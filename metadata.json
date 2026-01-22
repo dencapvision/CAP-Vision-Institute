@@ -1,0 +1,16 @@
+{
+  "name": "CAP Vision Partner | Transform People, Transform Organization",
+  "description": "สถาบันแคป วิชั่น พาร์ทเนอร์ - ที่ปรึกษาด้านการพัฒนาผู้นำและบุคลากรองค์กร ด้วยกระบวนการ Facilitation และ Activity Based Learning",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "author": "Den Master Facilitator",
+  "keywords": [
+    "อบรมพนักงาน",
+    "พัฒนาผู้นำ",
+    "Team Building",
+    "วิทยากร",
+    "CAP Vision",
+    "ครูเด่น มาสเตอร์ฟา"
+  ]
+}

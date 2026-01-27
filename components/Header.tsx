@@ -89,7 +89,7 @@ const Header: React.FC = () => {
                 >
                   <Link
                     to={item.path}
-                    className={`text-[#0f3460] hover:text-[#c5a059] px-2 py-2 text-[14px] xl:text-[15px] font-bold transition-all nav-font flex items-center gap-1 whitespace-nowrap ${location.pathname === item.path ? 'text-[#c5a059]' : ''}`}
+                    className={`text-[#0f3460] hover:text-[#c5a059] px-1.5 xl:px-2.5 py-2 text-[13px] xl:text-[14px] font-bold transition-all nav-font flex items-center gap-1 whitespace-nowrap ${location.pathname === item.path ? 'text-[#c5a059]' : ''}`}
                   >
                     {item.name}
                     {item.submenu && (

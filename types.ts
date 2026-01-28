@@ -7,6 +7,18 @@ export interface Course {
   image: string;
 }
 
+export interface OnlineCourse {
+  id: string;
+  title: string;
+  category: string;
+  image: string;
+  progress: number | null;
+  duration: string | null;
+  lessons: number | null;
+  instructor: string | null;
+  price: number | null;
+}
+
 export interface Service {
   id: string;
   title: string;

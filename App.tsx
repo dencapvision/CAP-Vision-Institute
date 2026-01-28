@@ -5,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async'; // Import HelmetProvider
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ChatBot from './components/ChatBot'; // Import ChatBot
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Courses from './pages/Courses';
 import CourseDetail from './pages/CourseDetail';
@@ -54,7 +55,14 @@ const App: React.FC = () => {
               <Route path="/speakers/:id" element={<SpeakerDetail />} />
               <Route path="/join-us" element={<JoinUs />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/lms" element={<LMS />} />
+              <Route
+                path="/lms"
+                element={
+                  <ProtectedRoute>
+                    <LMS />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/lms/:id" element={<LMSPlayer />} />
               <Route path="/lms-profile" element={<LMSProfile />} />
             </Routes>

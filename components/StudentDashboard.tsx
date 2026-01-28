@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Award,
   BarChart3,
@@ -7,9 +8,72 @@ import {
   GraduationCap,
   PlayCircle,
   Sparkles,
+  LogOut,
+  Ticket,
 } from 'lucide-react';
+import { signOut } from '../lib/auth';
+import { supabase } from '../lib/supabaseClient';
 
 const StudentDashboard: React.FC = () => {
+  const navigate = useNavigate();
+  const [redeemCode, setRedeemCode] = useState('');
+  const [redeeming, setRedeeming] = useState(false);
+  const [redeemError, setRedeemError] = useState<string | null>(null);
+  const [redeemSuccess, setRedeemSuccess] = useState(false);
+
+  const handleSignOut = async () => {
+    await signOut();
+    window.location.href = '#/login';
+  };
+
+  const handleRedeem = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setRedeeming(true);
+    setRedeemError(null);
+    setRedeemSuccess(false);
+
+    try {
+      // 1. Check if code exists and is not used
+      const { data: codeData, error: codeError } = await supabase
+        .from('registration_codes')
+        .select('*')
+        .eq('code', redeemCode)
+        .eq('is_used', false)
+        .single();
+
+      if (codeError || !codeData) {
+        throw new Error('รหัสลงทะเบียนไม่ถูกต้อง หรือถูกใช้งานไปแล้ว');
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('กรุณาเข้าสู่ระบบใหม่');
+
+      // 2. Add enrollment
+      const { error: enrollError } = await supabase
+        .from('user_enrollments')
+        .insert({
+          user_id: user.id,
+          course_id: codeData.course_id,
+        });
+
+      if (enrollError) throw enrollError;
+
+      // 3. Mark code as used
+      await supabase
+        .from('registration_codes')
+        .update({ is_used: true })
+        .eq('id', codeData.id);
+
+      setRedeemSuccess(true);
+      setRedeemCode('');
+      // In a real app, you'd trigger a data refresh here
+    } catch (err: any) {
+      setRedeemError(err.message);
+    } finally {
+      setRedeeming(false);
+    }
+  };
+
   const navItems = [
     { label: 'คอร์สของฉัน', icon: BookOpen, active: true },
     { label: 'ผลการเรียน', icon: BarChart3, active: false },
@@ -70,11 +134,10 @@ const StudentDashboard: React.FC = () => {
                   return (
                     <li key={item.label}>
                       <button
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-bold nav-font transition-all ${
-                          item.active
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-bold nav-font transition-all ${item.active
                             ? 'bg-[#0f3460] text-white shadow-lg'
                             : 'text-slate-500 hover:bg-slate-50'
-                        }`}
+                          }`}
                       >
                         <Icon className="w-5 h-5" />
                         {item.label}
@@ -82,6 +145,15 @@ const StudentDashboard: React.FC = () => {
                     </li>
                   );
                 })}
+                <li>
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-bold nav-font text-red-500 hover:bg-red-50 transition-all"
+                  >
+                    <LogOut className="w-5 h-5" />
+                    ออกจากระบบ
+                  </button>
+                </li>
               </ul>
             </div>
           </aside>
@@ -151,38 +223,71 @@ const StudentDashboard: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-xl p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 rounded-2xl bg-[#c5a059]/10 text-[#c5a059] flex items-center justify-center">
-                    <Sparkles className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.2em] text-slate-400 font-bold">Recommended</p>
-                    <h3 className="text-xl font-black text-[#0f3460] nav-font">หลักสูตรแนะนำ</h3>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  {recommendedCourses.map((course) => (
-                    <div
-                      key={course.title}
-                      className="group p-4 rounded-2xl border border-slate-100 hover:border-[#c5a059] hover:bg-[#fffbf5] transition-all"
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p className="text-[10px] uppercase tracking-[0.25em] text-[#c5a059] font-bold mb-2">
-                            {course.tag}
-                          </p>
-                          <h4 className="text-base font-bold text-[#0f3460] nav-font">{course.title}</h4>
-                          <p className="text-xs text-slate-400 font-bold mt-2">
-                            {course.level} • {course.duration}
-                          </p>
-                        </div>
-                        <button className="px-4 py-2 rounded-xl text-xs font-bold nav-font text-[#0f3460] bg-blue-50 group-hover:bg-[#0f3460] group-hover:text-white transition-all">
-                          ดูรายละเอียด
-                        </button>
-                      </div>
+              <div className="space-y-8">
+                <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-xl p-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-2xl bg-[#0f3460]/10 text-[#0f3460] flex items-center justify-center">
+                      <Ticket className="w-6 h-6" />
                     </div>
-                  ))}
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-slate-400 font-bold">Unlocking</p>
+                      <h3 className="text-xl font-black text-[#0f3460] nav-font">รหัสลงทะเบียน</h3>
+                    </div>
+                  </div>
+
+                  <form onSubmit={handleRedeem} className="space-y-4">
+                    <p className="text-sm text-slate-500 font-medium">มีรหัสลงทะเบียนสำหรับการเรียน? กรอกรหัสที่นี่เพื่อเริ่มเรียนได้ทันที</p>
+                    <input
+                      type="text"
+                      value={redeemCode}
+                      onChange={(e) => setRedeemCode(e.target.value.toUpperCase())}
+                      placeholder="กรอกรหัสลงทะเบียน..."
+                      className="w-full px-5 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-[#c5a059] font-bold text-[#0f3460] placeholder:font-normal uppercase tracking-widest"
+                    />
+                    {redeemError && <p className="text-xs text-red-500 font-bold ml-1">{redeemError}</p>}
+                    {redeemSuccess && <p className="text-xs text-green-500 font-bold ml-1">ปลดล็อคคอร์สเรียนสำเร็จ!</p>}
+                    <button
+                      disabled={redeeming || !redeemCode}
+                      className="w-full py-4 bg-[#c5a059] text-white rounded-2xl font-black nav-font shadow-lg hover:shadow-[#c5a059]/30 transition-all disabled:opacity-50"
+                    >
+                      {redeeming ? 'กำลังตรวจสอบ...' : 'แลกรับคอร์สเรียน'}
+                    </button>
+                  </form>
+                </div>
+
+                <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-xl p-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-2xl bg-[#c5a059]/10 text-[#c5a059] flex items-center justify-center">
+                      <Sparkles className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-slate-400 font-bold">Recommended</p>
+                      <h3 className="text-xl font-black text-[#0f3460] nav-font">หลักสูตรแนะนำ</h3>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    {recommendedCourses.map((course) => (
+                      <div
+                        key={course.title}
+                        className="group p-4 rounded-2xl border border-slate-100 hover:border-[#c5a059] hover:bg-[#fffbf5] transition-all"
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="min-w-0">
+                            <p className="text-[10px] uppercase tracking-[0.25em] text-[#c5a059] font-bold mb-2 truncate">
+                              {course.tag}
+                            </p>
+                            <h4 className="text-base font-bold text-[#0f3460] nav-font truncate">{course.title}</h4>
+                            <p className="text-xs text-slate-400 font-bold mt-2 truncate">
+                              {course.level} • {course.duration}
+                            </p>
+                          </div>
+                          <button className="flex-shrink-0 px-4 py-2 rounded-xl text-xs font-bold nav-font text-[#0f3460] bg-blue-50 group-hover:bg-[#0f3460] group-hover:text-white transition-all">
+                            ดูรายละเอียด
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </section>

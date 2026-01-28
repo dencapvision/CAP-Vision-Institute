@@ -1,25 +1,16 @@
-const AUTH_KEY = 'capvision_auth';
+import { supabase } from './supabaseClient';
 
-export const isLoggedIn = () => {
-  if (typeof window === 'undefined') {
-    return false;
-  }
-
-  return localStorage.getItem(AUTH_KEY) === 'true';
+export const isLoggedIn = async () => {
+  const { data: { session } } = await supabase.auth.getSession();
+  return !!session;
 };
 
-export const setLoggedIn = (value: boolean) => {
-  if (typeof window === 'undefined') {
-    return;
-  }
-
-  localStorage.setItem(AUTH_KEY, value ? 'true' : 'false');
+export const getCurrentUser = async () => {
+  const { data: { user } } = await supabase.auth.getUser();
+  return user;
 };
 
-export const clearLoggedIn = () => {
-  if (typeof window === 'undefined') {
-    return;
-  }
-
-  localStorage.removeItem(AUTH_KEY);
+export const signOut = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) throw error;
 };

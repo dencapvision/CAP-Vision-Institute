@@ -22,6 +22,7 @@ import SpeakerDetail from './pages/SpeakerDetail';
 import JoinUs from './pages/JoinUs';
 import About from './pages/About';
 import Portfolio from './pages/Portfolio';
+import Login from './pages/Login';
 import { CONTACT_INFO, BRAND_INFO } from './constants';
 
 // Scroll to top component
@@ -55,16 +56,24 @@ const App: React.FC = () => {
               <Route path="/speakers/:id" element={<SpeakerDetail />} />
               <Route path="/join-us" element={<JoinUs />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/lms" element={<LMS />} />
               <Route
-                path="/lms"
+                path="/lms/:id"
                 element={
                   <ProtectedRoute>
-                    <LMS />
+                    <LMSPlayer />
                   </ProtectedRoute>
                 }
               />
-              <Route path="/lms/:id" element={<LMSPlayer />} />
-              <Route path="/lms-profile" element={<LMSProfile />} />
+              <Route
+                path="/lms-profile"
+                element={
+                  <ProtectedRoute>
+                    <LMSProfile />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </main>
           <Footer />

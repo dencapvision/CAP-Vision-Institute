@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ArrowRight, CheckCircle2, Target, Zap, Award, Users, Calendar, MapPin, MessageCircle, Star, Sparkles, TrendingUp, Brain } from 'lucide-react';
 import { BRAND_INFO, CONTACT_INFO, SPEAKERS } from '../../constants';

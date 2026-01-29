@@ -23,7 +23,7 @@ import JoinUs from './pages/JoinUs';
 import About from './pages/About';
 import Portfolio from './pages/Portfolio';
 import Login from './pages/Login';
-import GrowthMasteryWorkshop from './pages/Growth Mastery Workshop';
+import GrowthMasteryWorkshop from './public/Growth Mastery Workshop';
 import { CONTACT_INFO, BRAND_INFO } from './constants';
 
 // Scroll to top component

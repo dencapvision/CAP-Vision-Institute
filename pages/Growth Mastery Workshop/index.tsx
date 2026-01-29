@@ -34,11 +34,11 @@ const GrowthMasteryWorkshop: React.FC = () => {
                                 <Sparkles className="w-4 h-4 text-[#c5a059]" />
                                 <span className="text-[#c5a059] font-bold text-xs uppercase tracking-widest nav-font">Platinum Edition Workshop</span>
                             </div>
-                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-tight mb-8 nav-font">
+                            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white leading-tight mb-8 nav-font">
                                 Growth <br />
                                 <span className="text-[#c5a059]">Mastery</span>
                             </h1>
-                            <p className="text-xl md:text-2xl text-blue-50/80 leading-relaxed mb-12 font-light max-w-xl">
+                            <p className="text-lg md:text-2xl text-blue-50/80 leading-relaxed mb-12 font-light max-w-xl">
                                 ปลดล็อกขีดจำกัด พัฒนาศักยภาพสู่การเป็นผู้นำ และการเติบโตแบบ <span className="text-[#c5a059] font-bold italic">Exponential</span> ด้วยกระบวนการ Facilitation ระดับสากล
                             </p>
 
@@ -60,17 +60,17 @@ const GrowthMasteryWorkshop: React.FC = () => {
 
                             <div className="grid grid-cols-2 md:grid-cols-3 gap-6 border-t border-white/10 pt-12">
                                 <div className="flex items-center gap-3">
-                                    <Calendar className="w-6 h-6 text-[#c5a059]" />
+                                    <Calendar className="w-5 h-5 md:w-6 md:h-6 text-[#c5a059]" />
                                     <div>
-                                        <p className="text-white/40 text-[10px] uppercase font-bold tracking-tiler">Date</p>
-                                        <p className="text-white font-bold nav-font">เร็วๆ นี้</p>
+                                        <p className="text-white/40 text-[10px] uppercase font-bold tracking-wider">Date</p>
+                                        <p className="text-white font-bold nav-font text-sm md:text-base">เร็วๆ นี้</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <MapPin className="w-6 h-6 text-[#c5a059]" />
+                                    <MapPin className="w-5 h-5 md:w-6 md:h-6 text-[#c5a059]" />
                                     <div>
-                                        <p className="text-white/40 text-[10px] uppercase font-bold tracking-tiler">Location</p>
-                                        <p className="text-white font-bold nav-font">Bangkok, Thailand</p>
+                                        <p className="text-white/40 text-[10px] uppercase font-bold tracking-wider">Location</p>
+                                        <p className="text-white font-bold nav-font text-sm md:text-base">Bangkok, Thailand</p>
                                     </div>
                                 </div>
                             </div>
@@ -105,11 +105,11 @@ const GrowthMasteryWorkshop: React.FC = () => {
             </section>
 
             {/* Why Growth Mastery? */}
-            <section className="py-24 md:py-32 bg-white">
+            <section className="py-16 md:py-32 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center max-w-3xl mx-auto mb-20 md:mb-32">
+                    <div className="text-center max-w-3xl mx-auto mb-16 md:mb-32">
                         <span className="text-[#c5a059] font-black text-xs uppercase tracking-[0.5em] mb-4 block nav-font">The Transformation</span>
-                        <h2 className="text-4xl md:text-6xl font-black text-[#0f3460] mb-8 nav-font">ทำไมต้อง Growth Mastery?</h2>
+                        <h2 className="text-3xl md:text-6xl font-black text-[#0f3460] mb-8 nav-font">ทำไมต้อง Growth Mastery?</h2>
                         <div className="w-24 h-1.5 bg-gradient-to-r from-[#0f3460] to-[#c5a059] mx-auto rounded-full"></div>
                     </div>
 
@@ -228,8 +228,8 @@ const GrowthMasteryWorkshop: React.FC = () => {
                                 ))}
                             </div>
                             <div className="flex flex-col sm:flex-row gap-6">
-                                <a href={CONTACT_INFO.lineUrl} className="bg-white text-[#0f3460] px-10 py-5 rounded-2xl font-black text-xl hover:bg-[#c5a059] hover:text-white transition-all text-center nav-font">
-                                    ปรึกษา Master Fa โดยตรง
+                                <a href={CONTACT_INFO.lineUrl} className="bg-[#c5a059] text-white px-10 py-5 rounded-2xl font-black text-xl hover:bg-white hover:text-[#0f3460] transition-all text-center nav-font shadow-xl">
+                                    ลงทะเบียนปรึกษา Master Fa
                                 </a>
                             </div>
                         </div>
@@ -253,7 +253,7 @@ const GrowthMasteryWorkshop: React.FC = () => {
                             </p>
 
                             <div className="flex flex-col sm:flex-row justify-center gap-6">
-                                <a href={CONTACT_INFO.lineUrl} className="bg-[#0f3460] text-white px-12 py-6 rounded-3xl font-black text-2xl hover:bg-[#c5a059] transition-all shadow-2xl shadow-blue-500/20 nav-font flex items-center justify-center gap-4">
+                                <a href={CONTACT_INFO.lineUrl} className="bg-[#c5a059] text-white px-12 py-6 rounded-3xl font-black text-2xl hover:bg-[#0f3460] transition-all shadow-2xl shadow-gold-500/30 nav-font flex items-center justify-center gap-4">
                                     จองที่นั่งตอนนี้ <ArrowRight className="w-6 h-6" />
                                 </a>
                             </div>

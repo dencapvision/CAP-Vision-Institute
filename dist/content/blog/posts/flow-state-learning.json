@@ -1,0 +1,48 @@
+{
+    "id": "flow-state-learning",
+    "title": "Flow State: สภาวะลื่นไหล กุญแจสำคัญสู่การเรียนรู้ระดับสูง (Deep Learning)",
+    "category": "Education",
+    "thumbnail": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80",
+    "author": "ครูเด่น มาสเตอร์ฟา",
+    "date": "23 มกราคม 2569",
+    "createdAt": "2026-01-23T00:00:00Z",
+    "readTime": "12 Min Read",
+    "description": "ทำความรู้จัก Flow State และเทคนิคการออกแบบการเรียนรู้เพื่อเปลี่ยนบรรยากาศในองค์กรให้มีชีวิตชีวา",
+    "tags": [
+        "Flow State",
+        "Learning",
+        "Psychology"
+    ],
+    "sections": [
+        {
+            "type": "heading",
+            "content": "ทำไมต้อง Flow State?"
+        },
+        {
+            "type": "text",
+            "content": "Flow State คือสภาวะที่มนุษย์มีประสิทธิภาพสูงสุด มีสมาธิสูงสุด และมีความสุขที่สุดในการทำงานหรือการเรียนรู้ เมื่ออยู่ในสภาวะนี้ สมองจะเปิดรับข้อมูลได้มากกว่าปกติถึง 5 เท่า"
+        },
+        {
+            "type": "highlight",
+            "title": "The Sweet Spot of Challenge",
+            "content": "FLOW จะเกิดขึ้นเมื่อ 'ระดับความท้าทาย' (Challenge) สมดุลกับ 'ทักษะ' (Skills) ของผู้เรียน หากง่ายไปจะเบื่อ หากยากไปจะกังวล"
+        },
+        {
+            "type": "subheading",
+            "content": "กลยุทธ์การสร้าง Flow ในห้องเรียน"
+        },
+        {
+            "type": "list",
+            "items": [
+                "Clear Goals: กำหนดเป้าหมายที่ชัดเจนในทุกขั้นตอน",
+                "Immediate Feedback: สร้างระบบที่ผู้เรียนรู้ผลลัพธ์ทันที",
+                "Autonomy: ให้ผู้เรียนได้ตัดสินใจและมีทางเลือกของตนเอง"
+            ]
+        },
+        {
+            "type": "quote",
+            "content": "การเรียนรู้ที่สนุกที่สุด คือการเรียนรู้ที่ผู้เรียนลืมไปว่ากำลังเรียนอยู่",
+            "author": "Mihaly Csikszentmihalyi"
+        }
+    ]
+}

@@ -1,0 +1,47 @@
+[
+    {
+        "id": "intro-to-facilitation",
+        "title": "ศิลปะการอำนวยความสะดวก (Facilitation Skills) สำหรับผู้นำยุคใหม่",
+        "category": "Leadership",
+        "thumbnail": "https://images.unsplash.com/photo-1517048676732-d676936d9b2c?auto=format&fit=crop&q=80",
+        "excerpt": "ทำไมการเป็นผู้นำที่สั่งการเก่งอาจไม่พออีกต่อไป? เจาะลึกทักษะ Facilitation ที่จะช่วยปลดล็อกศักยภาพทีมงานของคุณ",
+        "description": "เจาะลึกบทบาทผู้นำในฐานะ Facilitator เพื่อสร้างการมีส่วนร่วมและผลลัพธ์ที่ยั่งยืน",
+        "tags": [
+            "Leadership",
+            "Facilitation",
+            "Teamwork"
+        ],
+        "date": "2026-01-22",
+        "createdAt": "2026-01-22T00:00:00Z"
+    },
+    {
+        "id": "training-management-guide",
+        "title": "Training Management 101: 4 ขั้นตอนปั้นแผนพัฒนาคนให้เห็นผลจริง (T1-T4 Cycle)",
+        "category": "HRD Strategy",
+        "thumbnail": "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80",
+        "excerpt": "การทำ TNA (Training Needs Analysis) ให้แม่นยำคือจุดเริ่มต้นของความสำเร็จ เจาะลึกสมการ E - A = G",
+        "description": "คู่มือการวางแผนฝึกอบรมอย่างเป็นระบบด้วย T1-T4 Cycle เพื่อผลลัพธ์ที่วัดผลได้จริง",
+        "tags": [
+            "HRD",
+            "Training",
+            "Strategy"
+        ],
+        "date": "2026-01-20",
+        "createdAt": "2026-01-20T00:00:00Z"
+    },
+    {
+        "id": "flow-state-learning",
+        "title": "Flow State: สภาวะลื่นไหล กุญแจสำคัญสู่การเรียนรู้ระดับสูง (Deep Learning)",
+        "category": "Education",
+        "thumbnail": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80",
+        "excerpt": "จะดีแค่ไหนถ้าพนักงานของคุณเรียนรู้ด้วยความหลงใหลและลืมเวลา? มาสร้างสภาวะ Flow ในห้องเรียนกัน",
+        "description": "ทำความรู้จัก Flow State และเทคนิคการออกแบบการเรียนรู้เพื่อเปลี่ยนบรรยากาศในองค์กรให้มีชีวิตชีวา",
+        "tags": [
+            "Flow State",
+            "Learning",
+            "Psychology"
+        ],
+        "date": "2026-01-23",
+        "createdAt": "2026-01-23T00:00:00Z"
+    }
+]

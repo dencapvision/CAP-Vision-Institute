@@ -1,0 +1,48 @@
+{
+    "id": "training-management-guide",
+    "title": "Training Management 101: 4 ขั้นตอนปั้นแผนพัฒนาคนให้เห็นผลจริง (T1-T4 Cycle)",
+    "category": "HRD Strategy",
+    "thumbnail": "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80",
+    "author": "ทีมงาน CAP Vision",
+    "date": "20 มกราคม 2569",
+    "createdAt": "2026-01-20T00:00:00Z",
+    "readTime": "15 Min Read",
+    "description": "คู่มือการวางแผนฝึกอบรมอย่างเป็นระบบด้วย T1-T4 Cycle เพื่อผลลัพธ์ที่วัดผลได้จริง",
+    "tags": [
+        "HRD",
+        "Training",
+        "Strategy"
+    ],
+    "sections": [
+        {
+            "type": "heading",
+            "content": "T1-T4 Cycle: วงจรแห่งการพัฒนาที่ยั่งยืน"
+        },
+        {
+            "type": "text",
+            "content": "การจัดอบรมสัมมนาจะไม่เป็นเพียงแค่ 'กิจกรรม' อีกต่อไป หาก HR เข้าใจกระบวนการจัดการที่ครบวงจร ตั้งแต่การวิเคราะห์จนถึงการติดตามผล"
+        },
+        {
+            "type": "subheading",
+            "content": "T1: Training Needs Analysis (TNA)"
+        },
+        {
+            "type": "text",
+            "content": "อย่าจัดอบรมตาม 'Wants' ของผู้บริหาร แต่ต้องจัดตาม 'Needs' ของงาน ใช้สมการ E - A = G (Expectation - Actual = Gap) เพื่อหาจุดที่ต้องพัฒนาจริงๆ"
+        },
+        {
+            "type": "image",
+            "imageUrl": "https://images.unsplash.com/photo-1454165833222-12948705305d?auto=format&fit=crop&q=80",
+            "content": "Analysis Process"
+        },
+        {
+            "type": "list",
+            "items": [
+                "T1: วิเคราะห์ความต้องการ (Analysis)",
+                "T2: ออกแบบหลักสูตร (Design)",
+                "T3: ดำเนินการอบรม (Delivery)",
+                "T4: ประเมินและติดตามผล (Evaluation)"
+            ]
+        }
+    ]
+}

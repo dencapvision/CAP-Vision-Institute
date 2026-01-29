@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, PhoneCall, ChevronDown, GraduationCap, Laptop, Users, Info, Briefcase, MessageCircle, ExternalLink } from 'lucide-react';
+import { Menu, X, PhoneCall, ChevronDown, GraduationCap, Laptop, Users, Info, Briefcase, MessageCircle, ExternalLink, Sparkles } from 'lucide-react';
 import { CONTACT_INFO } from '../constants';
 import Logo from './Logo';
 
@@ -34,6 +34,7 @@ const Header: React.FC = () => {
       name: 'หลักสูตร',
       path: '/courses',
       submenu: [
+        { name: 'Growth Mastery Workshop', path: '/growth-mastery', icon: <Sparkles className="w-4 h-4" /> },
         { name: 'หลักสูตร In-house', path: '/courses', icon: <GraduationCap className="w-4 h-4" /> },
         { name: 'หลักสูตรออนไลน์', path: '/lms', icon: <Laptop className="w-4 h-4" /> }
       ]

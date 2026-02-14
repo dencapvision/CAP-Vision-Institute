@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Share2, Clock, Calendar, User, BookOpen, Quote, CheckCircle2, Download, FileText, ChevronRight, MessageCircle, Zap, Facebook, Target, BarChart3, TrendingUp, Users, Cpu, Tag } from 'lucide-react';
-import { RESOURCE_ARTICLES, CONTACT_INFO } from '../constants';
+import { RESOURCE_ARTICLES } from '../constants/resources';
+import { CONTACT_INFO } from '../constants/brand';
 
 interface PostContentSection {
    type: 'text' | 'heading' | 'subheading' | 'quote' | 'image' | 'list' | 'box' | 'highlight';

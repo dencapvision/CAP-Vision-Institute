@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Search, ChevronLeft, ChevronRight, ArrowRight, Star, ChevronDown, Filter as FilterIcon, Layout, Target, Zap, Users, MessageCircle, PenTool, Cpu, Layers } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { COURSES } from '../constants';
+import { COURSES } from '../constants/courses';
 import SEO from '../components/SEO';
 
 const Courses: React.FC = () => {

@@ -2,7 +2,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
 import { MessageSquare, X, Send, User, Sparkles, ChevronDown } from 'lucide-react';
-import { BRAND_INFO, COURSES, SERVICES, CONTACT_INFO } from '../constants';
+import { BRAND_INFO, CONTACT_INFO } from '../constants/brand';
+import { COURSES } from '../constants/courses';
+import { SERVICES_LIST as SERVICES } from '../constants/services';
 
 const ChatBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

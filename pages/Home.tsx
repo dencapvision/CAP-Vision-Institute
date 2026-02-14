@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Play, Target, Zap, Award, CheckCircle2, BarChart3, Users, ShieldCheck } from 'lucide-react';
-import { BRAND_INFO, CONTACT_INFO, COURSES } from '../constants';
+import { BRAND_INFO, CONTACT_INFO } from '../constants/brand';
+import { COURSES } from '../constants/courses';
 import Logo from '../components/Logo';
 import ClientsSection from '../components/ClientsSection';
 import SEO from '../components/SEO';

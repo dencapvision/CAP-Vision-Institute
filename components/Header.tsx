@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, PhoneCall, ChevronDown, GraduationCap, Laptop, Users, Info, Briefcase, MessageCircle, ExternalLink, Sparkles } from 'lucide-react';
-import { CONTACT_INFO } from '../constants';
+import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
+import { COURSES } from '../constants/courses';
 import Logo from './Logo';
 
 const Header: React.FC = () => {

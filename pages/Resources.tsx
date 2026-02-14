@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, PlayCircle, Clock, Download, FileText, ChevronRight, BookOpen, Video, FileDown, Filter, Layout, Tag, Calendar } from 'lucide-react';
-import { RESOURCE_ARTICLES as STATIC_ARTICLES, MICRO_LEARNING_VIDEOS, DOWNLOAD_RESOURCES, COLORS } from '../constants';
+import { RESOURCE_ARTICLES as STATIC_ARTICLES, MICRO_LEARNING_VIDEOS, DOWNLOAD_RESOURCES } from '../constants/resources';
+import { COLORS } from '../constants/theme';
 import { Link } from 'react-router-dom';
 
 interface BlogManifestItem {

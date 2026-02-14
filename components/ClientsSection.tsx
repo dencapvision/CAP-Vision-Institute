@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { CLIENTS } from '../constants';
+import { CLIENTS } from '../constants/brand';
 import { Award } from 'lucide-react';
 
 const ClientsSection: React.FC = () => {

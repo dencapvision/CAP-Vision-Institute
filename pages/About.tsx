@@ -2,7 +2,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Award, Target, Heart, Sparkles, CheckCircle2, Play, Users, Clock, Zap, MessageCircle, Quote, ShieldCheck, Cpu, Globe, ArrowRight, Shield } from 'lucide-react';
-import { BRAND_INFO, TIMELINE, SPEAKERS, CONTACT_INFO, SERVICES_LIST } from '../constants';
+import { BRAND_INFO, CONTACT_INFO, TIMELINE } from '../constants/brand';
+import { SPEAKERS } from '../constants/speakers';
+import { SERVICES_LIST } from '../constants/services';
 import ClientsSection from '../components/ClientsSection';
 import SEO from '../components/SEO';
 
@@ -162,7 +164,7 @@ const About: React.FC = () => {
                   {service.icon}
                 </div>
                 <h4 className="text-lg md:text-xl font-bold text-[#0f3460] mb-4 nav-font">{service.title}</h4>
-                <p className="text-gray-500 font-medium leading-relaxed text-xs md:text-sm opacity-80">{service.desc}</p>
+                <p className="text-gray-500 font-medium leading-relaxed text-xs md:text-sm opacity-80">{service.description}</p>
               </div>
             ))}
           </div>

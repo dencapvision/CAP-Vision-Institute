@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Heart, Rocket, Target, Users, Send, Upload, Link as LinkIcon, Video, CheckCircle, ArrowRight } from 'lucide-react';
-import { BRAND_INFO } from '../constants';
+import { BRAND_INFO } from '../constants/brand';
 
 const JoinUs: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -22,8 +22,8 @@ const JoinUs: React.FC = () => {
           <p className="text-xl text-gray-500 font-medium leading-relaxed mb-10">
             เราได้รับข้อมูลความตั้งใจของคุณแล้ว ทีมงานสถาบันแคป วิชั่น จะพิจารณาโปรไฟล์และติดต่อกลับหาคุณโดยเร็วที่สุด
           </p>
-          <button 
-            onClick={() => window.location.href = '/'} 
+          <button
+            onClick={() => window.location.href = '/'}
             className="bg-[#0f3460] text-white px-12 py-5 rounded-2xl font-bold nav-font hover:bg-[#c5a059] transition-all"
           >
             กลับสู่หน้าหลัก
@@ -51,25 +51,25 @@ const JoinUs: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 -mt-32 relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          
+
           {/* Content Side */}
           <div className="lg:col-span-5 space-y-10">
             <div className="bg-white p-12 rounded-[3rem] shadow-xl border border-gray-100">
               <h2 className="text-3xl font-black text-[#0f3460] mb-8 nav-font">ทำไมต้องมาร่วมงานกับเรา?</h2>
               <div className="space-y-8">
                 {[
-                  { 
-                    title: 'Culture of Growth', 
+                  {
+                    title: 'Culture of Growth',
                     desc: 'เราเชื่อในการพัฒนาตนเองก่อนที่จะไปพัฒนาผู้อื่น ที่นี่คุณจะได้เรียนรู้ทักษะ Facilitation ระดับพรีเมียม',
                     icon: <Target className="w-6 h-6" />
                   },
-                  { 
-                    title: 'Meaningful Impact', 
+                  {
+                    title: 'Meaningful Impact',
                     desc: 'ทุกโปรเจกต์ที่เราทำ คือการช่วยให้คนมีความสุขขึ้น ทำงานเก่งขึ้น และองค์กรแข็งแรงขึ้น',
                     icon: <Users className="w-6 h-6" />
                   },
-                  { 
-                    title: 'Joy & Professionalism', 
+                  {
+                    title: 'Joy & Professionalism',
                     desc: 'ทำงานด้วยความสนุก (Edutainment) ภายใต้มืออาชีพที่พร้อมซัพพอร์ตกันและกัน',
                     icon: <Heart className="w-6 h-6" />
                   }
@@ -93,10 +93,10 @@ const JoinUs: React.FC = () => {
                 เราไม่ใช่แค่บริษัทฝึกอบรม แต่เราคือ "Partner ของการเปลี่ยนแปลง" มาร่วมสร้างอนาคตที่ทุกคนได้ใช้ศักยภาพสูงสุดของตัวเองไปด้วยกัน
               </p>
               <div className="flex items-center gap-4">
-                 <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                    <Rocket className="w-6 h-6" />
-                 </div>
-                 <span className="font-black text-sm uppercase tracking-widest nav-font">Transforming Humanity</span>
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                  <Rocket className="w-6 h-6" />
+                </div>
+                <span className="font-black text-sm uppercase tracking-widest nav-font">Transforming Humanity</span>
               </div>
             </div>
           </div>
@@ -106,7 +106,7 @@ const JoinUs: React.FC = () => {
             <div className="bg-white rounded-[3.5rem] shadow-2xl p-10 md:p-16 border border-gray-100">
               <h2 className="text-3xl font-black text-[#0f3460] mb-4 nav-font">Recruitment Form</h2>
               <p className="text-gray-500 font-medium mb-12">เราไม่ได้มองหาแค่เรซูเม่ที่สวยงาม แต่เรามองหา "ความตั้งใจ" ที่ตรงกัน</p>
-              
+
               <form onSubmit={handleSubmit} className="space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-2">
@@ -153,14 +153,14 @@ const JoinUs: React.FC = () => {
                 </div>
 
                 <div className="p-8 bg-[#0f3460]/5 rounded-[2rem] border border-dashed border-[#0f3460]/20 flex flex-col items-center justify-center text-center">
-                   <Upload className="w-10 h-10 text-[#0f3460] mb-4 opacity-30" />
-                   <p className="text-sm font-bold text-[#0f3460] nav-font mb-1">อัปโหลด Resume / CV</p>
-                   <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">PDF format only (Max 5MB)</p>
-                   <input type="file" className="mt-4 text-xs font-bold text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-[#0f3460] file:text-white hover:file:bg-[#c5a059]" />
+                  <Upload className="w-10 h-10 text-[#0f3460] mb-4 opacity-30" />
+                  <p className="text-sm font-bold text-[#0f3460] nav-font mb-1">อัปโหลด Resume / CV</p>
+                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">PDF format only (Max 5MB)</p>
+                  <input type="file" className="mt-4 text-xs font-bold text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-[#0f3460] file:text-white hover:file:bg-[#c5a059]" />
                 </div>
 
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="w-full bg-[#0f3460] text-white py-6 rounded-2xl font-black text-xl hover:bg-[#c5a059] transition-all nav-font shadow-2xl shadow-blue-900/20 flex items-center justify-center gap-4 group"
                 >
                   ส่งความตั้งใจของฉัน <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />

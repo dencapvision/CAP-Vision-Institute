@@ -1,30 +1,38 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async'; // Import HelmetProvider
 import Header from './components/Header';
 import Footer from './components/Footer';
-import ChatBot from './components/ChatBot'; // Import ChatBot
+import ChatBot from './components/ChatBot';
 import ProtectedRoute from './components/ProtectedRoute';
-import Home from './pages/Home';
-import Courses from './pages/Courses';
-import CourseDetail from './pages/CourseDetail';
-import Services from './pages/Services';
-import Contact from './pages/Contact';
-import Resources from './pages/Resources';
-import BlogPost from './pages/BlogPost'; // New
-import Events from './pages/Events'; // New
-import LMS from './pages/LMS';
-import LMSPlayer from './pages/LMSPlayer';
-import LMSProfile from './pages/LMSProfile';
-import Speakers from './pages/Speakers';
-import SpeakerDetail from './pages/SpeakerDetail';
-import JoinUs from './pages/JoinUs';
-import About from './pages/About';
-import Portfolio from './pages/Portfolio';
-import Login from './pages/Login';
-import GrowthMasteryWorkshop from './pages/Growth Mastery Workshop';
-import { CONTACT_INFO, BRAND_INFO } from './constants';
+
+// Lazy load pages for performance
+const Home = lazy(() => import('./pages/Home'));
+const Courses = lazy(() => import('./pages/Courses'));
+const CourseDetail = lazy(() => import('./pages/CourseDetail'));
+const Services = lazy(() => import('./pages/Services'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Resources = lazy(() => import('./pages/Resources'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+const Events = lazy(() => import('./pages/Events'));
+const LMS = lazy(() => import('./pages/LMS'));
+const LMSPlayer = lazy(() => import('./pages/LMSPlayer'));
+const LMSProfile = lazy(() => import('./pages/LMSProfile'));
+const Speakers = lazy(() => import('./pages/Speakers'));
+const SpeakerDetail = lazy(() => import('./pages/SpeakerDetail'));
+const JoinUs = lazy(() => import('./pages/JoinUs'));
+const About = lazy(() => import('./pages/About'));
+const Portfolio = lazy(() => import('./pages/Portfolio'));
+const Login = lazy(() => import('./pages/Login'));
+
+import { CONTACT_INFO } from './constants/brand';
+
+// Loading Component
+const PageLoader = () => (
+  <div className="min-h-[60vh] flex items-center justify-center">
+    <div className="w-12 h-12 border-4 border-[#c5a059] border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
 
 // Scroll to top component
 const ScrollToTop = () => {
@@ -37,12 +45,12 @@ const ScrollToTop = () => {
 
 const App: React.FC = () => {
   return (
-    <HelmetProvider>
-      <Router>
-        <ScrollToTop />
-        <div className="min-h-screen flex flex-col">
-          <Header />
-          <main className="flex-grow">
+    <Router>
+      <ScrollToTop />
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-grow">
+          <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/courses" element={<Courses />} />
@@ -57,7 +65,6 @@ const App: React.FC = () => {
               <Route path="/speakers/:id" element={<SpeakerDetail />} />
               <Route path="/join-us" element={<JoinUs />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/growth-mastery" element={<GrowthMasteryWorkshop />} />
               <Route path="/login" element={<Login />} />
               <Route path="/lms" element={<LMS />} />
               <Route
@@ -77,20 +84,20 @@ const App: React.FC = () => {
                 }
               />
             </Routes>
-          </main>
-          <Footer />
+          </Suspense>
+        </main>
+        <Footer />
 
-          {/* ChatBot Integrated Globally */}
-          <ChatBot />
+        {/* ChatBot Integrated Globally */}
+        <ChatBot />
 
-          {/* Sticky CTA for Mobile */}
-          <div className="md:hidden sticky bottom-0 z-40 bg-white/80 backdrop-blur-md border-t border-gray-100 p-4 flex gap-3">
-            <a href={`tel:${CONTACT_INFO.phone}`} className="flex-1 bg-[#0f3460] text-white py-4 rounded-2xl font-bold text-center nav-font text-sm">โทรปรึกษา</a>
-            <a href={CONTACT_INFO.lineUrl} className="flex-1 bg-[#c5a059] text-white py-4 rounded-2xl font-bold text-center nav-font text-sm">ไลน์ทางการ</a>
-          </div>
+        {/* Sticky CTA for Mobile */}
+        <div className="md:hidden sticky bottom-0 z-40 bg-white/80 backdrop-blur-md border-t border-gray-100 p-4 flex gap-3">
+          <a href={`tel:${CONTACT_INFO.phone}`} className="flex-1 bg-[#0f3460] text-white py-4 rounded-2xl font-bold text-center nav-font text-sm">โทรปรึกษา</a>
+          <a href={CONTACT_INFO.lineUrl} className="flex-1 bg-[#c5a059] text-white py-4 rounded-2xl font-bold text-center nav-font text-sm">ไลน์ทางการ</a>
         </div>
-      </Router>
-    </HelmetProvider>
+      </div>
+    </Router>
   );
 };
 

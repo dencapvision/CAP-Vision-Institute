@@ -2,7 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Users, Award, Star, ArrowRight, MessageCircle } from 'lucide-react';
-import { SPEAKERS, BRAND_INFO } from '../constants';
+import { SPEAKERS } from '../constants/speakers';
+import { BRAND_INFO } from '../constants/brand';
 
 const Speakers: React.FC = () => {
   return (
@@ -26,9 +27,9 @@ const Speakers: React.FC = () => {
           {SPEAKERS.map((speaker) => (
             <div key={speaker.id} className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col group">
               <div className="relative h-80 overflow-hidden">
-                <img 
-                  src={speaker.image} 
-                  alt={speaker.name} 
+                <img
+                  src={speaker.image}
+                  alt={speaker.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0f3460]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
@@ -48,7 +49,7 @@ const Speakers: React.FC = () => {
                   {speaker.bio}
                 </p>
                 <div className="pt-8 border-t border-gray-50 flex items-center justify-between">
-                  <Link 
+                  <Link
                     to={`/speakers/${speaker.id}`}
                     className="text-[#0f3460] font-black nav-font flex items-center gap-2 group-hover:gap-4 transition-all"
                   >

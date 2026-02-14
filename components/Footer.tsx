@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Youtube, MessageCircle, Phone, MapPin } from 'lucide-react';
-import { CONTACT_INFO, BRAND_INFO } from '../constants';
+import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
 import Logo from './Logo';
 
 const Footer: React.FC = () => {

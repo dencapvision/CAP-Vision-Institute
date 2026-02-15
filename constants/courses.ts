@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Smile, ShieldCheck, Layout, Search, Zap, Brain, Layers } from 'lucide-react';
+import { Smile, ShieldCheck, Layout, Search, Zap, Brain, Layers, Users, MessageCircle, Target, Heart } from 'lucide-react';
 
 export interface CourseDetailInfo {
     id: string;
@@ -95,6 +95,80 @@ export const COURSES: CourseDetailInfo[] = [
             id: 'den-master-fa',
             name: 'ครูเด่น มาสเตอร์ฟา',
             bio: 'นักออกแบบกระบวนการเรียนรู้ (Dynamic Learning Designer)',
+            image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
+        }
+    },
+    {
+        id: 'effective-communication',
+        title: 'หลักสูตร ศิลปะการสื่อสารเพื่อประสิทธิผลงาน (Effective Communication)',
+        category: 'Communication Skills',
+        description: 'สื่อสารอย่างมีชั้นเชิง ลดความขัดแย้ง และสร้างความร่วมมือในทีม',
+        image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80',
+        longDescription: 'หลักสูตรที่ช่วยให้คุณเข้าใจรูปแบบการสื่อสารของตนเองและผู้อื่น พร้อมเทคนิคการฟังและการพูดที่สร้างสรรค์',
+        duration: '1 วัน (09.00 - 16.30 น.)',
+        audience: 'พนักงานทุกระดับ',
+        why: [
+            { label: 'ความร่วมมือ', stat: '85%', desc: 'เพิ่มประสิทธิภาพการทำงานร่วมกัน', icon: React.createElement(Users) },
+            { label: 'ลดข้อขัดแย้ง', stat: '60%', desc: 'ลดปัญหาความเข้าใจผิดในการทำงาน', icon: React.createElement(MessageCircle) }
+        ],
+        how: [
+            { title: 'DISC Analysis', desc: 'วิเคราะห์สไตล์การสื่อสารด้วย DISC Model', icon: React.createElement(Brain) },
+            { title: 'Active Listening', desc: 'ฝึกทักษะการฟังอย่างตั้งใจ', icon: React.createElement(Target) },
+            { title: 'Feedback Techniques', desc: 'เทคนิคการให้และรับข้อมูลป้อนกลับ', icon: React.createElement(MessageCircle) }
+        ],
+        what: [
+            'Communication Styles Assessment',
+            '3 levels of Listening',
+            'I-Message & Feedback',
+            'Non-verbal Communication'
+        ],
+        objectives: [
+            'เข้าใจสไตล์การสื่อสารของตนเองและผู้อื่น',
+            'สามารถสื่อสารเพื่อสร้างความร่วมมือได้',
+            'ลดความขัดแย้งจากการสื่อสาร',
+            'พัฒนาทักษะการฟังและการถาม'
+        ],
+        instructor: {
+            id: 'den-master-fa',
+            name: 'ครูเด่น มาสเตอร์ฟา',
+            bio: 'ผู้เชี่ยวชาญด้านการสื่อสารและการพัฒนาทีม',
+            image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
+        }
+    },
+    {
+        id: 'team-synergy',
+        title: 'หลักสูตร สร้างทีมแกร่งด้วยพลังบวก (Positive Team Synergy)',
+        category: 'Work Skills',
+        description: 'เปลี่ยนความแตกต่างให้เป็นพลัง ผสานจุดแข็งเพื่อเป้าหมายเดียวกัน',
+        image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+        longDescription: 'กิจกรรม Team Building ที่เน้นกระบวนการกลุ่มสัมพันธ์และการเรียนรู้ผ่านประสบการณ์ (Experiential Learning)',
+        duration: '1-2 วัน',
+        audience: 'ทีมงานทุกแผนก',
+        why: [
+            { label: 'ความผูกพัน', stat: '90%', desc: 'สร้างความรู้สึกเป็นเจ้าของร่วมกัน', icon: React.createElement(Heart) },
+            { label: 'พลังทีม', stat: 'MAX', desc: 'ดึงศักยภาพสูงสุดของทีมออกมาใช้', icon: React.createElement(Zap) }
+        ],
+        how: [
+            { title: 'Trust Building', desc: 'กิจกรรมสร้างความไว้วางใจ', icon: React.createElement(ShieldCheck) },
+            { title: 'Team Canvas', desc: 'ออกแบบข้อตกลงและเป้าหมายร่วมกัน', icon: React.createElement(Layout) },
+            { title: 'Synergy Games', desc: 'เกมจำลองสถานการณ์เพื่อการทำงานเป็นทีม', icon: React.createElement(Smile) }
+        ],
+        what: [
+            'The 5 Dysfunctions of a Team',
+            'Psychological Safety',
+            'Collaborative Mindset',
+            'Team Charter Design'
+        ],
+        objectives: [
+            'สร้างความไว้วางใจในทีม',
+            'ยอมรับความแตกต่างและทำงานร่วมกันได้',
+            'มีเป้าหมายและพันธสัญญาต่อทีมร่วมกัน',
+            'สื่อสารกันอย่างเปิดใจ'
+        ],
+        instructor: {
+            id: 'den-master-fa',
+            name: 'ครูเด่น มาสเตอร์ฟา',
+            bio: 'Certified Team Coach & Facilitator',
             image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
         }
     }

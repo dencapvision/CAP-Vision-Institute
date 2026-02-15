@@ -13,7 +13,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "upweb": "powershell -ExecutionPolicy Bypass -File ./scripts/deploy.ps1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.1.2",

@@ -24,6 +24,7 @@ const JoinUs = lazy(() => import('./pages/JoinUs'));
 const About = lazy(() => import('./pages/About'));
 const Portfolio = lazy(() => import('./pages/Portfolio'));
 const Login = lazy(() => import('./pages/Login'));
+const MediaManager = lazy(() => import('./pages/MediaManager'));
 
 import { CONTACT_INFO } from './constants/brand';
 
@@ -80,6 +81,14 @@ const App: React.FC = () => {
                 element={
                   <ProtectedRoute>
                     <LMSProfile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/media"
+                element={
+                  <ProtectedRoute>
+                    <MediaManager />
                   </ProtectedRoute>
                 }
               />

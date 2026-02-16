@@ -13,7 +13,7 @@ interface CourseCardProps {
 
 const CourseCard: React.FC<CourseCardProps> = ({ id, title, instructor, image, duration = '1 วัน', level = 'ทุกระดับ' }) => {
     return (
-        <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
+        <div className="group card-premium overflow-hidden flex flex-col h-full">
             {/* Image Container */}
             <div className="relative h-48 overflow-hidden">
                 <img

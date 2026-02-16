@@ -22,12 +22,14 @@ const About: React.FC = () => {
           <div className="absolute bottom-0 right-0 w-full h-1/2 bg-gradient-to-t from-[#c5a059]/20 to-transparent"></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <span className="text-[#c5a059] font-black text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.6em] mb-4 md:mb-6 block nav-font">เกี่ยวกับสถาบัน แคป วิชั่น</span>
-          <h1 className="text-3xl md:text-7xl lg:text-8xl font-black mb-6 md:mb-10 nav-font tracking-tight uppercase leading-none">จุดเริ่มต้นของพวกเรา</h1>
-          <p className="text-lg md:text-3xl text-[#c5a059] font-black nav-font mb-4 md:mb-8 italic">“{BRAND_INFO.slogan}”</p>
-          <p className="text-base md:text-2xl text-blue-100 max-w-4xl mx-auto font-light leading-relaxed opacity-90 px-4">
-            {BRAND_INFO.thaiName} — พาร์ทเนอร์ผู้อยู่เบื้องหลังการ Transformation ขององค์กรชั้นนำ <br className="hidden md:block" />
-            ผ่านกระบวนการ Facilitation ที่มุ่งเน้นผลลัพธ์ที่ยั่งยืน
+          <span className="text-[#c5a059] font-black text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.6em] mb-4 md:mb-6 block nav-font reveal-staggered-0 reveal-staggered active">เกี่ยวกับสถาบัน แคป วิชั่น</span>
+          <h1 className="text-3xl md:text-7xl lg:text-8xl font-black mb-6 md:mb-10 nav-font tracking-tight uppercase leading-none">
+            จุดเริ่มต้นของ<span className="font-gold">พวกเรา</span>
+          </h1>
+          <p className="text-lg md:text-3xl font-gold font-black nav-font mb-4 md:mb-8 italic">“{BRAND_INFO.slogan}”</p>
+          <p className="text-base md:text-2xl text-blue-100 max-w-4xl mx-auto font-light leading-relaxed opacity-90 px-4 reveal-staggered-1 reveal-staggered active">
+            <span>{BRAND_INFO.thaiName} — พาร์ทเนอร์ผู้อยู่เบื้องหลังการ Transformation ขององค์กรชั้นนำ</span> <br className="hidden md:block" />
+            <span>ผ่านกระบวนการ Facilitation ที่มุ่งเน้นผลลัพธ์ที่ยั่งยืน</span>
           </p>
         </div>
       </div>
@@ -159,11 +161,11 @@ const About: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
             {SERVICES_LIST.map((service, idx) => (
-              <div key={idx} className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all border border-gray-100 group">
+              <div key={idx} className="glass-panel-light p-8 md:p-12 rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all border border-gray-100 group hover:translate-y-[-8px]">
                 <div className="w-16 h-16 bg-gray-50 text-[#c5a059] rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#0f3460] group-hover:text-white transition-all shadow-inner">
                   {service.icon}
                 </div>
-                <h4 className="text-lg md:text-xl font-bold text-[#0f3460] mb-4 nav-font">{service.title}</h4>
+                <h4 className="text-lg md:text-xl font-bold text-[#0f3460] mb-4 nav-font group-hover:font-gold transition-all">{service.title}</h4>
                 <p className="text-gray-500 font-medium leading-relaxed text-xs md:text-sm opacity-80">{service.description}</p>
               </div>
             ))}
@@ -223,7 +225,7 @@ const About: React.FC = () => {
                   ))}
                 </div>
                 <div className="mt-10 md:mt-16">
-                  <Link to="/contact" className="bg-[#0f3460] text-white px-10 md:px-14 py-4 md:py-6 rounded-2xl md:rounded-[2rem] font-black text-base md:text-xl hover:bg-[#c5a059] transition-all nav-font shadow-xl inline-flex items-center gap-3 active:scale-95">
+                  <Link to="/contact" className="btn-premium bg-[#0f3460] text-white px-10 md:px-14 py-4 md:py-6 rounded-2xl md:rounded-[2rem] font-black text-base md:text-xl hover:bg-[#c5a059] transition-all nav-font shadow-xl inline-flex items-center gap-3 active:scale-95">
                     พร้อมยกระดับองค์กรหรือยัง? <ArrowRight className="w-5 h-5" />
                   </Link>
                 </div>

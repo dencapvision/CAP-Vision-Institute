@@ -4,10 +4,15 @@ import { SERVICES_LIST as SERVICES, TRAINING_INFO, TRANSFORMATIVE_LEARNING_INFO,
 import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
 import { CheckCircle2, ArrowRight, Zap, Target, TrendingUp, Heart, Cpu, Layout, MessageCircle, BarChart3, ShieldCheck, Award, LineChart, Puzzle, RefreshCcw, Brain, Sparkles, PenTool, Layers, Rocket, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const Services: React.FC = () => {
    return (
       <div className="bg-gray-50 min-h-screen">
+         <SEO
+            title="บริการองค์กร"
+            description="บริการฝึกอบรม In-house Training, Executive Coaching, OD Consulting จาก CAP Vision Institute"
+         />
          {/* Hero Header */}
          <div className="bg-[#0f3460] pt-24 pb-48 text-white relative overflow-hidden">
             <div className="absolute top-0 right-0 w-1/3 h-full opacity-5 pointer-events-none">

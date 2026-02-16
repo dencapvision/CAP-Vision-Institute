@@ -25,13 +25,13 @@ const Footer: React.FC = () => {
               สถาบันที่ปรึกษาด้านการยกระดับคุณภาพพนักงานและการพัฒนาผู้นำโดย {BRAND_INFO.director}
             </p>
             <div className="flex space-x-4">
-              <a href={CONTACT_INFO.facebookUrl} target="_blank" rel="noreferrer" className="w-11 h-11 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-[#c5a059] transition-all border border-white/10 shadow-lg" aria-label="Facebook">
+              <a href={CONTACT_INFO.facebookUrl} target="_blank" rel="noopener noreferrer" className="w-11 h-11 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-[#c5a059] transition-all duration-500 border border-white/10 shadow-lg" aria-label="Facebook">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href={CONTACT_INFO.youtubeUrl} target="_blank" rel="noreferrer" className="w-11 h-11 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-[#c5a059] transition-all border border-white/10 shadow-lg" aria-label="YouTube">
+              <a href={CONTACT_INFO.youtubeUrl} target="_blank" rel="noopener noreferrer" className="w-11 h-11 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-[#c5a059] transition-all duration-500 border border-white/10 shadow-lg" aria-label="YouTube">
                 <Youtube className="w-5 h-5" />
               </a>
-              <a href={CONTACT_INFO.lineUrl} target="_blank" rel="noreferrer" className="w-11 h-11 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-[#c5a059] transition-all border border-white/10 shadow-lg" aria-label="Line Official">
+              <a href={CONTACT_INFO.lineUrl} target="_blank" rel="noopener noreferrer" className="w-11 h-11 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-[#c5a059] transition-all duration-500 border border-white/10 shadow-lg" aria-label="Line Official">
                 <MessageCircle className="w-5 h-5" />
               </a>
             </div>
@@ -53,13 +53,13 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="font-bold text-lg mb-10 nav-font text-[#c5a059] uppercase tracking-wider">บริการของเรา</h4>
             <ul className="space-y-4 text-blue-100/70 font-bold text-sm">
-              <li><Link to="/services" className="hover:text-[#c5a059] transition-colors">In-house Training</Link></li>
-              <li><Link to="/services" className="hover:text-[#c5a059] transition-colors">Executive Coaching</Link></li>
-              <li><Link to="/services" className="hover:text-[#c5a059] transition-colors">OD Consulting</Link></li>
-              <li><Link to="/services" className="hover:text-[#c5a059] transition-colors">Facilitator Training</Link></li>
+              <li><Link to="/services#in-house" className="hover:text-[#c5a059] transition-colors">In-house Training</Link></li>
+              <li><Link to="/services#coaching" className="hover:text-[#c5a059] transition-colors">Executive Coaching</Link></li>
+              <li><Link to="/services#consulting" className="hover:text-[#c5a059] transition-colors">OD Consulting</Link></li>
+              <li><Link to="/services#facilitator" className="hover:text-[#c5a059] transition-colors">Facilitator Training</Link></li>
               <li><Link to="/lms" className="hover:text-[#c5a059] transition-colors">Digital Learning Solutions</Link></li>
               <li><Link to="/contact" className="hover:text-[#c5a059] transition-colors">Customized Solutions</Link></li>
-              <li><Link to="/services" className="hover:text-[#c5a059] transition-colors">Leadership Roadmap</Link></li>
+              <li><Link to="/services#leadership-roadmap" className="hover:text-[#c5a059] transition-colors">Leadership Roadmap</Link></li>
             </ul>
           </div>
 

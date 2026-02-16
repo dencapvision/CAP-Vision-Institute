@@ -3,6 +3,7 @@ import { Search, PlayCircle, Clock, Download, FileText, ChevronRight, BookOpen, 
 import { RESOURCE_ARTICLES as STATIC_ARTICLES, MICRO_LEARNING_VIDEOS, DOWNLOAD_RESOURCES } from '../constants/resources';
 import { COLORS } from '../constants/theme';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 interface BlogManifestItem {
    id: string;
@@ -54,6 +55,10 @@ const Resources: React.FC = () => {
 
    return (
       <div className="bg-[#f8fafc] min-h-screen">
+         <SEO
+            title="คลังความรู้"
+            description="รวมบทความ วิดีโอสั้น เครื่องมือ Templates จากทีม Master Facilitator ของ CAP Vision Institute"
+         />
          {/* Hero Header */}
          <div className="bg-[#0f3460] pt-20 pb-32 text-white relative overflow-hidden">
             <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import { Lock, Mail, User, ArrowRight, Loader2, GraduationCap } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const Login: React.FC = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -53,6 +55,10 @@ const Login: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center p-4 py-12">
+            <SEO
+                title="เข้าสู่ระบบ"
+                description="ล็อกอินเข้าสู่ระบบ LMS ออนไลน์ของ CAP Vision Institute"
+            />
             <div className="max-w-md w-full">
                 <div className="text-center mb-10">
                     <div className="w-20 h-20 bg-[#0f3460] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-blue-900/20">
@@ -144,6 +150,22 @@ const Login: React.FC = () => {
                         >
                             {isLogin ? 'ยังไม่มีบัญชี? สมัครสมาชิกที่นี่' : 'มีบัญชีอยู่แล้ว? เข้าสู่ระบบ'}
                         </button>
+                    </div>
+
+                    {/* Navigation Utility Section */}
+                    <div className="mt-12 pt-8 border-t border-slate-50 grid grid-cols-3 gap-4">
+                        <Link to="/" className="text-center group">
+                            <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 group-hover:text-[#0f3460] transition-colors">Home</div>
+                            <div className="text-xs font-bold text-slate-500 group-hover:text-[#c5a059]">หน้าหลัก</div>
+                        </Link>
+                        <Link to="/resources" className="text-center group">
+                            <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 group-hover:text-[#0f3460] transition-colors">Resources</div>
+                            <div className="text-xs font-bold text-slate-500 group-hover:text-[#c5a059]">คลังความรู้</div>
+                        </Link>
+                        <Link to="/contact" className="text-center group">
+                            <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 group-hover:text-[#0f3460] transition-colors">Support</div>
+                            <div className="text-xs font-bold text-slate-500 group-hover:text-[#c5a059]">ช่วยเหลือ</div>
+                        </Link>
                     </div>
                 </div>
             </div>

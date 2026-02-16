@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 // Added missing 'X' import from lucide-react
 import { PlayCircle, CheckCircle, ChevronRight, ArrowLeft, Download, MessageSquare, BookOpen, Star, Clock, FileText, CheckCircle2, Award, ChevronDown, X } from 'lucide-react';
 import { ONLINE_COURSES } from '../constants/courses';
+import SEO from '../components/SEO';
 
 const LMSPlayer: React.FC = () => {
   const { id } = useParams();
@@ -27,6 +28,10 @@ const LMSPlayer: React.FC = () => {
 
   return (
     <div className="bg-[#f8fafc] min-h-screen flex flex-col">
+      <SEO
+        title={`กำลังเรียน: ${course.title}`}
+        description={`เข้าเรียนหลักสูตร ${course.title} ในรูปแบบออนไลน์`}
+      />
       {/* Player Top Nav */}
       <div className="bg-white border-b border-gray-100 px-4 md:px-6 h-14 md:h-16 flex items-center justify-between sticky top-0 z-[60] shadow-sm">
         <Link to="/lms-profile" className="flex items-center gap-2 md:gap-3 text-[#0f3460] hover:text-[#c5a059] transition-all font-bold nav-font text-xs md:text-sm">
@@ -149,8 +154,8 @@ const LMSPlayer: React.FC = () => {
                                 key={oIdx}
                                 onClick={() => handleQuizOption(qIdx, oIdx)}
                                 className={`w-full p-4 md:p-5 rounded-xl md:rounded-2xl border text-left font-bold transition-all flex items-center justify-between text-sm md:text-base ${quizAnswers[qIdx] === oIdx
-                                    ? (quizSubmitted ? (oIdx === q.answer ? 'bg-green-50 border-green-500 text-green-700' : 'bg-red-50 border-red-500 text-red-700') : 'bg-[#0f3460] text-white border-[#0f3460]')
-                                    : (quizSubmitted && oIdx === q.answer ? 'bg-green-50 border-green-500 text-green-700' : 'bg-white text-gray-600 hover:bg-gray-50')
+                                  ? (quizSubmitted ? (oIdx === q.answer ? 'bg-green-50 border-green-500 text-green-700' : 'bg-red-50 border-red-500 text-red-700') : 'bg-[#0f3460] text-white border-[#0f3460]')
+                                  : (quizSubmitted && oIdx === q.answer ? 'bg-green-50 border-green-500 text-green-700' : 'bg-white text-gray-600 hover:bg-gray-50')
                                   }`}
                               >
                                 {opt}

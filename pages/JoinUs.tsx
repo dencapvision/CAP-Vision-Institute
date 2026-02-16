@@ -1,7 +1,9 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Heart, Rocket, Target, Users, Send, Upload, Link as LinkIcon, Video, CheckCircle, ArrowRight } from 'lucide-react';
 import { BRAND_INFO } from '../constants/brand';
+import SEO from '../components/SEO';
 
 const JoinUs: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -22,12 +24,18 @@ const JoinUs: React.FC = () => {
           <p className="text-xl text-gray-500 font-medium leading-relaxed mb-10">
             เราได้รับข้อมูลความตั้งใจของคุณแล้ว ทีมงานสถาบันแคป วิชั่น จะพิจารณาโปรไฟล์และติดต่อกลับหาคุณโดยเร็วที่สุด
           </p>
-          <button
-            onClick={() => window.location.href = '/'}
+          <Link
+            to="/"
             className="bg-[#0f3460] text-white px-12 py-5 rounded-2xl font-bold nav-font hover:bg-[#c5a059] transition-all"
           >
             กลับสู่หน้าหลัก
-          </button>
+          </Link>
+          <Link
+            to="/about"
+            className="bg-white border-2 border-gray-200 text-[#0f3460] px-10 py-5 rounded-2xl font-bold nav-font hover:border-[#c5a059] transition-all mt-4 inline-block"
+          >
+            เกี่ยวกับ CAP Vision
+          </Link>
         </div>
       </div>
     );
@@ -35,6 +43,10 @@ const JoinUs: React.FC = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen pb-24">
+      <SEO
+        title="ร่วมงานกับเรา"
+        description="เปิดรับสมัครวิทยากร Facilitator และทีมงาน CAP Vision Institute"
+      />
       {/* Hero Header */}
       <div className="bg-[#0f3460] pt-24 pb-48 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -167,6 +179,22 @@ const JoinUs: React.FC = () => {
                 </button>
               </form>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Cross-link CTA */}
+      <div className="max-w-7xl mx-auto px-4 mt-16">
+        <div className="bg-[#0f3460] text-white p-12 rounded-[3rem] text-center shadow-2xl">
+          <h3 className="text-2xl md:text-3xl font-black mb-6 nav-font">สนใจหลักสูตรของเรา?</h3>
+          <p className="text-blue-100/80 mb-8 max-w-xl mx-auto">ดูหลักสูตรทั้งหมดที่เราเปิดสอน หรือติดต่อเราเพื่อพูดคุย</p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link to="/courses" className="bg-[#c5a059] text-white px-10 py-4 rounded-2xl font-bold nav-font hover:bg-white hover:text-[#0f3460] transition-all">
+              ดูหลักสูตรทั้งหมด
+            </Link>
+            <Link to="/contact" className="border-2 border-white/30 text-white px-10 py-4 rounded-2xl font-bold nav-font hover:bg-white/10 transition-all">
+              ติดต่อเรา
+            </Link>
           </div>
         </div>
       </div>

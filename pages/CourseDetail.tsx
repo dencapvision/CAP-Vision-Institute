@@ -1,9 +1,10 @@
 
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Users, Calendar, Award, Star, MessageCircle, Phone, ChevronDown, Plus, Minus, Target, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Users, Calendar, Award, Star, MessageCircle, Phone, ChevronDown, ChevronRight, Plus, Minus, Target, ShieldCheck, Zap } from 'lucide-react';
 import { COURSES } from '../constants/courses';
 import { CONTACT_INFO } from '../constants/brand';
+import SEO from '../components/SEO';
 
 const CourseDetail: React.FC = () => {
    const { id } = useParams();
@@ -35,6 +36,10 @@ const CourseDetail: React.FC = () => {
 
    return (
       <div className="bg-gray-50 min-h-screen">
+         <SEO
+            title={course.title}
+            description={course.description}
+         />
          {/* Course Hero */}
          <div className="bg-[#0f3460] text-white pt-20 pb-32 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-1/3 h-full opacity-5 pointer-events-none">
@@ -49,8 +54,12 @@ const CourseDetail: React.FC = () => {
                      <span className="bg-[#c5a059] text-white px-5 py-2 rounded-xl text-xs font-black uppercase tracking-[0.2em] mb-6 inline-block nav-font">
                         {course.category}
                      </span>
-                     <h1 className="text-4xl md:text-6xl font-black mb-8 nav-font leading-tight">{course.title}</h1>
-                     <p className="text-xl text-blue-100 font-light opacity-80 leading-relaxed mb-10 max-w-2xl">
+                     <h1 className="text-4xl md:text-6xl font-black mb-8 nav-font leading-tight">
+                        {course.title.split(' ').map((word, i) => (
+                           <span key={i} className={i % 2 !== 0 ? 'font-gold' : ''}>{word} </span>
+                        ))}
+                     </h1>
+                     <p className="text-xl text-blue-100 font-light opacity-80 leading-relaxed mb-10 max-w-2xl reveal-staggered active">
                         {course.description}
                      </p>
                      <div className="flex flex-wrap gap-8">
@@ -84,8 +93,8 @@ const CourseDetail: React.FC = () => {
                      </div>
                   </div>
                   <div className="lg:w-2/5 w-full">
-                     <div className="bg-white p-4 rounded-[2.5rem] shadow-2xl relative">
-                        <img src={course.image} alt={course.title} className="w-full h-[400px] object-cover rounded-[2rem] shadow-inner" />
+                     <div className="bg-white p-4 rounded-[2.5rem] shadow-2xl relative reveal-staggered active">
+                        <img src={course.image} alt={course.title} className="w-full h-[400px] object-cover rounded-[2rem] shadow-inner" loading="lazy" />
                         <div className="absolute -bottom-8 -left-8 bg-white p-6 rounded-[2rem] shadow-xl border border-gray-50 hidden md:block">
                            <div className="flex items-center gap-4">
                               <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center">
@@ -178,8 +187,8 @@ const CourseDetail: React.FC = () => {
                                  <div
                                     key={i}
                                     className={`overflow-hidden border rounded-3xl transition-all duration-300 ${isExpanded
-                                          ? 'border-[#c5a059] bg-white shadow-xl shadow-gold-500/5 translate-x-2'
-                                          : 'border-gray-100 bg-gray-50/50 hover:bg-gray-50 hover:border-gray-200'
+                                       ? 'border-[#c5a059] bg-white shadow-xl shadow-gold-500/5 translate-x-2'
+                                       : 'border-gray-100 bg-gray-50/50 hover:bg-gray-50 hover:border-gray-200'
                                        }`}
                                  >
                                     <button
@@ -266,9 +275,13 @@ const CourseDetail: React.FC = () => {
                               <Phone className="w-6 h-6" /> {CONTACT_INFO.phone}
                            </a>
                         </div>
-                        <div className="mt-8 pt-8 border-t border-gray-50 flex items-center gap-4 text-gray-400">
-                           <Calendar className="w-5 h-5" />
-                           <span className="text-xs font-bold uppercase tracking-widest">Available All Year Round</span>
+                        <div className="mt-8 pt-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6">
+                           <div className="text-gray-500 text-sm font-medium">
+                              ต้องการความช่วยเหลือในการลงทะเบียน? <Link to="/contact" className="text-[#c5a059] font-bold hover:underline">ติดต่อเรา</Link>
+                           </div>
+                           <Link to="/lms" className="flex items-center gap-2 text-[#0f3460] font-bold hover:text-[#c5a059] transition-colors nav-font">
+                              ไปที่ระบบเรียนออนไลน์ <ChevronRight className="w-4 h-4" />
+                           </Link>
                         </div>
                      </div>
 

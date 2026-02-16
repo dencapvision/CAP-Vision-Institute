@@ -1,12 +1,18 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Calendar, Users, MapPin, ExternalLink, MessageCircle, Facebook, Linkedin, Globe, Target, Zap, Heart, Award, ArrowRight } from 'lucide-react';
 import { EVENT_INFO } from '../constants/events';
 import { CONTACT_INFO } from '../constants/brand';
+import SEO from '../components/SEO';
 
 const Events: React.FC = () => {
    return (
       <div className="bg-gray-50 min-h-screen pb-20">
+         <SEO
+            title="กิจกรรม & เครือข่าย"
+            description="กิจกรรม Workshop สัมมนา และเครือข่าย Facilitator Community ของ CAP Vision Institute"
+         />
          {/* Hero Header */}
          <div className="bg-[#0f3460] pt-24 pb-48 text-white relative overflow-hidden text-center">
             <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
@@ -133,12 +139,12 @@ const Events: React.FC = () => {
                      CAP Vision Partner พร้อมช่วยคุณพัฒนาเครือข่าย แลกเปลี่ยนความรู้ และสร้างโอกาสในการเติบโตที่ยั่งยืน
                   </p>
                   <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-6">
-                     <a href={CONTACT_INFO.lineUrl} className="bg-[#0f3460] text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-[#c5a059] transition-all nav-font shadow-xl">
+                     <Link to="/contact" className="bg-[#0f3460] text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-[#c5a059] transition-all nav-font shadow-xl">
                         สมัครสมาชิกชุมชน
-                     </a>
-                     <a href="/#/contact" className="flex items-center justify-center gap-4 bg-white border-2 border-gray-100 text-[#0f3460] px-10 py-5 rounded-2xl font-bold hover:border-[#c5a059] transition-all nav-font text-lg">
-                        <MessageCircle className="w-6 h-6 text-[#c5a059]" /> ติดตามกิจกรรมใหม่ๆ
-                     </a>
+                     </Link>
+                     <Link to="/courses" className="flex items-center justify-center gap-4 bg-white border-2 border-gray-100 text-[#0f3460] px-10 py-5 rounded-2xl font-bold hover:border-[#c5a059] transition-all nav-font text-lg">
+                        <MessageCircle className="w-6 h-6 text-[#c5a059]" /> ดูหลักสูตรทั้งหมด
+                     </Link>
                   </div>
                </div>
             </div>

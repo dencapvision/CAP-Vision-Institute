@@ -5,12 +5,17 @@ import { BookOpen, PlayCircle, Clock, Search, Layout, List, GraduationCap, Trend
 import { ONLINE_COURSES } from '../constants/courses';
 import { BRAND_INFO } from '../constants/brand';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const LMS: React.FC = () => {
   const [viewType, setViewType] = useState<'grid' | 'list'>('grid');
 
   return (
     <div className="bg-[#f8fafc] min-h-screen">
+      <SEO
+        title="คอร์สเรียนออนไลน์"
+        description="ยกระดับทักษะการเป็นผู้นำและการพัฒนาองค์กรผ่านระบบเรียนออนไลน์ของ CAP Vision Institute"
+      />
       {/* LMS Header Area */}
       <div className="bg-[#0f3460] pt-16 pb-32 text-white overflow-hidden relative">
         <div className="absolute top-0 right-0 w-1/3 h-full opacity-10">

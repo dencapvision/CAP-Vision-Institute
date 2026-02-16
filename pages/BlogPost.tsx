@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Share2, Clock, Calendar, User, BookOpen, Quote, CheckCircle2, Download, FileText, ChevronRight, MessageCircle, Zap, Facebook, Target, BarChart3, TrendingUp, Users, Cpu, Tag } from 'lucide-react';
 import { RESOURCE_ARTICLES } from '../constants/resources';
 import { CONTACT_INFO } from '../constants/brand';
+import SEO from '../components/SEO';
 
 interface PostContentSection {
    type: 'text' | 'heading' | 'subheading' | 'quote' | 'image' | 'list' | 'box' | 'highlight';
@@ -134,6 +135,12 @@ const BlogPost: React.FC = () => {
 
    return (
       <div className="bg-white min-h-screen">
+         {post && (
+            <SEO
+               title={post.title}
+               description={post.description || post.title}
+            />
+         )}
          {/* Article Header */}
          <div className="max-w-4xl mx-auto px-4 pt-16 md:pt-24 pb-12">
             <Link to="/resources" className="inline-flex items-center gap-2 text-gray-400 hover:text-[#c5a059] transition-colors font-bold mb-10 nav-font text-xs uppercase tracking-widest">

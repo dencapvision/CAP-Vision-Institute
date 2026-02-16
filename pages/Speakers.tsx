@@ -4,10 +4,15 @@ import { Link } from 'react-router-dom';
 import { Users, Award, Star, ArrowRight, MessageCircle } from 'lucide-react';
 import { SPEAKERS } from '../constants/speakers';
 import { BRAND_INFO } from '../constants/brand';
+import SEO from '../components/SEO';
 
 const Speakers: React.FC = () => {
   return (
     <div className="bg-gray-50 min-h-screen pb-20">
+      <SEO
+        title="วิทยากร และ Facilitator"
+        description="ทีมวิทยากรและ Master Facilitator ผู้เชี่ยวชาญด้านการพัฒนาบุคลากร จาก CAP Vision Institute"
+      />
       {/* Header */}
       <div className="bg-[#0f3460] pt-20 pb-32 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none">

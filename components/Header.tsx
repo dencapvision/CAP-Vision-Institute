@@ -35,7 +35,7 @@ const Header: React.FC = () => {
       name: 'หลักสูตร',
       path: '/courses',
       submenu: [
-        { name: 'Growth Mastery Workshop', path: '/growth-mastery', icon: <Sparkles className="w-4 h-4" /> },
+        { name: 'Growth Mastery Workshop', path: 'https://growth-mindset-workshop.capvisionpartner.com/', icon: <Sparkles className="w-4 h-4" />, external: true },
         { name: 'หลักสูตร In-house', path: '/courses', icon: <GraduationCap className="w-4 h-4" /> },
         { name: 'หลักสูตรออนไลน์', path: '/lms', icon: <Laptop className="w-4 h-4" /> }
       ]
@@ -104,16 +104,32 @@ const Header: React.FC = () => {
                     <div className="absolute top-[calc(100%-10px)] left-0 w-64 bg-white shadow-2xl rounded-2xl border border-gray-100 p-4 animate-in fade-in slide-in-from-top-2 duration-200">
                       <div className="space-y-1">
                         {item.submenu.map((sub) => (
-                          <Link
-                            key={sub.name}
-                            to={sub.path}
-                            className="flex items-center gap-3 p-3 text-[#0f3460] hover:bg-gray-50 hover:text-[#c5a059] rounded-xl transition-all nav-font font-bold text-sm"
-                          >
-                            <div className="bg-gray-50 p-2 rounded-lg text-[#c5a059]">
-                              {sub.icon}
-                            </div>
-                            {sub.name}
-                          </Link>
+                          (sub as any).external ? (
+                            <a
+                              key={sub.name}
+                              href={sub.path}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="flex items-center gap-3 p-3 text-[#0f3460] hover:bg-gray-50 hover:text-[#c5a059] rounded-xl transition-all nav-font font-bold text-sm"
+                            >
+                              <div className="bg-gray-50 p-2 rounded-lg text-[#c5a059]">
+                                {sub.icon}
+                              </div>
+                              {sub.name}
+                              <ExternalLink className="w-3 h-3 ml-auto text-gray-300" />
+                            </a>
+                          ) : (
+                            <Link
+                              key={sub.name}
+                              to={sub.path}
+                              className="flex items-center gap-3 p-3 text-[#0f3460] hover:bg-gray-50 hover:text-[#c5a059] rounded-xl transition-all nav-font font-bold text-sm"
+                            >
+                              <div className="bg-gray-50 p-2 rounded-lg text-[#c5a059]">
+                                {sub.icon}
+                              </div>
+                              {sub.name}
+                            </Link>
+                          )
                         ))}
                       </div>
                     </div>
@@ -167,16 +183,32 @@ const Header: React.FC = () => {
                 {item.submenu && (
                   <div className="pl-4 space-y-4 pt-1 border-l-2 border-gray-100">
                     {item.submenu.map((sub) => (
-                      <Link
-                        key={sub.name}
-                        to={sub.path}
-                        className="text-gray-500 hover:text-[#c5a059] block text-base md:text-lg font-bold nav-font flex items-center gap-4"
-                      >
-                        <div className="w-9 h-9 bg-gray-50 rounded-xl flex items-center justify-center text-[#c5a059]">
-                          {sub.icon}
-                        </div>
-                        {sub.name}
-                      </Link>
+                      (sub as any).external ? (
+                        <a
+                          key={sub.name}
+                          href={sub.path}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-gray-500 hover:text-[#c5a059] block text-base md:text-lg font-bold nav-font flex items-center gap-4"
+                        >
+                          <div className="w-9 h-9 bg-gray-50 rounded-xl flex items-center justify-center text-[#c5a059]">
+                            {sub.icon}
+                          </div>
+                          {sub.name}
+                          <ExternalLink className="w-3 h-3 text-gray-300" />
+                        </a>
+                      ) : (
+                        <Link
+                          key={sub.name}
+                          to={sub.path}
+                          className="text-gray-500 hover:text-[#c5a059] block text-base md:text-lg font-bold nav-font flex items-center gap-4"
+                        >
+                          <div className="w-9 h-9 bg-gray-50 rounded-xl flex items-center justify-center text-[#c5a059]">
+                            {sub.icon}
+                          </div>
+                          {sub.name}
+                        </Link>
+                      )
                     ))}
                   </div>
                 )}

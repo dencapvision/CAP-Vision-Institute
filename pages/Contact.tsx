@@ -1,8 +1,10 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Phone, MessageCircle, MapPin, Facebook, Youtube, Instagram, Send, Globe, Mail, Clock, CheckCircle, ArrowRight, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
 import { FAQS } from '../constants/faqs';
+import SEO from '../components/SEO';
 
 const Contact: React.FC = () => {
    const [submitted, setSubmitted] = useState(false);
@@ -41,6 +43,10 @@ const Contact: React.FC = () => {
 
    return (
       <div className="bg-white min-h-screen overflow-x-hidden">
+         <SEO
+            title="ติดต่อเรา"
+            description="ติดต่อ CAP Vision Institute สำหรับการฝึกอบรมและพัฒนาบุคลากร"
+         />
          {/* Hero Header */}
          <div className="bg-[#0f3460] pt-24 pb-48 text-white relative overflow-hidden text-center">
             <div className="absolute top-0 right-0 w-1/3 h-full opacity-5 pointer-events-none">
@@ -263,6 +269,29 @@ const Contact: React.FC = () => {
                      </div>
                      <span className="text-xs font-black nav-font uppercase tracking-widest text-gray-400 group-hover:text-[#0f3460]">Instagram</span>
                   </a>
+               </div>
+            </div>
+         </div>
+
+         {/* Cross-link Navigation Section */}
+         <div className="bg-white py-16 border-t border-gray-100">
+            <div className="max-w-7xl mx-auto px-4">
+               <div className="text-center mb-10">
+                  <h3 className="text-2xl font-black text-[#0f3460] nav-font">สำรวจข้อมูลเพิ่มเติม</h3>
+               </div>
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <Link to="/courses" className="group p-8 bg-gray-50 rounded-[2rem] border border-gray-100 hover:border-[#c5a059]/30 hover:shadow-lg transition-all text-center">
+                     <h4 className="text-lg font-bold text-[#0f3460] mb-2 nav-font group-hover:text-[#c5a059] transition-colors">หลักสูตรฝึกอบรม</h4>
+                     <p className="text-gray-500 text-sm">ดูหลักสูตรทั้งหมดที่เราเปิดสอน</p>
+                  </Link>
+                  <Link to="/services" className="group p-8 bg-gray-50 rounded-[2rem] border border-gray-100 hover:border-[#c5a059]/30 hover:shadow-lg transition-all text-center">
+                     <h4 className="text-lg font-bold text-[#0f3460] mb-2 nav-font group-hover:text-[#c5a059] transition-colors">บริการองค์กร</h4>
+                     <p className="text-gray-500 text-sm">In-house Training, Coaching, OD Consulting</p>
+                  </Link>
+                  <Link to="/about" className="group p-8 bg-gray-50 rounded-[2rem] border border-gray-100 hover:border-[#c5a059]/30 hover:shadow-lg transition-all text-center">
+                     <h4 className="text-lg font-bold text-[#0f3460] mb-2 nav-font group-hover:text-[#c5a059] transition-colors">เกี่ยวกับ CAP Vision</h4>
+                     <p className="text-gray-500 text-sm">วิสัยทัศน์ พันธกิจ และทีมวิทยากร</p>
+                  </Link>
                </div>
             </div>
          </div>

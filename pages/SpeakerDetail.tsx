@@ -5,6 +5,7 @@ import { ArrowLeft, CheckCircle2, Award, Star, MessageCircle, Phone, Globe, Book
 import { SPEAKERS } from '../constants/speakers';
 import { COURSES } from '../constants/courses';
 import { CONTACT_INFO } from '../constants/brand';
+import SEO from '../components/SEO';
 
 const SpeakerDetail: React.FC = () => {
    const { id } = useParams();
@@ -26,6 +27,10 @@ const SpeakerDetail: React.FC = () => {
 
    return (
       <div className="bg-gray-50 min-h-screen">
+         <SEO
+            title={speaker.name}
+            description={speaker.bio}
+         />
          {/* Hero Section */}
          <div className="bg-[#0f3460] pt-20 pb-40 text-white relative overflow-hidden">
             <div className="absolute inset-0 opacity-5">

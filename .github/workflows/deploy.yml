@@ -14,7 +14,7 @@ jobs:
 
       - name: Install and Build
         run: |
-          npm install react-helmet-async --legacy-peer-deps
+          npm install --legacy-peer-deps
           npm run build
 
       - name: Copy dist to VPS
@@ -24,6 +24,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: 22
-          source: "dist/*"
+          source: "dist/**"
           target: "/var/www/CAP-Vision-Institute"
           strip_components: 1

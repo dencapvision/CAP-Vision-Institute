@@ -1,10 +1,16 @@
 /* Global UI Polish & Animations */
 :root {
   --primary: #0f3460;
+  --primary-dark: #0a2545;
+  --primary-light: #1a4d8c;
   --secondary: #c5a059;
+  --secondary-dark: #a68444;
+  --secondary-light: #dcc188;
   --bg-soft: #f8fafc;
   --accent-gold: linear-gradient(135deg, #c5a059 0%, #e0c58e 50%, #c5a059 100%);
   --accent-navy: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+  --mesh-gradient: radial-gradient(at 100% 0%, rgba(197, 160, 89, 0.15) 0%, transparent 50%),
+                   radial-gradient(at 0% 100%, rgba(15, 52, 96, 0.1) 0%, transparent 50%);
 }
 
 html {
@@ -15,13 +21,15 @@ body {
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  background-color: var(--bg-soft);
 }
 
 /* 1. Typography Improvements */
 h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
   color: var(--primary);
+  line-height: 1.2;
 }
 
 .font-gold {

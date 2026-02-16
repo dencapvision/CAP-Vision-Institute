@@ -8,6 +8,7 @@
     "lucide-react": "^0.562.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "react-helmet-async": "^2.0.5",
     "react-router-dom": "^7.12.0"
   },
   "scripts": {
@@ -17,7 +18,10 @@
     "upweb": "powershell -ExecutionPolicy Bypass -File ./scripts/deploy.ps1"
   },
   "devDependencies": {
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^5.1.2",
+    "typescript": "^5.7.3",
     "vite": "^7.3.1"
   }
 }

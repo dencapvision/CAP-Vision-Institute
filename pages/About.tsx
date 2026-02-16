@@ -10,139 +10,100 @@ import SEO from '../components/SEO';
 
 const About: React.FC = () => {
   return (
-    <div className="bg-gray-50 min-h-screen pb-16 md:pb-24 overflow-x-hidden">
+    <div className="bg-white min-h-screen pb-16 md:pb-24 overflow-x-hidden">
       <SEO
         title="เกี่ยวกับเรา - CAP Vision Institute"
-        description="เกี่ยวกับ CAP Vision Institute สถาบันฝึกอบรมระดับมืออาชีพ ผู้นำด้าน Transformative Learning นำโดย ครูเด่น (อนุสรณ์ หนองนา) และ Master Fa พร้อมวิสัยทัศน์และพันธกิจในการพัฒนาคนและองค์กร"
+        description="เกี่ยวกับ CAP Vision Institute สถาบันฝึกอบรมระดับมืออาชีพ ผู้นำด้าน Transformative Learning นำโดย ครูเด่น (อนุสรณ์ หนองนา) และ Master Fa"
       />
       {/* Hero Header */}
-      <div className="bg-[#0f3460] pt-20 md:pt-32 pb-32 md:pb-56 text-white text-center relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-          <div className="absolute -top-24 -left-24 w-64 md:w-96 h-64 md:h-96 bg-[#c5a059] rounded-full blur-[80px] md:blur-[120px]"></div>
-          <div className="absolute bottom-0 right-0 w-full h-1/2 bg-gradient-to-t from-[#c5a059]/20 to-transparent"></div>
+      <div className="bg-[#0f3460] pt-24 md:pt-40 pb-32 md:pb-56 text-white text-center relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-[#c5a059]/10 rounded-full blur-[120px]"></div>
+          <div className="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 bg-blue-400/5 rounded-full blur-[120px]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(15,52,96,0.2),transparent_70%)]"></div>
         </div>
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <span className="text-[#c5a059] font-black text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.6em] mb-4 md:mb-6 block nav-font reveal-staggered-0 reveal-staggered active">เกี่ยวกับสถาบัน แคป วิชั่น</span>
-          <h1 className="text-3xl md:text-7xl lg:text-8xl font-black mb-6 md:mb-10 nav-font tracking-tight uppercase leading-none">
-            จุดเริ่มต้นของ<span className="font-gold">พวกเรา</span>
+          <span className="text-[#c5a059] font-black text-[10px] md:text-xs uppercase tracking-[0.5em] mb-6 md:mb-8 block nav-font">About CAP Vision Institute</span>
+          <h1 className="text-4xl md:text-8xl lg:text-9xl font-black mb-8 md:mb-12 nav-font tracking-tighter uppercase leading-[0.9]">
+            จุดเริ่มต้นของ<br /><span className="font-gold">พวกเรา</span>
           </h1>
-          <p className="text-lg md:text-3xl font-gold font-black nav-font mb-4 md:mb-8 italic">“{BRAND_INFO.slogan}”</p>
-          <p className="text-base md:text-2xl text-blue-100 max-w-4xl mx-auto font-light leading-relaxed opacity-90 px-4 reveal-staggered-1 reveal-staggered active">
-            <span>{BRAND_INFO.thaiName} — พาร์ทเนอร์ผู้อยู่เบื้องหลังการ Transformation ขององค์กรชั้นนำ</span> <br className="hidden md:block" />
-            <span>ผ่านกระบวนการ Facilitation ที่มุ่งเน้นผลลัพธ์ที่ยั่งยืน</span>
+          <p className="text-xl md:text-4xl font-gold font-black nav-font mb-6 md:mb-10 italic">“{BRAND_INFO.slogan}”</p>
+          <div className="w-24 h-1.5 bg-[#c5a059] mx-auto rounded-full mb-10 scale-x-110"></div>
+          <p className="text-lg md:text-3xl text-blue-50/70 max-w-4xl mx-auto font-light leading-relaxed px-4">
+            {BRAND_INFO.thaiName} — พาร์ทเนอร์ผู้อยู่เบื้องหลังการ Transformation ขององค์กรชั้นนำ <br className="hidden md:block" />
+            ผ่านกระบวนการ Facilitation ที่มุ่งเน้นผลลัพธ์ที่ยั่งยืน
           </p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 -mt-16 md:-mt-32 relative z-20">
+      <div className="max-w-7xl mx-auto px-4 -mt-20 md:-mt-32 relative z-20">
 
         {/* Intro Section - The Core Narrative */}
-        <section className="mb-20 md:mb-32">
-          <div className="bg-white rounded-[2.5rem] md:rounded-[4rem] p-8 md:p-20 shadow-2xl border border-gray-100 overflow-hidden relative">
-            <div className="absolute top-0 right-0 p-8 md:p-12 opacity-5 pointer-events-none">
-              <Quote className="w-48 h-48 md:w-64 md:h-64" />
+        <section className="mb-24 md:mb-40">
+          <div className="card-premium p-10 md:p-24 overflow-hidden relative">
+            <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+              <Quote className="w-48 h-48 md:w-80 md:h-80 text-[#0f3460]" />
             </div>
-            <div className="flex flex-col lg:flex-row gap-12 md:gap-20 items-center">
+            <div className="flex flex-col lg:flex-row gap-16 md:gap-24 items-center">
               <div className="lg:w-1/2">
-                <h2 className="text-2xl md:text-5xl font-black text-[#0f3460] mb-6 md:mb-10 nav-font leading-tight">
-                  เปลี่ยนคน... เปลี่ยนองค์กร
+                <span className="text-[#c5a059] font-black text-[10px] uppercase tracking-widest mb-4 block nav-font">Our Philosophy</span>
+                <h2 className="text-3xl md:text-6xl font-black text-[#0f3460] mb-8 md:mb-12 nav-font leading-tight">
+                  เปลี่ยนคน... <br />เปลี่ยนองค์กร
                 </h2>
-                <div className="space-y-4 md:space-y-6 text-sm md:text-lg text-gray-600 font-medium leading-relaxed opacity-90">
+                <div className="space-y-6 md:space-y-8 text-lg md:text-2xl text-gray-600 font-medium leading-relaxed opacity-90">
                   <p>
-                    CAP Vision Partner ก่อตั้งขึ้นจากความเชื่อที่ว่า <span className="text-[#0f3460] font-black underline decoration-[#c5a059] underline-offset-4">"ศักยภาพที่แท้จริงของมนุษย์ไม่ได้ถูกจำกัดด้วยสภาพแวดล้อม แต่ถูกปลดปล่อยผ่านการเรียนรู้ที่แท้จริง"</span>
+                    CAP Vision Partner ก่อตั้งขึ้นจากความเชื่อที่ว่า <span className="text-[#0f3460] font-black underline decoration-[#c5a059]/40 underline-offset-8">"ศักยภาพที่แท้จริงของมนุษย์ไม่ได้ถูกจำกัดด้วยสภาพแวดล้อม แต่ถูกปลดปล่อยผ่านการเรียนรู้ที่แท้จริง"</span>
                   </p>
                   <p>
-                    เริ่มต้นจากปี 2552 เราไม่ได้เป็นเพียงแค่ "ผู้ฝึกอบรม" แต่เป็น "ผู้กระตุ้น" และ "ผู้อำนวยการเรียนรู้" ที่ช่วยให้บุคคลค้นพบศักยภาพที่ซ่อนเร้น และเปลี่ยนแปลงตนเองจากภายใน (Inside-out Transformation) อย่างลึกซึ้ง
+                    เริ่มต้นจากปี 2552 เราไม่ได้เป็นเพียงแค่ "ผู้ฝึกอบรม" แต่เป็น "ผู้กระตุ้น" และ "ผู้อำนวยการเรียนรู้" ที่ช่วยให้บุคคลค้นพบศักยภาพที่ซ่อนเร้น และเปลี่ยนแปลงตนเองจากภายใน อย่างลึกซึ้ง
                   </p>
                 </div>
-                <div className="mt-8 md:mt-12 p-8 md:p-12 bg-[#0f3460] rounded-[2rem] md:rounded-[3rem] text-white shadow-xl relative overflow-hidden group">
-                  <div className="absolute -right-4 -bottom-4 w-24 h-24 md:w-40 md:h-40 bg-[#c5a059] rounded-full opacity-20 group-hover:scale-150 transition-transform duration-700"></div>
-                  <p className="text-lg md:text-3xl font-black nav-font leading-relaxed italic relative z-10 pr-6">
+                <div className="mt-12 md:mt-16 p-10 md:p-14 bg-gradient-to-br from-[#0f3460] to-[#0a2545] rounded-[3rem] text-white shadow-2xl relative overflow-hidden group">
+                  <div className="absolute -right-8 -bottom-8 w-48 h-48 bg-[#c5a059]/20 rounded-full group-hover:scale-150 transition-transform duration-1000"></div>
+                  <p className="text-xl md:text-4xl font-black nav-font leading-relaxed italic relative z-10 pr-6">
                     "พลังแห่งศักยภาพอยู่ในตัวท่าน ค้นพบความมหัศจรรย์นั้นด้วยตัวท่านเอง"
                   </p>
                 </div>
               </div>
               <div className="lg:w-1/2 w-full">
-                <div className="relative">
-                  <div className="absolute -inset-4 bg-[#c5a059]/10 rounded-[2.5rem] md:rounded-[3.5rem] blur-2xl"></div>
+                <div className="relative group">
+                  <div className="absolute -inset-10 bg-[#c5a059]/10 rounded-full blur-[100px] group-hover:blur-[120px] transition-all"></div>
                   <img
                     src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80"
-                    className="relative z-10 rounded-[2rem] md:rounded-[3rem] shadow-2xl grayscale hover:grayscale-0 transition-all duration-1000 w-full h-[300px] md:h-[500px] object-cover"
+                    className="relative z-10 rounded-[3rem] md:rounded-[4rem] shadow-2xl transition-all duration-1000 w-full h-[400px] md:h-[650px] object-cover"
                     alt="Team Collaboration"
                   />
+                  <div className="absolute inset-0 z-20 rounded-[3rem] md:rounded-[4rem] ring-1 ring-inset ring-white/10"></div>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Storytelling Section - Southern Thailand Impact */}
-        <section className="mb-20 md:mb-32 bg-[#0f3460] rounded-[2.5rem] md:rounded-[4rem] p-8 md:p-24 text-white shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 left-0 p-12 opacity-5 pointer-events-none">
-            <Globe className="w-64 h-64 md:w-96 md:h-96" />
-          </div>
-          <div className="max-w-4xl mx-auto relative z-10">
-            <span className="text-[#c5a059] font-black text-[10px] md:text-xs uppercase tracking-[0.4em] md:tracking-[0.5em] mb-4 md:mb-6 block nav-font">พันธกิจจากใจของพวกเรา</span>
-            <h2 className="text-2xl md:text-5xl font-black mb-8 md:mb-12 nav-font leading-tight">
-              การเรียนรู้ที่เปลี่ยนแปลงชีวิตและสังคมได้จริง
-            </h2>
-            <div className="space-y-6 md:space-y-8 text-base md:text-xl text-blue-100 font-light leading-relaxed opacity-80 mb-12 md:mb-20">
-              <p>
-                ช่วงปี <span className="text-[#c5a059] font-black">2554 - 2558</span> เราได้ลงพื้นที่ทำกิจกรรมชุมชนกับหน่วยงาน <span className="font-bold border-b border-[#c5a059]/50">ศอบต.</span> เพื่อช่วยเหลือพี่น้องที่ได้รับผลกระทบจากเหตุการณ์ความไม่สงบในภาคใต้
-              </p>
-              <p>
-                ประสบการณ์ครั้งนั้นสอนให้เราตระหนักว่า <span className="text-white font-bold italic">"การเรียนรู้และการพัฒนาไม่ได้จำกัดอยู่แค่ในห้องสัมมนา แต่มันคือลมหายใจของการเปลี่ยนแปลงชีวิตผู้คน"</span>
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
-              {[
-                'โรงเรียนในพื้นที่ชายขอบของประเทศ',
-                'กลุ่มชุมชนและชาวบ้าน',
-                'กลุ่มครูและบุคลากรทางการศึกษา',
-                'กลุ่มพระสงฆ์และองค์กรศาสนา',
-                'ผู้บริหารองค์กรและหน่วยงานภาครัฐ',
-                'บริษัทเอกชนขนาดเล็ก กลาง และใหญ่'
-              ].map((target, idx) => (
-                <div key={idx} className="flex items-center gap-4 bg-white/5 p-4 md:p-6 rounded-2xl border border-white/10 hover:bg-white/10 transition-colors group">
-                  <CheckCircle2 className="w-5 h-5 md:w-6 h-6 text-[#c5a059] group-hover:scale-110 transition-transform" />
-                  <span className="font-bold nav-font text-xs md:text-sm">{target}</span>
-                </div>
-              ))}
-            </div>
-            <div className="mt-12 md:mt-20 pt-8 md:pt-12 border-t border-white/10 text-center">
-              <p className="text-blue-100/60 text-xs md:text-base font-medium italic">
-                "เราเชื่อว่าบุคลากรคือทรัพย์สินที่สำคัญที่สุด (Human Capital) และภารกิจของเราคือการเจียระไนทรัพย์สินนั้นให้ทรงคุณค่าที่สุด"
-              </p>
             </div>
           </div>
         </section>
 
         {/* Vision & Mission Grid */}
-        <section className="mb-20 md:mb-32">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-5 bg-white p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] shadow-2xl border border-gray-100 relative overflow-hidden group">
-              <div className="absolute -top-10 -left-10 w-40 h-40 bg-gray-50 rounded-full opacity-50 group-hover:scale-110 transition-transform"></div>
-              <div className="w-16 h-16 bg-[#0f3460]/5 text-[#c5a059] rounded-2xl flex items-center justify-center mb-8 relative z-10">
-                <Target className="w-8 h-8" />
+        <section className="mb-24 md:mb-40">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div className="lg:col-span-5 bg-white p-10 md:p-16 rounded-[4rem] shadow-2xl border border-gray-100 relative overflow-hidden group">
+              <div className="w-20 h-20 bg-[#c5a059]/10 text-[#c5a059] rounded-3xl flex items-center justify-center mb-10 group-hover:bg-[#c5a059] group-hover:text-white transition-all">
+                <Target className="w-10 h-10" />
               </div>
-              <h3 className="text-2xl md:text-3xl font-black text-[#0f3460] mb-8 nav-font uppercase tracking-wider">Vision</h3>
-              <p className="text-lg md:text-2xl text-gray-600 font-bold leading-relaxed border-l-4 border-[#c5a059] pl-6 md:pl-8 italic nav-font">
+              <h3 className="text-3xl md:text-4xl font-black text-[#0f3460] mb-8 nav-font uppercase tracking-tighter">Vision</h3>
+              <p className="text-xl md:text-3xl text-gray-700 font-bold leading-relaxed border-l-8 border-[#c5a059] pl-8 italic nav-font">
                 “{BRAND_INFO.vision}”
               </p>
             </div>
-            <div className="lg:col-span-7 bg-[#0f3460] p-8 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] shadow-2xl text-white relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-8 md:p-12 opacity-10 pointer-events-none">
-                <Zap className="w-32 h-32 md:w-48 md:h-48" />
+            <div className="lg:col-span-7 bg-[#0f3460] p-10 md:p-16 rounded-[4rem] shadow-2xl text-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-12 opacity-10 pointer-events-none">
+                <Zap className="w-48 h-48" />
               </div>
-              <h3 className="text-2xl md:text-3xl font-black mb-10 nav-font uppercase tracking-wider text-[#c5a059]">Mission</h3>
-              <div className="space-y-4 md:space-y-6 relative z-10">
+              <h3 className="text-3xl md:text-4xl font-black mb-12 nav-font uppercase tracking-tighter text-[#c5a059]">Mission</h3>
+              <div className="space-y-6 md:space-y-8 relative z-10">
                 {BRAND_INFO.mission.map((item, idx) => (
-                  <div key={idx} className="flex gap-4 items-start group">
-                    <span className="w-8 h-8 md:w-10 md:h-10 bg-[#c5a059] text-white rounded-full flex items-center justify-center font-black flex-shrink-0 text-xs md:text-sm shadow-lg group-hover:scale-110 transition-transform">
+                  <div key={idx} className="flex gap-6 items-start group">
+                    <span className="w-10 h-10 md:w-12 md:h-12 bg-white/10 text-[#c5a059] rounded-full flex items-center justify-center font-black flex-shrink-0 text-lg md:text-xl group-hover:bg-[#c5a059] group-hover:text-white transition-all">
                       {idx + 1}
                     </span>
-                    <p className="text-blue-50 text-sm md:text-lg font-medium leading-relaxed opacity-90 pt-1 md:pt-1.5">{item}</p>
+                    <p className="text-blue-50 text-lg md:text-2xl font-medium leading-relaxed opacity-90">{item}</p>
                   </div>
                 ))}
               </div>

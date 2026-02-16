@@ -8,9 +8,19 @@ import Logo from './Logo';
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [coursesDropdown, setCoursesDropdown] = useState(false);
   const [aboutDropdown, setAboutDropdown] = useState(false);
   const location = useLocation();
+
+  // Handle scroll for floating effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -36,8 +46,7 @@ const Header: React.FC = () => {
       path: '/courses',
       submenu: [
         { name: 'Growth Mastery Workshop', path: 'https://growth-mindset-workshop.capvisionpartner.com/', icon: <Sparkles className="w-4 h-4" />, external: true },
-        { name: 'หลักสูตร In-house', path: '/courses', icon: <GraduationCap className="w-4 h-4" /> },
-        { name: 'หลักสูตรออนไลน์', path: '/lms', icon: <Laptop className="w-4 h-4" /> }
+        { name: 'หลักสูตร In-house', path: '/courses', icon: <GraduationCap className="w-4 h-4" /> }
       ]
     },
     { name: 'ผลงานการจัดอบรม', path: '/portfolio' },
@@ -57,18 +66,18 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 h-16 md:h-24 flex items-center transition-all duration-300">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex items-center ${isScrolled ? 'h-16 md:h-20 bg-white/90 backdrop-blur-xl shadow-lg border-b border-gray-100' : 'h-20 md:h-28 bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex justify-between items-center h-full">
           {/* Logo & Brand Section - Responsive Scaling */}
           <div className="flex items-center shrink-0">
             <Link to="/" className="flex items-center gap-2 md:gap-4 group">
-              <Logo className="w-8 h-8 md:w-11 md:h-11 transition-transform group-hover:scale-105" />
+              <Logo className={`transition-all duration-500 ${isScrolled ? 'w-8 h-8 md:w-10 md:h-10' : 'w-10 h-10 md:w-14 md:h-14'} group-hover:scale-110`} />
               <div className="flex flex-col justify-center">
-                <span className="text-[#0f3460] font-black text-lg md:text-2xl tracking-tight leading-none nav-font uppercase whitespace-nowrap">
+                <span className={`font-black tracking-tight leading-none nav-font uppercase transition-all duration-500 ${isScrolled ? 'text-lg md:text-xl text-[#0f3460]' : 'text-xl md:text-3xl text-white md:text-[#0f3460]'}`}>
                   CAP Vision Institute
                 </span>
-                <span className="text-[#c5a059] text-[9px] md:text-[10px] font-bold tracking-[0.2em] md:tracking-[0.4em] leading-none nav-font uppercase mt-0.5 md:mt-1">
+                <span className={`text-[9px] md:text-[10px] font-bold tracking-[0.2em] md:tracking-[0.4em] leading-none nav-font uppercase mt-0.5 md:mt-1 transition-all duration-500 ${isScrolled ? 'text-[#c5a059]' : 'text-[#c5a059]/80 md:text-[#c5a059]'}`}>
                   สถาบันพัฒนาศักยภาพผู้นำและฝึกอบรมครบวงจร
                 </span>
               </div>
@@ -91,11 +100,14 @@ const Header: React.FC = () => {
                 >
                   <Link
                     to={item.path}
-                    className={`text-[#0f3460] hover:text-[#c5a059] px-1.5 xl:px-2.5 py-2 text-[13px] xl:text-[14px] font-bold transition-all nav-font flex items-center gap-1 whitespace-nowrap ${location.pathname === item.path ? 'text-[#c5a059]' : ''}`}
+                    className={`px-1.5 xl:px-2.5 py-2 text-[13px] xl:text-[14px] font-bold transition-all duration-300 nav-font flex items-center gap-1 whitespace-nowrap ${isScrolled
+                        ? (location.pathname === item.path ? 'text-[#c5a059]' : 'text-[#0f3460] hover:text-[#c5a059]')
+                        : (location.pathname === item.path ? 'text-[#c5a059]' : 'text-white/90 hover:text-[#c5a059] md:text-[#0f3460]')
+                      }`}
                   >
                     {item.name}
                     {item.submenu && (
-                      <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 text-[#c5a059]' : 'text-gray-400'}`} />
+                      <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 text-[#c5a059]' : (isScrolled ? 'text-gray-400' : 'text-white/50 md:text-gray-400')}`} />
                     )}
                   </Link>
 

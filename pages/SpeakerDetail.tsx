@@ -51,7 +51,7 @@ const SpeakerDetail: React.FC = () => {
                      </div>
                   </div>
                   <div className="lg:w-2/3">
-                     <h1 className="text-4xl md:text-6xl font-black mb-6 nav-font leading-tight">{speaker.name}</h1>
+                     <h1 className="text-4xl md:text-6xl font-black mb-6 nav-font leading-tight text-white">{speaker.name}</h1>
                      <p className="text-xl text-[#c5a059] font-bold uppercase tracking-[0.2em] mb-10 nav-font">{speaker.title}</p>
                      <p className="text-xl text-blue-100/80 font-light leading-relaxed mb-10 max-w-2xl">{speaker.longBio}</p>
 

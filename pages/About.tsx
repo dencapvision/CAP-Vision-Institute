@@ -24,7 +24,7 @@ const About: React.FC = () => {
         </div>
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <span className="text-[#c5a059] font-black text-[10px] md:text-xs uppercase tracking-[0.5em] mb-6 md:mb-8 block nav-font">About CAP Vision Institute</span>
-          <h1 className="text-4xl md:text-8xl lg:text-9xl font-black mb-8 md:mb-12 nav-font tracking-tighter uppercase leading-[0.9]">
+          <h1 className="text-4xl md:text-8xl lg:text-9xl font-black mb-8 md:mb-12 nav-font tracking-tighter uppercase leading-[0.9] text-white">
             จุดเริ่มต้นของ<br /><span className="font-gold">พวกเรา</span>
           </h1>
           <p className="text-xl md:text-4xl font-gold font-black nav-font mb-6 md:mb-10 italic">“{BRAND_INFO.slogan}”</p>

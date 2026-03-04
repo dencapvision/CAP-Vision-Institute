@@ -201,7 +201,7 @@ const Home: React.FC = () => {
           <Logo className="w-full h-full p-20" />
         </div>
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <h2 className="text-4xl md:text-8xl font-black mb-8 md:mb-12 nav-font leading-tight tracking-tight uppercase">ยกระดับ<br />องค์กรของคุณ</h2>
+          <h2 className="text-4xl md:text-8xl font-black mb-8 md:mb-12 nav-font leading-tight tracking-tight uppercase text-white">ยกระดับ<br />องค์กรของคุณ</h2>
           <p className="text-blue-100/70 text-lg md:text-3xl mb-12 md:mb-20 font-light max-w-2xl mx-auto">
             ปรึกษาเราเพื่อออกแบบโซลูชันการพัฒนาผู้นำที่ทันสมัยและวัดผลได้จริง
           </p>

@@ -55,7 +55,7 @@ const Portfolio: React.FC = () => {
                 </div>
                 <div className="max-w-7xl mx-auto px-4 relative z-10">
                     <span className="text-[#c5a059] font-black text-[10px] md:text-xs uppercase tracking-[0.4em] mb-4 block nav-font">Our Success Stories</span>
-                    <h1 className="text-3xl md:text-6xl font-black mb-6 nav-font tracking-tight uppercase">
+                    <h1 className="text-3xl md:text-6xl font-black mb-6 nav-font tracking-tight uppercase text-white">
                         ผลงานแห่งความภาคภูมิใจ
                     </h1>
                     <p className="text-blue-100 text-base md:text-xl max-w-2xl mx-auto font-light opacity-80 leading-relaxed">

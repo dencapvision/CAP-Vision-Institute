@@ -38,128 +38,59 @@ const QUICK_REPLIES = [
   { label: '🏆 ผลงานองค์กร', action: 'portfolio' },
 ];
 
-// ===== CORE RESPONSE ENGINE =====
-function generateResponse(input: string): string {
+// ===== CORE RESPONSE ENGINE & CONTEXT TRACKING =====
+// Track basic conversation state to make it feel more natural (like a doctor's visit)
+let conversationState = {
+  step: 'intake', // intake -> diagnosis -> prescription -> checkout
+  topic: '',
+};
+
+function generateResponse(input: string, prevMessages?: Message[]): string {
   const q = input.toLowerCase();
 
-  // --- Course inquiry ---
-  if (q.includes('หลักสูตร') || q.includes('อบรม') || q.includes('training') || q.includes('in-house')) {
-    return `ยอดเยี่ยมครับ! 🎯 ผมมีหลักสูตรฝึกอบรมหลัก 4 กลุ่ม ที่ออกแบบมาสำหรับองค์กรโดยเฉพาะ:
+  // 1. Analyze user intent
+  const isGreeting = q.includes('สวัสดี') || q.includes('ทักทาย') || q.includes('hi') || q.includes('hello');
+  const isProblem = q.includes('ปัญหา') || q.includes('ไม่') || q.includes('ขาด') || q.includes('ต้องการพัฒนา') || q.includes('อยากพัฒนา');
+  const isQuote = q.includes('ราคา') || q.includes('เสนอราคา') || q.includes('quotation') || q.includes('งบประมาณ') || q.includes('จ้าง') || q.includes('ค่าใช้จ่าย');
+  const isCourse = q.includes('หลักสูตร') || q.includes('อบรม') || q.includes('training') || q.includes('in-house');
 
-🔹 **People Skills** — Service Mind, บุคลิกภาพ, Smart Personality
-🔹 **Work Skills** — Team Building, Creative Problem Solving
-🔹 **Communication Skills** — DISC, Effective Communication, Feedback
-🔹 **Leader Skills** — Leadership, DFA Strategy, Growth Mindset
+  // Identify topics
+  if (q.includes('service') || q.includes('บริการ') || q.includes('ลูกค้า')) conversationState.topic = 'service';
+  if (q.includes('team') || q.includes('ทีม') || q.includes('สามัคคี') || q.includes('ร่วมมือ')) conversationState.topic = 'team';
+  if (q.includes('ผู้นำ') || q.includes('หัวหน้า') || q.includes('leadership') || q.includes('management')) conversationState.topic = 'leadership';
+  if (q.includes('พูด') || q.includes('สื่อสาร') || q.includes('คุย') || q.includes('communication')) conversationState.topic = 'communication';
+  if (q.includes('growth') || q.includes('mindset') || q.includes('ทัศนคติ') || q.includes('เปลี่ยนแปลง')) conversationState.topic = 'mindset';
 
-ทุกหลักสูตรสามารถจัดแบบ **In-house Training** และ **ออกแบบเฉพาะองค์กร** ได้นะครับ 💡
-
-บอกผมได้เลยว่าองค์กรของคุณกำลังเผชิญโจทย์ไหนอยู่ครับ เช่น "ทีมสื่อสารไม่เข้าใจกัน" หรือ "พนักงานขาด Service Mind" ผมจะแนะนำให้ตรงจุดกว่านี้เลยครับ 🙌`;
+  // --- STEP 0: Greetings & Quick Actions ---
+  if (isGreeting && (!prevMessages || prevMessages.length < 3)) {
+    return `สวัสดีครับ! ยินดีที่ได้รู้จักครับ ผม "ครูเด่น (AI)" ผู้ช่วยของ CAP Vision Institute 😊
+    
+เพื่อจะได้แนะนำได้อย่างเหมาะสมที่สุด... ตอนนี้ที่องค์กรกำลังมองหาการพัฒนาทีมงานด้านไหนเป็นพิเศษไหมครับ? (เช่น เรื่องบริการ, การทำงานเป็นทีม, หรือภาวะผู้นำ)`;
   }
 
-  // --- Quote / Price ---
-  if (q.includes('ราคา') || q.includes('เสนอราคา') || q.includes('quotation') || q.includes('งบประมาณ') || q.includes('จ้าง') || q.includes('ค่าใช้จ่าย')) {
-    return `สำหรับการขอใบเสนอราคา In-house Training ครับ ขั้นตอนง่ายๆ มีดังนี้ 📋
+  if (isQuote) {
+    conversationState.step = 'checkout';
+    return `ยินดีครับ เรื่องค่าใช้จ่ายหรือขอใบเสนอราคา (In-house Training) ขั้นตอนง่ายมากครับ 📋
 
-**ขั้นที่ 1:** แจ้งข้อมูลเบื้องต้น
-- หัวข้อ / โจทย์องค์กรที่ต้องการพัฒนา
-- จำนวนผู้เข้าร่วม (กี่ท่าน)
-- ระยะเวลาที่ต้องการ (ครึ่งวัน / 1 วัน / 2 วัน)
+**ขั้นแรก** รบกวนแจ้งกรอบเบื้องต้นนิดนึงครับ:
+1. จัดให้แผนกไหน หรือระดับใด (พนักงาน / หัวหน้างาน)?
+2. ผู้เข้าร่วมประมาณกี่ท่านครับ?
+3. อยากให้เน้นทักษะอะไรเป็นพิเศษไหมครับ?
 
-**ขั้นที่ 2:** ทีมงานออกแบบ Course Outline เฉพาะองค์กร
-
-**ขั้นที่ 3:** รับใบเสนอราคาภายใน 24 ชั่วโมง
-
-📱 ส่งรายละเอียดมาที่ **LINE: @denmasterfa** ได้เลยนะครับ หรือกด "คุยกับเจ้าหน้าที่" ด้านล่างครับ 👇`;
+คุณสามารถพิมพ์ตอบผมที่นี่ หรือสะดวกส่งเข้า **LINE: @denmasterfa** เพื่อให้ทีมงานส่งใบเสนอราคาอย่างเป็นทางการให้ภายใน 24 ชม. ได้เลยนะครับ 👇`;
   }
 
-  // --- Service Mind specific ---
-  if (q.includes('service mind') || q.includes('บริการ') || q.includes('พนักงานบริการ') || q.includes('customer')) {
-    return `หลักสูตร **"ใช้หัวใจบริการ คนสำราญ งานสำเร็จ"** เหมาะมากเลยครับ! 🌟
-
-หลักสูตรนี้ออกแบบมาเพื่อ:
-✅ สร้าง **Smart Personality** ให้พนักงาน
-✅ พัฒนาทักษะ **Empathy** เข้าใจลูกค้า 4 ประเภท  
-✅ จัดการสถานการณ์ยากลำบากด้วย **Conflict Management**
-
-**ระยะเวลา:** 1 วัน (09.00 - 16.30 น.)  
-**เหมาะกับ:** Front-line Staff, เจ้าหน้าที่บริการลูกค้า
-
-อยากทราบรายละเอียดเพิ่มเติม หรือต้องการให้ผมออกแบบ Outline เฉพาะองค์กรไหมครับ? 😊`;
-  }
-
-  // --- Team Building ---
-  if (q.includes('team') || q.includes('ทีม') || q.includes('team building') || q.includes('สามัคคี')) {
-    return `โจทย์เรื่องทีม เป็นสิ่งที่ผมชอบมากครับ! 💪
-
-หลักสูตร **"สร้างทีมแกร่งด้วยพลังบวก (Positive Team Synergy)"** ตอบโจทย์ได้ตรงครับ:
-
-🎯 **เน้นทำความ "เข้าใจ" กัน** — ไม่ใช่แค่กิจกรรมสนุก
-🔑 **3 เสา Teamwork:** Trust → Communication → Shared Goal
-🎪 **Activity-based Learning** ที่นำกลับไปใช้งานได้จริง
-
-**สิ่งสำคัญที่สุด** ก่อนออกแบบ Team Building คือต้องรู้ว่าทีมมีปัญหาอะไรอยู่ครับ เช่น:
-- ขาดความไว้วางใจซึ่งกันและกัน?
-- สื่อสารข้ามแผนกไม่ค่อยดี?
-- หรือต้องการเพิ่ม Engagement?
-
-บอกผมได้เลยนะครับ จะได้ออกแบบได้ตรงจริงๆ 🙏`;
-  }
-
-  // --- Leadership ---
-  if (q.includes('ผู้นำ') || q.includes('leadership') || q.includes('หัวหน้า') || q.includes('management') || q.includes('manager')) {
-    return `ผู้นำที่ดีในยุคนี้ต้องทั้ง "รู้จักตัวเอง" และ "พัฒนาคนอื่น" ได้ด้วยนะครับ 🎯
-
-ที่ CAP Vision Institute มีหลักสูตรด้าน Leader Skills โดยเฉพาะ:
-
-📌 **Leadership Mastery: DFA Strategy**
-- D: Dynamic (พลังการนำที่ยืดหยุ่น)
-- F: Facilitation (นำด้วยคำถาม ไม่ใช่คำสั่ง)
-- A: Action Learning (เรียนจากการลงมือจริง)
-
-📌 **Growth Mindset Workshop**
-หลักสูตร Signature ของครูเด่น — ช่วยให้ผู้นำปลดล็อคศักยภาพทีมด้วย Mindset ที่ถูกต้อง
-
-อยากให้ผมเล่ารายละเอียดเพิ่มเติมหลักสูตรไหนครับ? 🌟`;
-  }
-
-  // --- Growth Mindset ---
-  if (q.includes('growth') || q.includes('mindset') || q.includes('ทัศนคติ') || q.includes('เปลี่ยนแปลง')) {
-    return `Growth Mindset — หัวใจสำคัญที่สุดของทุกองค์กรที่ต้องการเติบโตครับ! 🌱
-
-**Growth Mastery Workshop** คือหลักสูตร Signature ของผมครับ ที่ออกแบบมาเฉพาะ:
-
-✨ เปลี่ยน Fixed Mindset → Growth Mindset ในระดับพฤติกรรมจริง
-💡 ใช้กระบวนการ Transformative Learning ไม่ใช่แค่บรรยาย
-🎯 วัดผลได้หลังจบ — ทั้งทัศนคติและพฤติกรรม
-
-👉 ดูรายละเอียดเพิ่มเติมได้ที่: https://growth-mindset-workshop.capvisionpartner.com/
-
-หรืออยากให้ผมออกแบบ Outline พิเศษสำหรับองค์กรของคุณไหมครับ? 😊`;
-  }
-
-  // --- About Kru Den ---
-  if (q.includes('ครูเด่น') || q.includes('วิทยากร') || q.includes('facilitator') || q.includes('อนุสรณ์') || q.includes('อาจารย์')) {
-    return `ยินดีแนะนำตัวเองนะครับ! 😄
+  if (q.includes('ครูเด่นคือใคร') || q.includes('about') || q.includes('วิทยากร') || q.includes('ครูเด่น') || q.includes('ประวัติ')) {
+    return `ยินดีแนะนำตัวครับ! 😄
 
 **อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)**
-ผู้อำนวยการ CAP Vision Institute
+ผู้อำนวยการ CAP Vision Institute และ Master Facilitator 
 
-📌 **ประสบการณ์** มากกว่า **18 ปี** ด้านการพัฒนาคนและองค์กร
-📌 ออกแบบ Workshop / หลักสูตรกว่า **1,000 เวที** ทั่วประเทศ
-📌 วิทยากรและที่ปรึกษาให้กับ Toyota, Dell, Land & Houses, PEA, AOT และอีกกว่า 200 องค์กร
+ด้วยประสบการณ์กว่า **18 ปี** ในการพัฒนาคนให้กับระดับองค์กรใหญ่ๆ เช่น Toyota, PEA, AOT... ครูเด่นเน้นการสอนแบบ **Transformative Learning** — ไม่ใช่แค่นั่งฟังเลกเชอร์ แต่เปลี่ยนทัศนคติและพฤติกรรมผ่านกิจกรรม (Tools) ที่สนุกและลึกซึ้งครับ
 
-🏆 **ความเชี่ยวชาญ:**
-- Transformative Learning & Flow Learning
-- Human Communication & Facilitation
-- Leadership Development (DFA Model)
-- Growth Mindset & Team Synergy
-
-💬 **วิธีการสอน:** Activity-based + Circle Dialogue + Play to Learn — "เข้าใจง่าย ใช้ได้จริง"
-
-อยากคุยโดยตรงกับครูเด่น สามารถ **ADD LINE: @denmasterfa** ได้เลยนะครับ 🙏`;
+อยากคุยกับครูเด่นโดยตรง ทัก LINE: @denmasterfa ได้เลยนะครับ 🙏`;
   }
 
-  // --- Contact / Line ---
   if (q.includes('ติดต่อ') || q.includes('line') || q.includes('โทร') || q.includes('facebook') || q.includes('สอบถาม')) {
     return `ช่องทางติดต่อ CAP Vision Institute ทั้งหมดครับ 📞
 
@@ -167,38 +98,86 @@ function generateResponse(input: string): string {
 🔗 **Link:** https://lin.ee/zRTBF6K  
 📞 **โทร:** 093-223-5919  
 📧 **Email:** thecapvision@gmail.com  
-📘 **Facebook:** facebook.com/thecapvision
 
 **สำหรับ HRD / ฝ่ายพัฒนาบุคลากร** แนะนำส่งรายละเอียดโจทย์มาทาง LINE นะครับ จะได้รับการตอบสนองเร็วที่สุด! 🚀`;
   }
 
-  // --- How to use website ---
-  if (q.includes('เวบไซต์') || q.includes('website') || q.includes('ใช้งาน') || q.includes('ขั้นตอน') || q.includes('วิธี')) {
-    return `ขั้นตอนการรับบริการของ CAP Vision Institute ง่ายมากครับ! 📋
+  // --- STEP 1: Intake (ซักประวัติ / อาการ) ---
+  if (isProblem || (isCourse && conversationState.step === 'intake')) {
+    conversationState.step = 'diagnosis';
+    
+    if (conversationState.topic) {
+      const topicName = conversationState.topic === 'team' ? 'การสร้างทีม' 
+                      : conversationState.topic === 'service' ? 'การบริการลูกค้า' 
+                      : conversationState.topic === 'leadership' ? 'การบริหารและภาวะผู้นำ' 
+                      : conversationState.topic === 'mindset' ? 'ทัศนคติ Mindset'
+                      : 'การสื่อสารประสานงาน';
 
-**Step 1: 🔍 เลือกหลักสูตร**
-→ กด "หลักสูตรฝึกอบรม" บนเมนู
-→ เลือกหมวดหมู่ที่ต้องการ: People / Work / Communication / Leader Skills
+      return `เข้าใจเลยครับ ปัญหาเรื่อง${topicName}เป็นเรื่องที่หลายองค์กรเจอเหมือนกันเลย 💡
 
-**Step 2: 💬 ติดต่อขอใบเสนอราคา**
-→ กด "ขอใบเสนอราคา" ในหน้าหลักสูตร
-→ หรือ LINE: @denmasterfa
+เพื่อให้ผม (ในฐานะคู่คิด) ช่วย "วินิจฉัย" และจัดโครงสร้างการเรียนรู้ให้ตรงจุดที่สุด... ลองเล่าให้ผมฟังอีกนิดได้ไหมครับว่า **พฤติกรรมแบบไหนที่อยากเห็นการเปลี่ยนแปลงมากที่สุดหลังจบการอบรมครับ?** (เช่น อยากให้คุยกันมากขึ้น หรือแก้ปัญหาเก่งขึ้น)`;
+    }
 
-**Step 3: 📐 รับ Custom Course Outline**
-→ ทีมงานออกแบบหลักสูตรเฉพาะองค์กร
+    return `ยินดีครับ! 🎯 ผมมีหลักสูตรครอบคลุมครบ 4 ด้าน (People, Work, Communication, Leader Skills)
 
-**Step 4: 🎓 จัดอบรม + วัดผล**
-→ วิทยากรลงพื้นที่ + Certificate + Follow-up
-
-มีอะไรสงสัยเพิ่มเติมไหมครับ? 😊`;
+แต่เพื่อให้แนะนําได้เป๊ะที่สุด เหมือนเวลาไปหาหมอเลย... ถ้ารู้ "อาการ" ชัดเจน ก็จะจ่ายยาได้ตรงจุด 🩺
+    
+ตอนนี้ "อาการ" หรือความท้าทายหลักๆ ที่ทีมงานกำลังเจออยู่คือเรื่องไหนครับ? 
+- (ก) สื่อสารกันไม่ค่อยเข้าใจ
+- (ข) ขาดแรงจูงใจในการทำงาน/อยากพัฒนาหัวหน้า
+- (ค) บริการลูกค้ายังไม่ประทับใจ
+- (ง) อื่นๆ ลองเล่ามาได้เลยครับ!`;
   }
 
-  // --- Default - Powerful Question ---
+  // --- STEP 2: Diagnosis & Prescription (วินิจฉัยและสั่งยา) ---
+  if (conversationState.step === 'diagnosis' || (conversationState.topic && !isGreeting && !isQuote)) {
+    conversationState.step = 'prescription';
+    
+    let recommendation = '';
+    let details = '';
+
+    if (conversationState.topic === 'service' || q.includes('ค') || q.includes('บริการ')) {
+      recommendation = `หลักสูตร **"ใช้หัวใจบริการ คนสำราญ งานสำเร็จ"**`;
+      details = `เน้นแก้ปัญหาตั้งแต่ Mindset ไปสู่การรับมือกับเคสลูกค้าตัวจริง สร้าง Smart Personality และ Empathy ครับ`;
+    } else if (conversationState.topic === 'team' || q.includes('ก') || q.includes('สื่อสาร')) {
+      recommendation = `หลักสูตร **"สร้างทีมแกร่งด้วยพลังบวก (Positive Team Synergy)"**`;
+      details = `เราจะไม่เอาแต่เล่นเกมสนุกสนาน แต่จะใช้ Activity ดึงปมปัญหาในใจออกมาคลายด้วยกระบวนการ Facilitation เน้น 3 เสาหลัก: Trust → Communication → Shared Goal ครับ`;
+    } else if (conversationState.topic === 'leadership' || conversationState.topic === 'mindset' || q.includes('ข')) {
+      recommendation = `หลักสูตร **"Leadership Mastery"** หรือ **"Growth Mastery Workshop"**`;
+      details = `เปลี่ยนจากคนเก่งงาน ให้เป็นคนเก่งคนครับ ปลดล็อคศักยภาพทีมด้วย Mindset ที่ถูกต้อง และเรียนรู้การเป็นผู้นำที่ใช้คำถาม (Facilitation) ครับ`;
+    } else {
+      recommendation = `หลักสูตร **Custom Course Design**`;
+      details = `ถ้าเป็นโจทย์เฉพาะตัวแบบนี้ ผมแนะนำให้เราออกแบบใหม่เลยดีกว่าครับ! (เหมือนตัดเสื้อให้พอดีตัวองค์กรคุณเลย) จะได้แก้ปัญหาได้ตรงจุดที่สุดครับ`;
+    }
+
+    return `คำตอบนี้ช่วยให้เห็นภาพชัดขึ้นมากครับ! ขอบคุณที่แชร์นะครับ 🙏
+
+จากโจทย์ที่คุณเล่ามา ผมขอ "สั่งยา" เป็นตัวนี้ครับ:
+🎯 **${recommendation}**
+
+${details}
+
+ผมสามารถส่ง **Course Outline (โครงสร้างหลักสูตร)** เบื้องต้นแบบ 1 วันเต็มให้คุณดูคร่าวๆ ก่อนเอาไปพิจารณากับผู้บริหารได้นะครับ... **สนใจรับ Outline ไปดูก่อนไหมครับ?**`;
+  }
+
+  // --- STEP 3: Next Steps (นัดหมาย / จบกระบวนการ) ---
+  if (conversationState.step === 'prescription' && (q.includes('สนใจ') || q.includes('เอา') || q.includes('ได้') || q.includes('outline') || q.includes('ส่ง') || q.includes('รับ'))) {
+    conversationState.step = 'checkout';
+    return `เยี่ยมเลยครับ! 📝 
+
+เพื่อมอบประสบการณ์ที่ดีที่สุด และส่ง Course Outline ที่เจาะจงเฉพาะปัญหาที่คุณเพิ่งเล่าให้ฟัง แปะไปให้...
+
+รบกวนขอ **ชื่อหน่วยงาน/องค์กร** และ **แอด LINE: @denmasterfa** มารับ Outline ทางไลน์ได้เลยครับ 👇
+
+ทีมงานครูเด่น สแตนด์บายพร้อมส่งให้ภายในวันนี้เลยครับ!`;
+  }
+
+  // --- Default Fallback (General Conversation / Open Questions) ---
   const defaults = [
-    'ได้เลยครับ! 😊 ช่วยบอกผมหน่อยนะครับ ตอนนี้มีโจทย์ด้านไหนในองค์กรบ้าง เช่น เรื่องทีม, ผู้นำ, หรือพนักงาน?',
-    'ยินดีช่วยครับ! 👍 อยากทราบว่าองค์กรของคุณกำลังมองหาการพัฒนาด้านไหนครับ — ทักษะ (Skill) หรือ ทัศนคติ (Mindset)?',
-    'โอเคครับ! 🎯 ผมจะแนะนำให้ตรงที่สุดเลย บอกผมได้เลยนะครับว่าเป็นองค์กรเอกชน รัฐ หรือ SME ครับ?',
-    'ฟังดูน่าสนใจมากครับ! ✨ สอบถามบริการด้านไหนดีครับ — หลักสูตรอบรม, ขอใบเสนอราคา, หรืออยากคุยกับครูเด่นโดยตรง?',
+    'เข้าใจเลยครับ... แล้วในมุมของคุณ คิดว่าอุปสรรคที่ใหญ่ที่สุดของการพัฒนาเรื่องนี้คืออะไรหรือครับ? 🤔',
+    'น่าสนใจมากครับ ลองขยายความตรงนี้อีกนิดได้ไหมครับ เพื่อที่ผมจะได้แนะนำสิ่งที่เหมาะสมที่สุดให้?',
+    'เป็นมุมมองที่ดีมากครับ! ในฐานะที่ปรึกษา... ผมอยากรู้ว่าเป้าหมายสูงสุดที่คุณอยากเห็นทีมเปลี่ยนแปลงไปคืออะไรครับ? 🌟',
+    'รับทราบครับ! ทุกโจทย์มีทางออกเสมอ... ให้ผมช่วยส่งข้อมูลที่เกี่ยวข้องให้ทางช่องทางไหนดีครับ? (LINE หรือ Email ดีครับ) 👇'
   ];
   return defaults[Math.floor(Math.random() * defaults.length)];
 }
@@ -218,11 +197,14 @@ const AIAgent: React.FC = () => {
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
+      // Reset state on open
+      conversationState = { step: 'intake', topic: '' };
+      
       setMessages([
         {
           role: 'assistant',
           content:
-            'สวัสดีดีครับ! 😊 ยินดีให้บริการเลยนะครับ\n\nผมครูเด่น (AI) ผู้ช่วยจาก **CAP Vision Institute** ครับ สอบถามบริการด้านไหนดีครับ?\n\n✅ หลักสูตรฝึกอบรม In-house\n✅ ขอใบเสนอราคา\n✅ ปรึกษาด้านการพัฒนาบุคลากร',
+            'สวัสดีครับ! 👋 ยินดีต้อนรับสู่คลินิกพัฒนาศักยภาพองค์กรของ **CAP Vision Institute** นะครับ\n\nผม "ครูเด่น (AI)" รับหน้าที่เป็นที่ปรึกษาเบื้องต้น... วันนี้มี "อาการ" หรือทีมงานกำลังมีโจทย์ด้านไหน ให้ผมช่วยวินิจฉัยและแนะนำหลักสูตรดีครับ? 🩺\n\n(เช่น: ทีมสื่อสารไม่เข้าใจกัน, พนักงานบริการไม่ประทับใจ, หรืออยากสร้างความเป็นผู้นำ)',
         },
       ]);
     }
@@ -240,17 +222,30 @@ const AIAgent: React.FC = () => {
     if (!text.trim()) return;
 
     const userMsg: Message = { role: 'user', content: text };
-    setMessages((prev) => [...prev, userMsg]);
+    const nextMessages = [...messages, userMsg];
+    setMessages(nextMessages);
     setInput('');
     setIsTyping(true);
 
-    // Handle quick menu actions
+    // Filter quick actions that bypass conversation logic
     const lowerText = text.toLowerCase();
     let actionResponse = '';
-    if (lowerText === 'courses') actionResponse = 'ดูหลักสูตรทั้งหมด';
-    else if (lowerText === 'quote') actionResponse = 'ขอใบเสนอราคา';
-    else if (lowerText === 'about') actionResponse = 'ครูเด่น คือใคร';
-    else if (lowerText === 'portfolio') actionResponse = 'ผลงานองค์กร';
+    
+    // Quick menu mapping
+    if (lowerText === 'courses' || lowerText === 'สนใจ in-house training ครับ' || lowerText === 'ดูหลักสูตรทั้งหมด') {
+      actionResponse = 'สนใจหลักสูตร';
+      conversationState.step = 'intake';
+    }
+    else if (lowerText === 'quote' || lowerText === 'ขอใบเสนอราคาได้เลยไหม?' || lowerText === 'ขอใบเสนอราคา') {
+      actionResponse = 'ขอใบเสนอราคา';
+    }
+    else if (lowerText === 'about' || lowerText === 'ครูเด่น คือใคร?' || lowerText === 'ครูเด่น คือใคร') {
+      actionResponse = 'ครูเด่นคือใคร';
+    }
+    else if (lowerText === 'อยากพัฒนาทีมงาน') {
+      conversationState.topic = 'team';
+      actionResponse = 'อยากพัฒนาทีมงาน สื่อสารให้ดีขึ้น';
+    }
 
     const queryText = actionResponse || text;
 
@@ -258,9 +253,9 @@ const AIAgent: React.FC = () => {
       setIsTyping(false);
       setMessages((prev) => [
         ...prev,
-        { role: 'assistant', content: generateResponse(queryText) },
+        { role: 'assistant', content: generateResponse(queryText, prev) },
       ]);
-    }, 900 + Math.random() * 400);
+    }, 1000 + Math.random() * 500); // More natural typing delay
   };
 
   const suggestions = [

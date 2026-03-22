@@ -36,22 +36,27 @@ export const BRAND_INFO = {
 };
 
 export const CLIENTS = [
-    { name: 'Toyota', type: 'Corporate', logo: 'https://upload.wikimedia.org/wikipedia/commons/e/ee/Toyota_logo_%28modern%29.svg' },
-    { name: 'Dell Technologies', type: 'Corporate', logo: 'https://upload.wikimedia.org/wikipedia/commons/1/18/Dell_logo_2016.svg' },
-    { name: 'Betagro', type: 'Corporate', logo: 'https://www.betagro.com/img/logo-betagro.svg' },
-    { name: 'AOT', type: 'State Enterprise', logo: 'https://upload.wikimedia.org/wikipedia/en/2/2c/Airports_of_Thailand_Logo.svg' },
-    { name: 'EXAT', type: 'State Enterprise', logo: 'https://upload.wikimedia.org/wikipedia/th/4/4e/EXAT_Logo.png' },
-    { name: 'PEA', type: 'State Enterprise', logo: 'https://upload.wikimedia.org/wikipedia/th/thumb/f/f6/PEA_Logo.svg/1200px-PEA_Logo.svg.png' },
-    { name: 'Land & Houses', type: 'Corporate', logo: 'https://upload.wikimedia.org/wikipedia/th/thumb/3/30/Land_and_Houses_logo.svg/1280px-Land_and_Houses_logo.svg.png' },
-    { name: 'Central Food Retail', type: 'Corporate', logo: 'https://upload.wikimedia.org/wikipedia/commons/4/42/Central_Group_logo.svg' },
-    { name: 'Universal Robina', type: 'Corporate', logo: 'https://upload.wikimedia.org/wikipedia/commons/e/ee/URC_Logo.svg' },
-    { name: 'ศอบต.', type: 'Government', logo: 'https://upload.wikimedia.org/wikipedia/th/d/d4/SBPAC_Logo.png' },
-    { name: 'สสส. SOOK', type: 'Government', logo: 'https://upload.wikimedia.org/wikipedia/th/thumb/e/e0/Thai_Health_Promotion_Foundation_Logo.png/640px-Thai_Health_Promotion_Foundation_Logo.png' },
-    { name: 'กรมวิทยาศาสตร์บริการ', type: 'Government', logo: 'https://upload.wikimedia.org/wikipedia/th/thumb/7/7b/Logo_DSS_Thailand.svg/1200px-Logo_DSS_Thailand.svg.png' },
-    { name: 'มหาวิทยาลัยศรีนครินทรวิโรฒ', type: 'Academic', logo: 'https://upload.wikimedia.org/wikipedia/th/thumb/6/6f/SWU_Seal.png/600px-SWU_Seal.png' },
-    { name: 'มหาวิทยาลัยราชภัฏสกลนคร', type: 'Academic', logo: 'https://upload.wikimedia.org/wikipedia/th/9/9c/SNRU_Logo.png' },
-    { name: 'มหาวิทยาลัยราชภัฏยะลา', type: 'Academic', logo: 'https://upload.wikimedia.org/wikipedia/th/0/0f/YRU_Logo.png' },
-    { name: 'TISTR วว.', type: 'Government', logo: 'https://upload.wikimedia.org/wikipedia/th/1/11/TISTR_Logo.png' }
+    { name: 'Toyota', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Toyota_Symbol.svg.png' },
+    { name: 'Dell Technologies', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Dell%20Corperation%20(Thailand)%20Co.,%20Ltd..png' },
+    { name: 'Betagro', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Betagro.png' },
+    { name: 'AOT', type: 'State Enterprise', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Airports_of_Thailand_Logo.svg.png' },
+    { name: 'EXAT', type: 'State Enterprise', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/EXAT.png' },
+    { name: 'PEA', type: 'State Enterprise', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/PEA.png' },
+    { name: 'Land & Houses', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/landandhouses.jpg' },
+    { name: 'Central Food Retail', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/central%20food%20retail%20(CFR).png' },
+    { name: 'Universal Robina', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Universal_Robina-Logo.wine.png' },
+    { name: 'ศอบต.', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/sbpac.go.th.jpg' },
+    { name: 'สสส. SOOK', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/sook.png' },
+    { name: 'กรมวิทยาศาสตร์บริการ', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/dss.go.th.png' },
+    { name: 'สภากาชาดไทย', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Thai_Red_Cross_Society_Logo_(2022).svg' },
+    { name: 'กรมทรัพยากรน้ำบาดาล', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/dgr.go.th.png' },
+    { name: 'ปปส.', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/oncb.go.th.png' },
+    { name: 'สำนักงานทรัพยากรน้ำแห่งชาติ', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/onwr.go.th.png' },
+    { name: 'สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/obec.go.th.png' },
+    { name: 'มหาวิทยาลัยศรีนครินทรวิโรฒ', type: 'Academic', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/SWU.png' },
+    { name: 'มหาวิทยาลัยราชภัฏสกลนคร', type: 'Academic', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/snru.ac.th.png' },
+    { name: 'มหาวิทยาลัยราชภัฏยะลา', type: 'Academic', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/yru.ac.th.png' },
+    { name: 'TISTR วว.', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/tistr.or.th.svg' }
 ];
 
 export const TIMELINE = [

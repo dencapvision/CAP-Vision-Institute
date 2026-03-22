@@ -21,6 +21,7 @@ const Login = lazy(() => import('./pages/Login'));
 const Speakers = lazy(() => import('./pages/Speakers'));
 const SpeakerDetail = lazy(() => import('./pages/SpeakerDetail'));
 const JoinUs = lazy(() => import('./pages/JoinUs'));
+const MediaManager = lazy(() => import('./pages/MediaManager'));
 
 import { CONTACT_INFO } from './constants/brand';
 
@@ -64,6 +65,7 @@ const App: React.FC = () => {
                 <Route path="/join-us" element={<JoinUs />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/admin/media" element={<MediaManager />} />
               </Routes>
             </Suspense>
           </main>

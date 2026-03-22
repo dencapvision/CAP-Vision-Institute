@@ -36,7 +36,7 @@ const Portfolio: React.FC = () => {
             id: 4,
             client: "สำนักทรัพยากรน้ำแห่งชาติ",
             project: "การคิดบวกอย่างสร้างสรรค์ และ การทำงานอย่างมีความสุข",
-            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80",
+            image: "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/portfolio/Mindset.jpg",
             category: "Mindset",
             result: "Built positive mindset and workplace happiness"
         }

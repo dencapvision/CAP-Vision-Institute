@@ -1,9 +1,15 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Youtube, MessageCircle, Phone, MapPin, Instagram, Music2 } from 'lucide-react';
+import { Facebook, Youtube, MessageCircle, Phone, MapPin, Instagram } from 'lucide-react';
 import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
 import Logo from './Logo';
+
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.01.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.6-4.12-1.31a6.34 6.34 0 0 1-2.9-2.8V15.22c.07 1.96-.58 4.02-2.01 5.43-1.61 1.64-4.14 2.21-6.32 1.44-2.18-.74-3.79-2.78-4.10-5.06-.31-2.12.51-4.41 2.14-5.83 1.64-1.45 4.09-1.89 6.22-1.12.03.01.06.02.09.03v4.02c-1.39-.46-3.03-.2-4.16.89-1.14 1.1-1.28 3.01-.26 4.21.96 1.19 2.8 1.48 4.07.64.92-.61 1.34-1.74 1.3-2.83V.02z"/>
+  </svg>
+);
 
 const Footer: React.FC = () => {
   return (
@@ -38,7 +44,7 @@ const Footer: React.FC = () => {
                 <Instagram className="w-5 h-5" />
               </a>
               <a href={CONTACT_INFO.tiktokUrl} target="_blank" rel="noopener noreferrer" className="w-11 h-11 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-[#c5a059] transition-all duration-500 border border-white/10 shadow-lg" aria-label="TikTok">
-                <Music2 className="w-5 h-5" />
+                <TikTokIcon className="w-5 h-5" />
               </a>
             </div>
           </div>

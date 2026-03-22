@@ -9,10 +9,17 @@ export const CONTACT_INFO = {
     lineUrl: 'https://lin.ee/zRTBF6K',
     facebook: 'thecapvision',
     facebookUrl: 'https://facebook.com/thecapvision',
+    instagram: '@denmasterfa',
+    instagramUrl: 'https://www.instagram.com/denmasterfa',
     youtube: '@thecapvision',
     youtubeUrl: 'https://youtube.com/@thecapvision',
-    address: 'Bangkok, Thailand',
-    mapsUrl: 'https://goo.gl/maps/abc'
+    address: '60/319 หมู่บ้านพฤกษ์ลดา ซอย 2 ตำบล ลาดสวาย อำเภอลำลูกกา ปทุมธานี 12150',
+    mapsUrl: 'https://share.google/tfTmh0RBeeNACVWcn',
+    businessHours: {
+        weekdays: '08.30 - 18.00 น.',
+        saturday: '08.30 - 18.00 น.',
+        sunday: 'หยุดวันอาทิตย์'
+    }
 };
 
 export const BRAND_INFO = {

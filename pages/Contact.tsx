@@ -204,16 +204,16 @@ const Contact: React.FC = () => {
                            </div>
                            <div className="space-y-2">
                               <div className="flex justify-between text-sm font-bold nav-font">
-                                 <span className="text-gray-400 uppercase tracking-widest">Mon - Fri</span>
-                                 <span className="text-[#0f3460]">09:00 - 18:00</span>
+                                 <span className="text-gray-400 uppercase tracking-widest">จันทร์ - ศุกร์</span>
+                                 <span className="text-[#0f3460]">{CONTACT_INFO.businessHours.weekdays}</span>
                               </div>
                               <div className="flex justify-between text-sm font-bold nav-font">
-                                 <span className="text-gray-400 uppercase tracking-widest">Sat</span>
-                                 <span className="text-[#0f3460]">09:00 - 12:00</span>
+                                 <span className="text-gray-400 uppercase tracking-widest">เสาร์</span>
+                                 <span className="text-[#0f3460]">{CONTACT_INFO.businessHours.saturday}</span>
                               </div>
                               <div className="flex justify-between text-sm font-bold nav-font">
-                                 <span className="text-gray-400 uppercase tracking-widest">Sun</span>
-                                 <span className="text-gray-300">Closed</span>
+                                 <span className="text-gray-400 uppercase tracking-widest">อาทิตย์</span>
+                                 <span className="text-red-400">{CONTACT_INFO.businessHours.sunday}</span>
                               </div>
                            </div>
                         </div>
@@ -285,7 +285,7 @@ const Contact: React.FC = () => {
                      </div>
                      <span className="text-xs font-black nav-font uppercase tracking-widest text-gray-400 group-hover:text-[#0f3460]">YouTube</span>
                   </a>
-                  <a href="#" className="flex flex-col items-center group">
+                  <a href={CONTACT_INFO.instagramUrl} target="_blank" rel="noreferrer" className="flex flex-col items-center group">
                      <div className="w-20 h-20 bg-white rounded-3xl shadow-sm flex items-center justify-center text-pink-600 mb-4 group-hover:bg-pink-600 group-hover:text-white group-hover:-translate-y-2 transition-all">
                         <Instagram className="w-8 h-8" />
                      </div>

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Youtube, MessageCircle, Phone, MapPin } from 'lucide-react';
+import { Facebook, Youtube, MessageCircle, Phone, MapPin, Instagram } from 'lucide-react';
 import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
 import Logo from './Logo';
 
@@ -33,6 +33,9 @@ const Footer: React.FC = () => {
               </a>
               <a href={CONTACT_INFO.lineUrl} target="_blank" rel="noopener noreferrer" className="w-11 h-11 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-[#c5a059] transition-all duration-500 border border-white/10 shadow-lg" aria-label="Line Official">
                 <MessageCircle className="w-5 h-5" />
+              </a>
+              <a href={CONTACT_INFO.instagramUrl} target="_blank" rel="noopener noreferrer" className="w-11 h-11 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-[#c5a059] transition-all duration-500 border border-white/10 shadow-lg" aria-label="Instagram">
+                <Instagram className="w-5 h-5" />
               </a>
             </div>
           </div>

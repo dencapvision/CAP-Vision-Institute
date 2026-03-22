@@ -149,9 +149,10 @@ const navItems: NavItem[] = [
 ];
 
 // ===== SUB-COMPONENT: Dropdown Panel =====
-const DropdownPanel: React.FC<{ items: SubItem[] }> = ({ items }) => (
+// alignRight: used for nav items near viewport right edge to prevent overflow
+const DropdownPanel: React.FC<{ items: SubItem[]; alignRight?: boolean }> = ({ items, alignRight }) => (
   <div
-    className="absolute top-[calc(100%-2px)] left-0 min-w-[280px] bg-white shadow-2xl rounded-2xl border border-gray-100/80 p-3 z-50"
+    className={`absolute top-[calc(100%-2px)] min-w-[280px] bg-white shadow-2xl rounded-2xl border border-gray-100/80 p-3 z-50 ${alignRight ? 'right-0' : 'left-0'}`}
     style={{ animation: 'dropIn 0.18s cubic-bezier(0.16,1,0.3,1) both' }}
   >
     <div className="grid gap-1">
@@ -283,7 +284,10 @@ const Header: React.FC = () => {
 
           {/* ---- Desktop Nav ---- */}
           <div className="hidden lg:flex items-center gap-0.5 xl:gap-1 h-full">
-            {navItems.map((item) => (
+            {navItems.map((item, idx) => {
+              // Last 2 nav items are near right edge — align dropdown to right
+              const alignRight = idx >= navItems.length - 2;
+              return (
               <div
                 key={item.name}
                 className="relative h-full flex items-center"
@@ -310,10 +314,10 @@ const Header: React.FC = () => {
                 </Link>
 
                 {item.submenu && openDropdown === item.name && (
-                  <DropdownPanel items={item.submenu} />
+                  <DropdownPanel items={item.submenu} alignRight={alignRight} />
                 )}
               </div>
-            ))}
+            );})}
 
             {/* CTA Button */}
             <a

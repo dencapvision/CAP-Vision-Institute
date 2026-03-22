@@ -38,23 +38,23 @@ const Home: React.FC = () => {
               </span>
             </div>
 
-            <h1 className="text-4xl md:text-7xl lg:text-9xl font-black text-white leading-[1.05] md:leading-[1] mb-8 md:mb-12 nav-font tracking-tight">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white leading-[1.05] mb-8 md:mb-12 nav-font tracking-tight">
               Transform <span className="font-gold block md:inline">People</span><br className="hidden md:block" />
-              <span className="md:ml-20">Transform <span className="font-gold">Organization</span></span>
+              <span className="md:ml-16 lg:ml-20">Transform <span className="font-gold">Organization</span></span>
             </h1>
 
-            <p className="text-lg md:text-3xl text-blue-50 leading-relaxed mb-10 md:mb-16 font-light opacity-80 max-w-3xl">
+            <p className="text-base md:text-xl lg:text-2xl text-blue-50 leading-relaxed mb-10 md:mb-16 font-light opacity-80 max-w-2xl">
               <span>“Transform People, Transform Organization.”</span> <br className="hidden md:block" />
               <span className="font-medium text-white/90">ปลดล็อคศักยภาพมนุษย์ด้วยกระบวนการเรียนรู้ระดับพรีเมี่ยม</span> <br />
               <span className="text-[#c5a059] font-bold">โดย ครูเด่น มาสเตอร์ฟา [Master Facilitator]</span>
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 md:gap-8">
-              <Link to="/courses" className="btn-premium bg-[#c5a059] text-white px-8 md:px-14 py-4 md:py-6 rounded-2xl font-black text-lg md:text-xl transition-all flex items-center justify-center gap-4 group shadow-2xl shadow-gold-500/30 nav-font active:scale-95">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link to="/courses" className="btn-premium bg-[#c5a059] text-white px-8 md:px-12 py-4 md:py-5 rounded-2xl font-black text-base md:text-lg transition-all flex items-center justify-center gap-3 group shadow-2xl nav-font active:scale-95">
                 เลือกหลักสูตรฝึกอบรม
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
               </Link>
-              <Link to="/contact" className="btn-premium bg-white/5 backdrop-blur-xl text-white border-2 border-white/20 px-8 md:px-14 py-4 md:py-6 rounded-2xl font-black text-lg md:text-xl hover:bg-white/10 transition-all flex items-center justify-center gap-3 nav-font active:scale-95">
+              <Link to="/contact" className="btn-premium bg-white/5 backdrop-blur-xl text-white border-2 border-white/20 px-8 md:px-12 py-4 md:py-5 rounded-2xl font-black text-base md:text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-3 nav-font active:scale-95">
                 ขอใบเสนอราคา
               </Link>
             </div>
@@ -201,13 +201,16 @@ const Home: React.FC = () => {
           <Logo className="w-full h-full p-20" />
         </div>
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <h2 className="text-4xl md:text-8xl font-black mb-8 md:mb-12 nav-font leading-tight tracking-tight uppercase text-white">ยกระดับ<br />องค์กรของคุณ</h2>
-          <p className="text-blue-100/70 text-lg md:text-3xl mb-12 md:mb-20 font-light max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-5xl lg:text-7xl font-black mb-8 md:mb-12 nav-font leading-tight tracking-tight uppercase text-white">ยกระดับ<br />องค์กรของคุณ</h2>
+          <p className="text-blue-100/70 text-base md:text-xl lg:text-2xl mb-12 md:mb-20 font-light max-w-2xl mx-auto">
             ปรึกษาเราเพื่อออกแบบโซลูชันการพัฒนาผู้นำที่ทันสมัยและวัดผลได้จริง
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-6 md:gap-10">
-            <a href={CONTACT_INFO.lineUrl} className="btn-premium bg-[#c5a059] text-white px-10 md:px-20 py-5 md:py-8 rounded-[2rem] font-bold text-xl md:text-3xl hover:scale-105 transition-all shadow-2xl shadow-gold-500/40 nav-font">
+          <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-8">
+            <a href={CONTACT_INFO.lineUrl} className="btn-premium bg-[#c5a059] text-white px-10 md:px-16 py-4 md:py-6 rounded-[2rem] font-bold text-lg md:text-2xl hover:scale-105 transition-all shadow-2xl nav-font">
               พูดคุยกับพวกเรา
+            </a>
+            <a href={`tel:${CONTACT_INFO.phone}`} className="btn-premium bg-white/10 border-2 border-white/20 text-white px-10 md:px-16 py-4 md:py-6 rounded-[2rem] font-bold text-lg md:text-2xl hover:bg-white/20 transition-all nav-font">
+              {CONTACT_INFO.phone}
             </a>
           </div>
         </div>

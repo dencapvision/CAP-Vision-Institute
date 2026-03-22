@@ -1,252 +1,470 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, PhoneCall, ChevronDown, GraduationCap, Laptop, Users, Info, Briefcase, MessageCircle, ExternalLink, Sparkles } from 'lucide-react';
+import {
+  Menu, X, PhoneCall, ChevronDown,
+  GraduationCap, Laptop, Users, Info,
+  Briefcase, MessageCircle, ExternalLink,
+  Sparkles, BookOpen, Trophy, Newspaper,
+  Phone, Building2, Layers3, ChevronRight
+} from 'lucide-react';
 import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
-import { COURSES } from '../constants/courses';
 import Logo from './Logo';
 
+// ===== TYPES =====
+interface SubItem {
+  name: string;
+  path: string;
+  icon?: React.ReactNode;
+  external?: boolean;
+  description?: string;
+}
+interface NavItem {
+  name: string;
+  path: string;
+  icon?: React.ReactNode;
+  submenu?: SubItem[];
+}
+
+// ===== NAV DATA — 5 items for HRD audience =====
+const navItems: NavItem[] = [
+  {
+    name: 'หน้าหลัก',
+    path: '/',
+    icon: <Building2 className="w-4 h-4" />,
+  },
+  {
+    name: 'หลักสูตรฝึกอบรม',
+    path: '/courses',
+    icon: <GraduationCap className="w-4 h-4" />,
+    submenu: [
+      {
+        name: 'Growth Mastery Workshop',
+        path: 'https://growth-mindset-workshop.capvisionpartner.com/',
+        icon: <Sparkles className="w-4 h-4" />,
+        external: true,
+        description: 'หลักสูตร Signature สำหรับผู้นำ',
+      },
+      {
+        name: 'หลักสูตร In-house Training',
+        path: '/courses',
+        icon: <Layers3 className="w-4 h-4" />,
+        description: 'ออกแบบหลักสูตรเฉพาะองค์กร',
+      },
+      {
+        name: 'People Skills',
+        path: '/courses?cat=People+Skills',
+        icon: <Users className="w-4 h-4" />,
+        description: 'Service Mind, บุคลิกภาพ',
+      },
+      {
+        name: 'Work Skills',
+        path: '/courses?cat=Work+Skills',
+        icon: <Laptop className="w-4 h-4" />,
+        description: 'Team Building, Creative Thinking',
+      },
+      {
+        name: 'Communication Skills',
+        path: '/courses?cat=Communication+Skills',
+        icon: <MessageCircle className="w-4 h-4" />,
+        description: 'การสื่อสาร, DISC, Feedback',
+      },
+      {
+        name: 'Leader Skills',
+        path: '/courses?cat=Leader+Skills',
+        icon: <Trophy className="w-4 h-4" />,
+        description: 'Leadership, DFA Strategy',
+      },
+    ],
+  },
+  {
+    name: 'ผลงาน & บริการ',
+    path: '/portfolio',
+    icon: <Trophy className="w-4 h-4" />,
+    submenu: [
+      {
+        name: 'ผลงานการจัดอบรม',
+        path: '/portfolio',
+        icon: <Trophy className="w-4 h-4" />,
+        description: 'Case Studies จากลูกค้าองค์กร',
+      },
+      {
+        name: 'บริการองค์กร',
+        path: '/services',
+        icon: <Building2 className="w-4 h-4" />,
+        description: 'Consulting & Training Solutions',
+      },
+      {
+        name: 'วิทยากร & Facilitator',
+        path: '/speakers',
+        icon: <Users className="w-4 h-4" />,
+        description: 'ทีมผู้เชี่ยวชาญของเรา',
+      },
+    ],
+  },
+  {
+    name: 'ความรู้ & กิจกรรม',
+    path: '/resources',
+    icon: <BookOpen className="w-4 h-4" />,
+    submenu: [
+      {
+        name: 'คลังความรู้ & บทความ',
+        path: '/resources',
+        icon: <Newspaper className="w-4 h-4" />,
+        description: 'บทความ HRD, เทคนิคพัฒนาทีม',
+      },
+      {
+        name: 'กิจกรรม & เครือข่าย',
+        path: '/events',
+        icon: <Sparkles className="w-4 h-4" />,
+        description: 'Workshop, Seminar, Networking',
+      },
+    ],
+  },
+  {
+    name: 'ติดต่อ & เกี่ยวกับ',
+    path: '/contact',
+    icon: <Phone className="w-4 h-4" />,
+    submenu: [
+      {
+        name: 'เกี่ยวกับเรา',
+        path: '/about',
+        icon: <Info className="w-4 h-4" />,
+        description: 'วิสัยทัศน์ & พันธกิจ',
+      },
+      {
+        name: 'ติดต่อ / ขอใบเสนอราคา',
+        path: '/contact',
+        icon: <Phone className="w-4 h-4" />,
+        description: 'Quotation In-house Training',
+      },
+      {
+        name: 'ร่วมงานกับเรา',
+        path: '/join-us',
+        icon: <Briefcase className="w-4 h-4" />,
+        description: 'สมัครเป็นวิทยากรหรือพาร์ทเนอร์',
+      },
+    ],
+  },
+];
+
+// ===== SUB-COMPONENT: Dropdown Panel =====
+const DropdownPanel: React.FC<{ items: SubItem[] }> = ({ items }) => (
+  <div
+    className="absolute top-[calc(100%-2px)] left-0 min-w-[280px] bg-white shadow-2xl rounded-2xl border border-gray-100/80 p-3 z-50"
+    style={{ animation: 'dropIn 0.18s cubic-bezier(0.16,1,0.3,1) both' }}
+  >
+    <div className="grid gap-1">
+      {items.map((sub) => {
+        const inner = (
+          <div className="flex items-start gap-3 p-3 rounded-xl transition-all duration-200 group hover:bg-gray-50 cursor-pointer">
+            <div className="w-8 h-8 flex-shrink-0 bg-[#f0f4ff] group-hover:bg-[#e8f0fe] rounded-lg flex items-center justify-center text-[#c5a059] mt-0.5">
+              {sub.icon}
+            </div>
+            <div className="flex flex-col min-w-0">
+              <span className="text-[13px] font-bold text-[#0f3460] group-hover:text-[#c5a059] nav-font whitespace-nowrap flex items-center gap-1.5">
+                {sub.name}
+                {sub.external && <ExternalLink className="w-3 h-3 text-gray-300 flex-shrink-0" />}
+              </span>
+              {sub.description && (
+                <span className="text-[11px] text-gray-400 font-medium mt-0.5">{sub.description}</span>
+              )}
+            </div>
+          </div>
+        );
+
+        return sub.external ? (
+          <a
+            key={sub.name}
+            href={sub.path}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {inner}
+          </a>
+        ) : (
+          <Link key={sub.name} to={sub.path}>
+            {inner}
+          </Link>
+        );
+      })}
+    </div>
+  </div>
+);
+
+// ===== MAIN COMPONENT =====
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [coursesDropdown, setCoursesDropdown] = useState(false);
-  const [aboutDropdown, setAboutDropdown] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [openMobileSubmenu, setOpenMobileSubmenu] = useState<string | null>(null);
   const location = useLocation();
+  const dropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Handle scroll for floating effect
+  // Scroll detection
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
+  // Close mobile menu & dropdowns on route change
   useEffect(() => {
     setIsOpen(false);
+    setOpenDropdown(null);
+    setOpenMobileSubmenu(null);
   }, [location.pathname]);
 
-  // Prevent scroll when mobile menu is open
+  // Lock body scroll when mobile menu open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
-  const navItems = [
-    { name: 'หน้าหลัก', path: '/' },
-    {
-      name: 'หลักสูตร',
-      path: '/courses',
-      submenu: [
-        { name: 'Growth Mastery Workshop', path: 'https://growth-mindset-workshop.capvisionpartner.com/', icon: <Sparkles className="w-4 h-4" />, external: true },
-        { name: 'หลักสูตร In-house', path: '/courses', icon: <GraduationCap className="w-4 h-4" /> }
-      ]
-    },
-    { name: 'ผลงานการจัดอบรม', path: '/portfolio' },
-    { name: 'บริการองค์กร', path: '/services' },
-    { name: 'กิจกรรม & เครือข่าย', path: '/events' },
-    { name: 'คลังความรู้', path: '/resources' },
-    {
-      name: 'เกี่ยวกับเรา',
-      path: '/about',
-      submenu: [
-        { name: 'วิสัยทัศน์ & พันธกิจ', path: '/about', icon: <Info className="w-4 h-4" /> },
-        { name: 'วิทยากร และ Facilitator', path: '/speakers', icon: <Users className="w-4 h-4" /> },
-        { name: 'ร่วมงานกับเรา', path: '/join-us', icon: <Briefcase className="w-4 h-4" /> }
-      ]
-    },
-    { name: 'ติดต่อเรา', path: '/contact' },
-  ];
+  // Dropdown hover helpers with delay for smooth UX
+  const handleMouseEnter = (name: string) => {
+    if (dropdownTimer.current) clearTimeout(dropdownTimer.current);
+    setOpenDropdown(name);
+  };
+  const handleMouseLeave = () => {
+    dropdownTimer.current = setTimeout(() => setOpenDropdown(null), 120);
+  };
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex items-center ${isScrolled ? 'h-16 md:h-20 bg-white/90 backdrop-blur-xl shadow-lg border-b border-gray-100' : 'h-20 md:h-28 bg-transparent'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="flex justify-between items-center h-full">
-          {/* Logo & Brand Section - Responsive Scaling */}
-          <div className="flex items-center shrink-0">
-            <Link to="/" className="flex items-center gap-2 md:gap-4 group">
-              <Logo className={`transition-all duration-500 ${isScrolled ? 'w-8 h-8 md:w-10 md:h-10' : 'w-10 h-10 md:w-14 md:h-14'} group-hover:scale-110`} />
-              <div className="flex flex-col justify-center">
-                <span className={`font-black tracking-tight leading-none nav-font uppercase transition-all duration-500 ${isScrolled ? 'text-lg md:text-xl text-[#0f3460]' : 'text-xl md:text-3xl text-white md:text-[#0f3460]'}`}>
-                  CAP Vision Institute
-                </span>
-                <span className={`text-[9px] md:text-[10px] font-bold tracking-[0.2em] md:tracking-[0.4em] leading-none nav-font uppercase mt-0.5 md:mt-1 transition-all duration-500 ${isScrolled ? 'text-[#c5a059]' : 'text-[#c5a059]/80 md:text-[#c5a059]'}`}>
-                  สถาบันพัฒนาศักยภาพผู้นำและฝึกอบรมครบวงจร
-                </span>
-              </div>
-            </Link>
-          </div>
+    <>
+      {/* ---- Keyframe injection ---- */}
+      <style>{`
+        @keyframes dropIn {
+          from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+          to   { opacity: 1; transform: translateY(0)   scale(1); }
+        }
+        @keyframes slideInRight {
+          from { opacity: 0; transform: translateX(100%); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(12px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-2 xl:space-x-7 h-full">
-            {navItems.map((item) => {
-              const isCourses = item.name === 'หลักสูตร';
-              const isAbout = item.name === 'เกี่ยวกับเรา';
-              const isDropdownOpen = isCourses ? coursesDropdown : (isAbout ? aboutDropdown : false);
+      <nav
+        aria-label="Main Navigation"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled
+            ? 'h-16 bg-white/95 backdrop-blur-xl shadow-md border-b border-gray-100'
+            : 'h-20 md:h-24 bg-white/10 backdrop-blur-sm md:bg-transparent'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-full">
 
-              return (
-                <div
-                  key={item.name}
-                  className="relative h-full flex items-center"
-                  onMouseEnter={() => item.submenu && (isCourses ? setCoursesDropdown(true) : setAboutDropdown(true))}
-                  onMouseLeave={() => item.submenu && (isCourses ? setCoursesDropdown(false) : setAboutDropdown(false))}
+          {/* ---- Logo ---- */}
+          <Link to="/" className="flex items-center gap-2.5 group shrink-0" aria-label="CAP Vision Institute - หน้าหลัก">
+            <Logo
+              className={`transition-all duration-500 ${
+                isScrolled ? 'w-8 h-8 md:w-9 md:h-9' : 'w-9 h-9 md:w-12 md:h-12'
+              } group-hover:scale-110`}
+            />
+            <div className="flex flex-col leading-none">
+              <span className={`font-black tracking-tight nav-font uppercase transition-all duration-500 ${
+                isScrolled ? 'text-base md:text-lg text-[#0f3460]' : 'text-base md:text-2xl text-[#0f3460]'
+              }`}>
+                CAP Vision Institute
+              </span>
+              <span className={`text-[9px] md:text-[10px] font-bold tracking-[0.15em] nav-font text-[#c5a059] transition-all duration-500 ${
+                isScrolled ? 'opacity-100' : 'opacity-80 md:opacity-100'
+              }`}>
+                สถาบันพัฒนาศักยภาพผู้นำและฝึกอบรมครบวงจร
+              </span>
+            </div>
+          </Link>
+
+          {/* ---- Desktop Nav ---- */}
+          <div className="hidden lg:flex items-center gap-0.5 xl:gap-1 h-full">
+            {navItems.map((item) => (
+              <div
+                key={item.name}
+                className="relative h-full flex items-center"
+                onMouseEnter={() => item.submenu && handleMouseEnter(item.name)}
+                onMouseLeave={() => item.submenu && handleMouseLeave()}
+              >
+                <Link
+                  to={item.path}
+                  aria-current={isActive(item.path) ? 'page' : undefined}
+                  className={`px-2 xl:px-3 py-2 text-[13px] xl:text-[14px] font-bold transition-all duration-200 nav-font flex items-center gap-1 whitespace-nowrap rounded-lg hover:bg-[#0f3460]/5 ${
+                    isActive(item.path)
+                      ? 'text-[#c5a059]'
+                      : 'text-[#0f3460] hover:text-[#c5a059]'
+                  }`}
                 >
-                  <Link
-                    to={item.path}
-                    className={`px-1.5 xl:px-2.5 py-2 text-[13px] xl:text-[14px] font-bold transition-all duration-300 nav-font flex items-center gap-1 whitespace-nowrap ${isScrolled
-                        ? (location.pathname === item.path ? 'text-[#c5a059]' : 'text-[#0f3460] hover:text-[#c5a059]')
-                        : (location.pathname === item.path ? 'text-[#c5a059]' : 'text-white/90 hover:text-[#c5a059] md:text-[#0f3460]')
+                  {item.name}
+                  {item.submenu && (
+                    <ChevronDown
+                      className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                        openDropdown === item.name ? 'rotate-180 text-[#c5a059]' : 'text-gray-400'
                       }`}
-                  >
-                    {item.name}
-                    {item.submenu && (
-                      <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 text-[#c5a059]' : (isScrolled ? 'text-gray-400' : 'text-white/50 md:text-gray-400')}`} />
-                    )}
-                  </Link>
-
-                  {/* Dropdown Menu */}
-                  {item.submenu && isDropdownOpen && (
-                    <div className="absolute top-[calc(100%-10px)] left-0 w-64 bg-white shadow-2xl rounded-2xl border border-gray-100 p-4 animate-in fade-in slide-in-from-top-2 duration-200">
-                      <div className="space-y-1">
-                        {item.submenu.map((sub) => (
-                          (sub as any).external ? (
-                            <a
-                              key={sub.name}
-                              href={sub.path}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="flex items-center gap-3 p-3 text-[#0f3460] hover:bg-gray-50 hover:text-[#c5a059] rounded-xl transition-all nav-font font-bold text-sm"
-                            >
-                              <div className="bg-gray-50 p-2 rounded-lg text-[#c5a059]">
-                                {sub.icon}
-                              </div>
-                              {sub.name}
-                              <ExternalLink className="w-3 h-3 ml-auto text-gray-300" />
-                            </a>
-                          ) : (
-                            <Link
-                              key={sub.name}
-                              to={sub.path}
-                              className="flex items-center gap-3 p-3 text-[#0f3460] hover:bg-gray-50 hover:text-[#c5a059] rounded-xl transition-all nav-font font-bold text-sm"
-                            >
-                              <div className="bg-gray-50 p-2 rounded-lg text-[#c5a059]">
-                                {sub.icon}
-                              </div>
-                              {sub.name}
-                            </Link>
-                          )
-                        ))}
-                      </div>
-                    </div>
+                    />
                   )}
-                </div>
-              );
-            })}
+                </Link>
 
-            {/* Pill CTA Button */}
+                {item.submenu && openDropdown === item.name && (
+                  <DropdownPanel items={item.submenu} />
+                )}
+              </div>
+            ))}
+
+            {/* CTA Button */}
             <a
               href={`tel:${CONTACT_INFO.phone}`}
-              className="bg-[#c5a059] text-white px-6 xl:px-8 py-2.5 md:py-3.5 rounded-full text-[14px] xl:text-[15px] font-bold flex items-center gap-2 hover:bg-[#0f3460] transition-all shadow-md hover:shadow-lg nav-font whitespace-nowrap active:scale-95 ml-2"
+              className="ml-3 bg-[#c5a059] text-white px-5 xl:px-6 py-2.5 rounded-full text-[13px] xl:text-[14px] font-bold flex items-center gap-2 hover:bg-[#0f3460] transition-all duration-300 shadow-md hover:shadow-lg nav-font whitespace-nowrap active:scale-95"
+              aria-label="โทรนัดปรึกษาหลักสูตร"
             >
               <PhoneCall className="w-4 h-4" />
               นัดปรึกษา
             </a>
           </div>
 
-          {/* Mobile Menu Action Buttons */}
+          {/* ---- Mobile Action Bar ---- */}
           <div className="lg:hidden flex items-center gap-2">
             <a
               href={`tel:${CONTACT_INFO.phone}`}
               className="bg-[#c5a059] text-white p-2.5 rounded-full hover:bg-[#0f3460] transition-all shadow-md active:scale-90"
-              aria-label="Call for consultation"
+              aria-label="โทรปรึกษา"
+              style={{ touchAction: 'manipulation' }}
             >
               <PhoneCall className="w-4 h-4" />
             </a>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-[#0f3460] p-2 hover:bg-gray-100 rounded-xl transition-colors focus:outline-none"
-              aria-label="Toggle Menu"
+              className="text-[#0f3460] bg-white/80 backdrop-blur-sm p-2.5 rounded-xl hover:bg-gray-100 transition-colors focus:outline-none shadow-sm min-w-[44px] min-h-[44px] flex items-center justify-center"
+              aria-label={isOpen ? 'ปิดเมนู' : 'เปิดเมนู'}
+              aria-expanded={isOpen}
+              style={{ touchAction: 'manipulation' }}
             >
-              {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile menu Overlay - Improved Responsiveness & Glassmorphism */}
+      {/* ---- Mobile Full-screen Drawer ---- */}
       {isOpen && (
-        <div className="lg:hidden bg-white/98 fixed inset-0 top-16 z-50 overflow-y-auto animate-in fade-in slide-in-from-right duration-300">
-          <div className="px-6 py-8 space-y-8 pb-32">
-            {navItems.map((item) => (
-              <div key={item.name} className="space-y-3">
-                <Link
-                  to={item.path}
-                  className={`text-[#0f3460] hover:text-[#c5a059] block text-xl md:text-2xl font-black nav-font ${location.pathname === item.path ? 'text-[#c5a059]' : ''}`}
-                >
-                  {item.name}
-                </Link>
-                {item.submenu && (
-                  <div className="pl-4 space-y-4 pt-1 border-l-2 border-gray-100">
-                    {item.submenu.map((sub) => (
-                      (sub as any).external ? (
-                        <a
-                          key={sub.name}
-                          href={sub.path}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-gray-500 hover:text-[#c5a059] block text-base md:text-lg font-bold nav-font flex items-center gap-4"
-                        >
-                          <div className="w-9 h-9 bg-gray-50 rounded-xl flex items-center justify-center text-[#c5a059]">
+        <div
+          className="lg:hidden fixed inset-0 z-40 bg-white"
+          style={{ animation: 'slideInRight 0.28s cubic-bezier(0.16,1,0.3,1) both', paddingTop: '64px' }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="เมนูหลัก"
+        >
+          {/* Drawer Header */}
+          <div className="px-5 pt-5 pb-3 border-b border-gray-100">
+            <p className="text-[11px] font-bold text-gray-400 tracking-widest uppercase nav-font">เมนูหลัก</p>
+          </div>
+
+          <nav className="overflow-y-auto h-[calc(100svh-130px)] px-4 py-4 space-y-1 pb-32">
+            {navItems.map((item, idx) => (
+              <div
+                key={item.name}
+                style={{ animation: `fadeInUp 0.3s ${idx * 0.05}s cubic-bezier(0.16,1,0.3,1) both` }}
+              >
+                {/* Main menu item */}
+                <div className="flex items-center">
+                  <Link
+                    to={item.path}
+                    className={`flex-1 flex items-center gap-3 py-3.5 px-4 rounded-2xl font-black nav-font text-lg transition-all ${
+                      isActive(item.path)
+                        ? 'text-[#c5a059] bg-[#c5a059]/8'
+                        : 'text-[#0f3460] hover:text-[#c5a059] hover:bg-gray-50'
+                    }`}
+                    aria-current={isActive(item.path) ? 'page' : undefined}
+                  >
+                    <span className="w-8 h-8 flex items-center justify-center bg-[#f0f4ff] rounded-xl text-[#c5a059] flex-shrink-0">
+                      {item.icon}
+                    </span>
+                    {item.name}
+                  </Link>
+                  {/* Expand submenu toggle */}
+                  {item.submenu && (
+                    <button
+                      onClick={() =>
+                        setOpenMobileSubmenu(openMobileSubmenu === item.name ? null : item.name)
+                      }
+                      className="p-3 min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-400 hover:text-[#c5a059] rounded-xl transition-colors"
+                      aria-label={`ขยาย ${item.name}`}
+                      aria-expanded={openMobileSubmenu === item.name}
+                      style={{ touchAction: 'manipulation' }}
+                    >
+                      <ChevronRight
+                        className={`w-5 h-5 transition-transform duration-200 ${
+                          openMobileSubmenu === item.name ? 'rotate-90 text-[#c5a059]' : ''
+                        }`}
+                      />
+                    </button>
+                  )}
+                </div>
+
+                {/* Sub-menu items */}
+                {item.submenu && openMobileSubmenu === item.name && (
+                  <div className="ml-4 mt-1 space-y-1 border-l-2 border-[#c5a059]/20 pl-4">
+                    {item.submenu.map((sub) => {
+                      const inner = (
+                        <div className="flex items-center gap-3 py-3 px-3 rounded-xl hover:bg-gray-50 group transition-all min-h-[52px]">
+                          <div className="w-8 h-8 flex-shrink-0 bg-gray-100 rounded-lg flex items-center justify-center text-[#c5a059] group-hover:bg-[#c5a059]/10">
                             {sub.icon}
                           </div>
-                          {sub.name}
-                          <ExternalLink className="w-3 h-3 text-gray-300" />
+                          <div className="flex flex-col">
+                            <span className="text-[14px] font-bold text-[#0f3460] group-hover:text-[#c5a059] nav-font flex items-center gap-1">
+                              {sub.name}
+                              {sub.external && <ExternalLink className="w-3 h-3 text-gray-300" />}
+                            </span>
+                            {sub.description && (
+                              <span className="text-[11px] text-gray-400">{sub.description}</span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                      return sub.external ? (
+                        <a key={sub.name} href={sub.path} target="_blank" rel="noreferrer">
+                          {inner}
                         </a>
                       ) : (
-                        <Link
-                          key={sub.name}
-                          to={sub.path}
-                          className="text-gray-500 hover:text-[#c5a059] block text-base md:text-lg font-bold nav-font flex items-center gap-4"
-                        >
-                          <div className="w-9 h-9 bg-gray-50 rounded-xl flex items-center justify-center text-[#c5a059]">
-                            {sub.icon}
-                          </div>
-                          {sub.name}
+                        <Link key={sub.name} to={sub.path}>
+                          {inner}
                         </Link>
-                      )
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </div>
             ))}
+          </nav>
 
-            <div className="pt-8 border-t border-gray-100 space-y-4">
-              <a
-                href={`tel:${CONTACT_INFO.phone}`}
-                className="w-full bg-[#c5a059] text-white py-4 md:py-5 rounded-2xl font-black flex items-center justify-center gap-3 nav-font shadow-lg active:scale-95 text-base md:text-lg"
-              >
-                <PhoneCall className="w-5 h-5" /> นัดปรึกษาหลักสูตร
-              </a>
-              <a
-                href={CONTACT_INFO.lineUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="w-full bg-[#00b900] text-white py-4 md:py-5 rounded-2xl font-black flex items-center justify-center gap-3 nav-font shadow-lg active:scale-95 text-base md:text-lg"
-              >
-                <MessageCircle className="w-6 h-6" /> LINE Official Account
-              </a>
-            </div>
+          {/* Sticky CTA at drawer bottom */}
+          <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 flex gap-3 safe-area-pb">
+            <a
+              href={`tel:${CONTACT_INFO.phone}`}
+              className="flex-1 bg-[#0f3460] text-white py-4 rounded-2xl font-black text-center nav-font text-[15px] flex items-center justify-center gap-2 active:scale-95 transition-transform"
+              style={{ touchAction: 'manipulation' }}
+            >
+              <PhoneCall className="w-5 h-5" />
+              โทรปรึกษา
+            </a>
+            <a
+              href={CONTACT_INFO.lineUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="flex-1 bg-[#c5a059] text-white py-4 rounded-2xl font-black text-center nav-font text-[15px] flex items-center justify-center gap-2 active:scale-95 transition-transform"
+              style={{ touchAction: 'manipulation' }}
+            >
+              <MessageCircle className="w-5 h-5" />
+              ไลน์ทางการ
+            </a>
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 };
 

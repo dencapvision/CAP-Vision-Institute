@@ -1,4 +1,8 @@
-/* Global UI Polish & Animations */
+/* =====================================================
+   Global UI Polish & Animations — CAP Vision Institute
+   ===================================================== */
+
+/* -------- Design Tokens -------- */
 :root {
   --primary: #0f3460;
   --primary-dark: #0a2545;
@@ -9,27 +13,61 @@
   --bg-soft: #f8fafc;
   --accent-gold: linear-gradient(135deg, #c5a059 0%, #e0c58e 50%, #c5a059 100%);
   --accent-navy: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
-  --mesh-gradient: radial-gradient(at 100% 0%, rgba(197, 160, 89, 0.15) 0%, transparent 50%),
-                   radial-gradient(at 0% 100%, rgba(15, 52, 96, 0.1) 0%, transparent 50%);
+  --mesh-gradient:
+    radial-gradient(at 100% 0%, rgba(197, 160, 89, 0.15) 0%, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(15, 52, 96, 0.10) 0%, transparent 50%);
+
+  /* Spacing rhythm (8pt grid) */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Typography scale */
+  --text-xs:  11px;
+  --text-sm:  13px;
+  --text-base: 16px;
+  --text-lg:  18px;
+  --text-xl:  22px;
+  --text-2xl: 28px;
+  --text-3xl: 36px;
+  --text-4xl: 48px;
 }
 
+/* -------- Base Reset -------- */
 html {
   scroll-behavior: smooth;
+  /* Use dvh (dynamic viewport height) to correctly handle mobile browsers */
+  scroll-padding-top: 80px;
 }
 
 body {
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-soft);
+  /* Minimum 16px body text to prevent iOS auto-zoom on inputs */
+  font-size: var(--text-base);
+  line-height: 1.6;
 }
 
-/* 1. Typography Improvements */
+/* -------- Typography -------- */
 h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
   color: var(--primary);
-  line-height: 1.2;
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+/* Body text line-length control for readability */
+p, li {
+  max-width: 72ch;
+  line-height: 1.7;
 }
 
 .font-gold {
@@ -39,99 +77,162 @@ h1, h2, h3, h4, h5, h6 {
   background-clip: text;
 }
 
-/* 2. Staggered reveal animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* -------- Safe area support (iPhone notch, home indicator) -------- */
+.safe-area-pb {
+  padding-bottom: max(var(--space-md), env(safe-area-inset-bottom));
+}
+.safe-area-pt {
+  padding-top: max(var(--space-md), env(safe-area-inset-top));
 }
 
-.reveal-staggered > * {
-  opacity: 0;
+/* -------- Touch improvements -------- */
+a, button, [role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.reveal-staggered.active > * {
-  animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.reveal-staggered-0 > *:nth-child(1) { animation-delay: 0.1s; }
-.reveal-staggered-0 > *:nth-child(2) { animation-delay: 0.2s; }
-.reveal-staggered-0 > *:nth-child(3) { animation-delay: 0.3s; }
-.reveal-staggered-1 > *:nth-child(1) { animation-delay: 0.3s; }
-.reveal-staggered-1 > *:nth-child(2) { animation-delay: 0.4s; }
-.reveal-staggered-1 > *:nth-child(3) { animation-delay: 0.5s; }
-
-/* 3. Smooth focus states */
-a:focus-visible, button:focus-visible {
+/* -------- Focus states (Accessibility) -------- */
+a:focus-visible,
+button:focus-visible {
   outline: 2px solid var(--secondary);
-  outline-offset: 4px;
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
-/* 4. Glassmorphism Utilities */
+/* -------- Reveal animations -------- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.reveal-staggered > * { opacity: 0; }
+.reveal-staggered.active > * {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.reveal-staggered-0 > *:nth-child(1) { animation-delay: 0.05s; }
+.reveal-staggered-0 > *:nth-child(2) { animation-delay: 0.15s; }
+.reveal-staggered-0 > *:nth-child(3) { animation-delay: 0.25s; }
+.reveal-staggered-1 > *:nth-child(1) { animation-delay: 0.20s; }
+.reveal-staggered-1 > *:nth-child(2) { animation-delay: 0.30s; }
+.reveal-staggered-1 > *:nth-child(3) { animation-delay: 0.40s; }
+
+/* -------- Glassmorphism -------- */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
-
 .glass-panel-light {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.45);
 }
 
-/* 5. Modern Button Hover Effects */
+/* -------- Button Variants -------- */
 .btn-premium {
   position: relative;
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 44px; /* a11y touch target */
 }
-
 .btn-premium:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 20px 40px -10px rgba(15, 52, 96, 0.3);
+  transform: translateY(-3px) scale(1.015);
+  box-shadow: 0 16px 36px -8px rgba(15, 52, 96, 0.25);
 }
-
 .btn-premium::after {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
+  top: -50%; left: -60%;
+  width: 200%; height: 200%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.12), transparent);
   transform: rotate(45deg);
-  transition: 0.6s;
+  transition: 0.55s;
 }
+.btn-premium:hover::after { left: 120%; }
+.btn-premium:active { transform: scale(0.97); }
 
-.btn-premium:hover::after {
-  left: 120%;
-}
-
-/* 6. Card Polish */
+/* -------- Card Polish -------- */
 .card-premium {
   background: white;
-  border-radius: 2rem;
-  border: 1px solid rgba(0,0,0,0.03);
-  box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 8px 24px -4px rgba(0,0,0,0.06);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .card-premium:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 30px 60px -12px rgba(15, 52, 96, 0.12);
-  border-color: rgba(197, 160, 89, 0.2);
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px -10px rgba(15, 52, 96, 0.12);
+  border-color: rgba(197, 160, 89, 0.25);
 }
 
+/* -------- Course category chip (mobile filtering) -------- */
+.course-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1.5px solid rgba(15, 52, 96, 0.15);
+  background: white;
+  color: var(--primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 36px;
+  white-space: nowrap;
+}
+.course-chip:hover,
+.course-chip.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+.course-chip.active-gold {
+  background: var(--secondary);
+  color: white;
+  border-color: var(--secondary);
+}
+
+/* -------- Responsive: Tablet -------- */
+@media (min-width: 640px) and (max-width: 1023px) {
+  h1 { font-size: clamp(28px, 5vw, 42px); }
+  h2 { font-size: clamp(22px, 4vw, 32px); }
+  h3 { font-size: clamp(18px, 3vw, 24px); }
+  p  { font-size: 15px; }
+}
+
+/* -------- Mobile (< 640px) -------- */
+@media (max-width: 639px) {
+  h1 { font-size: clamp(22px, 7vw, 32px); }
+  h2 { font-size: clamp(18px, 5.5vw, 26px); }
+  h3 { font-size: clamp(16px, 4.5vw, 20px); }
+  /* Prevent iOS auto-zoom on inputs */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+  /* Content padding on small screens */
+  .container-mobile {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* -------- Scrollbar Styling -------- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(15, 52, 96, 0.15);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(197, 160, 89, 0.5); }

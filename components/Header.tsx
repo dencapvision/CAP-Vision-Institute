@@ -111,18 +111,17 @@ const navItems: NavItem[] = [
         description: 'Case Studies จากลูกค้าองค์กร',
       },
       {
-        name: 'ติดต่อเรา / ขอใบเสนอราคา',
-        path: '/contact',
-        icon: <Phone className="w-4 h-4" />,
-        description: 'สอบถามข้อมูล In-house Training',
-      },
-      {
         name: 'ร่วมงานกับเรา',
         path: '/join-us',
         icon: <Briefcase className="w-4 h-4" />,
         description: 'สมัครเป็นวิทยากรหรือพาร์ทเนอร์',
       },
     ],
+  },
+  {
+    name: 'ติดต่อเรา/ขอใบเสนอราคา',
+    path: '/contact',
+    icon: <Phone className="w-4 h-4" />,
   },
 ];
 

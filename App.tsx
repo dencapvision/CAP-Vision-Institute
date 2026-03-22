@@ -73,7 +73,7 @@ const App: React.FC = () => {
           <AIAgent />
 
           {/* Sticky CTA for Mobile */}
-          <div className="md:hidden sticky bottom-0 z-40 bg-white/80 backdrop-blur-md border-t border-gray-100 p-4 flex gap-3">
+          <div className="md:hidden sticky bottom-0 z-40 bg-white/80 backdrop-blur-md border-t border-gray-100 p-4 safe-area-pb flex gap-3">
             <a href={`tel:${CONTACT_INFO.phone}`} className="flex-1 bg-[#0f3460] text-white py-4 rounded-2xl font-bold text-center nav-font text-sm">โทรปรึกษา</a>
             <a href={CONTACT_INFO.lineUrl} className="flex-1 bg-[#c5a059] text-white py-4 rounded-2xl font-bold text-center nav-font text-sm">ไลน์ทางการ</a>
           </div>

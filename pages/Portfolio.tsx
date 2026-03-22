@@ -10,17 +10,17 @@ const Portfolio: React.FC = () => {
     const portFolioItems = [
         {
             id: 1,
-            client: "Mr.DIY",
+            client: "Central Food Retail",
             project: "Leadership Development Program",
-            image: COURSES[0].image,
+            image: "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/portfolio/Central%20Food%20Retail%202.jpg",
             category: "Leadership",
             result: "Developed 50+ future leaders"
         },
         {
             id: 2,
-            client: "Coway",
+            client: "สำนักพัฒนาสมรรถนะครูและบุคลากรอาชีวศึกษา",
             project: "Team Synergy & Culture",
-            image: COURSES[1].image,
+            image: "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/portfolio/team%20building1.jpg",
             category: "Team building",
             result: "Enhanced cross-functional collaboration"
         },
@@ -28,7 +28,7 @@ const Portfolio: React.FC = () => {
             id: 3,
             client: "สมาคมส่งเสริมบุคลิกสตรี",
             project: "นวัตกรรมการสื่อสารและการพูดในที่ชุมชน",
-            image: COURSES[2].image,
+            image: "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/portfolio/Communication.jpg",
             category: "Communication",
             result: "Improved communication & public speaking skills"
         },

@@ -13,6 +13,8 @@ export const CONTACT_INFO = {
     instagramUrl: 'https://www.instagram.com/denmasterfa',
     youtube: '@thecapvision',
     youtubeUrl: 'https://youtube.com/@thecapvision',
+    tiktok: '@denmasterfa',
+    tiktokUrl: 'https://www.tiktok.com/@denmasterfa',
     address: '60/319 หมู่บ้านพฤกษ์ลดา ซอย 2 ตำบล ลาดสวาย อำเภอลำลูกกา ปทุมธานี 12150',
     mapsUrl: 'https://share.google/tfTmh0RBeeNACVWcn',
     businessHours: {

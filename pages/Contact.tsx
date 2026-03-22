@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, MessageCircle, MapPin, Facebook, Youtube, Instagram, Send, Globe, Mail, Clock, CheckCircle, ArrowRight, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { Phone, MessageCircle, MapPin, Facebook, Youtube, Instagram, Send, Globe, Mail, Clock, CheckCircle, ArrowRight, HelpCircle, ChevronDown, ChevronUp, Music2 } from 'lucide-react';
 import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
 import { FAQS } from '../constants/faqs';
 import { supabase } from '../lib/supabaseClient';
@@ -183,7 +183,7 @@ const Contact: React.FC = () => {
                               <MapPin className="w-6 h-6 text-[#c5a059]" />
                               <h4 className="text-lg font-black text-[#0f3460] nav-font">ที่ตั้งสำนักงาน</h4>
                            </div>
-                           <p className="text-gray-500 font-bold leading-relaxed mb-1 nav-font">CAP Vision Partner - Learning & Facilitation Hub</p>
+                           <p className="text-gray-500 font-bold leading-relaxed mb-1 nav-font">สถาบันแคป วิชั่น (CAP Vision Partner)</p>
                            <p className="text-gray-500 font-medium leading-relaxed mb-6">
                               {CONTACT_INFO.address}
                            </p>
@@ -191,7 +191,7 @@ const Contact: React.FC = () => {
                               <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&q=80" className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" alt="Office location" />
                               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
                                  <a href={CONTACT_INFO.mapsUrl} target="_blank" rel="noreferrer" className="bg-[#c5a059] text-white px-6 py-3 rounded-xl font-bold nav-font text-xs flex items-center gap-2">
-                                    <MapPin className="w-4 h-4" /> Open in Google Maps
+                                    <MapPin className="w-4 h-4" /> ดูแผนที่ Google Maps
                                  </a>
                               </div>
                            </div>
@@ -290,6 +290,12 @@ const Contact: React.FC = () => {
                         <Instagram className="w-8 h-8" />
                      </div>
                      <span className="text-xs font-black nav-font uppercase tracking-widest text-gray-400 group-hover:text-[#0f3460]">Instagram</span>
+                  </a>
+                  <a href={CONTACT_INFO.tiktokUrl} target="_blank" rel="noreferrer" className="flex flex-col items-center group">
+                     <div className="w-20 h-20 bg-white rounded-3xl shadow-sm flex items-center justify-center text-black mb-4 group-hover:bg-black group-hover:text-white group-hover:-translate-y-2 transition-all">
+                        <Music2 className="w-8 h-8" />
+                     </div>
+                     <span className="text-xs font-black nav-font uppercase tracking-widest text-gray-400 group-hover:text-[#0f3460]">TikTok</span>
                   </a>
                </div>
             </div>

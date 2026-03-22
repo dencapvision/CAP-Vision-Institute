@@ -65,7 +65,10 @@ export const CLIENTS = [
     { name: 'มหาวิทยาลัยศรีนครินทรวิโรฒ', type: 'Academic', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/SWU.png' },
     { name: 'มหาวิทยาลัยราชภัฏสกลนคร', type: 'Academic', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/snru.ac.th.png' },
     { name: 'มหาวิทยาลัยราชภัฏยะลา', type: 'Academic', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/yru.ac.th.png' },
-    { name: 'TISTR วว.', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/tistr.or.th.svg' }
+    { name: 'เทศบาลเมืองป่าตอง จ.ภูเก็ต', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/patongcity.go.th.jpg' },
+    { name: 'TF Cosmetology', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/TF.png' },
+    { name: 'สมาคมส่งเสริมบุคลิกสตรี', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/thaiwomen.jpg' },
+    { name: 'TISTR วว.', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/tistr.or.th.svg' },
 ];
 
 export const TIMELINE = [

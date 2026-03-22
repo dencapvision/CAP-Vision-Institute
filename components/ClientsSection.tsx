@@ -38,15 +38,6 @@ const ClientsSection: React.FC = () => {
           ))}
         </div>
 
-        <div className="mt-20 md:mt-32 pt-12 border-t border-gray-50 text-center">
-          <div className="inline-flex items-center gap-6 bg-gray-50 px-8 py-4 rounded-[2rem] border border-gray-100 shadow-inner">
-            <Award className="w-10 h-10 text-[#c5a059]" />
-            <div className="text-left">
-              <p className="text-[#0f3460] font-black text-xl nav-font leading-tight">กว่า 500 องค์กร</p>
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">ที่ผ่านการพัฒนาด้วยหลักสูตรของเรา</p>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

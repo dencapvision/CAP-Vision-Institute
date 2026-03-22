@@ -10,7 +10,7 @@ const Portfolio: React.FC = () => {
     const portFolioItems = [
         {
             id: 1,
-            client: "SCG Logistics",
+            client: "Mr.DIY",
             project: "Leadership Development Program",
             image: COURSES[0].image,
             category: "Leadership",
@@ -18,27 +18,27 @@ const Portfolio: React.FC = () => {
         },
         {
             id: 2,
-            client: "PTT Global Chemical",
+            client: "Coway",
             project: "Team Synergy & Culture",
             image: COURSES[1].image,
-            category: "Team Building",
+            category: "Team building",
             result: "Enhanced cross-functional collaboration"
         },
         {
             id: 3,
-            client: "Toyota Motor Thailand",
-            project: "Effective Communication",
+            client: "สมาคมส่งเสริมบุคลิกสตรี",
+            project: "นวัตกรรมการสื่อสารและการพูดในที่ชุมชน",
             image: COURSES[2].image,
             category: "Communication",
-            result: "Improved internal communication scores by 30%"
+            result: "Improved communication & public speaking skills"
         },
         {
             id: 4,
-            client: "Kasikornbank",
-            project: "Agile Mindset Transformation",
+            client: "สำนักทรัพยากรน้ำแห่งชาติ",
+            project: "การคิดบวกอย่างสร้างสรรค์ และ การทำงานอย่างมีความสุข",
             image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80",
             category: "Mindset",
-            result: "Adopted agile practices across 10 teams"
+            result: "Built positive mindset and workplace happiness"
         }
     ];
 

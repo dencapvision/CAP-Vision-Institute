@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { HRD_FAQS } from '../constants/seo';
+import { HRD_FAQS, DEFAULT_SEO } from '../constants/seo';
 
 // ===== TYPE DEFINITIONS =====
 export type SEOSchemaType =
@@ -63,13 +63,13 @@ const ORG_DATA = {
 };
 
 export default function SEO({
-  title,
-  description,
-  name = 'CAP Vision Institute',
+  title = DEFAULT_SEO.title,
+  description = DEFAULT_SEO.description,
+  name = DEFAULT_SEO.author,
   type = 'WebSite',
-  keywords = [],
+  keywords = DEFAULT_SEO.keywords.split(', '),
   canonical,
-  ogImage = 'https://www.visionpartner.com/og-default.jpg',
+  ogImage = DEFAULT_SEO.ogImage,
   noIndex = false,
   courseData,
   articleData,

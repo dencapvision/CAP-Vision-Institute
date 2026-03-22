@@ -78,21 +78,25 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    name: 'ผลงาน & บริการ',
-    path: '/portfolio',
-    icon: <Trophy className="w-4 h-4" />,
+    name: 'บริการองค์กร',
+    path: '/services',
+    icon: <Building2 className="w-4 h-4" />,
+  },
+  {
+    name: 'คลังความรู้',
+    path: '/resources',
+    icon: <BookOpen className="w-4 h-4" />,
+  },
+  {
+    name: 'เกี่ยวกับเรา',
+    path: '/about',
+    icon: <Info className="w-4 h-4" />,
     submenu: [
       {
-        name: 'ผลงานการจัดอบรม',
-        path: '/portfolio',
-        icon: <Trophy className="w-4 h-4" />,
-        description: 'Case Studies จากลูกค้าองค์กร',
-      },
-      {
-        name: 'บริการองค์กร',
-        path: '/services',
-        icon: <Building2 className="w-4 h-4" />,
-        description: 'Consulting & Training Solutions',
+        name: 'วิสัยทัศน์ & พันธกิจ',
+        path: '/about',
+        icon: <Info className="w-4 h-4" />,
+        description: 'เป้าหมายและอุดมการณ์ของเรา',
       },
       {
         name: 'วิทยากร & Facilitator',
@@ -100,43 +104,17 @@ const navItems: NavItem[] = [
         icon: <Users className="w-4 h-4" />,
         description: 'ทีมผู้เชี่ยวชาญของเรา',
       },
-    ],
-  },
-  {
-    name: 'ความรู้ & กิจกรรม',
-    path: '/resources',
-    icon: <BookOpen className="w-4 h-4" />,
-    submenu: [
       {
-        name: 'คลังความรู้ & บทความ',
-        path: '/resources',
-        icon: <Newspaper className="w-4 h-4" />,
-        description: 'บทความ HRD, เทคนิคพัฒนาทีม',
+        name: 'ผลงานการจัดอบรม',
+        path: '/portfolio',
+        icon: <Trophy className="w-4 h-4" />,
+        description: 'Case Studies จากลูกค้าองค์กร',
       },
       {
-        name: 'กิจกรรม & เครือข่าย',
-        path: '/events',
-        icon: <Sparkles className="w-4 h-4" />,
-        description: 'Workshop, Seminar, Networking',
-      },
-    ],
-  },
-  {
-    name: 'ติดต่อ & เกี่ยวกับ',
-    path: '/contact',
-    icon: <Phone className="w-4 h-4" />,
-    submenu: [
-      {
-        name: 'เกี่ยวกับเรา',
-        path: '/about',
-        icon: <Info className="w-4 h-4" />,
-        description: 'วิสัยทัศน์ & พันธกิจ',
-      },
-      {
-        name: 'ติดต่อ / ขอใบเสนอราคา',
+        name: 'ติดต่อเรา / ขอใบเสนอราคา',
         path: '/contact',
         icon: <Phone className="w-4 h-4" />,
-        description: 'Quotation In-house Training',
+        description: 'สอบถามข้อมูล In-house Training',
       },
       {
         name: 'ร่วมงานกับเรา',

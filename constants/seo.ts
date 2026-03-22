@@ -1,140 +1,32 @@
+import { BRAND_INFO } from './brand';
 
-// HRD keyword library + SEO defaults for CAP Vision Institute
-// ใช้สำหรับ meta keywords, page-level defaults, และ AEO FAQ planning
-
-// ===== TARGET AUDIENCE KEYWORDS =====
-export const HRD_KEYWORDS = {
-  // Primary — high search volume, Thai HRD audience
-  primary: [
-    'หลักสูตรฝึกอบรม',
-    'อบรม HRD',
-    'หลักสูตร In-house',
-    'พัฒนาบุคลากร',
-    'ฝึกอบรมองค์กร',
-    'สถาบันฝึกอบรม',
-    'หลักสูตรพัฒนาตนเอง',
-  ],
-  // Secondary — specific course types
-  secondary: [
-    'อบรม Service Mind',
-    'อบรม Team Building',
-    'หลักสูตรผู้นำ',
-    'Growth Mindset workshop',
-    'Effective Communication training',
-    'Creative Problem Solving',
-    'Leadership Development',
-  ],
-  // GEO — location-based for local SEO
-  geo: [
-    'ฝึกอบรมกรุงเทพ',
-    'สถาบันฝึกอบรม Bangkok',
-    'อบรมบุคลากรไทย',
-    'Training Provider Thailand',
-    'In-house Training กรุงเทพ',
-  ],
-  // Brand
-  brand: [
-    'CAP Vision Institute',
-    'ครูเด่น มาสเตอร์ฟา',
-    'Master Facilitator',
-    'capvisionpartner',
-  ],
-} as const;
-
-// ===== PAGE-LEVEL SEO DEFAULTS =====
-export interface PageSEODefaults {
-  title: string;
-  description: string;
-  keywords: string[];
-  ogImage?: string;
-  schemaType?: 'WebSite' | 'Course' | 'Article' | 'FAQPage' | 'EducationalOrganization';
-}
-
-export const PAGE_SEO: Record<string, PageSEODefaults> = {
-  home: {
-    title: 'CAP Vision Institute | สถาบันฝึกอบรมพัฒนาบุคลากรครบวงจร',
-    description:
-      'สถาบันฝึกอบรมพัฒนาบุคลากร ด้วยหลักสูตร In-house Training, Growth Mindset, Service Mind, Team Building, Leadership โดยครูเด่น มาสเตอร์ฟา ผู้เชี่ยวชาญการพัฒนาองค์กร',
-    keywords: [
-      ...HRD_KEYWORDS.primary,
-      ...HRD_KEYWORDS.brand,
-      ...HRD_KEYWORDS.geo,
-    ],
-    ogImage: 'https://www.visionpartner.com/og-home.jpg',
-    schemaType: 'EducationalOrganization',
-  },
-  courses: {
-    title: 'หลักสูตรฝึกอบรม In-house Training | CAP Vision Institute',
-    description:
-      'รวมหลักสูตรฝึกอบรมสำหรับ HRD: Service Mind, Team Building, Creative Problem Solving, Effective Communication, Leadership — ออกแบบ In-house ตามความต้องการองค์กร',
-    keywords: [
-      ...HRD_KEYWORDS.primary,
-      ...HRD_KEYWORDS.secondary,
-    ],
-    ogImage: 'https://www.visionpartner.com/og-courses.jpg',
-    schemaType: 'Course',
-  },
-  about: {
-    title: 'เกี่ยวกับ CAP Vision Institute | สถาบันพัฒนาศักยภาพผู้นำ',
-    description:
-      'CAP Vision Institute สถาบันพัฒนาศักยภาพผู้นำและฝึกอบรมครบวงจร นำโดย ครูเด่น มาสเตอร์ฟา นักออกแบบกระบวนการเรียนรู้ (Master Facilitator) ประสบการณ์กว่า 15 ปี',
-    keywords: [
-      ...HRD_KEYWORDS.brand,
-      'สถาบันพัฒนาผู้นำ',
-      'Master Facilitator Thailand',
-    ],
-    schemaType: 'EducationalOrganization',
-  },
-  resources: {
-    title: 'คลังความรู้ HRD | บทความพัฒนาบุคลากร | CAP Vision Institute',
-    description:
-      'บทความและคลังความรู้สำหรับ HRD: เทคนิคการฝึกอบรม, Growth Mindset, Leadership, การพัฒนาทีม — อัพเดตใหม่ทุกสัปดาห์',
-    keywords: [
-      'บทความ HRD',
-      'ความรู้พัฒนาบุคลากร',
-      'เทคนิคฝึกอบรม',
-      ...HRD_KEYWORDS.secondary,
-    ],
-    schemaType: 'Article',
-  },
-  contact: {
-    title: 'ติดต่อ / ขอใบเสนอราคา In-house Training | CAP Vision Institute',
-    description:
-      'ติดต่อขอใบเสนอราคาหลักสูตรฝึกอบรม In-house สำหรับองค์กรของท่าน — ปรึกษาฟรี โทร หรือ LINE ได้เลย',
-    keywords: [
-      'ขอใบเสนอราคาอบรม',
-      'ติดต่อสถาบันฝึกอบรม',
-      'In-house Training ราคา',
-      ...HRD_KEYWORDS.geo,
-    ],
-  },
+export const DEFAULT_SEO = {
+  title: `${BRAND_INFO.name} | ${BRAND_INFO.slogan}`,
+  description: 'สถาบันพัฒนาที่ปรึกษา วิทยากร กระบวนกร และพัฒนาบุคลากรในองค์กร ออกแบบหลักสูตร In-house Training ที่เน้นผลลัพธ์ นำโดยครูเด่น มาสเตอร์ฟา',
+  keywords: 'ฝึกอบรม, In-house Training, พัฒนาบุคลากร, วิทยากร, กระบวนกร, ผู้นำ, HRD, Soft Skills, Leadership, CAP Vision Institute, ครูเด่น มาสเตอร์ฟา',
+  author: 'CAP Vision Institute',
+  themeColor: '#0f3460',
+  url: 'https://capvision.co.th', // Replace with exact prod URL
+  ogImage: '/og-image.jpg', // Placeholder, needs actual image
 };
 
-// ===== FAQS — สำหรับ AEO (Featured Snippets / People Also Ask) =====
+export const generateTitle = (pageTitle: string) => `${pageTitle} | ${BRAND_INFO.name}`;
+
 export const HRD_FAQS = [
   {
-    question: 'In-house Training คืออะไร?',
-    answer:
-      'In-house Training คือการจัดฝึกอบรมภายในองค์กร โดยสถาบันฝึกอบรมจะออกแบบหลักสูตรเฉพาะให้ตรงกับความต้องการของบริษัท ประหยัดต้นทุน และพนักงานทุกคนได้รับการฝึกอบรมพร้อมกัน',
+    question: "ควรจัดอบรม In-house Training หัวข้ออะไรดี?",
+    answer: "หลักสูตรยอดนิยมสำหรับองค์กรยุคนี้คือ Leadership, Growth Mindset, Effective Communication และ OKRs ซึ่งครูเด่น มาสเตอร์ฟา จะออกแบบเนื้อหาให้ตรงกับปัญหาของแต่ละองค์กร (Customize) อย่างแท้จริง"
   },
   {
-    question: 'CAP Vision Institute มีหลักสูตรอะไรบ้าง?',
-    answer:
-      'มีหลักสูตรหลัก 4 กลุ่ม: People Skills (Service Mind, บุคลิกภาพ), Work Skills (Team Building, Creative Problem Solving), Communication Skills (DISC, Effective Communication), และ Leader Skills (Leadership, Growth Mindset)',
+    question: "ทำไมถึงควรเลือก CAP Vision Institute สำหรับการพัฒนาบุคลากร?",
+    answer: "เพราะเราไม่ใช่แค่สอนทฤษฎี แต่เน้นการสร้าง 'กระบวนการเรียนรู้' (Facilitation) ให้ผู้เข้าอบรมได้คิดและนำไปใช้จริง โดยผู้เชี่ยวชาญระดับอาจารย์ (ครูเด่น มาสเตอร์ฟา) ที่มีประสบการณ์จริงกว่า 20 ปี"
   },
   {
-    question: 'จะขอใบเสนอราคาอบรม In-house ทำอย่างไร?',
-    answer:
-      'ติดต่อได้ทาง LINE Official Account หรือโทรตรงที่ฝ่ายการตลาด ทีมงานจะรับรายละเอียดและจัดส่งใบเสนอราคาภายใน 24 ชั่วโมง',
+    question: "Soft Skills ไหนจำเป็นที่สุดสำหรับพนักงานในปัจจุบัน?",
+    answer: "ทักษะที่สำคัญที่สุดคือ Empathy, Adaptability และ Complex Problem Solving ซึ่งเป็นรากฐานของการทำงานร่วมกันในยุคเทคโนโลยีดิสรัปชั่น"
   },
   {
-    question: 'หลักสูตรฝึกอบรมใช้เวลานานแค่ไหน?',
-    answer:
-      'หลักสูตรส่วนใหญ่ใช้เวลา 1 วัน (09.00-16.30 น.) สามารถปรับเป็นครึ่งวันหรือ 2 วันตามความต้องการขององค์กร',
-  },
-  {
-    question: 'ครูเด่น มาสเตอร์ฟา คือใคร?',
-    answer:
-      'ครูเด่น มาสเตอร์ฟา คือนักออกแบบกระบวนการเรียนรู้ (Master Facilitator) ผู้ก่อตั้ง CAP Vision Institute ผู้เชี่ยวชาญด้าน Growth Mindset, Service Mind, Leadership มากกว่า 15 ปี',
-  },
+    question: "มีหลักสูตรสำหรับหัวหน้างานมือใหม่ (New Manager) หรือไม่?",
+    answer: "มีครับ เรามีหลักสูตร 'จาก Manager สู่ Coach' ที่จะช่วยปรับ Mindset และติดอาวุธทักษะที่จำเป็น เช่น การมอบหมายงาน, รับฟังอย่างเข้าใจ และการประเมินผล"
+  }
 ];

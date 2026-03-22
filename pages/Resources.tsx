@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, PlayCircle, Clock, Download, FileText, ChevronRight, BookOpen, Video, FileDown, Filter, Layout, Tag, Calendar } from 'lucide-react';
-import { RESOURCE_ARTICLES as STATIC_ARTICLES, MICRO_LEARNING_VIDEOS, DOWNLOAD_RESOURCES } from '../constants/resources';
+import { MICRO_LEARNING_VIDEOS, DOWNLOAD_RESOURCES } from '../constants/resources';
+import { HRD_ARTICLES as STATIC_ARTICLES } from '../constants/articles';
 import { COLORS } from '../constants/theme';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
@@ -21,23 +22,20 @@ const Resources: React.FC = () => {
    const [activeType, setActiveType] = useState<'all' | 'video' | 'article' | 'download'>('all');
    const [searchQuery, setSearchQuery] = useState('');
    const [selectedTag, setSelectedTag] = useState<string | null>(null);
-   const [articles, setArticles] = useState<BlogManifestItem[]>(STATIC_ARTICLES.map(a => ({ ...a, date: '2026-01-20' })));
+   const [articles, setArticles] = useState<BlogManifestItem[]>((STATIC_ARTICLES as any[]).map(a => ({ ...a, date: a.date || '2026-01-20', category: a.category || 'HRD' })));
 
    useEffect(() => {
-      fetch('/content/blog/manifest.json')
-         .then(res => res.json())
-         .then(data => {
-            if (Array.isArray(data)) {
-               // Sort articles by createdAt or date descending
-               const sorted = [...data].sort((a, b) => {
-                  const dateA = a.createdAt || a.date;
-                  const dateB = b.createdAt || b.date;
-                  return new Date(dateB).getTime() - new Date(dateA).getTime();
-               });
-               setArticles(sorted);
-            }
-         })
-         .catch(err => console.error('Error loading blog manifest:', err));
+      // For now, let's use the static articles to ensure they display properly.
+      // fetch('/content/blog/manifest.json')
+      const data = (STATIC_ARTICLES as any[]).map(a => ({
+         ...a,
+         category: a.category || 'HRD',
+         tags: a.tags || ['HR', 'Leadership']
+       }));
+       const sorted = [...data].sort((a, b) => {
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+       });
+       setArticles(sorted as any);
    }, []);
 
    // Extract unique tags

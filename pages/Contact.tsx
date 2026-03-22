@@ -4,15 +4,37 @@ import { Link } from 'react-router-dom';
 import { Phone, MessageCircle, MapPin, Facebook, Youtube, Instagram, Send, Globe, Mail, Clock, CheckCircle, ArrowRight, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
 import { FAQS } from '../constants/faqs';
+import { supabase } from '../lib/supabaseClient';
 import SEO from '../components/SEO';
 
 const Contact: React.FC = () => {
    const [submitted, setSubmitted] = useState(false);
    const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-   const handleSubmit = (e: React.FormEvent) => {
+   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       setSubmitted(true);
+
+      const formData = new FormData(e.currentTarget);
+      const data = {
+         'ชื่อ-นามสกุล': formData.get('fullName'),
+         'หน่วยงาน/องค์กร': formData.get('organization'),
+         'เบอร์ติดต่อ': formData.get('phone'),
+         'บริการที่สนใจ': formData.get('service'),
+         'ความต้องการเพิ่มเติม': formData.get('requirements')
+      };
+
+      try {
+         // Send notification via Supabase Edge Function
+         await supabase.functions.invoke('line-notify', {
+            body: { 
+               formType: 'ฟอร์มติดต่อสอบถาม / ขอใบเสนอราคา', 
+               data 
+            }
+         });
+      } catch (error) {
+         console.error('Failed to send notification:', error);
+      }
    };
 
    const toggleFaq = (index: number) => {
@@ -83,19 +105,19 @@ const Contact: React.FC = () => {
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                         <div className="space-y-3 group">
                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">Full Name</label>
-                           <input required type="text" className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="ชื่อ-นามสกุล ของคุณ" />
+                           <input name="fullName" required type="text" className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="ชื่อ-นามสกุล ของคุณ" />
                         </div>
                         <div className="space-y-3 group">
                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">Organization</label>
-                           <input required type="text" className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="ชื่อหน่วยงาน / บริษัท" />
+                           <input name="organization" required type="text" className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="ชื่อหน่วยงาน / บริษัท" />
                         </div>
                         <div className="space-y-3 group">
                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">Phone Number</label>
-                           <input required type="tel" className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="เบอร์โทรศัพท์ที่ติดต่อได้" />
+                           <input name="phone" required type="tel" className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="เบอร์โทรศัพท์ที่ติดต่อได้" />
                         </div>
                         <div className="space-y-3 group">
                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">Service Interest</label>
-                           <select required className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-black text-[#0f3460] transition-all nav-font appearance-none">
+                           <select name="service" required className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-black text-[#0f3460] transition-all nav-font appearance-none">
                               <option value="">เลือกบริการที่สนใจ...</option>
                               <option value="inhouse">In-house Training</option>
                               <option value="coaching">Executive Coaching</option>
@@ -108,7 +130,7 @@ const Contact: React.FC = () => {
                      </div>
                      <div className="space-y-3 group">
                         <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">Your Requirements</label>
-                        <textarea required rows={5} className="w-full px-6 py-5 rounded-[2rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="เป้าหมายที่ต้องการพัฒนา / จำนวนผู้เข้าอบรม / ช่วงเวลาที่สะดวก..."></textarea>
+                        <textarea name="requirements" required rows={5} className="w-full px-6 py-5 rounded-[2rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="เป้าหมายที่ต้องการพัฒนา / จำนวนผู้เข้าอบรม / ช่วงเวลาที่สะดวก..."></textarea>
                      </div>
                      <div className="pt-6">
                         <button type="submit" className="w-full bg-[#0f3460] text-white px-12 py-6 rounded-2xl font-black text-xl hover:bg-[#c5a059] transition-all flex items-center justify-center gap-6 shadow-2xl shadow-blue-900/20 group nav-font">

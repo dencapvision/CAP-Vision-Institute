@@ -3,14 +3,39 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Rocket, Target, Users, Send, Upload, Link as LinkIcon, Video, CheckCircle, ArrowRight } from 'lucide-react';
 import { BRAND_INFO } from '../constants/brand';
+import { supabase } from '../lib/supabaseClient';
 import SEO from '../components/SEO';
 
 const JoinUs: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
+    
+    const formData = new FormData(e.currentTarget);
+    const resumeFile = formData.get('resume') as File | null;
+    
+    const data = {
+       'ชื่อ-นามสกุล': formData.get('fullName'),
+       'เบอร์โทรศัพท์ / LINE ID': formData.get('contact'),
+       'บทบาทที่อยากเข้าร่วม': formData.get('role'),
+       'ความตั้งใจ': formData.get('motivation'),
+       'พอร์ตโฟลิโอ': formData.get('portfolio'),
+       'วิดีโอแนะนำตัว': formData.get('video'),
+       'ไฟล์ Resume': resumeFile ? resumeFile.name : 'ไม่ได้แนบมา',
+    };
+
+    try {
+       await supabase.functions.invoke('line-notify', {
+          body: { 
+             formType: 'ฟอร์มสมัครร่วมงาน (Recruitment)', 
+             data 
+          }
+       });
+    } catch (error) {
+       console.error('Failed to send notification:', error);
+    }
   };
 
   if (submitted) {
@@ -123,17 +148,17 @@ const JoinUs: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-2">
                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">ชื่อ-นามสกุล</label>
-                    <input required type="text" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-medium" placeholder="ชื่อเล่นระบุต่อท้ายได้ครับ" />
+                    <input name="fullName" required type="text" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-medium" placeholder="ชื่อเล่นระบุต่อท้ายได้ครับ" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">เบอร์โทรศัพท์ / LINE ID</label>
-                    <input required type="text" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-medium" placeholder="ช่องทางติดต่อที่สะดวก" />
+                    <input name="contact" required type="text" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-medium" placeholder="ช่องทางติดต่อที่สะดวก" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">บทบาทที่อยากเข้าร่วม (Role)</label>
-                  <select required className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-bold text-[#0f3460] nav-font">
+                  <select name="role" required className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-bold text-[#0f3460] nav-font">
                     <option value="">กรุณาเลือกตำแหน่ง...</option>
                     <option value="facilitator">Facilitator / วิทยากร</option>
                     <option value="content">Content Creator / Graphic Designer</option>
@@ -146,7 +171,7 @@ const JoinUs: React.FC = () => {
 
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">เล่าถึงความตั้งใจของคุณ (Motivation)</label>
-                  <textarea required rows={5} className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-medium" placeholder="ทำไมคุณถึงอยากมาร่วมงานกับ CAP Vision? คุณมี Passion เรื่องอะไร?"></textarea>
+                  <textarea name="motivation" required rows={5} className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-medium" placeholder="ทำไมคุณถึงอยากมาร่วมงานกับ CAP Vision? คุณมี Passion เรื่องอะไร?"></textarea>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -154,13 +179,13 @@ const JoinUs: React.FC = () => {
                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block flex items-center gap-2">
                       <LinkIcon className="w-3 h-3" /> ลิงค์โปรไฟล์ / พอร์ตโฟลิโอ
                     </label>
-                    <input type="url" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-medium" placeholder="Google Drive, Website, LinkedIn" />
+                    <input name="portfolio" type="url" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-medium" placeholder="Google Drive, Website, LinkedIn" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block flex items-center gap-2">
                       <Video className="w-3 h-3" /> วิดีโอแนะนำตัวสั้นๆ (ถ้ามี)
                     </label>
-                    <input type="url" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-medium" placeholder="TikTok, YouTube, หรือ ลิงค์วิดีโอ" />
+                    <input name="video" type="url" className="w-full px-6 py-4 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-medium" placeholder="TikTok, YouTube, หรือ ลิงค์วิดีโอ" />
                   </div>
                 </div>
 
@@ -168,7 +193,7 @@ const JoinUs: React.FC = () => {
                   <Upload className="w-10 h-10 text-[#0f3460] mb-4 opacity-30" />
                   <p className="text-sm font-bold text-[#0f3460] nav-font mb-1">อัปโหลด Resume / CV</p>
                   <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">PDF format only (Max 5MB)</p>
-                  <input type="file" className="mt-4 text-xs font-bold text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-[#0f3460] file:text-white hover:file:bg-[#c5a059]" />
+                  <input name="resume" type="file" className="mt-4 text-xs font-bold text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-[#0f3460] file:text-white hover:file:bg-[#c5a059]" />
                 </div>
 
                 <button

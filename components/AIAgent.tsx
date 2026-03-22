@@ -97,7 +97,7 @@ function generateResponse(input: string, prevMessages?: Message[]): string {
 💬 **LINE OA:** @denmasterfa  
 🔗 **Link:** https://lin.ee/zRTBF6K  
 📞 **โทร:** 093-223-5919  
-📧 **Email:** thecapvision@gmail.com  
+📧 **Email:** dencapvision@gmail.com  
 
 **สำหรับ HRD / ฝ่ายพัฒนาบุคลากร** แนะนำส่งรายละเอียดโจทย์มาทาง LINE นะครับ จะได้รับการตอบสนองเร็วที่สุด! 🚀`;
   }

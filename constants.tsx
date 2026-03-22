@@ -13,7 +13,7 @@ export const COLORS = {
 
 export const CONTACT_INFO = {
   phone: '093-223-5919',
-  email: 'thecapvision@gmail.com',
+  email: 'dencapvision@gmail.com',
   line: '@denmasterfa',
   lineUrl: 'https://lin.ee/zRTBF6K',
   facebook: 'thecapvision',

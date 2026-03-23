@@ -2,13 +2,15 @@ import { Resource } from '../types';
 
 export const HRD_ARTICLES: Resource[] = [
   {
-    id: 'hrd-future-skills-2025',
+    id: 'ai-proof-skills-hr-2026',
     type: 'blog',
-    title: 'Future Skills 2025: ทักษะแห่งอนาคตที่ผู้นำองค์กรและ HRD ต้องรู้',
-    excerpt: 'สำรวจทักษะสำคัญที่จำเป็นต่อการขับเคลื่อนองค์กรในโลกยุค BANI World พร้อมแนวทางการ Reskill และ Upskill พนักงานเพื่อให้พร้อมรับมือกับการเปลี่ยนแปลง',
-    date: '2024-03-15',
-    thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+    title: 'ทักษะที่ AI แทนที่ไม่ได้ ในงานบริหารคนยุค 2026',
+    excerpt: 'เมื่อ AI ก้าวเข้าสู่ยุค Agentic HR พรมแดนระหว่างงานเทคนิคและงานหัวใจก็ชัดเจนขึ้น มาดู 5 ทักษะที่ AI ไม่มีวันเลียนแบบได้ในการบริหารคนยุคใหม่',
+    date: '2026-03-23',
+    thumbnail: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80',
   },
+  {
+    id: 'hrd-future-skills-2025',
   {
     id: 'building-growth-mindset-culture',
     type: 'blog',

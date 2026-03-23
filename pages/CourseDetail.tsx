@@ -54,9 +54,13 @@ const CourseDetail: React.FC = () => {
                      <span className="bg-[#c5a059] text-white px-5 py-2 rounded-xl text-xs font-black uppercase tracking-[0.2em] mb-6 inline-block nav-font">
                         {course.category}
                      </span>
-                     <h1 className="text-4xl md:text-6xl font-black mb-8 nav-font leading-tight">
-                        {course.title.split(' ').map((word, i) => (
-                           <span key={i} className={i % 2 !== 0 ? 'font-gold' : ''}>{word} </span>
+                     <h1 className="text-4xl md:text-6xl font-black mb-8 nav-font leading-tight whitespace-pre-line">
+                        {course.title.split('\n').map((line, lineIdx) => (
+                           <div key={lineIdx}>
+                              {line.split(' ').map((word, i) => (
+                                 <span key={i} className={i % 2 !== 0 ? 'font-gold' : ''}>{word} </span>
+                              ))}
+                           </div>
                         ))}
                      </h1>
                      <p className="text-xl text-blue-100 font-light opacity-80 leading-relaxed mb-10 max-w-2xl reveal-staggered active">
@@ -94,7 +98,7 @@ const CourseDetail: React.FC = () => {
                   </div>
                   <div className="lg:w-2/5 w-full">
                      <div className="bg-white p-4 rounded-[2.5rem] shadow-2xl relative reveal-staggered active">
-                        <img src={course.image} alt={course.title} className="w-full h-[400px] object-cover rounded-[2rem] shadow-inner" loading="lazy" />
+                        <img src={course.image} alt={course.altText || course.title} className="w-full h-[400px] object-cover rounded-[2rem] shadow-inner" loading="lazy" />
                         <div className="absolute -bottom-8 -left-8 bg-white p-6 rounded-[2rem] shadow-xl border border-gray-50 hidden md:block">
                            <div className="flex items-center gap-4">
                               <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center">
@@ -241,7 +245,7 @@ const CourseDetail: React.FC = () => {
                         <div className="flex flex-col md:flex-row gap-10 items-center">
                            <div className="w-48 h-48 rounded-[2rem] overflow-hidden flex-shrink-0 shadow-lg border-4 border-gray-50">
                               <Link to={`/speakers/${course.instructor.id}`}>
-                                 <img src={course.instructor.image} alt={course.instructor.name} className="w-full h-full object-cover hover:scale-105 transition-transform" />
+                                 <img src={course.instructor.image} alt={`วิทยากร: ${course.instructor.name}`} className="w-full h-full object-cover hover:scale-105 transition-transform" />
                               </Link>
                            </div>
                            <div>

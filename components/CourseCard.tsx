@@ -7,18 +7,19 @@ interface CourseCardProps {
     title: string;
     instructor: string;
     image: string;
+    altText?: string;
     duration?: string;
     level?: string;
 }
 
-const CourseCard: React.FC<CourseCardProps> = ({ id, title, instructor, image, duration = '1 วัน', level = 'ทุกระดับ' }) => {
+const CourseCard: React.FC<CourseCardProps> = ({ id, title, instructor, image, altText, duration = '1 วัน', level = 'ทุกระดับ' }) => {
     return (
         <div className="group card-premium overflow-hidden flex flex-col h-full">
             {/* Image Container */}
             <div className="relative h-48 overflow-hidden">
                 <img
                     src={image}
-                    alt={title}
+                    alt={altText || title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

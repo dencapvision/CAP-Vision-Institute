@@ -20,7 +20,7 @@ const Home: React.FC = () => {
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80"
-            alt="Collaboration"
+            alt="CAP Vision Institute - ทีมเวิร์คและการพัฒนาองค์กร"
             className="w-full h-full object-cover scale-110 md:scale-100 transition-transform duration-[10s] opacity-30"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0f3460] via-[#0f3460]/80 to-transparent"></div>
@@ -84,30 +84,30 @@ const Home: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="card-premium group">
+            {COURSES.slice(0, 3).map((course) => (
+              <div key={course.id} className="card-premium group">
                 <div className="relative overflow-hidden aspect-[4/3]">
                   <img
-                    src={`https://images.unsplash.com/photo-${item === 1 ? '1552664730-d307ca884978' : item === 2 ? '1551434678-e076c223a692' : '1542744173-8e7e53415bb0'}?auto=format&fit=crop&q=80`}
-                    alt="Course"
+                    src={course.image}
+                    alt={course.altText || course.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute top-4 left-4 bg-[#0f3460]/90 backdrop-blur-md text-white px-4 py-1.5 rounded-full text-xs font-black tracking-widest uppercase z-10">
                     Workshop
                   </div>
                 </div>
-                <div className="p-8 md:p-10">
-                  <h3 className="text-xl md:text-2xl font-black text-[#0f3460] mb-4 nav-font group-hover:text-[#c5a059] transition-colors leading-tight">
-                    {item === 1 ? 'Dynamic Learning Design (DFA)' : item === 2 ? 'Leadership Transformation' : 'Facilitation Mastery'}
+                <div className="p-8 md:p-10 flex flex-col h-full">
+                  <h3 className="text-xl md:text-2xl font-black text-[#0f3460] mb-4 nav-font group-hover:text-[#c5a059] transition-colors leading-tight whitespace-pre-line">
+                    {course.title}
                   </h3>
                   <p className="text-gray-500 text-sm md:text-base mb-8 line-clamp-2 opacity-80 leading-relaxed font-medium">
-                    ยกระดับทักษะการเรียนรู้และการบริหารคนด้วยเทคนิค Facilitation สมัยใหม่ที่มุ่งเน้นผลลัพธ์ที่ยั่งยืน
+                    {course.description}
                   </p>
                   <div className="flex items-center justify-between pt-8 border-t border-gray-100 mt-auto">
                     <span className="text-[#0f3460] font-black nav-font">เปิดรับสมัคร</span>
-                    <button className="flex items-center gap-2 text-[#c5a059] font-black uppercase tracking-widest text-xs group-hover:gap-4 transition-all nav-font">
+                    <Link to={`/courses/${course.id}`} className="flex items-center gap-2 text-[#c5a059] font-black uppercase tracking-widest text-xs group-hover:gap-4 transition-all nav-font">
                       ดูรายละเอียด <ArrowRight className="w-4 h-4" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

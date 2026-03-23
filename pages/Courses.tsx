@@ -83,7 +83,7 @@ const Courses: React.FC = () => {
                   <div key={course.id} className="w-full flex-shrink-0 relative h-[400px] md:h-[600px]">
                     <img
                       src={course.image}
-                      alt={course.title}
+                      alt={course.altText || course.title}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0f3460]/90 via-[#0f3460]/60 to-transparent"></div>
@@ -92,7 +92,7 @@ const Courses: React.FC = () => {
                         <Star className="w-4 h-4 md:w-5 h-5 fill-[#c5a059] text-[#c5a059]" />
                         <span className="text-[#c5a059] font-bold tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-xs uppercase nav-font">หลักสูตรแนะนำ</span>
                       </div>
-                      <h2 className="text-2xl md:text-5xl font-black mb-4 md:mb-6 nav-font leading-tight !text-white drop-shadow-[0_4px_15px_rgba(0,0,0,1)]">{course.title}</h2>
+                      <h2 className="text-2xl md:text-5xl font-black mb-4 md:mb-6 nav-font leading-tight !text-white drop-shadow-[0_4px_15px_rgba(0,0,0,1)] whitespace-pre-line">{course.title}</h2>
                       <p className="text-sm md:text-xl !text-blue-50 mb-6 md:mb-8 opacity-100 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] line-clamp-2 max-w-2xl">{course.description}</p>
                       <Link to={`/courses/${course.id}`} className="bg-[#c5a059] text-white px-8 md:px-10 py-3 md:py-4 rounded-xl md:rounded-2xl font-bold inline-flex items-center gap-3 hover:bg-white hover:text-[#0f3460] transition-all nav-font group/btn text-sm md:text-base shadow-lg">
                         ดูรายละเอียด
@@ -243,7 +243,7 @@ const Courses: React.FC = () => {
                 <div className="relative h-48 md:h-64 overflow-hidden">
                   <img
                     src={course.image}
-                    alt={course.title}
+                    alt={course.altText || course.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute top-4 left-4">
@@ -253,7 +253,7 @@ const Courses: React.FC = () => {
                   </div>
                 </div>
                 <div className="p-6 md:p-10 flex flex-col flex-grow">
-                  <h3 className="text-xl md:text-2xl font-bold text-[#0f3460] mb-3 md:mb-4 group-hover:text-[#c5a059] transition-colors nav-font leading-tight">{course.title}</h3>
+                  <h3 className="text-xl md:text-2xl font-bold text-[#0f3460] mb-3 md:mb-4 group-hover:text-[#c5a059] transition-colors nav-font leading-tight whitespace-pre-line">{course.title}</h3>
                   <p className="text-gray-500 text-sm md:text-lg mb-6 md:mb-8 flex-grow leading-relaxed font-medium opacity-80 line-clamp-2 md:line-clamp-3">{course.description}</p>
                   <div className="flex items-center justify-between pt-6 md:pt-8 border-t border-gray-50">
                     <Link

@@ -8,6 +8,7 @@ export interface CourseDetailInfo {
     category: string;
     description: string;
     image: string;
+    altText?: string;
     longDescription?: string;
     objectives?: string[];
     instructor?: {
@@ -26,10 +27,11 @@ export interface CourseDetailInfo {
 export const COURSES: CourseDetailInfo[] = [
     {
         id: 'service-mind-excellence',
-        title: 'หลักสูตร ใช้หัวใจบริการ คนสำราญ งานสำเร็จ (Service Mind)',
+        title: 'ใช้หัวใจบริการ คนสำราญ งานสำเร็จ\n(Service Mind Excellence)',
         category: 'People Skills',
         description: 'สร้างความแตกต่างด้วยหัวใจบริการ พร้อมปรับบุคลิกภาพแห่งตัวตนอย่างแท้จริง',
-        image: 'https://images.unsplash.com/photo-1556740734-7f9a2b7a0f4d?auto=format&fit=crop&q=80',
+        image: 'https://images.unsplash.com/photo-1521791136064-7986c2923216?auto=format&fit=crop&q=80',
+        altText: 'หลักสูตร ใช้หัวใจบริการ คนสำราญ งานสำเร็จ - CAP Vision Institute',
         longDescription: 'หลักสูตรที่มุ่งเน้นการสร้างบุคลิกภาพแห่งตัวตน (Smart Personality) ทั้งด้านทักษะความรู้และความเข้าใจในหลักการให้บริการด้วยใจ (Service Mind) โดยใช้จิตวิทยาการบริการอย่างมีศิลปะเพื่อภาพลักษณ์องค์กรที่ดีเยี่ยม',
         duration: '1 วัน (09.00 - 16.30 น.)',
         audience: 'พนักงานส่วนหน้า (Front-line), เจ้าหน้าที่บริการลูกค้า, พนักงานทุกคนในองค์กร',
@@ -63,10 +65,11 @@ export const COURSES: CourseDetailInfo[] = [
     },
     {
         id: 'creative-problem-solving',
-        title: 'หลักสูตร การแก้ปัญหาอย่างสร้างสรรค์ (Creative Problem Solving)',
+        title: 'การแก้ปัญหาอย่างสร้างสรรค์\n(Creative Problem Solving)',
         category: 'Work Skills',
         description: 'แตกปัญหาเพื่อหาทางออกด้วยกระบวนการคิดที่เป็นระบบและสร้างสรรค์',
         image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80',
+        altText: 'หลักสูตร การแก้ปัญหาอย่างสร้างสรรค์ - CAP Vision Institute',
         longDescription: 'กระบวนการที่สอนให้เราแตกปัญหาเพื่อทำความเข้าใจ สร้างแนวคิด และประเมินความคิดเหล่านั้นเพื่อหาทางออกที่มีประสิทธิภาพสูงสุด ตามหลักสูตรระดับสากล (Buffalo College, New York)',
         duration: '1 วัน (09.00 - 16.30 น.)',
         audience: 'พนักงานระดับปฏิบัติการ, หัวหน้างาน, ผู้จัดการโครงการ',
@@ -100,10 +103,11 @@ export const COURSES: CourseDetailInfo[] = [
     },
     {
         id: 'effective-communication',
-        title: 'หลักสูตร ศิลปะการสื่อสารเพื่อประสิทธิผลงาน (Effective Communication)',
+        title: 'ศิลปะการสื่อสารเพื่อประสิทธิผลงาน\n(Effective Communication)',
         category: 'Communication Skills',
         description: 'สื่อสารอย่างมีชั้นเชิง ลดความขัดแย้ง และสร้างความร่วมมือในทีม',
         image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80',
+        altText: 'หลักสูตร ศิลปะการสื่อสารเพื่อประสิทธิผลงาน - CAP Vision Institute',
         longDescription: 'หลักสูตรที่ช่วยให้คุณเข้าใจรูปแบบการสื่อสารของตนเองและผู้อื่น พร้อมเทคนิคการฟังและการพูดที่สร้างสรรค์',
         duration: '1 วัน (09.00 - 16.30 น.)',
         audience: 'พนักงานทุกระดับ',
@@ -137,10 +141,11 @@ export const COURSES: CourseDetailInfo[] = [
     },
     {
         id: 'team-synergy',
-        title: 'หลักสูตร สร้างทีมแกร่งด้วยพลังบวก (Positive Team Synergy)',
+        title: 'สร้างทีมแกร่งด้วยพลังบวก\n(Positive Team Synergy)',
         category: 'Work Skills',
         description: 'เปลี่ยนความแตกต่างให้เป็นพลัง ผสานจุดแข็งเพื่อเป้าหมายเดียวกัน',
         image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+        altText: 'หลักสูตร สร้างทีมแกร่งด้วยพลังบวก - CAP Vision Institute',
         longDescription: 'กิจกรรม Team Building ที่เน้นกระบวนการกลุ่มสัมพันธ์และการเรียนรู้ผ่านประสบการณ์ (Experiential Learning)',
         duration: '1-2 วัน',
         audience: 'ทีมงานทุกแผนก',

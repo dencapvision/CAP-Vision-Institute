@@ -11,6 +11,12 @@ export const HRD_ARTICLES: Resource[] = [
   },
   {
     id: 'hrd-future-skills-2025',
+    type: 'blog',
+    title: 'Future Skills 2025: ทักษะแห่งอนาคตที่ผู้นำองค์กรและ HRD ต้องรู้',
+    excerpt: 'สำรวจทักษะสำคัญที่จำเป็นต่อการขับเคลื่อนองค์กรในโลกยุค BANI World พร้อมแนวทางการ Reskill และ Upskill พนักงานเพื่อให้พร้อมรับมือกับการเปลี่ยนแปลง',
+    date: '2024-03-15',
+    thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+  },
   {
     id: 'building-growth-mindset-culture',
     type: 'blog',

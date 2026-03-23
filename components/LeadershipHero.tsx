@@ -39,11 +39,11 @@ const LeadershipHero: React.FC = () => {
 
               {/* Main Headline */}
               <div className="space-y-4">
-                <h1 className="text-4xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] nav-font tracking-tight drop-shadow-2xl">
+                <h1 className="text-4xl md:text-7xl lg:text-8xl font-black !text-white leading-[1.1] nav-font tracking-tight drop-shadow-[0_8px_32px_rgba(0,0,0,0.8)]">
                   Designing <br />
                   <span className="font-gold text-5xl md:text-8xl drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]">For Action</span>
                 </h1>
-                <h2 className="text-xl md:text-3xl font-black text-blue-100/90 nav-font uppercase tracking-wider mb-2 drop-shadow-lg">
+                <h2 className="text-xl md:text-3xl font-black !text-blue-100/90 nav-font uppercase tracking-wider mb-2 drop-shadow-lg">
                   Leadership Mastery DFA
                 </h2>
               </div>

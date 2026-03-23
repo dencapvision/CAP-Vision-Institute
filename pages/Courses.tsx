@@ -86,14 +86,14 @@ const Courses: React.FC = () => {
                       alt={course.title}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0f3460] via-[#0f3460]/70 to-transparent"></div>
-                    <div className="absolute bottom-0 left-0 p-6 md:p-16 text-white max-w-3xl">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0f3460]/90 via-[#0f3460]/60 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 p-6 md:p-16 !text-white max-w-3xl">
                       <div className="flex items-center gap-2 mb-3 md:mb-4">
                         <Star className="w-4 h-4 md:w-5 h-5 fill-[#c5a059] text-[#c5a059]" />
                         <span className="text-[#c5a059] font-bold tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-xs uppercase nav-font">หลักสูตรแนะนำ</span>
                       </div>
-                      <h2 className="text-2xl md:text-5xl font-black mb-4 md:mb-6 nav-font leading-tight drop-shadow-xl">{course.title}</h2>
-                      <p className="text-sm md:text-xl text-blue-50 mb-6 md:mb-8 opacity-100 drop-shadow-md line-clamp-2 max-w-2xl">{course.description}</p>
+                      <h2 className="text-2xl md:text-5xl font-black mb-4 md:mb-6 nav-font leading-tight !text-white drop-shadow-[0_4px_15px_rgba(0,0,0,1)]">{course.title}</h2>
+                      <p className="text-sm md:text-xl !text-blue-50 mb-6 md:mb-8 opacity-100 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] line-clamp-2 max-w-2xl">{course.description}</p>
                       <Link to={`/courses/${course.id}`} className="bg-[#c5a059] text-white px-8 md:px-10 py-3 md:py-4 rounded-xl md:rounded-2xl font-bold inline-flex items-center gap-3 hover:bg-white hover:text-[#0f3460] transition-all nav-font group/btn text-sm md:text-base shadow-lg">
                         ดูรายละเอียด
                         <ArrowRight className="w-4 h-4 md:w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />

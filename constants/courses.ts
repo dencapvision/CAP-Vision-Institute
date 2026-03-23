@@ -58,7 +58,7 @@ export const COURSES: CourseDetailInfo[] = [
             id: 'den-master-fa',
             name: 'ครูเด่น มาสเตอร์ฟา',
             bio: 'ที่ปรึกษาองค์กรและนักพัฒนาทักษะการสื่อสารเพิ่มพลังบวก',
-            image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
+            image: '/images/denmasterfa.jpg'
         }
     },
     {
@@ -95,7 +95,7 @@ export const COURSES: CourseDetailInfo[] = [
             id: 'den-master-fa',
             name: 'ครูเด่น มาสเตอร์ฟา',
             bio: 'นักออกแบบกระบวนการเรียนรู้ (Dynamic Learning Designer)',
-            image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
+            image: '/images/denmasterfa.jpg'
         }
     },
     {
@@ -132,7 +132,7 @@ export const COURSES: CourseDetailInfo[] = [
             id: 'den-master-fa',
             name: 'ครูเด่น มาสเตอร์ฟา',
             bio: 'ผู้เชี่ยวชาญด้านการสื่อสารและการพัฒนาทีม',
-            image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
+            image: '/images/denmasterfa.jpg'
         }
     },
     {

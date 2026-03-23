@@ -6,6 +6,7 @@ import { COURSES } from '../constants/courses';
 import Logo from '../components/Logo';
 import ClientsSection from '../components/ClientsSection';
 import SEO from '../components/SEO';
+import LeadershipHero from '../components/LeadershipHero';
 
 const Home: React.FC = () => {
   return (
@@ -15,57 +16,7 @@ const Home: React.FC = () => {
         description="CAP Vision Institute สถาบันฝึกอบรมระดับมืออาชีพ ผู้นำด้าน Transformative Learning นำโดย ครูเด่น (อนุสรณ์ หนองนา) และ Master Fa"
       />
 
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] md:min-h-screen flex items-center overflow-hidden bg-[#0f3460] pt-16 md:pt-0">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80"
-            alt="Collaboration"
-            className="w-full h-full object-cover scale-110 md:scale-100 transition-transform duration-[10s] opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0f3460] via-[#0f3460]/80 to-transparent"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(197,160,89,0.1),transparent_70%)]"></div>
-          <div className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 bg-[#c5a059]/10 rounded-full blur-[120px] animate-pulse"></div>
-          <div className="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 bg-blue-400/5 rounded-full blur-[120px]"></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 md:py-24">
-          <div className="max-w-4xl">
-            <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full mb-8 md:mb-10 animate-fade-in-down">
-              <span className="w-2 h-2 bg-[#c5a059] rounded-full animate-ping"></span>
-              <span className="text-white/80 font-bold tracking-[0.2em] text-[10px] md:text-sm nav-font uppercase leading-none mt-0.5">
-                CAP Vision Institute
-              </span>
-            </div>
-
-            <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white leading-[1.05] mb-8 md:mb-12 nav-font tracking-tight">
-              Transform <span className="font-gold block md:inline">People</span><br className="hidden md:block" />
-              <span className="md:ml-16 lg:ml-20">Transform <span className="font-gold">Organization</span></span>
-            </h1>
-
-            <p className="text-base md:text-xl lg:text-2xl text-blue-50 leading-relaxed mb-10 md:mb-16 font-light opacity-80 max-w-2xl">
-              <span>“Transform People, Transform Organization.”</span> <br className="hidden md:block" />
-              <span className="font-medium text-white/90">ปลดล็อคศักยภาพมนุษย์ด้วยกระบวนการเรียนรู้ระดับพรีเมี่ยม</span> <br />
-              <span className="text-[#c5a059] font-bold">โดย ครูเด่น มาสเตอร์ฟา [Master Facilitator]</span>
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/courses" className="btn-premium bg-[#c5a059] text-white px-8 md:px-12 py-4 md:py-5 rounded-2xl font-black text-base md:text-lg transition-all flex items-center justify-center gap-3 group shadow-2xl nav-font active:scale-95">
-                เลือกหลักสูตรฝึกอบรม
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-              </Link>
-              <Link to="/contact" className="btn-premium bg-white/5 backdrop-blur-xl text-white border-2 border-white/20 px-8 md:px-12 py-4 md:py-5 rounded-2xl font-black text-base md:text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-3 nav-font active:scale-95">
-                ขอใบเสนอราคา
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-3 text-white/40">
-          <span className="text-[10px] items-center font-bold tracking-widest uppercase rotate-90 origin-left translate-x-3 mb-8">Scroll</span>
-          <div className="w-0.5 h-16 bg-gradient-to-b from-white/40 to-transparent"></div>
-        </div>
-      </section>
+      <LeadershipHero />
 
       {/* Featured Courses Section */}
       <section className="py-24 md:py-32 bg-white relative">

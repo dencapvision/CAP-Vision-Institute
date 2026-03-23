@@ -20,6 +20,7 @@ interface LeadData {
   company: string;
   email: string;
   phone: string;
+  line_id: string;
   interest_topic: string;
 }
 
@@ -75,6 +76,7 @@ const AIAgent: React.FC = () => {
       company: '',
       email: '',
       phone: '',
+      line_id: '',
       interest_topic: topic || 'Custom Course Design',
     });
 
@@ -82,20 +84,42 @@ const AIAgent: React.FC = () => {
       e.preventDefault();
       setIsSubmittingLead(true);
       try {
+        // 1. Save to Supabase Leads table
         const { error } = await supabase.from('leads').insert([{
           name: formData.name,
           company: formData.company,
           email: formData.email,
           phone: formData.phone,
+          line_id: formData.line_id,
           interest_topic: formData.interest_topic,
           source: 'ai_agent_form'
         }]);
 
         if (error) throw error;
 
+        // 2. Send LINE Notification via Edge Function
+        try {
+          await supabase.functions.invoke('line-notify', {
+            body: { 
+              formType: 'AI Agent Lead (Custom Course)', 
+              data: {
+                'ชื่อ-นามสกุล': formData.name,
+                'หน่วยงาน/บริษัท': formData.company,
+                'อีเมล': formData.email,
+                'เบอร์โทรศัพท์': formData.phone,
+                'Line ID': formData.line_id,
+                'หัวข้อที่สนใจ': formData.interest_topic
+              } 
+            }
+          });
+        } catch (lineErr) {
+          console.error('Failed to send LINE notification:', lineErr);
+          // Don't block the user if only notification fails
+        }
+
         setMessages(prev => [...prev, {
           role: 'assistant',
-          content: '✅ **ได้รับข้อมูลเรียบร้อยแล้วครับ!**\n\nขอบคุณที่ไว้วางใจให้ทีมงานครูเด่นช่วยดูแลนะครับ เราจะติดต่อกลับเพื่อพูดคุยรายละเอียดเบื้องต้นภายใน 24 ชั่วโมงครับ 🙏\n\nระหว่างนี้สามารถดูหลักสูตรอื่นๆ รอได้เลยนะครับ 👇',
+          content: '✅ **ได้รับข้อมูลเรียบร้อยแล้วครับ!**\n\nขอบคุณที่ไว้วางใจให้ทีมงานครูเด่นช่วยดูแลนะครับ เราจะติดต่อกลับทาง Email/Line เพื่อพูดคุยรายละเอียดเบื้องต้นภายใน 24 ชั่วโมงครับ 🙏\n\nระหว่างนี้สามารถดูหลักสูตรอื่นๆ รอได้เลยนะครับ 👇',
           type: 'action-buttons'
         }]);
       } catch (err) {
@@ -138,10 +162,17 @@ const AIAgent: React.FC = () => {
           <input
             required
             type="email"
-            placeholder="อีเมล"
+            placeholder="อีเมล (E-mail)"
             className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-[#0f3460] outline-none"
             value={formData.email}
             onChange={e => setFormData({ ...formData, email: e.target.value })}
+          />
+          <input
+            required
+            placeholder="Line ID"
+            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-[#0f3460] outline-none"
+            value={formData.line_id}
+            onChange={e => setFormData({ ...formData, line_id: e.target.value })}
           />
           <button
             type="submit"
@@ -163,8 +194,8 @@ const AIAgent: React.FC = () => {
     // Intent Flags - Exact Button Matches first
     const isViewCourses = q.includes('ดูหลักสูตร') || q.includes('courses');
     const isAbout = q.includes('รู้จักครูเด่น') || q.includes('ครูเด่นคือใคร') || q.includes('วิทยากร') || q.includes('ประวัติ');
-    const isCustom = q.includes('ออกแบบเฉพาะ') || q.includes('custom');
-    const isQuote = q.includes('ราคา') || q.includes('เสนอราคา') || q.includes('quotation') || q.includes('งบประมาณ') || q.includes('จ้าง') || q.includes('ค่าใช้จ่าย');
+    const isCustom = q.includes('ออกแบบเฉพาะ') || q.includes('ออกแบบให้') || q.includes('custom') || q.includes('บริษัทผม') || q.includes('สำหรับองค์กร');
+    const isQuote = q.includes('ราคา') || q.includes('เสนอราคา') || q.includes('quotation') || q.includes('งบประมาณ') || q.includes('จ้าง') || q.includes('ค่าใช้จ่าย') || q.includes('กี่บาท');
     
     const isGreeting = (q.includes('สวัสดี') || q.includes('hi') || q.includes('hello')) && messages.length < 3;
     const isProblem = !isViewCourses && !isAbout && !isCustom && !isQuote && 

@@ -38,7 +38,9 @@ export const SPEAKERS: Speaker[] = [
         ],
         socials: {
             line: '@denmasterfa',
-            facebook: 'thecapvision'
+            facebook: 'cheumkon'
+            instagram: 'denmasterfa' 
+            tiktok: '@denmasterfa'
         }
     }
 ];

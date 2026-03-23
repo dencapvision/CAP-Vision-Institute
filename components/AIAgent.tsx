@@ -22,6 +22,7 @@ interface LeadData {
   phone: string;
   line_id: string;
   interest_topic: string;
+  requirements: string;
 }
 
 // ===== CONSTANTS =====
@@ -78,6 +79,7 @@ const AIAgent: React.FC = () => {
       phone: '',
       line_id: '',
       interest_topic: topic || 'Custom Course Design',
+      requirements: '',
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -85,17 +87,21 @@ const AIAgent: React.FC = () => {
       setIsSubmittingLead(true);
       try {
         // 1. Save to Supabase Leads table
-        const { error } = await supabase.from('leads').insert([{
+        const { error: dbError } = await supabase.from('leads').insert([{
           name: formData.name,
           company: formData.company,
           email: formData.email,
           phone: formData.phone,
           line_id: formData.line_id,
           interest_topic: formData.interest_topic,
+          notes: formData.requirements,
           source: 'ai_agent_form'
         }]);
 
-        if (error) throw error;
+        if (dbError) {
+          console.error('Supabase leads insert error:', dbError);
+          throw dbError;
+        }
 
         // 2. Send LINE Notification via Edge Function
         try {
@@ -108,7 +114,8 @@ const AIAgent: React.FC = () => {
                 'อีเมล': formData.email,
                 'เบอร์โทรศัพท์': formData.phone,
                 'Line ID': formData.line_id,
-                'หัวข้อที่สนใจ': formData.interest_topic
+                'หัวข้อที่สนใจ': formData.interest_topic,
+                'รายละเอียดเพิ่มเติม': formData.requirements
               } 
             }
           });
@@ -173,6 +180,14 @@ const AIAgent: React.FC = () => {
             className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-[#0f3460] outline-none"
             value={formData.line_id}
             onChange={e => setFormData({ ...formData, line_id: e.target.value })}
+          />
+          <textarea
+            required
+            placeholder="หัวข้อที่สนใจ/เป้าหมายที่ต้องการพัฒนา/จำนวนผู้เข้าอบรม/ช่วงเวลาสะดวก"
+            rows={3}
+            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-[#0f3460] outline-none resize-none"
+            value={formData.requirements}
+            onChange={e => setFormData({ ...formData, requirements: e.target.value })}
           />
           <button
             type="submit"

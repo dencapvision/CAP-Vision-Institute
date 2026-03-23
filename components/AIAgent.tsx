@@ -194,7 +194,7 @@ const AIAgent: React.FC = () => {
     // Intent Flags - Exact Button Matches first
     const isViewCourses = q.includes('ดูหลักสูตร') || q.includes('courses');
     const isAbout = q.includes('รู้จักครูเด่น') || q.includes('ครูเด่นคือใคร') || q.includes('วิทยากร') || q.includes('ประวัติ');
-    const isCustom = q.includes('ออกแบบเฉพาะ') || q.includes('ออกแบบให้') || q.includes('custom') || q.includes('บริษัทผม') || q.includes('สำหรับองค์กร');
+    const isCustom = q.includes('ออกแบบเฉพาะ') || q.includes('ออกแบบให้') || q.includes('custom') || q.includes('บริษัทผม') || q.includes('สำหรับองค์กร') || q.includes('เฉพาะองค์กร') || q.includes('พัฒนาหลักสูตร') || q.includes('ขอแบบฟอร์ม') || q.includes('ส่งข้อมูล');
     const isQuote = q.includes('ราคา') || q.includes('เสนอราคา') || q.includes('quotation') || q.includes('งบประมาณ') || q.includes('จ้าง') || q.includes('ค่าใช้จ่าย') || q.includes('กี่บาท');
     
     const isGreeting = (q.includes('สวัสดี') || q.includes('hi') || q.includes('hello')) && messages.length < 3;

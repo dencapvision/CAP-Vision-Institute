@@ -1,195 +1,49 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   MessageCircle, X, Send, ExternalLink,
   BookOpen, Users, Phone, ChevronRight,
-  Sparkles, GraduationCap, Target
+  Sparkles, GraduationCap, Target, Save, Loader2, CheckCircle2
 } from 'lucide-react';
 import { CONTACT_INFO } from '../constants/brand';
 import { COURSES } from '../constants/courses';
+import { supabase } from '../lib/supabaseClient';
 
 // ===== TYPES =====
 interface Message {
   role: 'user' | 'assistant';
   content: string;
-  type?: 'text' | 'course-cards' | 'action-buttons';
+  type?: 'text' | 'course-cards' | 'action-buttons' | 'lead-form' | 'success';
 }
 
-// ===== COURSE RECOMMENDATION MAP =====
-const CATEGORY_KEYWORDS: Record<string, string[]> = {
-  'service-mind-excellence': [
-    'service mind', 'บริการ', 'ลูกค้า', 'front-line', 'customer', 'พนักงานบริการ', 'ต้อนรับ',
-  ],
-  'creative-problem-solving': [
-    'แก้ปัญหา', 'problem solving', 'creative', 'สร้างสรรค์', 'ปัญหา', 'คิดนอกกรอบ',
-  ],
-  'effective-communication': [
-    'สื่อสาร', 'communication', 'พูด', 'ฟัง', 'ความขัดแย้ง', 'disc', 'feedback',
-  ],
-  'team-synergy': [
-    'team building', 'ทีม', 'team', 'ความสามัคคี', 'ทำงานร่วมกัน', 'synergy',
-  ],
-};
+interface LeadData {
+  name: string;
+  company: string;
+  email: string;
+  phone: string;
+  interest_topic: string;
+}
 
-// ===== SYSTEM PERSONA PROMPTS =====
+// ===== CONSTANTS =====
 const QUICK_REPLIES = [
   { label: '📚 ดูหลักสูตรทั้งหมด', action: 'courses' },
+  { label: '📐 ออกแบบหลักสูตรเฉพาะองค์กร', action: 'custom' },
   { label: '💬 ขอใบเสนอราคา', action: 'quote' },
   { label: '🧑‍🏫 รู้จักครูเด่น', action: 'about' },
-  { label: '🏆 ผลงานองค์กร', action: 'portfolio' },
 ];
 
-// ===== CORE RESPONSE ENGINE & CONTEXT TRACKING =====
-// Track basic conversation state to make it feel more natural (like a doctor's visit)
-let conversationState = {
-  step: 'intake', // intake -> diagnosis -> prescription -> checkout
-  topic: '',
-};
-
-function generateResponse(input: string, prevMessages?: Message[]): string {
-  const q = input.toLowerCase();
-
-  // 1. Analyze user intent
-  const isGreeting = q.includes('สวัสดี') || q.includes('ทักทาย') || q.includes('hi') || q.includes('hello');
-  const isProblem = q.includes('ปัญหา') || q.includes('ไม่') || q.includes('ขาด') || q.includes('ต้องการพัฒนา') || q.includes('อยากพัฒนา');
-  const isQuote = q.includes('ราคา') || q.includes('เสนอราคา') || q.includes('quotation') || q.includes('งบประมาณ') || q.includes('จ้าง') || q.includes('ค่าใช้จ่าย');
-  const isCourse = q.includes('หลักสูตร') || q.includes('อบรม') || q.includes('training') || q.includes('in-house');
-
-  // Identify topics
-  if (q.includes('service') || q.includes('บริการ') || q.includes('ลูกค้า')) conversationState.topic = 'service';
-  if (q.includes('team') || q.includes('ทีม') || q.includes('สามัคคี') || q.includes('ร่วมมือ')) conversationState.topic = 'team';
-  if (q.includes('ผู้นำ') || q.includes('หัวหน้า') || q.includes('leadership') || q.includes('management')) conversationState.topic = 'leadership';
-  if (q.includes('พูด') || q.includes('สื่อสาร') || q.includes('คุย') || q.includes('communication')) conversationState.topic = 'communication';
-  if (q.includes('growth') || q.includes('mindset') || q.includes('ทัศนคติ') || q.includes('เปลี่ยนแปลง')) conversationState.topic = 'mindset';
-
-  // --- STEP 0: Greetings & Quick Actions ---
-  if (isGreeting && (!prevMessages || prevMessages.length < 3)) {
-    return `สวัสดีครับ! ยินดีที่ได้รู้จักครับ ผม "ครูเด่น (AI)" ผู้ช่วยของ CAP Vision Institute 😊
-    
-เพื่อจะได้แนะนำได้อย่างเหมาะสมที่สุด... ตอนนี้ที่องค์กรกำลังมองหาการพัฒนาทีมงานด้านไหนเป็นพิเศษไหมครับ? (เช่น เรื่องบริการ, การทำงานเป็นทีม, หรือภาวะผู้นำ)`;
-  }
-
-  if (isQuote) {
-    conversationState.step = 'checkout';
-    return `ยินดีครับ เรื่องค่าใช้จ่ายหรือขอใบเสนอราคา (In-house Training) ขั้นตอนง่ายมากครับ 📋
-
-**ขั้นแรก** รบกวนแจ้งกรอบเบื้องต้นนิดนึงครับ:
-1. จัดให้แผนกไหน หรือระดับใด (พนักงาน / หัวหน้างาน)?
-2. ผู้เข้าร่วมประมาณกี่ท่านครับ?
-3. อยากให้เน้นทักษะอะไรเป็นพิเศษไหมครับ?
-
-คุณสามารถพิมพ์ตอบผมที่นี่ หรือสะดวกส่งเข้า **LINE: @denmasterfa** เพื่อให้ทีมงานส่งใบเสนอราคาอย่างเป็นทางการให้ภายใน 24 ชม. ได้เลยนะครับ 👇`;
-  }
-
-  if (q.includes('ครูเด่นคือใคร') || q.includes('about') || q.includes('วิทยากร') || q.includes('ครูเด่น') || q.includes('ประวัติ')) {
-    return `ยินดีแนะนำตัวครับ! 😄
-
-**อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)**
-ผู้อำนวยการ CAP Vision Institute และ Master Facilitator 
-
-ด้วยประสบการณ์กว่า **18 ปี** ในการพัฒนาคนให้กับระดับองค์กรใหญ่ๆ เช่น Toyota, PEA, AOT... ครูเด่นเน้นการสอนแบบ **Transformative Learning** — ไม่ใช่แค่นั่งฟังเลกเชอร์ แต่เปลี่ยนทัศนคติและพฤติกรรมผ่านกิจกรรม (Tools) ที่สนุกและลึกซึ้งครับ
-
-อยากคุยกับครูเด่นโดยตรง ทัก LINE: @denmasterfa ได้เลยนะครับ 🙏`;
-  }
-
-  if (q.includes('ติดต่อ') || q.includes('line') || q.includes('โทร') || q.includes('facebook') || q.includes('สอบถาม')) {
-    return `ช่องทางติดต่อ CAP Vision Institute ทั้งหมดครับ 📞
-
-💬 **LINE OA:** @denmasterfa  
-🔗 **Link:** https://lin.ee/zRTBF6K  
-📞 **โทร:** 093-223-5919  
-📧 **Email:** dencapvision@gmail.com  
-
-**สำหรับ HRD / ฝ่ายพัฒนาบุคลากร** แนะนำส่งรายละเอียดโจทย์มาทาง LINE นะครับ จะได้รับการตอบสนองเร็วที่สุด! 🚀`;
-  }
-
-  // --- STEP 1: Intake (ซักประวัติ / อาการ) ---
-  if (isProblem || (isCourse && conversationState.step === 'intake')) {
-    conversationState.step = 'diagnosis';
-    
-    if (conversationState.topic) {
-      const topicName = conversationState.topic === 'team' ? 'การสร้างทีม' 
-                      : conversationState.topic === 'service' ? 'การบริการลูกค้า' 
-                      : conversationState.topic === 'leadership' ? 'การบริหารและภาวะผู้นำ' 
-                      : conversationState.topic === 'mindset' ? 'ทัศนคติ Mindset'
-                      : 'การสื่อสารประสานงาน';
-
-      return `เข้าใจเลยครับ ปัญหาเรื่อง${topicName}เป็นเรื่องที่หลายองค์กรเจอเหมือนกันเลย 💡
-
-เพื่อให้ผม (ในฐานะคู่คิด) ช่วย "วินิจฉัย" และจัดโครงสร้างการเรียนรู้ให้ตรงจุดที่สุด... ลองเล่าให้ผมฟังอีกนิดได้ไหมครับว่า **พฤติกรรมแบบไหนที่อยากเห็นการเปลี่ยนแปลงมากที่สุดหลังจบการอบรมครับ?** (เช่น อยากให้คุยกันมากขึ้น หรือแก้ปัญหาเก่งขึ้น)`;
-    }
-
-    return `ยินดีครับ! 🎯 ผมมีหลักสูตรครอบคลุมครบ 4 ด้าน (People, Work, Communication, Leader Skills)
-
-แต่เพื่อให้แนะนําได้เป๊ะที่สุด เหมือนเวลาไปหาหมอเลย... ถ้ารู้ "อาการ" ชัดเจน ก็จะจ่ายยาได้ตรงจุด 🩺
-    
-ตอนนี้ "อาการ" หรือความท้าทายหลักๆ ที่ทีมงานกำลังเจออยู่คือเรื่องไหนครับ? 
-- (ก) สื่อสารกันไม่ค่อยเข้าใจ
-- (ข) ขาดแรงจูงใจในการทำงาน/อยากพัฒนาหัวหน้า
-- (ค) บริการลูกค้ายังไม่ประทับใจ
-- (ง) อื่นๆ ลองเล่ามาได้เลยครับ!`;
-  }
-
-  // --- STEP 2: Diagnosis & Prescription (วินิจฉัยและสั่งยา) ---
-  if (conversationState.step === 'diagnosis' || (conversationState.topic && !isGreeting && !isQuote)) {
-    conversationState.step = 'prescription';
-    
-    let recommendation = '';
-    let details = '';
-
-    if (conversationState.topic === 'service' || q.includes('ค') || q.includes('บริการ')) {
-      recommendation = `หลักสูตร **"ใช้หัวใจบริการ คนสำราญ งานสำเร็จ"**`;
-      details = `เน้นแก้ปัญหาตั้งแต่ Mindset ไปสู่การรับมือกับเคสลูกค้าตัวจริง สร้าง Smart Personality และ Empathy ครับ`;
-    } else if (conversationState.topic === 'team' || q.includes('ก') || q.includes('สื่อสาร')) {
-      recommendation = `หลักสูตร **"สร้างทีมแกร่งด้วยพลังบวก (Positive Team Synergy)"**`;
-      details = `เราจะไม่เอาแต่เล่นเกมสนุกสนาน แต่จะใช้ Activity ดึงปมปัญหาในใจออกมาคลายด้วยกระบวนการ Facilitation เน้น 3 เสาหลัก: Trust → Communication → Shared Goal ครับ`;
-    } else if (conversationState.topic === 'leadership' || conversationState.topic === 'mindset' || q.includes('ข')) {
-      recommendation = `หลักสูตร **"Leadership Mastery"** หรือ **"Growth Mastery Workshop"**`;
-      details = `เปลี่ยนจากคนเก่งงาน ให้เป็นคนเก่งคนครับ ปลดล็อคศักยภาพทีมด้วย Mindset ที่ถูกต้อง และเรียนรู้การเป็นผู้นำที่ใช้คำถาม (Facilitation) ครับ`;
-    } else {
-      recommendation = `หลักสูตร **Custom Course Design**`;
-      details = `ถ้าเป็นโจทย์เฉพาะตัวแบบนี้ ผมแนะนำให้เราออกแบบใหม่เลยดีกว่าครับ! (เหมือนตัดเสื้อให้พอดีตัวองค์กรคุณเลย) จะได้แก้ปัญหาได้ตรงจุดที่สุดครับ`;
-    }
-
-    return `คำตอบนี้ช่วยให้เห็นภาพชัดขึ้นมากครับ! ขอบคุณที่แชร์นะครับ 🙏
-
-จากโจทย์ที่คุณเล่ามา ผมขอ "สั่งยา" เป็นตัวนี้ครับ:
-🎯 **${recommendation}**
-
-${details}
-
-ผมสามารถส่ง **Course Outline (โครงสร้างหลักสูตร)** เบื้องต้นแบบ 1 วันเต็มให้คุณดูคร่าวๆ ก่อนเอาไปพิจารณากับผู้บริหารได้นะครับ... **สนใจรับ Outline ไปดูก่อนไหมครับ?**`;
-  }
-
-  // --- STEP 3: Next Steps (นัดหมาย / จบกระบวนการ) ---
-  if (conversationState.step === 'prescription' && (q.includes('สนใจ') || q.includes('เอา') || q.includes('ได้') || q.includes('outline') || q.includes('ส่ง') || q.includes('รับ'))) {
-    conversationState.step = 'checkout';
-    return `เยี่ยมเลยครับ! 📝 
-
-เพื่อมอบประสบการณ์ที่ดีที่สุด และส่ง Course Outline ที่เจาะจงเฉพาะปัญหาที่คุณเพิ่งเล่าให้ฟัง แปะไปให้...
-
-รบกวนขอ **ชื่อหน่วยงาน/องค์กร** และ **แอด LINE: @denmasterfa** มารับ Outline ทางไลน์ได้เลยครับ 👇
-
-ทีมงานครูเด่น สแตนด์บายพร้อมส่งให้ภายในวันนี้เลยครับ!`;
-  }
-
-  // --- Default Fallback (General Conversation / Open Questions) ---
-  const defaults = [
-    'เข้าใจเลยครับ... แล้วในมุมของคุณ คิดว่าอุปสรรคที่ใหญ่ที่สุดของการพัฒนาเรื่องนี้คืออะไรหรือครับ? 🤔',
-    'น่าสนใจมากครับ ลองขยายความตรงนี้อีกนิดได้ไหมครับ เพื่อที่ผมจะได้แนะนำสิ่งที่เหมาะสมที่สุดให้?',
-    'เป็นมุมมองที่ดีมากครับ! ในฐานะที่ปรึกษา... ผมอยากรู้ว่าเป้าหมายสูงสุดที่คุณอยากเห็นทีมเปลี่ยนแปลงไปคืออะไรครับ? 🌟',
-    'รับทราบครับ! ทุกโจทย์มีทางออกเสมอ... ให้ผมช่วยส่งข้อมูลที่เกี่ยวข้องให้ทางช่องทางไหนดีครับ? (LINE หรือ Email ดีครับ) 👇'
-  ];
-  return defaults[Math.floor(Math.random() * defaults.length)];
-}
-
-// ===== MAIN COMPONENT =====
 const AIAgent: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isSubmittingLead, setIsSubmittingLead] = useState(false);
+  
   const chatEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const conversationState = useRef({
+    step: 'intake', // intake -> diagnosis -> prescription -> checkout
+    topic: '',
+  });
 
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -197,19 +51,16 @@ const AIAgent: React.FC = () => {
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      // Reset state on open
-      conversationState = { step: 'intake', topic: '' };
-      
+      conversationState.current = { step: 'intake', topic: '' };
       setMessages([
         {
           role: 'assistant',
-          content:
-            'สวัสดีครับ! 👋 ยินดีต้อนรับสู่คลินิกพัฒนาศักยภาพองค์กรของ **CAP Vision Institute** นะครับ\n\nผม "ครูเด่น (AI)" รับหน้าที่เป็นที่ปรึกษาเบื้องต้น... วันนี้มี "อาการ" หรือทีมงานกำลังมีโจทย์ด้านไหน ให้ผมช่วยวินิจฉัยและแนะนำหลักสูตรดีครับ? 🩺\n\n(เช่น: ทีมสื่อสารไม่เข้าใจกัน, พนักงานบริการไม่ประทับใจ, หรืออยากสร้างความเป็นผู้นำ)',
+          content: 'สวัสดีครับ! 👋 ยินดีต้อนรับสู่คลินิกพัฒนาศักยภาพองค์กรของ **CAP Vision Institute** นะครับ\n\nผม "ครูเด่น (AI)" รับหน้าที่เป็นที่ปรึกษาเบื้องต้น... วันนี้มี "อาการ" หรือทีมงานกำลังมีโจทย์ด้านไหน ให้ผมช่วยวินิจฉัยและแนะนำหลักสูตรดีครับ? 🩺\n\n(เช่น: ทีมสื่อสารไม่เข้าใจกัน, พนักงานบริการไม่ประทับใจ, หรืออยากสร้างความเป็นผู้นำ)',
         },
       ]);
     }
     scrollToBottom();
-  }, [isOpen, messages]);
+  }, [isOpen, messages.length]);
 
   useEffect(() => {
     if (isOpen) {
@@ -217,216 +68,319 @@ const AIAgent: React.FC = () => {
     }
   }, [isOpen]);
 
+  // Lead Form Component
+  const LeadForm = ({ topic }: { topic: string }) => {
+    const [formData, setFormData] = useState<LeadData>({
+      name: '',
+      company: '',
+      email: '',
+      phone: '',
+      interest_topic: topic || 'Custom Course Design',
+    });
+
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      setIsSubmittingLead(true);
+      try {
+        const { error } = await supabase.from('leads').insert([{
+          name: formData.name,
+          company: formData.company,
+          email: formData.email,
+          phone: formData.phone,
+          interest_topic: formData.interest_topic,
+          source: 'ai_agent_form'
+        }]);
+
+        if (error) throw error;
+
+        setMessages(prev => [...prev, {
+          role: 'assistant',
+          content: '✅ **ได้รับข้อมูลเรียบร้อยแล้วครับ!**\n\nขอบคุณที่ไว้วางใจให้ทีมงานครูเด่นช่วยดูแลนะครับ เราจะติดต่อกลับเพื่อพูดคุยรายละเอียดเบื้องต้นภายใน 24 ชั่วโมงครับ 🙏\n\nระหว่างนี้สามารถดูหลักสูตรอื่นๆ รอได้เลยนะครับ 👇',
+          type: 'action-buttons'
+        }]);
+      } catch (err) {
+        console.error('Lead submission error:', err);
+        alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง หรือติดต่อทาง LINE ครับ');
+      } finally {
+        setIsSubmittingLead(false);
+      }
+    };
+
+    return (
+      <div className="bg-white border border-blue-100 rounded-2xl p-4 shadow-sm space-y-3 mt-2 w-full">
+        <div className="flex items-center gap-2 text-[#0f3460] mb-2">
+          <GraduationCap className="w-5 h-5" />
+          <span className="font-black text-sm">ข้อมูลสำหรับออกแบบหลักสูตร</span>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <input
+            required
+            placeholder="ชื่อ-นามสกุล"
+            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-[#0f3460] outline-none"
+            value={formData.name}
+            onChange={e => setFormData({ ...formData, name: e.target.value })}
+          />
+          <input
+            required
+            placeholder="ชื่อหน่วยงาน/บริษัท"
+            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-[#0f3460] outline-none"
+            value={formData.company}
+            onChange={e => setFormData({ ...formData, company: e.target.value })}
+          />
+          <input
+            required
+            type="tel"
+            placeholder="เบอร์โทรศัพท์"
+            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-[#0f3460] outline-none"
+            value={formData.phone}
+            onChange={e => setFormData({ ...formData, phone: e.target.value })}
+          />
+          <input
+            required
+            type="email"
+            placeholder="อีเมล"
+            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-[#0f3460] outline-none"
+            value={formData.email}
+            onChange={e => setFormData({ ...formData, email: e.target.value })}
+          />
+          <button
+            type="submit"
+            disabled={isSubmittingLead}
+            className="w-full bg-gradient-to-r from-[#0f3460] to-[#1a4d8c] text-white py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:opacity-90 transition-all disabled:opacity-50"
+          >
+            {isSubmittingLead ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+            {isSubmittingLead ? 'กำลังส่ง...' : 'ส่งข้อมูลให้ทีมงาน'}
+          </button>
+        </form>
+      </div>
+    );
+  };
+
+  const generateDynamicResponse = useCallback((input: string): Message => {
+    const q = input.toLowerCase();
+    const state = conversationState.current;
+
+    // Intent Flags
+    const isProblem = q.includes('ปัญหา') || q.includes('ไม่') || q.includes('ขาด') || q.includes('ต้องการพัฒนา') || q.includes('อยากพัฒนา');
+    const isQuote = q.includes('ราคา') || q.includes('เสนอราคา') || q.includes('quotation') || q.includes('งบประมาณ') || q.includes('จ้าง') || q.includes('ค่าใช้จ่าย');
+    const isGreeting = (q.includes('สวัสดี') || q.includes('hi') || q.includes('hello')) && messages.length < 3;
+
+    // Topic Identification (Update state)
+    if (q.includes('service') || q.includes('บริการ') || q.includes('ลูกค้า')) state.topic = 'service';
+    else if (q.includes('team') || q.includes('ทีม') || q.includes('สามัคคี') || q.includes('ร่วมมือ')) state.topic = 'team';
+    else if (q.includes('ผู้นำ') || q.includes('หัวหน้า') || q.includes('leadership') || q.includes('management')) state.topic = 'leadership';
+    else if (q.includes('พูด') || q.includes('สื่อสาร') || q.includes('คุย') || q.includes('communication')) state.topic = 'communication';
+
+    // 1. GREETING
+    if (isGreeting) {
+      return {
+        role: 'assistant',
+        content: 'สวัสดีครับ! ยินดีที่ได้พบกันครับ ผม **"ครูเด่น (AI)"** ที่ปรึกษาจาก CAP Vision Institute ครับ 😊\n\nเพื่อให้ผมแนะนำได้ตรงจุดที่สุด... ตอนนี้องค์กรของคุณกำลังมองหาการพัฒนาทีมงานในด้านไหนเป็นพิเศษอยู่ไหมครับ? หรือมี "โจทย์" อะไรที่อยากให้ผมช่วยแชร์ไอเดียไหมครับ?'
+      };
+    }
+
+    // 2. QUOTE / CUSTOM PATH
+    if (isQuote || q.includes('custom') || q.includes('ออกแบบเฉพาะ')) {
+      state.step = 'checkout';
+      return {
+        role: 'assistant',
+        content: 'ยินดีเลยครับ! สำหรับการ **ออกแบบหลักสูตรเฉพาะองค์กร (Custom Course Design)** นั้น ทีมงานเราจะทำการวิเคราะห์โจทย์ร่วมกันกับคุณ เพื่อสร้างโครงสร้างที่แก้ปัญหานั้นๆ ได้จริงครับ\n\nหากคุณต้องการให้เราช่วยประเมินแผนงานเบื้องต้นหรือส่งใบเสนอราคาให้ **รบกวนกรอกข้อมูลในฟอร์มด้านล่างนี้** ได้เลยนะครับ แล้วทีมงานจะรีบติดต่อกลับไปครับ 👇',
+        type: 'lead-form'
+      };
+    }
+
+    // 3. ABOUT KRU DEN
+    if (q.includes('ครูเด่นคือใคร') || q.includes('วิทยากร') || q.includes('ประวัติ')) {
+      return {
+        role: 'assistant',
+        content: 'ยินดีแนะนำตัวครับ! 😄\n\n**อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)**\nผู้อำนวยการ CAP Vision Institute และ Master Facilitator ที่มีประสบการณ์กว่า **18 ปี**\n\nครูเด่นเชี่ยวชาญการสอนแบบ **Transformative Learning** โดยเน้นการใช้กิจกรรมเป็นเครื่องมือเพื่อสร้าง Insight และเปลี่ยนทัศนคติในระดับจิตสำนึกครับ\n\nหากต้องการดูหลักสูตรที่ครูเด่นสอน หรือขอข้อมูลประวัติ (Profile) เพิ่มเติม เลือกด้านล่างได้เลยนะครับ 📂',
+        type: 'action-buttons'
+      };
+    }
+
+    // 4. INTAKE / DIAGNOSIS (Problem identified)
+    if (isProblem || (state.step === 'intake' && q.includes('หลักสูตร'))) {
+      state.step = 'diagnosis';
+      const topics = {
+        'service': 'การบริการที่ประทับใจ',
+        'team': 'การสร้างทีมเวิร์คที่ทรงพลัง',
+        'leadership': 'ภาวะผู้นำและการบริหาร',
+        'communication': 'การสื่อสารและประสานงาน'
+      };
+      //@ts-ignore
+      const topicLabel = topics[state.topic] || 'การพัฒนาบุคลากร';
+      
+      return {
+        role: 'assistant',
+        content: `เข้าใจเลยครับ เรื่อง **${topicLabel}** เป็นโจทย์ที่สำคัญมากในปัจจุบัน... 💡\n\nเพื่อให้ผมช่วยวินิจฉัย "อาการ" ได้แม่นยำขึ้น เหมือนเวลาหาหมอเลยครับ... ลองแชร์ให้ฟังหน่อยได้ไหมครับว่า **พฤติกรรมแบบไหนที่พี่อยากเห็นพนักงานทำต่างไปจากเดิม** หลังจากจบ Class นี้ครับ?`
+      };
+    }
+
+    // 5. PRESCRIPTION (Based on user answer to diagnosis)
+    if (state.step === 'diagnosis' && messages.length > 2) {
+      state.step = 'prescription';
+      
+      let recCourse = 'Customized Program';
+      let reason = 'เนื่องจากเป็นโจทย์ที่มีรายละเอียดเฉพาะเจาะจง ผมแนะนำให้เราออกแบบใหม่ร่วมกันครับ';
+
+      if (state.topic === 'service') {
+        recCourse = 'ใช้หัวใจบริการ คนสำราญ งานสำเร็จ (Service Mind Excellence)';
+        reason = 'เพื่อปรับจูน Mindset จากภายในสู่การบริการที่เป็นเลิศครับ';
+      } else if (state.topic === 'team') {
+        recCourse = 'Positive Team Synergy';
+        reason = 'เน้นการเปิดใจ ลดกำแพงความขัดแย้ง และสร้างเป้าหมายร่วมกันครับ';
+      } else if (state.topic === 'leadership') {
+        recCourse = 'Facilitative Leadership Mastery';
+        reason = 'เปลี่ยนหัวหน้างานให้เป็น "ผู้อำนวยความสะดวก" ที่ดึงศักยภาพลูกน้องได้สูงสุดครับ';
+      }
+
+      return {
+        role: 'assistant',
+        content: `ขอบคุณสำหรับข้อมูลที่มีคุณค่ามากครับ! ข้อมูลนี้ช่วยให้เห็นภาพชัดขึ้นจริงๆ 🙏\n\nจากโจทย์ดังกล่าว ผมขอแนะนำแนวทางที่เหมาะสมเป็นตัวนี้ครับ:\n🎯 **หลักสูตร ${recCourse}**\n\n${reason}\n\nคุณสนใจอยากรับ **Course Outline (โครงร่างหลักสูตร)** เพื่อไปเป็นข้อมูลเบื้องต้นในการพิจารณาก่อนไหมครับ? หรืออยากให้ทีมเราช่วยออกแบบพิเศษสำหรับองค์กรเลยดีครับ?`,
+        type: 'action-buttons'
+      };
+    }
+
+    // DEFAULT FALLBACK
+    const defaultMessages = [
+      'น่าสนใจมากครับ! ผมอยากเข้าใจโจทย์นี้ให้ลึกขึ้นอีกนิด... คุณคิดว่าอุปสรรคที่ใหญ่ที่สุดในตอนนี้คืออะไรหรือครับ? 🤔',
+      'เป็นมุมมองที่ดีมากครับ! 🌟 ในฐานะที่ปรึกษา... ผมอยากรู้ว่าเป้าหมายที่คุณอยากเห็นความสำเร็จของโปรเจกต์นี้คืออะไรครับ?',
+      'ยินดีรับโจทย์นี้ไปพิจารณาครับ! หากต้องการข้อมูลหลักสูตรที่เกี่ยวข้องทันที หรือต้องการให้ผมช่วยแนะนำหัวข้อที่เหมาะสม เลือกดูที่ปุ่มเมนูได้เลยนะครับ 👇'
+    ];
+    return {
+      role: 'assistant',
+      content: defaultMessages[Math.floor(Math.random() * defaultMessages.length)],
+      type: 'action-buttons'
+    };
+  }, [messages.length]);
+
   const handleSend = (overrideInput?: string) => {
     const text = overrideInput ?? input;
     if (!text.trim()) return;
 
     const userMsg: Message = { role: 'user', content: text };
-    const nextMessages = [...messages, userMsg];
-    setMessages(nextMessages);
+    setMessages(prev => [...prev, userMsg]);
     setInput('');
     setIsTyping(true);
 
-    // Filter quick actions that bypass conversation logic
-    const lowerText = text.toLowerCase();
-    let actionResponse = '';
-    
-    // Quick menu mapping
-    if (lowerText === 'courses' || lowerText === 'สนใจ in-house training ครับ' || lowerText === 'ดูหลักสูตรทั้งหมด') {
-      actionResponse = 'สนใจหลักสูตร';
-      conversationState.step = 'intake';
-    }
-    else if (lowerText === 'quote' || lowerText === 'ขอใบเสนอราคาได้เลยไหม?' || lowerText === 'ขอใบเสนอราคา') {
-      actionResponse = 'ขอใบเสนอราคา';
-    }
-    else if (lowerText === 'about' || lowerText === 'ครูเด่น คือใคร?' || lowerText === 'ครูเด่น คือใคร') {
-      actionResponse = 'ครูเด่นคือใคร';
-    }
-    else if (lowerText === 'อยากพัฒนาทีมงาน') {
-      conversationState.topic = 'team';
-      actionResponse = 'อยากพัฒนาทีมงาน สื่อสารให้ดีขึ้น';
-    }
-
-    const queryText = actionResponse || text;
-
     setTimeout(() => {
       setIsTyping(false);
-      setMessages((prev) => [
-        ...prev,
-        { role: 'assistant', content: generateResponse(queryText, prev) },
-      ]);
-    }, 1000 + Math.random() * 500); // More natural typing delay
+      const response = generateDynamicResponse(text);
+      setMessages(prev => [...prev, response]);
+    }, 800 + Math.random() * 600);
   };
-
-  const suggestions = [
-    'สนใจ In-house Training ครับ',
-    'อยากพัฒนาทีมงาน',
-    'ขอใบเสนอราคาได้เลยไหม?',
-    'ครูเด่น คือใคร?',
-  ];
 
   return (
     <div className="fixed bottom-6 right-5 md:right-6 z-[9999] flex flex-col items-end">
-
-      {/* ===== CHAT WINDOW ===== */}
       {isOpen && (
         <div
-          className="mb-4 w-[calc(100vw-24px)] md:w-[400px] max-h-[80svh] md:max-h-[600px] bg-white rounded-[1.5rem] shadow-2xl border border-gray-100 flex flex-col overflow-hidden"
+          className="mb-4 w-[calc(100vw-24px)] md:w-[400px] max-h-[85svh] md:max-h-[650px] bg-white rounded-[1.5rem] shadow-2xl border border-gray-100 flex flex-col overflow-hidden"
           style={{ animation: 'chatSlideUp 0.3s cubic-bezier(0.16,1,0.3,1) both' }}
         >
-          <style>{`
-            @keyframes chatSlideUp {
-              from { opacity:0; transform:translateY(24px) scale(0.97); }
-              to   { opacity:1; transform:translateY(0)   scale(1); }
-            }
-            @keyframes typingBounce {
-              0%,80%,100% { transform: translateY(0); }
-              40% { transform: translateY(-6px); }
-            }
-          `}</style>
-
-          {/* --- Header --- */}
+          {/* Header */}
           <div className="bg-gradient-to-r from-[#0f3460] to-[#1a4d8c] p-5 text-white flex justify-between items-center shrink-0">
             <div className="flex items-center gap-3">
               <div className="relative">
                 <div className="w-11 h-11 rounded-full border-2 border-[#c5a059] overflow-hidden bg-white/20">
-                  <img
-                    src="/images/denmasterfa.jpg"
-                    alt="ครูเด่น มาสเตอร์ฟา"
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src =
-                        'https://ui-avatars.com/api/?name=D&background=c5a059&color=fff&size=80';
-                    }}
-                  />
+                  <img src="/images/denmasterfa.jpg" alt="ครูเด่น (AI)" className="w-full h-full object-cover" />
                 </div>
-                {/* Online dot */}
                 <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-[#0f3460]" />
               </div>
               <div>
                 <h3 className="font-black text-[15px] nav-font leading-snug">ครูเด่น (AI)</h3>
-                <span className="text-[10px] text-[#c5a059] font-bold tracking-wider uppercase">
-                  Master Facilitator • ออนไลน์
-                </span>
+                <span className="text-[10px] text-[#c5a059] font-bold tracking-wider uppercase">Master Facilitator • ออนไลน์</span>
               </div>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="bg-white/10 hover:bg-white/25 p-2 rounded-full transition-all min-w-[36px] min-h-[36px] flex items-center justify-center"
-              aria-label="ปิดแชท"
-            >
+            <button onClick={() => setIsOpen(false)} className="bg-white/10 hover:bg-white/25 p-2 rounded-full transition-all">
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* --- Chat Area --- */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#f7f9fc]">
+          {/* Chat Area */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#f8fbff]">
             {messages.map((m, i) => (
-              <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                {m.role === 'assistant' && (
-                  <div className="w-7 h-7 rounded-full border border-[#c5a059]/30 overflow-hidden mr-2 flex-shrink-0 mt-0.5">
-                    <img
-                      src="/images/denmasterfa.jpg"
-                      alt=""
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src =
-                          'https://ui-avatars.com/api/?name=D&background=c5a059&color=fff&size=40';
-                      }}
-                    />
-                  </div>
-                )}
-                <div
-                  className={`max-w-[82%] px-4 py-3 text-sm leading-relaxed whitespace-pre-line ${
-                    m.role === 'user'
-                      ? 'bg-[#0f3460] text-white rounded-2xl rounded-tr-sm font-medium'
-                      : 'bg-white text-gray-800 rounded-2xl rounded-tl-sm shadow-sm border border-gray-100 font-medium'
-                  }`}
-                  dangerouslySetInnerHTML={{
-                    __html: m.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'),
-                  }}
-                />
-              </div>
-            ))}
-
-            {/* Typing indicator */}
-            {isTyping && (
-              <div className="flex justify-start items-center gap-2">
-                <div className="w-7 h-7 rounded-full border border-[#c5a059]/30 overflow-hidden flex-shrink-0">
-                  <img
-                    src="/images/denmasterfa.jpg"
-                    alt=""
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src =
-                        'https://ui-avatars.com/api/?name=D&background=c5a059&color=fff&size=40';
-                    }}
+              <div key={i} className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
+                <div className={`flex items-start gap-2 max-w-[85%] ${m.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                  {m.role === 'assistant' && (
+                    <div className="w-7 h-7 rounded-full border border-[#c5a059]/30 overflow-hidden flex-shrink-0 mt-1">
+                      <img src="/images/denmasterfa.jpg" alt="" className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  <div
+                    className={`px-4 py-3 text-sm leading-relaxed rounded-2xl ${
+                      m.role === 'user'
+                        ? 'bg-[#0f3460] text-white rounded-tr-sm'
+                        : 'bg-white text-gray-800 rounded-tl-sm shadow-sm border border-blue-50'
+                    } whitespace-pre-line`}
+                    dangerouslySetInnerHTML={{ __html: m.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}
                   />
                 </div>
-                <div className="bg-white rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm border border-gray-100 flex gap-1">
-                  {[0, 1, 2].map((dot) => (
-                    <span
-                      key={dot}
-                      className="w-2 h-2 rounded-full bg-gray-400 block"
-                      style={{
-                        animation: `typingBounce 1.2s ${dot * 0.2}s infinite ease-in-out`,
-                      }}
-                    />
-                  ))}
+                
+                {m.type === 'lead-form' && <LeadForm topic={conversationState.current.topic} />}
+
+                {m.role === 'assistant' && m.type === 'action-buttons' && (
+                  <div className="flex flex-wrap gap-2 mt-3 ml-9">
+                    <button
+                      onClick={() => handleSend('ขอดูหลักสูตรที่มีอยู่แล้วครับ')}
+                      className="bg-white text-[#0f3460] border border-[#0f3460]/20 px-3 py-1.5 rounded-full text-[12px] font-black hover:bg-[#0f3460] hover:text-white transition-all shadow-sm"
+                    >
+                      📂 ดูหลักสูตรทั้งหมด
+                    </button>
+                    <button
+                      onClick={() => handleSend('อยากพัฒนาหลักสูตรเฉพาะองค์กรครับ')}
+                      className="bg-white text-[#c5a059] border border-[#c5a059]/30 px-3 py-1.5 rounded-full text-[12px] font-black hover:bg-[#c5a059] hover:text-white transition-all shadow-sm"
+                    >
+                      📐 ออกแบบเฉพาะ
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))}
+            {isTyping && (
+              <div className="flex items-center gap-2 ml-1">
+                <div className="w-7 h-7 rounded-full border border-[#c5a059]/30 overflow-hidden shrink-0">
+                  <img src="/images/denmasterfa.jpg" alt="" className="w-full h-full object-cover" />
+                </div>
+                <div className="bg-white rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm border border-gray-100 flex gap-1 items-center h-[38px]">
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" />
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0.2s]" />
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0.4s]" />
                 </div>
               </div>
             )}
             <div ref={chatEndRef} />
           </div>
 
-          {/* --- Quick Suggestion Chips (first message) --- */}
+          {/* Quick Replies Footer */}
           {messages.length === 1 && (
-            <div className="px-4 pb-3 flex flex-wrap gap-2 bg-[#f7f9fc]">
-              {suggestions.map((s, i) => (
+            <div className="px-4 pb-3 flex flex-wrap gap-2 bg-[#f8fbff]">
+              {QUICK_REPLIES.map((q, i) => (
                 <button
                   key={i}
-                  onClick={() => handleSend(s)}
-                  className="bg-white border border-gray-200 px-3 py-1.5 rounded-full text-[12px] font-bold text-[#0f3460] hover:border-[#0f3460] hover:bg-[#0f3460] hover:text-white transition-all whitespace-nowrap"
-                  style={{ touchAction: 'manipulation' }}
+                  onClick={() => handleSend(q.label)}
+                  className="bg-white border border-[#0f3460]/10 px-3 py-2 rounded-xl text-[12px] font-black text-[#0f3460] hover:border-[#0f3460] hover:shadow-md hover:-translate-y-0.5 transition-all"
                 >
-                  {s}
+                  {q.label}
                 </button>
               ))}
             </div>
-          )}
+          ) }
 
-          {/* --- LINE OA Banner --- */}
-          <div className="px-4 pt-3 pb-2 bg-white border-t border-gray-100">
-            <a
-              href={CONTACT_INFO.lineUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full bg-[#00b900] text-white px-4 py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow nav-font text-[13px]"
-              style={{ touchAction: 'manipulation' }}
-            >
-              <MessageCircle className="w-4 h-4 flex-shrink-0" />
-              คุยตรงกับครูเด่น (LINE: @denmasterfa)
-              <ExternalLink className="w-3.5 h-3.5 ml-auto opacity-60" />
-            </a>
-          </div>
-
-          {/* --- Input Area --- */}
-          <div className="p-3 bg-white border-t border-gray-100 flex gap-2">
+          {/* Input Area */}
+          <div className="p-4 bg-white border-t border-gray-100 flex gap-2">
             <input
               ref={inputRef}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
-              placeholder="ถามเรื่องหลักสูตร หรือโจทย์องค์กร..."
-              className="flex-1 bg-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0f3460] transition-all min-h-[44px]"
+              placeholder="คุยกับครูเด่น (AI) ได้ที่นี่..."
+              className="flex-1 bg-gray-50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0f3460]/20 border border-gray-200"
             />
             <button
               onClick={() => handleSend()}
               disabled={!input.trim()}
-              className="bg-[#0f3460] disabled:opacity-40 text-white p-3 rounded-xl hover:bg-[#c5a059] transition-all min-w-[44px] min-h-[44px] flex items-center justify-center"
-              aria-label="ส่งข้อความ"
-              style={{ touchAction: 'manipulation' }}
+              className="bg-[#0f3460] disabled:opacity-40 text-white p-3 rounded-xl hover:bg-[#1a4d8c] transition-all shrink-0"
             >
               <Send className="w-5 h-5" />
             </button>
@@ -434,41 +388,21 @@ const AIAgent: React.FC = () => {
         </div>
       )}
 
-      {/* ===== TOGGLE BUTTON — Navy dark with gold accent (readable on any bg) ===== */}
+      {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        aria-label={isOpen ? 'ปิดแชท AI' : 'เปิดแชทกับครูเด่น AI'}
-        style={{ touchAction: 'manipulation' }}
-        className={`group relative flex items-center gap-3 transition-all duration-400 rounded-full shadow-2xl ${
-          isOpen
-            ? 'bg-gray-700 p-3.5 rotate-[5deg] scale-90'
-            : 'bg-[#0f3460] hover:bg-[#1a4d8c] p-4 hover:scale-105 active:scale-95'
+        className={`group relative flex items-center justify-center transition-all duration-500 rounded-full shadow-[0_10px_40px_rgba(15,52,96,0.5)] ${
+          isOpen ? 'bg-gray-800 p-3 rotate-90 scale-90' : 'bg-[#0f3460] p-4 hover:scale-110 active:scale-95'
         }`}
       >
-        {/* Pulsing ring when closed */}
+        {!isOpen && <span className="absolute inset-0 rounded-full bg-[#0f3460] animate-ping opacity-25" />}
+        {isOpen ? <X className="w-7 h-7 text-white" /> : <MessageCircle className="w-8 h-8 text-white" />}
+        
         {!isOpen && (
-          <span className="absolute inset-0 rounded-full bg-[#0f3460] animate-ping opacity-30 pointer-events-none" />
-        )}
-
-        {isOpen ? (
-          <X className="w-7 h-7 text-white" />
-        ) : (
-          <>
-            {/* Tooltip label */}
-            <div className="absolute right-full mr-3 bg-[#0f3460] text-white px-4 py-2.5 rounded-2xl shadow-xl font-black nav-font text-[13px] whitespace-nowrap opacity-0 group-hover:opacity-100 -translate-x-3 group-hover:translate-x-0 transition-all duration-300 pointer-events-none border border-white/10">
-              <span className="text-[#c5a059]">✨</span> ปรึกษาครูเด่น (AI)
-              {/* Arrow */}
-              <div className="absolute top-1/2 right-[-6px] -translate-y-1/2 w-0 h-0 border-l-[6px] border-l-[#0f3460] border-y-[5px] border-y-transparent" />
-            </div>
-
-            {/* Icon + Gold badge */}
-            <div className="relative">
-              <MessageCircle className="w-7 h-7 text-white" />
-              <div className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-[#c5a059] rounded-full flex items-center justify-center">
-                <Sparkles className="w-2.5 h-2.5 text-white" />
-              </div>
-            </div>
-          </>
+          <div className="absolute right-full mr-4 bg-white text-[#0f3460] px-5 py-3 rounded-2xl shadow-2xl font-black nav-font text-[14px] whitespace-nowrap opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-300 pointer-events-none border border-blue-50">
+            <span className="text-yellow-500 mr-2">✨</span> ปรึกษาครูเด่น (AI)
+            <div className="absolute top-1/2 right-[-8px] -translate-y-1/2 w-0 h-0 border-l-[8px] border-l-white border-y-[6px] border-y-transparent shadow-sm" />
+          </div>
         )}
       </button>
     </div>

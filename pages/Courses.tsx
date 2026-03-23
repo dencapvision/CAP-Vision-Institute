@@ -3,6 +3,7 @@ import { Search, ChevronLeft, ChevronRight, ArrowRight, Star, ChevronDown, Filte
 import { Link } from 'react-router-dom';
 import { COURSES } from '../constants/courses';
 import SEO from '../components/SEO';
+import LeadershipHero from '../components/LeadershipHero';
 
 const Courses: React.FC = () => {
   const [filter, setFilter] = useState('All');
@@ -67,21 +68,7 @@ const Courses: React.FC = () => {
         title={`${filter === 'All' ? 'หลักสูตรทั้งหมด' : filter} - CAP Vision Institute`}
         description="ค้นหาหลักสูตรฝึกอบรมพัฒนาบุคลากร Leadership, Team Building, Communication โดย CAP Vision Institute"
       />
-      {/* Page Header */}
-      <div className="bg-[#0f3460] pt-16 md:pt-20 pb-24 md:pb-32 text-white text-center relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-          <div className="absolute -top-24 -left-24 w-64 md:w-96 h-64 md:h-96 bg-[#c5a059] rounded-full blur-[80px] md:blur-[100px]"></div>
-          <div className="absolute -bottom-24 -right-24 w-64 md:w-96 h-64 md:h-96 bg-[#c5a059] rounded-full blur-[80px] md:blur-[100px]"></div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <h1 className="text-3xl md:text-6xl font-black mb-4 md:mb-6 nav-font tracking-tight uppercase">
-            {filter === 'All' ? 'หลักสูตรระดับพรีเมียม' : filter}
-          </h1>
-          <p className="text-blue-100 text-base md:text-xl max-w-2xl mx-auto font-light opacity-80 leading-relaxed">
-            {categoryInfo.desc}
-          </p>
-        </div>
-      </div>
+      <LeadershipHero />
 
       {/* Featured Carousel Section - Only show when "All" is selected */}
       {filter === 'All' && (

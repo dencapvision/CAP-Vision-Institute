@@ -33,7 +33,7 @@ const LeadershipHero: React.FC = () => {
               <div className="inline-flex items-center gap-3 w-fit bg-white/5 backdrop-blur-xl border border-white/10 px-6 py-2.5 rounded-full shadow-2xl">
                 <Sparkles className="w-5 h-5 text-[#c5a059] animate-pulse" />
                 <span className="text-[#c5a059] font-black tracking-[0.3em] text-[10px] md:text-xs nav-font uppercase leading-none">
-                  Leadership Course Generation #37
+                  Premium Leadership Course
                 </span>
               </div>
 
@@ -41,7 +41,7 @@ const LeadershipHero: React.FC = () => {
               <div className="space-y-4">
                 <h1 className="text-4xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] nav-font tracking-tight">
                   Designing <br />
-                  <span className="font-gold text-5xl md:text-8xl">For Action: #37</span>
+                  <span className="font-gold text-5xl md:text-8xl">For Action</span>
                 </h1>
                 <h2 className="text-xl md:text-3xl font-black text-blue-100/90 nav-font uppercase tracking-wider mb-2">
                   Leadership Mastery DFA

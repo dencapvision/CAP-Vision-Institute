@@ -160,10 +160,15 @@ const AIAgent: React.FC = () => {
     const q = input.toLowerCase();
     const state = conversationState.current;
 
-    // Intent Flags
-    const isProblem = q.includes('ปัญหา') || q.includes('ไม่') || q.includes('ขาด') || q.includes('ต้องการพัฒนา') || q.includes('อยากพัฒนา');
+    // Intent Flags - Exact Button Matches first
+    const isViewCourses = q.includes('ดูหลักสูตร') || q.includes('courses');
+    const isAbout = q.includes('รู้จักครูเด่น') || q.includes('ครูเด่นคือใคร') || q.includes('วิทยากร') || q.includes('ประวัติ');
+    const isCustom = q.includes('ออกแบบเฉพาะ') || q.includes('custom');
     const isQuote = q.includes('ราคา') || q.includes('เสนอราคา') || q.includes('quotation') || q.includes('งบประมาณ') || q.includes('จ้าง') || q.includes('ค่าใช้จ่าย');
+    
     const isGreeting = (q.includes('สวัสดี') || q.includes('hi') || q.includes('hello')) && messages.length < 3;
+    const isProblem = !isViewCourses && !isAbout && !isCustom && !isQuote && 
+                      (q.includes('ปัญหา') || q.includes('ไม่') || q.includes('ขาด') || q.includes('ต้องการพัฒนา') || q.includes('อยากพัฒนา'));
 
     // Topic Identification (Update state)
     if (q.includes('service') || q.includes('บริการ') || q.includes('ลูกค้า')) state.topic = 'service';
@@ -171,16 +176,26 @@ const AIAgent: React.FC = () => {
     else if (q.includes('ผู้นำ') || q.includes('หัวหน้า') || q.includes('leadership') || q.includes('management')) state.topic = 'leadership';
     else if (q.includes('พูด') || q.includes('สื่อสาร') || q.includes('คุย') || q.includes('communication')) state.topic = 'communication';
 
-    // 1. GREETING
-    if (isGreeting) {
+    // 1. VIEW COURSES
+    if (isViewCourses) {
       return {
         role: 'assistant',
-        content: 'สวัสดีครับ! ยินดีที่ได้พบกันครับ ผม **"ครูเด่น (AI)"** ที่ปรึกษาจาก CAP Vision Institute ครับ 😊\n\nเพื่อให้ผมแนะนำได้ตรงจุดที่สุด... ตอนนี้องค์กรของคุณกำลังมองหาการพัฒนาทีมงานในด้านไหนเป็นพิเศษอยู่ไหมครับ? หรือมี "โจทย์" อะไรที่อยากให้ผมช่วยแชร์ไอเดียไหมครับ?'
+        content: 'ยินดีเลยครับ! 📚 ผมได้รวบรวมหลักสูตรยอดนิยมของ **CAP Vision Institute** ไว้ให้แล้วครับ\n\nคุณสามารถคลิกเข้าไปดูรายละเอียด เนื้อหา และผลลัพธ์ที่จะได้รับในแต่ละหลักสูตรได้ที่ลิงก์นี้เลยนะครับ:\n👉 [ดูหลักสูตรทั้งหมดของเรา](https://capvisionpartner.com/courses)\n\nหรือถ้าอยากให้ผมช่วยเลือกหลักสูตรที่ "ตรงโจทย์" ที่สุด ลองบอกประเภททีมหรือปัญหาที่เจออยู่ได้นะครับ!',
+        type: 'action-buttons'
       };
     }
 
-    // 2. QUOTE / CUSTOM PATH
-    if (isQuote || q.includes('custom') || q.includes('ออกแบบเฉพาะ')) {
+    // 2. ABOUT KRU DEN
+    if (isAbout) {
+      return {
+        role: 'assistant',
+        content: 'ยินดีแนะนำตัวครับ! 😄\n\n**อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)**\nผู้อำนวยการ CAP Vision Institute และ Master Facilitator ที่มีประสบการณ์กว่า **18 ปี**\n\nครูเด่นเชี่ยวชาญการสอนแบบ **Transformative Learning** โดยเน้นการใช้กิจกรรมเป็นเครื่องมือเพื่อสร้าง Insight และเปลี่ยนทัศนคติในระดับจิตสำนึกครับ\n\nหากต้องการดูหลักสูตรที่ครูเด่นสอน หรือขอข้อมูลประวัติ (Profile) เพิ่มเติม เลือกด้านล่างได้เลยนะครับ 📂',
+        type: 'action-buttons'
+      };
+    }
+
+    // 3. QUOTE / CUSTOM PATH
+    if (isQuote || isCustom) {
       state.step = 'checkout';
       return {
         role: 'assistant',
@@ -189,17 +204,16 @@ const AIAgent: React.FC = () => {
       };
     }
 
-    // 3. ABOUT KRU DEN
-    if (q.includes('ครูเด่นคือใคร') || q.includes('วิทยากร') || q.includes('ประวัติ')) {
+    // 4. GREETING
+    if (isGreeting) {
       return {
         role: 'assistant',
-        content: 'ยินดีแนะนำตัวครับ! 😄\n\n**อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)**\nผู้อำนวยการ CAP Vision Institute และ Master Facilitator ที่มีประสบการณ์กว่า **18 ปี**\n\nครูเด่นเชี่ยวชาญการสอนแบบ **Transformative Learning** โดยเน้นการใช้กิจกรรมเป็นเครื่องมือเพื่อสร้าง Insight และเปลี่ยนทัศนคติในระดับจิตสำนึกครับ\n\nหากต้องการดูหลักสูตรที่ครูเด่นสอน หรือขอข้อมูลประวัติ (Profile) เพิ่มเติม เลือกด้านล่างได้เลยนะครับ 📂',
-        type: 'action-buttons'
+        content: 'สวัสดีครับ! ยินดีที่ได้พบกันครับ ผม **"ครูเด่น (AI)"** ที่ปรึกษาจาก CAP Vision Institute ครับ 😊\n\nเพื่อให้ผมแนะนำได้ตรงจุดที่สุด... ตอนนี้องค์กรของคุณกำลังมองหาการพัฒนาทีมงานในด้านไหนเป็นพิเศษอยู่ไหมครับ? หรือมี "โจทย์" อะไรที่อยากให้ผมช่วยแชร์ไอเดียไหมครับ?'
       };
     }
 
-    // 4. INTAKE / DIAGNOSIS (Problem identified)
-    if (isProblem || (state.step === 'intake' && q.includes('หลักสูตร'))) {
+    // 5. INTAKE / DIAGNOSIS (Problem identified)
+    if (isProblem || (state.step === 'intake' && q.includes('หลักสูตร') && !isViewCourses)) {
       state.step = 'diagnosis';
       const topics = {
         'service': 'การบริการที่ประทับใจ',

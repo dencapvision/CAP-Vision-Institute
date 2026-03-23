@@ -275,14 +275,11 @@ const CourseDetail: React.FC = () => {
                               <Phone className="w-6 h-6" /> {CONTACT_INFO.phone}
                            </a>
                         </div>
-                        <div className="mt-8 pt-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6">
-                           <div className="text-gray-500 text-sm font-medium">
-                              ต้องการความช่วยเหลือในการลงทะเบียน? <Link to="/contact" className="text-[#c5a059] font-bold hover:underline">ติดต่อเรา</Link>
-                           </div>
-                           <Link to="/lms" className="flex items-center gap-2 text-[#0f3460] font-bold hover:text-[#c5a059] transition-colors nav-font">
-                              ไปที่ระบบเรียนออนไลน์ <ChevronRight className="w-4 h-4" />
-                           </Link>
-                        </div>
+                         <div className="mt-8 pt-8 border-t border-gray-100 flex flex-col items-center gap-6">
+                            <div className="text-gray-500 text-sm font-medium text-center">
+                               ต้องการความช่วยเหลือในการลงทะเบียน? <Link to="/contact" className="text-[#c5a059] font-bold hover:underline">ติดต่อเรา</Link>
+                            </div>
+                         </div>
                      </div>
 
                      <div className="bg-gradient-to-br from-[#c5a059] to-[#e0c58e] p-10 rounded-[2.5rem] text-white shadow-xl">

@@ -19,27 +19,57 @@ const Contact: React.FC = () => {
 
    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      setSubmitted(true);
-
+      
       const formData = new FormData(e.currentTarget);
-      const data = {
-         'ชื่อ-นามสกุล': formData.get('fullName'),
-         'หน่วยงาน/องค์กร': formData.get('organization'),
-         'เบอร์ติดต่อ': formData.get('phone'),
-         'บริการที่สนใจ': formData.get('service'),
-         'ความต้องการเพิ่มเติม': formData.get('requirements')
+      const fullName = formData.get('fullName') as string;
+      const organization = formData.get('organization') as string;
+      const phone = formData.get('phone') as string;
+      const email = formData.get('email') as string;
+      const lineId = formData.get('lineId') as string;
+      const service = formData.get('service') as string;
+      const requirements = formData.get('requirements') as string;
+
+      const displayData = {
+         'ชื่อ-นามสกุล': fullName,
+         'หน่วยงาน/องค์กร': organization,
+         'เบอร์ติดต่อ': phone,
+         'อีเมล': email,
+         'Line ID': lineId,
+         'บริการที่สนใจ': service,
+         'ความต้องการเพิ่มเติม': requirements
       };
 
       try {
-         // Send notification via Supabase Edge Function
+         // 1. Persist to Supabase Database
+         const { error: dbError } = await supabase
+            .from('leads')
+            .insert([
+               {
+                  name: fullName,
+                  company: organization,
+                  phone: phone,
+                  email: email,
+                  line_id: lineId,
+                  interest_topic: `Service: ${service} | ${requirements}`,
+                  source: 'contact_form',
+                  status: 'new'
+               }
+            ]);
+
+         if (dbError) throw dbError;
+
+         // 2. Send notification via Supabase Edge Function
          await supabase.functions.invoke('line-notify', {
             body: { 
                formType: 'ฟอร์มติดต่อสอบถาม / ขอใบเสนอราคา', 
-               data 
+               data: displayData 
             }
          });
+
+         setSubmitted(true);
       } catch (error) {
-         console.error('Failed to send notification:', error);
+         console.error('Failed to submit form:', error);
+         alert('ขออภัยครับ เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
       }
    };
 
@@ -120,6 +150,14 @@ const Contact: React.FC = () => {
                         <div className="space-y-3 group">
                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">Phone Number</label>
                            <input name="phone" required type="tel" className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="เบอร์โทรศัพท์ที่ติดต่อได้" />
+                        </div>
+                        <div className="space-y-3 group">
+                           <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">E-mail Address</label>
+                           <input name="email" required type="email" className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="อีเมลสำหรับส่งข้อมูล" />
+                        </div>
+                        <div className="space-y-3 group">
+                           <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">Line ID</label>
+                           <input name="lineId" required type="text" className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="ID สำหรับส่งข้อมูล / ติดต่อกลับ" />
                         </div>
                         <div className="space-y-3 group">
                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">Service Interest</label>

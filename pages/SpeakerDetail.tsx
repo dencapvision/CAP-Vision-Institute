@@ -125,14 +125,22 @@ const SpeakerDetail: React.FC = () => {
                         <h4 className="text-xl font-black mb-4 nav-font">Contact Details</h4>
                         <p className="text-white/80 font-medium mb-8">ช่องทางติดตามและติดต่อสอบถามตารางงานวิทยากร</p>
                         <div className="space-y-4">
-                           <div className="flex items-center gap-3">
-                              <Globe className="w-5 h-5" />
-                              <span className="font-bold text-sm">@thecapvision</span>
-                           </div>
+                           {speaker.socials?.phone && (
+                              <div className="flex items-center gap-3">
+                                 <Phone className="w-5 h-5" />
+                                 <span className="font-bold text-sm">{speaker.socials.phone}</span>
+                              </div>
+                           )}
                            <div className="flex items-center gap-3">
                               <MessageCircle className="w-5 h-5" />
-                              <span className="font-bold text-sm">{speaker.socials?.line || CONTACT_INFO.line}</span>
+                              <span className="font-bold text-sm">Line OA: {speaker.socials?.line || CONTACT_INFO.line}</span>
                            </div>
+                           {speaker.socials?.facebook && (
+                              <div className="flex items-center gap-3">
+                                 <Globe className="w-5 h-5" />
+                                 <span className="font-bold text-sm">fb.com/{speaker.socials.facebook}</span>
+                              </div>
+                           )}
                         </div>
                      </div>
                   </div>

@@ -9,8 +9,10 @@ export interface Speaker {
     expertise: string[];
     achievements: string[];
     socials?: {
+        phone?: string;
         line?: string;
         facebook?: string;
+        instagram?: string;
         tiktok?: string;
     };
 }
@@ -37,9 +39,10 @@ export const SPEAKERS: Speaker[] = [
             'ที่ปรึกษาด้าน AI สำหรับธุรกิจสมัยใหม่'
         ],
         socials: {
+            phone: '093-223-5919',
             line: '@denmasterfa',
-            facebook: 'cheumkon'
-            instagram: 'denmasterfa' 
+            facebook: 'cheumkon',
+            instagram: 'denmasterfa',
             tiktok: '@denmasterfa'
         }
     }

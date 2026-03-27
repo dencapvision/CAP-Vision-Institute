@@ -69,7 +69,7 @@ const About: React.FC = () => {
                 <div className="relative group">
                   <div className="absolute -inset-10 bg-[#c5a059]/10 rounded-full blur-[100px] group-hover:blur-[120px] transition-all"></div>
                   <img
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80"
+                    src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/about%20us/CAP%20Vision%20CEO.jpg"
                     className="relative z-10 rounded-[3rem] md:rounded-[4rem] shadow-2xl transition-all duration-1000 w-full h-[400px] md:h-[650px] object-cover"
                     alt="Team Collaboration"
                   />

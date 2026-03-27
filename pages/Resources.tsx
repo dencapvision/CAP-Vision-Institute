@@ -36,6 +36,7 @@ interface BlogManifestItem {
    date: string;
    createdAt?: string;
    level?: 'Beginner' | 'Intermediate' | 'Expert';
+   readTime?: string;
 }
 
 const Resources: React.FC = () => {

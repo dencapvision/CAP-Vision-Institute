@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { RESOURCE_ARTICLES } from '../constants/resources';
+import { HRD_ARTICLES as STATIC_ARTICLES } from '../constants/articles';
 import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
 import ReflectionPanel from '../components/LearningHub/ReflectionPanel';

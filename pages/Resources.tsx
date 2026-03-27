@@ -99,7 +99,7 @@ const Resources: React.FC = () => {
                <motion.h1
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
-                 className="text-5xl md:text-7xl font-black text-[#0f3460] mb-8 nav-font tracking-tight uppercase leading-[0.9]"
+                 className="text-5xl md:text-7xl font-black text-[#0f3460] nav-font leading-[0.9] tracking-tight uppercase"
                >
                  Knowledge <br/>
                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500">To Action</span>
@@ -197,6 +197,7 @@ const Resources: React.FC = () => {
                                       Read Insight <ArrowRight className="w-4 h-4 text-blue-600" />
                                    </div>
                                 </div>
+                             </div>
                           </Link>
                         </motion.div>
                      ))}
@@ -270,7 +271,7 @@ const Resources: React.FC = () => {
                                  <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">{tool.type}</span>
                               </div>
                               <h3 className="font-bold text-xl text-[#0f3460] nav-font mb-8 leading-tight tracking-tight">{tool.title}</h3>
-                              <button className="w-full bg-[#0f3460] text-white py-4 rounded-2xl font-black flex items-center justify-center gap-3 hover:bg-blue-600 transition-all nav-font shadow-lg shadow-blue-50 uppercase tracking-widest text-xs">
+                              <button className="w-full bg-[#0f3460] text-white py-4 rounded-2xl font-black flex items-center justify-center gap-3 hover:bg-blue-600 transition-all nav-font shadow-lg shadow-blue-100 uppercase tracking-widest text-xs">
                                  Download Toolkit
                               </button>
                            </div>

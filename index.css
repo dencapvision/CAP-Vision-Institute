@@ -77,6 +77,18 @@ p, li {
   background-clip: text;
 }
 
+.text-glow-gold {
+  text-shadow: 0 0 20px rgba(197, 160, 89, 0.4), 0 0 40px rgba(197, 160, 89, 0.1);
+}
+
+.text-shadow-premium {
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.letter-spacing-tight {
+  letter-spacing: -0.04em;
+}
+
 /* -------- Safe area support (iPhone notch, home indicator) -------- */
 .safe-area-pb {
   padding-bottom: max(var(--space-md), env(safe-area-inset-bottom));

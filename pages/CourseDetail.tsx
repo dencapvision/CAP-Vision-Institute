@@ -54,11 +54,16 @@ const CourseDetail: React.FC = () => {
                      <span className="bg-[#c5a059] text-white px-5 py-2 rounded-xl text-xs font-black uppercase tracking-[0.2em] mb-6 inline-block nav-font">
                         {course.category}
                      </span>
-                     <h1 className="text-4xl md:text-6xl font-black mb-8 nav-font leading-tight whitespace-pre-line">
+                     <h1 className="text-4xl md:text-7xl font-black mb-8 nav-font leading-[1.1] whitespace-pre-line drop-shadow-2xl">
                         {course.title.split('\n').map((line, lineIdx) => (
-                           <div key={lineIdx}>
+                           <div key={lineIdx} className={lineIdx > 0 ? 'mt-4 opacity-90' : ''}>
                               {line.split(' ').map((word, i) => (
-                                 <span key={i} className={i % 2 !== 0 ? 'font-gold' : ''}>{word} </span>
+                                 <span 
+                                    key={i} 
+                                    className={`${(lineIdx === 0 && i === 1) || (lineIdx === 1 && word.includes('Mind')) ? 'font-gold text-glow-gold' : 'text-white text-shadow-premium'} inline-block mr-2 md:mr-4 transition-all hover:scale-105`}
+                                 >
+                                    {word}
+                                 </span>
                               ))}
                            </div>
                         ))}
@@ -98,7 +103,21 @@ const CourseDetail: React.FC = () => {
                   </div>
                   <div className="lg:w-2/5 w-full">
                      <div className="bg-white p-4 rounded-[2.5rem] shadow-2xl relative reveal-staggered active">
-                        <img src={course.image} alt={course.altText || course.title} className="w-full h-[400px] object-cover rounded-[2rem] shadow-inner" loading="lazy" />
+                        <img 
+                           src={course.image} 
+                           alt={course.altText || course.title} 
+                           className="w-full h-[400px] object-cover rounded-[2rem] shadow-inner" 
+                           onClick={(e) => {
+                              const img = e.target as HTMLImageElement;
+                              if (img.src.includes('unsplash.com')) {
+                                 img.src = 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80';
+                              }
+                           }}
+                           onError={(e) => {
+                              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80';
+                           }}
+                           loading="lazy" 
+                        />
                         <div className="absolute -bottom-8 -left-8 bg-white p-6 rounded-[2rem] shadow-xl border border-gray-50 hidden md:block">
                            <div className="flex items-center gap-4">
                               <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center">

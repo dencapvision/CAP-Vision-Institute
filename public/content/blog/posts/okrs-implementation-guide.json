@@ -1,0 +1,76 @@
+{
+    "id": "okrs-implementation-guide",
+    "title": "เจาะลึก OKRs: ตั้งเป้าหมายอย่างไรให้สอดคล้องและท้าทายทั้งองค์กร",
+    "category": "HR Strategy",
+    "thumbnail": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80",
+    "author": "ครูเด่น มาสเตอร์ฟา",
+    "date": "25 ธันวาคม 2566",
+    "createdAt": "2023-12-25T00:00:00Z",
+    "readTime": "8 Min Read",
+    "description": "อธิบายแนวคิด OKRs ให้เข้าใจง่าย พร้อมข้อควรระวังและปัจจัยความสำเร็จ (Critical Success Factors) ในการนำ OKRs ไปใช้จริงในภาคธุรกิจ",
+    "tags": [
+        "OKRs",
+        "Performance Management",
+        "Goal Setting",
+        "Strategic Alignment"
+    ],
+    "sections": [
+        {
+            "type": "heading",
+            "content": "OKRs ไม่ใช่แค่ KPI แบบเปลี่ยนชื่อ แต่คือกลยุทธ์การโฟกัสระดับโลก"
+        },
+        {
+            "type": "text",
+            "content": "ทำไม Google, Amazon หรือทีมสตาร์ทอัพระดับโลกถึงเลือกใช้ <b>OKRs (Objectives and Key Results)</b>? นั่นเป็นเพราะ OKRs ออกแบบมาเพื่อสร้างการเปลี่ยนแปลงที่รวดเร็วและท้าทาย โดยเน้นความโปร่งใส (Transparency) และการเชื่อมโยงเป้าหมาย (Alignment) จากระดับบริษัทลงมาสู่ระดับบุคคล"
+        },
+        {
+            "type": "subheading",
+            "content": "ส่วนประกอบของ OKRs ที่ทรงพลัง"
+        },
+        {
+            "type": "list",
+            "items": [
+                "<b>Objectives (O):</b> เป้าหมายเชิงคุณภาพที่ต้องสร้าง 'แรงบันดาลใจ' (Must be Inspiring and Qualitative)",
+                "<b>Key Results (KRs):</b> ตัววัดความสำเร็จเชิงปริมาณที่ชัดเจนและจับต้องได้ (Must be Quantifiable and Time-bound)"
+            ]
+        },
+        {
+            "type": "subheading",
+            "content": "กฎเหล็กของ OKRs: ทบทวนอย่างสม่ำเสมอ"
+        },
+        {
+            "type": "text",
+            "content": "OKRs จะล้มเหลวทันทีที่ถูกเก็บไว้ในลิ้นชัก ระบบ OKRs ต้องการการทำ Check-in ทุกสัปดาห์หรือรายเดือน เพื่อดูว่าเรายังเดินไปถูกทางไหม และต้องปรับเปลี่ยนอะไรบ้างท่ามกลางการเปลี่ยนแปลงของตลาด"
+        },
+        {
+            "type": "quote",
+            "content": "OKRs คือการเลือกสิ่งที่จะไม่ทำ พอๆ กับการเลือกสิ่งที่จะทำ (Focus is about saying NO)",
+            "author": "อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)"
+        },
+        {
+            "type": "highlight",
+            "title": "Critical Success Factor",
+            "content": "ความโปร่งใสเป็นปัจจัยสำคัญที่สุด ทุกคนในองค์กรควรรู้ว่า OKRs ของ CEO คืออะไร เพื่อให้เขาสามารถวางเป้าหมายของตัวเองให้สอดคล้องกันได้"
+        },
+        {
+            "type": "box",
+            "variant": "info",
+            "title": "🧠 Reflection Panel (สะท้อนคิด)",
+            "items": [
+                "<b>Insight:</b> เป้าหมายประจำไตรมาสของคุณตอนนี้ สร้างแรงบันดาลใจให้คุณอยากตื่นมาทำงานในเช้าวันจันทร์จริงไหม?",
+                "<b>Reflection:</b> ถ้าคุณต้องเลือกเป้าหมายเพียง 1 อย่างถ้าทำสำเร็จแล้วจะเปลี่ยนโฉมหน้าธุรกิจคุณไปเลย สิ่งนั้นคืออะไร?",
+                "<b>Action:</b> วันนี้ลองลิสต์ Objectives 1 ข้อของคุณ แล้วลองเขียน Key Results 3 ข้อที่มีตัวเลขชัดเจนกำัับไว้"
+            ]
+        },
+        {
+            "type": "box",
+            "variant": "success",
+            "title": "🏠 Workshop Seed: OKR Writing Clinic (15 Min)",
+            "items": [
+                "<b>Setup:</b> เตรียมเป้าหมายที่ดูคลุมเครือ 1 ประโยค (เช่น พัฒนาความสัมพันธ์ลูกค้า)",
+                "<b>Process:</b> ให้ทีมช่วยกันรีไรท์ให้เป็น O ที่ Inspiring และแตกเป็น KRs ที่วัดผลได้จริง",
+                "<b>Outcome:</b> ฝึกฝนการเขียนเป้าหมายที่เฉียบคมและทรงพลัง"
+            ]
+        }
+    ]
+}

@@ -75,5 +75,41 @@ When using this skill, the agent should follow:
 5. **Inject Workshop Activities**
 6. **Final Format in Kruden Style**
 
+## 🎨 5. UI Wireframe & Design System (CAP-Vision Style)
+
+Every component of the platform must follow these visual and structural guidelines:
+
+### 🟩 A. Layout Structure (Main Workspace)
+- **Navigation Bar**: Logo, Title (AI Course Builder), Profile.
+- **Sidebar (Category Selector)**:
+    - [👥 People Skills] (Service Mind, Personality)
+    - [💼 Work Skills] (Team Building, Creative Thinking)
+    - [💬 Communication Skills] (DISC, Feedback)
+    - [🏆 Leader Skills] (Leadership, Strategy)
+- **Main Content**:
+    - **Section A (Input)**: Topic, Audience, Pain Point, Expected Outcome.
+    - **Section B (AI Suggest)**: Smart suggestions cards.
+    - **Section C (Preview)**: Tabs (Overview, Modules, Activities).
+
+### 🟦 B. Learning Flow UI (6D Model)
+Visualize the 6D sequence as an interactive timeline or vertical step-flow:
+- `[1] Define` | `[2] Discover` | `[3] Develop` | `[4] Decide` | `[5] Deploy` | `[6] Reflection`
+- **Interaction**: Clicking a module reveals its internal details (Content, Workshop, Outcome).
+
+### 🟨 C. Design Tokens & Styles
+- **Colors**:
+    - Primary: `#1D4ED8` (Trust Blue)
+    - Secondary: `#F59E0B` (Premium Gold)
+    - Background: `#F9FAFB` (Neutral Gray)
+- **Typography**: 
+    - Heading: `Prompt / Inter`
+    - Body: `Sarabun`
+- **Components**: Card-based, Rounded (12px), Soft shadows, Glassmorphism on overlays.
+
+### 🚀 D. Advanced Features
+- **AI Insight Panel**: Contextual advice based on current design.
+- **Drag & Drop**: Ability to reorder modules or activities.
+- **Template Switcher**: Toggle between CPS, Leadership, or Custom templates.
+
 ---
 *Contact: [https://lin.ee/zRTBF6K]*

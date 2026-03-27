@@ -22,6 +22,7 @@ const Speakers = lazy(() => import('./pages/Speakers'));
 const SpeakerDetail = lazy(() => import('./pages/SpeakerDetail'));
 const JoinUs = lazy(() => import('./pages/JoinUs'));
 const MediaManager = lazy(() => import('./pages/MediaManager'));
+const CourseBuilderPage = lazy(() => import('./pages/CourseBuilder'));
 
 import { CONTACT_INFO } from './constants/brand';
 
@@ -66,6 +67,7 @@ const App: React.FC = () => {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/admin/media" element={<MediaManager />} />
+                <Route path="/admin/course-builder" element={<CourseBuilderPage />} />
               </Routes>
             </Suspense>
           </main>

@@ -28,6 +28,7 @@ import { RESOURCE_ARTICLES } from '../constants/resources';
 import { HRD_ARTICLES as STATIC_ARTICLES } from '../constants/articles';
 import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
+import ShareButtons from '../components/ShareButtons';
 import ReflectionPanel from '../components/LearningHub/ReflectionPanel';
 import AICoachSidebar from '../components/LearningHub/AICoachSidebar';
 import NewsletterBox from '../components/NewsletterBox';
@@ -278,15 +279,7 @@ const BlogPost: React.FC = () => {
               {/* Sidebar / Insights */}
               <aside className="lg:w-1/3">
                  <div className="sticky top-32 space-y-16">
-                    {/* Share Post */}
-                    <div className="bg-gray-50 rounded-[3rem] p-12 text-center border border-gray-100 shadow-inner">
-                       <p className="text-gray-400 font-black uppercase tracking-[0.3em] text-[10px] mb-8 nav-font">Knowledge Sharing</p>
-                       <div className="flex justify-center gap-6">
-                          <a href={CONTACT_INFO.facebookUrl} target="_blank" rel="noopener noreferrer" className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-blue-600 shadow-sm hover:scale-110 active:scale-95 transition-all"><Facebook className="w-7 h-7" /></a>
-                          <a href={CONTACT_INFO.lineUrl} target="_blank" rel="noopener noreferrer" className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-green-500 shadow-sm hover:scale-110 active:scale-95 transition-all"><MessageCircle className="w-7 h-7" /></a>
-                          <button className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-amber-500 shadow-sm hover:scale-110 active:scale-95 transition-all"><Share2 className="w-7 h-7" /></button>
-                       </div>
-                    </div>
+                    <ShareButtons title={post.title} />
 
                     {/* Related */}
                     <div>

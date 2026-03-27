@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Users, Calendar, Award, Sta
 import { COURSES } from '../constants/courses';
 import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
+import ShareButtons from '../components/ShareButtons';
 
 const CourseDetail: React.FC = () => {
    const { id } = useParams();
@@ -304,6 +305,8 @@ const CourseDetail: React.FC = () => {
                             </div>
                          </div>
                      </div>
+
+                     <ShareButtons title={course.title} />
 
                      <div className="bg-gradient-to-br from-[#c5a059] to-[#e0c58e] p-10 rounded-[2.5rem] text-white shadow-xl">
                         <h4 className="text-xl font-black mb-4 nav-font">Custom Solution</h4>

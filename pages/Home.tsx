@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, GraduationCap, Award, Sparkles, CheckCircle2, ChevronRight, MessageCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { BRAND_INFO, CONTACT_INFO } from '../constants/brand';
 import { COURSES } from '../constants/courses';
 import Logo from '../components/Logo';
@@ -66,6 +67,65 @@ const Home: React.FC = () => {
           <div className="w-0.5 h-16 bg-gradient-to-b from-white/40 to-transparent"></div>
         </div>
       </section>
+      {/* Video Intro Section */}
+      <motion.section 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="py-24 md:py-32 bg-[#0a2545] relative overflow-hidden"
+      >
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-[#c5a059] rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-16 md:mb-24">
+            <span className="text-[#c5a059] font-black text-[10px] md:text-sm uppercase tracking-[0.4em] mb-4 block nav-font underline decoration-2 underline-offset-8">
+              Experience the Transformation
+            </span>
+            <motion.h2 
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-3xl md:text-5xl lg:text-7xl font-black text-white nav-font leading-tight"
+            >
+              สัมผัสประสบการณ์ <span className="font-gold">การเรียนรู้</span> ที่แท้จริง
+            </motion.h2>
+          </div>
+          
+          <motion.div 
+            initial={{ scale: 0.95, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="max-w-5xl mx-auto"
+          >
+            <div className="relative aspect-video rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border-8 border-white/5 ring-1 ring-white/10 group">
+              <iframe
+                src="https://www.youtube.com/embed/nTdeTEWVeWE?si=JTWQI8tXb57_e7SL"
+                title="CAP Vision Institute - Intro Video"
+                className="absolute inset-0 w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
+            </div>
+            
+            <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+              {[
+                { title: 'Visionary Learning', desc: 'กระบวนการเรียนรู้ที่มองไกลกว่าแค่ทฤษฎี' },
+                { title: 'Interactive Flow', desc: 'การมีส่วนร่วมที่สร้างการเปลี่ยนแปลงจากภายใน' },
+                { title: 'Result Oriented', desc: 'มุ่งเน้นผลลัพธ์ที่นำไปใช้งานได้จริงในองค์กร' }
+              ].map((item, i) => (
+                <div key={i} className="group p-6 rounded-2xl hover:bg-white/5 transition-colors">
+                  <h4 className="text-[#c5a059] font-black text-lg mb-2 nav-font uppercase tracking-tight">{item.title}</h4>
+                  <p className="text-white/60 text-sm font-medium">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </motion.section>
 
       {/* Featured Courses Section */}
       <section className="py-24 md:py-32 bg-white relative">
@@ -91,6 +151,7 @@ const Home: React.FC = () => {
                     src={course.image}
                     alt={course.altText || course.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80';
                     }}

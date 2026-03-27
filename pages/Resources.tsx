@@ -154,7 +154,7 @@ const Resources: React.FC = () => {
                         >
                           <Link to={`/resources/${article.id}`} className="bg-white rounded-[3rem] border border-gray-100/50 overflow-hidden hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] transition-all duration-500 flex flex-col h-full group">
                              <div className="relative h-64 overflow-hidden shadow-inner">
-                                <img src={article.thumbnail} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={article.title} />
+                                <img src={article.thumbnail} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={article.title} loading="lazy" />
                                 <div className="absolute top-6 left-6 flex flex-col gap-2">
                                    <span className="bg-white/90 backdrop-blur-md text-[#0f3460] px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm">
                                       {article.category}
@@ -227,7 +227,7 @@ const Resources: React.FC = () => {
                      {MICRO_LEARNING_VIDEOS.map((video) => (
                         <div key={video.id} className="group bg-white rounded-[3rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all border border-gray-100 cursor-pointer">
                            <div className="relative h-56 overflow-hidden">
-                              <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                              <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
                               <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                  <PlayCircle className="w-16 h-16 text-white" />
                               </div>

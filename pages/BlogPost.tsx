@@ -23,7 +23,7 @@ import {
   Tag,
   Sparkles
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { RESOURCE_ARTICLES } from '../constants/resources';
 import { HRD_ARTICLES as STATIC_ARTICLES } from '../constants/articles';
 import { CONTACT_INFO } from '../constants/brand';
@@ -60,6 +60,12 @@ const BlogPost: React.FC = () => {
    const { id } = useParams();
    const [post, setPost] = useState<PostData | null>(null);
    const [loading, setLoading] = useState(true);
+   const { scrollYProgress } = useScroll();
+   const scaleX = useSpring(scrollYProgress, {
+      stiffness: 100,
+      damping: 30,
+      restDelta: 0.001
+   });
 
    useEffect(() => {
       setLoading(true);
@@ -171,6 +177,12 @@ const BlogPost: React.FC = () => {
             description={post.description || post.title}
          />
 
+         {/* Reading Progress Bar */}
+         <motion.div
+           className="fixed top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-600 to-amber-500 origin-left z-[100]"
+           style={{ scaleX }}
+         />
+
          {/* AI Coach Sidebar (Floating) */}
          <AICoachSidebar 
            articleTitle={post.title} 
@@ -229,6 +241,7 @@ const BlogPost: React.FC = () => {
                    src={post.thumbnail} 
                    className="w-full h-[400px] md:h-[600px] object-cover rounded-[4rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] mb-24" 
                    alt={post.title} 
+                   loading="lazy"
                  />
 
                  {/* Content Body */}

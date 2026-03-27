@@ -193,8 +193,8 @@ const About: React.FC = () => {
               </div>
               <div className="lg:w-1/2 w-full mt-8 md:mt-0">
                 <div className="grid grid-cols-2 gap-4 md:gap-6">
-                  <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80" className="rounded-[1.5rem] md:rounded-[2.5rem] shadow-lg h-48 md:h-80 w-full object-cover" alt="Workshop" />
-                  <img src="https://images.unsplash.com/photo-1517048676732-d676936d9b2c?auto=format&fit=crop&q=80" className="rounded-[1.5rem] md:rounded-[2.5rem] shadow-lg h-48 md:h-80 w-full object-cover mt-8 md:mt-12" alt="Meeting" />
+                  <img src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/about%20us/meeting%20team.jpg" className="rounded-[1.5rem] md:rounded-[2.5rem] shadow-lg h-48 md:h-80 w-full object-cover" alt="Meeting Team" />
+                  <img src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/about%20us/Presentation.jpg" className="rounded-[1.5rem] md:rounded-[2.5rem] shadow-lg h-48 md:h-80 w-full object-cover mt-8 md:mt-12" alt="Presentation" />
                 </div>
               </div>
             </div>

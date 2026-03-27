@@ -107,15 +107,15 @@ const AIAgent: React.FC = () => {
         try {
           await supabase.functions.invoke('line-notify', {
             body: { 
-              formType: 'AI Agent Lead (Custom Course)', 
+              formType: 'AI Intelligent Coach: สนใจออกแบบหลักสูตร', 
               data: {
                 'ชื่อ-นามสกุล': formData.name,
-                'หน่วยงาน/บริษัท': formData.company,
+                'หน่วยงาน/องค์กร': formData.company,
+                'เบอร์ติดต่อ': formData.phone,
                 'อีเมล': formData.email,
-                'เบอร์โทรศัพท์': formData.phone,
                 'Line ID': formData.line_id,
                 'หัวข้อที่สนใจ': formData.interest_topic,
-                'รายละเอียดเพิ่มเติม': formData.requirements
+                'ความต้องการเพิ่มเติม': formData.requirements
               } 
             }
           });

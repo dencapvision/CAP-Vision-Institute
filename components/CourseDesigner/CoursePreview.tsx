@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eye, BookOpen, Layers, Lightbulb, CheckCircle2, ChevronRight, Edit2, Plus, Download, Globe, Save } from 'lucide-react';
+import { Eye, BookOpen, Layers, Lightbulb, CheckCircle2, ChevronRight, Edit2, Plus, Download, Globe, Save, Star } from 'lucide-react';
 
 interface Module {
   id: number;

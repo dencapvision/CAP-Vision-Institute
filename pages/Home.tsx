@@ -85,28 +85,35 @@ const Home: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
             {COURSES.slice(0, 3).map((course) => (
-              <div key={course.id} className="card-premium group">
-                <div className="relative overflow-hidden aspect-[4/3]">
+              <div key={course.id} className="card-premium group flex flex-col h-full bg-white relative overflow-hidden transition-all duration-500">
+                <div className="relative overflow-hidden aspect-[16/10] bg-[#0f3460]/5">
                   <img
                     src={course.image}
                     alt={course.altText || course.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80';
+                    }}
                   />
-                  <div className="absolute top-4 left-4 bg-[#0f3460]/90 backdrop-blur-md text-white px-4 py-1.5 rounded-full text-xs font-black tracking-widest uppercase z-10">
-                    Workshop
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f3460]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute top-4 left-4 bg-[#c5a059] text-white px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase z-10 shadow-lg">
+                    Premium Workshop
                   </div>
                 </div>
-                <div className="p-8 md:p-10 flex flex-col h-full">
-                  <h3 className="text-xl md:text-2xl font-black text-[#0f3460] mb-4 nav-font group-hover:text-[#c5a059] transition-colors leading-tight whitespace-pre-line">
+                <div className="p-8 md:p-10 flex flex-col flex-grow">
+                  <h3 className="text-xl md:text-2xl font-black text-[#0f3460] mb-4 nav-font group-hover:text-[#c5a059] transition-colors leading-tight whitespace-pre-line min-h-[3.5rem]">
                     {course.title}
                   </h3>
-                  <p className="text-gray-500 text-sm md:text-base mb-8 line-clamp-2 opacity-80 leading-relaxed font-medium">
+                  <p className="text-gray-500 text-sm md:text-base mb-8 line-clamp-3 opacity-80 leading-relaxed font-medium flex-grow">
                     {course.description}
                   </p>
-                  <div className="flex items-center justify-between pt-8 border-t border-gray-100 mt-auto">
-                    <span className="text-[#0f3460] font-black nav-font">เปิดรับสมัคร</span>
-                    <Link to={`/courses/${course.id}`} className="flex items-center gap-2 text-[#c5a059] font-black uppercase tracking-widest text-xs group-hover:gap-4 transition-all nav-font">
-                      ดูรายละเอียด <ArrowRight className="w-4 h-4" />
+                  <div className="pt-8 border-t border-gray-100 mt-auto">
+                    <Link 
+                      to={`/courses/${course.id}`} 
+                      className="btn-premium w-full bg-[#0f3460] hover:bg-[#c5a059] text-white py-4 rounded-xl font-black text-sm md:text-base flex items-center justify-center gap-3 transition-all nav-font shadow-xl group/btn"
+                    >
+                      ดูรายละเอียดหลักสูตร
+                      <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" />
                     </Link>
                   </div>
                 </div>

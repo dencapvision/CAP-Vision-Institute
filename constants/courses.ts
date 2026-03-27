@@ -30,7 +30,7 @@ export const COURSES: CourseDetailInfo[] = [
         title: 'ใช้หัวใจบริการ คนสำราญ งานสำเร็จ\n(Service Mind Excellence)',
         category: 'People Skills',
         description: 'สร้างความแตกต่างด้วยหัวใจบริการ พร้อมปรับบุคลิกภาพแห่งตัวตนอย่างแท้จริง',
-        image: 'https://images.unsplash.com/photo-1521791136064-7986c2923216?auto=format&fit=crop&q=80',
+        image: 'https://images.unsplash.com/photo-1517048676732-d676936d9b2c?auto=format&fit=crop&q=80',
         altText: 'หลักสูตร ใช้หัวใจบริการ คนสำราญ งานสำเร็จ - CAP Vision Institute',
         longDescription: 'หลักสูตรที่มุ่งเน้นการสร้างบุคลิกภาพแห่งตัวตน (Smart Personality) ทั้งด้านทักษะความรู้และความเข้าใจในหลักการให้บริการด้วยใจ (Service Mind) โดยใช้จิตวิทยาการบริการอย่างมีศิลปะเพื่อภาพลักษณ์องค์กรที่ดีเยี่ยม',
         duration: '1 วัน (09.00 - 16.30 น.)',

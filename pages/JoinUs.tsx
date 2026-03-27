@@ -91,6 +91,14 @@ const JoinUs: React.FC = () => {
 
           {/* Content Side */}
           <div className="lg:col-span-5 space-y-10">
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-[#c5a059]/10 rounded-[3rem] blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+              <img 
+                src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/about%20us/join-us.jpg" 
+                className="relative z-10 rounded-[3rem] shadow-2xl w-full h-[300px] md:h-[400px] object-cover transition-transform duration-700 group-hover:scale-[1.02]" 
+                alt="CAP Vision Support Team" 
+              />
+            </div>
             <div className="bg-white p-12 rounded-[3rem] shadow-xl border border-gray-100">
               <h2 className="text-3xl font-black text-[#0f3460] mb-8 nav-font">ทำไมต้องมาร่วมงานกับเรา?</h2>
               <div className="space-y-8">

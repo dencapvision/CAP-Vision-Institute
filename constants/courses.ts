@@ -65,39 +65,43 @@ export const COURSES: CourseDetailInfo[] = [
     },
     {
         id: 'creative-problem-solving',
-        title: 'การแก้ปัญหาอย่างสร้างสรรค์\n(Creative Problem Solving)',
-        category: 'Work Skills',
-        description: 'แตกปัญหาเพื่อหาทางออกด้วยกระบวนการคิดที่เป็นระบบและสร้างสรรค์',
+        title: 'Creative Problem Solving for Innovative Work\n(คิดเป็นระบบ แก้ปัญหาเป็น สร้างทางเลือกใหม่)',
+        category: 'Creative Thinking & Problem Solving',
+        description: 'คิดเป็นระบบ แก้ปัญหาเป็น สร้างทางเลือกใหม่ในการทำงานอย่างสร้างสรรค์',
         image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80',
-        altText: 'หลักสูตร การแก้ปัญหาอย่างสร้างสรรค์ - CAP Vision Institute',
-        longDescription: 'กระบวนการที่สอนให้เราแตกปัญหาเพื่อทำความเข้าใจ สร้างแนวคิด และประเมินความคิดเหล่านั้นเพื่อหาทางออกที่มีประสิทธิภาพสูงสุด ตามหลักสูตรระดับสากล (Buffalo College, New York)',
-        duration: '1 วัน (09.00 - 16.30 น.)',
-        audience: 'พนักงานระดับปฏิบัติการ, หัวหน้างาน, ผู้จัดการโครงการ',
+        altText: 'หลักสูตร Creative Problem Solving for Innovative Work - CAP Vision Institute',
+        longDescription: 'หลักสูตรที่มุ่งเน้นการเปลี่ยนกรอบความคิด (Mindset) และพฤติกรรมของผู้เรียน ผ่านกระบวนการเรียนรู้แบบมีส่วนร่วม (Facilitation) และการสะท้อนคิด (Reflection) เพื่อให้สามารถ “เข้าใจปัญหาอย่างลึกซึ้ง คิดทางเลือกใหม่ และนำไปใช้ได้จริงในงาน” โดยออกแบบตามแนวคิด Transformative Learning',
+        duration: '1 วัน (09.00 - 16.00 น.)',
+        audience: 'พนักงานทุกระดับ, หัวหน้างาน, ผู้จัดการ และทีมงานที่ต้องแก้ปัญหาและตัดสินใจ',
         why: [
-            { label: 'นวัตกรรมใหม่', stat: '45%', desc: 'เพิ่มขีดความสามารถในการสร้างทางเลือกที่แตกต่าง', icon: React.createElement(Layers) },
-            { label: 'ประสิทธิภาพงาน', stat: '3X', desc: 'แก้ปัญหาได้รวดเร็วและแม่นยำขึ้นด้วยกระบวนการ 7 ขั้นตอน', icon: React.createElement(ShieldCheck) }
+            { label: 'Real-world Focus', stat: '100%', desc: 'ใช้ปัญหาจริงขององค์กรเป็นโจทย์ในการเรียนรู้', icon: React.createElement(Target) },
+            { label: 'Innovation Rate', stat: '45%+', desc: 'เพิ่มขีดความสามารถในการสร้างทางเลือกที่แตกต่างและเป็นไปได้จริง', icon: React.createElement(Layers) },
+            { label: 'Team Synergy', stat: 'High', desc: 'ส่งเสริมการทำงานร่วมกันและการระดมความคิดอย่างมีประสิทธิภาพ', icon: React.createElement(Users) }
         ],
         how: [
-            { title: 'Growth Mindset Workshop', desc: 'ปรับทัศนคติการเผชิญปัญหาผ่านกิจกรรม Gain & Loss', icon: React.createElement(Brain) },
-            { title: '7-Steps CPS Process', desc: 'เรียนรู้ขั้นตอนตั้งแต่ระบุปัญหาจนถึงการนำไปใช้งานจริง', icon: React.createElement(Layers) },
-            { title: 'Facilitating Cards', desc: 'ใช้เครื่องมือกระตุ้นไอเดียเพื่อเปลี่ยนปัญหาเป็นความท้าทาย', icon: React.createElement(Zap) }
+            { title: 'Interactive Learning', desc: 'บรรยาย 30% ฝึกปฏิบัติ 40% และการสะท้อนคิด 30%', icon: React.createElement(Zap) },
+            { title: 'CPS 6-Modules', desc: 'กระบวนการตั้งแต่ Define จนถึง Deep Reflection', icon: React.createElement(Layers) },
+            { title: 'Reflective Tools', desc: 'ใช้ Reflection Card และ Coaching Card เพื่อการเปลี่ยนแปลงภายใน', icon: React.createElement(Brain) }
         ],
         what: [
-            'Growth Mindset in Problem Solving',
-            'The 7 Steps of Creative Problem Solving',
-            'Relationship & Internal Communication Problems',
-            'Strategic Action Planning'
+            'ใช้เครื่องมือ CPS แก้ปัญหาในงานจริงได้ทันที',
+            'มี Action Plan สำหรับแก้ปัญหาจริงขององค์กร',
+            'กล้าคิด กล้าตัดสินใจ และทำงานเชิงรุกมากขึ้น',
+            'ทำงานร่วมกันเป็นทีมได้อย่างมีประสิทธิภาพ',
+            'มี Mindset เชิงบวกและมองปัญหาเป็นโอกาส'
         ],
         objectives: [
-            'ระบุและวิจัยปัญหาที่แท้จริงได้อย่างแม่นยำ',
-            'สร้างแนวคิด (Ideation) ที่หลากหลายแบบ No Judgment',
-            'จัดทำแผนปฏิบัติการ (Action Plan) ที่เป็นรูปธรรม',
-            'ตอบสนองต่อสิ่งเร้าอย่างมีสติและมีเหตุผล'
+            'Module 1: Define Problem – เข้าใจโจทย์และบริบทปัญหา (Problem Framing)',
+            'Module 2: Discover Insight – วิเคราะห์สาเหตุและมองปัญหาใหม่ (Root Cause Analysis)',
+            'Module 3: Develop Idea – สร้างทางเลือกอย่างสร้างสรรค์ (Divergent Thinking)',
+            'Module 4: Decide Solution – คัดเลือกและออกแบบแนวทาง (Impact vs Effort)',
+            'Module 5: Deploy Action – วางแผนและลงมือทำ (Action Plan & OKRs)',
+            'Module 6: Deep Reflection – สะท้อนคิดและต่อยอดการเรียนรู้ (Learning Loop)'
         ],
         instructor: {
             id: 'den-master-fa',
-            name: 'ครูเด่น มาสเตอร์ฟา',
-            bio: 'นักออกแบบกระบวนการเรียนรู้ (Dynamic Learning Designer)',
+            name: 'ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)',
+            bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning and Facilitation และผู้ก่อตั้ง FFT',
             image: '/images/denmasterfa.jpg'
         }
     },

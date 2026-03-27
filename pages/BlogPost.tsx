@@ -30,6 +30,7 @@ import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
 import ReflectionPanel from '../components/LearningHub/ReflectionPanel';
 import AICoachSidebar from '../components/LearningHub/AICoachSidebar';
+import NewsletterBox from '../components/NewsletterBox';
 
 interface PostContentSection {
    type: 'text' | 'heading' | 'subheading' | 'quote' | 'image' | 'list' | 'box' | 'highlight';
@@ -314,18 +315,7 @@ const BlogPost: React.FC = () => {
                        </div>
                     </div>
 
-                    {/* Newsletter */}
-                    <div className="bg-blue-50/50 rounded-[3rem] p-12 border border-blue-100/50 relative overflow-hidden shadow-inner">
-                       <TrendingUp className="w-12 h-12 text-blue-600/10 absolute -top-2 -right-2" />
-                       <h4 className="text-xl font-black text-[#0f3460] nav-font uppercase tracking-tighter mb-4">The Insight Weekly</h4>
-                       <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-8 leading-relaxed">
-                          รับข้อมูลการพัฒนาคนและความคิดเชิงระบบ สัปดาห์ละ 1 ครั้งโดยครูเด่น
-                       </p>
-                       <div className="space-y-3">
-                          <input type="email" placeholder="Email address" className="w-full rounded-xl py-4 px-6 text-sm bg-white border-transparent focus:ring-blue-100 focus:border-blue-100 transition-all font-medium" />
-                          <button className="w-full bg-[#0f3460] text-white py-4 rounded-xl font-black text-xs uppercase tracking-[0.2em] nav-font shadow-lg shadow-blue-100 hover:scale-[1.02] active:scale-95 transition-all">Subscribe</button>
-                       </div>
-                    </div>
+                    <NewsletterBox />
                  </div>
               </aside>
             </div>

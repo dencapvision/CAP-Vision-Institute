@@ -1,16 +1,45 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Users, Calendar, Award, Star, MessageCircle, Phone, ChevronDown, ChevronRight, Plus, Minus, Target, ShieldCheck, Zap } from 'lucide-react';
-import { COURSES } from '../constants/courses';
+import { fetchCourseBySlug } from '../services/courses';
+import { Course } from '../types';
 import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
 import ShareButtons from '../components/ShareButtons';
 
 const CourseDetail: React.FC = () => {
-   const { id } = useParams();
-   const course = COURSES.find(c => c.id === id);
+   const { id } = useParams(); // URL might be /courses/the-modern-facilitator
+   const [course, setCourse] = useState<Course | null>(null);
+   const [loading, setLoading] = useState(true);
    const [expandedObjectives, setExpandedObjectives] = useState<number[]>([]);
+
+   useEffect(() => {
+      const loadCourse = async () => {
+         try {
+            if (id) {
+               const data = await fetchCourseBySlug(id);
+               setCourse(data);
+            }
+         } catch (error) {
+            console.error('Failed to load course:', error);
+         } finally {
+            setLoading(false);
+         }
+      };
+
+      loadCourse();
+      // Scroll to top when loading new course
+      window.scrollTo(0, 0);
+   }, [id]);
+
+   if (loading) {
+      return (
+         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+            <div className="w-16 h-16 border-4 border-[#c5a059] border-t-transparent rounded-full animate-spin"></div>
+         </div>
+      );
+   }
 
    if (!course) {
       return (
@@ -106,7 +135,7 @@ const CourseDetail: React.FC = () => {
                      <div className="bg-white p-4 rounded-[2.5rem] shadow-2xl relative reveal-staggered active">
                         <img 
                            src={course.image} 
-                           alt={course.altText || course.title} 
+                           alt={course.alt_text || course.title} 
                            className="w-full h-[400px] object-cover rounded-[2rem] shadow-inner" 
                            onClick={(e) => {
                               const img = e.target as HTMLImageElement;
@@ -139,53 +168,59 @@ const CourseDetail: React.FC = () => {
                <div className="lg:col-span-2 space-y-16">
 
                   {/* Why Section */}
-                  {course.why && (
+                  {course.why_section && course.why_section.length > 0 && (
                      <div className="bg-white p-12 rounded-[3rem] shadow-sm border border-gray-100">
                         <h2 className="text-3xl font-black text-[#0f3460] mb-12 nav-font">Why? ทำไมต้องเรียนหลักสูตรนี้</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                           {course.why.map((item, idx) => (
-                              <div key={idx} className="bg-gray-50 p-8 rounded-[2rem] text-center group hover:bg-[#0f3460] transition-all">
-                                 <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mx-auto mb-4 text-[#c5a059] shadow-sm group-hover:bg-[#c5a059] group-hover:text-white transition-all">
-                                    {item.icon ? React.cloneElement(item.icon as any, { className: "w-6 h-6" }) : <Target className="w-6 h-6" />}
+                           {course.why_section.map((item: any, idx: number) => {
+                              const isObj = typeof item === 'object' && item !== null;
+                              return (
+                                 <div key={idx} className="bg-gray-50 p-8 rounded-[2rem] text-center group hover:bg-[#0f3460] transition-all">
+                                    <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mx-auto mb-4 text-[#c5a059] shadow-sm group-hover:bg-[#c5a059] group-hover:text-white transition-all">
+                                       {isObj && item.icon ? React.cloneElement(item.icon as any, { className: "w-6 h-6" }) : <Target className="w-6 h-6" />}
+                                    </div>
+                                    {isObj && item.stat && <span className="text-3xl font-black text-[#0f3460] group-hover:text-white block mb-1 nav-font">{item.stat}</span>}
+                                    <h4 className="text-sm font-bold text-[#c5a059] mb-3 nav-font uppercase tracking-widest">{isObj ? item.label : `เหตุผลที่ ${idx + 1}`}</h4>
+                                    <p className="text-sm text-gray-500 group-hover:text-blue-100/70 leading-relaxed">{isObj ? item.desc : item}</p>
                                  </div>
-                                 <span className="text-3xl font-black text-[#0f3460] group-hover:text-white block mb-1 nav-font">{item.stat}</span>
-                                 <h4 className="text-xs font-bold text-[#c5a059] mb-3 nav-font uppercase tracking-widest">{item.label}</h4>
-                                 <p className="text-[10px] text-gray-500 group-hover:text-blue-100/70 leading-relaxed">{item.desc}</p>
-                              </div>
-                           ))}
+                              );
+                           })}
                         </div>
                      </div>
                   )}
 
                   {/* How Section */}
-                  {course.how && (
+                  {course.how_section && course.how_section.length > 0 && (
                      <div className="bg-[#0f3460] p-12 rounded-[3rem] shadow-xl text-white overflow-hidden relative">
                         <div className="absolute top-0 right-0 p-8 opacity-5">
                            <Zap className="w-48 h-48" />
                         </div>
                         <h2 className="text-3xl font-black mb-12 nav-font text-[#c5a059]">How? วิธีการเรียนรู้ของเรา</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
-                           {course.how.map((item, idx) => (
-                              <div key={idx} className="bg-white/5 border border-white/10 p-8 rounded-[2rem] hover:bg-white/10 transition-all">
-                                 <div className="w-10 h-10 bg-[#c5a059] rounded-xl flex items-center justify-center mb-6 shadow-lg">
-                                    {item.icon ? React.cloneElement(item.icon as any, { className: "w-5 h-5 text-white" }) : <Target className="w-5 h-5 text-white" />}
+                           {course.how_section.map((item: any, idx: number) => {
+                              const isObj = typeof item === 'object' && item !== null;
+                              return (
+                                 <div key={idx} className="bg-white/5 border border-white/10 p-8 rounded-[2rem] hover:bg-white/10 transition-all">
+                                    <div className="w-10 h-10 bg-[#c5a059] rounded-xl flex items-center justify-center mb-6 shadow-lg">
+                                       {isObj && item.icon ? React.cloneElement(item.icon as any, { className: "w-5 h-5 text-white" }) : <Zap className="w-5 h-5 text-white" />}
+                                    </div>
+                                    <h4 className="text-lg font-bold text-[#c5a059] mb-3 nav-font">{isObj ? item.title : `ขั้นตอนที่ ${idx + 1}`}</h4>
+                                    <p className="text-blue-100/70 text-sm leading-relaxed">{isObj ? item.desc : item}</p>
                                  </div>
-                                 <h4 className="text-lg font-bold text-[#c5a059] mb-3 nav-font">{item.title}</h4>
-                                 <p className="text-blue-100/70 text-xs leading-relaxed">{item.desc}</p>
-                              </div>
-                           ))}
+                              );
+                           })}
                         </div>
                      </div>
                   )}
 
                   {/* What Section */}
-                  {course.what && (
+                  {course.what_section && course.what_section.length > 0 && (
                      <div className="bg-white p-12 rounded-[3rem] shadow-sm border border-gray-100">
                         <h2 className="text-3xl font-black text-[#0f3460] mb-12 nav-font">What? สิ่งที่ผู้เข้าอบรมจะได้รับ</h2>
                         <div className="space-y-4">
-                           {course.what.map((item, idx) => (
+                           {course.what_section.map((item: any, idx: number) => (
                               <div key={idx} className="flex gap-4 items-center p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-[#c5a059] transition-all">
-                                 <ShieldCheck className="w-6 h-6 text-green-500" />
+                                 <ShieldCheck className="w-6 h-6 text-green-500 flex-shrink-0" />
                                  <span className="text-lg font-bold text-[#0f3460] nav-font">{item}</span>
                               </div>
                            ))}
@@ -197,7 +232,7 @@ const CourseDetail: React.FC = () => {
                   <div className="bg-white p-12 rounded-[3rem] shadow-sm border border-gray-100">
                      <h2 className="text-3xl font-black text-[#0f3460] mb-8 nav-font">โครงสร้างหลักสูตรและกิจกรรม</h2>
                      <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed font-medium opacity-90">
-                        <p className="text-xl mb-12">{course.longDescription}</p>
+                        <p className="text-xl mb-12">{course.long_description || course.description}</p>
 
                         <h3 className="text-2xl font-black text-[#0f3460] mt-16 mb-10 nav-font flex items-center gap-4">
                            <Target className="w-8 h-8 text-[#c5a059]" />

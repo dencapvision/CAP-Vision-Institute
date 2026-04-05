@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Search, ChevronLeft, ChevronRight, ArrowRight, Star, ChevronDown, Filter as FilterIcon, Layout, Target, Zap, Users, MessageCircle, Layers, GraduationCap } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { COURSES } from '../constants/courses';
+import { fetchCourses } from '../services/courses';
+import type { Course } from '../types';
 import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
 import LeadershipHero from '../components/LeadershipHero';
@@ -11,6 +12,20 @@ const Courses: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeSlide, setActiveSlide] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCourses()
+      .then(data => {
+        setCourses(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
 
   const categories = ['All', 'Leader Skills', 'People Skills', 'Work Skills', 'Communication Skills'];
 
@@ -30,16 +45,16 @@ const Courses: React.FC = () => {
   };
 
   const categoryCounts = useMemo(() => {
-    const counts: Record<string, number> = { All: COURSES.length };
+    const counts: Record<string, number> = { All: courses.length };
     categories.forEach(cat => {
       if (cat !== 'All') {
-        counts[cat] = COURSES.filter(c => c.category === cat).length;
+        counts[cat] = courses.filter(c => c.category === cat).length;
       }
     });
     return counts;
-  }, [categories]);
+  }, [categories, courses]);
 
-  const featuredCourses = COURSES.slice(0, 4);
+  const featuredCourses = courses.slice(0, 4);
 
   const nextSlide = useCallback(() => {
     setActiveSlide((prev) => (prev === featuredCourses.length - 1 ? 0 : prev + 1));
@@ -54,7 +69,7 @@ const Courses: React.FC = () => {
     return () => clearInterval(timer);
   }, [nextSlide]);
 
-  const filteredCourses = COURSES.filter(c => {
+  const filteredCourses = courses.filter(c => {
     const matchesCategory = filter === 'All' || c.category === filter;
     const matchesSearch = c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       c.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -71,8 +86,21 @@ const Courses: React.FC = () => {
       />
       <div id="courses-top"><LeadershipHero /></div>
 
+      {loading && (
+         <div className="max-w-7xl mx-auto px-4 py-20 flex justify-center items-center">
+             <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#c5a059] border-t-transparent"></div>
+         </div>
+      )}
+
+      {!loading && courses.length === 0 && (
+         <div className="max-w-7xl mx-auto px-4 py-20 text-center">
+            <h2 className="text-2xl font-black text-[#0f3460] mb-4 nav-font">ยังไม่มีหลักสูตรในขณะนี้</h2>
+            <p className="text-gray-500">ทางสถาบันกำลังอัปเดตหลักสูตรใหม่ๆ โปรดติดตาม เร็วๆ นี้</p>
+         </div>
+      )}
+
       {/* Featured Carousel Section - Only show when "All" is selected */}
-      {filter === 'All' && (
+      {!loading && courses.length > 0 && filter === 'All' && (
         <div className="max-w-7xl mx-auto px-4 -mt-12 md:-mt-20 relative z-20 mb-12 md:mb-20">
           <div className="relative group">
             <div className="overflow-hidden rounded-[1.5rem] md:rounded-[2.5rem] shadow-2xl bg-white border border-white/20">
@@ -84,7 +112,7 @@ const Courses: React.FC = () => {
                   <div key={course.id} className="w-full flex-shrink-0 relative h-[400px] md:h-[600px]">
                     <img
                       src={course.image}
-                      alt={course.altText || course.title}
+                      alt={course.alt_text || course.title}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0f3460]/90 via-[#0f3460]/60 to-transparent"></div>
@@ -95,7 +123,7 @@ const Courses: React.FC = () => {
                       </div>
                       <h2 className="text-2xl md:text-5xl font-black mb-4 md:mb-6 nav-font leading-tight !text-white drop-shadow-[0_4px_15px_rgba(0,0,0,1)] whitespace-pre-line">{course.title}</h2>
                       <p className="text-sm md:text-xl !text-blue-50 mb-6 md:mb-8 opacity-100 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] line-clamp-2 max-w-2xl">{course.description}</p>
-                      <Link to={`/courses/${course.id}`} className="bg-[#c5a059] text-white px-8 md:px-10 py-3 md:py-4 rounded-xl md:rounded-2xl font-bold inline-flex items-center gap-3 hover:bg-white hover:text-[#0f3460] transition-all nav-font group/btn text-sm md:text-base shadow-lg">
+                      <Link to={`/courses/${course.slug || course.id}`} className="bg-[#c5a059] text-white px-8 md:px-10 py-3 md:py-4 rounded-xl md:rounded-2xl font-bold inline-flex items-center gap-3 hover:bg-white hover:text-[#0f3460] transition-all nav-font group/btn text-sm md:text-base shadow-lg">
                         ดูรายละเอียด
                         <ArrowRight className="w-4 h-4 md:w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
                       </Link>
@@ -136,6 +164,7 @@ const Courses: React.FC = () => {
       <div className={`max-w-7xl mx-auto px-4 ${filter !== 'All' ? '-mt-12 md:-mt-20 relative z-20' : ''}`}>
 
         {/* Visual Category Cards (Desktop) */}
+        {!loading && (
         <div className="hidden lg:grid grid-cols-5 gap-6 mb-12">
           {categories.map(cat => {
             const info = getCategoryInfo(cat);
@@ -171,6 +200,7 @@ const Courses: React.FC = () => {
             );
           })}
         </div>
+        )}
 
         {/* Search & Mobile Filter Bar */}
         <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-xl p-6 md:p-8 mb-12 md:mb-16 border border-gray-100">
@@ -235,6 +265,7 @@ const Courses: React.FC = () => {
         </div>
 
         {/* Course Grid */}
+        {!loading && (
         <div id="courses-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
           {filteredCourses.map((course) => {
             const colors = getCategoryInfo(course.category);
@@ -244,7 +275,7 @@ const Courses: React.FC = () => {
                 <div className="relative h-48 md:h-64 overflow-hidden">
                   <img
                     src={course.image}
-                    alt={course.altText || course.title}
+                    alt={course.alt_text || course.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute top-4 left-4">
@@ -258,7 +289,7 @@ const Courses: React.FC = () => {
                   <p className="text-gray-500 text-sm md:text-lg mb-6 md:mb-8 flex-grow leading-relaxed font-medium opacity-80 line-clamp-2 md:line-clamp-3">{course.description}</p>
                   <div className="pt-6 md:pt-8 border-t border-gray-50">
                     <Link
-                      to={`/courses/${course.id}`}
+                      to={`/courses/${course.slug || course.id}`}
                       className="w-full bg-[#0f3460] hover:bg-[#c5a059] text-white py-3 rounded-xl font-black text-sm md:text-base flex items-center justify-center gap-2 transition-all nav-font shadow-md active:scale-95"
                     >
                       ดูรายละเอียดหลักสูตร <ArrowRight className="w-4 h-4" />
@@ -269,6 +300,7 @@ const Courses: React.FC = () => {
             );
           })}
         </div>
+        )}
 
         {/* Bottom CTA — In-house Training prompt */}
         <div className="mt-20 bg-gradient-to-br from-[#0f3460] to-[#1a4a7a] rounded-[3rem] px-8 md:px-16 py-14 text-white text-center relative overflow-hidden">

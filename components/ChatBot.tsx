@@ -1,10 +1,11 @@
-
 import React, { useState, useEffect, useRef } from 'react';
-import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
-import { MessageSquare, X, Send, User, Sparkles, ChevronDown } from 'lucide-react';
-import { BRAND_INFO, CONTACT_INFO } from '../constants/brand';
-import { COURSES } from '../constants/courses';
+import { GoogleGenAI, Chat } from "@google/genai";
+import { MessageSquare, X, Send, User, Sparkles } from 'lucide-react';
+import { CONTACT_INFO } from '../constants/brand';
 import { SERVICES_LIST as SERVICES } from '../constants/services';
+import { fetchCourses } from '../services/courses';
+import { fetchOnlineCourses } from '../services/onlineCourses';
+import type { Course, OnlineCourse } from '../types';
 
 const ChatBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,59 +19,79 @@ const ChatBot: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const chatRef = useRef<Chat | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [isInitializing, setIsInitializing] = useState(false);
 
-  // Initialize Chat Session with refined Master Facilitator persona
-  const initChat = () => {
-    if (chatRef.current) return;
+  // Function to initialize the chat with dynamic context
+  const initChat = async () => {
+    if (chatRef.current || isInitializing) return;
+    
+    setIsInitializing(true);
+    try {
+      // Fetch dynamic context
+      const [allCourses, allOnlineCourses] = await Promise.all([
+        fetchCourses().catch(() => [] as Course[]),
+        fetchOnlineCourses().catch(() => [] as OnlineCourse[])
+      ]);
 
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const coursesContext = [
+          ...allCourses.map(c => `- ${c.title}: ${c.description}`),
+          ...allOnlineCourses.map(c => `- [Online] ${c.title}: ประยุกต์ใช้ในองค์กรยุคใหม่`)
+      ].join('\n');
 
-    const coursesContext = COURSES.map(c => `- ${c.title}: ${c.description}`).join('\n');
-    const servicesContext = SERVICES.map(s => `- ${s.title}: ${s.description}`).join('\n');
+      const servicesContext = SERVICES.map(s => `- ${s.title}: ${s.description}`).join('\n');
 
-    const systemInstruction = `
-      คุณคือ "ครูเด่น มาสเตอร์ ฟา" (Den Master Fa) หรือ อาจารย์อนุสรณ์ หนองนา ผู้อำนวยการสถาบัน CAP Vision Institute
-      
-      # กฎเหล็กในการตอบ (AI Mode):
-      - **กระชับ (Concise):** ตอบให้สั้น ตรงประเด็นที่สุด ไม่เยิ่นเย้อ
-      - **เน้นคำถามสไตล์โค้ช (Coaching Style):** ใช้การตั้งคำถามเพื่อให้ผู้ใช้งานได้คิดต่อหรือขยายความต้องการของตนเอง
-      - **ตรงคำถาม (Focus):** ตอบเฉพาะสิ่งที่ผู้ใช้งานถามเท่านั้น ไม่ต้องร่ายยาวเรื่องอื่นหากไม่จำเป็น
-      
-      # ประวัติและตัวตน:
-      - ประสบการณ์ 18 ปี ในการเป็น "ครูผู้สร้างครู สร้างวิทยากร และสร้างผู้นำ" (Train the Trainer)
-      - เป็น Master Facilitator ที่เชี่ยวชาญด้าน Human Communication และ Transformative Learning
-      - เจ้าของโมเดลการสอนเฉพาะตัว "DFA Model"
-      
-      # ปรัชญาการทำงาน (DFA Model):
-      1. D - Dynamic Learning Design: ออกแบบการเรียนรู้แบบพลวัต
-      2. F - FLOW State: สร้างบรรยากาศลื่นไหล สนุก ท้าทาย
-      3. A - Art of personal GROWTH: เน้นการเติบโตจากภายใน (Inside-out Transformation)
-      
-      # Frameworks & Tools:
-      - C.O.D.E Model: วิเคราะห์สไตล์การสื่อสาร (Commander, Organizer, Diplomat, Entertainer)
-      - 5Ps Process: Plan, Purpose, Participants, Problem, Product
-      
-      # คำแนะนำการตอบพิเศษ:
-      1. หากถามเรื่องการออกแบบหลักสูตร ให้สรุปสั้นๆ ตามโครงสร้าง (DFA Strategy, C.O.D.E, Agenda, Outcome) และปิดท้ายด้วยคำถามโค้ชเพื่อเช็คความต้องการที่แท้จริง
-      2. หากขอสไลด์ 20 สไลด์ ให้ลิสต์หัวข้อสั้นๆ ครบ 20 หัวข้อ
-      
-      # Tone of Voice:
-      - Masterful, Wise, Encouraging & Warm
-      - ภาษาไทยสละสลวย ผสมคำศัพท์ภาษาอังกฤษ (Transformation, Flow, Reflection)
-      
-      # ข้อมูลบริบทสถาบัน:
-      - หลักสูตร: ${coursesContext}
-      - บริการ: ${servicesContext}
-      - ติดต่อ: LINE OA ${CONTACT_INFO.line} (${CONTACT_INFO.lineUrl}), โทร ${CONTACT_INFO.phone}
-    `;
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
-    chatRef.current = ai.chats.create({
-      model: 'gemini-3-pro-preview',
-      config: {
-        systemInstruction: systemInstruction,
-        temperature: 0.7,
-      },
-    });
+      const systemInstruction = `
+        คุณคือ "ครูเด่น มาสเตอร์ ฟา" (Den Master Fa) หรือ อาจารย์อนุสรณ์ หนองนา ผู้อำนวยการสถาบัน CAP Vision Institute
+        
+        # กฎเหล็กในการตอบ (AI Mode):
+        - **กระชับ (Concise):** ตอบให้สั้น ตรงประเด็นที่สุด ไม่เยิ่นเย้อ
+        - **เน้นคำถามสไตล์โค้ช (Coaching Style):** ใช้การตั้งคำถามเพื่อให้ผู้ใช้งานได้คิดต่อหรือขยายความต้องการของตนเอง
+        - **ตรงคำถาม (Focus):** ตอบเฉพาะสิ่งที่ผู้ใช้งานถามเท่านั้น ไม่ต้องร่ายยาวเรื่องอื่นหากไม่จำเป็น
+        
+        # ประวัติและตัวตน:
+        - ประสบการณ์ 18 ปี ในการเป็น "ครูผู้สร้างครู สร้างวิทยากร และสร้างผู้นำ" (Train the Trainer)
+        - เป็น Master Facilitator ที่เชี่ยวชาญด้าน Human Communication และ Transformative Learning
+        - เจ้าของโมเดลการสอนเฉพาะตัว "DFA Model"
+        
+        # ปรัชญาการทำงาน (DFA Model):
+        1. D - Dynamic Learning Design: ออกแบบการเรียนรู้แบบพลวัต
+        2. F - FLOW State: สร้างบรรยากาศลื่นไหล สนุก ท้าทาย
+        3. A - Art of personal GROWTH: เน้นการเติบโตจากภายใน (Inside-out Transformation)
+        
+        # Frameworks & Tools:
+        - C.O.D.E Model: วิเคราะห์สไตล์การสื่อสาร (Commander, Organizer, Diplomat, Entertainer)
+        - 5Ps Process: Plan, Purpose, Participants, Problem, Product
+        
+        # คำแนะนำการตอบพิเศษ:
+        1. หากถามเรื่องการออกแบบหลักสูตร ให้สรุปสั้นๆ ตามโครงสร้าง (DFA Strategy, C.O.D.E, Agenda, Outcome) และปิดท้ายด้วยคำถามโค้ชเพื่อเช็คความต้องการที่แท้จริง
+        2. หากขอสไลด์ 20 สไลด์ ให้ลิสต์หัวข้อสั้นๆ ครบ 20 หัวข้อ
+        
+        # Tone of Voice:
+        - Masterful, Wise, Encouraging & Warm
+        - ภาษาไทยสละสลวย ผสมคำศัพท์ภาษาอังกฤษ (Transformation, Flow, Reflection)
+        
+        # ข้อมูลบริบทสถาบัน (Dynamic Data):
+        - หลักสูตรและวิชาที่สอน: 
+        ${coursesContext}
+        - บริการหลัก: 
+        ${servicesContext}
+        - ช่องทางการติดต่อ: LINE OA ${CONTACT_INFO.line} (${CONTACT_INFO.lineUrl}), โทร ${CONTACT_INFO.phone}
+      `;
+
+      chatRef.current = ai.chats.create({
+        model: 'gemini-3-pro-preview',
+        config: {
+          systemInstruction: systemInstruction,
+          temperature: 0.7,
+        },
+      });
+    } catch (error) {
+      console.error("Failed to initialize chat context:", error);
+    } finally {
+      setIsInitializing(false);
+    }
   };
 
   useEffect(() => {
@@ -86,7 +107,7 @@ const ChatBot: React.FC = () => {
   }, [messages, isTyping]);
 
   const handleSend = async () => {
-    if (!input.trim() || isTyping) return;
+    if (!input.trim() || isTyping || isInitializing) return;
 
     const userMessage = input.trim();
     setInput('');
@@ -94,7 +115,7 @@ const ChatBot: React.FC = () => {
     setIsTyping(true);
 
     try {
-      if (!chatRef.current) initChat();
+      if (!chatRef.current) await initChat();
 
       const response = await chatRef.current!.sendMessage({ message: userMessage });
       const text = response.text || "ขออภัยครับ พลังงานขัดข้องเล็กน้อย รบกวนคุณลองส่งข้อความใหม่อีกครั้งนะครับ";
@@ -135,8 +156,10 @@ const ChatBot: React.FC = () => {
               <div>
                 <h3 className="font-bold nav-font text-base leading-tight">ครูเด่น มาสเตอร์ฟา</h3>
                 <div className="flex items-center gap-1.5">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-[10px] font-bold text-blue-200 uppercase tracking-widest">Coaching AI Mode</span>
+                  <div className={`w-2 h-2 rounded-full ${isInitializing ? 'bg-yellow-400' : 'bg-green-400 animate-pulse'}`}></div>
+                  <span className="text-[10px] font-bold text-blue-200 uppercase tracking-widest">
+                    {isInitializing ? 'Initializing context...' : 'Coaching AI Mode'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -188,14 +211,15 @@ const ChatBot: React.FC = () => {
                     handleSend();
                   }
                 }}
-                placeholder="คุยกับครูเด่น..."
+                disabled={isInitializing}
+                placeholder={isInitializing ? "กำลังเตรียมข้อมูล..." : "คุยกับครูเด่น..."}
                 rows={1}
                 className="w-full pl-6 pr-14 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-[#c5a059] focus:bg-white transition-all text-sm font-medium resize-none overflow-hidden"
               />
               <button
                 onClick={handleSend}
-                disabled={!input.trim() || isTyping}
-                className={`absolute right-3 top-3 p-2 rounded-xl transition-all ${input.trim() && !isTyping ? 'bg-[#0f3460] text-white shadow-lg shadow-blue-900/20' : 'bg-gray-200 text-gray-400'
+                disabled={!input.trim() || isTyping || isInitializing}
+                className={`absolute right-3 top-3 p-2 rounded-xl transition-all ${input.trim() && !isTyping && !isInitializing ? 'bg-[#0f3460] text-white shadow-lg shadow-blue-900/20' : 'bg-gray-200 text-gray-400'
                   }`}
               >
                 <Send className="w-4 h-4" />

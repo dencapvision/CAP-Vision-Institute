@@ -2,20 +2,57 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 // Added missing 'X' import from lucide-react
-import { PlayCircle, CheckCircle, ChevronRight, ArrowLeft, Download, MessageSquare, BookOpen, Star, Clock, FileText, CheckCircle2, Award, ChevronDown, X } from 'lucide-react';
-import { ONLINE_COURSES } from '../constants/courses';
+import { PlayCircle, CheckCircle, ChevronRight, ArrowLeft, Download, MessageSquare, BookOpen, Star, Clock, FileText, CheckCircle2, Award, ChevronDown, X, Loader2 } from 'lucide-react';
+import { fetchOnlineCourseBySlug } from '../services/onlineCourses';
+import type { OnlineCourse } from '../types';
 import SEO from '../components/SEO';
 
 const LMSPlayer: React.FC = () => {
-  const { id } = useParams();
-  const course = ONLINE_COURSES.find(c => c.id === id) || ONLINE_COURSES[0];
+  const { id } = useParams<{ id: string }>();
+  const [course, setCourse] = useState<OnlineCourse | null>(null);
+  const [loading, setLoading] = useState(true);
   const [activeLessonIdx, setActiveLessonIdx] = useState(0);
   const [activeTab, setActiveTab] = useState<'details' | 'resources' | 'quiz' | 'discussion'>('details');
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [showCurriculum, setShowCurriculum] = useState(false);
 
-  const activeLesson = course.curriculum[activeLessonIdx] || course.curriculum[0];
+  React.useEffect(() => {
+    if (!id) return;
+    const loadCourse = async () => {
+      try {
+        const data = await fetchOnlineCourseBySlug(id);
+        setCourse(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadCourse();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-[#f8fafc]">
+        <Loader2 className="w-12 h-12 text-[#c5a059] animate-spin" />
+      </div>
+    );
+  }
+
+  if (!course) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-[#f8fafc]">
+        <div className="text-center">
+          <h2 className="text-2xl font-black text-[#0f3460] mb-2">ไม่พบคอร์สเรียน</h2>
+          <Link to="/lms" className="text-[#c5a059] hover:underline">กลับไปยังหน้ารวมคอร์ส</Link>
+        </div>
+      </div>
+    );
+  }
+
+  const curriculum = course.curriculum || [];
+  const activeLesson = curriculum[activeLessonIdx] || curriculum[0] || {};
 
   const handleQuizOption = (qIdx: number, oIdx: number) => {
     if (quizSubmitted) return;
@@ -87,7 +124,7 @@ const LMSPlayer: React.FC = () => {
                 </div>
                 <button
                   onClick={() => {
-                    setActiveLessonIdx(prev => Math.min(course.curriculum.length - 1, prev + 1));
+                    setActiveLessonIdx(prev => Math.min(curriculum.length - 1, prev + 1));
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   className="w-full md:w-auto bg-[#c5a059] text-white px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-[#0f3460] transition-all nav-font shadow-lg active:scale-95"
@@ -119,7 +156,7 @@ const LMSPlayer: React.FC = () => {
                 <div className="min-h-[250px] md:min-h-[300px] pb-10">
                   {activeTab === 'details' && (
                     <div className="text-gray-600 leading-relaxed font-medium text-sm md:text-base">
-                      <p>ในบทเรียนนี้ {course.instructor} จะพาทุกท่านไปเจาะลึกเนื้อหาของ {activeLesson.title} เพื่อให้ได้ผลลัพธ์ที่นำไปใช้ได้จริง</p>
+                      <p>ในบทเรียนนี้ {course.instructor?.name || 'Instructor'} จะพาทุกท่านไปเจาะลึกเนื้อหาของ {activeLesson.title} เพื่อให้ได้ผลลัพธ์ที่นำไปใช้ได้จริง</p>
                       <ul className="space-y-4 mt-8">
                         <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#c5a059] flex-shrink-0" /> เข้าใจแก่นแท้ของเนื้อหาผ่าน DFA Model</li>
                         <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#c5a059] flex-shrink-0" /> เทคนิคการประยุกต์ใช้ในสถานการณ์จริง</li>
@@ -199,10 +236,10 @@ const LMSPlayer: React.FC = () => {
         <div className="hidden lg:block lg:w-96 bg-white border-l border-gray-100 h-[calc(100vh-64px)] overflow-y-auto shadow-inner">
           <div className="p-8 border-b border-gray-100 bg-gray-50/30">
             <h3 className="text-xl font-bold text-[#0f3460] nav-font">เนื้อหาหลักสูตร</h3>
-            <p className="text-[10px] text-gray-400 mt-2 font-bold uppercase tracking-widest">{course.curriculum.length} บทเรียน • {course.duration}</p>
+            <p className="text-[10px] text-gray-400 mt-2 font-bold uppercase tracking-widest">{curriculum.length} บทเรียน • {course.duration}</p>
           </div>
           <div className="divide-y divide-gray-50">
-            {course.curriculum.map((lesson, i) => (
+            {curriculum.map((lesson, i) => (
               <div
                 key={i}
                 className={`p-6 cursor-pointer hover:bg-gray-50 transition-all flex items-start gap-4 ${activeLessonIdx === i ? 'bg-[#0f3460]/5 border-r-4 border-[#c5a059]' : ''}`}
@@ -242,7 +279,7 @@ const LMSPlayer: React.FC = () => {
                 </button>
               </div>
               <div className="divide-y divide-gray-50 pb-10">
-                {course.curriculum.map((lesson, i) => (
+                {curriculum.map((lesson, i) => (
                   <div
                     key={i}
                     className={`p-5 cursor-pointer flex items-start gap-4 ${activeLessonIdx === i ? 'bg-[#0f3460]/5 border-r-4 border-[#c5a059]' : ''}`}

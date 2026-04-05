@@ -1,12 +1,28 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Star, ArrowRight, MessageCircle, Users, Award, Zap, Clock } from 'lucide-react';
-import { SPEAKERS } from '../constants/speakers';
+import { Star, ArrowRight, MessageCircle, Users, Award, Zap, Clock, Loader2 } from 'lucide-react';
+import { fetchInstructors } from '../services/instructors';
+import type { Instructor } from '../types';
 import { BRAND_INFO, CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
 
 const Speakers: React.FC = () => {
+  const [speakers, setSpeakers] = useState<Instructor[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await fetchInstructors();
+        setSpeakers(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, []);
   return (
     <div className="min-h-screen bg-white">
       <SEO
@@ -69,8 +85,14 @@ const Speakers: React.FC = () => {
       {/* ── SPEAKERS GRID ─────────────────────────────────────── */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
-          {/* Featured speaker — Den Master Fa — large card */}
-          {SPEAKERS.filter(s => s.id === 'den-master-fa').map(speaker => (
+          {loading ? (
+            <div className="flex justify-center items-center py-24">
+              <Loader2 className="w-12 h-12 text-[#c5a059] animate-spin" />
+            </div>
+          ) : (
+            <>
+              {/* Featured speaker — Den Master Fa — large card */}
+              {speakers.filter(s => s.slug === 'den-master-fa').map(speaker => (
             <div key={speaker.id} className="mb-12">
               <div className="bg-[#0a1628] rounded-[2.5rem] overflow-hidden shadow-2xl">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -115,7 +137,7 @@ const Speakers: React.FC = () => {
 
                     <div className="flex flex-wrap gap-4">
                       <Link
-                        to={`/speakers/${speaker.id}`}
+                        to={`/speakers/${speaker.slug}`}
                         className="group btn-premium inline-flex items-center gap-2 bg-[#c5a059] text-white px-7 py-4 rounded-2xl font-black hover:bg-white hover:text-[#0f3460] transition-all"
                       >
                         ดูโปรไฟล์เต็ม
@@ -136,9 +158,9 @@ const Speakers: React.FC = () => {
             </div>
           ))}
 
-          {/* Other speakers grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {SPEAKERS.filter(s => s.id !== 'den-master-fa').map(speaker => (
+              {/* Other speakers grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {speakers.filter(s => s.slug !== 'den-master-fa').map(speaker => (
               <div
                 key={speaker.id}
                 className="group bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col hover:-translate-y-2"
@@ -167,7 +189,7 @@ const Speakers: React.FC = () => {
 
                   <div className="pt-6 border-t border-gray-100 flex items-center justify-between">
                     <Link
-                      to={`/speakers/${speaker.id}`}
+                      to={`/speakers/${speaker.slug}`}
                       className="text-[#0f3460] font-black text-sm flex items-center gap-2 group-hover:gap-3 transition-all group-hover:text-[#c5a059]"
                     >
                       ดูประวัติและผลงาน <ArrowRight className="w-4 h-4" />
@@ -175,8 +197,10 @@ const Speakers: React.FC = () => {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+                  ))}
+                </div>
+              </>
+            )}
         </div>
       </section>
 

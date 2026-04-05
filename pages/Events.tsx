@@ -1,12 +1,30 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, Users, MapPin, ExternalLink, MessageCircle, Facebook, Linkedin, Globe, Target, Zap, Heart, Award, ArrowRight } from 'lucide-react';
+import { Calendar, Users, MapPin, ExternalLink, MessageCircle, Facebook, Linkedin, Globe, Target, Zap, Heart, Award, ArrowRight, Loader2 } from 'lucide-react';
+import { fetchEvents } from '../services/events';
+import type { Event } from '../types';
 import { EVENT_INFO } from '../constants/events';
 import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
 
 const Events: React.FC = () => {
+   const [events, setEvents] = useState<Event[]>([]);
+   const [loading, setLoading] = useState(true);
+
+   useEffect(() => {
+      const loadData = async () => {
+         try {
+            const data = await fetchEvents();
+            setEvents(data);
+         } catch (error) {
+            console.error(error);
+         } finally {
+            setLoading(false);
+         }
+      };
+      loadData();
+   }, []);
+
    return (
       <div className="bg-gray-50 min-h-screen pb-20">
          <SEO
@@ -66,23 +84,50 @@ const Events: React.FC = () => {
                            </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-50">
-                           {EVENT_INFO.schedule.map((event) => (
-                              <tr key={event.id} className="hover:bg-gray-50/50 transition-colors">
-                                 <td className="px-10 py-8 text-[#c5a059] font-black nav-font whitespace-nowrap">{event.date}</td>
-                                 <td className="px-10 py-8 text-[#0f3460] font-bold text-lg nav-font leading-tight">{event.title}</td>
-                                 <td className="px-10 py-8 text-gray-500 font-medium whitespace-nowrap">{event.speaker}</td>
-                                 <td className="px-10 py-8 text-gray-500 font-medium">
-                                    <div className="flex items-center gap-2">
-                                       <MapPin className="w-4 h-4 text-[#c5a059]" /> {event.location}
-                                    </div>
-                                 </td>
-                                 <td className="px-10 py-8 text-center">
-                                    <a href={event.link} className="inline-flex items-center gap-2 bg-[#0f3460] text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-[#c5a059] transition-all nav-font whitespace-nowrap">
-                                       ลงทะเบียน <ExternalLink className="w-4 h-4" />
-                                    </a>
+                           {loading ? (
+                              <tr>
+                                 <td colSpan={5} className="px-10 py-24 text-center">
+                                    <Loader2 className="w-10 h-10 text-[#c5a059] animate-spin mx-auto" />
                                  </td>
                               </tr>
-                           ))}
+                           ) : events.length === 0 ? (
+                              <tr>
+                                 <td colSpan={5} className="px-10 py-24 text-center text-gray-400 font-medium">
+                                    ยังไม่มีกิจกรรมในขณะนี้
+                                 </td>
+                              </tr>
+                           ) : (
+                              events.map((event) => (
+                                 <tr key={event.id} className="hover:bg-gray-50/50 transition-colors">
+                                    <td className="px-10 py-8 text-[#c5a059] font-black nav-font whitespace-nowrap">
+                                       {new Date(event.event_date).toLocaleDateString('th-TH', { 
+                                          day: 'numeric', 
+                                          month: 'short', 
+                                          year: 'numeric' 
+                                       })}
+                                    </td>
+                                    <td className="px-10 py-8 text-[#0f3460] font-bold text-lg nav-font leading-tight">{event.title}</td>
+                                    <td className="px-10 py-8 text-gray-500 font-medium whitespace-nowrap">
+                                       {event.speaker?.name || 'ทีมวิทยากร CAP Vision'}
+                                    </td>
+                                    <td className="px-10 py-8 text-gray-500 font-medium">
+                                       <div className="flex items-center gap-2">
+                                          <MapPin className="w-4 h-4 text-[#c5a059]" /> {event.location}
+                                       </div>
+                                    </td>
+                                    <td className="px-10 py-8 text-center">
+                                       <a 
+                                          href={event.link || CONTACT_INFO.lineUrl} 
+                                          target="_blank" 
+                                          rel="noopener noreferrer"
+                                          className="inline-flex items-center gap-2 bg-[#0f3460] text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-[#c5a059] transition-all nav-font whitespace-nowrap"
+                                       >
+                                          ลงทะเบียน <ExternalLink className="w-4 h-4" />
+                                       </a>
+                                    </td>
+                                 </tr>
+                              ))
+                           )}
                         </tbody>
                      </table>
                   </div>

@@ -1,14 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, GraduationCap, Award, Sparkles, CheckCircle2, ChevronRight, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { BRAND_INFO, CONTACT_INFO } from '../constants/brand';
-import { COURSES } from '../constants/courses';
+import { fetchCourses } from '../services/courses';
+import type { Course } from '../types';
 import Logo from '../components/Logo';
 import ClientsSection from '../components/ClientsSection';
 import SEO from '../components/SEO';
 
 const Home: React.FC = () => {
+  const [featuredCourses, setFeaturedCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadCourses = async () => {
+      try {
+        const data = await fetchCourses();
+        setFeaturedCourses(data.slice(0, 3));
+      } catch (error) {
+        console.error("Error loading featured courses:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadCourses();
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
       <SEO
@@ -168,12 +186,17 @@ const Home: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-            {COURSES.slice(0, 3).map((course) => (
+            {loading ? (
+               <div className="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center py-12">
+                  <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#c5a059] border-t-transparent"></div>
+               </div>
+            ) : featuredCourses.length > 0 ? (
+               featuredCourses.map((course) => (
               <div key={course.id} className="card-premium group flex flex-col h-full bg-white relative overflow-hidden transition-all duration-500">
                 <div className="relative overflow-hidden aspect-[16/10] bg-[#0f3460]/5">
                   <img
                     src={course.image}
-                    alt={course.altText || course.title}
+                    alt={course.alt_text || course.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     loading="lazy"
                     onError={(e) => {
@@ -194,7 +217,7 @@ const Home: React.FC = () => {
                   </p>
                   <div className="pt-8 border-t border-gray-100 mt-auto">
                     <Link 
-                      to={`/courses/${course.id}`} 
+                      to={`/courses/${course.slug || course.id}`} 
                       className="btn-premium w-full bg-[#0f3460] hover:bg-[#c5a059] text-white py-4 rounded-xl font-black text-sm md:text-base flex items-center justify-center gap-3 transition-all nav-font shadow-xl group/btn"
                     >
                       ดูรายละเอียดหลักสูตร
@@ -203,7 +226,12 @@ const Home: React.FC = () => {
                   </div>
                 </div>
               </div>
-            ))}
+            ))
+            ) : (
+               <div className="col-span-1 md:col-span-2 lg:col-span-3 text-center py-12">
+                 <p className="text-gray-500">กำลังเตรียมหลักสูตรล่าสุด โปรดกลับมาใหม่ภายหลัง</p>
+               </div>
+            )}
           </div>
         </div>
       </section>

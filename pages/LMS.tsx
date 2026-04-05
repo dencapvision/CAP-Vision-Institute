@@ -1,14 +1,30 @@
 
-import React, { useState } from 'react';
-// Add missing Award import
-import { BookOpen, PlayCircle, Clock, Search, Layout, List, GraduationCap, TrendingUp, CheckCircle, Award, User } from 'lucide-react';
-import { ONLINE_COURSES } from '../constants/courses';
+import React, { useState, useEffect } from 'react';
+import { BookOpen, PlayCircle, Clock, Search, Layout, List, GraduationCap, TrendingUp, CheckCircle, Award, User, Loader2 } from 'lucide-react';
+import { fetchOnlineCourses } from '../services/onlineCourses';
+import type { OnlineCourse } from '../types';
 import { BRAND_INFO } from '../constants/brand';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 
 const LMS: React.FC = () => {
   const [viewType, setViewType] = useState<'grid' | 'list'>('grid');
+  const [courses, setCourses] = useState<OnlineCourse[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await fetchOnlineCourses();
+        setCourses(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, []);
 
   return (
     <div className="bg-[#f8fafc] min-h-screen">
@@ -37,7 +53,7 @@ const LMS: React.FC = () => {
             <div className="flex gap-4">
               <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20">
                 <p className="text-xs font-bold uppercase tracking-widest text-blue-200 mb-1">คอร์สทั้งหมด</p>
-                <p className="text-2xl font-black nav-font">48 คอร์ส</p>
+                <p className="text-2xl font-black nav-font">{loading ? '-' : courses.length} คอร์ส</p>
               </div>
               <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20">
                 <p className="text-xs font-bold uppercase tracking-widest text-blue-200 mb-1">นักเรียนที่เข้าเรียน</p>
@@ -87,39 +103,49 @@ const LMS: React.FC = () => {
         </div>
 
         {/* LMS Grid View */}
-        <div className={`grid ${viewType === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'} gap-10`}>
-          {ONLINE_COURSES.map((course) => (
-            <Link to={`/lms/${course.id}`} key={course.id} className={`group bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex ${viewType === 'list' ? 'flex-row items-center h-48' : 'flex-col'}`}>
-              <div className={`relative ${viewType === 'list' ? 'w-1/3 h-full' : 'h-64'} overflow-hidden`}>
-                <img
-                  src={course.image}
-                  alt={course.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <div className="bg-white/20 backdrop-blur-md p-4 rounded-full border border-white/30">
-                    <PlayCircle className="w-12 h-12 text-white" />
-                  </div>
-                </div>
-                {course.progress > 0 && (
-                  <div className="absolute top-4 left-4 right-4">
-                    <div className="bg-white/90 backdrop-blur-sm p-3 rounded-xl flex items-center justify-between shadow-lg">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-[#0f3460]">เรียนไปแล้ว {course.progress}%</span>
-                      <div className="w-20 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                        <div className="bg-[#c5a059] h-full" style={{ width: `${course.progress}%` }}></div>
-                      </div>
+        {loading ? (
+          <div className="flex justify-center items-center py-24">
+            <Loader2 className="w-12 h-12 text-[#c5a059] animate-spin" />
+          </div>
+        ) : courses.length === 0 ? (
+          <div className="text-center py-24 bg-white rounded-[2.5rem] shadow-sm border border-gray-100">
+            <h3 className="text-2xl font-black text-[#0f3460] mb-2">ไม่พบคอร์สเรียน</h3>
+            <p className="text-gray-500">ขณะนี้ยังไม่มีคอร์สเรียนออนไลน์เปิดให้บริการ</p>
+          </div>
+        ) : (
+          <div className={`grid ${viewType === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'} gap-10`}>
+            {courses.map((course) => (
+              <Link to={`/lms/${course.slug || course.id}`} key={course.id} className={`group bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex ${viewType === 'list' ? 'flex-row items-center h-48' : 'flex-col'}`}>
+                <div className={`relative ${viewType === 'list' ? 'w-1/3 h-full' : 'h-64'} overflow-hidden`}>
+                  <img
+                    src={course.image}
+                    alt={course.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <div className="bg-white/20 backdrop-blur-md p-4 rounded-full border border-white/30">
+                      <PlayCircle className="w-12 h-12 text-white" />
                     </div>
                   </div>
-                )}
-              </div>
-
-              <div className={`p-8 flex flex-col flex-grow ${viewType === 'list' ? 'justify-center' : ''}`}>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-[10px] font-bold text-[#c5a059] uppercase tracking-[0.2em]">{course.category}</span>
+                  {course.progress && course.progress > 0 ? (
+                    <div className="absolute top-4 left-4 right-4">
+                      <div className="bg-white/90 backdrop-blur-sm p-3 rounded-xl flex items-center justify-between shadow-lg">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#0f3460]">เรียนไปแล้ว {course.progress}%</span>
+                        <div className="w-20 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                          <div className="bg-[#c5a059] h-full" style={{ width: `${course.progress}%` }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
-                <h3 className="text-xl font-bold text-[#0f3460] mb-4 group-hover:text-[#c5a059] transition-colors nav-font leading-tight line-clamp-2">
-                  {course.title}
-                </h3>
+
+                <div className={`p-8 flex flex-col flex-grow ${viewType === 'list' ? 'justify-center' : ''}`}>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-[10px] font-bold text-[#c5a059] uppercase tracking-[0.2em]">{course.category}</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-[#0f3460] mb-4 group-hover:text-[#c5a059] transition-colors nav-font leading-tight line-clamp-2">
+                    {course.title}
+                  </h3>
 
                 <div className="flex items-center gap-6 mt-2 mb-6">
                   <div className="flex items-center gap-2 text-gray-400">
@@ -132,27 +158,30 @@ const LMS: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-6 border-t border-gray-50">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[#0f3460] overflow-hidden">
-                      <img src="https://i.pravatar.cc/100?u=instructor" alt="Instructor" />
+                  <div className="flex items-center justify-between pt-6 border-t border-gray-50">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-[#0f3460] overflow-hidden">
+                        <img src={course.instructor?.image || "https://i.pravatar.cc/100?u=instructor"} alt="Instructor" />
+                      </div>
+                      <span className="text-xs font-bold text-gray-600">{course.instructor?.name || 'Unknown Instructor'}</span>
                     </div>
-                    <span className="text-xs font-bold text-gray-600">{course.instructor}</span>
-                  </div>
-                  <div className="text-right">
-                    {course.progress === 100 ? (
-                      <span className="bg-green-50 text-green-600 px-4 py-1.5 rounded-full text-xs font-black nav-font flex items-center gap-1">
-                        <CheckCircle className="w-3 h-3" /> จบคอร์สแล้ว
-                      </span>
-                    ) : (
-                      <span className="text-lg font-black text-[#0f3460] nav-font">฿{course.price}</span>
-                    )}
+                    <div className="text-right">
+                      {course.progress === 100 ? (
+                        <span className="bg-green-50 text-green-600 px-4 py-1.5 rounded-full text-xs font-black nav-font flex items-center gap-1">
+                          <CheckCircle className="w-3 h-3" /> จบคอร์สแล้ว
+                        </span>
+                      ) : (
+                        <span className="text-lg font-black text-[#0f3460] nav-font">
+                          {course.price ? `฿${course.price.toLocaleString()}` : 'ฟรี'}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+              </Link>
+            ))}
+          </div>
+        )}
 
         {/* Learning Statistics Section */}
         <div className="mt-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

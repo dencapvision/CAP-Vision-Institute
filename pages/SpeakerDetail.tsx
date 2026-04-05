@@ -5,8 +5,9 @@ import {
   ArrowLeft, CheckCircle2, Award, Star, MessageCircle, Phone, BookOpen,
   ChevronRight, Zap, Users, Brain, Target, Quote, Calendar, TrendingUp, Shield
 } from 'lucide-react';
-import { SPEAKERS } from '../constants/speakers';
-import { COURSES } from '../constants/courses';
+import { fetchInstructorBySlug } from '../services/instructors';
+import { fetchCourses } from '../services/courses';
+import type { Instructor, Course } from '../types';
 import { CONTACT_INFO, CLIENTS } from '../constants/brand';
 import SEO from '../components/SEO';
 
@@ -61,9 +62,8 @@ const DEN_SPECIFIC = {
 };
 
 /* ─── Generic fallback detail page ─────────────────────────── */
-const GenericDetail: React.FC<{ speaker: ReturnType<typeof SPEAKERS['find']> & { id: string } }> = ({ speaker }) => {
+const GenericDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = ({ speaker, taughtCourses }) => {
   if (!speaker) return null;
-  const taughtCourses = COURSES.filter(c => c.instructor?.id === speaker.id);
   return (
     <div className="bg-gray-50 min-h-screen">
       <div className="bg-[#0f3460] pt-24 pb-40 text-white relative overflow-hidden">
@@ -83,8 +83,8 @@ const GenericDetail: React.FC<{ speaker: ReturnType<typeof SPEAKERS['find']> & {
             </div>
             <div className="lg:w-2/3">
               <h1 className="text-4xl md:text-5xl font-black mb-4 leading-tight text-white">{speaker.name}</h1>
-              <p className="text-lg text-[#c5a059] font-bold uppercase tracking-[0.15em] mb-8">{speaker.title}</p>
-              <p className="text-lg text-blue-100/80 leading-relaxed mb-8 max-w-2xl">{speaker.longBio}</p>
+              {speaker.title && <p className="text-lg text-[#c5a059] font-bold uppercase tracking-[0.15em] mb-8">{speaker.title}</p>}
+              <p className="text-lg text-blue-100/80 leading-relaxed mb-8 max-w-2xl">{speaker.longBio || speaker.bio}</p>
               <a href={CONTACT_INFO.lineUrl} className="inline-flex items-center gap-3 bg-[#c5a059] text-white px-8 py-4 rounded-2xl font-bold hover:bg-white hover:text-[#0f3460] transition-all">
                 <MessageCircle className="w-5 h-5" /> นัดปรึกษาหลักสูตร
               </a>
@@ -98,7 +98,7 @@ const GenericDetail: React.FC<{ speaker: ReturnType<typeof SPEAKERS['find']> & {
             <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-gray-100">
               <h2 className="text-xl font-black text-[#0f3460] mb-6 border-l-4 border-[#c5a059] pl-5">ความเชี่ยวชาญ</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {speaker.expertise.map((exp, i) => (
+                {(speaker.expertise || []).map((exp, i) => (
                   <div key={i} className="flex items-center gap-3 bg-gray-50 p-4 rounded-xl border border-gray-100">
                     <CheckCircle2 className="w-5 h-5 text-[#c5a059] flex-shrink-0" />
                     <span className="font-bold text-[#0f3460]">{exp}</span>
@@ -109,7 +109,7 @@ const GenericDetail: React.FC<{ speaker: ReturnType<typeof SPEAKERS['find']> & {
             <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-gray-100">
               <h2 className="text-xl font-black text-[#0f3460] mb-6 border-l-4 border-[#c5a059] pl-5">ผลงานและประสบการณ์</h2>
               <ul className="space-y-4">
-                {speaker.achievements.map((ach, i) => (
+                {(speaker.achievements || []).map((ach, i) => (
                   <li key={i} className="flex gap-4 items-start">
                     <Award className="w-5 h-5 text-[#c5a059] flex-shrink-0 mt-1" />
                     <p className="text-gray-600 leading-relaxed">{ach}</p>
@@ -159,8 +159,7 @@ const GenericDetail: React.FC<{ speaker: ReturnType<typeof SPEAKERS['find']> & {
 };
 
 /* ─── Den Master Fa Premium Detail Page ─────────────────────── */
-const DenMasterFaDetail: React.FC<{ speaker: (typeof SPEAKERS)[0] }> = ({ speaker }) => {
-  const taughtCourses = COURSES.filter(c => c.instructor?.id === 'den-master-fa');
+const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = ({ speaker, taughtCourses }) => {
   const [activeProblem, setActiveProblem] = useState(0);
 
   useEffect(() => {
@@ -655,7 +654,39 @@ const DenMasterFaDetail: React.FC<{ speaker: (typeof SPEAKERS)[0] }> = ({ speake
 /* ─── Main Component ───────────────────────────────────────── */
 const SpeakerDetail: React.FC = () => {
   const { id } = useParams();
-  const speaker = SPEAKERS.find(s => s.id === id);
+  const [speaker, setSpeaker] = useState<Instructor | null>(null);
+  const [taughtCourses, setTaughtCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      if (!id) return;
+      try {
+        setLoading(true);
+        const fetchedSpeaker = await fetchInstructorBySlug(id);
+        if (fetchedSpeaker) {
+          setSpeaker(fetchedSpeaker);
+          const allCourses = await fetchCourses();
+          setTaughtCourses(allCourses.filter(c => c.instructor_id === fetchedSpeaker.id));
+        } else {
+          setSpeaker(null);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="w-12 h-12 border-4 border-[#c5a059] border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   if (!speaker) {
     return (
@@ -671,12 +702,12 @@ const SpeakerDetail: React.FC = () => {
   }
 
   // Den Master Fa gets premium high-converting page
-  if (id === 'den-master-fa') {
-    return <DenMasterFaDetail speaker={speaker} />;
+  if (speaker.slug === 'den-master-fa') {
+    return <DenMasterFaDetail speaker={speaker} taughtCourses={taughtCourses} />;
   }
 
   // Other speakers get generic detail page
-  return <GenericDetail speaker={speaker} />;
+  return <GenericDetail speaker={speaker} taughtCourses={taughtCourses} />;
 };
 
 export default SpeakerDetail;

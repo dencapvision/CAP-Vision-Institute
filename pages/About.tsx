@@ -1,14 +1,31 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Award, Target, Heart, Sparkles, CheckCircle2, Zap, MessageCircle, Quote, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Award, Target, Heart, Sparkles, CheckCircle2, Zap, MessageCircle, Quote, ShieldCheck, ArrowRight, Loader2 } from 'lucide-react';
 import { BRAND_INFO, CONTACT_INFO, TIMELINE, CLIENTS } from '../constants/brand';
-import { SPEAKERS } from '../constants/speakers';
 import { SERVICES_LIST } from '../constants/services';
 import ClientsSection from '../components/ClientsSection';
 import SEO from '../components/SEO';
+import { fetchInstructorBySlug } from '../services/instructors';
+import type { Instructor } from '../types';
 
 const About: React.FC = () => {
+  const [founder, setFounder] = useState<Instructor | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadFounder = async () => {
+      try {
+        const data = await fetchInstructorBySlug('den-master-fa');
+        setFounder(data);
+      } catch (err) {
+        console.error('Failed to load founder info:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadFounder();
+  }, []);
+
   return (
     <div className="bg-white min-h-screen pb-16 md:pb-24 overflow-x-hidden">
       <SEO
@@ -244,43 +261,57 @@ const About: React.FC = () => {
             <span className="text-[#c5a059] font-black text-xs uppercase tracking-[0.4em] mb-4 block nav-font">The Visionary Leader</span>
             <h2 className="text-2xl md:text-4xl font-black text-[#0f3460] nav-font">ผู้นำกระบวนการเปลี่ยนผ่าน</h2>
           </div>
-          <div className="bg-white rounded-[3rem] p-8 md:p-20 shadow-xl border border-gray-100">
-            <div className="flex flex-col lg:flex-row items-center gap-12 md:gap-20">
-              <div className="lg:w-1/3">
-                <div className="relative group max-w-sm mx-auto">
-                  <div className="absolute -inset-4 bg-[#c5a059]/10 rounded-[3rem] blur-2xl"></div>
-                  <img
-                    src={SPEAKERS[0].image}
-                    alt={SPEAKERS[0].name}
-                    className="relative z-10 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl w-full grayscale hover:grayscale-0 transition-all duration-700"
-                  />
-                  <div className="absolute -bottom-4 -right-4 bg-[#c5a059] text-white p-5 md:p-7 rounded-2xl z-20 shadow-xl border-4 border-white hidden sm:block">
-                    <Award className="w-8 h-8 mx-auto" />
-                    <p className="text-[10px] font-black nav-font uppercase tracking-widest mt-2">Master Fa</p>
+          
+          <div className="bg-white rounded-[3rem] p-8 md:p-20 shadow-xl border border-gray-100 min-h-[400px] flex items-center justify-center">
+            {loading ? (
+              <div className="flex flex-col items-center gap-4">
+                <Loader2 className="w-12 h-12 text-[#c5a059] animate-spin" />
+                <p className="text-gray-400 font-medium nav-font">กำลังโหลดข้อมูลผู้ก่อตั้ง...</p>
+              </div>
+            ) : founder ? (
+              <div className="flex flex-col lg:flex-row items-center gap-12 md:gap-20 w-full">
+                <div className="lg:w-1/3">
+                  <div className="relative group max-w-sm mx-auto">
+                    <div className="absolute -inset-4 bg-[#c5a059]/10 rounded-[3rem] blur-2xl"></div>
+                    <img
+                      src={founder.image || ''}
+                      alt={founder.name}
+                      className="relative z-10 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl w-full grayscale hover:grayscale-0 transition-all duration-700 aspect-[4/5] object-cover"
+                    />
+                    <div className="absolute -bottom-4 -right-4 bg-[#c5a059] text-white p-5 md:p-7 rounded-2xl z-20 shadow-xl border-4 border-white hidden sm:block">
+                      <Award className="w-8 h-8 mx-auto" />
+                      <p className="text-[10px] font-black nav-font uppercase tracking-widest mt-2">Master Fa</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="lg:w-2/3">
-                <h2 className="text-2xl md:text-5xl font-black text-[#0f3460] mb-4 nav-font leading-tight">{SPEAKERS[0].name}</h2>
-                <p className="text-[#c5a059] font-bold text-sm mb-6">Master Facilitator · ประสบการณ์กว่า 18 ปี</p>
-                <p className="text-base md:text-xl text-gray-600 leading-relaxed font-medium mb-8 opacity-80">
-                  {SPEAKERS[0].longBio}
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                  {SPEAKERS[0].expertise.map((exp, i) => (
-                    <div key={i} className="flex items-center gap-3 group">
-                      <div className="bg-[#c5a059]/10 p-2 rounded-lg group-hover:bg-[#c5a059] transition-colors flex-shrink-0">
-                        <CheckCircle2 className="w-4 h-4 text-[#c5a059] group-hover:text-white" />
-                      </div>
-                      <span className="text-sm md:text-base font-bold text-gray-600 nav-font">{exp}</span>
+                <div className="lg:w-2/3">
+                  <h2 className="text-2xl md:text-5xl font-black text-[#0f3460] mb-4 nav-font leading-tight">{founder.name}</h2>
+                  <p className="text-[#c5a059] font-bold text-sm mb-6">{founder.title || 'Master Facilitator · ประสบการณ์กว่า 18 ปี'}</p>
+                  <p className="text-base md:text-xl text-gray-600 leading-relaxed font-medium mb-8 opacity-80">
+                    {founder.longBio || founder.bio}
+                  </p>
+                  {founder.expertise && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                      {founder.expertise.map((exp, i) => (
+                        <div key={i} className="flex items-center gap-3 group">
+                          <div className="bg-[#c5a059]/10 p-2 rounded-lg group-hover:bg-[#c5a059] transition-colors flex-shrink-0">
+                            <CheckCircle2 className="w-4 h-4 text-[#c5a059] group-hover:text-white" />
+                          </div>
+                          <span className="text-sm md:text-base font-bold text-gray-600 nav-font">{exp}</span>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  )}
+                  <Link to={`/speakers/${founder.slug}`} className="bg-[#0f3460] text-white px-10 py-4 rounded-2xl font-black text-base md:text-lg hover:bg-[#c5a059] transition-all nav-font shadow-xl active:scale-95 inline-flex items-center gap-3">
+                    อ่านประวัติฉบับเต็ม <ArrowRight className="w-5 h-5" />
+                  </Link>
                 </div>
-                <Link to={`/speakers/${SPEAKERS[0].id}`} className="bg-[#0f3460] text-white px-10 py-4 rounded-2xl font-black text-base md:text-lg hover:bg-[#c5a059] transition-all nav-font shadow-xl active:scale-95 inline-flex items-center gap-3">
-                  อ่านประวัติฉบับเต็ม <ArrowRight className="w-5 h-5" />
-                </Link>
               </div>
-            </div>
+            ) : (
+               <div className="text-center py-12">
+                <p className="text-gray-400">ไม่พบข้อมูลผู้ก่อตั้ง</p>
+              </div>
+            )}
           </div>
         </section>
 

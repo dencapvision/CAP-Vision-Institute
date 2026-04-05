@@ -3,8 +3,6 @@ import { Briefcase, ArrowRight, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import ClientsSection from '../components/ClientsSection';
-import { COURSES } from '../constants/courses'; // Re-use course images for portfolio for now
-
 const Portfolio: React.FC = () => {
     // Using some courses as dummy portfolio items for now, mixed with static data
     const portFolioItems = [

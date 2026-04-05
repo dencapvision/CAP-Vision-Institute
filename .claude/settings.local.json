@@ -6,7 +6,9 @@
       "Bash(npx tsc:*)",
       "Bash(python -c ':*)",
       "Bash(npx vite:*)",
-      "WebFetch(domain:www.urbinner.com)"
+      "WebFetch(domain:www.urbinner.com)",
+      "Bash(python3:*)",
+      "Bash(scp:*)"
     ]
   }
 }

@@ -1,311 +1,610 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Search, 
-  PlayCircle, 
-  Clock, 
-  Download, 
-  FileText, 
-  ChevronRight, 
-  BookOpen, 
-  Video, 
-  FileDown, 
-  Filter, 
-  Layout, 
-  Tag, 
-  Calendar,
-  Sparkles,
-  ArrowRight,
-  TrendingUp
+import React, { useState } from 'react';
+import {
+  BookOpen, PlayCircle, Clock, Download, FileText, ChevronRight,
+  ArrowRight, Sparkles, Users, Target, Zap, Brain, MessageCircle,
+  TrendingUp, GraduationCap, CheckCircle2, Star, Shield, Award
 } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { MICRO_LEARNING_VIDEOS, DOWNLOAD_RESOURCES } from '../constants/resources';
-import { HRD_ARTICLES as STATIC_ARTICLES } from '../constants/articles';
+import { HRD_ARTICLES } from '../constants/articles';
 import { Link } from 'react-router-dom';
+import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
-import SmartSearchBar from '../components/LearningHub/SmartSearchBar';
-import LearningPathFilter from '../components/LearningHub/LearningPathFilter';
 
-interface BlogManifestItem {
-   id: string;
-   title: string;
-   category: string;
-   thumbnail: string;
-   excerpt: string;
-   description?: string;
-   tags?: string[];
-   date: string;
-   createdAt?: string;
-   level?: 'Beginner' | 'Intermediate' | 'Expert';
-   readTime?: string;
-}
+const FEATURED_IDS = [
+  'ai-proof-skills-hr-2026',
+  'effective-leadership-communication',
+  'coaching-skills-for-managers',
+  'building-growth-mindset-culture',
+];
+
+const CATEGORIES = [
+  {
+    icon: Target,
+    label: 'ภาวะผู้นำ',
+    sublabel: 'Leadership',
+    color: 'bg-indigo-500',
+    lightColor: 'bg-indigo-50',
+    textColor: 'text-indigo-600',
+    ids: ['coaching-skills-for-managers', 'hrd-future-skills-2025', 'okrs-implementation-guide', 'agile-hr-transformation'],
+  },
+  {
+    icon: MessageCircle,
+    label: 'การสื่อสาร',
+    sublabel: 'Communication',
+    color: 'bg-sky-500',
+    lightColor: 'bg-sky-50',
+    textColor: 'text-sky-600',
+    ids: ['effective-leadership-communication', 'mental-health-in-workplace', 'design-thinking-for-hr'],
+  },
+  {
+    icon: Users,
+    label: 'ทีมและองค์กร',
+    sublabel: 'Team & Culture',
+    color: 'bg-emerald-500',
+    lightColor: 'bg-emerald-50',
+    textColor: 'text-emerald-600',
+    ids: ['employee-engagement-strategies', 'building-growth-mindset-culture', 'agile-hr-transformation'],
+  },
+  {
+    icon: Brain,
+    label: 'พัฒนาตนเอง',
+    sublabel: 'Personal Growth',
+    color: 'bg-orange-500',
+    lightColor: 'bg-orange-50',
+    textColor: 'text-orange-600',
+    ids: ['ai-proof-skills-hr-2026', 'data-driven-hr', 'mental-health-in-workplace'],
+  },
+];
+
+const DEEP_KNOWLEDGE = [
+  {
+    icon: Zap,
+    title: 'Transformative Learning คืออะไร?',
+    hook: 'ทำไมการอบรม 2 วันถึงไม่เปลี่ยนพฤติกรรมได้?',
+    body: 'การเรียนรู้ที่แท้จริงไม่ได้เกิดจากการรับข้อมูล แต่เกิดจากการเปลี่ยนกรอบความคิด (Transformative Frame) CAP Vision ออกแบบทุกหลักสูตรด้วยหลัก Active Learning ที่ผสาน Reflection กับ Action ทำให้ผู้เรียนนำไปใช้ได้จริง ไม่ใช่แค่จำได้ชั่วคราว',
+    tag: 'CAP Theory',
+  },
+  {
+    icon: Brain,
+    title: 'Inside-Out Growth Model',
+    hook: 'ทีมที่เก่งขึ้นจากข้างในออกมา vs ถูกสั่งให้เก่ง',
+    body: 'การเปลี่ยนแปลงที่ยั่งยืนต้องเริ่มจากข้างใน โมเดล Inside-Out ของ CAP Vision ทำงานที่ระดับ Mindset, Belief และ Behavior ไม่ใช่แค่ Skills เพราะคนที่เชื่อในตัวเองจะเรียนรู้ต่อไปเองโดยไม่ต้องรอให้องค์กรส่งไปอบรม',
+    tag: 'Philosophy',
+  },
+  {
+    icon: MessageCircle,
+    title: 'Dialogue 4 ระดับ',
+    hook: 'คุณกำลังพูดคุย หรือแค่รอให้ถึงตาตัวเอง?',
+    body: 'ทฤษฎี Dialogue มี 4 ระดับ: 1) Downloading — พูดจากสิ่งที่รู้อยู่แล้ว, 2) Debate — พูดเพื่อชนะ, 3) Discussion — แลกเปลี่ยนข้อมูล, 4) Dialogue — ฟังเพื่อเข้าใจและสร้างความหมายร่วมกัน การประชุมส่วนใหญ่อยู่ที่ระดับ 1-2 ผู้นำที่ยิ่งใหญ่ดึงทีมขึ้นสู่ระดับ 4',
+    tag: 'Facilitation',
+  },
+];
+
+const articleById = (id: string) => HRD_ARTICLES.find(a => a.id === id);
 
 const Resources: React.FC = () => {
-   const [activeType, setActiveType] = useState<'all' | 'video' | 'article' | 'download'>('article');
-   const [searchQuery, setSearchQuery] = useState('');
-   const [selectedPath, setSelectedPath] = useState('facilitation');
-   const [articles, setArticles] = useState<BlogManifestItem[]>((STATIC_ARTICLES as any[]).map(a => ({ 
-     ...a, 
-     date: a.date || '2026-01-20', 
-     category: a.category || 'facilitation',
-     level: a.level || (a.id === '1' ? 'Intermediate' : 'Beginner')
-    })));
+  const [activeCategory, setActiveCategory] = useState(0);
+  const [downloadEmail, setDownloadEmail] = useState('');
+  const [downloadSubmitted, setDownloadSubmitted] = useState(false);
 
-   useEffect(() => {
-       const data = (STATIC_ARTICLES as any[]).map(a => ({
-         ...a,
-         category: a.category || 'facilitation',
-         tags: a.tags || ['HR', 'Leadership'],
-         level: a.id === '1' ? 'Intermediate' : 'Beginner'
-       }));
-       const sorted = [...data].sort((a, b) => {
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
-       });
-       setArticles(sorted as any);
-   }, []);
+  const featuredArticles = FEATURED_IDS.map(id => articleById(id)).filter(Boolean) as typeof HRD_ARTICLES;
+  const categoryArticles = CATEGORIES[activeCategory].ids
+    .map(id => articleById(id))
+    .filter(Boolean) as typeof HRD_ARTICLES;
 
-   const filteredArticles = articles.filter(article => {
-      const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-         article.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-         (article.tags && article.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())));
+  return (
+    <div className="bg-white min-h-screen">
+      <SEO
+        title="Learning Hub | ศูนย์รวมความรู้พัฒนาคนและองค์กร | CAP Vision Institute"
+        description="รวมบทความ วิดีโอ และเครื่องมือฟรีด้านภาวะผู้นำ การสื่อสาร และการพัฒนาบุคลากร โดย ครูเด่น มาสเตอร์ฟา"
+      />
 
-      const matchesPath = activeType === 'article' ? article.category === selectedPath : true;
+      {/* ─── HERO ─────────────────────────────────────────────── */}
+      <section className="relative bg-[#0f3460] pt-32 pb-24 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80"
+            alt="Learning Hub"
+            className="w-full h-full object-cover opacity-10 scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0f3460] via-[#0f3460]/95 to-[#0f3460]" />
+          <div className="absolute top-0 right-0 w-2/3 h-2/3 bg-[#c5a059]/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4" />
+        </div>
 
-      return matchesSearch && matchesPath;
-   });
+        <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
+          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-5 py-2 rounded-full mb-8">
+            <Sparkles className="w-4 h-4 text-[#c5a059] animate-pulse" />
+            <span className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.3em] nav-font">
+              Learning Hub · 11 บทความ · เครื่องมือฟรี
+            </span>
+          </div>
 
-   return (
-      <div className="bg-white min-h-screen">
-         <SEO
-            title="Learning Intelligence System | CAP Vision Insight"
-            description="รวมบทความ วิดีโอสั้น และเครื่องมือช่วยทำงานเพื่อการเปลี่ยนแปลงองค์กรเชิงระบบ"
-         />
+          <h1 className="text-4xl md:text-6xl font-black nav-font leading-[1.1] tracking-tight mb-6">
+            <span className="text-[#c5a059]">ศูนย์รวมความรู้</span><br />
+            <span className="text-white">ด้านการพัฒนาคนและองค์กร</span>
+          </h1>
 
-         {/* Hero Header */}
-         <section className="relative pt-32 pb-20 overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-full">
-              <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-50/50 rounded-full blur-[120px]" />
-              <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-amber-50/30 rounded-full blur-[120px]" />
-            </div>
+          <p className="text-white/60 text-lg md:text-xl font-light leading-relaxed mb-10 max-w-2xl mx-auto">
+            ความรู้ที่ใช้งานได้จริง — ไม่ใช่แค่ทฤษฎี<br />
+            <span className="text-white/80 font-semibold">บทความ · วิดีโอ · เครื่องมือฟรี</span> โดยทีม CAP Vision Institute
+          </p>
 
-            <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
-               <motion.div
-                 initial={{ opacity: 0, y: 20 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-[0.2em] mb-8 nav-font"
-               >
-                 <Sparkles className="w-4 h-4" />
-                 Learning Intelligence System
-               </motion.div>
-               
-               <motion.h1
-                 initial={{ opacity: 0, y: 20 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 className="text-5xl md:text-7xl font-black text-[#0f3460] nav-font leading-[0.9] tracking-tight uppercase"
-               >
-                 Knowledge <br/>
-                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-500">To Action</span>
-               </motion.h1>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="#featured"
+              className="bg-[#c5a059] text-white px-8 py-4 rounded-2xl font-black text-base nav-font flex items-center justify-center gap-3 hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all shadow-2xl"
+            >
+              อ่านบทความแนะนำ <ArrowRight className="w-5 h-5" />
+            </a>
+            <a
+              href="#toolkit"
+              className="bg-white/5 border-2 border-white/20 text-white px-8 py-4 rounded-2xl font-black text-base nav-font flex items-center justify-center gap-3 hover:bg-white/10 transition-all"
+            >
+              ดาวน์โหลดเครื่องมือฟรี <Download className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
 
-               <motion.p
-                 initial={{ opacity: 0, y: 20 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 className="text-lg md:text-xl text-gray-500 mb-12 font-medium max-w-2xl mx-auto leading-relaxed"
-               >
-                 คลังปัญญาเพื่อการเปลี่ยนแปลง: รวมบทความ วิดีโอสั้น และเครื่องมือช่วยทำงาน (Tools) เพื่อการพัฒนาองค์กรเชิงระบบ
-               </motion.p>
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#c5a059]/30 to-transparent" />
+      </section>
 
-               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-                 <SmartSearchBar onSearch={setSearchQuery} />
-               </motion.div>
-            </div>
-         </section>
+      {/* ─── FEATURED INSIGHTS ────────────────────────────────── */}
+      <section id="featured" className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <p className="text-[#c5a059] font-black uppercase tracking-[0.3em] text-[10px] nav-font mb-3">
+              บทความแนะนำ
+            </p>
+            <h2 className="text-3xl md:text-4xl font-black text-[#0f3460] nav-font">
+              เริ่มต้นที่นี่ — ความรู้ที่เปลี่ยนมุมมอง
+            </h2>
+            <p className="text-gray-500 mt-3 max-w-xl mx-auto">
+              คัดเลือกโดยทีม CAP Vision เหมาะสำหรับผู้นำ HR และผู้จัดการที่ต้องการผลลัพธ์จริง
+            </p>
+          </div>
 
-         {/* Multi-Path Filter */}
-         <section className="pb-20">
-            <div className="max-w-7xl mx-auto px-6">
-              <LearningPathFilter 
-                activePath={selectedPath} 
-                onPathChange={(path) => { setSelectedPath(path); setActiveType('article'); }} 
-              />
-            </div>
-         </section>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {featuredArticles.map((article, idx) => (
+              <Link
+                key={article.id}
+                to={`/resources/${article.id}`}
+                className="group bg-white rounded-3xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={article.thumbnail}
+                    alt={article.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  {idx === 0 && (
+                    <div className="absolute top-4 left-4 bg-[#c5a059] text-white text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full nav-font">
+                      Hot
+                    </div>
+                  )}
+                </div>
+                <div className="p-6 flex flex-col flex-grow">
+                  <p className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest mb-2 nav-font">
+                    {article.date}
+                  </p>
+                  <h3 className="font-bold text-base text-[#0f3460] nav-font leading-tight mb-3 group-hover:text-[#c5a059] transition-colors flex-grow">
+                    {article.title}
+                  </h3>
+                  <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4">
+                    {article.excerpt}
+                  </p>
+                  <div className="flex items-center gap-2 text-[#0f3460] font-black text-[10px] nav-font uppercase tracking-widest mt-auto">
+                    อ่านต่อ <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
-         <div className="max-w-7xl mx-auto px-6 py-20 space-y-32">
-            {/* Insight Articles Section */}
-            {(activeType === 'all' || activeType === 'article') && (
-               <section>
-                  <div className="flex items-center justify-between mb-16">
-                    <div className="flex items-center gap-4">
-                      <div className="w-1.5 h-10 bg-blue-600 rounded-full" />
-                      <div>
-                        <h2 className="text-3xl font-black text-[#0f3460] nav-font uppercase tracking-tighter">Featured Insights</h2>
-                        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Recommended for {selectedPath}</p>
-                      </div>
+      {/* ─── IN-LINE CTA #1 ────────────────────────────────────── */}
+      <section className="py-12 bg-[#0f3460]/5 border-y border-[#c5a059]/10">
+        <div className="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <p className="font-black text-[#0f3460] text-lg nav-font">
+              สนใจนำความรู้เหล่านี้ไปใช้ในองค์กร?
+            </p>
+            <p className="text-gray-500 text-sm mt-1">
+              ทุกบทความเชื่อมกับหลักสูตร In-house Training ที่ออกแบบเฉพาะ
+            </p>
+          </div>
+          <Link
+            to="/contact"
+            className="bg-[#c5a059] text-white px-8 py-4 rounded-2xl font-black nav-font flex items-center gap-3 hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all whitespace-nowrap shadow-lg"
+          >
+            ปรึกษาฟรี <ChevronRight className="w-5 h-5" />
+          </Link>
+        </div>
+      </section>
+
+      {/* ─── CONTENT CATEGORIES ───────────────────────────────── */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <p className="text-[#c5a059] font-black uppercase tracking-[0.3em] text-[10px] nav-font mb-3">
+              หมวดหมู่ความรู้
+            </p>
+            <h2 className="text-3xl md:text-4xl font-black text-[#0f3460] nav-font">
+              เลือกอ่านตามทักษะที่ต้องการพัฒนา
+            </h2>
+          </div>
+
+          {/* Category Tabs */}
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {CATEGORIES.map((cat, idx) => {
+              const Icon = cat.icon;
+              return (
+                <button
+                  key={idx}
+                  onClick={() => setActiveCategory(idx)}
+                  className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-black text-sm nav-font transition-all ${
+                    activeCategory === idx
+                      ? 'bg-[#0f3460] text-white shadow-lg'
+                      : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {cat.label}
+                  <span className={`text-[10px] opacity-70 hidden sm:block`}>{cat.sublabel}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Category Articles */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {categoryArticles.map((article) => {
+              const cat = CATEGORIES[activeCategory];
+              const Icon = cat.icon;
+              return (
+                <Link
+                  key={article.id}
+                  to={`/resources/${article.id}`}
+                  className="group bg-white rounded-3xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="relative h-44 overflow-hidden">
+                    <img
+                      src={article.thumbnail}
+                      alt={article.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      loading="lazy"
+                    />
+                    <div className={`absolute top-4 left-4 ${cat.lightColor} ${cat.textColor} text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full nav-font flex items-center gap-1`}>
+                      <Icon className="w-3 h-3" /> {cat.label}
                     </div>
                   </div>
-
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                     {filteredArticles.map((article, index) => (
-                        <motion.div
-                          key={article.id}
-                          initial={{ opacity: 0, y: 30 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                        >
-                          <Link to={`/resources/${article.id}`} className="bg-white rounded-[3rem] border border-gray-100/50 overflow-hidden hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] transition-all duration-500 flex flex-col h-full group">
-                             <div className="relative h-64 overflow-hidden shadow-inner">
-                                <img src={article.thumbnail} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={article.title} loading="lazy" />
-                                <div className="absolute top-6 left-6 flex flex-col gap-2">
-                                   <span className="bg-white/90 backdrop-blur-md text-[#0f3460] px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm">
-                                      {article.category}
-                                   </span>
-                                   <span className={`px-4 py-1.5 backdrop-blur-md rounded-full text-[10px] font-black text-white shadow-sm uppercase tracking-widest ${
-                                      article.level === 'Expert' ? 'bg-red-500/80' : 
-                                      article.level === 'Intermediate' ? 'bg-amber-500/80' : 'bg-green-500/80'
-                                   }`}>
-                                      {article.level || 'Beginner'}
-                                   </span>
-                                </div>
-                             </div>
-
-                             <div className="p-10 flex flex-col flex-grow">
-                                <div className="flex items-center gap-4 mb-6 text-gray-400 text-[10px] font-black uppercase tracking-[0.2em]">
-                                   <div className="flex items-center gap-1.5">
-                                      <Calendar className="w-3.5 h-3.5 text-blue-600" />
-                                      {article.date}
-                                   </div>
-                                   <div className="flex items-center gap-1.5">
-                                      <Clock className="w-3.5 h-3.5 text-blue-600" />
-                                      {article.readTime || '8 min read'}
-                                   </div>
-                                </div>
-
-                                <h3 className="font-bold text-2xl text-[#0f3460] mb-6 nav-font leading-tight group-hover:text-blue-600 transition-colors tracking-tight">
-                                   {article.title}
-                                </h3>
-
-                                <p className="text-gray-500 leading-relaxed line-clamp-3 font-medium mb-8 text-sm italic">
-                                   {article.description || article.excerpt}
-                                </p>
-
-                                <div className="mt-auto flex items-center justify-between pt-8 border-t border-gray-50">
-                                   <div className="flex -space-x-2">
-                                      {[1,2,3].map(i => (
-                                        <div key={i} className="w-7 h-7 rounded-full bg-gray-100 border-2 border-white shadow-sm" />
-                                      ))}
-                                   </div>
-                                   <div className="text-[#0f3460] font-black text-[10px] flex items-center gap-2 group-hover:gap-4 transition-all nav-font uppercase tracking-widest">
-                                      Read Insight <ArrowRight className="w-4 h-4 text-blue-600" />
-                                   </div>
-                                </div>
-                             </div>
-                          </Link>
-                        </motion.div>
-                     ))}
+                  <div className="p-6">
+                    <h3 className="font-bold text-[#0f3460] nav-font leading-tight mb-2 group-hover:text-[#c5a059] transition-colors">
+                      {article.title}
+                    </h3>
+                    <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4">
+                      {article.excerpt}
+                    </p>
+                    <div className="flex items-center gap-2 text-[#0f3460] font-black text-[10px] nav-font uppercase tracking-widest">
+                      อ่านบทความ <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
+                </Link>
+              );
+            })}
+          </div>
 
-                  {filteredArticles.length === 0 && (
-                     <div className="text-center py-20 bg-gray-50 rounded-[4rem] border-2 border-dashed border-gray-200">
-                        <Search className="w-16 h-16 text-gray-200 mx-auto mb-4" />
-                        <p className="text-gray-400 font-bold nav-font uppercase tracking-widest text-xs">No Insights Found</p>
-                     </div>
-                  )}
-               </section>
-            )}
+          <div className="text-center mt-10">
+            <Link
+              to="/resources"
+              className="inline-flex items-center gap-2 text-[#0f3460] font-black text-sm nav-font border-2 border-[#0f3460]/20 px-6 py-3 rounded-2xl hover:border-[#c5a059] hover:text-[#c5a059] transition-all"
+            >
+              ดูบทความทั้งหมด <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
 
-            {/* Micro-learning Section */}
-            {(activeType === 'all' || activeType === 'video') && (
-               <section>
-                  <div className="flex items-center justify-between mb-12">
-                     <div>
-                        <h2 className="text-3xl font-black text-[#0f3460] nav-font mb-2">Micro-learning Video</h2>
-                        <p className="text-gray-400 font-medium tracking-tight">เรียนรู้วันละนิด จิตแจ่มใส เข้าใจง่ายใน 3-5 นาที</p>
-                     </div>
-                     <Video className="w-12 h-12 text-blue-600/10" />
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                     {MICRO_LEARNING_VIDEOS.map((video) => (
-                        <div key={video.id} className="group bg-white rounded-[3rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all border border-gray-100 cursor-pointer">
-                           <div className="relative h-56 overflow-hidden">
-                              <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
-                              <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                 <PlayCircle className="w-16 h-16 text-white" />
-                              </div>
-                              <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg text-white text-[10px] font-bold flex items-center gap-1">
-                                 <Clock className="w-3 h-3" /> {video.duration}
-                              </div>
-                           </div>
-                           <div className="p-10">
-                              <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-3 block">{video.category}</span>
-                              <h3 className="text-xl font-bold text-[#0f3460] nav-font mb-4 group-hover:text-blue-600 transition-colors uppercase tracking-tight">{video.title}</h3>
-                              <button className="text-[#0f3460] text-[10px] font-black flex items-center gap-2 group-hover:gap-4 transition-all nav-font uppercase tracking-widest">
-                                 Watch Now <ChevronRight className="w-4 h-4 text-blue-600" />
-                              </button>
-                           </div>
-                        </div>
-                     ))}
-                  </div>
-               </section>
-            )}
+      {/* ─── DEEP KNOWLEDGE ───────────────────────────────────── */}
+      <section className="py-24 bg-[#0f3460]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <p className="text-[#c5a059] font-black uppercase tracking-[0.3em] text-[10px] nav-font mb-3">
+              องค์ความรู้เชิงลึก
+            </p>
+            <h2 className="text-3xl md:text-4xl font-black text-white nav-font">
+              ทฤษฎีที่อยู่เบื้องหลังการอบรม CAP Vision
+            </h2>
+            <p className="text-white/50 mt-3 max-w-xl mx-auto">
+              เข้าใจว่าทำไมเราถึงออกแบบหลักสูตรแบบนี้ — และทำไมมันถึงได้ผล
+            </p>
+          </div>
 
-            {/* Templates Section */}
-            {(activeType === 'all' || activeType === 'download') && (
-               <section>
-                  <div className="flex items-center justify-between mb-12">
-                     <div>
-                        <h2 className="text-3xl font-black text-[#0f3460] nav-font mb-2 uppercase tracking-tighter">Templates & Toolkits</h2>
-                        <p className="text-gray-400 font-medium">ดาวน์โหลดเครื่องมือช่วยทำงานเพื่อประสิทธิภาพที่ดียิ่งขึ้น</p>
-                     </div>
-                     <FileDown className="w-12 h-12 text-blue-600/10" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {DEEP_KNOWLEDGE.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={idx}
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all group"
+                >
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 bg-[#c5a059]/20 rounded-xl flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-[#c5a059]" />
+                    </div>
+                    <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest nav-font">
+                      {item.tag}
+                    </span>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                     {DOWNLOAD_RESOURCES.map((tool) => (
-                        <div key={tool.id} className="bg-white rounded-[3rem] p-8 shadow-sm border border-gray-100 hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.05)] transition-all group">
-                           <div className="relative rounded-[2rem] overflow-hidden mb-8 h-48 bg-gray-50 flex items-center justify-center border border-gray-50 shadow-inner">
-                              <FileText className="w-16 h-16 text-blue-900 opacity-20 group-hover:scale-110 transition-transform duration-500" />
-                              <div className="absolute top-4 right-4 bg-white/90 p-3 rounded-xl shadow-sm">
-                                 <Download className="w-4 h-4 text-blue-600" />
-                              </div>
-                           </div>
-                           <div className="px-2">
-                              <div className="flex items-center gap-3 mb-4">
-                                 <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">{tool.type}</span>
-                              </div>
-                              <h3 className="font-bold text-xl text-[#0f3460] nav-font mb-8 leading-tight tracking-tight">{tool.title}</h3>
-                              <button className="w-full bg-[#0f3460] text-white py-4 rounded-2xl font-black flex items-center justify-center gap-3 hover:bg-blue-600 transition-all nav-font shadow-lg shadow-blue-100 uppercase tracking-widest text-xs">
-                                 Download Toolkit
-                              </button>
-                           </div>
-                        </div>
-                     ))}
-                  </div>
-               </section>
-            )}
-         </div>
+                  <p className="text-white/40 text-xs font-semibold italic mb-3">
+                    "{item.hook}"
+                  </p>
+                  <h3 className="text-white font-black text-xl nav-font mb-4 leading-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-white/60 text-sm leading-relaxed">
+                    {item.body}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
-         {/* Den Master Fa logic Quote */}
-         <section className="py-32 bg-[#0f3460] overflow-hidden relative">
-            <div className="absolute top-0 left-0 w-full h-full opacity-10">
-              <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-400 rounded-full blur-[100px]" />
-              <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-amber-400 rounded-full blur-[100px]" />
+      {/* ─── MICRO-LEARNING VIDEO ─────────────────────────────── */}
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between mb-12">
+            <div>
+              <p className="text-[#c5a059] font-black uppercase tracking-[0.3em] text-[10px] nav-font mb-2">
+                Micro-learning
+              </p>
+              <h2 className="text-3xl font-black text-[#0f3460] nav-font">
+                เรียนรู้ใน 3-5 นาที
+              </h2>
+              <p className="text-gray-500 mt-1 text-sm">เข้าใจง่าย นำไปใช้ได้ทันที</p>
             </div>
-            
-            <div className="container mx-auto px-6 relative text-center">
-              <div className="max-w-3xl mx-auto">
-                <span className="text-blue-400 text-[10px] font-black uppercase tracking-[0.4em] mb-8 block nav-font">Knowledge Persistence</span>
-                <blockquote className="text-3xl md:text-5xl font-black text-white nav-font italic leading-tight mb-12 tracking-tight">
-                  "การเรียนรู้ที่ไม่มีการสะท้อนคิด (Reflection) <br/>
-                  เปรียบเสมือนการปลูกเมล็ดพันธุ์บนพื้นปูน"
-                </blockquote>
-                <div className="w-16 h-1.5 bg-amber-500 rounded-full mx-auto mb-10" />
-                <p className="text-blue-100/60 font-black uppercase tracking-widest text-xs nav-font">
-                   Join the ecosystem of active learners at CAP Vision
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {MICRO_LEARNING_VIDEOS.map((video) => (
+              <div
+                key={video.id}
+                className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all border border-gray-100 cursor-pointer"
+              >
+                <div className="relative h-56 overflow-hidden">
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-[#0f3460]/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="w-16 h-16 bg-[#c5a059] rounded-full flex items-center justify-center shadow-2xl">
+                      <PlayCircle className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                  <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md px-3 py-1 rounded-lg text-white text-[10px] font-bold flex items-center gap-1">
+                    <Clock className="w-3 h-3" /> {video.duration}
+                  </div>
+                </div>
+                <div className="p-8">
+                  <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest mb-3 block nav-font">
+                    {video.category}
+                  </span>
+                  <h3 className="text-xl font-bold text-[#0f3460] nav-font mb-4 group-hover:text-[#c5a059] transition-colors">
+                    {video.title}
+                  </h3>
+                  <button className="flex items-center gap-2 text-[#0f3460] text-[10px] font-black nav-font uppercase tracking-widest group-hover:gap-4 transition-all">
+                    ดูวิดีโอ <ChevronRight className="w-4 h-4 text-[#c5a059]" />
+                  </button>
+                </div>
+              </div>
+            ))}
+
+            {/* Coming Soon Cards */}
+            {[
+              { title: 'เทคนิค Facilitation คำถามที่เปลี่ยนห้องประชุม', category: 'Facilitation', soon: true },
+              { title: 'OKRs ใน 5 นาที — ตั้งเป้าหมายอย่างผู้นำระดับโลก', category: 'Leadership', soon: true },
+            ].map((v, i) => (
+              <div key={i} className="bg-white rounded-3xl overflow-hidden border-2 border-dashed border-gray-200 opacity-60">
+                <div className="h-56 bg-gray-100 flex items-center justify-center">
+                  <div className="text-center">
+                    <PlayCircle className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                    <span className="text-gray-400 text-xs font-black nav-font uppercase tracking-widest">
+                      เร็วๆ นี้
+                    </span>
+                  </div>
+                </div>
+                <div className="p-8">
+                  <span className="text-gray-400 text-[9px] font-black uppercase tracking-widest mb-3 block nav-font">
+                    {v.category}
+                  </span>
+                  <h3 className="text-base font-bold text-gray-400 nav-font leading-tight">
+                    {v.title}
+                  </h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── IN-LINE CTA #2 ────────────────────────────────────── */}
+      <section className="py-16 bg-white border-y border-[#c5a059]/10">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <p className="text-[#c5a059] font-black uppercase tracking-[0.3em] text-[10px] nav-font mb-4">
+            จาก Insight สู่ Action
+          </p>
+          <h2 className="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-4">
+            ความรู้เหล่านี้สอนได้ในองค์กรของคุณ
+          </h2>
+          <p className="text-gray-500 mb-8 max-w-lg mx-auto">
+            ทุก concept ในบทความและวิดีโอ มีหลักสูตร In-house Training รองรับ ออกแบบเฉพาะสำหรับทีมของคุณ
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/courses"
+              className="bg-[#0f3460] text-white px-8 py-4 rounded-2xl font-black nav-font flex items-center justify-center gap-3 hover:bg-[#1a4a7a] transition-all"
+            >
+              ดูหลักสูตรทั้งหมด <GraduationCap className="w-5 h-5" />
+            </Link>
+            <Link
+              to="/contact"
+              className="border-2 border-[#c5a059] text-[#c5a059] px-8 py-4 rounded-2xl font-black nav-font flex items-center justify-center gap-3 hover:bg-[#c5a059] hover:text-white transition-all"
+            >
+              ปรึกษาฟรี ไม่มีข้อผูกมัด <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── TOOLKIT / FREE DOWNLOADS ─────────────────────────── */}
+      <section id="toolkit" className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <p className="text-[#c5a059] font-black uppercase tracking-[0.3em] text-[10px] nav-font mb-3">
+              Toolkit ฟรี
+            </p>
+            <h2 className="text-3xl md:text-4xl font-black text-[#0f3460] nav-font">
+              เครื่องมือที่ HR และผู้จัดการใช้จริง
+            </h2>
+            <p className="text-gray-500 mt-3">ดาวน์โหลดฟรี ใช้ได้ทันที ไม่ต้องรอ</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
+            {DOWNLOAD_RESOURCES.map((tool) => (
+              <div
+                key={tool.id}
+                className="bg-white rounded-3xl p-8 border border-gray-100 hover:shadow-2xl transition-all group"
+              >
+                <div className="flex items-start gap-5 mb-6">
+                  <div className="w-14 h-14 bg-[#0f3460]/5 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-[#c5a059]/10 transition-colors">
+                    <FileText className="w-7 h-7 text-[#0f3460] group-hover:text-[#c5a059] transition-colors" />
+                  </div>
+                  <div>
+                    <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest nav-font block mb-1">
+                      {tool.type} · {tool.category}
+                    </span>
+                    <h3 className="font-black text-[#0f3460] nav-font leading-tight text-lg">
+                      {tool.title}
+                    </h3>
+                  </div>
+                </div>
+                <button className="w-full bg-[#0f3460] text-white py-4 rounded-2xl font-black flex items-center justify-center gap-3 hover:bg-[#c5a059] transition-all nav-font text-sm">
+                  <Download className="w-4 h-4" /> ดาวน์โหลดฟรี
+                </button>
+                <p className="text-center text-gray-400 text-[10px] mt-3 nav-font">
+                  ไม่ต้องลงทะเบียน · ดาวน์โหลดได้เลย
                 </p>
               </div>
+            ))}
+          </div>
+
+          {/* Lead Capture */}
+          <div className="bg-[#0f3460] rounded-[2.5rem] p-10 md:p-16 max-w-4xl mx-auto text-center">
+            <div className="w-16 h-16 bg-[#c5a059]/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <Award className="w-8 h-8 text-[#c5a059]" />
             </div>
-         </section>
-      </div>
-   );
+            <h3 className="text-2xl md:text-3xl font-black text-white nav-font mb-4">
+              รับ Toolkit ชุดพิเศษ ฟรี
+            </h3>
+            <p className="text-white/60 mb-8 max-w-md mx-auto">
+              Checklist พัฒนาภาวะผู้นำ 30 ข้อ + คู่มือออกแบบ Learning Journey สำหรับ HR
+            </p>
+            {downloadSubmitted ? (
+              <div className="flex items-center justify-center gap-3 text-[#c5a059] font-black nav-font">
+                <CheckCircle2 className="w-6 h-6" /> ขอบคุณ! เราจะส่งให้ทาง LINE ภายใน 24 ชม.
+              </div>
+            ) : (
+              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                <input
+                  type="email"
+                  placeholder="อีเมลของคุณ"
+                  value={downloadEmail}
+                  onChange={e => setDownloadEmail(e.target.value)}
+                  className="flex-1 bg-white/10 border border-white/20 text-white placeholder-white/30 px-5 py-4 rounded-2xl font-medium focus:outline-none focus:border-[#c5a059] transition-colors"
+                />
+                <button
+                  onClick={() => downloadEmail && setDownloadSubmitted(true)}
+                  className="bg-[#c5a059] text-white px-8 py-4 rounded-2xl font-black nav-font hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all whitespace-nowrap"
+                >
+                  รับฟรีเลย
+                </button>
+              </div>
+            )}
+            <p className="text-white/30 text-[10px] mt-4 nav-font">
+              ไม่มี Spam · ยกเลิกได้ทุกเมื่อ
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── QUOTE ────────────────────────────────────────────── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <div className="w-12 h-1 bg-[#c5a059] rounded-full mx-auto mb-10" />
+          <blockquote className="text-2xl md:text-3xl font-black text-[#0f3460] nav-font italic leading-tight mb-8">
+            "การเรียนรู้ที่ไม่มีการสะท้อนคิด (Reflection)<br />
+            เปรียบเสมือนการปลูกเมล็ดพันธุ์บนพื้นปูน"
+          </blockquote>
+          <p className="text-gray-400 font-black text-xs uppercase tracking-widest nav-font">
+            — ครูเด่น มาสเตอร์ฟา, Founder CAP Vision Institute
+          </p>
+        </div>
+      </section>
+
+      {/* ─── FINAL CTA ────────────────────────────────────────── */}
+      <section className="py-24 bg-[#0f3460] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#c5a059]/10 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-blue-500/5 rounded-full blur-[80px]" />
+
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          <p className="text-[#c5a059] font-black uppercase tracking-[0.3em] text-[10px] nav-font mb-6">
+            ก้าวต่อไป
+          </p>
+          <h2 className="text-3xl md:text-5xl font-black text-[#c5a059] nav-font leading-tight mb-6">
+            พร้อมนำความรู้เหล่านี้
+          </h2>
+          <h2 className="text-3xl md:text-5xl font-black text-white nav-font leading-tight mb-8">
+            ไปพัฒนาทีมของคุณ?
+          </h2>
+          <p className="text-white/60 text-lg mb-10 max-w-xl mx-auto">
+            ปรึกษาโปรแกรมอบรม In-house Training ที่ออกแบบเฉพาะสำหรับองค์กรของคุณ
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+            <Link
+              to="/contact"
+              className="bg-[#c5a059] text-white px-10 py-5 rounded-2xl font-black text-lg nav-font flex items-center justify-center gap-3 hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all shadow-2xl"
+            >
+              ปรึกษาโปรแกรมอบรม <ArrowRight className="w-5 h-5" />
+            </Link>
+            <a
+              href={CONTACT_INFO.lineUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/5 border-2 border-white/20 text-white px-10 py-5 rounded-2xl font-black text-lg nav-font flex items-center justify-center gap-3 hover:bg-white/10 transition-all"
+            >
+              LINE: {CONTACT_INFO.line}
+            </a>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-6 text-white/40 text-xs font-bold nav-font uppercase tracking-widest">
+            {['ปรึกษาฟรี ไม่มีข้อผูกมัด', 'ตอบกลับภายใน 24 ชม.', 'ออกแบบเฉพาะองค์กรคุณ'].map((t, i) => (
+              <span key={i} className="flex items-center gap-2">
+                <Shield className="w-3 h-3 text-[#c5a059]" /> {t}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#c5a059]/30 to-transparent" />
+      </section>
+    </div>
+  );
 };
 
 export default Resources;

@@ -102,23 +102,34 @@ const Contact: React.FC = () => {
    return (
       <div className="bg-white min-h-screen overflow-x-hidden">
          <SEO
-            title="ติดต่อเรา"
-            description="ติดต่อ CAP Vision Institute สำหรับการฝึกอบรมและพัฒนาบุคลากร"
+            title="ติดต่อเรา | CAP Vision Institute"
+            description="ปรึกษาฟรีกับ Master Facilitator — ออกแบบหลักสูตร In-house Training, Executive Coaching, OD Consulting เฉพาะองค์กรคุณ ตอบกลับภายใน 24 ชั่วโมง"
          />
          {/* Hero Header */}
          <div className="bg-[#0f3460] pt-24 pb-48 text-white relative overflow-hidden text-center">
             <div className="absolute top-0 right-0 w-1/3 h-full opacity-5 pointer-events-none">
                <Globe className="w-full h-full transform translate-x-1/4" />
             </div>
-            <div className="max-w-7xl mx-auto px-4 relative z-10">
+            <div className="max-w-4xl mx-auto px-4 relative z-10">
                <span className="text-[#c5a059] font-black text-xs uppercase tracking-[0.5em] mb-6 block nav-font">Contact Us</span>
-               <h1 className="text-4xl md:text-7xl font-black mb-8 nav-font tracking-tight">เชื่อมต่อกับเรา</h1>
-               <p className="text-blue-100 text-xl md:text-2xl max-w-3xl mx-auto font-light leading-relaxed opacity-80 italic">
-                  “ร่วมสร้างการเรียนรู้ที่เปลี่ยนแปลงองค์กรของคุณ”
+               <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-5 nav-font tracking-tight leading-tight">
+                  <span className="text-[#c5a059]">ปรึกษาฟรี</span><br />
+                  <span className="text-white">ไม่มีข้อผูกมัด</span>
+               </h1>
+               <p className="text-blue-100/80 text-base md:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-8">
+                  บอกเราถึงปัญหาและเป้าหมายขององค์กรคุณ<br />
+                  เราวิเคราะห์ ออกแบบแนวทาง และส่งใบเสนอราคา<strong className="text-white"> ภายใน 24 ชั่วโมง</strong>
                </p>
-               <p className="mt-8 text-blue-50/70 font-medium max-w-2xl mx-auto text-sm md:text-lg">
-                  ไม่ว่าคุณจะเป็น HR, ผู้บริหารองค์กร, นักกระบวนกร หรือบุคคลที่ต้องการพัฒนาศักยภาพ เราพร้อมเป็นพาร์ทเนอร์ด้านการเรียนรู้ที่ช่วยออกแบบเส้นทางการพัฒนาที่เหมาะสมสำหรับคุณ
-               </p>
+               {/* Quick contact shortcuts */}
+               <div className="flex flex-col sm:flex-row justify-center gap-3">
+                  <a href={CONTACT_INFO.lineUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 bg-green-500 hover:bg-green-400 text-white px-8 py-3 rounded-2xl font-black text-base nav-font transition-all shadow-xl active:scale-95">
+                     <MessageCircle className="w-5 h-5" /> ทักเลยผ่าน LINE
+                  </a>
+                  <a href={`tel:${CONTACT_INFO.phone}`} className="inline-flex items-center justify-center gap-3 bg-white/10 border border-white/20 text-white px-8 py-3 rounded-2xl font-bold text-base nav-font hover:bg-white/20 transition-all active:scale-95">
+                     <Phone className="w-5 h-5 text-[#c5a059]" /> {CONTACT_INFO.phone}
+                  </a>
+               </div>
+               <p className="text-blue-200/40 text-xs mt-5">หรือกรอกฟอร์มด้านล่าง — เราจะติดต่อกลับเร็วที่สุด</p>
             </div>
          </div>
 
@@ -127,13 +138,15 @@ const Contact: React.FC = () => {
 
                {/* Contact Form Section */}
                <div className="lg:col-span-8 bg-white rounded-[3.5rem] shadow-2xl p-10 md:p-20 border border-gray-100">
-                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-6">
-                     <div>
-                        <h2 className="text-3xl font-black text-[#0f3460] nav-font mb-2">สอบถามหลักสูตร / ขอใบเสนอราคา</h2>
-                        <p className="text-gray-400 font-medium uppercase tracking-widest text-[10px]">Consultation & Quotation Request</p>
-                     </div>
-                     <div className="bg-[#c5a059]/10 text-[#c5a059] px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest nav-font">
-                        Learning Strategy Hub
+                  <div className="mb-10">
+                     <h2 className="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-2">ขอใบเสนอราคา / สอบถามหลักสูตร</h2>
+                     <p className="text-gray-400 text-sm font-medium mb-5">Consultation & Quotation Request</p>
+                     <div className="flex flex-wrap gap-3">
+                        {['ตอบกลับภายใน 24 ชั่วโมง', 'ปรึกษาฟรี', 'ไม่มีข้อผูกมัด'].map((t, i) => (
+                           <span key={i} className="inline-flex items-center gap-2 bg-green-50 text-green-600 text-xs font-bold px-4 py-2 rounded-full border border-green-100">
+                              <CheckCircle className="w-3.5 h-3.5" /> {t}
+                           </span>
+                        ))}
                      </div>
                   </div>
 
@@ -177,12 +190,12 @@ const Contact: React.FC = () => {
                         <textarea name="requirements" required rows={5} className="w-full px-6 py-5 rounded-[2rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="เป้าหมายที่ต้องการพัฒนา / จำนวนผู้เข้าอบรม / ช่วงเวลาที่สะดวก..."></textarea>
                      </div>
                      <div className="pt-6">
-                        <button type="submit" className="w-full bg-[#0f3460] text-white px-12 py-6 rounded-2xl font-black text-xl hover:bg-[#c5a059] transition-all flex items-center justify-center gap-6 shadow-2xl shadow-blue-900/20 group nav-font">
-                           ส่งข้อมูลขอคำปรึกษา
+                        <button type="submit" className="w-full bg-[#c5a059] text-white px-12 py-6 rounded-2xl font-black text-xl hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all flex items-center justify-center gap-4 shadow-2xl group nav-font active:scale-95">
+                           ขอใบเสนอราคา / ปรึกษาฟรี
                            <Send className="w-6 h-6 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
                         </button>
                      </div>
-                     <p className="text-center text-xs text-gray-400 font-medium">เมื่อคุณส่งข้อมูล ทีมงานของเราจะติดต่อกลับภายใน 24 ชั่วโมงทำการ</p>
+                     <p className="text-center text-xs text-gray-400 font-medium">ทีมงานจะติดต่อกลับภายใน 24 ชั่วโมงทำการ · ข้อมูลของคุณปลอดภัย 100%</p>
                   </form>
                </div>
 

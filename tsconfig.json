@@ -1,9 +1,19 @@
 {
+  "include": [
+    "*.ts",
+    "*.tsx",
+    "components/**/*",
+    "pages/**/*",
+    "lib/**/*",
+    "services/**/*",
+    "scripts/**/*",
+    "www/**/*"
+  ],
   "exclude": [
     "cap-vision-admin",
     "node_modules",
     "dist",
-    "supabase/functions"
+    "supabase"
   ],
   "compilerOptions": {
     "target": "ES2022",

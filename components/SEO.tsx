@@ -48,8 +48,8 @@ interface SEOProps {
 
 const ORG_DATA = {
   name: 'CAP Vision Institute',
-  url: 'https://www.visionpartner.com',
-  logo: 'https://www.visionpartner.com/logo.png',
+  url: 'https://capvisionpartner.com',
+  logo: 'https://capvisionpartner.com/logo.png',
   telephone: '+66-XX-XXXX-XXXX',
   address: {
     '@type': 'PostalAddress',

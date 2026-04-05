@@ -190,17 +190,49 @@ const SoftCTA: React.FC<{ onShowForm: () => void }> = ({ onShowForm }) => (
 
 const AIAgent: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [sessionId] = useState(() => {
+    const saved = localStorage.getItem('capvision_ai_session_id');
+    if (saved) return saved;
+    const newId = crypto.randomUUID();
+    localStorage.setItem('capvision_ai_session_id', newId);
+    return newId;
+  });
+
+  const [messages, setMessages] = useState<Message[]>(() => {
+    try {
+      const saved = localStorage.getItem('capvision_ai_messages');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [sessionId] = useState(() => crypto.randomUUID());
   const [showFormForIdx, setShowFormForIdx] = useState<number | null>(null);
 
   const chatEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const historyRef = useRef<{ role: string; content: string }[]>([]);
+  const historyRef = useRef<{ role: string; content: string }[]>(
+    (() => {
+      try {
+        const saved = localStorage.getItem('capvision_ai_history');
+        return saved ? JSON.parse(saved) : [];
+      } catch {
+        return [];
+      }
+    })()
+  );
 
   const scrollToBottom = () => chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+
+  // Save messages & history to localStorage whenever they change
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem('capvision_ai_messages', JSON.stringify(messages));
+      localStorage.setItem('capvision_ai_history', JSON.stringify(historyRef.current));
+    }
+  }, [messages]);
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {

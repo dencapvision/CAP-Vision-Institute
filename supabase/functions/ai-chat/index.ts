@@ -4,7 +4,7 @@
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY")!;
+const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY")!;
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
@@ -199,47 +199,43 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Build Gemini contents array (role: "user" | "model")
-    const contents = [
+    // Build Claude messages array
+    const messages = [
       ...history.map((h: { role: string; content: string }) => ({
-        role: h.role === "assistant" ? "model" : "user",
-        parts: [{ text: h.content }],
+        role: h.role as "user" | "assistant",
+        content: h.content,
       })),
-      { role: "user", parts: [{ text: message }] },
+      { role: "user" as const, content: message },
     ];
 
-    // Call Gemini API
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          system_instruction: {
-            parts: [{ text: SYSTEM_PROMPT }],
-          },
-          contents,
-          generationConfig: {
-            maxOutputTokens: 800,
-            temperature: 0.75,
-            topP: 0.9,
-          },
-        }),
-      }
-    );
+    // Call Claude API
+    const claudeRes = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "x-api-key": ANTHROPIC_API_KEY,
+        "anthropic-version": "2023-06-01",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 800,
+        system: SYSTEM_PROMPT,
+        messages,
+      }),
+    });
 
-    if (!geminiRes.ok) {
-      const err = await geminiRes.text();
-      console.error("Gemini API error:", err);
+    if (!claudeRes.ok) {
+      const err = await claudeRes.text();
+      console.error("Claude API error:", err);
       return new Response(JSON.stringify({ error: "AI service unavailable" }), {
         status: 502,
         headers: { ...CORS, "Content-Type": "application/json" },
       });
     }
 
-    const geminiData = await geminiRes.json();
+    const claudeData = await claudeRes.json();
     let reply: string =
-      geminiData.candidates?.[0]?.content?.parts?.[0]?.text ??
+      claudeData.content?.[0]?.text ??
       "ขออภัยครับ เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้งครับ";
 
     // Parse special markers

@@ -183,8 +183,8 @@ const Services: React.FC = () => {
                   Corporate Learning Solutions
                </span>
                <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 nav-font tracking-tight leading-tight">
-                  พัฒนาคน เปลี่ยนองค์กร<br />
-                  <span className="text-[#c5a059]">อย่างที่เห็นผลจริง</span>
+                  <span className="text-[#c5a059]">พัฒนาคน เปลี่ยนองค์กร</span><br />
+                  <span className="text-white">อย่างที่เห็นผลจริง</span>
                </h1>
                <p className="text-blue-100/80 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-10">
                   สำหรับ HR Manager และผู้บริหารที่ต้องการ{' '}

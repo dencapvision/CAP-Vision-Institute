@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Search, ChevronLeft, ChevronRight, ArrowRight, Star, ChevronDown, Filter as FilterIcon, Layout, Target, Zap, Users, MessageCircle, PenTool, Cpu, Layers } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, ArrowRight, Star, ChevronDown, Filter as FilterIcon, Layout, Target, Zap, Users, MessageCircle, Layers, GraduationCap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { COURSES } from '../constants/courses';
+import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
 import LeadershipHero from '../components/LeadershipHero';
 
@@ -65,10 +66,10 @@ const Courses: React.FC = () => {
   return (
     <div className="bg-gray-50 min-h-screen pb-20 overflow-x-hidden">
       <SEO
-        title={`${filter === 'All' ? 'หลักสูตรทั้งหมด' : filter} - CAP Vision Institute`}
-        description="ค้นหาหลักสูตรฝึกอบรมพัฒนาบุคลากร Leadership, Team Building, Communication โดย CAP Vision Institute"
+        title={`${filter === 'All' ? 'หลักสูตรทั้งหมด' : filter} | CAP Vision Institute`}
+        description="50+ หลักสูตรพัฒนาบุคลากร Leader Skills, People Skills, Communication, Work Skills ออกแบบด้วย Transformative Learning โดย Master Facilitator ประสบการณ์ 18+ ปี"
       />
-      <LeadershipHero />
+      <div id="courses-top"><LeadershipHero /></div>
 
       {/* Featured Carousel Section - Only show when "All" is selected */}
       {filter === 'All' && (
@@ -234,7 +235,7 @@ const Courses: React.FC = () => {
         </div>
 
         {/* Course Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+        <div id="courses-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
           {filteredCourses.map((course) => {
             const colors = getCategoryInfo(course.category);
             return (
@@ -255,24 +256,42 @@ const Courses: React.FC = () => {
                 <div className="p-6 md:p-10 flex flex-col flex-grow">
                   <h3 className="text-xl md:text-2xl font-bold text-[#0f3460] mb-3 md:mb-4 group-hover:text-[#c5a059] transition-colors nav-font leading-tight whitespace-pre-line">{course.title}</h3>
                   <p className="text-gray-500 text-sm md:text-lg mb-6 md:mb-8 flex-grow leading-relaxed font-medium opacity-80 line-clamp-2 md:line-clamp-3">{course.description}</p>
-                  <div className="flex items-center justify-between pt-6 md:pt-8 border-t border-gray-50">
+                  <div className="pt-6 md:pt-8 border-t border-gray-50">
                     <Link
                       to={`/courses/${course.id}`}
-                      className="text-[#0f3460] hover:text-[#c5a059] font-black text-sm md:text-base flex items-center gap-2 transition-all nav-font px-4 py-2 rounded-xl hover:bg-[#0f3460]/5"
+                      className="w-full bg-[#0f3460] hover:bg-[#c5a059] text-white py-3 rounded-xl font-black text-sm md:text-base flex items-center justify-center gap-2 transition-all nav-font shadow-md active:scale-95"
                     >
-                      ดูรายละเอียด <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      ดูรายละเอียดหลักสูตร <ArrowRight className="w-4 h-4" />
                     </Link>
-                    <div className="flex gap-0.5">
-                      {[1, 2, 3, 4, 5].map(i => (
-                        <Star key={i} className="w-2.5 h-2.5 md:w-3 h-3 fill-[#c5a059] text-[#c5a059]" />
-                      ))}
-                    </div>
                   </div>
                 </div>
               </div>
             );
           })}
         </div>
+
+        {/* Bottom CTA — In-house Training prompt */}
+        <div className="mt-20 bg-gradient-to-br from-[#0f3460] to-[#1a4a7a] rounded-[3rem] px-8 md:px-16 py-14 text-white text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#c5a059]/10 rounded-full -translate-y-1/2 translate-x-1/4 blur-3xl pointer-events-none"></div>
+          <div className="relative z-10">
+            <GraduationCap className="w-12 h-12 text-[#c5a059] mx-auto mb-5" />
+            <h2 className="text-2xl md:text-4xl font-black nav-font mb-3 leading-tight text-[#c5a059]">
+              ไม่เห็นหลักสูตรที่ใช่?
+            </h2>
+            <p className="text-blue-200/80 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+              เราออกแบบ <strong className="text-white">In-house Training</strong> เฉพาะองค์กรคุณ — เริ่มจาก TNA วิเคราะห์ปัญหาจริง ไม่มี Template สำเร็จรูป
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link to="/contact" className="bg-[#c5a059] text-white px-10 py-4 rounded-2xl font-black text-lg hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all nav-font shadow-xl active:scale-95 inline-flex items-center justify-center gap-3">
+                ขอ In-house Training <ArrowRight className="w-5 h-5" />
+              </Link>
+              <a href={CONTACT_INFO.lineUrl} target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/20 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all nav-font inline-flex items-center justify-center gap-3">
+                <MessageCircle className="w-5 h-5 text-[#c5a059]" /> ปรึกษาฟรีผ่าน Line
+              </a>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );

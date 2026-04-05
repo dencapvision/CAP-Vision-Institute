@@ -32,32 +32,56 @@ const Home: React.FC = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 md:py-24">
           <div className="max-w-4xl">
+
+            {/* Social proof badge */}
             <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full mb-8 md:mb-10 animate-fade-in-down">
-              <span className="w-2 h-2 bg-[#c5a059] rounded-full animate-ping"></span>
-              <span className="text-white/80 font-bold tracking-[0.2em] text-[10px] md:text-sm nav-font uppercase leading-none mt-0.5">
-                CAP Vision Institute
+              <span className="w-2 h-2 bg-[#c5a059] rounded-full animate-ping flex-shrink-0"></span>
+              <span className="text-white/80 font-bold tracking-[0.15em] text-[10px] md:text-xs nav-font uppercase leading-none mt-0.5">
+                ไว้วางใจโดย Toyota · Dell · AOT · กว่า 100 องค์กร
               </span>
             </div>
 
-            <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white leading-[1.05] mb-8 md:mb-12 nav-font tracking-tight">
-              Transform <span className="font-gold block md:inline">People</span><br className="hidden md:block" />
-              <span className="md:ml-16 lg:ml-20">Transform <span className="font-gold">Organization</span></span>
+            {/* H1 — brand identity preserved, gold emphasis boosted */}
+            <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1.05] mb-6 md:mb-8 nav-font tracking-tight">
+              <span className="text-[#c5a059]">Transform</span> <span className="text-white block md:inline">People</span><br className="hidden md:block" />
+              <span className="md:ml-16 lg:ml-20 text-white">Transform <span className="text-[#c5a059]">Organization</span></span>
             </h1>
 
-            <p className="text-base md:text-xl lg:text-2xl text-blue-50 leading-relaxed mb-10 md:mb-16 font-light opacity-80 max-w-2xl">
-              <span>“Transform People, Transform Organization.”</span> <br className="hidden md:block" />
-              <span className="font-medium text-white/90">ปลดล็อคศักยภาพมนุษย์ด้วยกระบวนการเรียนรู้ระดับพรีเมี่ยม</span> <br />
-              <span className="text-[#c5a059] font-bold">โดย ครูเด่น มาสเตอร์ฟา [Master Facilitator]</span>
+            {/* Subheadline — specific, outcome-focused */}
+            <p className="text-base md:text-xl text-blue-100/80 leading-relaxed mb-3 max-w-2xl">
+              สำหรับ HR Manager และผู้บริหารที่ต้องการ
+              <strong className="text-white"> พัฒนาผู้นำ ยกระดับทีม และวัดผลได้จริง</strong>
+            </p>
+            <p className="text-base md:text-lg text-blue-100/60 leading-relaxed mb-3 max-w-2xl">
+              ไม่ใช่แค่อบรม — แต่คือการเปลี่ยนแปลงที่ยั่งยืนด้วย Transformative Learning
+            </p>
+            <p className="text-[#c5a059] font-bold text-sm md:text-base mb-10 md:mb-12">
+              โดย ครูเด่น มาสเตอร์ฟา — Master Facilitator ประสบการณ์กว่า 18 ปี
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/courses" className="btn-premium bg-[#c5a059] text-white px-8 md:px-12 py-4 md:py-5 rounded-2xl font-black text-base md:text-lg transition-all flex items-center justify-center gap-3 group shadow-2xl nav-font active:scale-95">
-                เลือกหลักสูตรฝึกอบรม
+            {/* CTAs — conversion-first order */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-10 md:mb-14">
+              <Link to="/contact" className="btn-premium bg-[#c5a059] text-white px-8 md:px-12 py-4 md:py-5 rounded-2xl font-black text-base md:text-lg transition-all flex items-center justify-center gap-3 group shadow-2xl nav-font active:scale-95 hover:bg-[#e0c58e] hover:text-[#0f3460]">
+                ขอใบเสนอราคา
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
               </Link>
-              <Link to="/contact" className="btn-premium bg-white/5 backdrop-blur-xl text-white border-2 border-white/20 px-8 md:px-12 py-4 md:py-5 rounded-2xl font-black text-base md:text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-3 nav-font active:scale-95">
-                ขอใบเสนอราคา
+              <Link to="/courses" className="btn-premium bg-white/5 backdrop-blur-xl text-white border-2 border-white/20 px-8 md:px-12 py-4 md:py-5 rounded-2xl font-black text-base md:text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-3 nav-font active:scale-95">
+                ดูหลักสูตรทั้งหมด
               </Link>
+            </div>
+
+            {/* Trust stats */}
+            <div className="flex flex-wrap gap-8 md:gap-14 border-t border-white/10 pt-8">
+              {[
+                { value: '10,000+', label: 'ผู้เรียนสำเร็จ' },
+                { value: '100+',    label: 'องค์กรพันธมิตร' },
+                { value: '18+',     label: 'ปีประสบการณ์' },
+              ].map((stat, i) => (
+                <div key={i}>
+                  <div className="text-2xl md:text-3xl font-black text-[#c5a059] nav-font">{stat.value}</div>
+                  <div className="text-white/40 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

@@ -1,368 +1,323 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  MessageCircle, X, Send, ExternalLink,
-  BookOpen, Users, Phone, ChevronRight,
-  Sparkles, GraduationCap, Target, Save, Loader2, CheckCircle2
+  MessageCircle, X, Send, ArrowRight,
+  GraduationCap, Save, Loader2, Sparkles, ChevronRight,
+  Brain, Users, Target, MessageSquare
 } from 'lucide-react';
 import { CONTACT_INFO } from '../constants/brand';
-import { COURSES } from '../constants/courses';
 import { supabase } from '../lib/supabaseClient';
+import { Link } from 'react-router-dom';
 
-// ===== TYPES =====
+// ─── TYPES ───────────────────────────────────────────────────────────────────
+
 interface Message {
   role: 'user' | 'assistant';
   content: string;
-  type?: 'text' | 'course-cards' | 'action-buttons' | 'lead-form' | 'success';
+  showLeadForm?: boolean;
+  suggestedProgram?: string | null;
+  ctaType?: string;
 }
 
 interface LeadData {
   name: string;
   company: string;
-  email: string;
   phone: string;
+  email: string;
   line_id: string;
   interest_topic: string;
-  requirements: string;
 }
 
-// ===== CONSTANTS =====
-const QUICK_REPLIES = [
-  { label: '📚 ดูหลักสูตรทั้งหมด', action: 'courses' },
-  { label: '📐 ออกแบบหลักสูตรเฉพาะองค์กร', action: 'custom' },
-  { label: '💬 ขอใบเสนอราคา', action: 'quote' },
-  { label: '🧑‍🏫 รู้จักครูเด่น', action: 'about' },
+// ─── QUICK STARTERS ───────────────────────────────────────────────────────────
+
+const QUICK_STARTERS = [
+  { icon: MessageSquare, label: 'ทีมสื่อสารไม่ได้เรื่อง', value: 'ทีมผมมีปัญหาการสื่อสารกัน ไม่ค่อยเข้าใจกัน' },
+  { icon: Target,        label: 'อยากพัฒนาผู้นำ',         value: 'อยากพัฒนาทักษะภาวะผู้นำให้กับหัวหน้างานในองค์กร' },
+  { icon: Users,         label: 'พนักงาน Engagement ต่ำ', value: 'พนักงานขาดความผูกพันกับองค์กร ขาดแรงจูงใจ' },
+  { icon: Brain,         label: 'ต้องการออกแบบหลักสูตร',   value: 'ต้องการออกแบบหลักสูตรอบรมเฉพาะสำหรับองค์กรเรา' },
 ];
+
+// ─── WELCOME MESSAGE ──────────────────────────────────────────────────────────
+
+const WELCOME: Message = {
+  role: 'assistant',
+  content: 'สวัสดีครับ ยินดีต้อนรับสู่ CAP Vision Institute ครับ\n\nผมครูเด่น AI ที่ปรึกษาด้านการพัฒนาคนและองค์กร ผมไม่ได้มาแค่แนะนำหลักสูตร แต่จะช่วยวิเคราะห์โจทย์ขององค์กรคุณก่อนครับ\n\nก่อนอื่นเลย ผมอยากรู้จักคุณสักหน่อย... คุณรับผิดชอบงานด้านไหนในองค์กรครับ? (เช่น HR, ผู้บริหาร, ผู้จัดการทีม)',
+};
+
+// ─── LEAD FORM ────────────────────────────────────────────────────────────────
+
+const LeadForm: React.FC<{ topic: string; onSuccess: () => void }> = ({ topic, onSuccess }) => {
+  const [form, setForm] = useState<LeadData>({
+    name: '', company: '', phone: '', email: '', line_id: '', interest_topic: topic,
+  });
+  const [loading, setLoading] = useState(false);
+  const [done, setDone] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const { error } = await supabase.from('leads').insert([{
+        name: form.name,
+        company: form.company,
+        phone: form.phone,
+        email: form.email,
+        line_id: form.line_id,
+        interest_topic: form.interest_topic,
+        source: 'den_ai_advisor',
+      }]);
+      if (error) throw error;
+
+      try {
+        await supabase.functions.invoke('line-notify', {
+          body: {
+            formType: 'Den AI Advisor — Lead',
+            data: {
+              'ชื่อ': form.name,
+              'บริษัท': form.company,
+              'โทร': form.phone,
+              'อีเมล': form.email,
+              'Line ID': form.line_id,
+              'ความสนใจ': form.interest_topic,
+            },
+          },
+        });
+      } catch (_) {
+        // non-fatal
+      }
+
+      setDone(true);
+      onSuccess();
+    } catch (err) {
+      console.error(err);
+      alert('เกิดข้อผิดพลาด กรุณาลองใหม่หรือติดต่อทาง LINE ครับ');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (done) {
+    return (
+      <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 mt-3 text-center">
+        <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-3">
+          <Save className="w-5 h-5 text-white" />
+        </div>
+        <p className="font-black text-emerald-800 text-sm nav-font">ได้รับข้อมูลแล้วครับ!</p>
+        <p className="text-emerald-600 text-xs mt-1">ทีมงานจะติดต่อกลับภายใน 24 ชั่วโมงครับ</p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="bg-white border border-[#0f3460]/10 rounded-2xl p-5 mt-3 space-y-3 shadow-sm">
+      <div className="flex items-center gap-2 mb-1">
+        <GraduationCap className="w-4 h-4 text-[#0f3460]" />
+        <span className="font-black text-sm text-[#0f3460] nav-font">ข้อมูลสำหรับปรึกษา</span>
+      </div>
+      {(['name', 'company', 'phone', 'email', 'line_id'] as const).map((field) => (
+        <input
+          key={field}
+          required
+          type={field === 'email' ? 'email' : field === 'phone' ? 'tel' : 'text'}
+          placeholder={
+            field === 'name' ? 'ชื่อ-นามสกุล' :
+            field === 'company' ? 'หน่วยงาน / บริษัท' :
+            field === 'phone' ? 'เบอร์โทรศัพท์' :
+            field === 'email' ? 'อีเมล' : 'Line ID'
+          }
+          value={form[field]}
+          onChange={e => setForm({ ...form, [field]: e.target.value })}
+          className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-[#0f3460]/20 focus:border-[#0f3460] outline-none transition-all"
+        />
+      ))}
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full bg-[#c5a059] text-white py-3 rounded-xl font-black text-sm nav-font flex items-center justify-center gap-2 hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all disabled:opacity-50"
+      >
+        {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+        {loading ? 'กำลังส่ง...' : 'ส่งข้อมูลให้ทีมงาน'}
+      </button>
+      <p className="text-center text-gray-400 text-[10px] nav-font">ปรึกษาฟรี ไม่มีข้อผูกมัด</p>
+    </form>
+  );
+};
+
+// ─── PROGRAM CARD ─────────────────────────────────────────────────────────────
+
+const ProgramCard: React.FC<{ program: string }> = ({ program }) => (
+  <div className="bg-gradient-to-br from-[#0f3460] to-[#1a4a7a] rounded-2xl p-5 mt-3 text-white">
+    <p className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest nav-font mb-2">
+      แนะนำโปรแกรม
+    </p>
+    <p className="font-black text-base nav-font mb-4 leading-tight">{program}</p>
+    <div className="flex gap-2">
+      <Link
+        to="/courses"
+        className="flex-1 bg-[#c5a059] text-white py-2 rounded-xl font-black text-xs nav-font flex items-center justify-center gap-1 hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all"
+      >
+        ดูรายละเอียด <ChevronRight className="w-3 h-3" />
+      </Link>
+      <Link
+        to="/contact"
+        className="flex-1 bg-white/10 text-white py-2 rounded-xl font-black text-xs nav-font flex items-center justify-center gap-1 hover:bg-white/20 transition-all"
+      >
+        ขอใบเสนอราคา <ArrowRight className="w-3 h-3" />
+      </Link>
+    </div>
+  </div>
+);
+
+// ─── SOFT CTA ─────────────────────────────────────────────────────────────────
+
+const SoftCTA: React.FC<{ onShowForm: () => void }> = ({ onShowForm }) => (
+  <div className="flex flex-wrap gap-2 mt-3 ml-9">
+    <button
+      onClick={onShowForm}
+      className="bg-[#c5a059] text-white px-3 py-1.5 rounded-full text-[11px] font-black nav-font hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all shadow-sm"
+    >
+      ใช่ ต้องการปรึกษา
+    </button>
+    <Link
+      to="/courses"
+      className="bg-white text-[#0f3460] border border-[#0f3460]/20 px-3 py-1.5 rounded-full text-[11px] font-black nav-font hover:bg-[#0f3460] hover:text-white transition-all shadow-sm"
+    >
+      ดูหลักสูตรก่อน
+    </Link>
+  </div>
+);
+
+// ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 
 const AIAgent: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [isSubmittingLead, setIsSubmittingLead] = useState(false);
-  
+  const [sessionId] = useState(() => crypto.randomUUID());
+  const [showFormForIdx, setShowFormForIdx] = useState<number | null>(null);
+
   const chatEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const conversationState = useRef({
-    step: 'intake', // intake -> diagnosis -> prescription -> checkout
-    topic: '',
-  });
+  const historyRef = useRef<{ role: string; content: string }[]>([]);
 
-  const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const scrollToBottom = () => chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      conversationState.current = { step: 'intake', topic: '' };
-      setMessages([
-        {
-          role: 'assistant',
-          content: 'สวัสดีครับ! 👋 ยินดีต้อนรับสู่คลินิกพัฒนาศักยภาพองค์กรของ **CAP Vision Institute** นะครับ\n\nผม "ครูเด่น (AI)" รับหน้าที่เป็นที่ปรึกษาเบื้องต้น... วันนี้มี "อาการ" หรือทีมงานกำลังมีโจทย์ด้านไหน ให้ผมช่วยวินิจฉัยและแนะนำหลักสูตรดีครับ? 🩺\n\n(เช่น: ทีมสื่อสารไม่เข้าใจกัน, พนักงานบริการไม่ประทับใจ, หรืออยากสร้างความเป็นผู้นำ)',
-        },
-      ]);
+      setMessages([WELCOME]);
+      historyRef.current = [];
     }
     scrollToBottom();
   }, [isOpen, messages.length]);
 
+  useEffect(() => { if (messages.length) scrollToBottom(); }, [messages]);
+
   useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 300);
-    }
+    if (isOpen) setTimeout(() => inputRef.current?.focus(), 300);
   }, [isOpen]);
 
-  // Lead Form Component
-  const LeadForm = ({ topic }: { topic: string }) => {
-    const [formData, setFormData] = useState<LeadData>({
-      name: '',
-      company: '',
-      email: '',
-      phone: '',
-      line_id: '',
-      interest_topic: topic || 'Custom Course Design',
-      requirements: '',
-    });
+  const sendToAI = useCallback(async (text: string) => {
+    setIsTyping(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('ai-chat', {
+        body: {
+          message: text,
+          history: historyRef.current,
+          session_id: sessionId,
+          user_context: {},
+        },
+      });
 
-    const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      setIsSubmittingLead(true);
-      try {
-        // 1. Save to Supabase Leads table
-        const { error: dbError } = await supabase.from('leads').insert([{
-          name: formData.name,
-          company: formData.company,
-          email: formData.email,
-          phone: formData.phone,
-          line_id: formData.line_id,
-          interest_topic: formData.interest_topic,
-          notes: formData.requirements,
-          source: 'ai_agent_form'
-        }]);
-
-        if (dbError) {
-          console.error('Supabase leads insert error:', dbError);
-          throw dbError;
-        }
-
-        // 2. Send LINE Notification via Edge Function
-        try {
-          await supabase.functions.invoke('line-notify', {
-            body: { 
-              formType: 'AI Intelligent Coach: สนใจออกแบบหลักสูตร', 
-              data: {
-                'ชื่อ-นามสกุล': formData.name,
-                'หน่วยงาน/องค์กร': formData.company,
-                'เบอร์ติดต่อ': formData.phone,
-                'อีเมล': formData.email,
-                'Line ID': formData.line_id,
-                'หัวข้อที่สนใจ': formData.interest_topic,
-                'ความต้องการเพิ่มเติม': formData.requirements
-              } 
-            }
-          });
-        } catch (lineErr) {
-          console.error('Failed to send LINE notification:', lineErr);
-          // Don't block the user if only notification fails
-        }
-
-        setMessages(prev => [...prev, {
-          role: 'assistant',
-          content: '✅ **ได้รับข้อมูลเรียบร้อยแล้วครับ!**\n\nขอบคุณที่ไว้วางใจให้ทีมงานครูเด่นช่วยดูแลนะครับ เราจะติดต่อกลับทาง Email/Line เพื่อพูดคุยรายละเอียดเบื้องต้นภายใน 24 ชั่วโมงครับ 🙏\n\nระหว่างนี้สามารถดูหลักสูตรอื่นๆ รอได้เลยนะครับ 👇',
-          type: 'action-buttons'
-        }]);
-      } catch (err) {
-        console.error('Lead submission error:', err);
-        alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง หรือติดต่อทาง LINE ครับ');
-      } finally {
-        setIsSubmittingLead(false);
-      }
-    };
-
-    return (
-      <div className="bg-white border border-blue-100 rounded-2xl p-4 shadow-sm space-y-3 mt-2 w-full">
-        <div className="flex items-center gap-2 text-[#0f3460] mb-2">
-          <GraduationCap className="w-5 h-5" />
-          <span className="font-black text-sm">ข้อมูลสำหรับออกแบบหลักสูตร</span>
-        </div>
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <input
-            required
-            placeholder="ชื่อ-นามสกุล"
-            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-[#0f3460] outline-none"
-            value={formData.name}
-            onChange={e => setFormData({ ...formData, name: e.target.value })}
-          />
-          <input
-            required
-            placeholder="ชื่อหน่วยงาน/บริษัท"
-            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-[#0f3460] outline-none"
-            value={formData.company}
-            onChange={e => setFormData({ ...formData, company: e.target.value })}
-          />
-          <input
-            required
-            type="tel"
-            placeholder="เบอร์โทรศัพท์"
-            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-[#0f3460] outline-none"
-            value={formData.phone}
-            onChange={e => setFormData({ ...formData, phone: e.target.value })}
-          />
-          <input
-            required
-            type="email"
-            placeholder="อีเมล (E-mail)"
-            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-[#0f3460] outline-none"
-            value={formData.email}
-            onChange={e => setFormData({ ...formData, email: e.target.value })}
-          />
-          <input
-            required
-            placeholder="Line ID"
-            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-[#0f3460] outline-none"
-            value={formData.line_id}
-            onChange={e => setFormData({ ...formData, line_id: e.target.value })}
-          />
-          <textarea
-            required
-            placeholder="หัวข้อที่สนใจ/เป้าหมายที่ต้องการพัฒนา/จำนวนผู้เข้าอบรม/ช่วงเวลาสะดวก"
-            rows={3}
-            className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-1 focus:ring-[#0f3460] outline-none resize-none"
-            value={formData.requirements}
-            onChange={e => setFormData({ ...formData, requirements: e.target.value })}
-          />
-          <button
-            type="submit"
-            disabled={isSubmittingLead}
-            className="w-full bg-gradient-to-r from-[#0f3460] to-[#1a4d8c] text-white py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:opacity-90 transition-all disabled:opacity-50"
-          >
-            {isSubmittingLead ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-            {isSubmittingLead ? 'กำลังส่ง...' : 'ส่งข้อมูลให้ทีมงาน'}
-          </button>
-        </form>
-      </div>
-    );
-  };
-
-  const generateDynamicResponse = useCallback((input: string): Message => {
-    const q = input.toLowerCase();
-    const state = conversationState.current;
-
-    // Intent Flags - Exact Button Matches first
-    const isViewCourses = q.includes('ดูหลักสูตร') || q.includes('courses');
-    const isAbout = q.includes('รู้จักครูเด่น') || q.includes('ครูเด่นคือใคร') || q.includes('วิทยากร') || q.includes('ประวัติ');
-    const isCustom = q.includes('ออกแบบเฉพาะ') || q.includes('ออกแบบให้') || q.includes('custom') || q.includes('บริษัทผม') || q.includes('สำหรับองค์กร') || q.includes('เฉพาะองค์กร') || q.includes('พัฒนาหลักสูตร') || q.includes('ขอแบบฟอร์ม') || q.includes('ส่งข้อมูล');
-    const isQuote = q.includes('ราคา') || q.includes('เสนอราคา') || q.includes('quotation') || q.includes('งบประมาณ') || q.includes('จ้าง') || q.includes('ค่าใช้จ่าย') || q.includes('กี่บาท');
-    
-    const isGreeting = (q.includes('สวัสดี') || q.includes('hi') || q.includes('hello')) && messages.length < 3;
-    const isProblem = !isViewCourses && !isAbout && !isCustom && !isQuote && 
-                      (q.includes('ปัญหา') || q.includes('ไม่') || q.includes('ขาด') || q.includes('ต้องการพัฒนา') || q.includes('อยากพัฒนา'));
-
-    // Topic Identification (Update state)
-    if (q.includes('service') || q.includes('บริการ') || q.includes('ลูกค้า')) state.topic = 'service';
-    else if (q.includes('team') || q.includes('ทีม') || q.includes('สามัคคี') || q.includes('ร่วมมือ')) state.topic = 'team';
-    else if (q.includes('ผู้นำ') || q.includes('หัวหน้า') || q.includes('leadership') || q.includes('management')) state.topic = 'leadership';
-    else if (q.includes('พูด') || q.includes('สื่อสาร') || q.includes('คุย') || q.includes('communication')) state.topic = 'communication';
-
-    // 1. VIEW COURSES
-    if (isViewCourses) {
-      return {
-        role: 'assistant',
-        content: 'ยินดีเลยครับ! 📚 ผมได้รวบรวมหลักสูตรยอดนิยมของ **CAP Vision Institute** ไว้ให้แล้วครับ\n\nคุณสามารถคลิกเข้าไปดูรายละเอียด เนื้อหา และผลลัพธ์ที่จะได้รับในแต่ละหลักสูตรได้ที่ลิงก์นี้เลยนะครับ:\n👉 [ดูหลักสูตรทั้งหมดของเรา](https://capvisionpartner.com/courses)\n\nหรือถ้าอยากให้ผมช่วยเลือกหลักสูตรที่ "ตรงโจทย์" ที่สุด ลองบอกประเภททีมหรือปัญหาที่เจออยู่ได้นะครับ!',
-        type: 'action-buttons'
-      };
-    }
-
-    // 2. ABOUT KRU DEN
-    if (isAbout) {
-      return {
-        role: 'assistant',
-        content: 'ยินดีแนะนำตัวครับ! 😄\n\n**อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)**\nผู้อำนวยการ CAP Vision Institute และ Master Facilitator ที่มีประสบการณ์กว่า **18 ปี**\n\nครูเด่นเชี่ยวชาญการสอนแบบ **Transformative Learning** โดยเน้นการใช้กิจกรรมเป็นเครื่องมือเพื่อสร้าง Insight และเปลี่ยนทัศนคติในระดับจิตสำนึกครับ\n\nหากต้องการดูหลักสูตรที่ครูเด่นสอน หรือขอข้อมูลประวัติ (Profile) เพิ่มเติม เลือกด้านล่างได้เลยนะครับ 📂',
-        type: 'action-buttons'
-      };
-    }
-
-    // 3. QUOTE / CUSTOM PATH
-    if (isQuote || isCustom) {
-      state.step = 'checkout';
-      return {
-        role: 'assistant',
-        content: 'ยินดีเลยครับ! สำหรับการ **ออกแบบหลักสูตรเฉพาะองค์กร (Custom Course Design)** นั้น ทีมงานเราจะทำการวิเคราะห์โจทย์ร่วมกันกับคุณ เพื่อสร้างโครงสร้างที่แก้ปัญหานั้นๆ ได้จริงครับ\n\nหากคุณต้องการให้เราช่วยประเมินแผนงานเบื้องต้นหรือส่งใบเสนอราคาให้ **รบกวนกรอกข้อมูลในฟอร์มด้านล่างนี้** ได้เลยนะครับ แล้วทีมงานจะรีบติดต่อกลับไปครับ 👇',
-        type: 'lead-form'
-      };
-    }
-
-    // 4. GREETING
-    if (isGreeting) {
-      return {
-        role: 'assistant',
-        content: 'สวัสดีครับ! ยินดีที่ได้พบกันครับ ผม **"ครูเด่น (AI)"** ที่ปรึกษาจาก CAP Vision Institute ครับ 😊\n\nเพื่อให้ผมแนะนำได้ตรงจุดที่สุด... ตอนนี้องค์กรของคุณกำลังมองหาการพัฒนาทีมงานในด้านไหนเป็นพิเศษอยู่ไหมครับ? หรือมี "โจทย์" อะไรที่อยากให้ผมช่วยแชร์ไอเดียไหมครับ?'
-      };
-    }
-
-    // 5. INTAKE / DIAGNOSIS (Problem identified)
-    if (isProblem || (state.step === 'intake' && q.includes('หลักสูตร') && !isViewCourses)) {
-      state.step = 'diagnosis';
-      const topics = {
-        'service': 'การบริการที่ประทับใจ',
-        'team': 'การสร้างทีมเวิร์คที่ทรงพลัง',
-        'leadership': 'ภาวะผู้นำและการบริหาร',
-        'communication': 'การสื่อสารและประสานงาน'
-      };
-      //@ts-ignore
-      const topicLabel = topics[state.topic] || 'การพัฒนาบุคลากร';
-      
-      return {
-        role: 'assistant',
-        content: `เข้าใจเลยครับ เรื่อง **${topicLabel}** เป็นโจทย์ที่สำคัญมากในปัจจุบัน... 💡\n\nเพื่อให้ผมช่วยวินิจฉัย "อาการ" ได้แม่นยำขึ้น เหมือนเวลาหาหมอเลยครับ... ลองแชร์ให้ฟังหน่อยได้ไหมครับว่า **พฤติกรรมแบบไหนที่พี่อยากเห็นพนักงานทำต่างไปจากเดิม** หลังจากจบ Class นี้ครับ?`
-      };
-    }
-
-    // 5. PRESCRIPTION (Based on user answer to diagnosis)
-    if (state.step === 'diagnosis' && messages.length > 2) {
-      state.step = 'prescription';
-      
-      let recCourse = 'Customized Program';
-      let reason = 'เนื่องจากเป็นโจทย์ที่มีรายละเอียดเฉพาะเจาะจง ผมแนะนำให้เราออกแบบใหม่ร่วมกันครับ';
-
-      if (state.topic === 'service') {
-        recCourse = 'ใช้หัวใจบริการ คนสำราญ งานสำเร็จ (Service Mind Excellence)';
-        reason = 'เพื่อปรับจูน Mindset จากภายในสู่การบริการที่เป็นเลิศครับ';
-      } else if (state.topic === 'team') {
-        recCourse = 'Positive Team Synergy';
-        reason = 'เน้นการเปิดใจ ลดกำแพงความขัดแย้ง และสร้างเป้าหมายร่วมกันครับ';
-      } else if (state.topic === 'leadership') {
-        recCourse = 'Facilitative Leadership Mastery';
-        reason = 'เปลี่ยนหัวหน้างานให้เป็น "ผู้อำนวยความสะดวก" ที่ดึงศักยภาพลูกน้องได้สูงสุดครับ';
+      if (error || !data?.reply) {
+        throw new Error(error?.message || 'Empty response');
       }
 
-      return {
+      // Update history for next turn
+      historyRef.current = [
+        ...historyRef.current,
+        { role: 'user', content: text },
+        { role: 'assistant', content: data.reply },
+      ];
+
+      const aiMsg: Message = {
         role: 'assistant',
-        content: `ขอบคุณสำหรับข้อมูลที่มีคุณค่ามากครับ! ข้อมูลนี้ช่วยให้เห็นภาพชัดขึ้นจริงๆ 🙏\n\nจากโจทย์ดังกล่าว ผมขอแนะนำแนวทางที่เหมาะสมเป็นตัวนี้ครับ:\n🎯 **หลักสูตร ${recCourse}**\n\n${reason}\n\nคุณสนใจอยากรับ **Course Outline (โครงร่างหลักสูตร)** เพื่อไปเป็นข้อมูลเบื้องต้นในการพิจารณาก่อนไหมครับ? หรืออยากให้ทีมเราช่วยออกแบบพิเศษสำหรับองค์กรเลยดีครับ?`,
-        type: 'action-buttons'
+        content: data.reply,
+        showLeadForm: data.show_lead_form,
+        suggestedProgram: data.suggested_program,
+        ctaType: data.cta_type,
       };
+      setMessages(prev => {
+        const next = [...prev, aiMsg];
+        if (data.show_lead_form) setShowFormForIdx(next.length - 1);
+        return next;
+      });
+    } catch (err) {
+      console.error('AI error:', err);
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: 'ขออภัยครับ ขณะนี้ระบบขัดข้องชั่วคราว กรุณาติดต่อทาง LINE ได้เลยครับ',
+        ctaType: 'none',
+      }]);
+    } finally {
+      setIsTyping(false);
     }
+  }, [sessionId]);
 
-    // DEFAULT FALLBACK
-    const defaultMessages = [
-      'น่าสนใจมากครับ! ผมอยากเข้าใจโจทย์นี้ให้ลึกขึ้นอีกนิด... คุณคิดว่าอุปสรรคที่ใหญ่ที่สุดในตอนนี้คืออะไรหรือครับ? 🤔',
-      'เป็นมุมมองที่ดีมากครับ! 🌟 ในฐานะที่ปรึกษา... ผมอยากรู้ว่าเป้าหมายที่คุณอยากเห็นความสำเร็จของโปรเจกต์นี้คืออะไรครับ?',
-      'ยินดีรับโจทย์นี้ไปพิจารณาครับ! หากต้องการข้อมูลหลักสูตรที่เกี่ยวข้องทันที หรือต้องการให้ผมช่วยแนะนำหัวข้อที่เหมาะสม เลือกดูที่ปุ่มเมนูได้เลยนะครับ 👇'
-    ];
-    return {
-      role: 'assistant',
-      content: defaultMessages[Math.floor(Math.random() * defaultMessages.length)],
-      type: 'action-buttons'
-    };
-  }, [messages.length]);
-
-  const handleSend = (overrideInput?: string) => {
-    const text = overrideInput ?? input;
-    if (!text.trim()) return;
-
+  const handleSend = (overrideText?: string) => {
+    const text = overrideText ?? input;
+    if (!text.trim() || isTyping) return;
+    setInput('');
     const userMsg: Message = { role: 'user', content: text };
     setMessages(prev => [...prev, userMsg]);
-    setInput('');
-    setIsTyping(true);
-
-    setTimeout(() => {
-      setIsTyping(false);
-      const response = generateDynamicResponse(text);
-      setMessages(prev => [...prev, response]);
-    }, 800 + Math.random() * 600);
+    sendToAI(text);
   };
+
+  const renderMarkdown = (text: string) =>
+    text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br/>');
 
   return (
     <div className="fixed bottom-6 right-5 md:right-6 z-[9999] flex flex-col items-end">
+      {/* ── CHAT WINDOW ─────────────────────────────────────────────────── */}
       {isOpen && (
         <div
-          className="mb-4 w-[calc(100vw-24px)] md:w-[400px] max-h-[85svh] md:max-h-[650px] bg-white rounded-[1.5rem] shadow-2xl border border-gray-100 flex flex-col overflow-hidden"
-          style={{ animation: 'chatSlideUp 0.3s cubic-bezier(0.16,1,0.3,1) both' }}
+          className="mb-4 w-[calc(100vw-24px)] md:w-[400px] max-h-[88svh] md:max-h-[660px] bg-white rounded-[1.5rem] shadow-2xl border border-gray-100 flex flex-col overflow-hidden"
+          style={{ animation: 'chatSlideUp 0.28s cubic-bezier(0.16,1,0.3,1) both' }}
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-[#0f3460] to-[#1a4d8c] p-5 text-white flex justify-between items-center shrink-0">
+          <div className="bg-gradient-to-r from-[#0f3460] to-[#1a4a7a] px-5 py-4 text-white flex justify-between items-center shrink-0">
             <div className="flex items-center gap-3">
               <div className="relative">
                 <div className="w-11 h-11 rounded-full border-2 border-[#c5a059] overflow-hidden bg-white/20">
-                  <img src="/images/denmasterfa.jpg" alt="ครูเด่น (AI)" className="w-full h-full object-cover" />
+                  <img src="/images/denmasterfa.jpg" alt="ครูเด่น AI" className="w-full h-full object-cover" />
                 </div>
                 <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-[#0f3460]" />
               </div>
               <div>
-                <h3 className="font-black text-[15px] nav-font leading-snug">ครูเด่น (AI)</h3>
-                <span className="text-[10px] text-[#c5a059] font-bold tracking-wider uppercase">Master Facilitator • ออนไลน์</span>
+                <h3 className="font-black text-[15px] nav-font leading-none">ครูเด่น AI</h3>
+                <span className="text-[10px] text-[#c5a059] font-bold tracking-wider uppercase">
+                  AI Advisor · ออนไลน์
+                </span>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="bg-white/10 hover:bg-white/25 p-2 rounded-full transition-all">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="bg-white/10 hover:bg-white/25 p-2 rounded-full transition-all"
+              aria-label="Close"
+            >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Chat Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#f8fbff]">
-            {messages.map((m, i) => (
-              <div key={i} className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
-                <div className={`flex items-start gap-2 max-w-[85%] ${m.role === 'user' ? 'flex-row-reverse' : ''}`}>
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#f7f9fc]">
+
+            {messages.map((m, idx) => (
+              <div key={idx} className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
+                <div className={`flex items-start gap-2 max-w-[88%] ${m.role === 'user' ? 'flex-row-reverse' : ''}`}>
                   {m.role === 'assistant' && (
-                    <div className="w-7 h-7 rounded-full border border-[#c5a059]/30 overflow-hidden flex-shrink-0 mt-1">
+                    <div className="w-7 h-7 rounded-full border border-[#c5a059]/40 overflow-hidden flex-shrink-0 mt-0.5">
                       <img src="/images/denmasterfa.jpg" alt="" className="w-full h-full object-cover" />
                     </div>
                   )}
@@ -370,77 +325,88 @@ const AIAgent: React.FC = () => {
                     className={`px-4 py-3 text-sm leading-relaxed rounded-2xl ${
                       m.role === 'user'
                         ? 'bg-[#0f3460] text-white rounded-tr-sm'
-                        : 'bg-white text-gray-800 rounded-tl-sm shadow-sm border border-blue-50'
-                    } whitespace-pre-line`}
-                    dangerouslySetInnerHTML={{ __html: m.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }}
+                        : 'bg-white text-gray-800 rounded-tl-sm shadow-sm border border-blue-50/80'
+                    }`}
+                    dangerouslySetInnerHTML={{ __html: renderMarkdown(m.content) }}
                   />
                 </div>
-                
-                {m.type === 'lead-form' && <LeadForm topic={conversationState.current.topic} />}
 
-                {m.role === 'assistant' && m.type === 'action-buttons' && (
-                  <div className="flex flex-wrap gap-2 mt-3 ml-9">
-                    <button
-                      onClick={() => handleSend('ขอดูหลักสูตรที่มีอยู่แล้วครับ')}
-                      className="bg-white text-[#0f3460] border border-[#0f3460]/20 px-3 py-1.5 rounded-full text-[12px] font-black hover:bg-[#0f3460] hover:text-white transition-all shadow-sm"
-                    >
-                      📂 ดูหลักสูตรทั้งหมด
-                    </button>
-                    <button
-                      onClick={() => handleSend('อยากพัฒนาหลักสูตรเฉพาะองค์กรครับ')}
-                      className="bg-white text-[#c5a059] border border-[#c5a059]/30 px-3 py-1.5 rounded-full text-[12px] font-black hover:bg-[#c5a059] hover:text-white transition-all shadow-sm"
-                    >
-                      📐 ออกแบบเฉพาะ
-                    </button>
-                  </div>
+                {/* CTA widgets */}
+                {m.role === 'assistant' && (
+                  <>
+                    {(m.showLeadForm || showFormForIdx === idx) && (
+                      <div className="w-full max-w-[88%] ml-9">
+                        <LeadForm
+                          topic={m.suggestedProgram ?? 'AI Advisor Consultation'}
+                          onSuccess={() => setShowFormForIdx(null)}
+                        />
+                      </div>
+                    )}
+                    {m.suggestedProgram && !m.showLeadForm && (
+                      <div className="w-full max-w-[88%] ml-9">
+                        <ProgramCard program={m.suggestedProgram} />
+                      </div>
+                    )}
+                    {m.ctaType === 'soft_cta' && !m.showLeadForm && !m.suggestedProgram && (
+                      <SoftCTA onShowForm={() => setShowFormForIdx(idx)} />
+                    )}
+                  </>
                 )}
               </div>
             ))}
+
+            {/* Typing indicator */}
             {isTyping && (
-              <div className="flex items-center gap-2 ml-1">
-                <div className="w-7 h-7 rounded-full border border-[#c5a059]/30 overflow-hidden shrink-0">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-full border border-[#c5a059]/40 overflow-hidden shrink-0">
                   <img src="/images/denmasterfa.jpg" alt="" className="w-full h-full object-cover" />
                 </div>
-                <div className="bg-white rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm border border-gray-100 flex gap-1 items-center h-[38px]">
-                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" />
-                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0.2s]" />
-                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0.4s]" />
+                <div className="bg-white rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm border border-blue-50 flex gap-1 items-center">
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             )}
             <div ref={chatEndRef} />
           </div>
 
-          {/* Quick Replies Footer */}
-          {messages.length === 1 && (
-            <div className="px-4 pb-3 flex flex-wrap gap-2 bg-[#f8fbff]">
-              {QUICK_REPLIES.map((q, i) => (
-                <button
-                  key={i}
-                  onClick={() => handleSend(q.label)}
-                  className="bg-white border border-[#0f3460]/10 px-3 py-2 rounded-xl text-[12px] font-black text-[#0f3460] hover:border-[#0f3460] hover:shadow-md hover:-translate-y-0.5 transition-all"
-                >
-                  {q.label}
-                </button>
-              ))}
+          {/* Quick Starters — shown only on first message */}
+          {messages.length <= 1 && (
+            <div className="px-4 pb-3 bg-[#f7f9fc] grid grid-cols-2 gap-2">
+              {QUICK_STARTERS.map((q, i) => {
+                const Icon = q.icon;
+                return (
+                  <button
+                    key={i}
+                    onClick={() => handleSend(q.value)}
+                    disabled={isTyping}
+                    className="bg-white border border-[#0f3460]/10 px-3 py-2.5 rounded-xl text-[11px] font-black text-[#0f3460] nav-font hover:border-[#c5a059] hover:bg-[#c5a059]/5 transition-all flex items-center gap-2 text-left"
+                  >
+                    <Icon className="w-3.5 h-3.5 text-[#c5a059] shrink-0" />
+                    {q.label}
+                  </button>
+                );
+              })}
             </div>
-          ) }
+          )}
 
-          {/* Input Area */}
-          <div className="p-4 bg-white border-t border-gray-100 flex gap-2">
+          {/* Input */}
+          <div className="p-4 bg-white border-t border-gray-100 flex gap-2 shrink-0">
             <input
               ref={inputRef}
               type="text"
               value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
-              placeholder="คุยกับครูเด่น (AI) ได้ที่นี่..."
-              className="flex-1 bg-gray-50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0f3460]/20 border border-gray-200"
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && !e.shiftKey && handleSend()}
+              placeholder="คุยกับครูเด่น AI ได้ที่นี่..."
+              disabled={isTyping}
+              className="flex-1 bg-gray-50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0f3460]/20 border border-gray-200 disabled:opacity-60 transition-all"
             />
             <button
               onClick={() => handleSend()}
-              disabled={!input.trim()}
-              className="bg-[#0f3460] disabled:opacity-40 text-white p-3 rounded-xl hover:bg-[#1a4d8c] transition-all shrink-0"
+              disabled={!input.trim() || isTyping}
+              className="bg-[#0f3460] disabled:opacity-40 text-white p-3 rounded-xl hover:bg-[#1a4a7a] transition-all shrink-0"
             >
               <Send className="w-5 h-5" />
             </button>
@@ -448,23 +414,48 @@ const AIAgent: React.FC = () => {
         </div>
       )}
 
-      {/* Toggle Button */}
+      {/* ── TOGGLE BUTTON ────────────────────────────────────────────────── */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`group relative flex items-center justify-center transition-all duration-500 rounded-full shadow-[0_10px_40px_rgba(15,52,96,0.5)] ${
-          isOpen ? 'bg-gray-800 p-3 rotate-90 scale-90' : 'bg-[#0f3460] p-4 hover:scale-110 active:scale-95'
+        onClick={() => setIsOpen(o => !o)}
+        aria-label="ปรึกษาครูเด่น AI"
+        className={`group relative flex items-center justify-center transition-all duration-400 rounded-full shadow-[0_8px_32px_rgba(15,52,96,0.45)] ${
+          isOpen
+            ? 'bg-gray-800 p-3 rotate-90 scale-90'
+            : 'bg-[#0f3460] p-4 hover:scale-110 active:scale-95'
         }`}
       >
-        {!isOpen && <span className="absolute inset-0 rounded-full bg-[#0f3460] animate-ping opacity-25" />}
-        {isOpen ? <X className="w-7 h-7 text-white" /> : <MessageCircle className="w-8 h-8 text-white" />}
-        
         {!isOpen && (
-          <div className="absolute right-full mr-4 bg-white text-[#0f3460] px-5 py-3 rounded-2xl shadow-2xl font-black nav-font text-[14px] whitespace-nowrap opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-300 pointer-events-none border border-blue-50">
-            <span className="text-yellow-500 mr-2">✨</span> ปรึกษาครูเด่น (AI)
-            <div className="absolute top-1/2 right-[-8px] -translate-y-1/2 w-0 h-0 border-l-[8px] border-l-white border-y-[6px] border-y-transparent shadow-sm" />
+          <span className="absolute inset-0 rounded-full bg-[#0f3460] animate-ping opacity-20" />
+        )}
+        {isOpen ? (
+          <X className="w-7 h-7 text-white" />
+        ) : (
+          <MessageCircle className="w-8 h-8 text-white" />
+        )}
+
+        {/* Tooltip */}
+        {!isOpen && (
+          <div className="absolute right-full mr-4 bg-white text-[#0f3460] px-5 py-3 rounded-2xl shadow-2xl font-black nav-font text-[13px] whitespace-nowrap opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 pointer-events-none border border-blue-50 flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-[#c5a059]" />
+            ปรึกษาครูเด่น AI
+            <div className="absolute top-1/2 right-[-7px] -translate-y-1/2 w-0 h-0 border-l-[7px] border-l-white border-y-[5px] border-y-transparent" />
+          </div>
+        )}
+
+        {/* Unread badge when closed and not interacted */}
+        {!isOpen && messages.length === 0 && (
+          <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#c5a059] rounded-full flex items-center justify-center">
+            <span className="text-white text-[8px] font-black">1</span>
           </div>
         )}
       </button>
+
+      <style>{`
+        @keyframes chatSlideUp {
+          from { opacity: 0; transform: translateY(20px) scale(0.97); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+      `}</style>
     </div>
   );
 };

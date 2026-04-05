@@ -431,7 +431,7 @@ const Services: React.FC = () => {
                   <span className="text-[#c5a059] text-xs font-black uppercase tracking-[0.4em] block mb-6 nav-font">
                      เริ่มต้นวันนี้
                   </span>
-                  <h2 className="text-3xl md:text-5xl font-black nav-font mb-4 leading-tight">
+                  <h2 className="text-3xl md:text-5xl font-black nav-font mb-4 leading-tight text-[#c5a059]">
                      เริ่มต้นพัฒนาทีมของคุณวันนี้
                   </h2>
                   <p className="text-blue-200/80 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">

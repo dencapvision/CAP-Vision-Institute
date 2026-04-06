@@ -212,32 +212,35 @@ export const COURSES: CourseDetailInfo[] = [
   },
   {
     id: 'leadership-mindset-reset',
-    title: 'Leadership Mindset Reset: Transforming from Manager to Leader',
+    title: 'Leadership Mindset Reset: รีเซ็ตวิธีคิดผู้นำ ปลดล็อกศักยภาพทีมทั้งระบบ',
     category: 'Leader Skills',
-    description: 'หลักสูตรเร่งด่วนเพื่อปรับจูนหัวใจและวิธีคิดของผู้นำยุคใหม่ เปลี่ยนจาก "ผู้สั่งการ" เป็น "ผู้สร้างแรงบันดาลใจ"',
+    description: 'เปลี่ยน "กรอบความคิดเดิม" ที่จำกัดทีม สู่ Mindset ผู้นำยุคใหม่ ที่สร้างทั้งผลงานและคนไปพร้อมกัน ผ่านกระบวนการเรียนรู้แบบ ลงมือทำ + สะท้อนคิด + ตกผลึก',
     image: 'https://images.unsplash.com/photo-1507679799987-c7377bc586df?auto=format&fit=crop&q=80',
-    longDescription: 'หลักสูตรที่มุ่งเน้นการปรับจูนหัวใจและวิธีคิดของผู้นำยุคใหม่ เพื่อก้าวข้ามขีดจำกัดเดิมๆ และสร้างวัฒนธรรมการทำงานที่มีประสิทธิภาพสูง ผ่านกระบวนการ Transformative Learning',
+    longDescription: 'ผู้นำจำนวนมาก "ทำงานเก่ง" แต่ยังไม่สามารถ "ยกระดับทีม" ได้จริง ไม่ใช่เพราะขาดทักษะ แต่เพราะยังติดอยู่ใน กรอบความคิดเดิม (Old Mindset) หลักสูตรนี้ช่วยให้ผู้นำมองเห็นรูปแบบความคิดของตัวเอง เข้าใจผลกระทบต่อทีม และ Reset วิธีคิดเพื่อสร้างผลลัพธ์ใหม่' + '\n\n' + '#### 🔶 ลูกค้าที่ไว้วางใจ' + '\n' + 'URC | Central | AOT | Land and Houses | การไฟฟ้าส่วนภูมิภาค (PEA) | ศอ.บต. | ปปส. (100+ องค์กรทั่วประเทศ)',
     duration: '1 วัน (6 ชม.)',
-    audience: 'ผู้จัดการ, หัวหน้างาน, ผู้นำยุคใหม่, HRD Professionals',
+    audience: 'ผู้บริหาร, ผู้จัดการ / หัวหน้างาน, Talent / Future Leader',
     why: [
-      { label: 'Inside-Out Growth', stat: '100%', desc: 'เน้นการพัฒนาจากทัศนคติภายในสู่การกระทำภายนอก', icon: <Heart /> },
-      { label: 'Team Engagement', stat: '90%', desc: 'สร้างความผูกพันและแรงจูงใจให้ทีมงาน', icon: <Users /> }
+      { label: 'ผู้นำยึดวิธีเดิม', stat: '😣', desc: 'ไม่กล้าเปลี่ยน ยึดติดความสำเร็จเดิม', icon: <Zap /> },
+      { label: 'ทีมรอคำสั่ง', stat: '❌', desc: 'ทีมงานไม่คิดเอง รอสั่งการอย่างเดียว', icon: <Search /> },
+      { label: 'ขาด Growth Mindset', stat: '📌', desc: 'ทีมขาดความกระตือรือร้นในการเรียนรู้', icon: <TrendingUp /> }
     ],
     how: [
-      { title: 'Reflective Dialogue', desc: 'กระบวนการสนทนาเพื่อสะท้อนคิดและถอดบทเรียน', icon: <MessageCircle /> },
-      { title: 'CAP Framework', desc: 'ใช้โมเดลการเรียนรู้ที่ผสมผสานความลึกซึ้งและการใช้งานจริง', icon: <Cpu /> }
+      { title: 'Self-Awareness', desc: 'Module 1: เข้าใจกรอบความคิดที่จำกัดตัวเอง', icon: <Search /> },
+      { title: 'Mindset Shift', desc: 'Module 2: เปลี่ยน Fixed เป็น Growth Mindset', icon: <Zap /> },
+      { title: 'Growth Culture', desc: 'Module 4: สร้าง Psychological Safety ในทีม', icon: <ShieldCheck /> }
     ],
     what: [
-      'Leadership Mindset Shifting',
-      'The Art of Deep Listening',
-      'Psychological Safety in Teams',
-      'High Impact Coaching for Leaders'
+      'เข้าใจกรอบความคิดของตนเองและทีม',
+      'ปรับ Mindset ให้สอดคล้องกับเป้าหมายองค์กร',
+      'เพิ่ม Engagement และการมีส่วนร่วมของทีม',
+      'สร้างพฤติกรรมการเรียนรู้ในทีม',
+      'นำแนวคิดไปใช้ในการทำงานจริงทันที'
     ],
     objectives: [
-      'ก้าวข้าม Fixed Mindset เพื่อเปิดรับความเป็นไปได้ใหม่ๆ',
-      'สื่อสารเพื่อสร้างความไว้วางใจและแรงภาพลักษณ์ผู้นำ',
-      'ใช้กระบวนการ Facilitation ในการนำประชุมและแก้โจทย์ทีม',
-      'สร้างวัฒนธรรมการเรียนรู้ให้เกิดขึ้นในหน่วยงาน'
+      'เห็น Mindset ที่ซ่อนอยู่ของตัวเอง',
+      'เปลี่ยนจาก สั่งงาน เป็น สร้างการเรียนรู้',
+      'สร้างวัฒนธรรมการเติบโตในองค์กร',
+      'ลดปัญหาการสื่อสารและเพิ่มประสิทธิภาพทีม'
     ],
     instructor: {
       id: 'den-master-fa',

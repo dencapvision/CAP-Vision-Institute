@@ -84,20 +84,82 @@ const CourseDetail: React.FC = () => {
     };
 
     const renderIcon = (icon: any, className: string = "w-6 h-6") => {
-       if (!icon) return <Target className={className} />;
-       
-       // If it's already a React element (from constants.tsx)
-       if (React.isValidElement(icon)) {
-          return React.cloneElement(icon as React.ReactElement<any>, { className });
-       }
+        if (!icon) return <Target className={className} />;
+        
+        // If it's already a React element (from constants.tsx)
+        if (React.isValidElement(icon)) {
+           return React.cloneElement(icon as React.ReactElement<any>, { className });
+        }
 
-       // If it's a string (from database)
-       if (typeof icon === 'string' && ICON_MAP[icon]) {
-          return React.cloneElement(ICON_MAP[icon] as React.ReactElement<any>, { className });
-       }
+        // If it's a string (from database)
+        if (typeof icon === 'string' && ICON_MAP[icon]) {
+           return React.cloneElement(ICON_MAP[icon] as React.ReactElement<any>, { className });
+        }
 
-       return <Target className={className} />;
-    };
+        return <Target className={className} />;
+     };
+
+     // Helper to clean markdown and format text
+     const formatMarkdown = (text: string) => {
+        if (!text) return null;
+        
+        // Split by --- to create logical blocks
+        const blocks = text.split('---').map(b => b.trim()).filter(Boolean);
+        
+        return blocks.map((block, bIdx) => {
+           // Clean up symbols but keep structure
+           const lines = block.split('\n').map(line => {
+              let processed = line.trim();
+              
+              // Step 1: Detect Headers BEFORE any cleaning
+              const isH3 = processed.startsWith('###');
+              const isH4 = processed.startsWith('####');
+              
+              // Step 2: Global cleaning for all symbols
+              processed = processed
+                 .replace(/^#+\s*/, '')      // Remove start-of-line hashes
+                 .replace(/#{1,6}\s/g, '')   // Remove any remaining hashes followed by space
+                 .replace(/🔶\s*/g, '')      // Remove diamond emoji
+                 .replace(/\*\*/g, '')        // Remove double asterisks
+                 .replace(/\*/g, '');          // Remove single asterisks
+              
+              if (!processed) return null;
+
+              if (isH3) {
+                 return <h3 key={Math.random()} id={`h3-${Math.random()}`} className="text-2xl font-black text-[#0f3460] mt-8 mb-4 nav-font leading-tight">{processed}</h3>;
+              }
+              if (isH4) {
+                 return <h4 key={Math.random()} id={`h4-${Math.random()}`} className="text-lg font-bold text-[#c5a059] mt-6 mb-3 nav-font uppercase tracking-wide">{processed}</h4>;
+              }
+              
+              // Check if it's a list item
+              if (processed.startsWith('-')) {
+                 return (
+                    <div key={Math.random()} className="flex items-start gap-3 mb-3 ml-2">
+                       <CheckCircle2 className="w-5 h-5 text-[#c5a059] mt-0.5 flex-shrink-0" />
+                       <span className="text-content-premium">{processed.replace(/^-\s*/, '')}</span>
+                    </div>
+                 );
+              }
+
+              // Check if it's Q&A
+              if (processed.startsWith('Q:') || processed.startsWith('**Q:')) {
+                 return <p key={Math.random()} className="text-[#0f3460] font-black mt-8 mb-3 nav-font text-lg">{processed.replace(/^\**Q:\s*/, 'Q: ')}</p>;
+              }
+              if (processed.startsWith('A:') || processed.startsWith('*A:')) {
+                 return <p key={Math.random()} className="text-content-premium mb-8 italic pl-6 border-l-4 border-[#c5a059]/40 bg-gray-50/50 py-3 pr-4 rounded-r-xl">{processed.replace(/^[\s\*]*A:\s*/, 'A: ')}</p>;
+              }
+
+              return <p key={Math.random()} className="mb-6 text-content-premium">{processed}</p>;
+           });
+
+           return (
+              <div key={bIdx} className={bIdx > 0 ? "pt-10 mt-10 border-t border-gray-100" : ""}>
+                 {lines}
+              </div>
+           );
+        });
+     };
 
    return (
       <div className="bg-gray-50 min-h-screen">
@@ -272,26 +334,41 @@ const CourseDetail: React.FC = () => {
                    )}
 
                   {/* Original Description & Objectives Accordion */}
-                  <div className="bg-white p-12 rounded-[3rem] shadow-sm border border-gray-100">
-                     <h2 className="text-3xl font-black text-[#0f3460] mb-8 nav-font">โครงสร้างหลักสูตรและกิจกรรม</h2>
-                     <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed font-medium opacity-90">
-                        <p className="text-xl mb-12">{course.long_description || course.description}</p>
+                  <div className="bg-white p-12 rounded-[3rem] shadow-sm border border-gray-100 relative overflow-hidden">
+                      <div className="absolute top-0 right-0 w-64 h-64 bg-gray-50/50 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
+                      <h2 className="text-3xl font-black text-[#0f3460] mb-8 font-heading-premium relative z-10 font-gold-gradient">
+                         ข้อมูลหลักสูตร (Signature Hybrid Style)
+                      </h2>
+                      
+                      <div className="relative z-10">
+                         <div className="text-lg">
+                            {formatMarkdown(course.long_description || course.description)}
+                         </div>
 
-                        <h3 className="text-2xl font-black text-[#0f3460] mt-16 mb-10 nav-font flex items-center gap-4">
-                           <Target className="w-8 h-8 text-[#c5a059]" />
-                           หัวข้อกิจกรรม (Agenda & Activities)
-                        </h3>
+                         <div className="mt-20">
+                            <div className="flex items-center gap-5 mb-12">
+                               <div className="w-14 h-14 bg-gradient-to-br from-[#0f3460] to-[#1a4d8c] rounded-2xl flex items-center justify-center shadow-xl shadow-blue-900/20">
+                                  <Layout className="w-7 h-7 text-white" />
+                               </div>
+                               <div>
+                                  <h3 className="text-3xl font-black text-[#0f3460] font-heading-premium">
+                                     Course Modules (Hands-on + Practical)
+                                  </h3>
+                                  <p className="text-sm text-[#c5a059] font-bold uppercase tracking-[0.2em] mt-2">Focus on Action & Mastery</p>
+                               </div>
+                            </div>
+                         </div>
 
-                        <div className="space-y-4">
+                        <div className="space-y-5">
                            {course.objectives?.map((obj: any, i: number) => {
                               const isExpanded = expandedObjectives.includes(i);
                               const isObj = typeof obj === 'object' && obj !== null;
                               return (
                                  <div
                                     key={i}
-                                    className={`overflow-hidden border rounded-3xl transition-all duration-300 ${isExpanded
-                                       ? 'border-[#c5a059] bg-white shadow-xl shadow-gold-500/5 translate-x-2'
-                                       : 'border-gray-100 bg-gray-50/50 hover:bg-gray-50 hover:border-gray-200'
+                                    className={`overflow-hidden border rounded-3xl transition-all duration-400 ease-out ${isExpanded
+                                       ? 'border-[#c5a059]/30 bg-white shadow-2xl shadow-gold-500/10 scale-[1.02] z-10 relative'
+                                       : 'border-gray-100/80 bg-gray-50/40 hover:bg-white hover:border-[#c5a059]/30 hover:shadow-lg'
                                        }`}
                                  >
                                     <button
@@ -315,19 +392,32 @@ const CourseDetail: React.FC = () => {
                                     </button>
 
                                     <div
-                                       className={`transition-all duration-300 ease-in-out overflow-hidden ${isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                                       className={`transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden ${isExpanded ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'
                                           }`}
                                     >
-                                       <div className="px-20 pb-8 pt-2 text-gray-500 font-medium leading-relaxed border-t border-gray-50/50">
-                                          <p className="mt-4">
-                                             ในหัวข้อนี้ เราจะใช้กระบวนการเรียนรู้แบบ Activity-Based Learning เพื่อช่วยให้ผู้เรียนเข้าใจแก่นแท้และสามารถนำไปปรับใช้ได้ทันที
-                                             โดยเน้นการสร้าง "Insight" หรือการตระหนักรู้จากภายใน เพื่อให้เกิดการเปลี่ยนแปลงในระยะยาวและมีประสิทธิภาพสูงสุดต่อองค์กร
-                                          </p>
-                                          <ul className="mt-4 space-y-2 list-disc pl-5 text-sm text-[#0f3460]/70">
-                                             <li>ลงมือปฏิบัติจริงผ่าน Case Study</li>
-                                             <li>สรุปบทเรียนผ่านการ Facilitation</li>
-                                             <li>วางแผนการนำไปใช้จริงในที่ทำงาน</li>
-                                          </ul>
+                                       <div className="px-8 md:px-20 pb-10 pt-6 border-t border-gray-100 bg-gradient-to-b from-gray-50/30 to-white">
+                                          {isObj && obj.desc ? (
+                                             <div className="text-content-premium">
+                                                {formatMarkdown(obj.desc)}
+                                             </div>
+                                          ) : (
+                                             <p className="text-gray-500 italic font-medium">ไม่มีรายละเอียดเพิ่มเติมสำหรับหัวข้อนี้</p>
+                                          )}
+                                          
+                                          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                             <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+                                                <div className="w-8 h-8 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center">
+                                                   <Zap className="w-4 h-4" />
+                                                </div>
+                                                <span className="text-xs font-bold text-[#0f3460]">Learning by Doing</span>
+                                             </div>
+                                             <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+                                                <div className="w-8 h-8 bg-green-50 text-green-500 rounded-lg flex items-center justify-center">
+                                                   <CheckCircle2 className="w-4 h-4" />
+                                                </div>
+                                                <span className="text-xs font-bold text-[#0f3460]">Real Application</span>
+                                             </div>
+                                          </div>
                                        </div>
                                     </div>
                                  </div>

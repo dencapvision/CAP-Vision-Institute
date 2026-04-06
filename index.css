@@ -85,6 +85,19 @@ p, li {
   text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+.text-content-premium {
+  color: #4b5563; /* text-gray-600 */
+  line-height: 1.8;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.font-heading-premium {
+  font-family: 'Inter', sans-serif; /* or the intended heading font */
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
 .letter-spacing-tight {
   letter-spacing: -0.04em;
 }

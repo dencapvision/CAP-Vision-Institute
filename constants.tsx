@@ -284,42 +284,6 @@ export const COURSES: CourseDetailInfo[] = [
       bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning',
       image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
     }
-  },
-  {
-    id: 'ai-mastery-professionals',
-    title: 'AI Mastery for Professionals: Productivity Reimagined',
-    category: 'Work Skills',
-    description: 'ปลดล็อกขีดจำกัดการทำงานด้วยพลัง AI: ยกระดับประสิทธิภาพการทำงานในยุคดิจิทัลด้วย AI Tools และ Prompt Engineering',
-    image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80',
-    longDescription: 'ในยุคที่ข้อมูลมีมหาศาล ความรวดเร็วและความแม่นยำคือหัวใจสำคัญของการทำงาน หลักสูตรนี้ออกแบบมาเพื่อผู้ปฏิบัติงานยุคใหม่ที่ต้องการก้าวข้ามการทำงานแบบเดิมๆ สู่การเป็น AI-Powered Professional',
-    duration: '1 วัน (6 ชม.)',
-    audience: 'Business Professionals, Content Creators, Admin Teams, พนักงานทุกคนที่ต้องการเพิ่ม Productivity',
-    why: [
-      { label: 'Efficiency Multiplier', stat: '3X', desc: 'การทวีคูณประสิทธิภาพงานด้วยเครื่องมือที่ถูกต้อง', icon: <Zap /> },
-      { label: 'Future Readiness', stat: '100%', desc: 'เตรียมความพร้อมสู่โลกการทำงานในอนาคต', icon: <Target /> }
-    ],
-    how: [
-      { title: 'Interactive Demo', desc: 'สาธิตการใช้เครื่องมือ AI ชั้นนำในธุรกิจ', icon: <Video /> },
-      { title: 'Workflow Audit', desc: 'สำรวจและปรับปรุงกระบวนการทำงานด้วย AI', icon: <Search /> }
-    ],
-    what: [
-      'AI Mindset Reset',
-      'Prompt Engineering Mastery',
-      'AI-Powered Content Generation',
-      'Workflow Automation'
-    ],
-    objectives: [
-      'ลดเวลาในการทำงานเอกสารและงานวิเคราะห์ลงได้อย่างน้อย 30-50%',
-      'สามารถเขียน Prompt ที่ซับซ้อนเพื่อสั่งงาน AI ได้อย่างแม่นยำ',
-      'ออกแบบกระบวนการทำงานใหม่ที่สอดแทรก AI เข้าไปอย่างลื่นไหล',
-      'มีความมั่นใจในการใช้เทคโนโลยีใหม่ๆ เพื่อสร้างสรรค์ผลงานระดับพรีเมียม'
-    ],
-    instructor: {
-      id: 'den-master-fa',
-      name: 'ครูเด่น มาสเตอร์ฟา',
-      bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning',
-      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
-    }
   }
 ];
 

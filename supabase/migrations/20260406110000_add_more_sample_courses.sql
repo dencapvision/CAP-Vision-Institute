@@ -84,6 +84,8 @@ BEGIN
     ) ON CONFLICT (slug) DO UPDATE SET
         title = EXCLUDED.title,
         description = EXCLUDED.description,
+        image = EXCLUDED.image,
+        alt_text = EXCLUDED.alt_text,
         long_description = EXCLUDED.long_description,
         why_section = EXCLUDED.why_section,
         how_section = EXCLUDED.how_section,
@@ -164,6 +166,8 @@ URC | Central | AOT | Land and Houses | การไฟฟ้าส่วนภ�
     ) ON CONFLICT (slug) DO UPDATE SET
         title = EXCLUDED.title,
         description = EXCLUDED.description,
+        image = EXCLUDED.image,
+        alt_text = EXCLUDED.alt_text,
         long_description = EXCLUDED.long_description,
         why_section = EXCLUDED.why_section,
         how_section = EXCLUDED.how_section,

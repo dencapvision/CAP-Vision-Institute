@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Search, ChevronLeft, ChevronRight, ArrowRight, Star, ChevronDown, Filter as FilterIcon, Layout, Target, Zap, Users, MessageCircle, Layers, GraduationCap } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { fetchCourses } from '../services/courses';
 import type { Course } from '../types';
 import { CONTACT_INFO } from '../constants/brand';
@@ -8,6 +8,9 @@ import SEO from '../components/SEO';
 import LeadershipHero from '../components/LeadershipHero';
 
 const Courses: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const catParam = searchParams.get('cat');
+  
   const [filter, setFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeSlide, setActiveSlide] = useState(0);
@@ -28,6 +31,40 @@ const Courses: React.FC = () => {
   }, []);
 
   const categories = ['All', 'Leader Skills', 'People Skills', 'Work Skills', 'Communication Skills'];
+
+  // Sync state with URL parameter 'cat'
+  useEffect(() => {
+    if (catParam && categories.includes(catParam)) {
+      setFilter(catParam);
+    } else {
+      setFilter('All');
+    }
+  }, [catParam]);
+
+  // Auto-scroll to grid when category is selected via URL
+  useEffect(() => {
+    if (catParam && !loading && courses.length > 0) {
+      // Add a small timeout to ensure DOM is ready and content is rendered
+      const timer = setTimeout(() => {
+        const element = document.getElementById('courses-grid');
+        if (element) {
+          const yOffset = -100; // Offset to account for sticky header
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [catParam, loading, courses.length]);
+
+  const handleFilterChange = (cat: string) => {
+    if (cat === 'All') {
+      searchParams.delete('cat');
+    } else {
+      searchParams.set('cat', cat);
+    }
+    setSearchParams(searchParams);
+  };
 
   const getCategoryInfo = (category: string) => {
     switch (category) {
@@ -172,7 +209,7 @@ const Courses: React.FC = () => {
             return (
               <button
                 key={cat}
-                onClick={() => setFilter(cat)}
+                onClick={() => handleFilterChange(cat)}
                 className={`p-6 rounded-[2.5rem] text-left transition-all duration-500 border group flex flex-col h-full ${isActive
                   ? 'bg-white border-[#c5a059] shadow-2xl shadow-gold-500/10 -translate-y-2'
                   : 'bg-white border-transparent shadow-sm hover:shadow-lg hover:border-gray-200'
@@ -223,7 +260,7 @@ const Courses: React.FC = () => {
                     <button
                       key={cat}
                       onClick={() => {
-                        setFilter(cat);
+                        handleFilterChange(cat);
                         setIsDropdownOpen(false);
                       }}
                       className={`w-full text-left px-6 py-4 font-bold nav-font transition-colors flex items-center justify-between text-sm ${filter === cat ? 'bg-[#0f3460] text-white' : 'text-gray-600 hover:bg-gray-50'

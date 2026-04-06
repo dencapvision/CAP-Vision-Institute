@@ -6,7 +6,8 @@ import {
   GraduationCap, Laptop, Users, Info,
   Briefcase, MessageCircle, ExternalLink,
   Sparkles, BookOpen, Trophy, Newspaper,
-  Phone, Building2, Layers3, ChevronRight
+  Phone, Building2, Layers3, ChevronRight,
+  FileText
 } from 'lucide-react';
 import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
 import Logo from './Logo';
@@ -40,10 +41,16 @@ const navItems: NavItem[] = [
     submenu: [
       {
         name: 'Growth Mastery Workshop',
-        path: 'https://growth-mindset-workshop.capvisionpartner.com/',
+        path: '/resources/building-growth-mindset-culture',
         icon: <Sparkles className="w-4 h-4" />,
-        external: true,
+        external: false,
         description: 'หลักสูตร Signature สำหรับผู้นำ',
+      },
+      {
+        name: 'Workshop Handouts',
+        path: '/growth-mastery/handouts',
+        icon: <FileText className="w-4 h-4" />,
+        description: 'เอกสารประกอบการอบรมแบบโต้ตอบ',
       },
       {
         name: 'หลักสูตร In-house Training',

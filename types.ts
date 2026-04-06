@@ -76,3 +76,43 @@ export interface Resource {
   category?: string;
   author?: string;
 }
+
+// Workshop Specific Types
+export interface WheelData {
+  career: number;
+  finance: number;
+  health: number;
+  family: number;
+  love: number;
+  growth: number;
+  leisure: number;
+  contribution: number;
+}
+
+export interface ActionPlanRow {
+  goal: string;
+  steps: string[];
+  timeline: string;
+  support: string;
+}
+
+export interface GrowthRoadmapState {
+  name: string;
+  team: string;
+  strengths: string[];
+  gaps: string[];
+  mainGoal: string;
+  feeling: string;
+  plans: ActionPlanRow[];
+}
+
+export interface Slide {
+  id: number;
+  title: string;
+  content: string | React.ReactNode;
+  theme: 'blue' | 'emerald' | 'orange' | 'dark' | 'gold';
+  section?: string;
+}
+
+export type WorksheetType = 'wheel' | 'roadmap' | 'slides';
+

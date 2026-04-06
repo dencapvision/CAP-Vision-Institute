@@ -8,10 +8,7 @@ export const fetchCourses = async (): Promise<Course[]> => {
 
   const { data, error } = await supabase
     .from(TABLE_NAME)
-    .select(`
-      *,
-      instructor:instructors(*)
-    `)
+    .select('*')
     .eq('is_published', true)
     .order('title', { ascending: true });
 
@@ -27,10 +24,7 @@ export const fetchCourseBySlug = async (slug: string): Promise<Course | null> =>
 
    const { data, error } = await supabase
     .from(TABLE_NAME)
-    .select(`
-      *,
-      instructor:instructors(*)
-    `)
+    .select('*')
     .eq('slug', slug)
     .eq('is_published', true)
     .single();
@@ -42,3 +36,4 @@ export const fetchCourseBySlug = async (slug: string): Promise<Course | null> =>
    
    return data as Course;
 }
+

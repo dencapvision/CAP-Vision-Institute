@@ -91,8 +91,7 @@ const Speakers: React.FC = () => {
             </div>
           ) : (
             <>
-              {/* Featured speaker — Den Master Fa — large card */}
-              {speakers.filter(s => s.slug === 'den-master-fa').map(speaker => (
+              {speakers.filter(s => s.slug === 'den-masterfa').map(speaker => (
             <div key={speaker.id} className="mb-12">
               <div className="bg-[#0a1628] rounded-[2.5rem] overflow-hidden shadow-2xl">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -160,7 +159,7 @@ const Speakers: React.FC = () => {
 
               {/* Other speakers grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {speakers.filter(s => s.slug !== 'den-master-fa').map(speaker => (
+                {speakers.filter(s => s.slug !== 'den-masterfa').map(speaker => (
               <div
                 key={speaker.id}
                 className="group bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col hover:-translate-y-2"

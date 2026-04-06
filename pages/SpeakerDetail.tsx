@@ -702,7 +702,7 @@ const SpeakerDetail: React.FC = () => {
   }
 
   // Den Master Fa gets premium high-converting page
-  if (speaker.slug === 'den-master-fa') {
+  if (speaker.slug === 'den-masterfa') {
     return <DenMasterFaDetail speaker={speaker} taughtCourses={taughtCourses} />;
   }
 

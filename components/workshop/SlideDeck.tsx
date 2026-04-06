@@ -293,6 +293,30 @@ export const SlideDeck: React.FC = () => {
             page-break-after: always;
             width: 297mm;
             height: 210mm;
+            padding: 30px !important;
+            background: white !important;
+            color: black !important;
+            border: 1px solid #eee !important;
+            border-radius: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+          }
+          .printable-slide * {
+            color: black !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+          }
+          .printable-slide h1, 
+          .printable-slide h2, 
+          .printable-slide h3,
+          .printable-slide .nav-font {
+            color: #0f3460 !important;
+            -webkit-text-fill-color: #0f3460 !important;
+          }
+          .printable-slide .text-[#c5a059] {
+            color: #c5a059 !important;
+            -webkit-text-fill-color: #c5a059 !important;
           }
         }
       `}} />

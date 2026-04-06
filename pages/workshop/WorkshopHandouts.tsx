@@ -84,7 +84,7 @@ const WorkshopHandouts: React.FC = () => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
       // Using the pattern from ChatBot.tsx
       const chat = ai.chats.create({ 
-        model: 'gemini-3-flash',
+        model: 'gemini-3-pro-preview',
         config: { temperature: 0.7 } 
       });
       const response = await chat.sendMessage({ message: prompt });
@@ -107,22 +107,25 @@ const WorkshopHandouts: React.FC = () => {
       
       โปรดตอบกลับเป็น JSON เท่านั้น (Array ของ Object 3 ชิ้น) ตามรูปแบบนี้:
       [
-        {"goal": "...", "steps": ["...", "..."], "timeline": "...", "support": "..."},
+        {"goal": "หัวข้อเป้าหมาย", "steps": ["ขั้นที่ 1", "ขั้นที่ 2"], "timeline": "ระยะเวลา", "support": "ทรัพยากรที่ต้องใช้"},
         ...
       ]
-      ขอเป็นภาษาไทยที่ทรงพลังและทำได้จริง (Actionable)
+      ขอเป็นภาษาไทยที่ทรงพลังและทำได้จริง (Actionable) ห้ามมีข้อความอื่นนอกเหนือจาก JSON
     `;
 
     const response = await generateAI(prompt);
     if (response) {
       try {
-        const cleanJson = response.replace(/```json|```/g, '').trim();
+        // More robust JSON extraction
+        const jsonMatch = response.match(/\[[\s\S]*\]/);
+        const cleanJson = jsonMatch ? jsonMatch[0] : response.replace(/```json|```/g, '').trim();
         const parsed = JSON.parse(cleanJson);
         if (Array.isArray(parsed)) {
           setRoadmapData(prev => ({ ...prev, plans: parsed }));
         }
       } catch (e) {
         console.error("JSON Parse Error:", e);
+        alert("AI ส่งข้อมูลมาในรูปแบบที่อ่านไม่ได้ กรุณาลองกด Suggest อีกครั้งครับ");
       }
     }
     setIsGenerating(false);
@@ -296,14 +299,34 @@ const WorkshopHandouts: React.FC = () => {
       <style dangerouslySetInnerHTML={{ __html: `
         @media print {
           .no-print { display: none !important; }
-          body { background: white !important; }
+          body { background: white !important; color: black !important; }
+          .print-container { 
+            padding: 0 !important; 
+            margin: 0 !important;
+            width: 100% !important;
+            max-width: none !important;
+          }
+          /* Force visibility for clipped or transparent text */
+          h1, h2, h3, h4, h5, h6, .nav-font, [class*="bg-clip-text"] {
+            background: none !important;
+            -webkit-background-clip: initial !important;
+            background-clip: initial !important;
+            color: #0f3460 !important; /* Default dark navy for print */
+            text-fill-color: #0f3460 !important;
+            -webkit-text-fill-color: #0f3460 !important;
+            opacity: 1 !important;
+            text-shadow: none !important;
+          }
+          .text-[#c5a059], .text-[#ebd49d], .text-gold { color: #c5a059 !important; }
+          
           .printable-area { 
             box-shadow: none !important; 
-            border: 1px solid #eee !important;
+            border: none !important;
             margin: 0 !important;
-            padding: 20px !important;
+            padding: 0 !important;
+            width: 100% !important;
           }
-          .card-premium { border: none !important; }
+          .card-premium { border: 1px solid #eee !important; box-shadow: none !important; }
           .page-break { page-break-after: always; }
         }
         

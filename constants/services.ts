@@ -15,7 +15,7 @@ export const SERVICES = [
         title: 'Executive Coaching',
         description: 'การโค้ชผู้บริหารเพื่อดึงศักยภาพและสร้างภาวะผู้นำที่เหนือระดับ',
         icon: React.createElement(Users, { className: "w-8 h-8" }),
-        image: 'https://images.unsplash.com/photo-1517048676732-d676936d9b2c?auto=format&fit=crop&q=80'
+        image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80'
     },
     {
         id: 'od-consulting',

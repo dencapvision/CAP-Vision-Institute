@@ -15,7 +15,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'ศิลปะการอำนวยความสะดวก (Facilitation Skills) สำหรับผู้นำยุคใหม่',
     excerpt: 'เจาะลึกบทบาทผู้นำในฐานะ Facilitator เพื่อสร้างการมีส่วนร่วมและผลลัพธ์ที่ยั่งยืน',
     date: '2026-01-22',
-    thumbnail: 'https://images.unsplash.com/photo-1517048676732-d676936d9b2c?auto=format&fit=crop&q=80',
+    thumbnail: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80',
   },
   {
     id: 'training-management-guide',

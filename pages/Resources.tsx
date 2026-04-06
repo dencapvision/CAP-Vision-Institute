@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
 
-const FEATURED_IDS = ['design-thinking-hr', 'feedback-culture', 'psychological-safety', 'intro-to-facilitation'];
+const FEATURED_IDS = ['flow-state-learning', 'intro-to-facilitation', 'hrd-future-skills-2025', 'building-growth-mindset-culture'];
 
 const CATEGORIES = [
   {
@@ -25,7 +25,7 @@ const CATEGORIES = [
     label: 'Leadership',
     sublabel: 'ผู้นำทีม',
     icon: Target,
-    ids: ['growth-mindset-leadership', 'feedback-culture', 'design-thinking-hr', 'intro-to-facilitation', 'training-management-guide'],
+    ids: ['hrd-future-skills-2025', 'coaching-skills-for-managers', 'training-management-guide', 'intro-to-facilitation', 'effective-leadership-communication'],
     textColor: 'text-blue-600',
     lightColor: 'bg-blue-50'
   },
@@ -33,23 +33,23 @@ const CATEGORIES = [
     label: 'Team & Culture',
     sublabel: 'วัฒนธรรม',
     icon: Users,
-    ids: ['psychological-safety', 'effective-1on1', 'facilitation-skills'],
+    ids: ['employee-engagement-strategies', 'agile-hr-transformation', 'mental-health-in-workplace', 'building-growth-mindset-culture'],
     textColor: 'text-green-600',
     lightColor: 'bg-green-50'
   },
   {
-    label: 'Communication',
-    sublabel: 'การสื่อสาร',
+    label: 'Modern HR',
+    sublabel: 'เทคโนโลยี',
     icon: MessageCircle,
-    ids: ['empathy-at-work', 'difficult-conversations', 'intro-to-facilitation'],
+    ids: ['ai-proof-skills-hr-2026', 'data-driven-hr', 'okrs-implementation-guide', 'design-thinking-for-hr'],
     textColor: 'text-purple-600',
     lightColor: 'bg-purple-50'
   },
   {
-    label: 'Personal Growth',
+    label: 'Self-Growth',
     sublabel: 'พัฒนาตนเอง',
     icon: Brain,
-    ids: ['growth-mindset-intro', 'building-growth-mindset-culture', 'flow-state-learning'],
+    ids: ['flow-state-learning', 'building-growth-mindset-culture'],
     textColor: 'text-amber-600',
     lightColor: 'bg-amber-50'
   }

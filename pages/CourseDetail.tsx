@@ -1,12 +1,31 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Users, Calendar, Award, Star, MessageCircle, Phone, ChevronDown, ChevronRight, Plus, Minus, Target, ShieldCheck, Zap } from 'lucide-react';
+import { 
+   ArrowLeft, ArrowRight, CheckCircle2, Clock, Users, Calendar, Award, Star, MessageCircle, 
+   Phone, ChevronDown, ChevronRight, Plus, Minus, Target, ShieldCheck, Zap, Search, Heart, 
+   Layout, Video, Zap as ZapIcon 
+} from 'lucide-react';
 import { fetchCourseBySlug } from '../services/courses';
 import { Course } from '../types';
 import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
 import ShareButtons from '../components/ShareButtons';
+
+const ICON_MAP: Record<string, React.ReactNode> = {
+   'Target': <Target />,
+   'Search': <Search />,
+   'Heart': <Heart />,
+   'Users': <Users />,
+   'Zap': <Zap />,
+   'Layout': <Layout />,
+   'Video': <Video />,
+   'Clock': <Clock />,
+   'Award': <Award />,
+   'CheckCircle2': <CheckCircle2 />,
+   'ShieldCheck': <ShieldCheck />,
+   'MessageCircle': <MessageCircle />
+};
 
 const CourseDetail: React.FC = () => {
    const { id } = useParams(); // URL might be /courses/the-modern-facilitator
@@ -58,11 +77,27 @@ const CourseDetail: React.FC = () => {
       );
    }
 
-   const toggleObjective = (index: number) => {
-      setExpandedObjectives(prev =>
-         prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
-      );
-   };
+    const toggleObjective = (index: number) => {
+       setExpandedObjectives(prev =>
+          prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
+       );
+    };
+
+    const renderIcon = (icon: any, className: string = "w-6 h-6") => {
+       if (!icon) return <Target className={className} />;
+       
+       // If it's already a React element (from constants.tsx)
+       if (React.isValidElement(icon)) {
+          return React.cloneElement(icon as React.ReactElement<any>, { className });
+       }
+
+       // If it's a string (from database)
+       if (typeof icon === 'string' && ICON_MAP[icon]) {
+          return React.cloneElement(ICON_MAP[icon] as React.ReactElement<any>, { className });
+       }
+
+       return <Target className={className} />;
+    };
 
    return (
       <div className="bg-gray-50 min-h-screen">
@@ -177,7 +212,7 @@ const CourseDetail: React.FC = () => {
                               return (
                                  <div key={idx} className="bg-gray-50 p-8 rounded-[2rem] text-center group hover:bg-[#0f3460] transition-all">
                                     <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mx-auto mb-4 text-[#c5a059] shadow-sm group-hover:bg-[#c5a059] group-hover:text-white transition-all">
-                                       {isObj && item.icon ? React.cloneElement(item.icon as any, { className: "w-6 h-6" }) : <Target className="w-6 h-6" />}
+                                       {renderIcon(isObj ? item.icon : null)}
                                     </div>
                                     {isObj && item.stat && <span className="text-3xl font-black text-[#0f3460] group-hover:text-white block mb-1 nav-font">{item.stat}</span>}
                                     <h4 className="text-sm font-bold text-[#c5a059] mb-3 nav-font uppercase tracking-widest">{isObj ? item.label : `เหตุผลที่ ${idx + 1}`}</h4>
@@ -202,7 +237,7 @@ const CourseDetail: React.FC = () => {
                               return (
                                  <div key={idx} className="bg-white/5 border border-white/10 p-8 rounded-[2rem] hover:bg-white/10 transition-all">
                                     <div className="w-10 h-10 bg-[#c5a059] rounded-xl flex items-center justify-center mb-6 shadow-lg">
-                                       {isObj && item.icon ? React.cloneElement(item.icon as any, { className: "w-5 h-5 text-white" }) : <Zap className="w-5 h-5 text-white" />}
+                                       {renderIcon(isObj ? item.icon : null, "w-5 h-5 text-white")}
                                     </div>
                                     <h4 className="text-lg font-bold text-[#c5a059] mb-3 nav-font">{isObj ? item.title : `ขั้นตอนที่ ${idx + 1}`}</h4>
                                     <p className="text-blue-100/70 text-sm leading-relaxed">{isObj ? item.desc : item}</p>
@@ -213,20 +248,28 @@ const CourseDetail: React.FC = () => {
                      </div>
                   )}
 
-                  {/* What Section */}
-                  {course.what_section && course.what_section.length > 0 && (
-                     <div className="bg-white p-12 rounded-[3rem] shadow-sm border border-gray-100">
-                        <h2 className="text-3xl font-black text-[#0f3460] mb-12 nav-font">What? สิ่งที่ผู้เข้าอบรมจะได้รับ</h2>
-                        <div className="space-y-4">
-                           {course.what_section.map((item: any, idx: number) => (
-                              <div key={idx} className="flex gap-4 items-center p-5 bg-gray-50 rounded-2xl border border-gray-100 hover:border-[#c5a059] transition-all">
-                                 <ShieldCheck className="w-6 h-6 text-green-500 flex-shrink-0" />
-                                 <span className="text-lg font-bold text-[#0f3460] nav-font">{item}</span>
-                              </div>
-                           ))}
-                        </div>
-                     </div>
-                  )}
+                   {/* What Section */}
+                   {course.what_section && course.what_section.length > 0 && (
+                      <div className="bg-white p-12 rounded-[3rem] shadow-sm border border-gray-100">
+                         <h2 className="text-3xl font-black text-[#0f3460] mb-12 nav-font">What? สิ่งที่ผู้เข้าอบรมจะได้รับ</h2>
+                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {course.what_section.map((item: any, idx: number) => {
+                               const isObj = typeof item === 'object' && item !== null;
+                               return (
+                                  <div key={idx} className="flex gap-4 items-center p-6 bg-gray-50 rounded-3xl border border-gray-100 hover:border-[#c5a059] transition-all group">
+                                     <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-green-500 shadow-sm group-hover:bg-[#c5a059] group-hover:text-white transition-all">
+                                        {renderIcon(isObj ? item.icon : null, "w-5 h-5")}
+                                     </div>
+                                     <div>
+                                        <h4 className="font-bold text-[#0f3460] nav-font">{isObj ? item.title : item}</h4>
+                                        {isObj && item.desc && <p className="text-sm text-gray-500 mt-1">{item.desc}</p>}
+                                     </div>
+                                  </div>
+                               );
+                            })}
+                         </div>
+                      </div>
+                   )}
 
                   {/* Original Description & Objectives Accordion */}
                   <div className="bg-white p-12 rounded-[3rem] shadow-sm border border-gray-100">
@@ -240,8 +283,9 @@ const CourseDetail: React.FC = () => {
                         </h3>
 
                         <div className="space-y-4">
-                           {course.objectives?.map((obj, i) => {
+                           {course.objectives?.map((obj: any, i: number) => {
                               const isExpanded = expandedObjectives.includes(i);
+                              const isObj = typeof obj === 'object' && obj !== null;
                               return (
                                  <div
                                     key={i}
@@ -258,11 +302,11 @@ const CourseDetail: React.FC = () => {
                                        <div className="flex items-center gap-5">
                                           <div className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-colors ${isExpanded ? 'bg-[#c5a059] text-white' : 'bg-white text-[#c5a059] border border-gray-100'
                                              }`}>
-                                             <CheckCircle2 className="w-5 h-5" />
+                                             {renderIcon(isObj ? obj.icon : 'CheckCircle2', "w-5 h-5")}
                                           </div>
                                           <span className={`text-lg font-bold nav-font transition-colors ${isExpanded ? 'text-[#0f3460]' : 'text-gray-700'
                                              }`}>
-                                             {obj}
+                                             {isObj ? obj.title : obj}
                                           </span>
                                        </div>
                                        <div className={`flex-shrink-0 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>

@@ -91,67 +91,8 @@ BEGIN
         objectives = EXCLUDED.objectives,
         updated_at = now();
 
-    -- 2. Insert 'AI Mastery for Professionals'
-    INSERT INTO public.courses (
-        slug, title, category, description, image, alt_text, long_description,
-        duration, audience, why_section, how_section, what_section, objectives,
-        instructor_id, is_published
-    ) VALUES (
-        'ai-mastery-for-professionals',
-        'AI Mastery for Professionals: Productivity with Generative AI',
-        'Work Skills',
-        'ยกระดับการทำงานสู่ยุค AI: Mastering ChatGPT, Midjourney, and AI Automation for Work',
-        'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80',
-        'AI Mastery Hero Image',
-        $ldesc$### "AI จะไม่มาแย่งงานคุณ แต่คนที่ใช้ AI เป็นจะมาแทนที่คุณ"
-ในโลกการทำงานยุคใหม่ การทำงานหนัก (Work Hard) อาจไม่เพียงพอเท่ากับการทำงานอย่างชาญฉลาด (Work Smart) ด้วยเทคโนโลยี AI หลักสูตรนี้จะพาคุณไปทำความรู้จักกับจักรวาลของ Generative AI ที่สามารถช่วยคุณประหยัดเวลาได้มากกว่า 40% ในแต่ละวัน
 
----
-
-#### 🔶 คุณจะได้เรียนรู้อะไร?
-ไม่ใช่แค่การเล่นสนุก แต่เราเน้น "Prompt Engineering" เชิงลึกสำหรับการทำงานจริง: ตั้งแต่การเขียนบทความ, การสร้างรูปภาพพรีเซนต์ระดับเทพ, ไปจนถึงการวิเคราะห์ข้อมูลมหาศาลภายในเสี้ยววินาที
-
----
-
-#### 🔶 เหมาะกับใคร?
-- นักการตลาดที่ต้องการไอเดียคอนเทนต์ไม่จำกัด
-- ผู้จัดการที่ต้องการลดงานเอกสารและสรุปรายงาน
-- คนทำงานกราฟิกและดีไซน์ที่ต้องการความเร็วสูง$ldesc$,
-        '1 วัน (6 ชม.)',
-        'Business Owners, Marketers, Creative Teams, Managers',
-        $json$[
-            {"title": "Overworked", "desc": "งานล้นมือ ทำงานรูปแบบเดิมๆ ที่ใช้เวลานาน", "icon": "Clock"},
-            {"title": "Lack of Content", "desc": "คิดไอเดียไม่ออก หรือเขียนสคริปต์ได้ช้า", "icon": "Sparkles"},
-            {"title": "Fear of AI", "desc": "กลัวตกยุคและไม่รู้จะเริ่มใช้ AI อย่างไร", "icon": "ShieldExclamation"}
-        ]$json$::jsonb,
-        $json$[
-            {"title": "Prompt Engineering", "desc": "เทคนิคการสั่งงาน AI ให้ได้ผลลัพธ์ดั่งใจ", "icon": "CommandLine"},
-            {"title": "AI Workflow Design", "desc": "ออกแบบลำดับงานที่ใช้ AI ช่วยอัตโนมัติ", "icon": "ChevronDoubleRight"},
-            {"title": "Creative Co-Pilot", "desc": "ใช้ AI เป็นคู่คิดในการสร้างสรรค์ไอเดีย", "icon": "LightBulb"}
-        ]$json$::jsonb,
-        $json$[
-            {"title": "Mastering ChatGPT", "desc": "การใช้งาน ChatGPT ขั้นสูงเพื่อธุรกิจ", "icon": "ChatBubbleLeftRight"},
-            {"title": "AI Visuals", "desc": "สร้างภาพพรีเมี่ยมด้วย Midjourney / Leonardo", "icon": "Photo"},
-            {"title": "Automation Tools", "desc": "ใช้ AI ในการสรุปการประชุมและวิเคราะห์ข้อมูล", "icon": "DocumentMagnifyingGlass"}
-        ]$json$::jsonb,
-        $json$[
-            {"title": "ประหยัดเวลา 50%+", "desc": "ลดเวลาทำงานรูทีนและเพิ่ม Productivity", "icon": "RocketLaunch"},
-            {"title": "เทคนิคการเขียนโปรมป์", "desc": "สั่งงาน AI ได้อย่างแม่นยำระดับมือสมัครเล่น", "icon": "HandRaised"},
-            {"title": "ความได้เปรียบทางธุรกิจ", "desc": "ก้าวนำคู่แข่งด้วยเทคโนโลยียุคใหม่", "icon": "PresentationChartBar"}
-        ]$json$::jsonb,
-        agus_instructor_id,
-        true
-    ) ON CONFLICT (slug) DO UPDATE SET
-        title = EXCLUDED.title,
-        description = EXCLUDED.description,
-        long_description = EXCLUDED.long_description,
-        why_section = EXCLUDED.why_section,
-        how_section = EXCLUDED.how_section,
-        what_section = EXCLUDED.what_section,
-        objectives = EXCLUDED.objectives,
-        updated_at = now();
-
-    -- 3. Insert 'Leadership Mindset Reset'
+    -- 2. Insert 'Leadership Mindset Reset'
     INSERT INTO public.courses (
         slug, title, category, description, image, alt_text, long_description,
         duration, audience, why_section, how_section, what_section, objectives,

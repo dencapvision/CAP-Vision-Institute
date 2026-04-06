@@ -663,6 +663,8 @@ const SpeakerDetail: React.FC = () => {
       if (!id) return;
       try {
         setLoading(true);
+        setSpeaker(null);
+        setTaughtCourses([]);
         const fetchedSpeaker = await fetchInstructorBySlug(id);
         if (fetchedSpeaker) {
           setSpeaker(fetchedSpeaker);

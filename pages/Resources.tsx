@@ -10,50 +10,49 @@ import { Link } from 'react-router-dom';
 import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
 
-const FEATURED_IDS = [
-  'ai-proof-skills-hr-2026',
-  'effective-leadership-communication',
-  'coaching-skills-for-managers',
-  'building-growth-mindset-culture',
-];
+const FEATURED_IDS = ['design-thinking-hr', 'feedback-culture', 'psychological-safety', 'intro-to-facilitation'];
 
 const CATEGORIES = [
   {
+    label: 'ทั้งหมด',
+    sublabel: 'ทุกหัวข้อ',
+    icon: Sparkles,
+    ids: HRD_ARTICLES.map(a => a.id),
+    textColor: 'text-gray-600',
+    lightColor: 'bg-gray-100'
+  },
+  {
+    label: 'Leadership',
+    sublabel: 'ผู้นำทีม',
     icon: Target,
-    label: 'ภาวะผู้นำ',
-    sublabel: 'Leadership',
-    color: 'bg-indigo-500',
-    lightColor: 'bg-indigo-50',
-    textColor: 'text-indigo-600',
-    ids: ['coaching-skills-for-managers', 'hrd-future-skills-2025', 'okrs-implementation-guide', 'agile-hr-transformation'],
+    ids: ['growth-mindset-leadership', 'feedback-culture', 'design-thinking-hr', 'intro-to-facilitation', 'training-management-guide'],
+    textColor: 'text-blue-600',
+    lightColor: 'bg-blue-50'
   },
   {
-    icon: MessageCircle,
-    label: 'การสื่อสาร',
-    sublabel: 'Communication',
-    color: 'bg-sky-500',
-    lightColor: 'bg-sky-50',
-    textColor: 'text-sky-600',
-    ids: ['effective-leadership-communication', 'mental-health-in-workplace', 'design-thinking-for-hr'],
-  },
-  {
+    label: 'Team & Culture',
+    sublabel: 'วัฒนธรรม',
     icon: Users,
-    label: 'ทีมและองค์กร',
-    sublabel: 'Team & Culture',
-    color: 'bg-emerald-500',
-    lightColor: 'bg-emerald-50',
-    textColor: 'text-emerald-600',
-    ids: ['employee-engagement-strategies', 'building-growth-mindset-culture', 'agile-hr-transformation'],
+    ids: ['psychological-safety', 'effective-1on1', 'facilitation-skills'],
+    textColor: 'text-green-600',
+    lightColor: 'bg-green-50'
   },
   {
-    icon: Brain,
-    label: 'พัฒนาตนเอง',
-    sublabel: 'Personal Growth',
-    color: 'bg-orange-500',
-    lightColor: 'bg-orange-50',
-    textColor: 'text-orange-600',
-    ids: ['ai-proof-skills-hr-2026', 'data-driven-hr', 'mental-health-in-workplace'],
+    label: 'Communication',
+    sublabel: 'การสื่อสาร',
+    icon: MessageCircle,
+    ids: ['empathy-at-work', 'difficult-conversations', 'intro-to-facilitation'],
+    textColor: 'text-purple-600',
+    lightColor: 'bg-purple-50'
   },
+  {
+    label: 'Personal Growth',
+    sublabel: 'พัฒนาตนเอง',
+    icon: Brain,
+    ids: ['growth-mindset-intro', 'building-growth-mindset-culture', 'flow-state-learning'],
+    textColor: 'text-amber-600',
+    lightColor: 'bg-amber-50'
+  }
 ];
 
 const DEEP_KNOWLEDGE = [
@@ -115,7 +114,7 @@ const Resources: React.FC = () => {
           <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-5 py-2 rounded-full mb-8">
             <Sparkles className="w-4 h-4 text-[#c5a059] animate-pulse" />
             <span className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.3em] nav-font">
-              Learning Hub · 11 บทความ · เครื่องมือฟรี
+              Learning Hub · {HRD_ARTICLES.length} บทความ · เครื่องมือฟรี
             </span>
           </div>
 
@@ -224,7 +223,7 @@ const Resources: React.FC = () => {
       </section>
 
       {/* ─── CONTENT CATEGORIES ───────────────────────────────── */}
-      <section className="py-24 bg-white">
+      <section id="content-categories" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <p className="text-[#c5a059] font-black uppercase tracking-[0.3em] text-[10px] nav-font mb-3">
@@ -296,12 +295,15 @@ const Resources: React.FC = () => {
           </div>
 
           <div className="text-center mt-10">
-            <Link
-              to="/resources"
+            <button
+              onClick={() => {
+                setActiveCategory(0);
+                document.getElementById('content-categories')?.scrollIntoView({ behavior: 'smooth' });
+              }}
               className="inline-flex items-center gap-2 text-[#0f3460] font-black text-sm nav-font border-2 border-[#0f3460]/20 px-6 py-3 rounded-2xl hover:border-[#c5a059] hover:text-[#c5a059] transition-all"
             >
               ดูบทความทั้งหมด <ChevronRight className="w-4 h-4" />
-            </Link>
+            </button>
           </div>
         </div>
       </section>

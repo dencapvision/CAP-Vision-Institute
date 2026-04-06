@@ -73,4 +73,6 @@ export interface Resource {
   excerpt: string;
   date: string;
   thumbnail: string;
+  category?: string;
+  author?: string;
 }

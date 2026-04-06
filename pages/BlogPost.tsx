@@ -71,8 +71,13 @@ const BlogPost: React.FC = () => {
 
    useEffect(() => {
       setLoading(true);
+      setPost(null); // Clear previous post explicitly to avoid stale data
+      
       fetch(`/content/blog/posts/${id}.json`)
-         .then(res => res.json())
+         .then(res => {
+            if (!res.ok) throw new Error('File not found');
+            return res.json();
+         })
          .then(data => {
             setPost(data);
             setLoading(false);
@@ -81,7 +86,8 @@ const BlogPost: React.FC = () => {
             console.error('Error loading post:', err);
             setLoading(false);
          });
-      window.scrollTo(0, 0);
+         
+      window.scrollTo({ top: 0, behavior: 'smooth' });
    }, [id]);
 
    const renderSection = (section: PostContentSection, index: number) => {
@@ -212,7 +218,7 @@ const BlogPost: React.FC = () => {
                        ))}
                     </div>
 
-                    <h1 className="text-4xl md:text-7xl font-black text-[#0f3460] nav-font leading-[0.9] tracking-tighter uppercase">
+                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-[#0f3460] nav-font leading-[1.1] tracking-tighter uppercase">
                        {post.title}
                     </h1>
 
@@ -288,7 +294,10 @@ const BlogPost: React.FC = () => {
                           Recommended Insights
                        </h3>
                        <div className="space-y-12">
-                          {STATIC_ARTICLES.slice(0, 3).map((a: any) => (
+                          {STATIC_ARTICLES
+                             .filter(a => a.id !== id)
+                             .slice(0, 3)
+                             .map((a: any) => (
                             <Link key={a.id} to={`/resources/${a.id}`} className="group block">
                                <div className="flex gap-6 items-center">
                                   <div className="w-24 h-24 rounded-[1.8rem] overflow-hidden flex-shrink-0 shadow-sm">

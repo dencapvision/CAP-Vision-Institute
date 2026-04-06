@@ -10,6 +10,18 @@ const Speakers: React.FC = () => {
   const [speakers, setSpeakers] = useState<Instructor[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Fallback data for Den Master Fa in case Database is empty or failing
+  const DEN_FALLBACK: Instructor = {
+    id: 'den-masterfa-fallback',
+    slug: 'den-masterfa',
+    name: 'ครูเด่น มาสเตอร์ฟา',
+    title: 'Master Facilitator & Director',
+    bio: 'ผู้อำนวยการสถาบันผู้เชี่ยวชาญด้าน Transformative Learning ประสบการณ์ 18+ ปี 1,000+ เวที',
+    image: '/images/denmasterfa.jpg',
+    socials: { line: CONTACT_INFO.line }
+  };
+
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -91,71 +103,75 @@ const Speakers: React.FC = () => {
             </div>
           ) : (
             <>
-              {speakers.filter(s => s.slug === 'den-masterfa').map(speaker => (
-            <div key={speaker.id} className="mb-12">
-              <div className="bg-[#0a1628] rounded-[2.5rem] overflow-hidden shadow-2xl">
-                <div className="grid grid-cols-1 lg:grid-cols-2">
-                  {/* Image */}
-                  <div className="relative h-[400px] lg:h-auto overflow-hidden">
-                    <img
-                      src={speaker.image}
-                      alt={speaker.name}
-                      className="w-full h-full object-cover object-top"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0a1628]/80 lg:block hidden" />
-                    <div className="absolute top-6 left-6 bg-[#c5a059] text-white text-xs font-black px-4 py-2 rounded-full uppercase tracking-widest">
-                      🌟 Featured Speaker
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-10 lg:p-12 flex flex-col justify-center">
-                    {/* Badge */}
-                    <p className="text-[#c5a059] font-bold uppercase tracking-[0.25em] text-xs mb-4">
-                      Master Facilitator & Director
-                    </p>
-
-                    <h2 className="text-3xl lg:text-4xl font-black text-white mb-3" style={{ letterSpacing: '-0.02em' }}>
-                      {speaker.name}
-                    </h2>
-                    <p className="text-white/60 mb-6 leading-relaxed">{speaker.bio}</p>
-
-                    {/* Mini stats */}
-                    <div className="flex flex-wrap gap-4 mb-8">
-                      {[
-                        { v: '18+', l: 'ปี' },
-                        { v: '1,000+', l: 'เวที' },
-                        { v: '100+', l: 'องค์กร' },
-                      ].map((s, i) => (
-                        <div key={i} className="bg-white/10 border border-white/10 rounded-xl px-4 py-2 text-center">
-                          <p className="text-[#c5a059] font-black text-lg">{s.v}</p>
-                          <p className="text-white/50 text-xs">{s.l}</p>
+              {/* Featured Speaker (With Fallback) */}
+              {(() => {
+                const den = speakers.find(s => s.slug === 'den-masterfa') || DEN_FALLBACK;
+                return (
+                  <div key={den.id} className="mb-12">
+                    <div className="bg-[#0a1628] rounded-[2.5rem] overflow-hidden shadow-2xl">
+                      <div className="grid grid-cols-1 lg:grid-cols-2">
+                        {/* Image */}
+                        <div className="relative h-[400px] lg:h-auto overflow-hidden">
+                          <img
+                            src={den.image || '/images/denmasterfa.jpg'}
+                            alt={den.name}
+                            className="w-full h-full object-cover object-top"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0a1628]/80 lg:block hidden" />
+                          <div className="absolute top-6 left-6 bg-[#c5a059] text-white text-xs font-black px-4 py-2 rounded-full uppercase tracking-widest">
+                            🌟 Featured Speaker
+                          </div>
                         </div>
-                      ))}
-                    </div>
 
-                    <div className="flex flex-wrap gap-4">
-                      <Link
-                        to={`/speakers/${speaker.slug}`}
-                        className="group btn-premium inline-flex items-center gap-2 bg-[#c5a059] text-white px-7 py-4 rounded-2xl font-black hover:bg-white hover:text-[#0f3460] transition-all"
-                      >
-                        ดูโปรไฟล์เต็ม
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                      <a
-                        href={CONTACT_INFO.lineUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-7 py-4 rounded-2xl font-bold hover:bg-white/20 transition-all"
-                      >
-                        <MessageCircle className="w-4 h-4" /> จองคิว
-                      </a>
+                        {/* Content */}
+                        <div className="p-10 lg:p-12 flex flex-col justify-center">
+                          {/* Badge */}
+                          <p className="text-[#c5a059] font-bold uppercase tracking-[0.25em] text-xs mb-4">
+                            {den.title || 'Master Facilitator & Director'}
+                          </p>
+
+                          <h2 className="text-3xl lg:text-4xl font-black text-white mb-3" style={{ letterSpacing: '-0.02em' }}>
+                            {den.name}
+                          </h2>
+                          <p className="text-white/60 mb-6 leading-relaxed">{den.bio}</p>
+
+                          {/* Mini stats */}
+                          <div className="flex flex-wrap gap-4 mb-8">
+                            {[
+                              { v: '18+', l: 'ปี' },
+                              { v: '1,000+', l: 'เวที' },
+                              { v: '100+', l: 'องค์กร' },
+                            ].map((s, i) => (
+                              <div key={i} className="bg-white/10 border border-white/10 rounded-xl px-4 py-2 text-center">
+                                <p className="text-[#c5a059] font-black text-lg">{s.v}</p>
+                                <p className="text-white/50 text-xs">{s.l}</p>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="flex flex-wrap gap-4">
+                            <Link
+                              to={`/speakers/${den.slug}`}
+                              className="group btn-premium inline-flex items-center gap-2 bg-[#c5a059] text-white px-7 py-4 rounded-2xl font-black hover:bg-white hover:text-[#0f3460] transition-all"
+                            >
+                              ดูโปรไฟล์เต็ม
+                              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                            <a
+                              href={CONTACT_INFO.lineUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-7 py-4 rounded-2xl font-bold hover:bg-white/20 transition-all"
+                            >
+                              <MessageCircle className="w-4 h-4" /> จองคิว
+                            </a>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          ))}
+                );
+              })()}
 
               {/* Other speakers grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

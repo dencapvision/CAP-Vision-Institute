@@ -2,6 +2,30 @@ import { Resource } from '../types';
 
 export const HRD_ARTICLES: Resource[] = [
   {
+    id: 'flow-state-learning',
+    type: 'blog',
+    title: 'Flow State: สภาวะลื่นไหล กุญแจสำคัญสู่การเรียนรู้ระดับสูง (Deep Learning)',
+    excerpt: 'ทำความรู้จัก Flow State และเทคนิคการออกแบบการเรียนรู้เพื่อเปลี่ยนบรรยากาศในองค์กรให้มีชีวิตชีวา',
+    date: '2026-01-23',
+    thumbnail: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80',
+  },
+  {
+    id: 'intro-to-facilitation',
+    type: 'blog',
+    title: 'ศิลปะการอำนวยความสะดวก (Facilitation Skills) สำหรับผู้นำยุคใหม่',
+    excerpt: 'เจาะลึกบทบาทผู้นำในฐานะ Facilitator เพื่อสร้างการมีส่วนร่วมและผลลัพธ์ที่ยั่งยืน',
+    date: '2026-01-22',
+    thumbnail: 'https://images.unsplash.com/photo-1517048676732-d676936d9b2c?auto=format&fit=crop&q=80',
+  },
+  {
+    id: 'training-management-guide',
+    type: 'blog',
+    title: 'Training Management 101: 4 ขั้นตอนปั้นแผนพัฒนาคนให้เห็นผลจริง (T1-T4 Cycle)',
+    excerpt: 'คู่มือการวางแผนฝึกอบรมอย่างเป็นระบบด้วย T1-T4 Cycle เพื่อผลลัพธ์ที่วัดผลได้จริง',
+    date: '2026-01-20',
+    thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+  },
+  {
     id: 'ai-proof-skills-hr-2026',
     type: 'blog',
     title: 'ทักษะที่ AI แทนที่ไม่ได้ ในงานบริหารคนยุค 2026',

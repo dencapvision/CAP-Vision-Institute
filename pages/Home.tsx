@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Users, GraduationCap, Award, Sparkles, CheckCircle2, ChevronRight, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { BRAND_INFO, CONTACT_INFO } from '../constants/brand';
+import { HRD_ARTICLES } from '../constants/articles';
 import { fetchCourses } from '../services/courses';
 import type { Course } from '../types';
 import Logo from '../components/Logo';
 import ClientsSection from '../components/ClientsSection';
 import SEO from '../components/SEO';
+import { Calendar, User } from 'lucide-react';
+
 
 const Home: React.FC = () => {
   const [featuredCourses, setFeaturedCourses] = useState<Course[]>([]);
@@ -315,7 +318,75 @@ const Home: React.FC = () => {
 
       <ClientsSection />
 
+      {/* Insights & Articles Section */}
+      <section className="py-24 md:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 gap-6">
+            <div className="max-w-2xl">
+              <span className="inline-block text-[#c5a059] font-black text-xs uppercase tracking-[0.5em] mb-4 nav-font">Knowledge Hub</span>
+              <h2 className="text-3xl md:text-5xl font-black text-[#0f3460] nav-font">Insights & Articles</h2>
+            </div>
+            <Link 
+              to="/resources" 
+              className="group flex items-center gap-2 text-[#0f3460] font-bold hover:text-[#c5a059] transition-colors nav-font text-lg"
+            >
+              ดูบทความทั้งหมด
+              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {HRD_ARTICLES.slice(0, 3).map((article) => (
+              <motion.div
+                key={article.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="group bg-gray-50 rounded-[2rem] overflow-hidden hover:shadow-2xl transition-all duration-500 flex flex-col h-full"
+              >
+                <Link to={`/resources/${article.id}`} className="relative h-64 overflow-hidden block">
+                  <img
+                    src={article.thumbnail}
+                    alt={article.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#0f3460] px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest z-10 shadow-sm">
+                    {article.category}
+                  </div>
+                </Link>
+                <div className="p-8 flex flex-col flex-grow">
+                  <div className="flex items-center gap-4 text-gray-400 text-xs mb-4 font-bold uppercase tracking-wider">
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5" />
+                      {article.date}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <User className="w-3.5 h-3.5" />
+                      {article.author}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-black text-[#0f3460] mb-4 group-hover:text-[#c5a059] transition-colors line-clamp-2 leading-tight">
+                    <Link to={`/resources/${article.id}`}>{article.title}</Link>
+                  </h3>
+                  <p className="text-gray-500 text-sm line-clamp-3 mb-8 flex-grow">
+                    {article.excerpt}
+                  </p>
+                  <Link
+                    to={`/resources/${article.id}`}
+                    className="inline-flex items-center gap-2 text-[#0f3460] font-black text-sm uppercase tracking-wider group/link hover:text-[#c5a059] transition-colors"
+                  >
+                    อ่านต่อ
+                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
+
       <section className="py-24 md:py-40 bg-gradient-to-br from-[#0f3460] to-[#0a2545] text-white relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-5 pointer-events-none">
           <Logo className="w-full h-full p-20" />

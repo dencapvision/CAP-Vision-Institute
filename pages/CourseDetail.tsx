@@ -337,7 +337,7 @@ const CourseDetail: React.FC = () => {
                   <div className="bg-white p-12 rounded-[3rem] shadow-sm border border-gray-100 relative overflow-hidden">
                       <div className="absolute top-0 right-0 w-64 h-64 bg-gray-50/50 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
                       <h2 className="text-3xl font-black text-[#0f3460] mb-8 font-heading-premium relative z-10 font-gold-gradient">
-                         ข้อมูลหลักสูตร (Signature Hybrid Style)
+                         รายละเอียดหลักสูตร
                       </h2>
                       
                       <div className="relative z-10">

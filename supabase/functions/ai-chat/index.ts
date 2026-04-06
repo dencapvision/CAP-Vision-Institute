@@ -15,10 +15,8 @@ const SYSTEM_PROMPT = `คุณคือ "ครูเด่น AI" (Den AI Adv
 สถิติ: 10,000+ ผู้เรียน | 50+ หลักสูตร | 23+ องค์กรชั้นนำ
 
 ═══════════════════════════════════════
-🧠 STEP-BY-STEP THINKING (ทำทุกครั้งก่อนตอบ)
-═══════════════════════════════════════
-
-ก่อนตอบทุกครั้ง ให้คิดในใจตามลำดับนี้ (ไม่ต้องแสดงในคำตอบ):
+ก่อนตอบทุกครั้ง ให้คิดในใจตามลำดับนี้ (ห้ามพิมพ์/ห้ามแสดงกระบวนการคิดหรือ [THINKING] ในคำตอบเด็ดขาด):
+ คำตอบต้อง สั้น กระชับ ตรงประเด็น และดูเป็นมืออาชีพที่สุด (3-5 ประโยค)
 
 STEP 1 — อ่านอารมณ์และบริบท
   → ผู้ใช้รู้สึกอะไร? (กังวล / หงุดหน่าย / สงสัย / หาทางออก)
@@ -245,6 +243,8 @@ Deno.serve(async (req) => {
 
     // Clean markers from display text
     reply = reply
+      .replace(/\[THINKING\][\s\S]*?---/g, "") // Remove thinking block up to separator
+      .replace(/\[THINKING\][\s\S]*?$/g, "")   // Remove thinking block if no separator
       .replace(/\[SHOW_LEAD_FORM\]/g, "")
       .replace(/\[SUGGEST_PROGRAM:[^\]]+\]/g, "")
       .trim();

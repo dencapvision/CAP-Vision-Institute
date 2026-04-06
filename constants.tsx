@@ -209,6 +209,114 @@ export const COURSES: CourseDetailInfo[] = [
       bio: 'นักออกแบบกระบวนการเรียนรู้ (Dynamic Learning Designer)',
       image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
     }
+  },
+  {
+    id: 'leadership-mindset-reset',
+    title: 'Leadership Mindset Reset: Transforming from Manager to Leader',
+    category: 'Leader Skills',
+    description: 'หลักสูตรเร่งด่วนเพื่อปรับจูนหัวใจและวิธีคิดของผู้นำยุคใหม่ เปลี่ยนจาก "ผู้สั่งการ" เป็น "ผู้สร้างแรงบันดาลใจ"',
+    image: 'https://images.unsplash.com/photo-1507679799987-c7377bc586df?auto=format&fit=crop&q=80',
+    longDescription: 'หลักสูตรที่มุ่งเน้นการปรับจูนหัวใจและวิธีคิดของผู้นำยุคใหม่ เพื่อก้าวข้ามขีดจำกัดเดิมๆ และสร้างวัฒนธรรมการทำงานที่มีประสิทธิภาพสูง ผ่านกระบวนการ Transformative Learning',
+    duration: '1 วัน (6 ชม.)',
+    audience: 'ผู้จัดการ, หัวหน้างาน, ผู้นำยุคใหม่, HRD Professionals',
+    why: [
+      { label: 'Inside-Out Growth', stat: '100%', desc: 'เน้นการพัฒนาจากทัศนคติภายในสู่การกระทำภายนอก', icon: <Heart /> },
+      { label: 'Team Engagement', stat: '90%', desc: 'สร้างความผูกพันและแรงจูงใจให้ทีมงาน', icon: <Users /> }
+    ],
+    how: [
+      { title: 'Reflective Dialogue', desc: 'กระบวนการสนทนาเพื่อสะท้อนคิดและถอดบทเรียน', icon: <MessageCircle /> },
+      { title: 'CAP Framework', desc: 'ใช้โมเดลการเรียนรู้ที่ผสมผสานความลึกซึ้งและการใช้งานจริง', icon: <Cpu /> }
+    ],
+    what: [
+      'Leadership Mindset Shifting',
+      'The Art of Deep Listening',
+      'Psychological Safety in Teams',
+      'High Impact Coaching for Leaders'
+    ],
+    objectives: [
+      'ก้าวข้าม Fixed Mindset เพื่อเปิดรับความเป็นไปได้ใหม่ๆ',
+      'สื่อสารเพื่อสร้างความไว้วางใจและแรงภาพลักษณ์ผู้นำ',
+      'ใช้กระบวนการ Facilitation ในการนำประชุมและแก้โจทย์ทีม',
+      'สร้างวัฒนธรรมการเรียนรู้ให้เกิดขึ้นในหน่วยงาน'
+    ],
+    instructor: {
+      id: 'den-master-fa',
+      name: 'ครูเด่น มาสเตอร์ฟา',
+      bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning',
+      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
+    }
+  },
+  {
+    id: 'conflict-to-collaboration',
+    title: 'Conflict to Collaboration: The Art of Generative Teams',
+    category: 'People Skills',
+    description: 'เปลี่ยนความขัดแย้งเป็นพลังสร้างสรรค์: ศิลปะการสร้างทีมที่มีประสิทธิภาพสูงด้วยเทคนิค Generative Dialogue และ Trust Architecture',
+    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80',
+    longDescription: 'หลักสูตรนี้จะพาคุณไปเจาะลึกถึงรากเหง้าของความขัดแย้ง และใช้เครื่องมือในการสร้างความเข้าใจแบบ Inside-Out เพื่อเปลี่ยนทีมจาก Silo ให้เป็น Synergy',
+    duration: '1 วัน (6 ชม.)',
+    audience: 'ทีมบริหาร, หัวหน้างาน, พนักงานระดับปฏิบัติการ, Cross-functional Teams',
+    why: [
+      { label: 'The Root of Friction', stat: '100%', desc: 'วิเคราะห์สาเหตุที่ทำให้เกิดความขัดแย้งในที่ทำงาน', icon: <Search /> },
+      { label: 'Trust Economy', stat: '95%', desc: 'ความไว้วางใจคือต้นทุนสำคัญของผลผลิตในทีม', icon: <Heart /> }
+    ],
+    how: [
+      { title: 'Simulation Games', desc: 'กิจกรรมจำลองสถานการณ์ความขัดแย้งเสมือนจริง', icon: <Layout /> },
+      { title: 'Safe Space Dialogue', desc: 'การสร้างพื้นที่ปลอดภัยในการแลกเปลี่ยนความคิด', icon: <MessageCircle /> }
+    ],
+    what: [
+      'Radical Empathy',
+      'Generative Dialogue',
+      'Conflict Framework',
+      'Action Plan for Synergy'
+    ],
+    objectives: [
+      'สามารถระบุสไตล์การสื่อสารที่แตกต่างกันของคนในทีมได้',
+      'ลดอัตราการเกิดความขัดแย้งที่รุนแรงและส่งผลกระทบต่อผลผลิตงาน',
+      'สร้างข้อตกลงร่วมกัน (Team Agreement) ที่สมาชิกทุกคนยอมรับ',
+      'พัฒนาทักษะการฟังที่ลึกซึ้ง (Empathetic Listening) เพื่อลดการตัดสิน'
+    ],
+    instructor: {
+      id: 'den-master-fa',
+      name: 'ครูเด่น มาสเตอร์ฟา',
+      bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning',
+      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
+    }
+  },
+  {
+    id: 'ai-mastery-professionals',
+    title: 'AI Mastery for Professionals: Productivity Reimagined',
+    category: 'Work Skills',
+    description: 'ปลดล็อกขีดจำกัดการทำงานด้วยพลัง AI: ยกระดับประสิทธิภาพการทำงานในยุคดิจิทัลด้วย AI Tools และ Prompt Engineering',
+    image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80',
+    longDescription: 'ในยุคที่ข้อมูลมีมหาศาล ความรวดเร็วและความแม่นยำคือหัวใจสำคัญของการทำงาน หลักสูตรนี้ออกแบบมาเพื่อผู้ปฏิบัติงานยุคใหม่ที่ต้องการก้าวข้ามการทำงานแบบเดิมๆ สู่การเป็น AI-Powered Professional',
+    duration: '1 วัน (6 ชม.)',
+    audience: 'Business Professionals, Content Creators, Admin Teams, พนักงานทุกคนที่ต้องการเพิ่ม Productivity',
+    why: [
+      { label: 'Efficiency Multiplier', stat: '3X', desc: 'การทวีคูณประสิทธิภาพงานด้วยเครื่องมือที่ถูกต้อง', icon: <Zap /> },
+      { label: 'Future Readiness', stat: '100%', desc: 'เตรียมความพร้อมสู่โลกการทำงานในอนาคต', icon: <Target /> }
+    ],
+    how: [
+      { title: 'Interactive Demo', desc: 'สาธิตการใช้เครื่องมือ AI ชั้นนำในธุรกิจ', icon: <Video /> },
+      { title: 'Workflow Audit', desc: 'สำรวจและปรับปรุงกระบวนการทำงานด้วย AI', icon: <Search /> }
+    ],
+    what: [
+      'AI Mindset Reset',
+      'Prompt Engineering Mastery',
+      'AI-Powered Content Generation',
+      'Workflow Automation'
+    ],
+    objectives: [
+      'ลดเวลาในการทำงานเอกสารและงานวิเคราะห์ลงได้อย่างน้อย 30-50%',
+      'สามารถเขียน Prompt ที่ซับซ้อนเพื่อสั่งงาน AI ได้อย่างแม่นยำ',
+      'ออกแบบกระบวนการทำงานใหม่ที่สอดแทรก AI เข้าไปอย่างลื่นไหล',
+      'มีความมั่นใจในการใช้เทคโนโลยีใหม่ๆ เพื่อสร้างสรรค์ผลงานระดับพรีเมียม'
+    ],
+    instructor: {
+      id: 'den-master-fa',
+      name: 'ครูเด่น มาสเตอร์ฟา',
+      bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning',
+      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
+    }
   }
 ];
 

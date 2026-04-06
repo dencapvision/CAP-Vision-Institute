@@ -30,7 +30,7 @@ const About: React.FC = () => {
     <div className="bg-white min-h-screen pb-16 md:pb-24 overflow-x-hidden">
       <SEO
         title="เกี่ยวกับเรา | CAP Vision Institute"
-        description="CAP Vision Institute — Transformation Partner ที่ไว้วางใจโดย Toyota, Dell, AOT และกว่า 100 องค์กร นำโดย ครูเด่น มาสเตอร์ฟา Master Facilitator ประสบการณ์กว่า 18 ปี"
+        description="CAP Vision Institute — Transformation Partner ที่ไว้วางใจโดย Tops, Mr.D.I.Y., AOT, PEA, Land and Houses และกว่า 100 องค์กร นำโดย ครูเด่น มาสเตอร์ฟา Master Facilitator ประสบการณ์กว่า 18 ปี"
       />
 
       {/* ── 1. HERO ─────────────────────────────────────────────────────────── */}

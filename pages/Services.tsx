@@ -170,7 +170,7 @@ const Services: React.FC = () => {
       <div className="bg-gray-50 min-h-screen">
          <SEO
             title="บริการพัฒนาองค์กร | CAP Vision Institute"
-            description="In-house Training, Executive Coaching, OD Consulting ออกแบบเฉพาะองค์กรคุณ โดย Master Facilitator ที่ไว้วางใจโดย Toyota, Dell, AOT และกว่า 100 องค์กร"
+            description="In-house Training, Executive Coaching, OD Consulting ออกแบบเฉพาะองค์กรคุณ โดย Master Facilitator ที่ไว้วางใจโดย Tops, Mr.D.I.Y., AOT, PEA, Land and Houses และกว่า 100 องค์กร"
          />
 
          {/* ── 1. HERO ─────────────────────────────────────────────────────── */}
@@ -208,7 +208,7 @@ const Services: React.FC = () => {
                   </a>
                </div>
                <p className="text-blue-200/40 text-sm mt-8">
-                  ไว้วางใจโดย Toyota · Dell · AOT · สภากาชาดไทย และกว่า 100 องค์กร
+                  ไว้วางใจโดย Tops · Mr.D.I.Y. · AOT · PEA · Land and Houses · กว่า 100 องค์กร
                </p>
             </div>
          </div>
@@ -386,7 +386,7 @@ const Services: React.FC = () => {
                   ))}
                </div>
                <p className="text-center text-gray-400 text-xs leading-relaxed max-w-3xl mx-auto">
-                  Toyota · Dell Technologies · Betagro · AOT · EXAT · PEA · Land &amp; Houses · Central Food Retail ·
+                  Tops · Mr.D.I.Y. · AOT · PEA · Land and Houses · Toyota · Dell Technologies · Betagro · EXAT ·
                   สภากาชาดไทย · กรมวิทยาศาสตร์บริการ · สสส. · ปปส. · มหาวิทยาลัยศรีนครินทรวิโรฒ และอีกมากกว่า 100 องค์กร
                </p>
             </section>

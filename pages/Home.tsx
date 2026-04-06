@@ -58,7 +58,7 @@ const Home: React.FC = () => {
             <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full mb-8 md:mb-10 animate-fade-in-down">
               <span className="w-2 h-2 bg-[#c5a059] rounded-full animate-ping flex-shrink-0"></span>
               <span className="text-white/80 font-bold tracking-[0.15em] text-[10px] md:text-xs nav-font uppercase leading-none mt-0.5">
-                ไว้วางใจโดย Toyota · Dell · AOT · กว่า 100 องค์กร
+                ไว้วางใจโดย Tops · Mr.D.I.Y. · AOT · PEA · Land and Houses · กว่า 100 องค์กร
               </span>
             </div>
 

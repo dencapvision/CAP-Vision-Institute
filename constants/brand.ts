@@ -45,14 +45,15 @@ export const BRAND_INFO = {
 };
 
 export const CLIENTS = [
+    { name: 'Tops (Central Food Retail)', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/central%20food%20retail%20(CFR).png' },
+    { name: 'Mr.D.I.Y. (Thailand)', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/mrdiy.png' },
+    { name: 'AOT', type: 'State Enterprise', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Airports_of_Thailand_Logo.svg.png' },
+    { name: 'PEA', type: 'State Enterprise', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/PEA.png' },
+    { name: 'Land & Houses', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/landandhouses.jpg' },
     { name: 'Toyota', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Toyota_Symbol.svg.png' },
     { name: 'Dell Technologies', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Dell%20Corperation%20(Thailand)%20Co.,%20Ltd..png' },
     { name: 'Betagro', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Betagro.png' },
-    { name: 'AOT', type: 'State Enterprise', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Airports_of_Thailand_Logo.svg.png' },
     { name: 'EXAT', type: 'State Enterprise', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/EXAT.png' },
-    { name: 'PEA', type: 'State Enterprise', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/PEA.png' },
-    { name: 'Land & Houses', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/landandhouses.jpg' },
-    { name: 'Central Food Retail', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/central%20food%20retail%20(CFR).png' },
     { name: 'Universal Robina', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Universal_Robina-Logo.wine.png' },
     { name: 'ศอบต.', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/sbpac.go.th.jpg' },
     { name: 'สสส. SOOK', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/sook.png' },

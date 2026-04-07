@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Smile, ShieldCheck, Layout, Search, Zap, Brain, Layers, Users, MessageCircle, Target, Heart } from 'lucide-react';
+import { Smile, ShieldCheck, Layout, Search, Zap, Brain, Layers, Users, MessageCircle, Target, Heart, Compass, Eye, Flame, Star } from 'lucide-react';
 
 export interface CourseDetailInfo {
     id: string;
@@ -25,6 +25,50 @@ export interface CourseDetailInfo {
 }
 
 export const COURSES: CourseDetailInfo[] = [
+    {
+        id: 'transformational-leadership',
+        title: 'ผู้นำการเปลี่ยนแปลงจากภายใน สร้างผลลัพธ์ที่ยั่งยืน\n(Transformational Leadership)',
+        category: 'Leader Skills',
+        description: 'เปลี่ยนจาก "ผู้นำที่สั่งงาน" สู่ผู้นำที่เข้าใจตนเอง เห็นคน และขับเคลื่อนการเปลี่ยนแปลงได้จริง',
+        image: '/images/courses/transformational_leadership.png',
+        altText: 'หลักสูตร Transformational Leadership - พัฒนาผู้นำองค์กร CAP Vision Institute',
+        longDescription: 'ผู้นำจำนวนมาก "เก่งงาน" แต่ไม่สามารถ "เปลี่ยนทีม" ได้จริง เพราะสิ่งที่องค์กรต้องการวันนี้ไม่ใช่แค่คนที่บริหารงานได้ แต่คือผู้นำที่เปลี่ยนคน เปลี่ยนทีม และเปลี่ยนผลลัพธ์ได้ หลักสูตรนี้ออกแบบให้ผู้นำเข้าใจ "ตัวเอง" อย่างลึก เห็น "ศักยภาพของคน" อย่างแท้จริง และสร้างการเปลี่ยนแปลงจากภายในสู่ภายนอก เมื่อผู้นำเปลี่ยน ทีมจะเปลี่ยน องค์กรจะเปลี่ยน',
+        duration: 'In-house Training 1–2 วัน | Online / Hybrid | 20–50 คน',
+        audience: 'ผู้บริหาร / CEO, ผู้จัดการ / หัวหน้างาน, High Potential Leader',
+        why: [
+            { label: 'Self-Awareness', stat: '100%', desc: 'ค้นพบ Core Identity และศักยภาพภายในของผู้นำแต่ละคน', icon: React.createElement(Eye) },
+            { label: 'Behavioral Change', stat: 'จริง', desc: 'ออกแบบให้เกิดการเปลี่ยนแปลงพฤติกรรมจริง ไม่ใช่แค่ความรู้', icon: React.createElement(Flame) },
+            { label: 'Team Engagement', stat: '+85%', desc: 'ผู้นำที่เปลี่ยนแปลงส่งผลให้ทีมมี Ownership สูงขึ้น', icon: React.createElement(Users) },
+            { label: 'Sustainable Results', stat: 'ยาวนาน', desc: 'สร้างผลลัพธ์ที่ยั่งยืนจากการเปลี่ยนแปลงจากภายใน', icon: React.createElement(Star) }
+        ],
+        how: [
+            { title: 'Workshop 70%', desc: 'Learning by Doing — เรียนรู้ผ่านการลงมือทำจริงทุกกิจกรรม', icon: React.createElement(Zap) },
+            { title: 'Reflection & Dialogue', desc: 'สะท้อนคิดเชิงลึกและ Circle Dialogue เรียนรู้ผ่านวงสนทนา', icon: React.createElement(MessageCircle) },
+            { title: 'Real Case Application', desc: '"เรียนรู้ → ตกผลึก → ทดลองใช้ → เปลี่ยนจริง" Signature CAP Vision', icon: React.createElement(Target) }
+        ],
+        what: [
+            'Module 1: Self-Leadership — CAP Theory ตัวตนผู้นำ + Reflection จุดแข็ง / Blind Spot',
+            'Module 2: Leadership Mindset — เปลี่ยนจาก Manager → Leader วิธีคิดที่สร้าง/จำกัดทีม',
+            'Module 3: Vision & Purpose — สร้าง Vision ที่มีพลัง + Alignment ระหว่างคนกับองค์กร',
+            'Module 4: Leading People — เข้าใจคน (Psychology + Behavior) + Motivation จากภายใน',
+            'Module 5: Leading Change — การนำการเปลี่ยนแปลง + รับมือแรงต้าน Resistance → Engagement',
+            'Module 6: Facilitative Leadership — การตั้งคำถามทรงพลัง + Circle Dialogue / Team Facilitation'
+        ],
+        objectives: [
+            'เข้าใจสไตล์ผู้นำของตนเอง (Self-awareness) และค้นพบ Core Identity',
+            'ปรับ Mindset และพฤติกรรมการนำทีม จาก "ควบคุม" สู่ "สร้างแรงบันดาลใจ"',
+            'สร้างทีมที่มี Engagement และ Ownership อย่างแท้จริง',
+            'นำการเปลี่ยนแปลงในองค์กรได้จริง เปลี่ยน Resistance → Engagement',
+            'สร้าง Vision ที่ทีมเชื่อและอยากไปด้วย เชื่อมเป้าหมายองค์กรกับความหมายของทีม',
+            'สร้างผลลัพธ์ที่ยั่งยืนในระยะยาวผ่านการเปลี่ยนแปลงจากภายใน'
+        ],
+        instructor: {
+            id: 'den-master-fa',
+            name: 'ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)',
+            bio: 'ผู้อำนวยการสถาบัน CAP Vision Institute ผู้เชี่ยวชาญด้าน Transformative Learning, Leadership Development และ Facilitation กว่า 20 ปี',
+            image: '/images/denmasterfa.jpg'
+        }
+    },
     {
         id: 'service-mind-excellence',
         title: 'ใช้หัวใจบริการ คนสำราญ งานสำเร็จ\n(Service Mind Excellence)',

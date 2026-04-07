@@ -25,6 +25,14 @@ const MediaManager = lazy(() => import('./pages/MediaManager'));
 const CourseBuilderPage = lazy(() => import('./pages/CourseBuilder'));
 const WorkshopHandouts = lazy(() => import('./pages/workshop/WorkshopHandouts'));
 
+// Dashboard pages
+const DashboardLayout = lazy(() => import('./pages/dashboard/DashboardLayout'));
+const DashboardHome = lazy(() => import('./pages/dashboard/DashboardHome'));
+const DashboardCourses = lazy(() => import('./pages/dashboard/DashboardCourses'));
+const CourseCreateWizard = lazy(() => import('./pages/dashboard/CourseCreateWizard'));
+const DashboardSpeakers = lazy(() => import('./pages/dashboard/DashboardSpeakers'));
+const DashboardAIGenerator = lazy(() => import('./pages/dashboard/DashboardAIGenerator'));
+
 
 import { CONTACT_INFO } from './constants/brand';
 
@@ -44,38 +52,51 @@ const ScrollToTop = () => {
   return null;
 };
 
-const App: React.FC = () => {
-  return (
-    <HelmetProvider>
-      <Router>
-        <ScrollToTop />
-        <div className="min-h-screen flex flex-col overflow-x-hidden">
-          <Header />
-          <main className="flex-grow w-full min-w-0">
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/courses" element={<Courses />} />
-                <Route path="/courses/:id" element={<CourseDetail />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/resources" element={<Resources />} />
-                <Route path="/resources/:id" element={<BlogPost />} />
-                <Route path="/events" element={<Events />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/portfolio" element={<Portfolio />} />
-                <Route path="/speakers" element={<Speakers />} />
-                <Route path="/speakers/:id" element={<SpeakerDetail />} />
-                <Route path="/join-us" element={<JoinUs />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/admin/media" element={<MediaManager />} />
-                <Route path="/admin/course-builder" element={<CourseBuilderPage />} />
-                <Route path="/growth-mastery/handouts" element={<WorkshopHandouts />} />
-              </Routes>
-            </Suspense>
-          </main>
-          <Footer />
+// Wrapper that hides Header/Footer for /dashboard/* routes
+const AppShell: React.FC = () => {
+  const { pathname } = useLocation();
+  const isDashboard = pathname.startsWith('/dashboard');
 
+  return (
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
+      {!isDashboard && <Header />}
+      <main className={isDashboard ? 'flex-grow' : 'flex-grow w-full min-w-0'}>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            {/* Public routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/courses/:id" element={<CourseDetail />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/resources/:id" element={<BlogPost />} />
+            <Route path="/events" element={<Events />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/speakers" element={<Speakers />} />
+            <Route path="/speakers/:id" element={<SpeakerDetail />} />
+            <Route path="/join-us" element={<JoinUs />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/admin/media" element={<MediaManager />} />
+            <Route path="/admin/course-builder" element={<CourseBuilderPage />} />
+            <Route path="/growth-mastery/handouts" element={<WorkshopHandouts />} />
+
+            {/* Dashboard routes */}
+            <Route path="/dashboard" element={<DashboardLayout />}>
+              <Route index element={<DashboardHome />} />
+              <Route path="courses" element={<DashboardCourses />} />
+              <Route path="courses/new" element={<CourseCreateWizard />} />
+              <Route path="speakers" element={<DashboardSpeakers />} />
+              <Route path="ai-generator" element={<DashboardAIGenerator />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </main>
+      {!isDashboard && <Footer />}
+
+      {!isDashboard && (
+        <>
           {/* AI Agent Integrated Globally */}
           <AIAgent />
 
@@ -84,7 +105,18 @@ const App: React.FC = () => {
             <a href={`tel:${CONTACT_INFO.phone}`} className="flex-1 bg-[#0f3460] text-white py-4 rounded-2xl font-bold text-center nav-font text-sm">โทรปรึกษา</a>
             <a href={CONTACT_INFO.lineUrl} className="flex-1 bg-[#c5a059] text-white py-4 rounded-2xl font-bold text-center nav-font text-sm">ไลน์ทางการ</a>
           </div>
-        </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <HelmetProvider>
+      <Router>
+        <ScrollToTop />
+        <AppShell />
       </Router>
     </HelmetProvider>
   );

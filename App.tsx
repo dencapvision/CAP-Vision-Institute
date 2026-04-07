@@ -34,6 +34,8 @@ const CourseCreateWizard = lazy(() => import('./pages/dashboard/CourseCreateWiza
 const DashboardSpeakers = lazy(() => import('./pages/dashboard/DashboardSpeakers'));
 const DashboardAIGenerator = lazy(() => import('./pages/dashboard/DashboardAIGenerator'));
 const DashboardArticles = lazy(() => import('./pages/dashboard/DashboardArticles'));
+const DashboardBlog = lazy(() => import('./pages/dashboard/DashboardBlog'));
+const DashboardBlogEditor = lazy(() => import('./pages/dashboard/DashboardBlogEditor'));
 
 
 import { CONTACT_INFO } from './constants/brand';
@@ -92,6 +94,9 @@ const AppShell: React.FC = () => {
               <Route path="courses/new" element={<CourseCreateWizard />} />
               <Route path="speakers" element={<DashboardSpeakers />} />
               <Route path="articles" element={<DashboardArticles />} />
+              <Route path="blog" element={<DashboardBlog />} />
+              <Route path="blog/new" element={<DashboardBlogEditor />} />
+              <Route path="blog/edit/:id" element={<DashboardBlogEditor />} />
               <Route path="ai-generator" element={<DashboardAIGenerator />} />
             </Route>
           </Routes>

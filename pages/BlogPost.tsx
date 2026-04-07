@@ -26,7 +26,7 @@ import {
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { RESOURCE_ARTICLES } from '../constants/resources';
 import { HRD_ARTICLES as STATIC_ARTICLES } from '../constants/articles';
-import { fetchArticleBySlug } from '../services/blog-articles';
+import { fetchArticleBySlug, fetchRelatedArticles, type BlogArticleRow } from '../services/blog-articles';
 import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
 import ShareButtons from '../components/ShareButtons';
@@ -87,6 +87,7 @@ const BlogPost: React.FC = () => {
    const [post, setPost] = useState<PostData | null>(null);
    const [aeoPost, setAeoPost] = useState<AEOPost | null>(null);
    const [loading, setLoading] = useState(true);
+   const [relatedArticles, setRelatedArticles] = useState<BlogArticleRow[]>([]);
    const { scrollYProgress } = useScroll();
    const scaleX = useSpring(scrollYProgress, {
       stiffness: 100,
@@ -114,15 +115,15 @@ const BlogPost: React.FC = () => {
             setLoading(false);
          })
          .catch(async () => {
-            // Fallback: try Supabase blog_articles table
             try {
                const row = await fetchArticleBySlug(id!);
                if (row) {
-                  setAeoPost({ ...row.content, slug: row.slug, category: row.category, thumbnail: row.thumbnail, author: row.author, date: row.date_label, readTime: row.read_time });
+                  const aeo: AEOPost = { ...row.content, slug: row.slug, category: row.category, thumbnail: row.thumbnail, author: row.author, date: row.date_label, readTime: row.read_time };
+                  setAeoPost(aeo);
+                  // load related articles
+                  fetchRelatedArticles(row.slug, row.content?.seo?.keywords ?? []).then(setRelatedArticles).catch(() => {});
                }
-            } catch {
-               // not found anywhere
-            }
+            } catch { /* not found anywhere */ }
             setLoading(false);
          });
          
@@ -543,6 +544,31 @@ const BlogPost: React.FC = () => {
                           ))}
                        </div>
                     </div>
+
+                    {/* Related AEO Articles */}
+                    {relatedArticles.length > 0 && (
+                       <div>
+                          <h3 className="text-xl font-black text-[#0f3460] uppercase tracking-tighter nav-font mb-8 flex items-center gap-4">
+                             <div className="w-1.5 h-8 bg-[#c5a059] rounded-full" />
+                             Related Insights
+                          </h3>
+                          <div className="space-y-8">
+                             {relatedArticles.map(a => (
+                                <Link key={a.id} to={`/resources/${a.slug}`} className="group block">
+                                   <div className="flex gap-5 items-center">
+                                      <div className="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm bg-[#0f3460]/5">
+                                         {a.thumbnail ? <img src={a.thumbnail} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" /> : <div className="w-full h-full flex items-center justify-center"><Sparkles className="w-6 h-6 text-[#c5a059]/40" /></div>}
+                                      </div>
+                                      <div>
+                                         <h4 className="font-bold text-[#0f3460] leading-tight mb-1.5 group-hover:text-[#c5a059] transition-colors nav-font tracking-tight text-sm line-clamp-2">{a.title}</h4>
+                                         <span className="text-[9px] font-black text-[#c5a059] uppercase tracking-widest">{a.category}</span>
+                                      </div>
+                                   </div>
+                                </Link>
+                             ))}
+                          </div>
+                       </div>
+                    )}
 
                     <NewsletterBox />
                  </div>

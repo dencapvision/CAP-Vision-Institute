@@ -79,3 +79,55 @@ export async function deleteArticle(id: string): Promise<void> {
   const { error } = await supabase.from('blog_articles').delete().eq('id', id);
   if (error) throw error;
 }
+
+export async function fetchArticleById(id: string): Promise<BlogArticleRow | null> {
+  const { data, error } = await supabase
+    .from('blog_articles')
+    .select('*')
+    .eq('id', id)
+    .single();
+  if (error) return null;
+  return data as BlogArticleRow;
+}
+
+export async function updateArticle(id: string, payload: {
+  content: GeneratedArticle;
+  category: string;
+  thumbnail: string;
+  published?: boolean;
+}): Promise<void> {
+  const { error } = await supabase
+    .from('blog_articles')
+    .update({
+      slug: payload.content.slug,
+      title: payload.content.title,
+      category: payload.category,
+      thumbnail: payload.thumbnail,
+      content: payload.content,
+      published: payload.published ?? false,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', id);
+  if (error) throw error;
+}
+
+export async function fetchRelatedArticles(slug: string, keywords: string[], limit = 3): Promise<BlogArticleRow[]> {
+  const { data } = await supabase
+    .from('blog_articles')
+    .select('*')
+    .eq('published', true)
+    .neq('slug', slug)
+    .order('created_at', { ascending: false })
+    .limit(20);
+  if (!data) return [];
+  // Score by keyword overlap client-side
+  const scored = (data as BlogArticleRow[]).map(row => {
+    const rowKeywords: string[] = row.content?.seo?.keywords ?? [];
+    const overlap = keywords.filter(k => rowKeywords.some(rk => rk.toLowerCase().includes(k.toLowerCase()) || k.toLowerCase().includes(rk.toLowerCase()))).length;
+    return { row, overlap };
+  });
+  return scored
+    .sort((a, b) => b.overlap - a.overlap)
+    .slice(0, limit)
+    .map(s => s.row);
+}

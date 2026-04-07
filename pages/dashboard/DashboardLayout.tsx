@@ -10,7 +10,7 @@ const NAV = [
   { to: '/dashboard', label: 'ภาพรวม', icon: LayoutDashboard, exact: true },
   { to: '/dashboard/courses', label: 'หลักสูตร', icon: BookOpen },
   { to: '/dashboard/speakers', label: 'วิทยากร', icon: Users },
-  { to: '/dashboard/articles', label: 'บทความ AI', icon: FileText },
+  { to: '/dashboard/blog', label: 'บทความ', icon: FileText },
   { to: '/dashboard/ai-generator', label: 'Course AI', icon: Sparkles },
 ];
 

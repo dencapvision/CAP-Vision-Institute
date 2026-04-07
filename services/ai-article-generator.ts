@@ -1,6 +1,6 @@
 import { GoogleGenAI } from '@google/genai';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
 export interface ArticleFAQ {
   question: string;
@@ -112,11 +112,14 @@ Rules:
 - Keywords must include main topic + HRD + Leadership + Thai terms
 - Images: suggest relevant Unsplash photo URLs for training/leadership/teamwork topics`;
 
-export async function generateArticle(title: string): Promise<GeneratedArticle> {
+export async function generateArticle(title: string, context?: string): Promise<GeneratedArticle> {
+  const contextNote = context?.trim()
+    ? `\nEditor Context / Pain Point:\n${context.trim()}\nUse this context to make the article more specific and relevant.\n`
+    : '';
   const response = await ai.models.generateContent({
     model: 'gemini-2.0-flash',
     contents: [
-      { role: 'user', parts: [{ text: SYSTEM_PROMPT + '\n\n' + USER_TEMPLATE(title) }] }
+      { role: 'user', parts: [{ text: SYSTEM_PROMPT + '\n\n' + contextNote + USER_TEMPLATE(title) }] }
     ],
     config: { temperature: 0.7 }
   });

@@ -42,15 +42,17 @@ const About: React.FC = () => {
         </div>
         <div className="max-w-5xl mx-auto px-4 relative z-10">
           <span className="text-[#c5a059] font-black text-[10px] md:text-xs uppercase tracking-[0.5em] mb-6 md:mb-8 block nav-font">
-            About CAP Vision Institute
+            Transformative Learning Programs
           </span>
           <h1 className="text-4xl md:text-7xl lg:text-8xl font-black mb-6 md:mb-8 nav-font tracking-tight leading-[0.95]">
-            <span className="text-[#c5a059]">เชื่อในศักยภาพมนุษย์</span><br />
-            <span className="text-white">ขับเคลื่อนด้วยการเรียนรู้</span>
+            <span className="text-white">พัฒนาคน สร้างทีม</span><br />
+            <span className="text-[#c5a059]">ยกระดับองค์กร</span>
           </h1>
-          <p className="text-lg md:text-2xl text-white/85 max-w-3xl mx-auto font-light leading-relaxed mb-10 px-4">
-            ตั้งแต่ปี 2552 เราเป็น <strong className="text-white">Transformation Partner</strong> ที่อยู่เบื้องหลัง
-            การเปลี่ยนแปลงขององค์กรชั้นนำ ผ่านกระบวนการ Facilitation ที่มุ่งเน้นผลลัพธ์ที่ยั่งยืน
+          <p className="text-xl md:text-2xl font-bold text-[#c5a059] mb-4">
+            Inspire People. Transform Mindsets. Create Real Impact.
+          </p>
+          <p className="text-lg md:text-xl text-white/85 max-w-3xl mx-auto font-medium leading-relaxed mb-10 px-4">
+            จุดประกายคน เปลี่ยนวิธีคิด สร้างผลลัพธ์ที่จับต้องได้
           </p>
 
           {/* Trust stats */}
@@ -162,9 +164,13 @@ const About: React.FC = () => {
                 <Target className="w-8 h-8" />
               </div>
               <h3 className="text-2xl md:text-4xl font-black text-[#0f3460] mb-6 nav-font uppercase tracking-tight">Vision</h3>
-              <p className="text-lg md:text-2xl text-gray-700 font-bold leading-relaxed border-l-4 border-[#c5a059] pl-6 italic nav-font">
-                "{BRAND_INFO.vision}"
-              </p>
+              <div className="border-l-4 border-[#c5a059] pl-6">
+                {BRAND_INFO.vision.split('\n').map((line, i) => (
+                  <p key={i} className="text-lg md:text-2xl text-gray-700 font-bold leading-relaxed italic nav-font">
+                    {i === 0 ? `"${line}` : i === BRAND_INFO.vision.split('\n').length - 1 ? `${line}"` : line}
+                  </p>
+                ))}
+              </div>
             </div>
             <div className="lg:col-span-7 bg-[#0f3460] p-10 md:p-16 rounded-[3rem] shadow-xl text-white relative overflow-hidden">
               <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none">

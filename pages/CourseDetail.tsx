@@ -195,7 +195,7 @@ const CourseDetail: React.FC = () => {
                            </div>
                         ))}
                      </h1>
-                     <p className="text-xl text-blue-100 font-light opacity-80 leading-relaxed mb-10 max-w-2xl reveal-staggered active">
+                     <p className="text-xl text-white font-medium leading-relaxed mb-10 max-w-2xl reveal-staggered active">
                         {course.description}
                      </p>
                      <div className="flex flex-wrap gap-8">
@@ -204,8 +204,8 @@ const CourseDetail: React.FC = () => {
                               <Clock className="w-6 h-6 text-[#c5a059]" />
                            </div>
                            <div>
-                              <p className="text-[10px] text-blue-300 font-bold uppercase tracking-widest mb-1">Duration</p>
-                              <p className="text-sm font-bold">{course.duration || 'Flexible'}</p>
+                              <p className="text-xs text-blue-200 font-bold uppercase tracking-widest mb-1">Duration</p>
+                              <p className="text-sm font-bold text-white">{course.duration || 'Flexible'}</p>
                            </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -213,8 +213,8 @@ const CourseDetail: React.FC = () => {
                               <Users className="w-6 h-6 text-[#c5a059]" />
                            </div>
                            <div>
-                              <p className="text-[10px] text-blue-300 font-bold uppercase tracking-widest mb-1">Target Audience</p>
-                              <p className="text-sm font-bold">{course.audience || 'All Levels'}</p>
+                              <p className="text-xs text-blue-200 font-bold uppercase tracking-widest mb-1">Target Audience</p>
+                              <p className="text-sm font-bold text-white">{course.audience || 'All Levels'}</p>
                            </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -222,8 +222,8 @@ const CourseDetail: React.FC = () => {
                               <Star className="w-6 h-6 text-[#c5a059]" />
                            </div>
                            <div>
-                              <p className="text-[10px] text-blue-300 font-bold uppercase tracking-widest mb-1">Rating</p>
-                              <p className="text-sm font-bold">4.9/5.0 Premium</p>
+                              <p className="text-xs text-blue-200 font-bold uppercase tracking-widest mb-1">Rating</p>
+                              <p className="text-sm font-bold text-white">4.9/5.0 Premium</p>
                            </div>
                         </div>
                      </div>
@@ -278,7 +278,7 @@ const CourseDetail: React.FC = () => {
                                     </div>
                                     {isObj && item.stat && <span className="text-3xl font-black text-[#0f3460] group-hover:text-white block mb-1 nav-font">{item.stat}</span>}
                                     <h4 className="text-sm font-bold text-[#c5a059] mb-3 nav-font uppercase tracking-widest">{isObj ? item.label : `เหตุผลที่ ${idx + 1}`}</h4>
-                                    <p className="text-sm text-gray-500 group-hover:text-blue-100/70 leading-relaxed">{isObj ? item.desc : item}</p>
+                                    <p className="text-sm text-gray-500 group-hover:text-blue-100 leading-relaxed">{isObj ? item.desc : item}</p>
                                  </div>
                               );
                            })}
@@ -302,7 +302,7 @@ const CourseDetail: React.FC = () => {
                                        {renderIcon(isObj ? item.icon : null, "w-5 h-5 text-white")}
                                     </div>
                                     <h4 className="text-lg font-bold text-[#c5a059] mb-3 nav-font">{isObj ? item.title : `ขั้นตอนที่ ${idx + 1}`}</h4>
-                                    <p className="text-blue-100/70 text-sm leading-relaxed">{isObj ? item.desc : item}</p>
+                                    <p className="text-blue-100 text-sm leading-relaxed">{isObj ? item.desc : item}</p>
                                  </div>
                               );
                            })}

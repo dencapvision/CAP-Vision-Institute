@@ -17,7 +17,8 @@
       "Bash(SUPABASE_ACCESS_TOKEN=sbp_15449deb579790572b8fa7c7f963f0588feb881a npx supabase functions deploy ai-chat --project-ref nheppvjayzxlblkeanxs --use-api)",
       "Bash(SUPABASE_ACCESS_TOKEN=sbp_fe2349edb4e9d5bb2d8c1c8462e950a0f0f09948 npx supabase functions deploy ai-chat --project-ref nheppvjayzxlblkeanxs --use-api)",
       "Bash(rsync:*)",
-      "Bash(ssh:*)"
+      "Bash(ssh:*)",
+      "Bash(npm install:*)"
     ]
   }
 }

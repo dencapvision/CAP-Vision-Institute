@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../Anti_02.1) Growth-Mastery-Workshop"
+		}
+	],
+	"settings": {
+		"gitlens.ai.largePromptWarningThreshold": 8000
+	}
+}

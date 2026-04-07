@@ -15,7 +15,9 @@
       "Bash(SUPABASE_ACCESS_TOKEN=sbp_582a01be61a68b1a056eb499d38bebfa2b800c9a npx supabase functions deploy ai-chat --project-ref nheppvjayzxlblkeanxs --use-api)",
       "Bash(SUPABASE_ACCESS_TOKEN=sbp_a0fceed73b481f052d112e6ae54658ef4019cce6 npx supabase functions deploy ai-chat --project-ref nheppvjayzxlblkeanxs --use-api)",
       "Bash(SUPABASE_ACCESS_TOKEN=sbp_15449deb579790572b8fa7c7f963f0588feb881a npx supabase functions deploy ai-chat --project-ref nheppvjayzxlblkeanxs --use-api)",
-      "Bash(SUPABASE_ACCESS_TOKEN=sbp_fe2349edb4e9d5bb2d8c1c8462e950a0f0f09948 npx supabase functions deploy ai-chat --project-ref nheppvjayzxlblkeanxs --use-api)"
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_fe2349edb4e9d5bb2d8c1c8462e950a0f0f09948 npx supabase functions deploy ai-chat --project-ref nheppvjayzxlblkeanxs --use-api)",
+      "Bash(rsync:*)",
+      "Bash(ssh:*)"
     ]
   }
 }

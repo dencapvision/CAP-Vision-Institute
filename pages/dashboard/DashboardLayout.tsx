@@ -3,14 +3,16 @@ import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient';
 import {
   LayoutDashboard, BookOpen, Users, Sparkles, FileText,
-  LogOut, Menu, X, ChevronRight
+  Briefcase, BarChart3, LogOut, Menu, X, ChevronRight
 } from 'lucide-react';
 
 const NAV = [
   { to: '/dashboard', label: 'ภาพรวม', icon: LayoutDashboard, exact: true },
-  { to: '/dashboard/courses', label: 'หลักสูตร', icon: BookOpen },
-  { to: '/dashboard/speakers', label: 'วิทยากร', icon: Users },
   { to: '/dashboard/blog', label: 'บทความ', icon: FileText },
+  { to: '/dashboard/portfolio', label: 'Portfolio', icon: Briefcase },
+  { to: '/dashboard/courses', label: 'หลักสูตร', icon: BookOpen },
+  { to: '/dashboard/seo', label: 'SEO Analyzer', icon: BarChart3 },
+  { to: '/dashboard/speakers', label: 'วิทยากร', icon: Users },
   { to: '/dashboard/ai-generator', label: 'Course AI', icon: Sparkles },
 ];
 

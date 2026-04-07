@@ -36,6 +36,9 @@ const DashboardAIGenerator = lazy(() => import('./pages/dashboard/DashboardAIGen
 const DashboardArticles = lazy(() => import('./pages/dashboard/DashboardArticles'));
 const DashboardBlog = lazy(() => import('./pages/dashboard/DashboardBlog'));
 const DashboardBlogEditor = lazy(() => import('./pages/dashboard/DashboardBlogEditor'));
+const DashboardPortfolio = lazy(() => import('./pages/dashboard/DashboardPortfolio'));
+const DashboardPortfolioEditor = lazy(() => import('./pages/dashboard/DashboardPortfolioEditor'));
+const DashboardSEO = lazy(() => import('./pages/dashboard/DashboardSEO'));
 
 
 import { CONTACT_INFO } from './constants/brand';
@@ -97,6 +100,10 @@ const AppShell: React.FC = () => {
               <Route path="blog" element={<DashboardBlog />} />
               <Route path="blog/new" element={<DashboardBlogEditor />} />
               <Route path="blog/edit/:id" element={<DashboardBlogEditor />} />
+              <Route path="portfolio" element={<DashboardPortfolio />} />
+              <Route path="portfolio/new" element={<DashboardPortfolioEditor />} />
+              <Route path="portfolio/edit/:id" element={<DashboardPortfolioEditor />} />
+              <Route path="seo" element={<DashboardSEO />} />
               <Route path="ai-generator" element={<DashboardAIGenerator />} />
             </Route>
           </Routes>

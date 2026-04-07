@@ -1,10 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { 
-   ArrowLeft, ArrowRight, CheckCircle2, Clock, Users, Calendar, Award, Star, MessageCircle, 
-   Phone, ChevronDown, ChevronRight, Plus, Minus, Target, ShieldCheck, Zap, Search, Heart, 
-   Layout, Video, Zap as ZapIcon 
+import {
+   ArrowLeft, ArrowRight, CheckCircle2, Clock, Users, Calendar, Award, Star, MessageCircle,
+   Phone, ChevronDown, ChevronRight, Plus, Minus, Target, ShieldCheck, Zap, Search, Heart,
+   Layout, Video, Zap as ZapIcon, Eye, Flame, Compass, Brain, Layers
 } from 'lucide-react';
 import { fetchCourseBySlug } from '../services/courses';
 import { Course } from '../types';
@@ -24,7 +24,13 @@ const ICON_MAP: Record<string, React.ReactNode> = {
    'Award': <Award />,
    'CheckCircle2': <CheckCircle2 />,
    'ShieldCheck': <ShieldCheck />,
-   'MessageCircle': <MessageCircle />
+   'MessageCircle': <MessageCircle />,
+   'Eye': <Eye />,
+   'Flame': <Flame />,
+   'Star': <Star />,
+   'Compass': <Compass />,
+   'Brain': <Brain />,
+   'Layers': <Layers />
 };
 
 const CourseDetail: React.FC = () => {

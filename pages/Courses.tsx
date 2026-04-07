@@ -314,6 +314,9 @@ const Courses: React.FC = () => {
                     src={course.image}
                     alt={course.alt_text || course.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80';
+                    }}
                   />
                   <div className="absolute top-4 left-4">
                     <span className={`${colors.bg} text-white px-3 md:px-5 py-1 md:py-2 rounded-lg text-[9px] md:text-[10px] font-black uppercase tracking-widest nav-font shadow-lg`}>

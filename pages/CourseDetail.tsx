@@ -308,7 +308,7 @@ const CourseDetail: React.FC = () => {
                                        {renderIcon(isObj ? item.icon : null, "w-5 h-5 text-white")}
                                     </div>
                                     <h4 className="text-lg font-bold text-[#c5a059] mb-3 nav-font">{isObj ? item.title : `ขั้นตอนที่ ${idx + 1}`}</h4>
-                                    <p className="text-blue-100 text-sm leading-relaxed">{isObj ? item.desc : item}</p>
+                                    <p className="text-white text-sm leading-relaxed">{isObj ? item.desc : item}</p>
                                  </div>
                               );
                            })}

@@ -426,15 +426,18 @@ const Services: React.FC = () => {
 
             {/* ── 9. FINAL CTA ────────────────────────────────────────────────── */}
             <section className="bg-gradient-to-br from-[#0f3460] to-[#1a4a7a] rounded-[3rem] px-8 md:px-16 py-16 text-white text-center relative overflow-hidden">
-               <div className="absolute top-0 right-0 w-64 h-64 bg-[#c5a059]/10 rounded-full -translate-y-1/2 translate-x-1/4 blur-3xl pointer-events-none" />
+               <div className="absolute top-0 right-0 w-96 h-96 bg-[#c5a059]/15 rounded-full -translate-y-1/2 translate-x-1/4 blur-3xl pointer-events-none" />
+               <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#c5a059]/10 rounded-full translate-y-1/2 -translate-x-1/4 blur-3xl pointer-events-none" />
                <div className="relative z-10">
-                  <span className="text-[#c5a059] text-xs font-black uppercase tracking-[0.4em] block mb-6 nav-font">
-                     เริ่มต้นวันนี้
-                  </span>
-                  <h2 className="text-3xl md:text-5xl font-black nav-font mb-4 leading-tight text-[#c5a059]">
+                  <div className="inline-flex items-center gap-2 bg-[#c5a059]/20 border border-[#c5a059]/50 rounded-full px-5 py-2 mb-8">
+                     <span className="w-1.5 h-1.5 bg-[#c5a059] rounded-full animate-pulse" />
+                     <span className="text-[#c5a059] text-xs font-black uppercase tracking-[0.4em] nav-font">เริ่มต้นวันนี้</span>
+                  </div>
+                  <h2 className="text-3xl md:text-5xl font-black nav-font mb-2 leading-tight text-white">
                      เริ่มต้นพัฒนาทีมของคุณวันนี้
                   </h2>
-                  <p className="text-white/90 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+                  <div className="w-16 h-1 bg-[#c5a059] rounded-full mx-auto mb-6 mt-4" />
+                  <p className="text-white/90 text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
                      ปรึกษาฟรีกับ Master Facilitator — เราวิเคราะห์ปัญหา ออกแบบแนวทาง
                      และส่งใบเสนอราคาภายใน 24 ชั่วโมง
                   </p>

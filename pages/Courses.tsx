@@ -344,13 +344,17 @@ const Courses: React.FC = () => {
 
         {/* Bottom CTA — In-house Training prompt */}
         <div className="mt-20 bg-gradient-to-br from-[#0f3460] to-[#1a4a7a] rounded-[3rem] px-8 md:px-16 py-14 text-white text-center relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#c5a059]/10 rounded-full -translate-y-1/2 translate-x-1/4 blur-3xl pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#c5a059]/15 rounded-full -translate-y-1/2 translate-x-1/4 blur-3xl pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#c5a059]/10 rounded-full translate-y-1/2 -translate-x-1/4 blur-3xl pointer-events-none"></div>
           <div className="relative z-10">
-            <GraduationCap className="w-12 h-12 text-[#c5a059] mx-auto mb-5" />
-            <h2 className="text-2xl md:text-4xl font-black nav-font mb-3 leading-tight text-white">
+            <div className="w-14 h-14 bg-[#c5a059]/20 border border-[#c5a059]/40 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <GraduationCap className="w-7 h-7 text-[#c5a059]" />
+            </div>
+            <h2 className="text-2xl md:text-4xl font-black nav-font mb-2 leading-tight text-white">
               ไม่เห็นหลักสูตรที่ใช่?
             </h2>
-            <p className="text-white/90 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+            <div className="w-16 h-1 bg-[#c5a059] rounded-full mx-auto mb-5 mt-3" />
+            <p className="text-white/90 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed font-medium">
               เราออกแบบ <strong className="text-white">In-house Training</strong> เฉพาะองค์กรคุณ — เริ่มจาก TNA วิเคราะห์ปัญหาจริง ไม่มี Template สำเร็จรูป
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">

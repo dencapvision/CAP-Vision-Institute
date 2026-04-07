@@ -317,13 +317,18 @@ const About: React.FC = () => {
 
         {/* ── 9. FINAL CTA ────────────────────────────────────────────────────── */}
         <div className="bg-gradient-to-br from-[#0f3460] to-[#1a4a7a] rounded-[3rem] py-16 md:py-20 px-8 md:px-16 text-white text-center relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-72 h-72 bg-[#c5a059]/10 rounded-full -translate-y-1/2 translate-x-1/4 blur-3xl pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#c5a059]/15 rounded-full -translate-y-1/2 translate-x-1/4 blur-3xl pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#c5a059]/10 rounded-full translate-y-1/2 -translate-x-1/4 blur-3xl pointer-events-none"></div>
           <div className="relative z-10">
-            <span className="text-[#c5a059] text-xs font-black uppercase tracking-[0.4em] block mb-5 nav-font">พร้อมร่วมงานกับเรา</span>
-            <h2 className="text-3xl md:text-5xl font-black nav-font mb-4 leading-tight text-[#c5a059]">
+            <div className="inline-flex items-center gap-2 bg-[#c5a059]/20 border border-[#c5a059]/50 rounded-full px-5 py-2 mb-8">
+              <span className="w-1.5 h-1.5 bg-[#c5a059] rounded-full animate-pulse" />
+              <span className="text-[#c5a059] text-xs font-black uppercase tracking-[0.4em] nav-font">พร้อมร่วมงานกับเรา</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black nav-font mb-2 leading-tight text-white">
               เริ่มต้นการเปลี่ยนแปลง<br />องค์กรของคุณวันนี้
             </h2>
-            <p className="text-white/90 text-base md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+            <div className="w-16 h-1 bg-[#c5a059] rounded-full mx-auto mb-6 mt-4" />
+            <p className="text-white/90 text-base md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
               ปรึกษาฟรีกับ Master Facilitator — เราวิเคราะห์ปัญหา ออกแบบแนวทาง และส่งใบเสนอราคาภายใน 24 ชั่วโมง
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">

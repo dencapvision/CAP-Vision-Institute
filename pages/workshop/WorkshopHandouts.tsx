@@ -84,8 +84,8 @@ const WorkshopHandouts: React.FC = () => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
       // Using the pattern from ChatBot.tsx
       const chat = ai.chats.create({ 
-        model: 'gemini-2.0-flash',
-        config: { temperature: 0.7 } 
+        model: 'gemini-2.0-flash-001',
+        config: { temperature: 0.7 }
       });
       const response = await chat.sendMessage({ message: prompt });
       return response.text;

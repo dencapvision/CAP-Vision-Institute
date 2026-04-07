@@ -81,7 +81,7 @@ const ChatBot: React.FC = () => {
       `;
 
       chatRef.current = ai.chats.create({
-        model: 'gemini-2.0-flash',
+        model: 'gemini-2.0-flash-001',
         config: {
           systemInstruction: systemInstruction,
           temperature: 0.7,

@@ -57,20 +57,74 @@ body {
   line-height: 1.6;
 }
 
-/* -------- Typography -------- */
-h1, h2, h3, h4, h5, h6 {
-  text-wrap: balance;
-  letter-spacing: -0.02em;
-  color: var(--primary);
-  line-height: 1.25;
-  font-weight: 800;
+/* -------- Base Typography (inside @layer so Tailwind utilities can override) -------- */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+    color: var(--primary);
+    line-height: 1.25;
+    font-weight: 800;
+  }
+
+  p, li {
+    max-width: 72ch;
+    line-height: 1.7;
+  }
 }
 
-/* Body text line-length control for readability */
-p, li {
-  max-width: 72ch;
-  line-height: 1.7;
+/* ============================================================
+   DARK SECTION TEXT — Permanent High-Specificity Override
+   Outside @layer → wins over @layer utilities (Tailwind)
+   Fixes headings & paragraphs on ALL dark navy backgrounds
+   ============================================================ */
+
+/* ── Direct dark bg classes ── */
+.bg-\[\#0f3460\] h1, .bg-\[\#0f3460\] h2, .bg-\[\#0f3460\] h3,
+.bg-\[\#0f3460\] h4, .bg-\[\#0f3460\] h5,
+.bg-\[\#0a1628\] h1, .bg-\[\#0a1628\] h2, .bg-\[\#0a1628\] h3,
+.bg-\[\#0a1628\] h4, .bg-\[\#0a1628\] h5,
+.bg-\[\#1a4a7a\] h1, .bg-\[\#1a4a7a\] h2, .bg-\[\#1a4a7a\] h3,
+.bg-\[\#1a4a7a\] h4, .bg-\[\#1a4a7a\] h5,
+.bg-\[\#0a2545\] h1, .bg-\[\#0a2545\] h2, .bg-\[\#0a2545\] h3,
+.bg-\[\#0a2545\] h4, .bg-\[\#0a2545\] h5 {
+  color: #ffffff !important;
+  opacity: 1 !important;
 }
+
+.bg-\[\#0f3460\] p, .bg-\[\#0a1628\] p,
+.bg-\[\#1a4a7a\] p, .bg-\[\#0a2545\] p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  opacity: 1 !important;
+}
+
+/* ── Gradient dark sections (from-[#0f3460], from-[#0a1628]) ── */
+.from-\[\#0f3460\] h1, .from-\[\#0f3460\] h2, .from-\[\#0f3460\] h3,
+.from-\[\#0f3460\] h4, .from-\[\#0f3460\] h5,
+.from-\[\#0a1628\] h1, .from-\[\#0a1628\] h2, .from-\[\#0a1628\] h3,
+.from-\[\#0a1628\] h4, .from-\[\#0a1628\] h5 {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.from-\[\#0f3460\] p, .from-\[\#0a1628\] p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  opacity: 1 !important;
+}
+
+/* ── Protect Gold accent — never override ── */
+.text-\[\#c5a059\],
+.text-\[\#c5a059\] * {
+  color: #c5a059 !important;
+}
+
+/* ── Protect white text utility explicitly set ── */
+.text-white { color: #ffffff !important; }
+.text-white\/90 { color: rgba(255,255,255,0.9) !important; }
+.text-white\/85 { color: rgba(255,255,255,0.85) !important; }
+.text-white\/80 { color: rgba(255,255,255,0.8) !important; }
+.text-white\/75 { color: rgba(255,255,255,0.75) !important; }
+.text-white\/70 { color: rgba(255,255,255,0.7) !important; }
 
 .font-gold {
   background: var(--accent-gold);

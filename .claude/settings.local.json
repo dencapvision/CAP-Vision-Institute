@@ -18,7 +18,14 @@
       "Bash(SUPABASE_ACCESS_TOKEN=sbp_fe2349edb4e9d5bb2d8c1c8462e950a0f0f09948 npx supabase functions deploy ai-chat --project-ref nheppvjayzxlblkeanxs --use-api)",
       "Bash(rsync:*)",
       "Bash(ssh:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(curl -X POST https://capvisionpartner.com/webhook/deploy -H \"Content-Type: application/json\" -d '{\"ref\":\"refs/heads/main\"}' -v)",
+      "Bash(curl -X POST http://76.13.21.197/webhook/deploy -H \"Content-Type: application/json\" -H \"Host: capvisionpartner.com\" -d '{\"ref\":\"refs/heads/main\"}' -s)",
+      "Bash(curl -X POST https://76.13.21.197/webhook/deploy -H \"Content-Type: application/json\" -H \"Host: capvisionpartner.com\" -d '{\"ref\":\"refs/heads/main\"}' -sk)",
+      "Bash(curl:*)",
+      "Bash(nslookup:*)",
+      "Bash(openssl s_client -connect capvisionpartner.com:443 -servername capvisionpartner.com)",
+      "Bash(openssl x509:*)"
     ]
   }
 }

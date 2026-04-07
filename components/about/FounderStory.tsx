@@ -153,12 +153,14 @@ const FounderStory: React.FC = () => {
 
         {/* Read full bio CTA */}
         <div className="mt-12 text-center">
-          <Link
-            to="/speakers/den-master-fa"
+          <a
+            href="https://capvisionpartner.com/speakers/den-masterfa"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block border border-[#0f3460] text-[#0f3460] px-10 py-4 font-black text-sm uppercase tracking-widest nav-font hover:bg-[#0f3460] hover:text-white transition-colors"
           >
             อ่านประวัติฉบับเต็ม
-          </Link>
+          </a>
         </div>
       </div>
     </section>

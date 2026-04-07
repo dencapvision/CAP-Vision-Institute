@@ -26,6 +26,7 @@ import {
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { RESOURCE_ARTICLES } from '../constants/resources';
 import { HRD_ARTICLES as STATIC_ARTICLES } from '../constants/articles';
+import { fetchArticleBySlug } from '../services/blog-articles';
 import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
 import ShareButtons from '../components/ShareButtons';
@@ -112,8 +113,16 @@ const BlogPost: React.FC = () => {
             }
             setLoading(false);
          })
-         .catch(err => {
-            console.error('Error loading post:', err);
+         .catch(async () => {
+            // Fallback: try Supabase blog_articles table
+            try {
+               const row = await fetchArticleBySlug(id!);
+               if (row) {
+                  setAeoPost({ ...row.content, slug: row.slug, category: row.category, thumbnail: row.thumbnail, author: row.author, date: row.date_label, readTime: row.read_time });
+               }
+            } catch {
+               // not found anywhere
+            }
             setLoading(false);
          });
          

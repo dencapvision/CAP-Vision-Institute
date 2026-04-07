@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient';
 import {
-  LayoutDashboard, BookOpen, Users, Sparkles,
+  LayoutDashboard, BookOpen, Users, Sparkles, FileText,
   LogOut, Menu, X, ChevronRight
 } from 'lucide-react';
 
@@ -10,7 +10,8 @@ const NAV = [
   { to: '/dashboard', label: 'ภาพรวม', icon: LayoutDashboard, exact: true },
   { to: '/dashboard/courses', label: 'หลักสูตร', icon: BookOpen },
   { to: '/dashboard/speakers', label: 'วิทยากร', icon: Users },
-  { to: '/dashboard/ai-generator', label: 'AI Generator', icon: Sparkles },
+  { to: '/dashboard/articles', label: 'บทความ AI', icon: FileText },
+  { to: '/dashboard/ai-generator', label: 'Course AI', icon: Sparkles },
 ];
 
 const DashboardLayout: React.FC = () => {

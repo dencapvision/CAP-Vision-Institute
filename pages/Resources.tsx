@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BookOpen, PlayCircle, Clock, Download, FileText, ChevronRight,
   ArrowRight, Sparkles, Users, Target, Zap, Brain, MessageCircle,
-  TrendingUp, GraduationCap, CheckCircle2, Star, Shield, Award
+  TrendingUp, GraduationCap, CheckCircle2, Star, Shield, Award, Cpu
 } from 'lucide-react';
 import { MICRO_LEARNING_VIDEOS, DOWNLOAD_RESOURCES } from '../constants/resources';
 import { HRD_ARTICLES } from '../constants/articles';
 import { Link } from 'react-router-dom';
 import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
+import { fetchPublishedArticles, type BlogArticleRow } from '../services/blog-articles';
 
 const FEATURED_IDS = ['flow-state-learning', 'intro-to-facilitation', 'hrd-future-skills-2025', 'building-growth-mindset-culture'];
 
@@ -85,6 +86,11 @@ const Resources: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState(0);
   const [downloadEmail, setDownloadEmail] = useState('');
   const [downloadSubmitted, setDownloadSubmitted] = useState(false);
+  const [aeoArticles, setAeoArticles] = useState<BlogArticleRow[]>([]);
+
+  useEffect(() => {
+    fetchPublishedArticles().then(setAeoArticles).catch(() => {});
+  }, []);
 
   const featuredArticles = FEATURED_IDS.map(id => articleById(id)).filter(Boolean) as typeof HRD_ARTICLES;
   const categoryArticles = CATEGORIES[activeCategory].ids
@@ -307,6 +313,72 @@ const Resources: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* ─── AI-POWERED INSIGHTS (AEO Articles from Supabase) ─── */}
+      {aeoArticles.length > 0 && (
+        <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex items-center justify-between mb-12">
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="bg-[#c5a059]/10 text-[#c5a059] text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full nav-font flex items-center gap-1.5">
+                    <Cpu className="w-3 h-3" /> AI-Generated · AEO Optimized
+                  </span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-black text-[#0f3460] nav-font">
+                  CAP Vision Insights
+                </h2>
+                <p className="text-gray-500 mt-2 text-sm">บทความเชิงลึก ตอบตรงประเด็น — Answer-first สำหรับผู้นำและ HR</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {aeoArticles.map((article) => (
+                <Link
+                  key={article.id}
+                  to={`/resources/${article.slug}`}
+                  className="group bg-white rounded-3xl border border-gray-100 overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
+                >
+                  {article.thumbnail ? (
+                    <div className="relative h-44 overflow-hidden">
+                      <img
+                        src={article.thumbnail}
+                        alt={article.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        loading="lazy"
+                      />
+                      <div className="absolute top-4 left-4 bg-[#0f3460]/80 backdrop-blur-sm text-white text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full nav-font flex items-center gap-1">
+                        <Cpu className="w-2.5 h-2.5" /> AI Insight
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="h-44 bg-gradient-to-br from-[#0f3460] to-[#1a4a7a] flex items-center justify-center relative">
+                      <Sparkles className="w-12 h-12 text-[#c5a059]/30" />
+                      <div className="absolute top-4 left-4 bg-white/10 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full nav-font flex items-center gap-1">
+                        <Cpu className="w-2.5 h-2.5" /> AI Insight
+                      </div>
+                    </div>
+                  )}
+                  <div className="p-6 flex flex-col flex-grow">
+                    <p className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest mb-2 nav-font">
+                      {article.date_label || article.category}
+                    </p>
+                    <h3 className="font-bold text-base text-[#0f3460] nav-font leading-tight mb-3 group-hover:text-[#c5a059] transition-colors flex-grow">
+                      {article.title}
+                    </h3>
+                    <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4">
+                      {article.content.summary}
+                    </p>
+                    <div className="flex items-center gap-2 text-[#0f3460] font-black text-[10px] nav-font uppercase tracking-widest mt-auto">
+                      อ่าน Insight <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ─── DEEP KNOWLEDGE ───────────────────────────────────── */}
       <section className="py-24 bg-[#0f3460]">

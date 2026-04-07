@@ -33,6 +33,7 @@ const DashboardCourses = lazy(() => import('./pages/dashboard/DashboardCourses')
 const CourseCreateWizard = lazy(() => import('./pages/dashboard/CourseCreateWizard'));
 const DashboardSpeakers = lazy(() => import('./pages/dashboard/DashboardSpeakers'));
 const DashboardAIGenerator = lazy(() => import('./pages/dashboard/DashboardAIGenerator'));
+const DashboardArticles = lazy(() => import('./pages/dashboard/DashboardArticles'));
 
 
 import { CONTACT_INFO } from './constants/brand';
@@ -90,6 +91,7 @@ const AppShell: React.FC = () => {
               <Route path="courses" element={<DashboardCourses />} />
               <Route path="courses/new" element={<CourseCreateWizard />} />
               <Route path="speakers" element={<DashboardSpeakers />} />
+              <Route path="articles" element={<DashboardArticles />} />
               <Route path="ai-generator" element={<DashboardAIGenerator />} />
             </Route>
           </Routes>

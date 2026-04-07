@@ -68,7 +68,7 @@ const Speakers: React.FC = () => {
             </span>
           </h1>
 
-          <p className="text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed">
+          <p className="text-xl text-white/85 max-w-2xl mx-auto mb-12 leading-relaxed">
             พบกับทีม Master Facilitator และผู้เชี่ยวชาญด้าน Transformative Learning จาก {BRAND_INFO.thaiName}
           </p>
 
@@ -85,7 +85,7 @@ const Speakers: React.FC = () => {
                   <Icon className="w-5 h-5 text-[#c5a059]" />
                   <div className="text-left">
                     <span className="font-black text-lg">{stat.value}</span>
-                    <span className="text-white/50 text-sm ml-2">{stat.label}</span>
+                    <span className="text-white/75 text-sm ml-2">{stat.label}</span>
                   </div>
                 </div>
               );
@@ -133,7 +133,7 @@ const Speakers: React.FC = () => {
                           <h2 className="text-3xl lg:text-4xl font-black text-white mb-3" style={{ letterSpacing: '-0.02em' }}>
                             {den.name}
                           </h2>
-                          <p className="text-white/60 mb-6 leading-relaxed">{den.bio}</p>
+                          <p className="text-white/85 mb-6 leading-relaxed">{den.bio}</p>
 
                           {/* Mini stats */}
                           <div className="flex flex-wrap gap-4 mb-8">
@@ -144,7 +144,7 @@ const Speakers: React.FC = () => {
                             ].map((s, i) => (
                               <div key={i} className="bg-white/10 border border-white/10 rounded-xl px-4 py-2 text-center">
                                 <p className="text-[#c5a059] font-black text-lg">{s.v}</p>
-                                <p className="text-white/50 text-xs">{s.l}</p>
+                                <p className="text-white/75 text-xs">{s.l}</p>
                               </div>
                             ))}
                           </div>
@@ -234,7 +234,7 @@ const Speakers: React.FC = () => {
               <h2 className="text-3xl md:text-4xl font-black text-white mb-4" style={{ letterSpacing: '-0.02em' }}>
                 ต้องการนัดปรึกษาหลักสูตร In-house?
               </h2>
-              <p className="text-white/60 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+              <p className="text-white/85 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
                 เราพร้อมออกแบบและส่งทีมวิทยากรไปช่วย Transform องค์กรของคุณถึงที่
               </p>
 
@@ -256,7 +256,7 @@ const Speakers: React.FC = () => {
                   Line: {CONTACT_INFO.line}
                 </a>
               </div>
-              <p className="text-white/30 text-sm">
+              <p className="text-white/65 text-sm">
                 ปรึกษาเบื้องต้นฟรี · ตารางคิวมีจำกัด แนะนำจองล่วงหน้า 1-2 เดือน
               </p>
             </div>

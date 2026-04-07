@@ -221,7 +221,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
               </p>
 
               {/* Hook */}
-              <p className="text-lg text-white/60 leading-relaxed mb-10 max-w-xl">
+              <p className="text-lg text-white/85 leading-relaxed mb-10 max-w-xl">
                 "ไม่ใช่แค่การพูดบนเวที แต่คือการ<strong className="text-white/90">เปลี่ยนวิธีคิด</strong>ของคนทั้งองค์กร"
               </p>
 
@@ -288,7 +288,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                 <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center backdrop-blur-sm">
                   <Icon className="w-6 h-6 text-[#c5a059] mx-auto mb-3" />
                   <p className="text-3xl font-black text-white mb-1">{stat.value}</p>
-                  <p className="text-white/50 text-sm">{stat.label}</p>
+                  <p className="text-white/75 text-sm">{stat.label}</p>
                 </div>
               );
             })}
@@ -438,7 +438,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
             <h2 className="text-3xl md:text-4xl font-black text-white" style={{ letterSpacing: '-0.02em' }}>
               Transformative Learning คืออะไร?
             </h2>
-            <p className="mt-4 text-white/60 max-w-2xl mx-auto">
+            <p className="mt-4 text-white/85 max-w-2xl mx-auto">
               เราเชื่อว่า "ความรู้อย่างเดียวเปลี่ยนคนไม่ได้ แต่ประสบการณ์ต่างหากที่เปลี่ยนคนได้"
             </p>
           </div>
@@ -447,7 +447,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
               <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-[#c5a059]/40 transition-all duration-300">
                 <div className="text-4xl mb-5">{method.icon}</div>
                 <h3 className="font-black text-white mb-3">{method.name}</h3>
-                <p className="text-white/60 text-sm leading-relaxed">{method.desc}</p>
+                <p className="text-white/85 text-sm leading-relaxed">{method.desc}</p>
               </div>
             ))}
           </div>
@@ -605,7 +605,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
             }}>วิทยากรที่สร้างผลลัพธ์จริง</span>
           </h2>
-          <p className="text-white/60 text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white/85 text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
             ไม่ใช่แค่ผ่านวันอบรมไป แต่ทีมคุณต้องเปลี่ยนแปลงจริง วัดผลได้จริง
           </p>
           <div className="flex flex-wrap gap-4 justify-center mb-6">
@@ -639,7 +639,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
               { icon: '🎤', text: '1,000+ เวที' },
               { icon: '✅', text: 'ออกแบบหลักสูตรได้' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-2 text-white/50 text-sm">
+              <div key={i} className="flex items-center gap-2 text-white/75 text-sm">
                 <span>{item.icon}</span>
                 <span>{item.text}</span>
               </div>

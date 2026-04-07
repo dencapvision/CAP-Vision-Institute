@@ -439,19 +439,19 @@ const CourseDetail: React.FC = () => {
                         <h2 className="text-3xl font-black text-[#0f3460] mb-8 nav-font">วิทยากรผู้สอน</h2>
                         <div className="flex flex-col md:flex-row gap-10 items-center">
                            <div className="w-48 h-48 rounded-[2rem] overflow-hidden flex-shrink-0 shadow-lg border-4 border-gray-50">
-                              <Link to={`/speakers/${course.instructor.id}`}>
+                              <Link to={`/speakers/${course.instructor.slug || course.instructor.id}`}>
                                  <img src={course.instructor.image} alt={`วิทยากร: ${course.instructor.name}`} className="w-full h-full object-cover hover:scale-105 transition-transform" />
                               </Link>
                            </div>
                            <div>
                               <h3 className="text-2xl font-black text-[#0f3460] mb-3 nav-font">
-                                 <Link to={`/speakers/${course.instructor.id}`} className="hover:text-[#c5a059] transition-colors">
+                                 <Link to={`/speakers/${course.instructor.slug || course.instructor.id}`} className="hover:text-[#c5a059] transition-colors">
                                     {course.instructor.name}
                                  </Link>
                               </h3>
                               <p className="text-gray-500 font-bold uppercase tracking-widest text-xs mb-4">Director & Master Facilitator</p>
                               <p className="text-lg text-gray-600 leading-relaxed font-medium opacity-80">{course.instructor.bio}</p>
-                              <Link to={`/speakers/${course.instructor.id}`} className="inline-flex items-center gap-2 text-[#c5a059] font-black text-sm uppercase tracking-widest mt-6 hover:gap-4 transition-all">
+                              <Link to={`/speakers/${course.instructor.slug || course.instructor.id}`} className="inline-flex items-center gap-2 text-[#c5a059] font-black text-sm uppercase tracking-widest mt-6 hover:gap-4 transition-all">
                                  อ่านประวัติและผลงานฉบับเต็ม <ArrowRight className="w-4 h-4" />
                               </Link>
                            </div>

@@ -3,7 +3,6 @@ import { WheelOfLife } from '../../components/workshop/WheelOfLife';
 import { GrowthRoadmap } from '../../components/workshop/GrowthRoadmap';
 import { SlideDeck } from '../../components/workshop/SlideDeck';
 import { WheelData, GrowthRoadmapState, WorksheetType } from '../../types';
-import { GoogleGenAI } from "@google/genai";
 import { 
   FileText, 
   Settings, 
@@ -81,14 +80,14 @@ const WorkshopHandouts: React.FC = () => {
 
   const generateAI = async (prompt: string) => {
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
-      // Using the pattern from ChatBot.tsx
-      const chat = ai.chats.create({ 
-        model: 'gemini-2.5-flash',
-        config: { temperature: 0.7 }
+      const response = await fetch('/api/gemini', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt }),
       });
-      const response = await chat.sendMessage({ message: prompt });
-      return response.text;
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      return data.text as string;
     } catch (error) {
       console.error("AI Error:", error);
       alert("เกิดข้อผิดพลาดในการเชื่อมต่อ AI กรุณาลองใหม่อีกครั้ง");

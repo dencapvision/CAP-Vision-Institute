@@ -179,7 +179,7 @@ const CourseDetail: React.FC = () => {
                <Award className="w-full h-full transform translate-x-1/4" />
             </div>
             <div className="max-w-7xl mx-auto px-4 relative z-10">
-               <Link to="/courses" className="inline-flex items-center gap-2 text-blue-200 hover:text-[#c5a059] transition-colors font-bold mb-10 nav-font text-sm uppercase tracking-widest">
+               <Link to="/courses" className="inline-flex items-center gap-2 text-white/80 hover:text-[#c5a059] transition-colors font-bold mb-10 nav-font text-sm uppercase tracking-widest">
                   <ArrowLeft className="w-4 h-4" /> ย้อนกลับ
                </Link>
                <div className="flex flex-col lg:flex-row gap-16 items-start">
@@ -210,7 +210,7 @@ const CourseDetail: React.FC = () => {
                               <Clock className="w-6 h-6 text-[#c5a059]" />
                            </div>
                            <div>
-                              <p className="text-xs text-blue-200 font-bold uppercase tracking-widest mb-1">Duration</p>
+                              <p className="text-xs text-white/70 font-bold uppercase tracking-widest mb-1">Duration</p>
                               <p className="text-sm font-bold text-white">{course.duration || 'Flexible'}</p>
                            </div>
                         </div>
@@ -219,7 +219,7 @@ const CourseDetail: React.FC = () => {
                               <Users className="w-6 h-6 text-[#c5a059]" />
                            </div>
                            <div>
-                              <p className="text-xs text-blue-200 font-bold uppercase tracking-widest mb-1">Target Audience</p>
+                              <p className="text-xs text-white/70 font-bold uppercase tracking-widest mb-1">Target Audience</p>
                               <p className="text-sm font-bold text-white">{course.audience || 'All Levels'}</p>
                            </div>
                         </div>
@@ -228,7 +228,7 @@ const CourseDetail: React.FC = () => {
                               <Star className="w-6 h-6 text-[#c5a059]" />
                            </div>
                            <div>
-                              <p className="text-xs text-blue-200 font-bold uppercase tracking-widest mb-1">Rating</p>
+                              <p className="text-xs text-white/70 font-bold uppercase tracking-widest mb-1">Rating</p>
                               <p className="text-sm font-bold text-white">4.9/5.0 Premium</p>
                            </div>
                         </div>

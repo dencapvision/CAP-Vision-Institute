@@ -186,7 +186,7 @@ const Services: React.FC = () => {
                   <span className="text-[#c5a059]">พัฒนาคน เปลี่ยนองค์กร</span><br />
                   <span className="text-white">อย่างที่เห็นผลจริง</span>
                </h1>
-               <p className="text-blue-100/80 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-10">
+               <p className="text-white/90 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-10">
                   สำหรับ HR Manager และผู้บริหารที่ต้องการ{' '}
                   <strong className="text-white">ยกระดับทีม สร้างผู้นำ และวัดผลได้</strong>
                   <br />ไม่ใช่แค่อบรม — แต่คือการเปลี่ยนแปลงที่ยั่งยืน
@@ -207,7 +207,7 @@ const Services: React.FC = () => {
                      <MessageCircle className="w-5 h-5 text-[#c5a059]" /> ปรึกษาฟรี
                   </a>
                </div>
-               <p className="text-blue-200/40 text-sm mt-8">
+               <p className="text-white/70 text-sm mt-8">
                   ไว้วางใจโดย Tops · Mr.D.I.Y. · AOT · PEA · Land and Houses · กว่า 100 องค์กร
                </p>
             </div>
@@ -247,7 +247,7 @@ const Services: React.FC = () => {
                   <h2 className="text-2xl md:text-4xl font-black text-white nav-font mb-3">
                      เราแตกต่างจากการอบรมทั่วไปอย่างไร
                   </h2>
-                  <p className="text-blue-200/70 max-w-2xl mx-auto">
+                  <p className="text-white/85 max-w-2xl mx-auto">
                      ไม่ใช่วิทยากรบรรยาย แต่คือ{' '}
                      <strong className="text-[#c5a059]">Transformation Partner</strong>{' '}
                      ที่ออกแบบทุกอย่างเพื่อองค์กรของคุณ
@@ -261,7 +261,7 @@ const Services: React.FC = () => {
                         </div>
                         <div>
                            <h3 className="text-lg font-black text-white mb-1 nav-font">{title}</h3>
-                           <p className="text-blue-200/70 text-sm leading-relaxed">{desc}</p>
+                           <p className="text-white/85 text-sm leading-relaxed">{desc}</p>
                         </div>
                      </div>
                   ))}
@@ -434,7 +434,7 @@ const Services: React.FC = () => {
                   <h2 className="text-3xl md:text-5xl font-black nav-font mb-4 leading-tight text-[#c5a059]">
                      เริ่มต้นพัฒนาทีมของคุณวันนี้
                   </h2>
-                  <p className="text-blue-200/80 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+                  <p className="text-white/90 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
                      ปรึกษาฟรีกับ Master Facilitator — เราวิเคราะห์ปัญหา ออกแบบแนวทาง
                      และส่งใบเสนอราคาภายใน 24 ชั่วโมง
                   </p>
@@ -454,7 +454,7 @@ const Services: React.FC = () => {
                         <MessageCircle className="w-5 h-5 text-[#c5a059]" /> ปรึกษาฟรีผ่าน Line
                      </a>
                   </div>
-                  <p className="text-blue-200/40 text-xs mt-6">
+                  <p className="text-white/70 text-xs mt-6">
                      ไม่มีข้อผูกมัด · ตอบกลับภายใน 24 ชั่วโมง · ปรึกษาฟรี
                   </p>
                </div>

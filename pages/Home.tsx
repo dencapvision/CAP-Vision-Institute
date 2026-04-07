@@ -69,11 +69,11 @@ const Home: React.FC = () => {
             </h1>
 
             {/* Subheadline — specific, outcome-focused */}
-            <p className="text-base md:text-xl text-blue-100/80 leading-relaxed mb-3 max-w-2xl">
+            <p className="text-base md:text-xl text-white/90 leading-relaxed mb-3 max-w-2xl">
               สำหรับ HR Manager และผู้บริหารที่ต้องการ
               <strong className="text-white"> พัฒนาผู้นำ ยกระดับทีม และวัดผลได้จริง</strong>
             </p>
-            <p className="text-base md:text-lg text-blue-100/60 leading-relaxed mb-3 max-w-2xl">
+            <p className="text-base md:text-lg text-white/85 leading-relaxed mb-3 max-w-2xl">
               ไม่ใช่แค่อบรม — แต่คือการเปลี่ยนแปลงที่ยั่งยืนด้วย Transformative Learning
             </p>
             <p className="text-[#c5a059] font-bold text-sm md:text-base mb-10 md:mb-12">
@@ -100,14 +100,14 @@ const Home: React.FC = () => {
               ].map((stat, i) => (
                 <div key={i}>
                   <div className="text-2xl md:text-3xl font-black text-[#c5a059] nav-font">{stat.value}</div>
-                  <div className="text-white/40 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">{stat.label}</div>
+                  <div className="text-white/75 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">{stat.label}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-3 text-white/40">
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-3 text-white/60">
           <span className="text-[10px] items-center font-bold tracking-widest uppercase rotate-90 origin-left translate-x-3 mb-8">Scroll</span>
           <div className="w-0.5 h-16 bg-gradient-to-b from-white/40 to-transparent"></div>
         </div>
@@ -164,7 +164,7 @@ const Home: React.FC = () => {
               ].map((item, i) => (
                 <div key={i} className="group p-6 rounded-2xl hover:bg-white/5 transition-colors">
                   <h4 className="text-[#c5a059] font-black text-lg mb-2 nav-font uppercase tracking-tight">{item.title}</h4>
-                  <p className="text-white/60 text-sm font-medium">{item.desc}</p>
+                  <p className="text-white/85 text-sm font-medium">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -259,7 +259,7 @@ const Home: React.FC = () => {
                   {stat.icon}
                 </div>
                 <div className="text-3xl md:text-6xl font-black text-white mb-2 md:mb-4 nav-font tracking-tight">{stat.value}</div>
-                <div className="text-blue-200/60 font-black tracking-[0.2em] text-[10px] md:text-sm uppercase nav-font">{stat.label}</div>
+                <div className="text-white/80 font-black tracking-[0.2em] text-[10px] md:text-sm uppercase nav-font">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -393,7 +393,7 @@ const Home: React.FC = () => {
         </div>
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <h2 className="text-3xl md:text-5xl lg:text-7xl font-black mb-8 md:mb-12 nav-font leading-tight tracking-tight uppercase text-white">ยกระดับ<br />องค์กรของคุณ</h2>
-          <p className="text-blue-100/70 text-base md:text-xl lg:text-2xl mb-12 md:mb-20 font-light max-w-2xl mx-auto">
+          <p className="text-white/85 text-base md:text-xl lg:text-2xl mb-12 md:mb-20 font-light max-w-2xl mx-auto">
             ปรึกษาเราเพื่อออกแบบโซลูชันการพัฒนาผู้นำที่ทันสมัยและวัดผลได้จริง
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-8">

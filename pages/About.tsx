@@ -48,7 +48,7 @@ const About: React.FC = () => {
             <span className="text-[#c5a059]">เชื่อในศักยภาพมนุษย์</span><br />
             <span className="text-white">ขับเคลื่อนด้วยการเรียนรู้</span>
           </h1>
-          <p className="text-lg md:text-2xl text-blue-100/70 max-w-3xl mx-auto font-light leading-relaxed mb-10 px-4">
+          <p className="text-lg md:text-2xl text-white/85 max-w-3xl mx-auto font-light leading-relaxed mb-10 px-4">
             ตั้งแต่ปี 2552 เราเป็น <strong className="text-white">Transformation Partner</strong> ที่อยู่เบื้องหลัง
             การเปลี่ยนแปลงขององค์กรชั้นนำ ผ่านกระบวนการ Facilitation ที่มุ่งเน้นผลลัพธ์ที่ยั่งยืน
           </p>
@@ -63,7 +63,7 @@ const About: React.FC = () => {
             ].map((s, i) => (
               <div key={i} className="text-center">
                 <div className="text-2xl md:text-4xl font-black text-[#c5a059] nav-font">{s.value}</div>
-                <div className="text-white/40 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">{s.label}</div>
+                <div className="text-white/75 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">{s.label}</div>
               </div>
             ))}
           </div>
@@ -177,7 +177,7 @@ const About: React.FC = () => {
                     <span className="w-9 h-9 bg-white/10 text-[#c5a059] rounded-full flex items-center justify-center font-black flex-shrink-0 text-sm group-hover:bg-[#c5a059] group-hover:text-white transition-all">
                       {idx + 1}
                     </span>
-                    <p className="text-blue-100/80 text-base md:text-lg font-medium leading-relaxed">{item}</p>
+                    <p className="text-white/90 text-base md:text-lg font-medium leading-relaxed">{item}</p>
                   </div>
                 ))}
               </div>
@@ -323,7 +323,7 @@ const About: React.FC = () => {
             <h2 className="text-3xl md:text-5xl font-black nav-font mb-4 leading-tight text-[#c5a059]">
               เริ่มต้นการเปลี่ยนแปลง<br />องค์กรของคุณวันนี้
             </h2>
-            <p className="text-blue-200/80 text-base md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-white/90 text-base md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
               ปรึกษาฟรีกับ Master Facilitator — เราวิเคราะห์ปัญหา ออกแบบแนวทาง และส่งใบเสนอราคาภายใน 24 ชั่วโมง
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -334,7 +334,7 @@ const About: React.FC = () => {
                 <MessageCircle className="w-5 h-5 text-[#c5a059]" /> ปรึกษาฟรีผ่าน Line
               </a>
             </div>
-            <p className="text-blue-200/30 text-xs mt-6">ไม่มีข้อผูกมัด · ตอบกลับภายใน 24 ชั่วโมง</p>
+            <p className="text-white/70 text-xs mt-6">ไม่มีข้อผูกมัด · ตอบกลับภายใน 24 ชั่วโมง</p>
           </div>
         </div>
 

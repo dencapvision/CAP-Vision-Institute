@@ -116,7 +116,7 @@ const Contact: React.FC = () => {
                   <span className="text-[#c5a059]">ปรึกษาฟรี</span><br />
                   <span className="text-white">ไม่มีข้อผูกมัด</span>
                </h1>
-               <p className="text-blue-100/80 text-base md:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-8">
+               <p className="text-white/90 text-base md:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-8">
                   บอกเราถึงปัญหาและเป้าหมายขององค์กรคุณ<br />
                   เราวิเคราะห์ ออกแบบแนวทาง และส่งใบเสนอราคา<strong className="text-white"> ภายใน 24 ชั่วโมง</strong>
                </p>
@@ -129,7 +129,7 @@ const Contact: React.FC = () => {
                      <Phone className="w-5 h-5 text-[#c5a059]" /> {CONTACT_INFO.phone}
                   </a>
                </div>
-               <p className="text-blue-200/40 text-xs mt-5">หรือกรอกฟอร์มด้านล่าง — เราจะติดต่อกลับเร็วที่สุด</p>
+               <p className="text-white/70 text-xs mt-5">หรือกรอกฟอร์มด้านล่าง — เราจะติดต่อกลับเร็วที่สุด</p>
             </div>
          </div>
 
@@ -293,7 +293,7 @@ const Contact: React.FC = () => {
                      <h2 className="text-3xl md:text-5xl font-black text-white nav-font mb-6 leading-tight max-w-2xl">
                         สร้างแรงบันดาลใจและพัฒนาศักยภาพผู้คนในทุกระดับ
                      </h2>
-                     <p className="text-blue-100/70 font-medium max-w-xl text-sm md:text-lg">
+                     <p className="text-white/85 font-medium max-w-xl text-sm md:text-lg">
                         บรรยากาศกิจกรรม BKK THE ONE SOCIETY 2025 โดยท่าอากาศยานสุวรรณภูมิ (AOT) — หนึ่งในความภูมิใจที่เราได้ร่วมเป็นส่วนหนึ่งของการพัฒนา
                      </p>
                   </div>

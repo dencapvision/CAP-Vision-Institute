@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
                 <span className="text-[#c5a059] text-[9px] font-bold uppercase tracking-[0.3em]">พาร์ทเนอร์</span>
               </div>
             </div>
-            <p className="text-blue-100 text-[15px] leading-relaxed mb-10 opacity-80 font-medium">
+            <p className="text-white/90 text-[15px] leading-relaxed mb-10 font-medium">
               "Transform People, Transform Organization"<br />
               สถาบันที่ปรึกษาด้านการยกระดับคุณภาพพนักงานและการพัฒนาผู้นำโดย {BRAND_INFO.director}
             </p>
@@ -51,7 +51,7 @@ const Footer: React.FC = () => {
 
           <div>
             <h4 className="font-bold text-lg mb-10 nav-font text-[#c5a059] uppercase tracking-wider">ลิงก์ด่วน</h4>
-            <ul className="space-y-4 text-blue-100/70 font-bold text-sm">
+            <ul className="space-y-4 text-white/85 font-bold text-sm">
               <li><Link to="/" className="hover:text-[#c5a059] transition-colors">หน้าหลัก</Link></li>
               <li><Link to="/courses" className="hover:text-[#c5a059] transition-colors">หลักสูตรพัฒนาผู้นำ</Link></li>
               <li><Link to="/events" className="hover:text-[#c5a059] transition-colors">กิจกรรม & เครือข่าย</Link></li>
@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
 
           <div>
             <h4 className="font-bold text-lg mb-10 nav-font text-[#c5a059] uppercase tracking-wider">บริการของเรา</h4>
-            <ul className="space-y-4 text-blue-100/70 font-bold text-sm">
+            <ul className="space-y-4 text-white/85 font-bold text-sm">
               <li><Link to="/services#in-house" className="hover:text-[#c5a059] transition-colors">In-house Training</Link></li>
               <li><Link to="/services#coaching" className="hover:text-[#c5a059] transition-colors">Executive Coaching</Link></li>
               <li><Link to="/services#consulting" className="hover:text-[#c5a059] transition-colors">OD Consulting</Link></li>
@@ -84,7 +84,7 @@ const Footer: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-[10px] font-black text-[#c5a059] uppercase tracking-widest mb-1 opacity-60">Call Center</p>
-                  <p className="text-blue-100 font-bold">{CONTACT_INFO.phone}</p>
+                  <p className="text-white font-bold">{CONTACT_INFO.phone}</p>
                 </div>
               </li>
               <li className="flex items-start gap-4 group">
@@ -93,7 +93,7 @@ const Footer: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-[10px] font-black text-[#c5a059] uppercase tracking-widest mb-1 opacity-60">LINE Official</p>
-                  <p className="text-blue-100 font-bold">{CONTACT_INFO.line}</p>
+                  <p className="text-white font-bold">{CONTACT_INFO.line}</p>
                 </div>
               </li>
               <li className="flex items-start gap-4 group">
@@ -102,14 +102,14 @@ const Footer: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-[10px] font-black text-[#c5a059] uppercase tracking-widest mb-1 opacity-60">Location</p>
-                  <p className="text-blue-100 leading-tight font-bold text-sm">{CONTACT_INFO.address}</p>
+                  <p className="text-white leading-tight font-bold text-sm">{CONTACT_INFO.address}</p>
                 </div>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-white/5 pt-12 text-center text-[10px] md:text-[11px] text-blue-200/40 font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] nav-font">
+        <div className="border-t border-white/10 pt-12 text-center text-[10px] md:text-[11px] text-white/65 font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] nav-font">
           <p>© {new Date().getFullYear()} {BRAND_INFO.thaiName} (CAP Vision Partner). Empowerment through Innovation & Care.</p>
         </div>
       </div>

@@ -123,7 +123,7 @@ const Resources: React.FC = () => {
             <span className="text-white">ด้านการพัฒนาคนและองค์กร</span>
           </h1>
 
-          <p className="text-white/60 text-lg md:text-xl font-light leading-relaxed mb-10 max-w-2xl mx-auto">
+          <p className="text-white/80 text-lg md:text-xl font-light leading-relaxed mb-10 max-w-2xl mx-auto">
             ความรู้ที่ใช้งานได้จริง — ไม่ใช่แค่ทฤษฎี<br />
             <span className="text-white/80 font-semibold">บทความ · วิดีโอ · เครื่องมือฟรี</span> โดยทีม CAP Vision Institute
           </p>
@@ -318,7 +318,7 @@ const Resources: React.FC = () => {
             <h2 className="text-3xl md:text-4xl font-black text-white nav-font">
               ทฤษฎีที่อยู่เบื้องหลังการอบรม CAP Vision
             </h2>
-            <p className="text-white/50 mt-3 max-w-xl mx-auto">
+            <p className="text-white/80 mt-3 max-w-xl mx-auto">
               เข้าใจว่าทำไมเราถึงออกแบบหลักสูตรแบบนี้ — และทำไมมันถึงได้ผล
             </p>
           </div>
@@ -339,13 +339,13 @@ const Resources: React.FC = () => {
                       {item.tag}
                     </span>
                   </div>
-                  <p className="text-white/40 text-xs font-semibold italic mb-3">
+                  <p className="text-white/65 text-xs font-semibold italic mb-3">
                     "{item.hook}"
                   </p>
                   <h3 className="text-white font-black text-xl nav-font mb-4 leading-tight">
                     {item.title}
                   </h3>
-                  <p className="text-white/60 text-sm leading-relaxed">
+                  <p className="text-white/80 text-sm leading-relaxed">
                     {item.body}
                   </p>
                 </div>
@@ -513,7 +513,7 @@ const Resources: React.FC = () => {
             <h3 className="text-2xl md:text-3xl font-black text-white nav-font mb-4">
               รับ Toolkit ชุดพิเศษ ฟรี
             </h3>
-            <p className="text-white/60 mb-8 max-w-md mx-auto">
+            <p className="text-white/80 mb-8 max-w-md mx-auto">
               Checklist พัฒนาภาวะผู้นำ 30 ข้อ + คู่มือออกแบบ Learning Journey สำหรับ HR
             </p>
             {downloadSubmitted ? (
@@ -537,7 +537,7 @@ const Resources: React.FC = () => {
                 </button>
               </div>
             )}
-            <p className="text-white/30 text-[10px] mt-4 nav-font">
+            <p className="text-white/65 text-[10px] mt-4 nav-font">
               ไม่มี Spam · ยกเลิกได้ทุกเมื่อ
             </p>
           </div>
@@ -573,7 +573,7 @@ const Resources: React.FC = () => {
           <h2 className="text-3xl md:text-5xl font-black text-white nav-font leading-tight mb-8">
             ไปพัฒนาทีมของคุณ?
           </h2>
-          <p className="text-white/60 text-lg mb-10 max-w-xl mx-auto">
+          <p className="text-white/80 text-lg mb-10 max-w-xl mx-auto">
             ปรึกษาโปรแกรมอบรม In-house Training ที่ออกแบบเฉพาะสำหรับองค์กรของคุณ
           </p>
 
@@ -594,7 +594,7 @@ const Resources: React.FC = () => {
             </a>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-6 text-white/40 text-xs font-bold nav-font uppercase tracking-widest">
+          <div className="flex flex-wrap justify-center gap-6 text-white/65 text-xs font-bold nav-font uppercase tracking-widest">
             {['ปรึกษาฟรี ไม่มีข้อผูกมัด', 'ตอบกลับภายใน 24 ชม.', 'ออกแบบเฉพาะองค์กรคุณ'].map((t, i) => (
               <span key={i} className="flex items-center gap-2">
                 <Shield className="w-3 h-3 text-[#c5a059]" /> {t}

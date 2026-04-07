@@ -40,7 +40,7 @@ const Events: React.FC = () => {
             <div className="max-w-7xl mx-auto px-4 relative z-10">
                <span className="text-[#c5a059] font-black text-xs uppercase tracking-[0.5em] mb-6 block nav-font">Gathering of Minds</span>
                <h1 className="text-4xl md:text-7xl font-black mb-8 nav-font tracking-tight">{EVENT_INFO.title}</h1>
-               <p className="text-blue-100 text-xl md:text-2xl max-w-3xl mx-auto font-light leading-relaxed italic">
+               <p className="text-white/90 text-xl md:text-2xl max-w-3xl mx-auto font-light leading-relaxed italic">
                   “{EVENT_INFO.slogan}”
                </p>
             </div>

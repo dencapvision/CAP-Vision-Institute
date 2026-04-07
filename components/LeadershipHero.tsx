@@ -102,7 +102,7 @@ const LeadershipHero: React.FC = () => {
               <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#c5a059]/20 rounded-full blur-[60px]"></div>
               <div className="relative z-10 space-y-6">
                 <div>
-                  <p className="text-white/60 font-black uppercase tracking-[0.3em] text-[10px] nav-font mb-1">Course Categories</p>
+                  <p className="text-white/80 font-black uppercase tracking-[0.3em] text-[10px] nav-font mb-1">Course Categories</p>
                   <p className="text-2xl font-black text-white nav-font">4 หมวดทักษะหลัก</p>
                 </div>
                 <div className="space-y-3">
@@ -120,7 +120,7 @@ const LeadershipHero: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-3 pt-2 border-t border-white/10">
                   <Zap className="w-5 h-5 text-[#c5a059]" />
-                  <span className="text-white/70 text-xs font-bold uppercase tracking-widest nav-font">ทุกหลักสูตรปรับ In-house ได้</span>
+                  <span className="text-white/85 text-xs font-bold uppercase tracking-widest nav-font">ทุกหลักสูตรปรับ In-house ได้</span>
                 </div>
               </div>
             </div>

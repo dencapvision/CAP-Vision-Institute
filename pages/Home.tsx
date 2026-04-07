@@ -100,14 +100,14 @@ const Home: React.FC = () => {
               ].map((stat, i) => (
                 <div key={i}>
                   <div className="text-2xl md:text-3xl font-black text-[#c5a059] nav-font">{stat.value}</div>
-                  <div className="text-white/75 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">{stat.label}</div>
+                  <div className="text-white/85 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">{stat.label}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-3 text-white/60">
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-3 text-white/80">
           <span className="text-[10px] items-center font-bold tracking-widest uppercase rotate-90 origin-left translate-x-3 mb-8">Scroll</span>
           <div className="w-0.5 h-16 bg-gradient-to-b from-white/40 to-transparent"></div>
         </div>

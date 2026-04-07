@@ -210,7 +210,7 @@ const CourseDetail: React.FC = () => {
                               <Clock className="w-6 h-6 text-[#c5a059]" />
                            </div>
                            <div>
-                              <p className="text-xs text-white/70 font-bold uppercase tracking-widest mb-1">Duration</p>
+                              <p className="text-xs text-white/85 font-bold uppercase tracking-widest mb-1">Duration</p>
                               <p className="text-sm font-bold text-white">{course.duration || 'Flexible'}</p>
                            </div>
                         </div>
@@ -219,7 +219,7 @@ const CourseDetail: React.FC = () => {
                               <Users className="w-6 h-6 text-[#c5a059]" />
                            </div>
                            <div>
-                              <p className="text-xs text-white/70 font-bold uppercase tracking-widest mb-1">Target Audience</p>
+                              <p className="text-xs text-white/85 font-bold uppercase tracking-widest mb-1">Target Audience</p>
                               <p className="text-sm font-bold text-white">{course.audience || 'All Levels'}</p>
                            </div>
                         </div>
@@ -228,7 +228,7 @@ const CourseDetail: React.FC = () => {
                               <Star className="w-6 h-6 text-[#c5a059]" />
                            </div>
                            <div>
-                              <p className="text-xs text-white/70 font-bold uppercase tracking-widest mb-1">Rating</p>
+                              <p className="text-xs text-white/85 font-bold uppercase tracking-widest mb-1">Rating</p>
                               <p className="text-sm font-bold text-white">4.9/5.0 Premium</p>
                            </div>
                         </div>

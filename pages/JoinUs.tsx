@@ -80,7 +80,7 @@ const JoinUs: React.FC = () => {
         </div>
         <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
           <h1 className="text-5xl md:text-7xl font-black mb-8 nav-font tracking-tight">ร่วมเป็นส่วนหนึ่งของ CAP Vision</h1>
-          <p className="text-xl md:text-2xl text-blue-100/80 max-w-3xl mx-auto font-light leading-relaxed">
+          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto font-light leading-relaxed">
             เรายินดีต้อนรับคนรุ่นใหม่ที่มี "ใจ" อยากเห็นผู้คนเติบโตและพัฒนาศักยภาพตนเองอย่างไม่มีขีดจำกัด
           </p>
         </div>
@@ -220,7 +220,7 @@ const JoinUs: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 mt-16">
         <div className="bg-[#0f3460] text-white p-12 rounded-[3rem] text-center shadow-2xl">
           <h3 className="text-2xl md:text-3xl font-black mb-6 nav-font">สนใจหลักสูตรของเรา?</h3>
-          <p className="text-blue-100/80 mb-8 max-w-xl mx-auto">ดูหลักสูตรทั้งหมดที่เราเปิดสอน หรือติดต่อเราเพื่อพูดคุย</p>
+          <p className="text-white/90 mb-8 max-w-xl mx-auto">ดูหลักสูตรทั้งหมดที่เราเปิดสอน หรือติดต่อเราเพื่อพูดคุย</p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link to="/courses" className="bg-[#c5a059] text-white px-10 py-4 rounded-2xl font-bold nav-font hover:bg-white hover:text-[#0f3460] transition-all">
               ดูหลักสูตรทั้งหมด

@@ -63,7 +63,7 @@ const About: React.FC = () => {
             ].map((s, i) => (
               <div key={i} className="text-center">
                 <div className="text-2xl md:text-4xl font-black text-[#c5a059] nav-font">{s.value}</div>
-                <div className="text-white/75 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">{s.label}</div>
+                <div className="text-white/85 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">{s.label}</div>
               </div>
             ))}
           </div>
@@ -339,7 +339,7 @@ const About: React.FC = () => {
                 <MessageCircle className="w-5 h-5 text-[#c5a059]" /> ปรึกษาฟรีผ่าน Line
               </a>
             </div>
-            <p className="text-white/70 text-xs mt-6">ไม่มีข้อผูกมัด · ตอบกลับภายใน 24 ชั่วโมง</p>
+            <p className="text-white/85 text-xs mt-6">ไม่มีข้อผูกมัด · ตอบกลับภายใน 24 ชั่วโมง</p>
           </div>
         </div>
 

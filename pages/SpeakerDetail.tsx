@@ -84,7 +84,7 @@ const GenericDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> 
             <div className="lg:w-2/3">
               <h1 className="text-4xl md:text-5xl font-black mb-4 leading-tight text-white">{speaker.name}</h1>
               {speaker.title && <p className="text-lg text-[#c5a059] font-bold uppercase tracking-[0.15em] mb-8">{speaker.title}</p>}
-              <p className="text-lg text-blue-100/80 leading-relaxed mb-8 max-w-2xl">{speaker.longBio || speaker.bio}</p>
+              <p className="text-lg text-white/90 leading-relaxed mb-8 max-w-2xl">{speaker.longBio || speaker.bio}</p>
               <a href={CONTACT_INFO.lineUrl} className="inline-flex items-center gap-3 bg-[#c5a059] text-white px-8 py-4 rounded-2xl font-bold hover:bg-white hover:text-[#0f3460] transition-all">
                 <MessageCircle className="w-5 h-5" /> นัดปรึกษาหลักสูตร
               </a>
@@ -247,7 +247,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
               </div>
 
               {/* Microcopy */}
-              <p className="mt-4 text-white/40 text-sm">
+              <p className="mt-4 text-white/65 text-sm">
                 ⏰ ตารางคิวมีจำกัด — แนะนำจองล่วงหน้า 1-2 เดือน
               </p>
             </div>
@@ -288,7 +288,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                 <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center backdrop-blur-sm">
                   <Icon className="w-6 h-6 text-[#c5a059] mx-auto mb-3" />
                   <p className="text-3xl font-black text-white mb-1">{stat.value}</p>
-                  <p className="text-white/75 text-sm">{stat.label}</p>
+                  <p className="text-white/85 text-sm">{stat.label}</p>
                 </div>
               );
             })}
@@ -349,7 +349,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
           <div className="bg-[#0a1628] rounded-3xl p-8 md:p-10 text-white">
             <Zap className="w-10 h-10 text-[#c5a059] mx-auto mb-4" />
             <p className="text-xl md:text-2xl font-bold leading-relaxed">
-              ถึงเวลาเปลี่ยนจากการ <span className="text-white/50 line-through">"สอน" (Teaching)</span>
+              ถึงเวลาเปลี่ยนจากการ <span className="text-white/80 line-through">"สอน" (Teaching)</span>
               <br />
               เป็นการ <span className="text-[#c5a059]">"ฟื้นฟู" (Facilitating)</span> ศักยภาพที่แท้จริง
             </p>
@@ -627,7 +627,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
               โทรตรง {CONTACT_INFO.phone}
             </a>
           </div>
-          <p className="text-white/30 text-sm">
+          <p className="text-white/65 text-sm">
             ⏰ ตารางคิวจำกัด — แนะนำสอบถามล่วงหน้าอย่างน้อย 1-2 เดือน · ปรึกษาเบื้องต้นฟรี
           </p>
 
@@ -639,7 +639,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
               { icon: '🎤', text: '1,000+ เวที' },
               { icon: '✅', text: 'ออกแบบหลักสูตรได้' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-2 text-white/75 text-sm">
+              <div key={i} className="flex items-center gap-2 text-white/85 text-sm">
                 <span>{item.icon}</span>
                 <span>{item.text}</span>
               </div>

@@ -129,7 +129,7 @@ const Contact: React.FC = () => {
                      <Phone className="w-5 h-5 text-[#c5a059]" /> {CONTACT_INFO.phone}
                   </a>
                </div>
-               <p className="text-white/70 text-xs mt-5">หรือกรอกฟอร์มด้านล่าง — เราจะติดต่อกลับเร็วที่สุด</p>
+               <p className="text-white/85 text-xs mt-5">หรือกรอกฟอร์มด้านล่าง — เราจะติดต่อกลับเร็วที่สุด</p>
             </div>
          </div>
 

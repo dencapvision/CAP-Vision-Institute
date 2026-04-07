@@ -83,7 +83,7 @@ const Footer: React.FC = () => {
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-black text-[#c5a059] uppercase tracking-widest mb-1 opacity-60">Call Center</p>
+                  <p className="text-[10px] font-black text-[#c5a059] uppercase tracking-widest mb-1">Call Center</p>
                   <p className="text-white font-bold">{CONTACT_INFO.phone}</p>
                 </div>
               </li>
@@ -92,7 +92,7 @@ const Footer: React.FC = () => {
                   <MessageCircle className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-black text-[#c5a059] uppercase tracking-widest mb-1 opacity-60">LINE Official</p>
+                  <p className="text-[10px] font-black text-[#c5a059] uppercase tracking-widest mb-1">LINE Official</p>
                   <p className="text-white font-bold">{CONTACT_INFO.line}</p>
                 </div>
               </li>
@@ -101,7 +101,7 @@ const Footer: React.FC = () => {
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-black text-[#c5a059] uppercase tracking-widest mb-1 opacity-60">Location</p>
+                  <p className="text-[10px] font-black text-[#c5a059] uppercase tracking-widest mb-1">Location</p>
                   <p className="text-white leading-tight font-bold text-sm">{CONTACT_INFO.address}</p>
                 </div>
               </li>
@@ -109,7 +109,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-12 text-center text-[10px] md:text-[11px] text-white/65 font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] nav-font">
+        <div className="border-t border-white/10 pt-12 text-center text-[10px] md:text-[11px] text-white/85 font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] nav-font">
           <p>© {new Date().getFullYear()} {BRAND_INFO.thaiName} (CAP Vision Partner). Empowerment through Innovation & Care.</p>
         </div>
       </div>

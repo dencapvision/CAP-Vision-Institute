@@ -27,7 +27,17 @@
       "Bash(openssl s_client -connect capvisionpartner.com:443 -servername capvisionpartner.com)",
       "Bash(openssl x509:*)",
       "Bash(node -e ':*)",
-      "Bash(node scripts/update-transformational-leadership.mjs)"
+      "Bash(node scripts/update-transformational-leadership.mjs)",
+      "Bash(sed -n '255,265p' pages/Speakers.tsx)",
+      "Bash(sed -n '108,115p' components/Footer.tsx)",
+      "Bash(sed -n '80,92p' components/Footer.tsx)",
+      "Bash(sed -n '340,360p' pages/Resources.tsx)",
+      "Bash(sed -n '318,325p' pages/Resources.tsx)",
+      "Bash(sed -n '536,545p' pages/Resources.tsx)",
+      "Bash(sed -n '593,601p' pages/Resources.tsx)",
+      "Bash(sed -n '348,352p' pages/SpeakerDetail.tsx)",
+      "Bash(sed -n '626,645p' pages/SpeakerDetail.tsx)",
+      "Bash(sed -n '247,255p' pages/SpeakerDetail.tsx)"
     ]
   }
 }

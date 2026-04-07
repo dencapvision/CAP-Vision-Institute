@@ -207,7 +207,7 @@ const Services: React.FC = () => {
                      <MessageCircle className="w-5 h-5 text-[#c5a059]" /> ปรึกษาฟรี
                   </a>
                </div>
-               <p className="text-white/70 text-sm mt-8">
+               <p className="text-white/85 text-sm mt-8">
                   ไว้วางใจโดย Tops · Mr.D.I.Y. · AOT · PEA · Land and Houses · กว่า 100 องค์กร
                </p>
             </div>
@@ -457,7 +457,7 @@ const Services: React.FC = () => {
                         <MessageCircle className="w-5 h-5 text-[#c5a059]" /> ปรึกษาฟรีผ่าน Line
                      </a>
                   </div>
-                  <p className="text-white/70 text-xs mt-6">
+                  <p className="text-white/85 text-xs mt-6">
                      ไม่มีข้อผูกมัด · ตอบกลับภายใน 24 ชั่วโมง · ปรึกษาฟรี
                   </p>
                </div>

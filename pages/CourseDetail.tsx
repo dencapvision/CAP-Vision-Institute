@@ -89,6 +89,15 @@ const CourseDetail: React.FC = () => {
        );
     };
 
+    // Strip ALL emoji from any text from the database
+    const stripEmoji = (text: string): string => {
+       if (!text) return text;
+       return text
+          .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}]+/gu, '')
+          .replace(/[\u{1F004}\u{1F0CF}\u{1F170}-\u{1F171}\u{1F17E}-\u{1F17F}\u{1F18E}\u{1F191}-\u{1F19A}\u{1F201}-\u{1F202}\u{1F21A}\u{1F22F}\u{1F232}-\u{1F23A}]+/gu, '')
+          .trim();
+    };
+
     const renderIcon = (icon: any, className: string = "w-6 h-6") => {
         if (!icon) return <Target className={className} />;
         
@@ -125,9 +134,11 @@ const CourseDetail: React.FC = () => {
               processed = processed
                  .replace(/^#+\s*/, '')      // Remove start-of-line hashes
                  .replace(/#{1,6}\s/g, '')   // Remove any remaining hashes followed by space
-                 .replace(/🔶\s*/g, '')      // Remove diamond emoji
+                 // Remove ALL emoji (Unicode ranges: emoticons, symbols, flags, etc.)
+                 .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE00}-\u{FE0F}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}]+/gu, '')
                  .replace(/\*\*/g, '')        // Remove double asterisks
-                 .replace(/\*/g, '');          // Remove single asterisks
+                 .replace(/\*/g, '')           // Remove single asterisks
+                 .trim();
               
               if (!processed) return null;
 
@@ -282,9 +293,9 @@ const CourseDetail: React.FC = () => {
                                     <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mx-auto mb-4 text-[#c5a059] shadow-sm group-hover:bg-[#c5a059] group-hover:text-white transition-all">
                                        {renderIcon(isObj ? item.icon : null)}
                                     </div>
-                                    {isObj && item.stat && <span className="text-3xl font-black text-[#0f3460] group-hover:text-white block mb-1 nav-font">{item.stat}</span>}
-                                    <h4 className="text-sm font-bold text-[#c5a059] mb-3 nav-font uppercase tracking-widest">{isObj ? item.label : `เหตุผลที่ ${idx + 1}`}</h4>
-                                    <p className="text-sm text-gray-500 group-hover:text-blue-100 leading-relaxed">{isObj ? item.desc : item}</p>
+                                    {isObj && item.stat && <span className="text-3xl font-black text-[#0f3460] group-hover:text-white block mb-1 nav-font">{stripEmoji(String(item.stat))}</span>}
+                                    <h4 className="text-sm font-bold text-[#c5a059] mb-3 nav-font uppercase tracking-widest">{isObj ? stripEmoji(item.label) : `เหตุผลที่ ${idx + 1}`}</h4>
+                                    <p className="text-sm text-gray-500 group-hover:text-blue-100 leading-relaxed">{isObj ? stripEmoji(item.desc) : stripEmoji(item)}</p>
                                  </div>
                               );
                            })}
@@ -307,8 +318,8 @@ const CourseDetail: React.FC = () => {
                                     <div className="w-10 h-10 bg-[#c5a059] rounded-xl flex items-center justify-center mb-6 shadow-lg">
                                        {renderIcon(isObj ? item.icon : null, "w-5 h-5 text-white")}
                                     </div>
-                                    <h4 className="text-lg font-bold text-[#c5a059] mb-3 nav-font">{isObj ? item.title : `ขั้นตอนที่ ${idx + 1}`}</h4>
-                                    <p className="text-white text-sm leading-relaxed">{isObj ? item.desc : item}</p>
+                                    <h4 className="text-lg font-bold text-[#c5a059] mb-3 nav-font">{isObj ? stripEmoji(item.title) : `ขั้นตอนที่ ${idx + 1}`}</h4>
+                                    <p className="text-white text-sm leading-relaxed">{isObj ? stripEmoji(item.desc) : stripEmoji(item)}</p>
                                  </div>
                               );
                            })}
@@ -329,8 +340,8 @@ const CourseDetail: React.FC = () => {
                                         {renderIcon(isObj ? item.icon : null, "w-5 h-5")}
                                      </div>
                                      <div>
-                                        <h4 className="font-bold text-[#0f3460] nav-font">{isObj ? item.title : item}</h4>
-                                        {isObj && item.desc && <p className="text-sm text-gray-500 mt-1">{item.desc}</p>}
+                                        <h4 className="font-bold text-[#0f3460] nav-font">{isObj ? stripEmoji(item.title) : stripEmoji(item)}</h4>
+                                        {isObj && item.desc && <p className="text-sm text-gray-500 mt-1">{stripEmoji(item.desc)}</p>}
                                      </div>
                                   </div>
                                );
@@ -389,7 +400,7 @@ const CourseDetail: React.FC = () => {
                                           </div>
                                           <span className={`text-lg font-bold nav-font transition-colors ${isExpanded ? 'text-[#0f3460]' : 'text-gray-700'
                                              }`}>
-                                             {isObj ? obj.title : obj}
+                                             {isObj ? stripEmoji(obj.title) : stripEmoji(obj)}
                                           </span>
                                        </div>
                                        <div className={`flex-shrink-0 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>

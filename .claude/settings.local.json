@@ -45,7 +45,8 @@
       "Bash(node scripts/update-ai-mastery-professionals.mjs)",
       "Bash(node scripts/update-conflict-to-collaboration.mjs)",
       "Bash(node scripts/update-transformational-leadership-v2.mjs)",
-      "Bash(node scripts/update-leading-with-purpose.mjs)"
+      "Bash(node scripts/update-leading-with-purpose.mjs)",
+      "Bash(node scripts/seed-portfolio.mjs)"
     ]
   }
 }

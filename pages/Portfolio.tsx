@@ -1,116 +1,128 @@
-import React from 'react';
-import { Briefcase, ArrowRight, ExternalLink } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRight, ExternalLink, Loader2 } from 'lucide-react';
 import SEO from '../components/SEO';
 import ClientsSection from '../components/ClientsSection';
+import PortfolioCard from '../components/PortfolioCard';
+import { fetchPortfolios } from '../services/portfolio';
+import type { Portfolio } from '../services/portfolio';
+
+const CATEGORIES = ['ทั้งหมด', 'Leadership', 'Team', 'Communication', 'Mindset', 'Work Skills'];
+
 const Portfolio: React.FC = () => {
-    // Using some courses as dummy portfolio items for now, mixed with static data
-    const portFolioItems = [
-        {
-            id: 1,
-            client: "Central Food Retail",
-            project: "Leadership Development Program",
-            image: "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/portfolio/Central%20Food%20Retail%202.jpg",
-            category: "Leadership",
-            result: "Developed 50+ future leaders"
-        },
-        {
-            id: 2,
-            client: "สำนักพัฒนาสมรรถนะครูและบุคลากรอาชีวศึกษา",
-            project: "Team Synergy & Culture",
-            image: "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/portfolio/team%20building1.jpg",
-            category: "Team building",
-            result: "Enhanced cross-functional collaboration"
-        },
-        {
-            id: 3,
-            client: "สมาคมส่งเสริมบุคลิกสตรี",
-            project: "นวัตกรรมการสื่อสารและการพูดในที่ชุมชน",
-            image: "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/portfolio/Communication.jpg",
-            category: "Communication",
-            result: "Improved communication & public speaking skills"
-        },
-        {
-            id: 4,
-            client: "สำนักทรัพยากรน้ำแห่งชาติ",
-            project: "การคิดบวกอย่างสร้างสรรค์ และ การทำงานอย่างมีความสุข",
-            image: "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/portfolio/Mindset.jpg",
-            category: "Mindset",
-            result: "Built positive mindset and workplace happiness"
-        }
-    ];
+  const [items, setItems] = useState<Portfolio[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeCategory, setActiveCategory] = useState('ทั้งหมด');
 
-    return (
-        <div className="bg-gray-50 min-h-screen pb-20 overflow-x-hidden">
-            <SEO
-                title="ผลงานของเรา (Portfolio) - CAP Vision Institute"
-                description="ตัวอย่างผลงานการฝึกอบรมและพัฒนาบุคลากรให้กับองค์กรชั้นนำ โดย CAP Vision Institute"
-            />
-            {/* Page Header */}
-            <div className="bg-[#0f3460] pt-16 md:pt-20 pb-24 md:pb-32 text-white text-center relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#c5a059] rounded-full blur-[150px]"></div>
-                </div>
-                <div className="max-w-7xl mx-auto px-4 relative z-10">
-                    <span className="text-[#c5a059] font-black text-[10px] md:text-xs uppercase tracking-[0.4em] mb-4 block nav-font">Our Success Stories</span>
-                    <h1 className="text-3xl md:text-6xl font-black mb-6 nav-font tracking-tight uppercase text-white">
-                        ผลงานแห่งความภาคภูมิใจ
-                    </h1>
-                    <p className="text-blue-100 text-base md:text-xl max-w-2xl mx-auto font-light opacity-80 leading-relaxed">
-                        เบื้องหลังความสำเร็จของการพัฒนาคนและองค์กรชั้นนำระดับประเทศ
-                    </p>
-                </div>
-            </div>
+  useEffect(() => {
+    fetchPortfolios()
+      .then(setItems)
+      .finally(() => setLoading(false));
+  }, []);
 
-            <div className="max-w-7xl mx-auto px-4 -mt-16 md:-mt-24 relative z-20">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {portFolioItems.map((item) => (
-                        <div key={item.id} className="bg-white rounded-[2rem] overflow-hidden shadow-xl border border-gray-100 group hover:-translate-y-2 transition-transform duration-500">
-                            <div className="relative h-64 overflow-hidden">
-                                <img src={item.image} alt={item.project} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-xl text-xs font-bold text-[#0f3460] nav-font shadow-lg">
-                                    {item.category}
-                                </div>
-                            </div>
-                            <div className="p-8">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <Briefcase className="w-5 h-5 text-[#c5a059]" />
-                                    <span className="text-sm font-bold text-gray-400 uppercase tracking-wider">{item.client}</span>
-                                </div>
-                                <h3 className="text-2xl font-black text-[#0f3460] mb-4 nav-font leading-tight">{item.project}</h3>
-                                <div className="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-6">
-                                    <p className="text-gray-600 font-medium text-sm">
-                                        <span className="text-[#c5a059] font-bold mr-2">Result:</span> {item.result}
-                                    </p>
-                                </div>
-                                <Link to="/contact" className="inline-flex items-center gap-2 text-[#0f3460] font-bold hover:text-[#c5a059] transition-colors nav-font">
-                                    สนใจหลักสูตรนี้ <ArrowRight className="w-4 h-4" />
-                                </Link>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+  const filtered = activeCategory === 'ทั้งหมด'
+    ? items
+    : items.filter((p) => p.category === activeCategory);
 
-            <div className="mt-20 md:mt-32">
-                <ClientsSection />
-            </div>
+  return (
+    <div className="bg-[#f8fafc] min-h-screen pb-20 overflow-x-hidden">
+      <SEO
+        title="ผลงาน Case Studies — CAP Vision Institute"
+        description="Case Study จากองค์กรชั้นนำที่ไว้วางใจ CAP Vision Institute ในการพัฒนาผู้นำ ทีม และองค์กร"
+      />
 
-            {/* CTA */}
-            <section className="py-20 bg-white">
-                <div className="max-w-4xl mx-auto px-4 text-center">
-                    <h2 className="text-3xl md:text-5xl font-black text-[#0f3460] mb-8 nav-font">ร่วมสร้างความสำเร็จใหม่ๆ ไปกับเรา</h2>
-                    <p className="text-gray-500 text-lg mb-10 font-medium">
-                        ให้เราเป็นส่วนหนึ่งในการขับเคลื่อนองค์กรของคุณสู่เป้าหมายด้วยกระบวนการพัฒนาบุคลากรที่วัดผลได้จริง
-                    </p>
-                    <Link to="/contact" className="bg-[#c5a059] text-white px-10 py-5 rounded-2xl font-bold text-xl hover:bg-[#0f3460] transition-colors shadow-xl nav-font inline-flex items-center gap-3">
-                        ติดต่อเราเพื่อขอคำปรึกษา <ExternalLink className="w-5 h-5" />
-                    </Link>
-                </div>
-            </section>
-
+      {/* ── HERO ─────────────────────────────────────────── */}
+      <div className="bg-[#0f3460] pt-16 md:pt-24 pb-28 md:pb-40 text-white text-center relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#c5a059]/8 rounded-full blur-[150px]" />
         </div>
-    );
+        <div className="max-w-5xl mx-auto px-4 relative z-10">
+          <span className="text-[#c5a059] font-black text-[10px] md:text-xs uppercase tracking-[0.45em] mb-4 block nav-font">
+            Success Stories
+          </span>
+          <h1 className="text-3xl md:text-6xl font-black mb-5 nav-font tracking-tight">
+            Case Studies
+          </h1>
+          <p className="text-white/75 text-base md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+            เบื้องหลังการเปลี่ยนแปลงขององค์กรชั้นนำ — ผ่านกระบวนการ Transformative Learning โดย CAP Vision Institute
+          </p>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 -mt-16 md:-mt-20 relative z-20">
+
+        {/* ── FILTER ───────────────────────────────────────── */}
+        <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-4 mb-8 flex flex-wrap gap-2 items-center justify-center">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-5 py-2.5 rounded-xl text-xs font-black transition-all ${
+                activeCategory === cat
+                  ? 'bg-[#0f3460] text-white shadow-sm'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* ── GRID ─────────────────────────────────────────── */}
+        {loading ? (
+          <div className="flex items-center justify-center py-24">
+            <Loader2 className="w-10 h-10 text-[#c5a059] animate-spin" />
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className="text-center py-20 text-gray-400 font-medium">
+            ยังไม่มี Case Study ในหมวดนี้
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7 mb-16">
+            {filtered.map((item) => (
+              <PortfolioCard key={item.id} item={item} />
+            ))}
+          </div>
+        )}
+
+        {/* ── CLIENTS ──────────────────────────────────────── */}
+        <div className="mb-20">
+          <ClientsSection />
+        </div>
+
+        {/* ── CTA ──────────────────────────────────────────── */}
+        <section className="bg-gradient-to-br from-[#0f3460] to-[#1a4a8a] rounded-[2.5rem] py-16 px-8 md:px-16 text-white text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#c5a059]/10 rounded-full -translate-y-1/2 translate-x-1/4 blur-3xl pointer-events-none" />
+          <div className="relative z-10">
+            <p className="text-[#c5a059] text-xs font-black uppercase tracking-[0.4em] mb-5 nav-font">
+              ร่วมสร้างความสำเร็จ
+            </p>
+            <h2 className="text-2xl md:text-4xl font-black nav-font mb-3 leading-tight">
+              ให้ CAP Vision เป็นส่วนหนึ่ง<br />ในการขับเคลื่อนองค์กรของคุณ
+            </h2>
+            <div className="w-12 h-1 bg-[#c5a059] rounded-full mx-auto my-5" />
+            <p className="text-white/80 text-sm md:text-base max-w-xl mx-auto mb-8 font-medium leading-relaxed">
+              ปรึกษาฟรีกับ Master Facilitator — วิเคราะห์ปัญหา ออกแบบแนวทาง ส่งใบเสนอราคาภายใน 24 ชั่วโมง
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                to="/contact"
+                className="bg-[#c5a059] text-white px-10 py-4 rounded-2xl font-black text-base md:text-lg hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all nav-font shadow-2xl inline-flex items-center justify-center gap-2"
+              >
+                ขอใบเสนอราคาฟรี <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/courses"
+                className="bg-white/10 border border-white/20 text-white px-10 py-4 rounded-2xl font-bold text-base hover:bg-white/20 transition-all nav-font inline-flex items-center justify-center gap-2"
+              >
+                <ExternalLink className="w-4 h-4 text-[#c5a059]" /> ดูหลักสูตรทั้งหมด
+              </Link>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
 };
 
 export default Portfolio;

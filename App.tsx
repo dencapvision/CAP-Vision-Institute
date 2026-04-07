@@ -24,6 +24,7 @@ const JoinUs = lazy(() => import('./pages/JoinUs'));
 const MediaManager = lazy(() => import('./pages/MediaManager'));
 const CourseBuilderPage = lazy(() => import('./pages/CourseBuilder'));
 const WorkshopHandouts = lazy(() => import('./pages/workshop/WorkshopHandouts'));
+const PortfolioDetail = lazy(() => import('./pages/PortfolioDetail'));
 
 // Dashboard pages
 const DashboardLayout = lazy(() => import('./pages/dashboard/DashboardLayout'));
@@ -73,6 +74,7 @@ const AppShell: React.FC = () => {
             <Route path="/events" element={<Events />} />
             <Route path="/about" element={<About />} />
             <Route path="/portfolio" element={<Portfolio />} />
+                <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
             <Route path="/speakers" element={<Speakers />} />
             <Route path="/speakers/:id" element={<SpeakerDetail />} />
             <Route path="/join-us" element={<JoinUs />} />

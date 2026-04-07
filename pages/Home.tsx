@@ -54,30 +54,28 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 md:py-24">
           <div className="max-w-4xl">
 
-            {/* Social proof badge */}
+            {/* Badge */}
             <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full mb-8 md:mb-10 animate-fade-in-down">
               <span className="w-2 h-2 bg-[#c5a059] rounded-full animate-ping flex-shrink-0"></span>
               <span className="text-white/80 font-bold tracking-[0.15em] text-[10px] md:text-xs nav-font uppercase leading-none mt-0.5">
-                ไว้วางใจโดย Tops · Mr.D.I.Y. · AOT · PEA · Land and Houses · กว่า 100 องค์กร
+                Transformative Learning Programs
               </span>
             </div>
 
-            {/* H1 — brand identity preserved, gold emphasis boosted */}
+            {/* H1 */}
             <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1.05] mb-6 md:mb-8 nav-font tracking-tight">
-              <span className="text-[#c5a059]">Transform</span> <span className="text-white block md:inline">People</span><br className="hidden md:block" />
-              <span className="md:ml-16 lg:ml-20 text-white">Transform <span className="text-[#c5a059]">Organization</span></span>
+              <span className="text-white">พัฒนาคน สร้างทีม</span><br />
+              <span className="text-[#c5a059]">ยกระดับองค์กร</span>
             </h1>
 
-            {/* Subheadline — specific, outcome-focused */}
-            <p className="text-base md:text-xl text-white/90 leading-relaxed mb-3 max-w-2xl">
-              สำหรับ HR Manager และผู้บริหารที่ต้องการ
-              <strong className="text-white"> พัฒนาผู้นำ ยกระดับทีม และวัดผลได้จริง</strong>
+            {/* Highlight */}
+            <p className="text-xl md:text-2xl font-bold text-[#c5a059] mb-4">
+              Inspire People. Transform Mindsets. Create Real Impact.
             </p>
-            <p className="text-base md:text-lg text-white/85 leading-relaxed mb-3 max-w-2xl">
-              ไม่ใช่แค่อบรม — แต่คือการเปลี่ยนแปลงที่ยั่งยืนด้วย Transformative Learning
-            </p>
-            <p className="text-[#c5a059] font-bold text-sm md:text-base mb-10 md:mb-12">
-              โดย ครูเด่น มาสเตอร์ฟา — Master Facilitator ประสบการณ์กว่า 18 ปี
+
+            {/* Sub */}
+            <p className="text-base md:text-xl text-white/85 leading-relaxed mb-10 md:mb-12 max-w-2xl">
+              จุดประกายคน เปลี่ยนวิธีคิด สร้างผลลัพธ์ที่จับต้องได้
             </p>
 
             {/* CTAs — conversion-first order */}

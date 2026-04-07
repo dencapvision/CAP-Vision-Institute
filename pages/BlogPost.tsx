@@ -503,7 +503,7 @@ const BlogPost: React.FC = () => {
               {/* Sidebar / Insights */}
               <aside className="lg:w-1/3">
                  <div className="sticky top-32 space-y-16">
-                    <ShareButtons title={post.title} />
+                    <ShareButtons title={activePost.title} />
 
                     {/* Related */}
                     <div>

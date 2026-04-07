@@ -321,3 +321,102 @@ button:focus-visible {
   border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover { background: rgba(197, 160, 89, 0.5); }
+
+/* ============================================================
+   CAP VISION DESIGN SYSTEM — Typography-First Premium Layer
+   ============================================================ */
+
+/* ── Global Card Component ── */
+.cap-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.cap-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(15, 52, 96, 0.09);
+}
+
+/* ── Dark Section System ── */
+.dark-bg {
+  background: #0a1628;
+  color: #ffffff;
+}
+.dark-bg h1,
+.dark-bg h2,
+.dark-bg h3,
+.dark-bg h4,
+.dark-bg h5,
+.dark-bg h6 {
+  color: #ffffff !important;
+}
+.dark-bg p {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* ── Highlight Box (left-border accent) ── */
+.box-highlight {
+  border-left: 3px solid var(--secondary);
+  padding: 20px 24px;
+  background: #f8fafc;
+  border-radius: 0 12px 12px 0;
+}
+
+/* ── Section spacing ── */
+.section-py {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+/* ── Label / Badge (text-only) ── */
+.cap-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+
+/* ── Number Step Indicator ── */
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(197, 160, 89, 0.12);
+  color: var(--secondary);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+/* ── Gold Divider ── */
+.gold-divider {
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--secondary);
+  border-radius: 2px;
+  margin: 12px 0;
+}
+.gold-divider-center {
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--secondary);
+  border-radius: 2px;
+  margin: 12px auto;
+}
+
+/* ── Typography — refined heading sizes ── */
+@layer base {
+  h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 800; line-height: 1.2; }
+  h2 { font-size: clamp(22px, 3.5vw, 32px); font-weight: 700; line-height: 1.25; }
+  h3 { font-size: clamp(18px, 2.5vw, 22px); font-weight: 700; line-height: 1.35; }
+}

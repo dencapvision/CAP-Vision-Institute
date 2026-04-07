@@ -37,10 +37,10 @@ const DEN_SPECIFIC = {
     { title: 'P — Performance', desc: 'ผลลัพธ์ที่วัดได้ พฤติกรรมที่เปลี่ยน ไม่ใช่แค่ความรู้ที่เพิ่ม', icon: TrendingUp, color: 'from-emerald-600 to-emerald-800' },
   ],
   methodologies: [
-    { name: 'Transformative Learning', desc: 'เรียนรู้ผ่านประสบการณ์จริง ไม่ใช่แค่ฟังบรรยาย', icon: '🔄' },
-    { name: 'Active Learning & Flow', desc: 'กิจกรรมที่ทำให้ผู้เรียน "เข้าสู่สภาวะ Flow" ลืมเวลาแต่ได้เนื้อหา', icon: '⚡' },
-    { name: 'Circle Dialogue', desc: 'กระบวนการสะท้อนคิดเป็นวงกลม ดึงความรู้จากภายในออกมา', icon: '🗣️' },
-    { name: 'Role Play & Simulation', desc: 'ฝึกทักษะจากสถานการณ์จริง ผิดพลาดได้อย่างปลอดภัย', icon: '🎭' },
+    { name: 'Transformative Learning', desc: 'เรียนรู้ผ่านประสบการณ์จริง ไม่ใช่แค่ฟังบรรยาย', index: '01' },
+    { name: 'Active Learning & Flow', desc: 'กิจกรรมที่ทำให้ผู้เรียน "เข้าสู่สภาวะ Flow" ลืมเวลาแต่ได้เนื้อหา', index: '02' },
+    { name: 'Circle Dialogue', desc: 'กระบวนการสะท้อนคิดเป็นวงกลม ดึงความรู้จากภายในออกมา', index: '03' },
+    { name: 'Role Play & Simulation', desc: 'ฝึกทักษะจากสถานการณ์จริง ผิดพลาดได้อย่างปลอดภัย', index: '04' },
   ],
   expertiseAreas: [
     { category: 'Leadership & Communication', items: ['สื่อสารสำหรับผู้นำยุคใหม่', 'C.O.D. Communication Model', 'Human Communication 4 ระดับ', 'Leadership Presence & Influence'] },
@@ -248,7 +248,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
 
               {/* Microcopy */}
               <p className="mt-4 text-white/65 text-sm">
-                ⏰ ตารางคิวมีจำกัด — แนะนำจองล่วงหน้า 1-2 เดือน
+                ตารางคิวมีจำกัด — แนะนำจองล่วงหน้า 1-2 เดือน
               </p>
             </div>
 
@@ -445,7 +445,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {DEN_SPECIFIC.methodologies.map((method, i) => (
               <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-[#c5a059]/40 transition-all duration-300">
-                <div className="text-4xl mb-5">{method.icon}</div>
+                <div className="step-number mb-5">{method.index}</div>
                 <h3 className="font-black text-white mb-3">{method.name}</h3>
                 <p className="text-white/85 text-sm leading-relaxed">{method.desc}</p>
               </div>
@@ -500,12 +500,12 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
               <div key={i} className="group relative bg-gray-50 border-2 border-gray-100 hover:border-[#c5a059] rounded-3xl p-8 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                 {prog.tag === 'bestseller' && (
                   <div className="absolute -top-3 -right-3 bg-[#c5a059] text-white text-xs font-black px-4 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
-                    🔥 Bestseller
+                    Bestseller
                   </div>
                 )}
                 {prog.tag === 'popular' && (
                   <div className="absolute -top-3 -right-3 bg-[#0f3460] text-white text-xs font-black px-4 py-1.5 rounded-full shadow-lg uppercase tracking-wider">
-                    ⭐ Popular
+                    Popular
                   </div>
                 )}
                 <div className="flex items-start justify-between mb-4">
@@ -628,19 +628,19 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
             </a>
           </div>
           <p className="text-white/65 text-sm">
-            ⏰ ตารางคิวจำกัด — แนะนำสอบถามล่วงหน้าอย่างน้อย 1-2 เดือน · ปรึกษาเบื้องต้นฟรี
+            ตารางคิวจำกัด — แนะนำสอบถามล่วงหน้าอย่างน้อย 1-2 เดือน · ปรึกษาเบื้องต้นฟรี
           </p>
 
           {/* Social Proof Micro */}
           <div className="mt-12 flex flex-wrap justify-center gap-6">
             {[
-              { icon: '⭐', text: '18+ ปีประสบการณ์' },
-              { icon: '🏢', text: '100+ องค์กร' },
-              { icon: '🎤', text: '1,000+ เวที' },
-              { icon: '✅', text: 'ออกแบบหลักสูตรได้' },
+              { label: '18+', text: 'ปีประสบการณ์' },
+              { label: '100+', text: 'องค์กร' },
+              { label: '1,000+', text: 'เวที' },
+              { label: 'Custom', text: 'ออกแบบหลักสูตรได้' },
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-2 text-white/85 text-sm">
-                <span>{item.icon}</span>
+                <span className="text-[#c5a059] font-black">{item.label}</span>
                 <span>{item.text}</span>
               </div>
             ))}

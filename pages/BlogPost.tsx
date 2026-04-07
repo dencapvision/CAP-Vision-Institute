@@ -58,9 +58,33 @@ interface PostData {
    sections: PostContentSection[];
 }
 
+// ── NEW AEO Format ────────────────────────────────────
+interface AEOPost {
+   title: string;
+   slug: string;
+   category?: string;
+   thumbnail?: string;
+   author?: string;
+   date?: string;
+   readTime?: string;
+   summary: string;
+   context: string;
+   insight: string;
+   framework: string[];
+   application: string;
+   case_study: string;
+   takeaways: string[];
+   faq: Array<{ question: string; answer: string }>;
+   cta?: string;
+   seo?: { meta_title?: string; meta_description?: string; keywords?: string[] };
+   hashtags?: string[];
+   images?: Array<{ url: string; alt: string; title: string; description: string }>;
+}
+
 const BlogPost: React.FC = () => {
    const { id } = useParams();
    const [post, setPost] = useState<PostData | null>(null);
+   const [aeoPost, setAeoPost] = useState<AEOPost | null>(null);
    const [loading, setLoading] = useState(true);
    const { scrollYProgress } = useScroll();
    const scaleX = useSpring(scrollYProgress, {
@@ -71,15 +95,21 @@ const BlogPost: React.FC = () => {
 
    useEffect(() => {
       setLoading(true);
-      setPost(null); // Clear previous post explicitly to avoid stale data
-      
+      setPost(null);
+      setAeoPost(null);
+
       fetch(`/content/blog/posts/${id}.json`)
          .then(res => {
             if (!res.ok) throw new Error('File not found');
             return res.json();
          })
          .then(data => {
-            setPost(data);
+            // Detect format: AEO (has summary field) vs legacy (has sections array)
+            if (data.summary !== undefined) {
+               setAeoPost(data as AEOPost);
+            } else {
+               setPost(data as PostData);
+            }
             setLoading(false);
          })
          .catch(err => {
@@ -160,6 +190,165 @@ const BlogPost: React.FC = () => {
       }
    };
 
+   // ── AEO format renderer ──────────────────────────
+   const renderAEO = (p: AEOPost) => (
+      <article className="space-y-10">
+         {/* 1. Answer-first Summary */}
+         <div className="bg-[#0f3460] text-white rounded-[2rem] p-8 md:p-10 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-[#c5a059]/10 rounded-full -translate-y-1/2 translate-x-1/4 blur-2xl" />
+            <p className="text-[10px] font-black text-[#c5a059] uppercase tracking-[0.4em] mb-3 nav-font">สรุปสั้น — ตอบทันที</p>
+            <p className="text-lg md:text-xl font-bold leading-relaxed text-white/90">{p.summary}</p>
+         </div>
+
+         {/* 2. Context */}
+         {p.context && (
+            <section>
+               <h2 className="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-5 flex items-center gap-3">
+                  <span className="w-1 h-8 bg-[#c5a059] rounded-full inline-block" />
+                  ทำไมเรื่องนี้สำคัญในองค์กร
+               </h2>
+               {p.context.split('\n\n').filter(Boolean).map((para, i) => (
+                  <p key={i} className="text-gray-700 text-base md:text-lg leading-relaxed font-medium mb-4">{para}</p>
+               ))}
+            </section>
+         )}
+
+         {/* 3. Insight */}
+         {p.insight && (
+            <section>
+               <h2 className="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-5 flex items-center gap-3">
+                  <span className="w-1 h-8 bg-[#c5a059] rounded-full inline-block" />
+                  แนวคิดสำคัญ — CAP Vision Insight
+               </h2>
+               {p.insight.split('\n\n').filter(Boolean).map((para, i) => (
+                  <p key={i} className="text-gray-700 text-base md:text-lg leading-relaxed font-medium mb-4">{para}</p>
+               ))}
+            </section>
+         )}
+
+         {/* 4. Framework */}
+         {p.framework?.length > 0 && (
+            <section className="bg-[#f8fafc] rounded-[2rem] p-8 md:p-10 border border-gray-100">
+               <h2 className="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-7">Framework ที่ใช้ได้จริง</h2>
+               <ol className="space-y-4">
+                  {p.framework.map((step, i) => (
+                     <li key={i} className="flex gap-5 items-start">
+                        <span className="w-9 h-9 bg-[#0f3460] text-white text-xs font-black rounded-xl flex items-center justify-center flex-shrink-0">
+                           {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <p className="text-gray-700 text-base md:text-lg font-medium leading-relaxed pt-1">{step}</p>
+                     </li>
+                  ))}
+               </ol>
+            </section>
+         )}
+
+         {/* 5. Application */}
+         {p.application && (
+            <section>
+               <h2 className="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-5 flex items-center gap-3">
+                  <span className="w-1 h-8 bg-[#c5a059] rounded-full inline-block" />
+                  นำไปใช้ในองค์กรอย่างไร
+               </h2>
+               {p.application.split('\n\n').filter(Boolean).map((para, i) => (
+                  <p key={i} className="text-gray-700 text-base md:text-lg leading-relaxed font-medium mb-4">{para}</p>
+               ))}
+            </section>
+         )}
+
+         {/* 6. Case Study */}
+         {p.case_study && (
+            <section className="border-l-4 border-[#c5a059] pl-8 py-6 bg-amber-50/40 rounded-r-[2rem]">
+               <p className="text-[10px] font-black text-[#c5a059] uppercase tracking-[0.4em] mb-3 nav-font">ตัวอย่างจากองค์กรจริง</p>
+               {p.case_study.split('\n\n').filter(Boolean).map((para, i) => (
+                  <p key={i} className="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-3">{para}</p>
+               ))}
+            </section>
+         )}
+
+         {/* 7. Takeaways */}
+         {p.takeaways?.length > 0 && (
+            <section className="bg-[#0f3460]/5 rounded-[2rem] p-8 md:p-10">
+               <h2 className="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-6">สรุปสิ่งที่ได้</h2>
+               <ul className="space-y-4">
+                  {p.takeaways.map((item, i) => (
+                     <li key={i} className="flex items-start gap-4">
+                        <CheckCircle2 className="w-5 h-5 text-[#c5a059] shrink-0 mt-0.5" />
+                        <span className="text-gray-700 text-base font-medium leading-relaxed">{item}</span>
+                     </li>
+                  ))}
+               </ul>
+            </section>
+         )}
+
+         {/* 8. Hashtags */}
+         {p.hashtags && p.hashtags.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+               {p.hashtags.map((tag) => (
+                  <span key={tag} className="text-xs font-bold text-[#0f3460]/60 bg-gray-100 px-3 py-1.5 rounded-lg">
+                     {tag}
+                  </span>
+               ))}
+            </div>
+         )}
+
+         {/* 9. FAQ (AEO) */}
+         {p.faq?.length > 0 && (
+            <section>
+               <h2 className="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-7 flex items-center gap-3">
+                  <span className="w-1 h-8 bg-[#c5a059] rounded-full inline-block" />
+                  คำถามที่พบบ่อย
+               </h2>
+               <div className="space-y-4">
+                  {p.faq.map((item, i) => (
+                     <FAQItem key={i} question={item.question} answer={item.answer} />
+                  ))}
+               </div>
+            </section>
+         )}
+
+         {/* 10. CTA */}
+         <div className="bg-gray-900 text-white p-10 md:p-14 rounded-[2.5rem] relative overflow-hidden">
+            <div className="absolute bottom-0 right-0 p-8 opacity-5"><Users className="w-48 h-48" /></div>
+            <h3 className="text-2xl md:text-4xl font-black mb-5 nav-font text-[#c5a059] leading-tight uppercase tracking-tight">
+               พร้อมออกแบบการพัฒนา<br />ยกระดับองค์กรหรือยัง?
+            </h3>
+            <p className="text-white/70 mb-8 text-base md:text-lg font-medium max-w-xl leading-relaxed">
+               {p.cta || 'สถาบัน CAP Vision พร้อมออกแบบหลักสูตรที่ตรงกับปัญหาขององค์กรคุณ ปรึกษาฟรีภายใน 24 ชั่วโมง'}
+            </p>
+            <div className="flex flex-wrap gap-4">
+               <a href={CONTACT_INFO.lineUrl} className="bg-[#c5a059] text-white px-10 py-4 rounded-2xl font-black hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all nav-font shadow-lg uppercase tracking-widest text-sm">
+                  ปรึกษาฟรี
+               </a>
+               <Link to="/contact" className="border-2 border-white/20 px-10 py-4 rounded-2xl font-black hover:bg-white/10 transition-all nav-font uppercase tracking-widest text-sm">
+                  ขอใบเสนอราคา
+               </Link>
+            </div>
+         </div>
+      </article>
+   );
+
+   // FAQ accordion component
+   const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, answer }) => {
+      const [open, setOpen] = React.useState(false);
+      return (
+         <div className={`border rounded-2xl overflow-hidden transition-all ${open ? 'border-[#c5a059]' : 'border-gray-200'}`}>
+            <button
+               className="w-full flex items-center justify-between px-6 py-5 text-left"
+               onClick={() => setOpen(!open)}
+            >
+               <span className="text-sm md:text-base font-bold text-[#0f3460] pr-4">{question}</span>
+               <span className={`text-[#c5a059] font-black text-xl transition-transform flex-shrink-0 ${open ? 'rotate-45' : ''}`}>+</span>
+            </button>
+            {open && (
+               <div className="px-6 pb-5 text-gray-600 text-sm md:text-base leading-relaxed font-medium border-t border-gray-100 pt-4">
+                  {answer}
+               </div>
+            )}
+         </div>
+      );
+   };
+
    if (loading) {
       return (
          <div className="min-h-screen flex items-center justify-center bg-white">
@@ -168,7 +357,7 @@ const BlogPost: React.FC = () => {
       );
    }
 
-   if (!post) {
+   if (!post && !aeoPost) {
       return (
          <div className="min-h-screen flex flex-col items-center justify-center bg-white px-4 text-center">
             <h2 className="text-3xl font-black text-[#0f3460] mb-4 nav-font">ไม่พบหน้าที่คุณต้องการ</h2>
@@ -178,11 +367,33 @@ const BlogPost: React.FC = () => {
       );
    }
 
+   // For AEO format, use a unified post-like object for the header
+   const activePost = aeoPost ? {
+      title: aeoPost.title,
+      category: aeoPost.category || 'Insight',
+      thumbnail: aeoPost.thumbnail || (aeoPost.images?.[0]?.url ?? ''),
+      author: aeoPost.author || 'ครูเด่น มาสเตอร์ฟา',
+      date: aeoPost.date || '',
+      readTime: aeoPost.readTime || '5 นาที',
+      description: aeoPost.seo?.meta_description || aeoPost.summary,
+      tags: aeoPost.hashtags?.map(h => h.replace('#', '')) || [],
+   } : post!;
+
    return (
       <div className="bg-white min-h-screen">
          <SEO
-            title={`${post.title} | CAP Vision Insight`}
-            description={post.description || post.title}
+            title={aeoPost?.seo?.meta_title || `${activePost.title} | CAP Vision Insight`}
+            description={aeoPost?.seo?.meta_description || activePost.description || activePost.title}
+            keywords={aeoPost?.seo?.keywords}
+            type="BlogPosting"
+            articleData={{
+               headline: activePost.title,
+               description: activePost.description || activePost.title,
+               image: activePost.thumbnail,
+               datePublished: activePost.date,
+               author: activePost.author,
+            }}
+            articleFaq={aeoPost?.faq}
          />
 
          {/* Reading Progress Bar */}
@@ -192,9 +403,12 @@ const BlogPost: React.FC = () => {
          />
 
          {/* AI Coach Sidebar (Floating) */}
-         <AICoachSidebar 
-           articleTitle={post.title} 
-           articleContent={post.sections.map(s => s.content || '').join(' ')} 
+         <AICoachSidebar
+           articleTitle={activePost.title}
+           articleContent={aeoPost
+             ? [aeoPost.summary, aeoPost.context, aeoPost.insight, aeoPost.application].join(' ')
+             : post!.sections.map(s => s.content || '').join(' ')
+           }
          />
 
          {/* Hero Header */}
@@ -209,9 +423,9 @@ const BlogPost: React.FC = () => {
                  <div className="space-y-10 mb-16">
                     <div className="flex flex-wrap gap-3">
                        <span className="bg-blue-600 text-white px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] inline-block nav-font shadow-lg shadow-blue-100">
-                          {post.category}
+                          {activePost.category}
                        </span>
-                       {post.tags?.map(tag => (
+                       {activePost.tags?.map(tag => (
                           <span key={tag} className="bg-gray-50 text-gray-400 px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest inline-block nav-font border border-gray-100">
                              #{tag}
                           </span>
@@ -219,7 +433,7 @@ const BlogPost: React.FC = () => {
                     </div>
 
                     <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-[#0f3460] nav-font leading-[1.1] tracking-tighter uppercase">
-                       {post.title}
+                       {activePost.title}
                     </h1>
 
                     <div className="flex flex-wrap items-center gap-10 py-8 border-y border-gray-100">
@@ -227,58 +441,62 @@ const BlogPost: React.FC = () => {
                           <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-[#0f3460] shadow-inner border border-gray-100"><User className="w-6 h-6" /></div>
                           <div>
                             <span className="block text-[9px] font-black text-gray-400 uppercase tracking-widest nav-font">Author</span>
-                            <span className="text-sm font-bold text-[#0f3460]">{post.author}</span>
+                            <span className="text-sm font-bold text-[#0f3460]">{activePost.author}</span>
                           </div>
                        </div>
                        <div className="flex items-center gap-10">
                          <div className="flex items-center gap-3">
                             <Calendar className="w-5 h-5 text-blue-600" />
-                            <span className="text-xs font-black uppercase tracking-widest text-gray-400 nav-font">{post.date}</span>
+                            <span className="text-xs font-black uppercase tracking-widest text-gray-400 nav-font">{activePost.date}</span>
                          </div>
                          <div className="flex items-center gap-3">
                             <Clock className="w-5 h-5 text-blue-600" />
-                            <span className="text-xs font-black uppercase tracking-widest text-gray-400 nav-font">{post.readTime}</span>
+                            <span className="text-xs font-black uppercase tracking-widest text-gray-400 nav-font">{activePost.readTime}</span>
                          </div>
                        </div>
                     </div>
                  </div>
 
-                 <motion.img 
-                   initial={{ opacity: 0, y: 30 }}
-                   animate={{ opacity: 1, y: 0 }}
-                   src={post.thumbnail} 
-                   className="w-full h-[400px] md:h-[600px] object-cover rounded-[4rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] mb-24" 
-                   alt={post.title} 
-                   loading="lazy"
-                 />
+                 {activePost.thumbnail && (
+                   <motion.img
+                     initial={{ opacity: 0, y: 30 }}
+                     animate={{ opacity: 1, y: 0 }}
+                     src={activePost.thumbnail}
+                     className="w-full h-[400px] md:h-[600px] object-cover rounded-[4rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] mb-24"
+                     alt={activePost.title}
+                     loading="lazy"
+                   />
+                 )}
 
-                 {/* Content Body */}
+                 {/* Content Body — AEO or Legacy */}
                  <article className="max-w-none text-[#0f3460]">
-                    {post.sections.map((section, index) => renderSection(section, index))}
+                    {aeoPost ? renderAEO(aeoPost) : post!.sections.map((section, index) => renderSection(section, index))}
 
-                    {/* Reflection Panel - CRITICAL FOR TRANSFORMATION */}
-                    <div className="mt-24">
-                       <ReflectionPanel articleTitle={post.title} />
-                    </div>
-
-                    {/* Content Footer / CTA */}
-                    <div className="bg-gray-900 text-white p-14 md:p-20 rounded-[4rem] my-24 shadow-2xl relative overflow-hidden group">
-                       <div className="absolute bottom-0 right-0 p-12 opacity-5 scale-150"><Users className="w-64 h-64" /></div>
-                       <h3 className="text-3xl md:text-5xl font-black mb-10 nav-font text-amber-500 leading-tight uppercase tracking-tighter">
-                          พร้อมออกแบบการพัฒนา <br/> ยกระดับองค์กรหรือยังครับ?
-                       </h3>
-                       <p className="text-blue-100/70 mb-14 text-lg font-medium max-w-2xl leading-relaxed">
-                          สถาบันแคป วิชั่น พร้อมเป็นพาร์ทเนอร์ในการวิเคราะห์ความต้องการ (TNA) และออกแบบระบบนิเวศแห่งการเรียนรู้ (Learning Ecosystem) ที่เห็นผลจริงให้กับองค์กรของคุณ
-                       </p>
-                       <div className="flex flex-wrap gap-8">
-                          <a href={CONTACT_INFO.lineUrl} className="bg-amber-500 text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-white hover:text-amber-500 transition-all nav-font shadow-xl shadow-amber-500/20 uppercase tracking-widest">
-                             Consult now
-                          </a>
-                          <Link to="/contact" className="border-2 border-white/20 px-12 py-5 rounded-2xl font-black text-xl hover:bg-white/10 transition-all nav-font uppercase tracking-widest">
-                             Get Proposal
-                          </Link>
-                       </div>
-                    </div>
+                    {/* Reflection Panel + Legacy CTA — only for old format */}
+                    {!aeoPost && (
+                       <>
+                          <div className="mt-24">
+                             <ReflectionPanel articleTitle={activePost.title} />
+                          </div>
+                          <div className="bg-gray-900 text-white p-14 md:p-20 rounded-[4rem] my-24 shadow-2xl relative overflow-hidden group">
+                             <div className="absolute bottom-0 right-0 p-12 opacity-5 scale-150"><Users className="w-64 h-64" /></div>
+                             <h3 className="text-3xl md:text-5xl font-black mb-10 nav-font text-amber-500 leading-tight uppercase tracking-tighter">
+                                พร้อมออกแบบการพัฒนา <br/> ยกระดับองค์กรหรือยังครับ?
+                             </h3>
+                             <p className="text-blue-100/70 mb-14 text-lg font-medium max-w-2xl leading-relaxed">
+                                สถาบันแคป วิชั่น พร้อมเป็นพาร์ทเนอร์ในการวิเคราะห์ความต้องการ (TNA) และออกแบบระบบนิเวศแห่งการเรียนรู้ (Learning Ecosystem) ที่เห็นผลจริงให้กับองค์กรของคุณ
+                             </p>
+                             <div className="flex flex-wrap gap-8">
+                                <a href={CONTACT_INFO.lineUrl} className="bg-amber-500 text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-white hover:text-amber-500 transition-all nav-font shadow-xl shadow-amber-500/20 uppercase tracking-widest">
+                                   Consult now
+                                </a>
+                                <Link to="/contact" className="border-2 border-white/20 px-12 py-5 rounded-2xl font-black text-xl hover:bg-white/10 transition-all nav-font uppercase tracking-widest">
+                                   Get Proposal
+                                </Link>
+                             </div>
+                          </div>
+                       </>
+                    )}
                  </article>
               </div>
 

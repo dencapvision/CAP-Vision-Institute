@@ -46,7 +46,7 @@ export const BRAND_INFO = {
 
 export const CLIENTS = [
     { name: 'Tops (Central Food Retail)', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/central%20food%20retail%20(CFR).png' },
-    { name: 'Mr.D.I.Y. (Thailand)', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/mrdiy.png' },
+    { name: 'Mr.D.I.Y. (Thailand)', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Mr-DIY-logo.png' },
     { name: 'AOT', type: 'State Enterprise', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Airports_of_Thailand_Logo.svg.png' },
     { name: 'PEA', type: 'State Enterprise', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/PEA.png' },
     { name: 'Land & Houses', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/landandhouses.jpg' },

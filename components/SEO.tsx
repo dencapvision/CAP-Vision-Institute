@@ -42,6 +42,8 @@ interface SEOProps {
   articleData?: ArticleSchemaData;
   // Include global FAQ schema (for home/courses pages)
   includeFAQ?: boolean;
+  // Article-specific FAQ schema (AEO — overrides global FAQ)
+  articleFaq?: Array<{ question: string; answer: string }>;
   // Breadcrumb items
   breadcrumb?: Array<{ name: string; url: string }>;
 }
@@ -74,6 +76,7 @@ export default function SEO({
   courseData,
   articleData,
   includeFAQ = false,
+  articleFaq,
   breadcrumb,
 }: SEOProps) {
   const canonicalUrl = canonical || (typeof window !== 'undefined' ? window.location.href : '');
@@ -144,11 +147,16 @@ export default function SEO({
       : null;
 
   // ===== JSON-LD: FAQPage (AEO target) =====
-  const faqSchema = includeFAQ
+  // articleFaq takes priority; fallback to global HRD_FAQS if includeFAQ
+  const faqItems = articleFaq && articleFaq.length > 0
+    ? articleFaq
+    : includeFAQ ? HRD_FAQS : null;
+
+  const faqSchema = faqItems
     ? {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        mainEntity: HRD_FAQS.map((faq) => ({
+        mainEntity: faqItems.map((faq) => ({
           '@type': 'Question',
           name: faq.question,
           acceptedAnswer: {

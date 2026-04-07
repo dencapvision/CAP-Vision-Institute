@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Facebook, MessageCircle, Share2, Check, Copy } from 'lucide-react';
+import { Facebook, MessageCircle, Share2, Check, Linkedin } from 'lucide-react';
 
 interface ShareButtonsProps {
   url?: string;
@@ -19,6 +19,10 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({ url, title }) => {
 
   const shareToLine = () => {
     window.open(`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}`, '_blank');
+  };
+
+  const shareToLinkedIn = () => {
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank');
   };
 
   const handleGeneralShare = async () => {
@@ -61,8 +65,17 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({ url, title }) => {
           <Facebook className="w-7 h-7" />
         </button>
         
+        {/* LinkedIn */}
+        <button
+          onClick={shareToLinkedIn}
+          className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-[#0A66C2] shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all group/btn border border-gray-50"
+          title="Share on LinkedIn"
+        >
+          <Linkedin className="w-6 h-6" />
+        </button>
+
         {/* LINE */}
-        <button 
+        <button
           onClick={shareToLine}
           className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-[#06C755] shadow-sm hover:shadow-md hover:scale-110 active:scale-95 transition-all group/btn border border-gray-50"
           title="Share on LINE"

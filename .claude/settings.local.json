@@ -25,7 +25,9 @@
       "Bash(curl:*)",
       "Bash(nslookup:*)",
       "Bash(openssl s_client -connect capvisionpartner.com:443 -servername capvisionpartner.com)",
-      "Bash(openssl x509:*)"
+      "Bash(openssl x509:*)",
+      "Bash(node -e ':*)",
+      "Bash(node scripts/update-transformational-leadership.mjs)"
     ]
   }
 }

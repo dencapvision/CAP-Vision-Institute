@@ -37,7 +37,8 @@
       "Bash(sed -n '593,601p' pages/Resources.tsx)",
       "Bash(sed -n '348,352p' pages/SpeakerDetail.tsx)",
       "Bash(sed -n '626,645p' pages/SpeakerDetail.tsx)",
-      "Bash(sed -n '247,255p' pages/SpeakerDetail.tsx)"
+      "Bash(sed -n '247,255p' pages/SpeakerDetail.tsx)",
+      "Bash(node scripts/insert-leadership-communication.mjs)"
     ]
   }
 }

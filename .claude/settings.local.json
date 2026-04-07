@@ -38,7 +38,13 @@
       "Bash(sed -n '348,352p' pages/SpeakerDetail.tsx)",
       "Bash(sed -n '626,645p' pages/SpeakerDetail.tsx)",
       "Bash(sed -n '247,255p' pages/SpeakerDetail.tsx)",
-      "Bash(node scripts/insert-leadership-communication.mjs)"
+      "Bash(node scripts/insert-leadership-communication.mjs)",
+      "Bash(node scripts/insert-ai-mastery.mjs)",
+      "Bash(node scripts/update-cps-problem-solving.mjs)",
+      "Bash(node scripts/update-modern-facilitator.mjs)",
+      "Bash(node scripts/update-ai-mastery-professionals.mjs)",
+      "Bash(node scripts/update-conflict-to-collaboration.mjs)",
+      "Bash(node scripts/update-transformational-leadership-v2.mjs)"
     ]
   }
 }

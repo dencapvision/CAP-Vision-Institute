@@ -46,7 +46,12 @@
       "Bash(node scripts/update-conflict-to-collaboration.mjs)",
       "Bash(node scripts/update-transformational-leadership-v2.mjs)",
       "Bash(node scripts/update-leading-with-purpose.mjs)",
-      "Bash(node scripts/seed-portfolio.mjs)"
+      "Bash(node scripts/seed-portfolio.mjs)",
+      "Bash(cp public/content/blog/posts/coaching-skills-for-managers.json dist/content/blog/posts/)",
+      "Bash(cp public/content/blog/posts/agile-hr-transformation.json dist/content/blog/posts/)",
+      "Bash(cp public/content/blog/posts/ai-proof-skills-hr-2026.json dist/content/blog/posts/)",
+      "Bash(cp public/content/blog/posts/building-growth-mindset-culture.json dist/content/blog/posts/)",
+      "Bash(cp public/content/blog/posts/data-driven-hr.json dist/content/blog/posts/)"
     ]
   }
 }

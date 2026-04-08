@@ -1,12 +1,14 @@
 {
     "id": "okrs-implementation-guide",
     "title": "เจาะลึก OKRs: ตั้งเป้าหมายอย่างไรให้สอดคล้องและท้าทายทั้งองค์กร",
+    "slug": "okrs-implementation-guide",
     "category": "HR Strategy",
     "thumbnail": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80",
     "author": "ครูเด่น มาสเตอร์ฟา",
     "date": "25 ธันวาคม 2566",
     "createdAt": "2023-12-25T00:00:00Z",
     "readTime": "8 Min Read",
+    "summary": "OKRs ไม่ใช่ KPI แบบเปลี่ยนชื่อ แต่คือระบบตั้งเป้าหมายที่สร้าง Alignment จากบนลงล่าง สร้างความโปร่งใส และกระตุ้นให้ทีมตั้งเป้าหมายที่ท้าทายจริงๆ บทความนี้ครอบคลุมโครงสร้าง OKR, ข้อผิดพลาดที่พบบ่อย และวิธีนำไปใช้จริงในองค์กร",
     "description": "อธิบายแนวคิด OKRs ให้เข้าใจง่าย พร้อมข้อควรระวังและปัจจัยความสำเร็จ (Critical Success Factors) ในการนำ OKRs ไปใช้จริงในภาคธุรกิจ",
     "tags": [
         "OKRs",
@@ -14,63 +16,78 @@
         "Goal Setting",
         "Strategic Alignment"
     ],
-    "sections": [
+    "context": "หลายองค์กรทำ OKRs แล้วล้มเหลวเพราะเข้าใจผิดว่ามันคือ KPI แบบใหม่ — วัดผล Grade พนักงาน และเชื่อมกับการขึ้นเงินเดือน OKRs ที่ทำงานได้จริงมีลักษณะตรงกันข้าม: เปิดเผยสาธารณะ ไม่ผูกกับ Compensation โดยตรง และตั้งให้ท้าทายจนถึงระดับ 70% ก็ถือว่าสำเร็จ",
+    "insight": "Google ใช้ OKRs มาตั้งแต่ปี 1999 และยกเครดิตให้ OKRs เป็นส่วนสำคัญที่ทำให้สามารถ Scale ได้รวดเร็ว John Doerr ผู้แนะนำ OKRs ให้ Google กล่าวว่า 'Ideas are easy. Execution is everything.' — OKRs คือเครื่องมือที่ทำให้ Execution มีทิศทางและวัดได้",
+    "framework": [
         {
-            "type": "heading",
-            "content": "OKRs ไม่ใช่แค่ KPI แบบเปลี่ยนชื่อ แต่คือกลยุทธ์การโฟกัสระดับโลก"
+            "step": "องค์ประกอบที่ 1",
+            "title": "Objectives — เป้าหมายที่สร้างแรงบันดาลใจ",
+            "description": "Objective ที่ดีต้องเป็น Qualitative, Inspiring และ Time-bound ตัวอย่าง: 'สร้างประสบการณ์ลูกค้าที่ทำให้พวกเขาบอกต่อด้วยความภาคภูมิใจ' ไม่ใช่ 'เพิ่มยอดขาย' (นั่นคือ Key Result) ถามว่า 'ถ้าเราทำ Objective นี้สำเร็จ ชีวิตลูกค้าหรือองค์กรจะเปลี่ยนไปอย่างไร?'"
         },
         {
-            "type": "text",
-            "content": "ทำไม Google, Amazon หรือทีมสตาร์ทอัพระดับโลกถึงเลือกใช้ <b>OKRs (Objectives and Key Results)</b>? นั่นเป็นเพราะ OKRs ออกแบบมาเพื่อสร้างการเปลี่ยนแปลงที่รวดเร็วและท้าทาย โดยเน้นความโปร่งใส (Transparency) และการเชื่อมโยงเป้าหมาย (Alignment) จากระดับบริษัทลงมาสู่ระดับบุคคล"
+            "step": "องค์ประกอบที่ 2",
+            "title": "Key Results — ตัววัดที่ชัดเจนและท้าทาย",
+            "description": "Key Result ที่ดีต้องวัดได้เป็นตัวเลข มี Deadline ชัดเจน และถ้าทำได้ 70% ก็ถือว่าดี เช่น 'NPS Score จาก 45 เป็น 65 ภายในสิ้นไตรมาส' หรือ '80% ของลูกค้าให้คะแนน 4+ ใน Post-purchase Survey' ถ้า Key Result ทำได้ 100% ทุกครั้ง แสดงว่าตั้งเป้าไม่ท้าทายพอ"
         },
         {
-            "type": "subheading",
-            "content": "ส่วนประกอบของ OKRs ที่ทรงพลัง"
+            "step": "ขั้นตอนที่ 1",
+            "title": "Cascade จาก Company สู่ Team สู่ Individual",
+            "description": "เริ่มจาก Company OKRs (3-5 Objectives) แล้วให้แต่ละทีมตั้ง Team OKRs ที่สนับสนุน Company OKRs จากนั้น Individual OKRs ที่สนับสนุน Team OKRs ความโปร่งใสคือหัวใจ — ทุกคนในองค์กรควรเห็น OKRs ของกันและกัน"
         },
         {
-            "type": "list",
-            "items": [
-                "<b>Objectives (O):</b> เป้าหมายเชิงคุณภาพที่ต้องสร้าง 'แรงบันดาลใจ' (Must be Inspiring and Qualitative)",
-                "<b>Key Results (KRs):</b> ตัววัดความสำเร็จเชิงปริมาณที่ชัดเจนและจับต้องได้ (Must be Quantifiable and Time-bound)"
-            ]
+            "step": "ขั้นตอนที่ 2",
+            "title": "Check-in สม่ำเสมอ ไม่ใช่รอสิ้นไตรมาส",
+            "description": "ทำ Weekly/Bi-weekly Check-in สั้นๆ (15-30 นาที) เพื่อดูความคืบหน้า ระบุ Blockers และปรับ Priority ถ้าจำเป็น OKRs ที่ถูกทบทวนแค่สิ้นไตรมาสคือ OKRs ที่รอล้มเหลว"
+        }
+    ],
+    "application": "เริ่ม OKRs ด้วยการทำ Team Level ก่อน ไม่ต้องรอ Company-wide Rollout เลือก 1 ทีมที่สมัครใจ ตั้ง Objective 1 ข้อ Key Results 2-3 ข้อ ทำ Weekly Check-in และทบทวนผลสิ้นไตรมาส เรียนรู้จาก Pilot นี้ก่อนขยายทั้งองค์กร ข้อผิดพลาดที่ใหญ่ที่สุดคือการทำ Big Bang Rollout พร้อมกัน",
+    "case_study": {
+        "title": "บริษัท Software House 120 คน: เพิ่ม Team Alignment 60% ด้วย OKRs",
+        "story": "บริษัท Software House แห่งหนึ่งมีปัญหาทีม Development, Design และ Sales ทำงานแบบ Silo — แต่ละทีมตั้งเป้าหมายเองโดยไม่สอดคล้องกัน ทำให้ Product Launch ล่าช้าบ่อย หลัง OKR Pilot 2 ไตรมาส ทีมทั้งหมดเห็น OKRs ของกันและกัน Conflict ลดลงเพราะทุกคนรู้ว่าทีมอื่นกำลังทำอะไรและทำไม OKR Alignment Score (วัดผ่าน Survey) เพิ่มขึ้น 60% และ Product ออกตรงเวลา 3 Releases ติดต่อกัน",
+        "result": "Team Alignment Score เพิ่ม 60%, On-time Product Release เพิ่มจาก 40% เป็น 85%, Cross-team Conflict ลด 45%"
+    },
+    "takeaways": [
+        "OKRs ที่ดีแยก Objective (แรงบันดาลใจ) จาก Key Results (ตัวเลขวัดผล) ให้ชัดเจน",
+        "ถ้าทำ Key Results ได้ 100% ทุกครั้ง แสดงว่าตั้งเป้าไม่ท้าทายพอ — เป้าที่ดีควรทำได้ 70-80%",
+        "ความโปร่งใสคือหัวใจของ OKRs ทุกคนต้องเห็น OKRs ของกันและกัน",
+        "OKRs ไม่ควรผูกโดยตรงกับ Compensation เพราะจะทำให้คนตั้งเป้าต่ำเพื่อความปลอดภัย",
+        "OKRs ที่ไม่มี Weekly Check-in คือ OKRs ที่รอล้มเหลว — Cadence สม่ำเสมอคือปัจจัยสำเร็จ"
+    ],
+    "faq": [
+        {
+            "question": "OKRs ต่างจาก KPI อย่างไร?",
+            "answer": "KPI วัดสุขภาพของธุรกิจแบบต่อเนื่อง (Business as Usual) เช่น Revenue, Customer Satisfaction, Uptime ส่วน OKRs คือเป้าหมายที่ท้าทายและเปลี่ยนแปลงได้ เพื่อขับเคลื่อนการพัฒนาครั้งสำคัญ ทั้งสองทำงานร่วมกัน ไม่ใช่แทนกัน"
         },
         {
-            "type": "subheading",
-            "content": "กฎเหล็กของ OKRs: ทบทวนอย่างสม่ำเสมอ"
+            "question": "องค์กรควรมี OKR กี่ข้อต่อระดับ?",
+            "answer": "กฎของ John Doerr: ไม่เกิน 5 Objectives และ 4 Key Results ต่อ Objective น้อยกว่าดีกว่า เพราะ OKRs คือการบังคับให้เลือก Focus ถ้ามี OKRs มากเกินไปหมายความว่าไม่ได้ Focus จริง"
         },
         {
-            "type": "text",
-            "content": "OKRs จะล้มเหลวทันทีที่ถูกเก็บไว้ในลิ้นชัก ระบบ OKRs ต้องการการทำ Check-in ทุกสัปดาห์หรือรายเดือน เพื่อดูว่าเรายังเดินไปถูกทางไหม และต้องปรับเปลี่ยนอะไรบ้างท่ามกลางการเปลี่ยนแปลงของตลาด"
+            "question": "จะรู้ได้อย่างไรว่า OKRs ที่ตั้งท้าทายพอหรือยัง?",
+            "answer": "ใช้ 'Comfort Test': ถ้าคุณมั่นใจ 100% ว่าจะทำ Key Results สำเร็จ แสดงว่าตั้งเป้าต่ำเกินไป ความรู้สึกที่ถูกต้องสำหรับ Stretch OKR คือ 'น่าตื่นเต้นแต่ก็น่ากลัวเล็กน้อย' ถ้าไม่รู้สึกอะไรเลย เป้ายังไม่ท้าทายพอ"
         },
         {
-            "type": "quote",
-            "content": "OKRs คือการเลือกสิ่งที่จะไม่ทำ พอๆ กับการเลือกสิ่งที่จะทำ (Focus is about saying NO)",
-            "author": "อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)"
-        },
+            "question": "ควรเริ่ม OKRs ที่ไตรมาส 1 ของปีงบประมาณหรือไม่?",
+            "answer": "ไม่จำเป็น สามารถเริ่มได้ทุกเมื่อ แต่ควรเริ่มในช่วงต้นไตรมาสเพื่อให้มีเวลา 3 เดือนเต็มในการขับเคลื่อน ที่สำคัญกว่าคือความพร้อมของทีม — ดีกว่าที่จะเริ่มเมื่อทีมเข้าใจและพร้อมมากกว่ารอให้ 'ถูก Timing'"
+        }
+    ],
+    "cta": {
+        "title": "พร้อมนำ OKRs ไปใช้ในองค์กรของคุณ?",
+        "description": "CAP Vision ออกแบบ OKRs Implementation Workshop และ Facilitation สำหรับผู้บริหารและทีม HR ที่ต้องการนำ OKRs ไปใช้อย่างถูกต้องและเห็นผลจริง",
+        "buttonText": "สอบถาม OKRs Workshop",
+        "buttonLink": "/contact"
+    },
+    "seo": {
+        "metaTitle": "OKRs คืออะไร? วิธีตั้งเป้าหมายและนำ OKRs ไปใช้ในองค์กรจริง",
+        "metaDescription": "เรียนรู้ OKRs ตั้งแต่โครงสร้าง Objective และ Key Results ไปจนถึงวิธี Cascade, Check-in และข้อผิดพลาดที่ทำให้ OKRs ล้มเหลว พร้อม Case Study จริง",
+        "keywords": ["OKRs", "OKR implementation", "Goal Setting", "Performance Management", "Strategic Alignment", "การตั้งเป้าหมาย"]
+    },
+    "hashtags": ["#OKRs", "#GoalSetting", "#PerformanceManagement", "#StrategicAlignment", "#CAPVision"],
+    "images": [
         {
-            "type": "highlight",
-            "title": "Critical Success Factor",
-            "content": "ความโปร่งใสเป็นปัจจัยสำคัญที่สุด ทุกคนในองค์กรควรรู้ว่า OKRs ของ CEO คืออะไร เพื่อให้เขาสามารถวางเป้าหมายของตัวเองให้สอดคล้องกันได้"
-        },
-        {
-            "type": "box",
-            "variant": "info",
-            "title": "🧠 Reflection Panel (สะท้อนคิด)",
-            "items": [
-                "<b>Insight:</b> เป้าหมายประจำไตรมาสของคุณตอนนี้ สร้างแรงบันดาลใจให้คุณอยากตื่นมาทำงานในเช้าวันจันทร์จริงไหม?",
-                "<b>Reflection:</b> ถ้าคุณต้องเลือกเป้าหมายเพียง 1 อย่างถ้าทำสำเร็จแล้วจะเปลี่ยนโฉมหน้าธุรกิจคุณไปเลย สิ่งนั้นคืออะไร?",
-                "<b>Action:</b> วันนี้ลองลิสต์ Objectives 1 ข้อของคุณ แล้วลองเขียน Key Results 3 ข้อที่มีตัวเลขชัดเจนกำัับไว้"
-            ]
-        },
-        {
-            "type": "box",
-            "variant": "success",
-            "title": "🏠 Workshop Seed: OKR Writing Clinic (15 Min)",
-            "items": [
-                "<b>Setup:</b> เตรียมเป้าหมายที่ดูคลุมเครือ 1 ประโยค (เช่น พัฒนาความสัมพันธ์ลูกค้า)",
-                "<b>Process:</b> ให้ทีมช่วยกันรีไรท์ให้เป็น O ที่ Inspiring และแตกเป็น KRs ที่วัดผลได้จริง",
-                "<b>Outcome:</b> ฝึกฝนการเขียนเป้าหมายที่เฉียบคมและทรงพลัง"
-            ]
+            "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80",
+            "alt": "Team reviewing OKRs progress on whiteboard",
+            "caption": "OKRs คือการเลือกสิ่งที่จะไม่ทำ พอๆ กับการเลือกสิ่งที่จะทำ — Focus is about saying NO"
         }
     ]
 }

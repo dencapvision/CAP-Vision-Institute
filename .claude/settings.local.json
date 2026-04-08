@@ -57,7 +57,9 @@
       "WebFetch(domain:unicorngloballink.com)",
       "WebFetch(domain:www.hostinger.com)",
       "WebSearch",
-      "WebFetch(domain:gamma.app)"
+      "WebFetch(domain:gamma.app)",
+      "Bash(node scripts/seed-courses-master.mjs)",
+      "Bash(grep -v \"^[0-9]*:[[:space:]]*//\")"
     ]
   }
 }

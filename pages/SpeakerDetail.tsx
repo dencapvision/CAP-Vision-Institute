@@ -32,9 +32,30 @@ const DEN_SPECIFIC = {
     { label: 'ครูเด่น มาสเตอร์ฟา', points: ['Facilitation ดึงศักยภาพออกมา', 'ทุกคนมีส่วนร่วม 100%', 'วัดผลด้วยพฤติกรรมที่เปลี่ยน', 'ติดตามผล 30-90 วัน', 'เปลี่ยน Mindset จากภายใน'] },
   ],
   capValues: [
-    { title: 'C — Communication', desc: 'ทฤษฎีการสื่อสาร 4 ระดับ สร้างความเข้าใจลึกกว่าคำพูด', icon: MessageCircle, color: 'from-blue-600 to-blue-800' },
-    { title: 'A — Awareness', desc: 'การตระหนักรู้ตนเอง คือจุดเริ่มต้นของการเปลี่ยนแปลงที่แท้จริง', icon: Brain, color: 'from-amber-500 to-amber-700' },
-    { title: 'P — Performance', desc: 'ผลลัพธ์ที่วัดได้ พฤติกรรมที่เปลี่ยน ไม่ใช่แค่ความรู้ที่เพิ่ม', icon: TrendingUp, color: 'from-emerald-600 to-emerald-800' },
+    {
+      letter: 'C',
+      title: 'CAPACITY',
+      titleTh: 'ศักยภาพ',
+      desc: 'มนุษย์ทุกคนมีศักยภาพที่รอการปลดปล่อย หน้าที่ของ CAP Vision คือการสร้างบริบทที่ปลอดภัยให้ศักยภาพนั้นเผยออกมา',
+      icon: MessageCircle,
+      color: 'from-blue-600 to-blue-800',
+    },
+    {
+      letter: 'A',
+      title: 'AWARENESS',
+      titleTh: 'การตระหนักรู้',
+      desc: 'การเปลี่ยนแปลงที่ยั่งยืนเริ่มจาก Self-Awareness — การรู้จักตนเอง เข้าใจรูปแบบความคิด และมองเห็นทางเลือกใหม่ที่ไม่เคยเห็นมาก่อน',
+      icon: Brain,
+      color: 'from-amber-500 to-amber-700',
+    },
+    {
+      letter: 'P',
+      title: 'PERFORMANCE',
+      titleTh: 'ผลลัพธ์ที่วัดได้',
+      desc: 'การเรียนรู้ต้องแปลงเป็นผลลัพธ์จริงในการทำงาน ไม่ใช่แค่ความรู้สึกดีในห้องอบรม แต่คือพฤติกรรมและผลงานที่เปลี่ยนจริง',
+      icon: TrendingUp,
+      color: 'from-emerald-600 to-emerald-800',
+    },
   ],
   methodologies: [
     { name: 'Transformative Learning', desc: 'เรียนรู้ผ่านประสบการณ์จริง ไม่ใช่แค่ฟังบรรยาย', index: '01' },
@@ -402,12 +423,13 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
       <section className="py-24 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <p className="text-[#c5a059] font-bold uppercase tracking-[0.3em] text-sm mb-4">กรอบแนวคิดต้นฉบับ</p>
+            <p className="text-[#c5a059] font-bold uppercase tracking-[0.3em] text-sm mb-4">CAP Vision Story</p>
             <h2 className="text-3xl md:text-4xl font-black text-[#0a1628]" style={{ letterSpacing: '-0.02em' }}>
-              CAP Theory — ทฤษฎีที่อยู่เบื้องหลังทุกหลักสูตร
+              ทฤษฎีที่อยู่เบื้องหลังทุกกระบวนการ
             </h2>
             <p className="mt-4 text-gray-500 max-w-2xl mx-auto leading-relaxed">
-              กรอบแนวคิดที่ออกแบบโดยครูเด่นซึ่งเป็นต้นแบบของการพัฒนาคนแบบองค์รวม ครอบคลุมตั้งแต่ภายในตัวบุคคลไปจนถึงผลลัพธ์ขององค์กร
+              CAP ไม่ใช่แค่ชื่อ แต่คือปรัชญาที่เชื่อว่าการพัฒนาคนต้องเริ่มจากการสร้างศักยภาพ
+              ผ่านการตระหนักรู้ และวัดผลด้วยผลลัพธ์ที่จับต้องได้
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -417,11 +439,14 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                 <div key={i} className="group relative overflow-hidden rounded-3xl bg-gray-50 border border-gray-100 hover:shadow-xl transition-all duration-500 hover:-translate-y-2">
                   <div className={`h-2 w-full bg-gradient-to-r ${cap.color}`} />
                   <div className="p-8">
-                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${cap.color} flex items-center justify-center mb-6 shadow-lg`}>
-                      <Icon className="w-7 h-7 text-white" />
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${cap.color} flex items-center justify-center mb-4 shadow-lg`}>
+                      <span className="text-white text-2xl font-black">{cap.letter}</span>
                     </div>
-                    <h3 className="text-xl font-black text-[#0a1628] mb-3">{cap.title}</h3>
-                    <p className="text-gray-500 leading-relaxed">{cap.desc}</p>
+                    <p className={`text-xs font-black tracking-widest uppercase mb-1 bg-gradient-to-r ${cap.color} bg-clip-text text-transparent`}>
+                      {cap.title}
+                    </p>
+                    <h3 className="text-xl font-black text-[#0a1628] mb-3">{cap.titleTh}</h3>
+                    <p className="text-gray-500 leading-relaxed text-sm">{cap.desc}</p>
                   </div>
                 </div>
               );

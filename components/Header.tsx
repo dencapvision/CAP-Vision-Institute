@@ -101,6 +101,12 @@ const navItems: NavItem[] = [
         icon: <Laptop className="w-4 h-4" />,
         description: '4 แพคเกจ ฟรีโดเมน + VPS Setup',
       },
+      {
+        name: 'CEO Speechfulness',
+        path: '/ceo-speechfulness',
+        icon: <Sparkles className="w-4 h-4" />,
+        description: 'Coaching พูด & สื่อสาร สำหรับผู้บริหาร',
+      },
     ],
   },
   {

@@ -56,7 +56,8 @@
       "WebFetch(domain:migi-james.vercel.app)",
       "WebFetch(domain:unicorngloballink.com)",
       "WebFetch(domain:www.hostinger.com)",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:gamma.app)"
     ]
   }
 }

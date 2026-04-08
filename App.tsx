@@ -25,6 +25,7 @@ const MediaManager = lazy(() => import('./pages/MediaManager'));
 const CourseBuilderPage = lazy(() => import('./pages/CourseBuilder'));
 const WorkshopHandouts = lazy(() => import('./pages/workshop/WorkshopHandouts'));
 const PortfolioDetail = lazy(() => import('./pages/PortfolioDetail'));
+const WebAppPricing = lazy(() => import('./pages/WebAppPricing'));
 
 // Dashboard pages
 const DashboardLayout = lazy(() => import('./pages/dashboard/DashboardLayout'));
@@ -90,6 +91,7 @@ const AppShell: React.FC = () => {
             <Route path="/admin/media" element={<MediaManager />} />
             <Route path="/admin/course-builder" element={<CourseBuilderPage />} />
             <Route path="/growth-mastery/handouts" element={<WorkshopHandouts />} />
+            <Route path="/web-app-pricing" element={<WebAppPricing />} />
 
             {/* Dashboard routes */}
             <Route path="/dashboard" element={<DashboardLayout />}>

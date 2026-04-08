@@ -88,6 +88,20 @@ const navItems: NavItem[] = [
     name: 'บริการองค์กร',
     path: '/services',
     icon: <Building2 className="w-4 h-4" />,
+    submenu: [
+      {
+        name: 'บริการฝึกอบรมองค์กร',
+        path: '/services',
+        icon: <GraduationCap className="w-4 h-4" />,
+        description: 'In-house Training & Consulting',
+      },
+      {
+        name: 'สร้างเว็บแอพ AI พร้อมใช้',
+        path: '/web-app-pricing',
+        icon: <Laptop className="w-4 h-4" />,
+        description: '4 แพคเกจ ฟรีโดเมน + VPS Setup',
+      },
+    ],
   },
   {
     name: 'คลังความรู้',

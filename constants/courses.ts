@@ -194,6 +194,50 @@ export const COURSES: CourseDetailInfo[] = [
         }
     },
     {
+        id: 'storytelling-for-business',
+        title: 'เล่าเรื่องให้ธุรกิจเดิน\n(Storytelling for Business)',
+        category: 'Communication Skills',
+        description: 'เปลี่ยนข้อมูลและตัวเลขให้กลายเป็นเรื่องเล่าที่จับใจ สร้างแรงบันดาลใจ และขับเคลื่อนการตัดสินใจในองค์กร',
+        image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Course/Storytelling%20for%20Business.jpg',
+        altText: 'หลักสูตร Storytelling for Business - CAP Vision Institute',
+        longDescription: 'ในยุคที่ข้อมูลล้นหลาม สิ่งที่ทำให้ผู้คนหยุดฟัง จดจำ และลงมือทำ ไม่ใช่ตัวเลขหรือ Data แต่คือ "เรื่องเล่า" ที่ดีหนึ่งเรื่อง นักธุรกิจที่ยิ่งใหญ่ที่สุดในโลก ไม่ว่าจะเป็น Steve Jobs, Simon Sinek หรือ Elon Musk ล้วนเป็นนักเล่าเรื่องชั้นยอด หลักสูตรนี้ไม่ได้สอนให้คุณพูดเก่งขึ้น แต่สอนให้คุณ "สื่อสารด้วยหัวใจ" ผ่านโครงสร้าง Story ที่ถูกออกแบบมาเพื่องานธุรกิจโดยเฉพาะ ตั้งแต่การ Pitch ผู้บริหาร การสร้าง Brand Story ไปจนถึงการ Lead Change ผ่านพลังของเรื่องเล่า',
+        duration: 'In-house Training 1–2 วัน | 20–40 คน',
+        audience: 'ผู้บริหาร / CEO, Sales & Marketing, HR & L&D, Project Manager, ทุกคนที่ต้องโน้มน้าวและสร้างแรงบันดาลใจให้ผู้อื่น',
+        why: [
+            { label: 'Retention Rate', stat: '22X', desc: 'ข้อมูลที่นำเสนอผ่านเรื่องเล่าถูกจดจำได้มากกว่าข้อมูลล้วนๆ ถึง 22 เท่า (Stanford Research)', icon: React.createElement(Brain) },
+            { label: 'Persuasion Power', stat: '+65%', desc: 'การตัดสินใจซื้อหรือสนับสนุนเพิ่มขึ้นเมื่อใช้ Story แทนการนำเสนอ Feature/Spec', icon: React.createElement(Target) },
+            { label: 'Emotional Connection', stat: 'Deep', desc: 'Story กระตุ้นสมองส่วน Emotion ทำให้ผู้ฟัง Feel ก่อน Think และ Act ตามมา', icon: React.createElement(Heart) },
+            { label: 'Leadership Impact', stat: 'สูงขึ้น', desc: 'ผู้นำที่เล่าเรื่องเป็นสร้าง Vision Alignment และ Team Engagement ได้ดีกว่า 3 เท่า', icon: React.createElement(Star) }
+        ],
+        how: [
+            { title: 'Story Deconstruction', desc: 'ถอดแบบเรื่องเล่าที่ทรงพลังจากผู้นำระดับโลก แล้วนำ Framework มาประยุกต์ใช้จริง', icon: React.createElement(Layers) },
+            { title: 'Story Building Workshop', desc: 'เขียนและเล่าเรื่องธุรกิจของตัวเองในคลาส รับ Feedback ทันทีจากวิทยากรและเพื่อน', icon: React.createElement(Zap) },
+            { title: 'Real Business Cases', desc: 'ฝึกผ่านโจทย์จริง เช่น Pitch ผู้บริหาร, เปิดตัวโปรเจกต์, Lead Change ด้วย Story', icon: React.createElement(Target) }
+        ],
+        what: [
+            'Module 1: Why Story Works — วิทยาศาสตร์เบื้องหลังพลังของ Storytelling',
+            'Module 2: Story Frameworks — Hero\'s Journey, Problem-Solution, Before-After-Bridge',
+            'Module 3: Business Story Types — Pitch Story, Brand Story, Change Story, Teaching Story',
+            'Module 4: Story Ingredients — Character, Conflict, Transformation, Stakes',
+            'Module 5: Data Storytelling — เปลี่ยนตัวเลขและ Data ให้มีชีวิต',
+            'Module 6: Story in Action — เล่าเรื่องจริงต่อกลุ่ม รับ Feedback + Coaching'
+        ],
+        objectives: [
+            'เข้าใจโครงสร้างของเรื่องเล่าที่ทรงพลังและนำไปประยุกต์ใช้ในงานธุรกิจได้ทันที',
+            'สร้าง Business Story ของตัวเองได้ ตั้งแต่ Pitch Story, Change Story ถึง Brand Story',
+            'เปลี่ยน Data และตัวเลขให้กลายเป็นเรื่องเล่าที่ผู้ฟังจำได้และรู้สึกได้',
+            'ใช้ Storytelling ในการนำเสนอแผนงาน โน้มน้าวผู้บริหาร และ Lead Change',
+            'สร้าง Emotional Connection กับผู้ฟังผ่านเทคนิค Character และ Conflict',
+            'เล่าเรื่องได้อย่างมั่นใจ มีโครงสร้าง และสร้างผลลัพธ์ที่วัดได้จริง'
+        ],
+        instructor: {
+            id: 'den-master-fa',
+            name: 'ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)',
+            bio: 'ผู้อำนวยการสถาบัน CAP Vision Institute นักเล่าเรื่องและ Facilitator ที่ใช้พลัง Storytelling ในการพัฒนาผู้นำและขับเคลื่อนองค์กรมากว่า 20 ปี',
+            image: '/images/denmasterfa.jpg'
+        }
+    },
+    {
         id: 'effective-communication',
         title: 'ศิลปะการสื่อสารเพื่อประสิทธิผลงาน\n(Effective Communication)',
         category: 'Communication Skills',

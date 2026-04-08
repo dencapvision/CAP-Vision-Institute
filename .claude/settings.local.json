@@ -51,7 +51,12 @@
       "Bash(cp public/content/blog/posts/agile-hr-transformation.json dist/content/blog/posts/)",
       "Bash(cp public/content/blog/posts/ai-proof-skills-hr-2026.json dist/content/blog/posts/)",
       "Bash(cp public/content/blog/posts/building-growth-mindset-culture.json dist/content/blog/posts/)",
-      "Bash(cp public/content/blog/posts/data-driven-hr.json dist/content/blog/posts/)"
+      "Bash(cp public/content/blog/posts/data-driven-hr.json dist/content/blog/posts/)",
+      "WebFetch(domain:the-rainbow-alchemy.vercel.app)",
+      "WebFetch(domain:migi-james.vercel.app)",
+      "WebFetch(domain:unicorngloballink.com)",
+      "WebFetch(domain:www.hostinger.com)",
+      "WebSearch"
     ]
   }
 }

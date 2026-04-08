@@ -150,6 +150,50 @@ export const COURSES: CourseDetailInfo[] = [
         }
     },
     {
+        id: 'presentation-like-a-pro',
+        title: 'นำเสนองานอย่างมืออาชีพ\n(Presentation Like a Pro)',
+        category: 'Communication Skills',
+        description: 'เปลี่ยนทุกการนำเสนอให้ทรงพลัง น่าเชื่อถือ และสร้าง Impact ได้จริง ตั้งแต่การออกแบบสไลด์ไปจนถึงการ Deliver บนเวที',
+        image: '/images/courses/powerful-speaking.png',
+        altText: 'หลักสูตร Presentation Like a Pro - CAP Vision Institute',
+        longDescription: 'คนจำนวนมากกลัวการนำเสนอ ไม่ใช่เพราะไม่รู้เรื่อง แต่เพราะ "ไม่รู้จะพูดอย่างไรให้คนฟัง" หลักสูตรนี้ออกแบบมาเพื่อเปลี่ยนทุกคนให้กลายเป็นนักนำเสนอที่มั่นใจ ครอบคลุมทั้ง Mindset (เชื่อในคุณค่าของสิ่งที่นำเสนอ), Skillset (โครงสร้าง Storytelling, Voice & Body Language, Visual Design) และ Toolset (PowerPoint/Canva เทคนิค) เพราะการนำเสนอที่ดีไม่ใช่แค่ความรู้ที่แม่นยำ แต่คือการเชื่อมใจผู้ฟังให้เข้าถึงเนื้อหาได้ทุกนาที',
+        duration: 'In-house Training 1–2 วัน | 20–40 คน',
+        audience: 'ผู้จัดการ / หัวหน้างาน, พนักงานที่นำเสนองานประจำ, Sales & Marketing, ผู้บริหารที่ต้องพรีเซนต์ต่อ C-Suite หรือลูกค้า',
+        why: [
+            { label: 'Executive Presence', stat: '+80%', desc: 'ผู้เข้าอบรมมีความมั่นใจในการนำเสนอเพิ่มขึ้นชัดเจน', icon: React.createElement(Star) },
+            { label: 'Audience Engagement', stat: 'สูงขึ้น', desc: 'ผู้ฟังจดจำและอยากนำสิ่งที่ได้ยินไปใช้', icon: React.createElement(Users) },
+            { label: 'Message Clarity', stat: '3X', desc: 'โครงสร้างที่ชัดทำให้ผู้ฟังเข้าใจเร็วและตัดสินใจได้เลย', icon: React.createElement(Target) },
+            { label: 'Presentation Anxiety', stat: '-70%', desc: 'ลดความกลัวเวทีด้วยเทคนิค Mindset Shift และการฝึกซ้ำ', icon: React.createElement(Heart) }
+        ],
+        how: [
+            { title: 'Practice-First', desc: 'ฝึกนำเสนอจริงตั้งแต่ชั่วโมงแรก รับ Feedback ทันที ไม่ใช่แค่ฟังทฤษฎี', icon: React.createElement(Flame) },
+            { title: 'Video Playback', desc: 'อัดวีดิโอการนำเสนอของตัวเอง เห็น Blind Spot และปรับปรุงได้ทันที', icon: React.createElement(Eye) },
+            { title: 'Real Case Workshop', desc: 'นำหัวข้องานจริงขององค์กรมาฝึก ได้สไลด์และสคริปต์ใช้งานได้ทันที', icon: React.createElement(Zap) }
+        ],
+        what: [
+            'Module 1: Presentation Mindset — เปลี่ยนจาก "กลัว" เป็น "กล้า" + Audience-First Thinking',
+            'Module 2: Story Architecture — โครงสร้าง PREP / Problem-Solution / Hero\'s Journey + Opening Hook',
+            'Module 3: Slide Design Mastery — One Idea Per Slide, Visual Hierarchy, Data Storytelling',
+            'Module 4: Voice & Body Language — Vocal Variety, Eye Contact, Gesture, Stage Presence',
+            'Module 5: Q&A Mastery — รับมือคำถามยาก Hostile Questions และการรักษาความน่าเชื่อถือ',
+            'Module 6: Live Presentation Lab — นำเสนอจริงต่อกลุ่ม + Peer Feedback + Coaching จากวิทยากร'
+        ],
+        objectives: [
+            'ออกแบบโครงสร้างการนำเสนอด้วย Storytelling ที่ดึงดูดและจูงใจผู้ฟังได้ตั้งแต่ต้น',
+            'สร้างสไลด์ที่สื่อความชัดเจน ดูน่าเชื่อถือ และไม่ทำให้ผู้ฟังหลับ',
+            'ใช้น้ำเสียง ภาษากาย และสายตาในการสร้าง Executive Presence บนเวที',
+            'รับมือกับความประหม่าและคำถามยากได้อย่างมั่นใจและเป็นมืออาชีพ',
+            'ปรับการนำเสนอให้เหมาะกับผู้ฟังแต่ละประเภท ตั้งแต่ C-Suite ถึงทีมงาน',
+            'ฝึกนำเสนองานจริงและรับ Feedback เพื่อนำไปใช้ได้ทันทีหลังจบหลักสูตร'
+        ],
+        instructor: {
+            id: 'den-master-fa',
+            name: 'ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)',
+            bio: 'ผู้อำนวยการสถาบัน CAP Vision Institute นักพูด นักฝึกอบรม และ Facilitator ที่มีประสบการณ์กว่า 20 ปีในการพัฒนาทักษะการนำเสนอให้กับผู้บริหารและพนักงานองค์กรชั้นนำ',
+            image: '/images/denmasterfa.jpg'
+        }
+    },
+    {
         id: 'effective-communication',
         title: 'ศิลปะการสื่อสารเพื่อประสิทธิผลงาน\n(Effective Communication)',
         category: 'Communication Skills',

@@ -2,16 +2,19 @@ import { createClient } from '@supabase/supabase-js';
 import fs from 'fs';
 import { resolve } from 'path';
 
-const envPath = resolve(process.cwd(), '.env.local');
-const envContent = fs.readFileSync(envPath, 'utf-8');
-const envVars = Object.fromEntries(
-  envContent.split('\n')
-    .filter(line => line.trim() && !line.startsWith('#'))
-    .map(line => line.split('=').map(s => s.trim()))
-);
+const envPathLocal = resolve(process.cwd(), '.env.local');
+const envPath = resolve(process.cwd(), '.env');
+const configPath = fs.existsSync(envPathLocal) ? envPathLocal : fs.existsSync(envPath) ? envPath : null;
+if (configPath) {
+  fs.readFileSync(configPath, 'utf-8').split('\n').forEach(line => {
+    const m = line.match(/^([^=]+)=(.*)$/);
+    if (m) process.env[m[1]] = m[2].trim().replace(/^['"]|['"]$/g, '');
+  });
+}
 
-const SUPABASE_URL = envVars['VITE_SUPABASE_URL'];
-const SUPABASE_KEY = envVars['VITE_SUPABASE_SERVICE_KEY'] || envVars['VITE_SUPABASE_ANON_KEY'];
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL || '';
+const SUPABASE_KEY = process.env.VITE_SUPABASE_service_role || process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+if (!SUPABASE_URL || !SUPABASE_KEY) { console.error('Missing credentials'); process.exit(1); }
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 

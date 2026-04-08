@@ -23,7 +23,7 @@ if (configPath) {
 }
 
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || '';
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+const SUPABASE_KEY = process.env.VITE_SUPABASE_service_role || process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 if (!SUPABASE_URL || !SUPABASE_KEY) { console.error('Missing credentials'); process.exit(1); }
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -161,7 +161,7 @@ Tops | AOT | PEA | Land and Houses | Mr.D.I.Y. (100+ องค์กรทั่
       {
         icon: 'Zap',
         title: 'Module 4 — Pressure Decisions: ตัดสินใจในสถานการณ์กดดัน',
-        desc: 'การตัดสินใจยากที่สุดมักมาพร้อมกับ Deadline ที่สั้นที่สุด\n\n- Time-boxed Decision Making: ตั้ง Deadline ให้กับกระบวนการตัดสินใจ\n- Satisficing vs Optimizing: เมื่อ "ดีพอ" ดีกว่า "สมบูรณ์แบบ"'\n- Managing Ambiguity: ตัดสินใจโดยไม่รอข้อมูลครบร้อยเปอร์เซ็นต์\n- Stress Inoculation: ฝึกตัดสินใจในสภาวะกดดันจำลอง\n- Simulation: High-stakes Decision Scenario ที่ต้องตัดสินใจในเวลาจำกัด'
+        desc: 'การตัดสินใจยากที่สุดมักมาพร้อมกับ Deadline ที่สั้นที่สุด\n\n- Time-boxed Decision Making: ตั้ง Deadline ให้กับกระบวนการตัดสินใจ\n- Satisficing vs Optimizing: เมื่อ "ดีพอ" ดีกว่า "สมบูรณ์แบบ"\n- Managing Ambiguity: ตัดสินใจโดยไม่รอข้อมูลครบร้อยเปอร์เซ็นต์\n- Stress Inoculation: ฝึกตัดสินใจในสภาวะกดดันจำลอง\n- Simulation: High-stakes Decision Scenario ที่ต้องตัดสินใจในเวลาจำกัด'
       },
       {
         icon: 'Target',

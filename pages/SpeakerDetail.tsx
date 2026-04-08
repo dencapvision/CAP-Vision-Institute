@@ -430,6 +430,95 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         </div>
       </section>
 
+      {/* ── 5.5 DFA MODEL ───────────────────────────────────── */}
+      <section className="py-24 bg-gradient-to-br from-[#0a1628] to-[#0f3460]">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <p className="text-[#c5a059] font-bold uppercase tracking-[0.3em] text-sm mb-4">ปรัชญาต้นฉบับ</p>
+            <h2 className="text-3xl md:text-4xl font-black text-white" style={{ letterSpacing: '-0.02em' }}>
+              DFA Model — Dialogue · Flow · Action
+            </h2>
+            <p className="mt-4 text-white/70 max-w-2xl mx-auto leading-relaxed">
+              แนวคิดหลักของครูเด่นในการออกแบบกระบวนการเรียนรู้ที่มีประสิทธิภาพ
+              <br />
+              <span className="text-[#c5a059] font-semibold">"การสื่อสารที่เยียวยา นำไปสู่การไหลเวียนของพลังงานที่ดี และสร้างการกระทำที่ยั่งยืน"</span>
+            </p>
+          </div>
+
+          {/* Flow Arrow Layout */}
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0">
+            {/* D */}
+            <div className="flex-1 max-w-xs bg-white/8 border border-white/10 rounded-3xl p-8 text-center hover:bg-white/12 hover:border-[#c5a059]/40 transition-all duration-300 group">
+              <div className="w-16 h-16 rounded-2xl bg-[#c5a059] flex items-center justify-center mx-auto mb-5 shadow-lg shadow-[#c5a059]/30 group-hover:scale-105 transition-transform">
+                <span className="text-white text-2xl font-black">D</span>
+              </div>
+              <h3 className="text-xl font-black text-white mb-3">Dialogue</h3>
+              <p className="text-white/60 text-sm leading-relaxed">
+                การสื่อสารที่เปิดพื้นที่ ฟัง ถาม สะท้อน สร้างความเชื่อมโยงในทีมและการเรียนรู้ร่วมกัน
+              </p>
+              <div className="mt-5 inline-flex items-center gap-1.5 bg-[#c5a059]/15 text-[#c5a059] text-xs font-bold px-3 py-1.5 rounded-full">
+                เปิดพื้นที่ · ฟัง · ถาม · สะท้อน
+              </div>
+            </div>
+
+            {/* Arrow */}
+            <div className="flex md:flex-col items-center justify-center px-4 py-2 md:py-0 text-[#c5a059]/50">
+              <svg className="w-8 h-8 rotate-90 md:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </div>
+
+            {/* F */}
+            <div className="flex-1 max-w-xs bg-white/8 border border-white/10 rounded-3xl p-8 text-center hover:bg-white/12 hover:border-blue-400/40 transition-all duration-300 group">
+              <div className="w-16 h-16 rounded-2xl bg-blue-500 flex items-center justify-center mx-auto mb-5 shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
+                <span className="text-white text-2xl font-black">F</span>
+              </div>
+              <h3 className="text-xl font-black text-white mb-3">Flow</h3>
+              <p className="text-white/60 text-sm leading-relaxed">
+                การออกแบบกระบวนการเรียนรู้ที่ลื่นไหล ทำให้ผู้เรียนมีส่วนร่วมอย่างต่อเนื่องและเกิดการเรียนรู้อย่างแท้จริง
+              </p>
+              <div className="mt-5 inline-flex items-center gap-1.5 bg-blue-500/15 text-blue-300 text-xs font-bold px-3 py-1.5 rounded-full">
+                ลื่นไหล · มีส่วนร่วม · เรียนรู้แท้จริง
+              </div>
+            </div>
+
+            {/* Arrow */}
+            <div className="flex md:flex-col items-center justify-center px-4 py-2 md:py-0 text-[#c5a059]/50">
+              <svg className="w-8 h-8 rotate-90 md:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </div>
+
+            {/* A */}
+            <div className="flex-1 max-w-xs bg-white/8 border border-white/10 rounded-3xl p-8 text-center hover:bg-white/12 hover:border-emerald-400/40 transition-all duration-300 group">
+              <div className="w-16 h-16 rounded-2xl bg-emerald-500 flex items-center justify-center mx-auto mb-5 shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform">
+                <span className="text-white text-2xl font-black">A</span>
+              </div>
+              <h3 className="text-xl font-black text-white mb-3">Action</h3>
+              <p className="text-white/60 text-sm leading-relaxed">
+                การลงมือเปลี่ยนแปลงและสร้างนิสัยใหม่ที่นำไปสู่ผลลัพธ์ที่วัดได้และยั่งยืน
+              </p>
+              <div className="mt-5 inline-flex items-center gap-1.5 bg-emerald-500/15 text-emerald-300 text-xs font-bold px-3 py-1.5 rounded-full">
+                ลงมือทำ · วัดได้ · ยั่งยืน
+              </div>
+            </div>
+          </div>
+
+          {/* Tagline */}
+          <div className="mt-14 text-center">
+            <div className="inline-flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-8 py-4">
+              <span className="text-2xl font-black text-[#c5a059] nav-font">D</span>
+              <span className="text-white/30 text-lg">→</span>
+              <span className="text-2xl font-black text-blue-400 nav-font">F</span>
+              <span className="text-white/30 text-lg">→</span>
+              <span className="text-2xl font-black text-emerald-400 nav-font">A</span>
+              <span className="w-px h-6 bg-white/20 mx-2" />
+              <span className="text-white/60 text-sm">กรอบแนวคิดต้นฉบับโดย ครูเด่น มาสเตอร์ฟา</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── 6. METHODOLOGY ──────────────────────────────────── */}
       <section className="py-24 bg-gradient-to-br from-[#0a1628] to-[#0f3460]">
         <div className="max-w-6xl mx-auto px-6">

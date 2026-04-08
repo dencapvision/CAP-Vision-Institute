@@ -620,8 +620,12 @@ const CEOSpeechfulness: React.FC = () => {
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100">
             <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
-              <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-[#0f3460] flex items-center justify-center flex-shrink-0 overflow-hidden">
-                <Mic2 className="w-16 h-16 text-[#c5a059]" />
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl flex-shrink-0 overflow-hidden shadow-lg border-2 border-[#c5a059]/30">
+                <img
+                  src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/Den%20Service/denmasterfa.jpg"
+                  alt="ครูเด่น มาสเตอร์ฟา"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div>
                 <p className="text-[#c5a059] text-sm font-bold tracking-widest nav-font uppercase mb-2">เกี่ยวกับวิทยากร</p>

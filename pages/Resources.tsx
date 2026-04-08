@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
 import { fetchPublishedArticles, type BlogArticleRow } from '../services/blog-articles';
+import { fetchPublishedVideos, fetchPublishedToolkits, type MicroVideo, type ToolkitDownload } from '../services/resources-admin';
 
 const FEATURED_IDS = ['flow-state-learning', 'intro-to-facilitation', 'hrd-future-skills-2025', 'building-growth-mindset-culture'];
 
@@ -87,10 +88,22 @@ const Resources: React.FC = () => {
   const [downloadEmail, setDownloadEmail] = useState('');
   const [downloadSubmitted, setDownloadSubmitted] = useState(false);
   const [aeoArticles, setAeoArticles] = useState<BlogArticleRow[]>([]);
+  const [liveVideos, setLiveVideos] = useState<MicroVideo[]>([]);
+  const [liveToolkits, setLiveToolkits] = useState<ToolkitDownload[]>([]);
 
   useEffect(() => {
     fetchPublishedArticles().then(setAeoArticles).catch(() => {});
+    fetchPublishedVideos().then(setLiveVideos).catch(() => {});
+    fetchPublishedToolkits().then(setLiveToolkits).catch(() => {});
   }, []);
+
+  // Use Supabase data when available, else fall back to static constants
+  const activeVideos = liveVideos.length > 0
+    ? liveVideos
+    : MICRO_LEARNING_VIDEOS.map(v => ({ ...v, id: v.id, thumbnail_url: v.thumbnail, video_url: v.videoUrl ?? '', file_type: '', download_url: '', description: '', published: true, sort_order: 0, created_at: '', updated_at: '' } as unknown as MicroVideo));
+  const activeToolkits = liveToolkits.length > 0
+    ? liveToolkits
+    : DOWNLOAD_RESOURCES.map(t => ({ ...t, id: t.id, file_type: t.type, thumbnail_url: t.thumbnail, download_url: t.downloadUrl ?? '', description: '', published: true, sort_order: 0, created_at: '', updated_at: '' } as unknown as ToolkitDownload));
 
   const featuredArticles = FEATURED_IDS.map(id => articleById(id)).filter(Boolean) as typeof HRD_ARTICLES;
   const categoryArticles = CATEGORIES[activeCategory].ids
@@ -443,40 +456,53 @@ const Resources: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {MICRO_LEARNING_VIDEOS.map((video) => (
-              <div
-                key={video.id}
-                className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all border border-gray-100 cursor-pointer"
-              >
-                <div className="relative h-56 overflow-hidden">
-                  <img
-                    src={video.thumbnail}
-                    alt={video.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-[#0f3460]/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="w-16 h-16 bg-[#c5a059] rounded-full flex items-center justify-center shadow-2xl">
-                      <PlayCircle className="w-8 h-8 text-white" />
+            {activeVideos.map((video) => {
+              const hasUrl = !!video.video_url;
+              const Wrapper = hasUrl ? 'a' : 'div';
+              const wrapperProps = hasUrl
+                ? { href: video.video_url, target: '_blank', rel: 'noopener noreferrer' }
+                : {};
+              const thumb = (video as any).thumbnail_url || (video as any).thumbnail || '';
+              return (
+                <Wrapper
+                  key={video.id}
+                  {...(wrapperProps as any)}
+                  className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all border border-gray-100 cursor-pointer"
+                >
+                  <div className="relative h-56 overflow-hidden">
+                    {thumb
+                      ? <img src={thumb} alt={video.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
+                      : <div className="w-full h-56 bg-gray-100 flex items-center justify-center"><PlayCircle className="w-12 h-12 text-gray-200" /></div>}
+                    <div className="absolute inset-0 bg-[#0f3460]/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="w-16 h-16 bg-[#c5a059] rounded-full flex items-center justify-center shadow-2xl">
+                        <PlayCircle className="w-8 h-8 text-white" />
+                      </div>
                     </div>
+                    {video.duration && (
+                      <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md px-3 py-1 rounded-lg text-white text-[10px] font-bold flex items-center gap-1">
+                        <Clock className="w-3 h-3" /> {video.duration}
+                      </div>
+                    )}
+                    {!hasUrl && (
+                      <div className="absolute top-4 left-4 bg-black/60 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full nav-font">
+                        เร็วๆ นี้
+                      </div>
+                    )}
                   </div>
-                  <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-md px-3 py-1 rounded-lg text-white text-[10px] font-bold flex items-center gap-1">
-                    <Clock className="w-3 h-3" /> {video.duration}
+                  <div className="p-8">
+                    <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest mb-3 block nav-font">
+                      {video.category}
+                    </span>
+                    <h3 className="text-xl font-bold text-[#0f3460] nav-font mb-4 group-hover:text-[#c5a059] transition-colors">
+                      {video.title}
+                    </h3>
+                    <span className="flex items-center gap-2 text-[#0f3460] text-[10px] font-black nav-font uppercase tracking-widest group-hover:gap-4 transition-all">
+                      {hasUrl ? 'ดูวิดีโอ' : 'เร็วๆ นี้'} <ChevronRight className="w-4 h-4 text-[#c5a059]" />
+                    </span>
                   </div>
-                </div>
-                <div className="p-8">
-                  <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest mb-3 block nav-font">
-                    {video.category}
-                  </span>
-                  <h3 className="text-xl font-bold text-[#0f3460] nav-font mb-4 group-hover:text-[#c5a059] transition-colors">
-                    {video.title}
-                  </h3>
-                  <button className="flex items-center gap-2 text-[#0f3460] text-[10px] font-black nav-font uppercase tracking-widest group-hover:gap-4 transition-all">
-                    ดูวิดีโอ <ChevronRight className="w-4 h-4 text-[#c5a059]" />
-                  </button>
-                </div>
-              </div>
-            ))}
+                </Wrapper>
+              );
+            })}
 
             {/* Coming Soon Cards */}
             {[
@@ -549,32 +575,48 @@ const Resources: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
-            {DOWNLOAD_RESOURCES.map((tool) => (
-              <div
-                key={tool.id}
-                className="bg-white rounded-3xl p-8 border border-gray-100 hover:shadow-2xl transition-all group"
-              >
-                <div className="flex items-start gap-5 mb-6">
-                  <div className="w-14 h-14 bg-[#0f3460]/5 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-[#c5a059]/10 transition-colors">
-                    <FileText className="w-7 h-7 text-[#0f3460] group-hover:text-[#c5a059] transition-colors" />
+            {activeToolkits.map((tool) => {
+              const dlUrl = (tool as any).download_url || (tool as any).downloadUrl || '';
+              const fileType = (tool as any).file_type || (tool as any).type || 'PDF';
+              return (
+                <div
+                  key={tool.id}
+                  className="bg-white rounded-3xl p-8 border border-gray-100 hover:shadow-2xl transition-all group"
+                >
+                  <div className="flex items-start gap-5 mb-6">
+                    <div className="w-14 h-14 bg-[#0f3460]/5 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-[#c5a059]/10 transition-colors">
+                      <FileText className="w-7 h-7 text-[#0f3460] group-hover:text-[#c5a059] transition-colors" />
+                    </div>
+                    <div>
+                      <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest nav-font block mb-1">
+                        {fileType} · {tool.category}
+                      </span>
+                      <h3 className="font-black text-[#0f3460] nav-font leading-tight text-lg">
+                        {tool.title}
+                      </h3>
+                    </div>
                   </div>
-                  <div>
-                    <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest nav-font block mb-1">
-                      {tool.type} · {tool.category}
-                    </span>
-                    <h3 className="font-black text-[#0f3460] nav-font leading-tight text-lg">
-                      {tool.title}
-                    </h3>
-                  </div>
+                  {dlUrl ? (
+                    <a
+                      href={dlUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      download
+                      className="w-full bg-[#0f3460] text-white py-4 rounded-2xl font-black flex items-center justify-center gap-3 hover:bg-[#c5a059] transition-all nav-font text-sm"
+                    >
+                      <Download className="w-4 h-4" /> ดาวน์โหลดฟรี
+                    </a>
+                  ) : (
+                    <div className="w-full bg-gray-100 text-gray-400 py-4 rounded-2xl font-black flex items-center justify-center gap-3 nav-font text-sm cursor-not-allowed">
+                      <Download className="w-4 h-4" /> เร็วๆ นี้
+                    </div>
+                  )}
+                  <p className="text-center text-gray-400 text-[10px] mt-3 nav-font">
+                    ไม่ต้องลงทะเบียน · ดาวน์โหลดได้เลย
+                  </p>
                 </div>
-                <button className="w-full bg-[#0f3460] text-white py-4 rounded-2xl font-black flex items-center justify-center gap-3 hover:bg-[#c5a059] transition-all nav-font text-sm">
-                  <Download className="w-4 h-4" /> ดาวน์โหลดฟรี
-                </button>
-                <p className="text-center text-gray-400 text-[10px] mt-3 nav-font">
-                  ไม่ต้องลงทะเบียน · ดาวน์โหลดได้เลย
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Lead Capture */}

@@ -29,8 +29,19 @@ export const MICRO_LEARNING_VIDEOS = [
         title: 'เทคนิคการฟังแบบ Deep Listening',
         category: 'Communication Skills',
         thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80',
-        duration: '3:45'
-    }
+        duration: '3:45',
+        // ใส่ YouTube URL ตรงนี้ — เช่น 'https://www.youtube.com/watch?v=XXXXXXX'
+        videoUrl: '',
+    },
+    // ── ตัวอย่าง: เพิ่มวิดีโอใหม่ copy block นี้แล้วแก้ข้อมูล ──
+    // {
+    //     id: 'vid-2',
+    //     title: 'Facilitation คืออะไร? เปิดประชุมให้ทีม Flow',
+    //     category: 'Facilitation',
+    //     thumbnail: 'https://...',
+    //     duration: '4:20',
+    //     videoUrl: 'https://www.youtube.com/watch?v=XXXXXXX',
+    // },
 ];
 
 export const DOWNLOAD_RESOURCES = [
@@ -39,13 +50,26 @@ export const DOWNLOAD_RESOURCES = [
         title: 'TNA Framework & Questionnaire (Thai version)',
         type: 'PDF / EXCEL',
         category: 'HRD Partner',
-        thumbnail: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80'
+        thumbnail: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80',
+        // ใส่ URL ไฟล์ตรงนี้ — Supabase Storage, Google Drive, หรือ Dropbox direct link
+        downloadUrl: '',
     },
     {
         id: 'roi-calculator',
         title: 'สูตรคำนวณ ROI การฝึกอบรม (Cheat Sheet)',
         type: 'PDF',
         category: 'Business Result',
-        thumbnail: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80'
-    }
+        thumbnail: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80',
+        // ใส่ URL ไฟล์ตรงนี้
+        downloadUrl: '',
+    },
+    // ── ตัวอย่าง: เพิ่มเครื่องมือใหม่ copy block นี้แล้วแก้ข้อมูล ──
+    // {
+    //     id: 'facilitation-guide',
+    //     title: 'คู่มือ Facilitation สำหรับผู้นำทีม',
+    //     type: 'PDF',
+    //     category: 'Facilitation',
+    //     thumbnail: 'https://...',
+    //     downloadUrl: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/toolkit/...',
+    // },
 ];

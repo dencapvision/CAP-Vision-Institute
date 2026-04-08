@@ -60,6 +60,22 @@ interface PostData {
 }
 
 // ── NEW AEO Format ────────────────────────────────────
+interface FrameworkStep {
+   step?: string;
+   title?: string;
+   description?: string;
+}
+interface CaseStudyObj {
+   title?: string;
+   story?: string;
+   result?: string;
+}
+interface CTAObj {
+   title?: string;
+   description?: string;
+   buttonText?: string;
+   buttonLink?: string;
+}
 interface AEOPost {
    title: string;
    slug: string;
@@ -71,15 +87,15 @@ interface AEOPost {
    summary: string;
    context: string;
    insight: string;
-   framework: string[];
+   framework: string[] | FrameworkStep[];
    application: string;
-   case_study: string;
+   case_study: string | CaseStudyObj;
    takeaways: string[];
    faq: Array<{ question: string; answer: string }>;
-   cta?: string;
-   seo?: { meta_title?: string; meta_description?: string; keywords?: string[] };
+   cta?: string | CTAObj;
+   seo?: { meta_title?: string; metaTitle?: string; meta_description?: string; metaDescription?: string; keywords?: string[] };
    hashtags?: string[];
-   images?: Array<{ url: string; alt: string; title: string; description: string }>;
+   images?: Array<{ url: string; alt: string; title?: string; description?: string; caption?: string }>;
 }
 
 const BlogPost: React.FC = () => {
@@ -240,15 +256,35 @@ const BlogPost: React.FC = () => {
          {p.framework?.length > 0 && (
             <section className="bg-[#f8fafc] rounded-[2rem] p-8 md:p-10 border border-gray-100">
                <h2 className="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-7">Framework ที่ใช้ได้จริง</h2>
-               <ol className="space-y-4">
-                  {p.framework.map((step, i) => (
-                     <li key={i} className="flex gap-5 items-start">
-                        <span className="w-9 h-9 bg-[#0f3460] text-white text-xs font-black rounded-xl flex items-center justify-center flex-shrink-0">
-                           {String(i + 1).padStart(2, '0')}
-                        </span>
-                        <p className="text-gray-700 text-base md:text-lg font-medium leading-relaxed pt-1">{step}</p>
-                     </li>
-                  ))}
+               <ol className="space-y-6">
+                  {(p.framework as Array<string | FrameworkStep>).map((step, i) => {
+                     if (typeof step === 'string') {
+                        return (
+                           <li key={i} className="flex gap-5 items-start">
+                              <span className="w-9 h-9 bg-[#0f3460] text-white text-xs font-black rounded-xl flex items-center justify-center flex-shrink-0">
+                                 {String(i + 1).padStart(2, '0')}
+                              </span>
+                              <p className="text-gray-700 text-base md:text-lg font-medium leading-relaxed pt-1">{step}</p>
+                           </li>
+                        );
+                     }
+                     const s = step as FrameworkStep;
+                     return (
+                        <li key={i} className="flex gap-5 items-start">
+                           <span className="w-9 h-9 bg-[#0f3460] text-white text-xs font-black rounded-xl flex items-center justify-center flex-shrink-0">
+                              {String(i + 1).padStart(2, '0')}
+                           </span>
+                           <div className="pt-1">
+                              {(s.step || s.title) && (
+                                 <p className="font-black text-[#0f3460] text-sm md:text-base nav-font mb-1">
+                                    {s.step ? `${s.step}${s.title ? ` — ${s.title}` : ''}` : s.title}
+                                 </p>
+                              )}
+                              {s.description && <p className="text-gray-700 text-base md:text-lg font-medium leading-relaxed">{s.description}</p>}
+                           </div>
+                        </li>
+                     );
+                  })}
                </ol>
             </section>
          )}
@@ -270,9 +306,23 @@ const BlogPost: React.FC = () => {
          {p.case_study && (
             <section className="border-l-4 border-[#c5a059] pl-8 py-6 bg-amber-50/40 rounded-r-[2rem]">
                <p className="text-[10px] font-black text-[#c5a059] uppercase tracking-[0.4em] mb-3 nav-font">ตัวอย่างจากองค์กรจริง</p>
-               {p.case_study.split('\n\n').filter(Boolean).map((para, i) => (
-                  <p key={i} className="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-3">{para}</p>
-               ))}
+               {typeof p.case_study === 'string' ? (
+                  p.case_study.split('\n\n').filter(Boolean).map((para, i) => (
+                     <p key={i} className="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-3">{para}</p>
+                  ))
+               ) : (
+                  <>
+                     {(p.case_study as CaseStudyObj).title && (
+                        <p className="font-black text-[#0f3460] text-sm md:text-base nav-font mb-3">{(p.case_study as CaseStudyObj).title}</p>
+                     )}
+                     {(p.case_study as CaseStudyObj).story && (
+                        <p className="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-3">{(p.case_study as CaseStudyObj).story}</p>
+                     )}
+                     {(p.case_study as CaseStudyObj).result && (
+                        <p className="text-sm font-black text-[#c5a059] mt-3">{(p.case_study as CaseStudyObj).result}</p>
+                     )}
+                  </>
+               )}
             </section>
          )}
 
@@ -318,23 +368,37 @@ const BlogPost: React.FC = () => {
          )}
 
          {/* 10. CTA */}
-         <div className="bg-gray-900 text-white p-10 md:p-14 rounded-[2.5rem] relative overflow-hidden">
-            <div className="absolute bottom-0 right-0 p-8 opacity-5"><Users className="w-48 h-48" /></div>
-            <h3 className="text-2xl md:text-4xl font-black mb-5 nav-font text-[#c5a059] leading-tight uppercase tracking-tight">
-               พร้อมออกแบบการพัฒนา<br />ยกระดับองค์กรหรือยัง?
-            </h3>
-            <p className="text-white/70 mb-8 text-base md:text-lg font-medium max-w-xl leading-relaxed">
-               {p.cta || 'สถาบัน CAP Vision พร้อมออกแบบหลักสูตรที่ตรงกับปัญหาขององค์กรคุณ ปรึกษาฟรีภายใน 24 ชั่วโมง'}
-            </p>
-            <div className="flex flex-wrap gap-4">
-               <a href={CONTACT_INFO.lineUrl} className="bg-[#c5a059] text-white px-10 py-4 rounded-2xl font-black hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all nav-font shadow-lg uppercase tracking-widest text-sm">
-                  ปรึกษาฟรี
-               </a>
-               <Link to="/contact" className="border-2 border-white/20 px-10 py-4 rounded-2xl font-black hover:bg-white/10 transition-all nav-font uppercase tracking-widest text-sm">
-                  ขอใบเสนอราคา
-               </Link>
-            </div>
-         </div>
+         {(() => {
+            const ctaTitle = typeof p.cta === 'object' && p.cta ? (p.cta as CTAObj).title : 'พร้อมออกแบบการพัฒนา\nยกระดับองค์กรหรือยัง?';
+            const ctaDesc = typeof p.cta === 'object' && p.cta ? (p.cta as CTAObj).description : (typeof p.cta === 'string' ? p.cta : 'สถาบัน CAP Vision พร้อมออกแบบหลักสูตรที่ตรงกับปัญหาขององค์กรคุณ ปรึกษาฟรีภายใน 24 ชั่วโมง');
+            const ctaBtnText = typeof p.cta === 'object' && p.cta ? (p.cta as CTAObj).buttonText : 'ปรึกษาฟรี';
+            const ctaBtnLink = typeof p.cta === 'object' && p.cta ? (p.cta as CTAObj).buttonLink : undefined;
+            return (
+               <div className="bg-gray-900 text-white p-10 md:p-14 rounded-[2.5rem] relative overflow-hidden">
+                  <div className="absolute bottom-0 right-0 p-8 opacity-5"><Users className="w-48 h-48" /></div>
+                  <h3 className="text-2xl md:text-4xl font-black mb-5 nav-font text-[#c5a059] leading-tight uppercase tracking-tight whitespace-pre-line">
+                     {ctaTitle || 'พร้อมออกแบบการพัฒนา\nยกระดับองค์กรหรือยัง?'}
+                  </h3>
+                  <p className="text-white/70 mb-8 text-base md:text-lg font-medium max-w-xl leading-relaxed">
+                     {ctaDesc || 'สถาบัน CAP Vision พร้อมออกแบบหลักสูตรที่ตรงกับปัญหาขององค์กรคุณ ปรึกษาฟรีภายใน 24 ชั่วโมง'}
+                  </p>
+                  <div className="flex flex-wrap gap-4">
+                     {ctaBtnLink ? (
+                        <Link to={ctaBtnLink} className="bg-[#c5a059] text-white px-10 py-4 rounded-2xl font-black hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all nav-font shadow-lg uppercase tracking-widest text-sm">
+                           {ctaBtnText || 'ปรึกษาฟรี'}
+                        </Link>
+                     ) : (
+                        <a href={CONTACT_INFO.lineUrl} className="bg-[#c5a059] text-white px-10 py-4 rounded-2xl font-black hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all nav-font shadow-lg uppercase tracking-widest text-sm">
+                           {ctaBtnText || 'ปรึกษาฟรี'}
+                        </a>
+                     )}
+                     <Link to="/contact" className="border-2 border-white/20 px-10 py-4 rounded-2xl font-black hover:bg-white/10 transition-all nav-font uppercase tracking-widest text-sm">
+                        ขอใบเสนอราคา
+                     </Link>
+                  </div>
+               </div>
+            );
+         })()}
       </article>
    );
 
@@ -378,6 +442,8 @@ const BlogPost: React.FC = () => {
    }
 
    // For AEO format, use a unified post-like object for the header
+   const aeoSeoTitle = aeoPost?.seo?.meta_title || aeoPost?.seo?.metaTitle;
+   const aeoSeoDesc = aeoPost?.seo?.meta_description || aeoPost?.seo?.metaDescription;
    const activePost = aeoPost ? {
       title: aeoPost.title,
       category: aeoPost.category || 'Insight',
@@ -385,15 +451,15 @@ const BlogPost: React.FC = () => {
       author: aeoPost.author || 'ครูเด่น มาสเตอร์ฟา',
       date: aeoPost.date || '',
       readTime: aeoPost.readTime || '5 นาที',
-      description: aeoPost.seo?.meta_description || aeoPost.summary,
+      description: aeoSeoDesc || aeoPost.summary,
       tags: aeoPost.hashtags?.map(h => h.replace('#', '')) || [],
    } : post!;
 
    return (
       <div className="bg-white min-h-screen">
          <SEO
-            title={aeoPost?.seo?.meta_title || `${activePost.title} | CAP Vision Insight`}
-            description={aeoPost?.seo?.meta_description || activePost.description || activePost.title}
+            title={aeoSeoTitle || `${activePost.title} | CAP Vision Insight`}
+            description={aeoSeoDesc || activePost.description || activePost.title}
             keywords={aeoPost?.seo?.keywords}
             type="BlogPosting"
             articleData={{

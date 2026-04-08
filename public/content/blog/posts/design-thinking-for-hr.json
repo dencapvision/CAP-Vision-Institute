@@ -1,93 +1,114 @@
 {
     "id": "design-thinking-for-hr",
-    "title": "Design Thinking for HR: ออกแบบประสบการณ์พนักงาน (EX) ให้โดนใจ",
+    "title": "Design Thinking for HR: ออกแบบประสบการณ์พนักงาน (EX) ที่ทำให้คนอยากอยู่และอยากเติบโต",
     "slug": "design-thinking-for-hr",
     "category": "Innovation",
     "thumbnail": "https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&q=80",
     "author": "ครูเด่น มาสเตอร์ฟา",
     "date": "28 พฤศจิกายน 2566",
     "createdAt": "2023-11-28T00:00:00Z",
-    "readTime": "8 Min Read",
-    "summary": "Design Thinking for HR คือการนำกระบวนการออกแบบที่เอามนุษย์เป็นศูนย์กลางมาใช้ในงานบริหารคน ตั้งแต่ Onboarding ถึง Offboarding เพื่อสร้าง Employee Experience ที่ดีและลดอัตราการลาออก",
+    "readTime": "12 Min Read",
+    "summary": "Design Thinking for HR คือการนำกระบวนการออกแบบที่เอามนุษย์เป็นศูนย์กลางมาใช้ในงานบริหารคน เพื่อสร้าง Employee Experience ที่ทำให้พนักงานรู้สึกว่าตัวเองสำคัญ — ตั้งแต่วันแรกที่เข้ามาจนวันสุดท้ายที่จากไป บทความนี้อธิบาย 5 ขั้นตอนของ Design Thinking ที่ HR นำไปใช้ได้ทันที พร้อม Employee Journey Map, เครื่องมือ Empathy และ Case Study จริงที่ลด Early Turnover ได้ 65%",
     "description": "ใช้กระบวนการคิดเชิงออกแบบ เพื่อเข้าไปนั่งในใจพนักงาน ตั้งแต่กระบวนการ Onboarding ไปจนถึง Offboarding ลดอัตราการลาออกและเพิ่มความผูกพัน",
     "tags": [
         "Design Thinking",
         "Employee Experience",
         "HR Innovation",
-        "Service Design"
+        "Service Design",
+        "Employee Journey Map",
+        "Onboarding"
     ],
-    "context": "HR ส่วนใหญ่ออกแบบนโยบายและกระบวนการโดยเริ่มจาก 'สะดวกสำหรับองค์กร' ไม่ใช่ 'สะดวกสำหรับพนักงาน' ผลที่ตามมาคือนโยบายที่ไม่มีใครใช้ กระบวนการที่สร้างแรงเสียดทาน และพนักงานที่รู้สึกเป็นแค่ 'ทรัพยากร' ไม่ใช่ 'มนุษย์'",
-    "insight": "Deloitte พบว่าองค์กรที่ลงทุนใน Employee Experience อย่างจริงจังมี Revenue ต่อพนักงานสูงกว่า 2 เท่า และ Profit ต่อพนักงานสูงกว่า 4 เท่า เมื่อเทียบกับองค์กรที่ไม่ให้ความสำคัญ — เพราะพนักงานที่มี EX ดีสร้าง Customer Experience ที่ดีได้",
+    "context": "ลองนึกภาพว่าถ้าบริษัทของคุณออกแบบประสบการณ์ลูกค้าแบบเดียวกับที่ออกแบบประสบการณ์พนักงาน — ไม่มีการ Onboarding ที่ชัดเจน ไม่รู้ว่าขั้นตอนต่อไปคืออะไร ต้องรอนานเพื่อได้รับการอนุมัติเรื่องเล็กน้อย และไม่มีใครถามว่ารู้สึกอย่างไร คุณคิดว่าลูกค้าจะกลับมาซื้อซ้ำไหม? HR ส่วนใหญ่ออกแบบกระบวนการโดยเริ่มจาก 'สะดวกสำหรับฝ่าย HR' ไม่ใช่ 'ดีสำหรับพนักงาน' ผลลัพธ์คือนโยบายที่ไม่มีใครปฏิบัติจริง กระบวนการที่สร้างแรงเสียดทาน และพนักงานที่รู้สึกเป็นแค่ 'ฟันเฟือง' ไม่ใช่ 'มนุษย์ที่มีคุณค่า'",
+    "insight": "Deloitte Global Human Capital Trends พบว่าองค์กรที่ลงทุนใน Employee Experience อย่างจริงจังมี Revenue ต่อพนักงานสูงกว่า 2 เท่า และ Profit ต่อพนักงานสูงกว่า 4 เท่า เมื่อเทียบกับองค์กรที่ไม่ให้ความสำคัญ เหตุผลไม่ใช่เรื่องบังเอิญ — พนักงานที่มี EX ดีมี Discretionary Effort สูงกว่า 40% และสร้าง Customer Experience ที่ดีตามมาโดยอัตโนมัติ เพราะคนที่รู้สึกดีกับองค์กรจะดูแลลูกค้าดีกว่าคนที่รู้สึกเหนื่อยล้าและถูกมองข้าม",
     "framework": [
         {
             "step": "ขั้นที่ 1 — Empathize",
-            "title": "ฟังด้วยหัวใจ ไม่ใช่มองจาก Data เพียงอย่างเดียว",
-            "description": "ลงไปสัมภาษณ์พนักงานจริงๆ ใช้ Shadow Interviews ติดตามพนักงานในวันแรกของการทำงาน ทำ Focus Group ถามว่า Moment ไหนที่รู้สึกดีที่สุดและแย่ที่สุดในการทำงานที่นี่"
+            "title": "ออกจากห้อง HR แล้วไปอยู่ในชีวิตพนักงานจริงๆ",
+            "description": "ขั้น Empathize คือการหยุดสมมติว่าเรารู้ว่าพนักงานต้องการอะไร แล้วออกไปค้นหาความจริง เครื่องมือหลักคือ (1) User Interview เชิงลึก 30-45 นาที ถามเรื่อง 'บอกเล่าวันแรกที่เข้ามาทำงานที่นี่ให้ฟัง' หรือ 'Moment ไหนในการทำงานที่นี่ที่ทำให้คุณรู้สึกภูมิใจที่สุด?' (2) Shadow Observation ติดตามพนักงานใหม่ในวัน Onboarding โดยไม่แทรกแซง สังเกตว่าเขาสับสนตรงไหน รอใครบ้าง และรู้สึกอย่างไร (3) Empathy Map สรุปสิ่งที่พนักงาน 'คิด ทำ รู้สึก และพูด' ในแต่ละ Touchpoint สำคัญ กฎสำคัญของขั้นนี้คือ ฟังเพื่อเข้าใจ ไม่ใช่ฟังเพื่อแก้ตัว"
         },
         {
             "step": "ขั้นที่ 2 — Define",
-            "title": "ระบุ Pain Point ที่แท้จริง",
-            "description": "จาก Insight ที่ได้ สรุปเป็น 'How Might We' Statement เช่น 'เราจะออกแบบ Onboarding อย่างไรให้พนักงานใหม่รู้สึกเป็นส่วนหนึ่งของทีมภายใน 30 วันแรก?' การกำหนดปัญหาให้ชัดคือครึ่งหนึ่งของการแก้ปัญหา"
+            "title": "สรุป Pain Point ให้แหลมคม ด้วย 'How Might We'",
+            "description": "หลังจากรวบรวม Insight มากพอแล้ว ขั้น Define คือการสังเคราะห์ความจริงที่ได้ยินมาให้เป็นคำนิยามปัญหาที่ชัดเจน วิธีที่ได้ผลที่สุดคือการเขียน 'How Might We' (HMW) Statement ซึ่งเริ่มต้นด้วย 'เราจะ...อย่างไร เพื่อให้...' ตัวอย่าง: 'เราจะออกแบบสัปดาห์แรกของการทำงานอย่างไร เพื่อให้พนักงานใหม่รู้สึกว่าตัวเองเป็นส่วนหนึ่งของทีมก่อนสิ้นวันศุกร์แรก?' HMW Statement ที่ดีต้องไม่กว้างเกินไป (เราจะทำให้พนักงานมีความสุขอย่างไร?) และไม่แคบเกินไปจนบังคับทิศทาง Solution (เราจะออกแบบ Welcome Kit อย่างไร?) ให้มีช่องว่างสำหรับความคิดสร้างสรรค์"
         },
         {
             "step": "ขั้นที่ 3 — Ideate",
-            "title": "ระดมไอเดียโดยไม่ตัดสิน",
-            "description": "รวมทีม HR, Line Manager และพนักงานตัวแทนมา Brainstorm ไอเดียโดยไม่มีการตัดสินก่อน เป้าหมายคือปริมาณไอเดียก่อน คุณภาพทีหลัง กฎคือ 'ไม่มีไอเดียไหนโง่เกินไป'"
+            "title": "ระดมไอเดียแบบ Diverge ก่อน Converge ทีหลัง",
+            "description": "ขั้น Ideate ที่ล้มเหลวคือการ Brainstorm ที่มีคนพูดว่า 'แต่งบเราไม่พอ' หรือ 'เราเคยทำแบบนั้นแล้วไม่ได้ผล' ในช่วง 20 นาทีแรก กฎเหล็กคือห้ามตัดสิน ทุกไอเดียถูกเขียนลง ไม่ว่าจะ 'บ้า' แค่ไหน เทคนิคที่ได้ผลในบริบท HR: (1) Crazy 8s — ให้แต่ละคนพับกระดาษ A4 เป็น 8 ช่อง แล้วสเกตช์ไอเดีย 8 อย่างใน 8 นาที (2) SCAMPER — ถามว่าจะ Substitute, Combine, Adapt, Modify, Put to other use, Eliminate หรือ Reverse กระบวนการเดิมได้อย่างไร? (3) Worst Possible Idea — คิดไอเดียแย่ที่สุดที่จะทำให้พนักงานหนีออกจากองค์กร แล้ว Reverse มันเพื่อหาทางออกใหม่"
         },
         {
-            "step": "ขั้นที่ 4 — Prototype & Test",
-            "title": "ทดลองเร็ว เรียนรู้เร็ว",
-            "description": "เลือกไอเดีย 2-3 อย่างมาสร้าง Prototype ขนาดเล็ก เช่น ทดลอง Onboarding Buddy Program กับทีมเดียวก่อน วัดผล รับ Feedback และปรับปรุงก่อนขยายทั่วองค์กร"
+            "step": "ขั้นที่ 4 — Prototype",
+            "title": "สร้างต้นแบบในชั่วโมง ไม่ใช่ในเดือน",
+            "description": "Prototype ใน Design Thinking ไม่ใช่ระบบ IT หรือโครงการขนาดใหญ่ มันคือ 'ตัวอย่างที่พอให้ทดสอบได้' ที่สร้างได้ใน 1-2 วัน ตัวอย่างสำหรับ HR: ถ้าอยากทดสอบ Buddy System สำหรับ Onboarding — จับคู่พนักงานใหม่ 2 คนกับ Buddy ที่สมัครใจ 2 คน แล้วนัดพบ 3 ครั้งใน 30 วัน บันทึกว่าเกิดอะไรขึ้น ถ้าอยากทดสอบ 30-60-90 Day Roadmap — สร้าง Google Docs ง่ายๆ แล้วให้ Manager ลองใช้กับพนักงานใหม่ 1 คน Prototype ที่เรียบง่ายแต่ทดสอบได้ดีกว่า Plan ที่สมบูรณ์แบบแต่ไม่ถูกทดสอบ"
+        },
+        {
+            "step": "ขั้นที่ 5 — Test",
+            "title": "ทดสอบกับคนจริง รับ Feedback อย่างเปิดใจ และ Iterate",
+            "description": "นำ Prototype ไปทดสอบกับพนักงานกลุ่มเล็กๆ โดยสังเกตพฤติกรรมมากกว่าฟังความคิดเห็น เพราะสิ่งที่คนพูดกับสิ่งที่คนทำมักต่างกัน ถ้าพนักงานบอกว่า 'ดีนะครับ' แต่ไม่ได้ใช้งาน Prototype นั้น แปลว่ายังมีปัญหาที่ต้องแก้ คำถามที่ดีหลัง Test: 'อะไรที่ทำให้คุณสับสน?' 'ถ้าคุณออกแบบเอง คุณจะเปลี่ยนอะไร?' 'มีอะไรที่คุณคาดหวังแต่ไม่ได้รับ?' Design Thinking ไม่ใช่กระบวนการที่ทำครั้งเดียวแล้วจบ แต่คือวงจร Empathize-Define-Ideate-Prototype-Test ที่วนซ้ำจนได้ Solution ที่ใช่"
         }
     ],
-    "application": "เริ่มด้วยการทำ Employee Journey Map สำหรับ 1 Touchpoint ที่คิดว่าเจ็บปวดที่สุด (เช่น วันแรกทำงาน หรือกระบวนการขอลาหยุด) สัมภาษณ์พนักงาน 5-10 คน ถามว่าพวกเขาคิด รู้สึก และทำอะไร ณ จุดนั้น แล้วออกแบบประสบการณ์ใหม่ที่ลด Friction และเพิ่ม Delight",
+    "application": "เริ่มต้น Design Thinking for HR ด้วย Mini Sprint 3 วัน: วันที่ 1 — เลือก 1 Touchpoint ที่เจ็บปวดที่สุด (วันแรกทำงาน กระบวนการขอลาหยุด หรือ Performance Review) แล้วสัมภาษณ์พนักงาน 5 คนที่เคยผ่านจุดนั้น ถามว่า 'ช่วงเวลาไหนที่รู้สึกดีที่สุดและแย่ที่สุด?' วันที่ 2 — สร้าง Empathy Map และ Employee Journey Map สำหรับ Touchpoint นั้น ระบุ Pain Points และ Opportunity Areas แล้วเขียน HMW Statement 3-5 ข้อ Brainstorm ไอเดีย 20+ อย่างโดยไม่ตัดสิน เลือก 2-3 ไอเดียที่ Feasible และ High Impact วันที่ 3 — สร้าง Low-fidelity Prototype และทดสอบกับพนักงาน 3 คน รับ Feedback ปรับปรุง และวางแผน Pilot กับกลุ่มใหญ่ขึ้นในสัปดาห์ถัดไป",
     "case_study": {
-        "title": "บริษัท E-Commerce ขนาดกลาง: ลด 90-Day Turnover จาก 35% เหลือ 12%",
-        "story": "ทีม HR พบว่า 35% ของพนักงานใหม่ลาออกภายใน 90 วันแรก หลังทำ Design Thinking Workshop และสัมภาษณ์พนักงาน 20 คน พบ Pain Point หลัก 3 อย่าง: (1) พนักงานใหม่ไม่รู้ว่าจะถามใคร (2) ไม่มีความชัดเจนเรื่อง Expectation (3) รู้สึกโดดเดี่ยวในสัปดาห์แรก ทีม HR ออกแบบ Buddy System, 30-60-90 Day Roadmap และ Weekly Check-in ใน 6 เดือน Early Turnover ลดจาก 35% เหลือ 12%",
-        "result": "90-Day Turnover ลดจาก 35% เหลือ 12%, ประหยัดค่าสรรหา 2.8 ล้านบาท/ปี, New Employee Satisfaction เพิ่มขึ้น 45%"
+        "title": "โรงพยาบาลเอกชนขนาดกลาง: ออกแบบ Onboarding ใหม่ลด 90-Day Turnover จาก 38% เหลือ 13%",
+        "story": "โรงพยาบาลเอกชนแห่งหนึ่งมีปัญหาพยาบาลและเจ้าหน้าที่ใหม่ลาออกภายใน 90 วันแรกสูงถึง 38% ซึ่งสร้างต้นทุนค่าสรรหาและฝึกอบรมกว่า 5.2 ล้านบาทต่อปี ทีม HR เดิมเชื่อว่าปัญหาคือเงินเดือนต่ำกว่าโรงพยาบาลคู่แข่ง แต่หลังจากทำ Design Thinking Workshop 2 วัน และสัมภาษณ์พนักงานที่ลาออกไปแล้ว 15 คน พบความจริงที่น่าตกใจ: ปัญหาหลักไม่ใช่เงินเดือน แต่คือ 3 Pain Points ที่ไม่เคยถูกพูดถึง ได้แก่ (1) ในสัปดาห์แรก พนักงานใหม่ไม่รู้ว่าต้องถามใครเรื่องระเบียบปฏิบัติ เพราะรุ่นพี่ยุ่งและดูไม่ยินดีที่จะช่วย (2) ไม่มีความชัดเจนว่า 3 เดือนแรกมีเป้าหมายและ Expectation อะไร จนรู้สึกว่าตัวเองทำผิดอยู่ตลอดเวลาแต่ไม่รู้ว่าผิดอะไร (3) ไม่มีช่องทางในการพูดถึงปัญหาหรือข้อสงสัยอย่างปลอดภัย กลัวถูกมองว่าไม่เก่ง ทีม HR ใช้ข้อมูลนี้ออกแบบ Onboarding ใหม่ทั้งหมดใน 3 สัปดาห์ ได้แก่ (1) Buddy Program ที่คัดเลือกและฝึก Buddy โดยเฉพาะ ให้ Buddy มีเวลา Dedicated สำหรับพนักงานใหม่ 30 นาทีต่อวันในสัปดาห์แรก (2) 30-60-90 Day Success Map ที่บอกชัดเจนว่าในแต่ละช่วงคาดหวังอะไร และจะรู้ได้อย่างไรว่าทำได้ดี (3) Weekly Pulse Check-in 15 นาทีระหว่าง HR กับพนักงานใหม่ทุกสัปดาห์ใน 90 วันแรก เพื่อให้มีพื้นที่ปลอดภัยในการพูดก่อนที่ปัญหาจะสะสมจนทนไม่ไหว หลัง Pilot 3 เดือนในแผนก Nursing ก่อน แล้วขยายทั้งโรงพยาบาล ผลใน 6 เดือน 90-Day Turnover ลดจาก 38% เหลือ 13% ประหยัดต้นทุนได้กว่า 3.9 ล้านบาท และ New Employee Satisfaction Score เพิ่มจาก 5.2 เป็น 8.4 จาก 10",
+        "result": "90-Day Turnover ลดจาก 38% เหลือ 13% (-65%), ประหยัดต้นทุนสรรหา 3.9 ล้านบาท/ปี, New Employee Satisfaction เพิ่มจาก 5.2 เป็น 8.4/10"
     },
     "takeaways": [
-        "Design Thinking for HR เริ่มจากการสัมภาษณ์พนักงานจริงๆ ไม่ใช่แค่ดู Survey ผล",
-        "Employee Journey Map คือเครื่องมือที่สำคัญที่สุดสำหรับ HR ที่อยากก้าวจากงาน Admin สู่งาน Strategic",
-        "ทดลอง Prototype ขนาดเล็กกับ 1 ทีมก่อน อย่าเปลี่ยนทั้งองค์กรในครั้งเดียว",
-        "พนักงานที่ถูก Involve ในการออกแบบกระบวนการ HR จะ Buy-in ผลลัพธ์มากกว่าพนักงานที่รับนโยบายสำเร็จรูป",
-        "งาน HR ที่ดีคือการออกแบบให้พนักงานรักองค์กร เช่นเดียวกับที่เราออกแบบให้ลูกค้ารักโปรดักต์"
+        "HR ที่ดีออกแบบกระบวนการโดยเริ่มจาก 'พนักงานรู้สึกอะไร' ไม่ใช่ 'HR ต้องการอะไร' — นั่นคือหัวใจของ Design Thinking",
+        "Employee Journey Map เปลี่ยน HR จากผู้บริหารนโยบายเป็นผู้ออกแบบประสบการณ์ — ก้าวที่สำคัญที่สุดสู่งาน Strategic",
+        "Shadow Observation และ In-depth Interview ให้ Insight ที่ Survey ไม่มีวันให้ได้ เพราะคนพูดต่างจากสิ่งที่คนทำ",
+        "Prototype ใน 1-2 วัน ทดสอบ 1 สัปดาห์ ดีกว่าวางแผน 3 เดือนแล้วไม่ได้ทำอะไรเลย",
+        "พนักงานที่ถูก Involve ในการออกแบบกระบวนการ HR จะ Buy-in และปฏิบัติตามได้ดีกว่าพนักงานที่รับนโยบายสำเร็จรูป",
+        "ปัญหา Turnover ส่วนใหญ่ไม่ได้มาจากเงินเดือน แต่มาจาก Moment ของความไม่ชัดเจน ความโดดเดี่ยว และการขาด Recognition ซึ่งแก้ได้ด้วย EX Design"
     ],
     "faq": [
         {
+            "question": "Design Thinking for HR แตกต่างจากการทำ HR Survey ทั่วไปอย่างไร?",
+            "answer": "Survey บอกว่า 'อะไร' (พนักงาน 60% ไม่พอใจกระบวนการ Onboarding) แต่ Design Thinking บอกว่า 'ทำไม' และ 'อย่างไร' (พนักงานไม่รู้ว่าจะถามใคร รู้สึกโดดเดี่ยวในสัปดาห์แรก และไม่มีความชัดเจนเรื่อง Expectation) Survey ให้ข้อมูลกว้าง Design Thinking ให้ความเข้าใจลึก ทั้งสองทำงานเสริมกัน ไม่ใช่แทนกัน"
+        },
+        {
+            "question": "Employee Journey Map คืออะไร และทำอย่างไร?",
+            "answer": "Employee Journey Map คือแผนผังที่แสดง Touchpoints ทั้งหมดที่พนักงานสัมผัสกับองค์กร ตั้งแต่ Attraction (เห็นโฆษณาสมัครงาน) ถึง Alumni (หลังลาออก) โดยในแต่ละ Touchpoint จะแสดง Actions ที่พนักงานทำ, Thoughts ที่คิด, Emotions ที่รู้สึก (มักใช้กราฟสูง-ต่ำ) และ Pain/Opportunity Points เริ่มต้นด้วยการทำ Journey Map สำหรับ 1 Stage (เช่น Onboarding) ก่อน ใช้ Post-it บนกระดาษ A1 ก็พอ"
+        },
+        {
+            "question": "ทีม HR เล็กๆ 2-3 คนจะทำ Design Thinking ได้จริงไหม?",
+            "answer": "ได้ และบางครั้งได้ผลดีกว่าทีมใหญ่เพราะตัดสินใจเร็วกว่า กุญแจสำคัญคือการเชิญพนักงานและ Line Manager เข้ามาเป็น Co-designer ใน Workshop ไม่ใช่ทำคนเดียวแล้วนำเสนอ เริ่มจาก 1 ปัญหา 1 HMW Statement 1 Prototype — แล้วค่อยขยาย"
+        },
+        {
+            "question": "Design Thinking for HR เหมาะกับงาน HR ด้านไหนบ้าง?",
+            "answer": "เหมาะกับทุก Touchpoint ใน Employee Lifecycle เช่น การออกแบบกระบวนการสรรหาที่ให้ประสบการณ์ที่ดีแม้กับผู้สมัครที่ไม่ผ่าน, Onboarding Program, Internal Communication, Learning & Development Experience, Performance Review Process และ Offboarding ที่ทำให้คนรู้สึกดีแม้จะจากไปแล้ว"
+        },
+        {
+            "question": "จะโน้มน้าวผู้บริหารให้สนับสนุน Design Thinking Project ได้อย่างไร?",
+            "answer": "แปลงปัญหาเป็นตัวเลขก่อน: ถ้า Turnover Rate ของพนักงานอายุงาน 0-1 ปีอยู่ที่ 25% และค่าสรรหา+ฝึกอบรมต่อคนอยู่ที่ 150,000 บาท แสดงให้ผู้บริหารเห็นว่าองค์กรเสียค่าใช้จ่ายเท่าไหร่ต่อปี จากนั้นนำเสนอว่า Design Thinking Project ใช้งบเท่าไหร่ และถ้าลด Turnover ได้เพียง 30% จะ ROI กี่เดือน ตัวเลขน่าเชื่อมากกว่า Concept"
+        },
+        {
             "question": "Design Thinking ต่างจาก Service Design อย่างไร?",
-            "answer": "Design Thinking คือ Mindset และกระบวนการแก้ปัญหา ส่วน Service Design คือ Discipline ที่นำ Design Thinking มาใช้ออกแบบ Service Experience โดยเฉพาะ ในบริบท HR ทั้งสองทับซ้อนกันมาก Employee Journey Mapping เป็นเครื่องมือ Service Design ที่ใช้ Design Thinking เป็นพื้นฐาน"
-        },
-        {
-            "question": "ทีม HR เล็กๆ จะทำ Design Thinking ได้ไหม?",
-            "answer": "ได้อย่างแน่นอน Design Thinking ไม่ต้องการทีมใหญ่ ทีม 2-3 คนสามารถทำ User Interview, Journey Mapping และ Prototyping ได้ เริ่มจากปัญหาเล็กๆ 1 อย่างก็พอ"
-        },
-        {
-            "question": "จะวัดผลของ EX Improvement ได้อย่างไร?",
-            "answer": "วัดผ่าน Metrics ที่เชื่อมโยงกับ EX ที่คุณปรับปรุง เช่น ถ้าปรับ Onboarding วัด 90-Day Retention Rate และ New Employee Satisfaction Score ถ้าปรับ Internal Communication วัด Employee NPS และ Engagement Survey"
-        },
-        {
-            "question": "ผู้บริหารจะสนับสนุน Design Thinking for HR ได้อย่างไร?",
-            "answer": "นำ Business Case ไปนำเสนอ: คำนวณต้นทุนของ Early Turnover หรือ Low Engagement ที่มีอยู่ แล้วแสดงว่า Investment ใน EX Design จะคืนทุนในเวลาเท่าไหร่ ผู้บริหารสนใจ ROI มากกว่า Concept"
+            "answer": "Design Thinking คือ Mindset และกระบวนการแก้ปัญหาที่ยืดหยุ่น ส่วน Service Design คือ Discipline ที่ใช้เครื่องมือเฉพาะ เช่น Service Blueprint, Customer Journey Map เพื่อออกแบบ Service Experience อย่างเป็นระบบ ในทางปฏิบัติ HR ที่ใช้ Design Thinking จะนำเครื่องมือของ Service Design มาใช้ด้วย — ทั้งสองทับซ้อนกันมากและทำงานเสริมกันได้ดี"
         }
     ],
     "cta": {
-        "title": "ออกแบบ Employee Experience ที่ทำให้คนอยากอยู่",
-        "description": "CAP Vision ออกแบบ Design Thinking for HR Workshop ที่ทีม HR จะได้ทำ Employee Journey Map จริงและออกแบบ Solution ใหม่สำหรับปัญหาที่คาใจ",
+        "title": "พร้อมออกแบบ Employee Experience ที่ทำให้คนอยากอยู่?",
+        "description": "CAP Vision ออกแบบ Design Thinking for HR Workshop 2 วันที่ทีม HR และ Line Manager จะได้ทำ Employee Journey Map จริง ระบุ Pain Points จากข้อมูลพนักงานจริง และออกแบบ Solution ใหม่ที่นำกลับไปใช้ได้ทันทีในสัปดาห์ถัดไป ไม่ใช่แค่ Concept แต่คือ Action Plan ที่ชัดเจน",
         "buttonText": "สอบถาม In-house Workshop",
         "buttonLink": "/contact"
     },
     "seo": {
-        "metaTitle": "Design Thinking for HR: วิธีออกแบบ Employee Experience ที่ทำให้คนอยากอยู่",
-        "metaDescription": "เรียนรู้ Design Thinking for HR ตั้งแต่ Empathize ถึง Test พร้อม Employee Journey Mapping และ Case Study ที่ลด 90-Day Turnover จาก 35% เหลือ 12%",
-        "keywords": ["Design Thinking HR", "Employee Experience", "EX Design", "Employee Journey Map", "HR Innovation", "Onboarding Design"]
+        "metaTitle": "Design Thinking for HR: ออกแบบ Employee Experience ให้คนอยากอยู่และเติบโต",
+        "metaDescription": "เรียนรู้ Design Thinking for HR ทั้ง 5 ขั้นตอน Empathize-Define-Ideate-Prototype-Test พร้อม Employee Journey Map, Empathy Map และ Case Study โรงพยาบาลที่ลด 90-Day Turnover จาก 38% เหลือ 13%",
+        "keywords": ["Design Thinking HR", "Employee Experience", "EX Design", "Employee Journey Map", "HR Innovation", "Onboarding Design", "ประสบการณ์พนักงาน", "การออกแบบ HR"]
     },
-    "hashtags": ["#DesignThinkingHR", "#EmployeeExperience", "#HRInnovation", "#JourneyMapping", "#CAPVision"],
+    "hashtags": ["#DesignThinkingHR", "#EmployeeExperience", "#HRInnovation", "#EmployeeJourneyMap", "#CAPVision", "#EXDesign"],
     "images": [
         {
             "url": "https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&q=80",
             "alt": "HR team using Design Thinking to map employee journey",
             "caption": "งาน HR ที่ดีคือการออกแบบให้พนักงานรักองค์กร เหมือนที่เราออกแบบให้ลูกค้ารักโปรดักต์"
+        },
+        {
+            "url": "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80",
+            "alt": "Team conducting empathy interviews and journey mapping workshop",
+            "caption": "Empathy Map ช่วยให้ HR เข้าใจว่าพนักงานคิด รู้สึก และทำอะไร ในแต่ละ Touchpoint สำคัญ"
         }
     ]
 }

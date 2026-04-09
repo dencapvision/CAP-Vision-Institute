@@ -212,80 +212,123 @@ const CEOSpeechfulness: React.FC = () => {
         keywords={['CEO Speechfulness', 'หลักสูตรพูด', 'Coaching ผู้บริหาร', 'ครูเด่น', 'Public Speaking', 'CAP Vision']}
       />
 
-      {/* ── Hero ────────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0f1e] pt-24 pb-20">
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-[#0a0f1e] pt-32 pb-24">
         {/* BG layers */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[700px] h-[700px] rounded-full bg-[#c5a059]/8 blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-blue-600/10 blur-3xl" />
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full bg-[#c5a059]/10 blur-[120px]" />
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full bg-blue-600/10 blur-[120px]" />
           <div
             className="absolute inset-0 opacity-[0.03]"
             style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }}
           />
         </div>
 
-        <div className="relative max-w-5xl mx-auto px-4 text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-[#c5a059]/15 border border-[#c5a059]/30 text-[#c5a059] text-sm font-bold px-5 py-2.5 rounded-full mb-8">
-            <Mic2 className="w-4 h-4" />
-            หลักสูตรสื่อสารพิเศษสำหรับผู้บริหาร
-          </div>
-
-          <h1 className="text-5xl md:text-7xl font-black text-white leading-[1.1] mb-4 nav-font">
-            CEO{' '}
-            <span className="text-[#c5a059]">Speechfulness</span>
-          </h1>
-
-          <p className="text-xl md:text-2xl text-white/60 font-medium mb-8 nav-font">
-            พูดให้ตรึงใจ · ฟังให้ลึกซึ้ง · สื่อสารแบบผู้บริหารยุคใหม่
-          </p>
-
-          <p className="text-white/50 text-base mb-10">
-            โดย{' '}
-            <span className="text-[#c5a059] font-bold">อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)</span>
-            {' '}· ประสบการณ์กว่า 18 ปีด้านการสื่อสารผู้บริหาร
-          </p>
-
-          {/* Target avatars */}
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {['ผู้บริหาร CEO', 'เจ้าของธุรกิจ', 'Startup Founder', 'Influencer & Creator'].map((t) => (
-              <span key={t} className="bg-white/8 border border-white/10 text-white/70 text-sm px-4 py-2 rounded-full">
-                {t}
-              </span>
-            ))}
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href={CONTACT_INFO.lineUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[#c5a059] hover:bg-amber-400 text-white font-black py-4 px-8 rounded-2xl text-base transition-all shadow-lg shadow-[#c5a059]/30 hover:shadow-xl nav-font active:scale-95"
-            >
-              <MessageCircle className="w-5 h-5" />
-              ปรึกษาฟรีผ่าน Line
-            </a>
-            <a
-              href="#packages"
-              className="inline-flex items-center justify-center gap-2 bg-white/8 hover:bg-white/15 border border-white/15 text-white font-bold py-4 px-8 rounded-2xl text-base transition-all nav-font"
-            >
-              ดูแพคเกจและราคา
-              <ArrowRight className="w-5 h-5" />
-            </a>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 max-w-lg mx-auto mt-14">
-            {[
-              { n: '18+', label: 'ปีประสบการณ์' },
-              { n: '5', label: 'โมดูลหลัก' },
-              { n: '3', label: 'เดือน Coaching' },
-            ].map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="text-3xl font-black text-[#c5a059] nav-font">{s.n}</div>
-                <div className="text-white/40 text-xs mt-1">{s.label}</div>
+        <div className="relative max-w-7xl mx-auto px-4 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            {/* Left Content */}
+            <div className="lg:col-span-7 text-center lg:text-left order-2 lg:order-1">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 bg-[#c5a059]/15 border border-[#c5a059]/30 text-[#c5a059] text-sm font-bold px-5 py-2.5 rounded-full mb-8 animate-fade-in">
+                <Mic2 className="w-4 h-4" />
+                หลักสูตรสื่อสารพิเศษสำหรับผู้บริหาร
               </div>
-            ))}
+
+              <h1 className="text-5xl md:text-6xl lg:text-8xl font-black text-white leading-[1.05] mb-6 nav-font tracking-tight">
+                CEO{' '}
+                <span className="text-[#c5a059] block lg:inline">Speechfulness</span>
+              </h1>
+
+              <p className="text-xl md:text-2xl text-white/80 font-medium mb-8 nav-font">
+                พูดให้ตรึงใจ · ฟังให้ลึกซึ้ง · สื่อสารแบบผู้บริหารยุคใหม่
+              </p>
+
+              <div className="flex items-center gap-4 mb-10 justify-center lg:justify-start">
+                <div className="w-12 h-[1px] bg-[#c5a059]/50 hidden sm:block" />
+                <p className="text-white/60 text-base md:text-lg">
+                  โดย <span className="text-[#c5a059] font-bold">ครูเด่น มาสเตอร์ฟา</span>
+                  <span className="hidden sm:inline"> · ประสบการณ์กว่า 18 ปีด้านการสื่อสารผู้บริหาร</span>
+                </p>
+              </div>
+
+              {/* Target tags */}
+              <div className="flex flex-wrap justify-center lg:justify-start gap-2.5 mb-10">
+                {['ผู้บริหาร CEO', 'เจ้าของธุรกิจ', 'Startup Founder', 'Influencer'].map((t) => (
+                  <span key={t} className="bg-white/5 border border-white/10 text-white/50 text-xs font-bold px-4 py-2 rounded-lg backdrop-blur-sm">
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <a
+                  href={CONTACT_INFO.lineUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group relative inline-flex items-center justify-center gap-3 bg-[#c5a059] hover:bg-amber-400 text-white font-black py-5 px-10 rounded-2xl text-lg transition-all shadow-xl shadow-[#c5a059]/20 hover:shadow-[#c5a059]/40 nav-font active:scale-95"
+                >
+                  <MessageCircle className="w-6 h-6" />
+                  ปรึกษาครูเด่นทาง Line
+                </a>
+                <a
+                  href="#packages"
+                  className="inline-flex items-center justify-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold py-5 px-10 rounded-2xl text-lg transition-all nav-font backdrop-blur-md"
+                >
+                  ดูแพคเกจและราคา
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
+
+              {/* Quick Stats */}
+              <div className="flex items-center justify-center lg:justify-start gap-8 mt-16 pt-8 border-t border-white/5">
+                {[
+                  { n: '18+', label: 'ปีประสบการณ์' },
+                  { n: '5', label: 'โมดูลหลัก' },
+                  { n: '3', label: 'เดือน Coaching' },
+                ].map((s) => (
+                  <div key={s.label}>
+                    <div className="text-2xl font-black text-[#c5a059] nav-font">{s.n}</div>
+                    <div className="text-white/30 text-[10px] uppercase tracking-widest font-bold mt-1">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Image Container */}
+            <div className="lg:col-span-5 order-1 lg:order-2">
+              <div className="relative group mx-auto max-w-md lg:max-w-none">
+                {/* Decorative Elements */}
+                <div className="absolute -inset-4 bg-gradient-to-tr from-[#c5a059]/20 to-transparent rounded-[3rem] blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+                <div className="absolute -top-6 -right-6 w-32 h-32 bg-[#c5a059]/10 rounded-full blur-3xl animate-pulse" />
+                
+                <div className="relative rounded-[2.5rem] overflow-hidden border border-white/10 aspect-[4/5] shadow-2xl">
+                  <img
+                    src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa9.jpg"
+                    alt="Kru Den Master Fa - CEO Speechfulness"
+                    className="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-110"
+                  />
+                  {/* Overlay Gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1e]/80 via-transparent to-transparent opacity-60" />
+                  
+                  {/* Floating Badge */}
+                  <div className="absolute bottom-8 left-8 right-8 bg-black/40 backdrop-blur-xl border border-white/10 p-5 rounded-2xl">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-[#c5a059] flex items-center justify-center text-white flex-shrink-0">
+                        <Award className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <div className="text-white font-bold text-sm">Experience Leader</div>
+                        <div className="text-white/60 text-xs">Expert Communication Coach</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Accent border */}
+                <div className="absolute inset-0 rounded-[2.5rem] border-2 border-[#c5a059]/20 pointer-events-none -m-2 opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100 transition-all duration-700" />
+              </div>
+            </div>
+
           </div>
         </div>
       </section>

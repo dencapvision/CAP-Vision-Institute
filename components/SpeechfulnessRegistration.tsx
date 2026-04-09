@@ -73,40 +73,31 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
     setLoading(true);
     setError(null);
     try {
-      // 1. Auth: Sign up in the background
-      // This creates the user but we don't depend on its session for the DB insert
-      const { data: authData } = await supabase.auth.signUp({
-        email: formData.email,
-        password: Math.random().toString(36).slice(-12),
-        options: {
-          data: {
-            full_name: formData.fullName,
-            phone: formData.phone,
-          }
-        }
-      });
-
-      const userId = authData?.user?.id;
-
-      // 2. Call RPC to handle registration (Secured bypass of RLS)
+      // 1. Generate Booking Code
       const bookingCode = await ceoService.generateBookingCode();
-      const { data: bookingId, error: rpcError } = await supabase.rpc('register_speechfulness_booking', {
-        p_user_email: formData.email,
-        p_full_name: formData.fullName,
-        p_phone: formData.phone,
-        p_tax_id: formData.taxId,
-        p_address: formData.address,
-        p_package_name: selectedPackage.name,
-        p_tier_id: selectedPackage.id,
-        p_total_amount: totalAmount,
-        p_booking_code: bookingCode,
-        p_type: selectedPackage.type === 'full' ? 'membership' : 'session',
-        p_user_id: userId || null
-      });
 
-      if (rpcError) throw rpcError;
+      // 2. Insert into Isolated Lead Table (No Auth Dependency)
+      const { data: leadData, error: leadError } = await supabase
+        .from('ceo_speechfulness_leads')
+        .insert({
+          full_name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+          tax_id: formData.taxId,
+          package_name: selectedPackage.name,
+          tier_id: selectedPackage.id,
+          total_amount: totalAmount,
+          booking_code: bookingCode,
+          is_vat: formData.isVat,
+          status: 'pending_payment'
+        })
+        .select()
+        .single();
 
-      setBookingId(bookingId);
+      if (leadError) throw leadError;
+
+      setBookingId(leadData.id);
       setStep('payment');
     } catch (err: any) {
       console.error('Registration error:', err);
@@ -127,34 +118,35 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
     setLoading(true);
     
     try {
-      // 1. Upload Slip to Storage
+      // 1. Upload Slip to Independent Storage Bucket
       const fileName = `${bookingId}_${Date.now()}.jpg`;
       const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('payment-slips')
-        .upload(`speechfulness/${fileName}`, slipFile);
+        .from('ceo-media')
+        .upload(`slips/${fileName}`, slipFile);
 
       if (uploadError) throw uploadError;
 
-      const slipUrl = supabase.storage.from('payment-slips').getPublicUrl(`speechfulness/${fileName}`).data.publicUrl;
+      const slipUrl = supabase.storage.from('ceo-media').getPublicUrl(`slips/${fileName}`).data.publicUrl;
 
-      // 2. Create Payment Record
-      const { error: paymentError } = await supabase
-        .from('ceo_payments')
-        .insert({
-          booking_id: bookingId,
-          amount_paid: totalAmount,
+      // 2. Update Lead Record with Slip and Status
+      const { error: updateError } = await supabase
+        .from('ceo_speechfulness_leads')
+        .update({
           slip_url: slipUrl,
-          status: 'pending',
-          payment_method: 'bank_transfer',
-          created_at: new Date().toISOString(),
-        });
+          status: 'paid',
+          metadata: {
+            payment_at: new Date().toISOString(),
+            method: 'bank_transfer'
+          }
+        })
+        .eq('id', bookingId);
 
-      if (paymentError) throw paymentError;
+      if (updateError) throw updateError;
 
       // 3. Send LINE Notification
       await supabase.functions.invoke('line-notify', {
         body: {
-          formType: 'ลงทะเบียน CEO Speechfulness ใหม่',
+          formType: 'ลงทะเบียน CEO Speechfulness (VIP)',
           data: {
             'โปรแกรม': 'CEO Speechfulness',
             'แพคเกจ': selectedPackage.name,

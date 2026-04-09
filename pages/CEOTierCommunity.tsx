@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { CONTACT_INFO, CLIENTS as BRAND_CLIENTS } from '../constants/brand';
+import { BookingWizard } from '../components/CEO/BookingWizard';
 
 // ─── Logos & Assets ───────────────────────────────────────────────────────────
 const CAP_LOGO = 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/about%20us/cap%20vision%20logo.png';
@@ -137,6 +138,7 @@ const FACilitators = [
 
 const CEOTierCommunity: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isWizardOpen, setIsWizardOpen] = useState(false);
 
   return (
     <div className="bg-[#0a0a1a] text-white min-h-screen selection:bg-[#c5a059]/30">
@@ -201,15 +203,13 @@ const CEOTierCommunity: React.FC = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-                <a
-                  href={CONTACT_INFO.lineUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-premium inline-flex items-center gap-4 bg-[#c5a059] text-[#0a0a1a] px-12 py-6 rounded-2xl font-black text-lg nav-font shadow-[0_20px_50px_-12px_rgba(197,160,89,0.3)]"
+                <button
+                  onClick={() => setIsWizardOpen(true)}
+                  className="btn-premium inline-flex items-center gap-4 bg-[#c5a059] text-[#0a0a1a] px-12 py-6 rounded-2xl font-black text-lg nav-font shadow-[0_20px_50px_-12px_rgba(197,160,89,0.3)] transition-all transform hover:-translate-y-1 active:scale-95"
                 >
                   สมัครเข้าร่วมวง CEO Tier
                   <ArrowRight className="w-6 h-6" />
-                </a>
+                </button>
                 <div className="flex flex-col gap-1">
                    <div className="flex -space-x-3">
                      {[1,2,3,4].map(i => (
@@ -521,15 +521,13 @@ const CEOTierCommunity: React.FC = () => {
           </div>
 
           <div className="space-y-10">
-            <a
-              href={CONTACT_INFO.lineUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-premium inline-flex items-center gap-6 bg-[#c5a059] text-[#0a0a1a] px-20 py-8 rounded-[2.5rem] font-black text-2xl nav-font shadow-[0_30px_60px_-15px_rgba(197,160,89,0.4)] hover:-translate-y-2 group"
+            <button
+              onClick={() => setIsWizardOpen(true)}
+              className="btn-premium inline-flex items-center gap-6 bg-[#c5a059] text-[#0a0a1a] px-20 py-8 rounded-[2.5rem] font-black text-2xl nav-font shadow-[0_30px_60px_-15px_rgba(197,160,89,0.4)] hover:-translate-y-2 group transition-all transform active:scale-95"
             >
               คุยกับเราเพื่อขอเข้ากลุ่ม
               <ArrowRight className="w-8 h-8 group-hover:translate-x-3 transition-transform duration-500" />
-            </a>
+            </button>
             
             <p className="text-white/30 text-xs font-black uppercase tracking-[0.6em] animate-pulse">
                 Selection Strictly Focused on High-Impact Leaders
@@ -551,6 +549,10 @@ const CEOTierCommunity: React.FC = () => {
             <p className="text-white/20 text-[9px] uppercase font-black tracking-[0.2em]">© 2024 CAP Vision Institute x NEWDICE · Standard of Excellence</p>
         </div>
       </footer>
+      </footer>
+
+      {/* Booking Wizard Modal */}
+      <BookingWizard isOpen={isWizardOpen} onClose={() => setIsWizardOpen(false)} />
     </div>
   );
 };

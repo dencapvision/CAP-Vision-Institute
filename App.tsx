@@ -28,6 +28,7 @@ const PortfolioDetail = lazy(() => import('./pages/PortfolioDetail'));
 const WebAppPricing = lazy(() => import('./pages/WebAppPricing'));
 const CEOSpeechfulness = lazy(() => import('./pages/CEOSpeechfulness'));
 const CEOTierCommunity = lazy(() => import('./pages/CEOTierCommunity'));
+const CEOMemberDashboard = lazy(() => import('./pages/CEOMemberDashboard'));
 
 // Dashboard pages
 const DashboardLayout = lazy(() => import('./pages/dashboard/DashboardLayout'));
@@ -96,6 +97,7 @@ const AppShell: React.FC = () => {
             <Route path="/web-app-pricing" element={<WebAppPricing />} />
             <Route path="/ceo-speechfulness" element={<CEOSpeechfulness />} />
             <Route path="/ceo-tier-community" element={<CEOTierCommunity />} />
+            <Route path="/ceo-member-dashboard" element={<CEOMemberDashboard />} />
 
             {/* Dashboard routes */}
             <Route path="/dashboard" element={<DashboardLayout />}>

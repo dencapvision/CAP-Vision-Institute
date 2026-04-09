@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { CONTACT_INFO } from '../constants/brand';
+import SpeechfulnessRegistration from '../components/SpeechfulnessRegistration';
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -200,6 +201,8 @@ const FAQS = [
 // ─── Component ────────────────────────────────────────────────────────────────
 const CEOSpeechfulness: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [selectedPackage, setSelectedPackage] = useState<any>(null);
+  const [showBooking, setShowBooking] = useState(false);
 
   return (
     <>
@@ -566,10 +569,16 @@ const CEOSpeechfulness: React.FC = () => {
                   </ul>
 
                   {/* CTA */}
-                  <a
-                    href={CONTACT_INFO.lineUrl}
-                    target="_blank"
-                    rel="noreferrer"
+                  <button
+                    onClick={() => {
+                      setSelectedPackage({
+                        id: pkg.id,
+                        name: pkg.name,
+                        price: pkg.price,
+                        type: pkg.id.includes('3m') ? 'full' : 'consult'
+                      });
+                      setShowBooking(true);
+                    }}
                     className="block w-full text-center py-4 rounded-2xl font-black text-sm nav-font transition-all active:scale-95 hover:opacity-90"
                     style={
                       pkg.highlight
@@ -578,7 +587,7 @@ const CEOSpeechfulness: React.FC = () => {
                     }
                   >
                     {pkg.cta} →
-                  </a>
+                  </button>
                 </div>
               </div>
             ))}
@@ -603,15 +612,21 @@ const CEOSpeechfulness: React.FC = () => {
             <br />
             เฉพาะผู้สมัครแพคเกจ CEO Speechfulness 3 เดือน
           </p>
-          <a
-            href={CONTACT_INFO.lineUrl}
-            target="_blank"
-            rel="noreferrer"
+          <button
+            onClick={() => {
+              setSelectedPackage({
+                id: 'package-3m',
+                name: 'CEO Speechfulness 3 เดือน',
+                price: 39000,
+                type: 'full'
+              });
+              setShowBooking(true);
+            }}
             className="inline-flex items-center gap-2 bg-white text-[#c5a059] font-black py-4 px-8 rounded-2xl text-base hover:bg-[#0f3460] hover:text-white transition-all nav-font shadow-lg"
           >
             <MessageCircle className="w-5 h-5" />
-            สมัครเลย — Line @denmasterfa
-          </a>
+            สมัครเลย — ชำระเงิน/ลงทะเบียน
+          </button>
         </div>
       </section>
 

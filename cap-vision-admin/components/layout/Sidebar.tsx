@@ -16,6 +16,7 @@ const navItems = [
   { href: '/contents', label: 'บทความ / ข้อมูล', icon: FileText },
   { href: '/speakers', label: 'วิทยากร', icon: Users },
   { href: '/courses', label: 'หลักสูตร', icon: BookOpen },
+  { href: '/speechfulness', label: 'CEO Speechfulness', icon: Sparkles },
   { href: '/events', label: 'อีเวนท์', icon: Calendar },
   { href: '/media', label: 'Media Library', icon: Image },
   { href: '/leads', label: 'Leads', icon: MessageSquare },

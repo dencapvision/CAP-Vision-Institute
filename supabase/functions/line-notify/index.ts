@@ -42,8 +42,6 @@ const CORS_HEADERS = {
       });
     }
 
-    const { formType, data, to, project } = await req.json();
-
     if (!formType || !data) {
       return new Response(JSON.stringify({ error: "Invalid request body" }), {
         status: 400,

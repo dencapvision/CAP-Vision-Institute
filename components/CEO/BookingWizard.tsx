@@ -5,7 +5,7 @@ import {
   User, Building2, Briefcase, BarChart3, 
   Phone, MessageSquare, Mail, AlertCircle,
   CreditCard, QrCode, Upload, Loader2, Sparkles,
-  Lock, ArrowRight, ShieldCheck
+  Lock, ArrowRight, ShieldCheck, Copy, CheckCheck
 } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 import { ceoService } from '../../lib/ceoService';
@@ -35,6 +35,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
   const [paymentMethod, setPaymentMethod] = useState<'stripe' | 'transfer' | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [bookingData, setBookingData] = useState<any>(null);
+  const [copied, setCopied] = useState(false);
 
   const [formData, setFormData] = useState({
     full_name: '',
@@ -505,7 +506,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
                           name="transfer_date"
                           value={formData.transfer_date}
                           onChange={handleChange}
-                          className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-sm font-bold focus:border-[#c5a059] outline-none"
+                          className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-sm font-bold text-slate-900 focus:border-[#c5a059] outline-none"
                         />
                       </div>
                       <div className="space-y-1">
@@ -515,7 +516,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
                           name="transfer_time"
                           value={formData.transfer_time}
                           onChange={handleChange}
-                          className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-sm font-bold focus:border-[#c5a059] outline-none"
+                          className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-sm font-bold text-slate-900 focus:border-[#c5a059] outline-none"
                         />
                       </div>
                     </div>
@@ -554,18 +555,42 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
                 key="completion"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="text-center space-y-6 py-4"
+                className="text-center space-y-6 pt-2 pb-8"
               >
                 <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-2">
                   <Check className="w-10 h-10 text-green-500" />
                 </div>
                 
-                <div className="space-y-2">
-                  <h2 className="text-3xl font-black text-[#0f3460] nav-font leading-tight">ดำเนินการจองสำเร็จ!</h2>
-                  <p className="text-gray-500 font-bold">ขอบคุณที่ร่วมเป็นส่วนหนึ่งของ CEO Tier Community</p>
-                  <div className="bg-[#f8fafc] px-8 py-4 rounded-2xl inline-block border border-gray-100 mt-2">
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">รหัสการสมัครของคุณ (Copy ไปแจ้งใน LINE)</p>
-                    <p className="text-3xl font-black text-[#c5a059] tracking-tighter">{bookingData?.booking_code || 'CEO-WAIT'}</p>
+                <div className="space-y-4">
+                  <div>
+                    <h2 className="text-3xl font-black text-[#0f3460] nav-font leading-tight">ดำเนินการจองสำเร็จ!</h2>
+                    <p className="text-gray-500 font-bold">ขอบคุณที่ร่วมเป็นส่วนหนึ่งของ CEO Tier Community</p>
+                  </div>
+
+                  <div className="bg-[#f8fafc] w-full max-w-sm mx-auto p-6 rounded-3xl border border-gray-100 shadow-sm relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-2 opacity-5 group-hover:opacity-10 transition-opacity">
+                      <QrCode size={80} />
+                    </div>
+                    
+                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 text-center">รหัสการสมัครของคุณ</p>
+                    
+                    <div className="flex items-center justify-center gap-4">
+                      <p className="text-4xl font-black text-[#c5a059] tracking-tighter drop-shadow-sm">
+                        {bookingData?.booking_code || 'CEO-ERR'}
+                      </p>
+                      <button 
+                        onClick={() => {
+                          const code = bookingData?.booking_code || '';
+                          navigator.clipboard.writeText(code);
+                          setCopied(true);
+                          setTimeout(() => setCopied(false), 2000);
+                        }}
+                        className={`p-3 rounded-2xl transition-all shadow-lg ${copied ? 'bg-green-500 text-white scale-110' : 'bg-[#0f3460] text-white hover:scale-110 active:scale-95'}`}
+                      >
+                        {copied ? <CheckCheck size={20} /> : <Copy size={20} />}
+                      </button>
+                    </div>
+                    <p className="text-[10px] font-bold text-gray-400 mt-3 text-center">ก๊อปปี้รหัสนี้นำไปแจ้งที่ LINE ทีมงานได้ทันที</p>
                   </div>
                 </div>
 
@@ -590,7 +615,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
                       <div className="w-10 h-10 rounded-xl bg-[#0f3460]/5 text-[#0f3460] flex items-center justify-center flex-shrink-0 font-bold border border-[#0f3460]/10">2</div>
                       <div>
                         <p className="font-black text-[#0f3460] nav-font">ส่ง "รหัสการสมัคร" เข้าแชท</p>
-                        <p className="text-gray-500 text-xs font-medium">คลิก Copy รหัสด้านบนแล้วส่งเข้า LINE ได้ทันที</p>
+                        <p className="text-gray-500 text-xs font-medium">คลิกปุ่ม Copy ด้านบนแล้วส่งเข้า LINE ได้ทันที</p>
                       </div>
                     </div>
 
@@ -624,7 +649,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
                   </div>
                 </div>
 
-                <div className="pt-6">
+                <div className="pt-6 pb-4">
                   <button 
                     onClick={onClose}
                     className="text-[#0f3460] font-black hover:text-[#c5a059] transition-all nav-font flex items-center gap-2 mx-auto group"

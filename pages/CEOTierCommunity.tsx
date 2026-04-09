@@ -246,27 +246,8 @@ const CEOTierCommunity: React.FC = () => {
         </div>
       </section>
 
-      <section className="py-16 bg-[#0a0a1a] border-y border-white/5 relative bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-center text-[#c5a059]/50 text-[10px] font-black uppercase tracking-[0.4em] mb-12">
-            Joining the conversation alongside executives from
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20 opacity-40 hover:opacity-80 transition-all duration-700">
-             {BRAND_CLIENTS.map((client, i) => (
-               <div key={i} className="group relative">
-                 <img 
-                   src={client.logo} 
-                   alt={client.name} 
-                   className="h-10 md:h-14 object-contain brightness-0 invert filter hover:brightness-100 hover:invert-0 transition-all duration-500 grayscale group-hover:grayscale-0" 
-                 />
-                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[8px] font-black text-[#c5a059] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap uppercase tracking-widest">
-                   {client.name}
-                 </div>
-               </div>
-             ))}
-          </div>
-        </div>
-      </section>
+      {/* ─── REMOVED CLIENT LOGOS SECTION ─── */}
+
 
       {/* ─── PROBLEM ─────────────────────────────────────────────────────────── */}
       <section className="py-32 bg-gradient-to-b from-[#0d0d1f] to-[#0a0a1a] relative overflow-hidden">
@@ -425,7 +406,8 @@ const CEOTierCommunity: React.FC = () => {
 
       <FacilitatorSection />
 
-      {/* ─── IMPACT & ACTIVITIES ────────────────────────────────────────────── */}
+      {/* ─── HIDDEN ACTIVITY GALLERY SECTION (Awaiting real photos) ─── */}
+      {/* 
       <section className="py-32 bg-[#0a0a1a] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-24">
@@ -456,6 +438,7 @@ const CEOTierCommunity: React.FC = () => {
           </div>
         </div>
       </section>
+      */}
 
       {/* ─── FAQ ─────────────────────────────────────────────────────────────── */}
       <section className="py-40 bg-[#0a0a1a]">

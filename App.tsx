@@ -44,6 +44,7 @@ const DashboardPortfolio = lazy(() => import('./pages/dashboard/DashboardPortfol
 const DashboardPortfolioEditor = lazy(() => import('./pages/dashboard/DashboardPortfolioEditor'));
 const DashboardSEO = lazy(() => import('./pages/dashboard/DashboardSEO'));
 const DashboardResources = lazy(() => import('./pages/dashboard/DashboardResources'));
+const DashboardCEOTier = lazy(() => import('./pages/dashboard/DashboardCEOTier'));
 
 
 import { CONTACT_INFO } from './constants/brand';
@@ -115,6 +116,8 @@ const AppShell: React.FC = () => {
               <Route path="resources" element={<DashboardResources />} />
               <Route path="seo" element={<DashboardSEO />} />
               <Route path="ai-generator" element={<DashboardAIGenerator />} />
+              <Route path="ceo-tier" element={<DashboardCEOTier />} />
+
             </Route>
           </Routes>
         </Suspense>

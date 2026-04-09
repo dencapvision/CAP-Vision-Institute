@@ -8,6 +8,7 @@ import {
 
 const NAV = [
   { to: '/dashboard', label: 'ภาพรวม', icon: LayoutDashboard, exact: true },
+  { to: '/dashboard/ceo-tier', label: 'CEO Tier', icon: Crown },
   { to: '/dashboard/blog', label: 'บทความ', icon: FileText },
   { to: '/dashboard/resources', label: 'Resources', icon: Library },
   { to: '/dashboard/portfolio', label: 'Portfolio', icon: Briefcase },

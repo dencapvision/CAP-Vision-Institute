@@ -6,7 +6,7 @@ import {
   Crown, Eye, Clock
 } from 'lucide-react';
 import SEO from '../components/SEO';
-import { CONTACT_INFO } from '../constants/brand';
+import { CONTACT_INFO, CLIENTS as BRAND_CLIENTS } from '../constants/brand';
 
 // ─── Logos & Assets ───────────────────────────────────────────────────────────
 const CAP_LOGO = 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/about%20us/cap%20vision%20logo.png';
@@ -82,12 +82,13 @@ const OUTCOMES = [
   { icon: <Zap className="w-6 h-6" />, title: 'ลดความโดดเดี่ยว', desc: 'ของการเป็นผู้นำ' },
 ];
 
-const CLIENTS = [
-  { name: 'AOT', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Airports_of_Thailand_Logo.svg.png' },
-  { name: 'Central Food Retail', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/central%20food%20retail%20(CFR).png' },
-  { name: 'URC', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Universal_Robina-Logo.wine.png' },
-  { name: 'MR.D.I.Y.', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Mr-DIY-logo.png' },
-  { name: 'Land and Houses', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/landandhouses.jpg' },
+const ACTIVITIES = [
+  { url: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa1.jpg', title: 'CEO Roundtable' },
+  { url: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa2.jpg', title: 'Strategic Planning' },
+  { url: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa3.jpg', title: 'Executive Coaching' },
+  { url: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa4.jpg', title: 'Leadership Workshop' },
+  { url: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa5.jpg', title: 'Organizational Design' },
+  { url: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa6.jpg', title: 'Mindset Transformation' },
 ];
 
 const FAQS = [
@@ -250,13 +251,13 @@ const CEOTierCommunity: React.FC = () => {
           <p className="text-center text-[#c5a059]/50 text-[10px] font-black uppercase tracking-[0.4em] mb-12">
             Joining the conversation alongside executives from
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 hover:opacity-80 transition-all duration-700">
-             {CLIENTS.map((client, i) => (
+          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20 opacity-40 hover:opacity-80 transition-all duration-700">
+             {BRAND_CLIENTS.map((client, i) => (
                <div key={i} className="group relative">
                  <img 
                    src={client.logo} 
                    alt={client.name} 
-                   className="h-8 md:h-12 object-contain brightness-0 invert filter hover:brightness-100 hover:invert-0 transition-all duration-500 grayscale group-hover:grayscale-0" 
+                   className="h-10 md:h-14 object-contain brightness-0 invert filter hover:brightness-100 hover:invert-0 transition-all duration-500 grayscale group-hover:grayscale-0" 
                  />
                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[8px] font-black text-[#c5a059] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap uppercase tracking-widest">
                    {client.name}
@@ -423,6 +424,38 @@ const CEOTierCommunity: React.FC = () => {
       </section>
 
       <FacilitatorSection />
+
+      {/* ─── IMPACT & ACTIVITIES ────────────────────────────────────────────── */}
+      <section className="py-32 bg-[#0a0a1a] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-24">
+            <span className="cap-label mb-6 block text-center">Impact & Activities</span>
+            <h2 className="text-5xl md:text-6xl font-black nav-font text-white">บรรยากาศและกิจกรรม</h2>
+            <div className="gold-divider-center" />
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {ACTIVITIES.map((img, i) => (
+              <div 
+                key={i} 
+                className={`relative overflow-hidden rounded-[2rem] group border border-white/5 ${
+                  i === 0 ? 'md:col-span-2 md:row-span-2' : ''
+                }`}
+              >
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a1a] via-transparent to-transparent z-10 opacity-60 group-hover:opacity-20 transition-opacity" />
+                <img 
+                  src={img.url} 
+                  alt={img.title} 
+                  className="w-full h-full object-cover aspect-[4/3] group-hover:scale-110 transition-transform duration-1000"
+                />
+                <div className="absolute bottom-6 left-6 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
+                   <p className="text-[#c5a059] text-[10px] font-black uppercase tracking-widest">{img.title}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ─── FAQ ─────────────────────────────────────────────────────────────── */}
       <section className="py-40 bg-[#0a0a1a]">

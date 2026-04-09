@@ -107,6 +107,12 @@ const navItems: NavItem[] = [
         icon: <Sparkles className="w-4 h-4" />,
         description: 'Coaching พูด & สื่อสาร สำหรับผู้บริหาร',
       },
+      {
+        name: 'CEO Tier Community',
+        path: '/ceo-tier-community',
+        icon: <Trophy className="w-4 h-4" />,
+        description: 'Private Exchange Session สำหรับ CEO ระดับ 50-100M',
+      },
     ],
   },
   {

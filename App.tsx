@@ -27,6 +27,7 @@ const WorkshopHandouts = lazy(() => import('./pages/workshop/WorkshopHandouts'))
 const PortfolioDetail = lazy(() => import('./pages/PortfolioDetail'));
 const WebAppPricing = lazy(() => import('./pages/WebAppPricing'));
 const CEOSpeechfulness = lazy(() => import('./pages/CEOSpeechfulness'));
+const CEOTierCommunity = lazy(() => import('./pages/CEOTierCommunity'));
 
 // Dashboard pages
 const DashboardLayout = lazy(() => import('./pages/dashboard/DashboardLayout'));
@@ -94,6 +95,7 @@ const AppShell: React.FC = () => {
             <Route path="/growth-mastery/handouts" element={<WorkshopHandouts />} />
             <Route path="/web-app-pricing" element={<WebAppPricing />} />
             <Route path="/ceo-speechfulness" element={<CEOSpeechfulness />} />
+            <Route path="/ceo-tier-community" element={<CEOTierCommunity />} />
 
             {/* Dashboard routes */}
             <Route path="/dashboard" element={<DashboardLayout />}>

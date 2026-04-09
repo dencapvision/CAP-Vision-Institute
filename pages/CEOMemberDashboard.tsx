@@ -261,7 +261,7 @@ const NavItem = ({ icon, label, active = false }: { icon: any, label: string, ac
     active ? 'bg-[#c5a059]/10 text-[#c5a059]' : 'text-white/40 hover:bg-white/5 hover:text-white'
   }`}>
     <div className={`transition-transform group-hover:scale-110 ${active ? 'text-[#c5a059]' : 'text-inherit'}`}>
-      {React.cloneElement(icon as React.ReactElement, { className: 'w-5 h-5' })}
+      {React.cloneElement(icon as React.ReactElement<any>, { className: 'w-5 h-5' })}
     </div>
     {label}
   </button>

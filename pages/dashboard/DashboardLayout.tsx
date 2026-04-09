@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient';
 import {
   LayoutDashboard, BookOpen, Users, Sparkles, FileText,
-  Briefcase, BarChart3, LogOut, Menu, X, ChevronRight, Library
+  Briefcase, BarChart3, LogOut, Menu, X, ChevronRight, Library, Crown
 } from 'lucide-react';
 
 const NAV = [

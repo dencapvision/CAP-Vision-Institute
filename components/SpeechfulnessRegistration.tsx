@@ -74,7 +74,7 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
     setError(null);
     try {
       // 1. Generate Booking Code
-      const bookingCode = await ceoService.generateBookingCode();
+      const bookingCode = await ceoService.generateBookingCode('CEO-SF');
 
       // 2. Insert into Isolated Lead Table (No Auth Dependency)
       const { data: leadData, error: leadError } = await supabase

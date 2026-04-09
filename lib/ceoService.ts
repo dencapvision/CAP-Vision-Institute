@@ -8,16 +8,11 @@ export const ceoService = {
     const today = new Date();
     const dateStr = today.toISOString().slice(0, 10).replace(/-/g, '');
     
-    // Count existing bookings for today to get the sequence
-    const { count, error } = await supabase
-      .from('ceo_bookings')
-      .select('*', { count: 'exact', head: true })
-      .gte('created_at', today.toISOString().slice(0, 10));
-      
-    if (error) console.error('Error counting bookings:', error);
+    // Generate a short random suffix (4 chars) to prevent collisions
+    const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
     
-    const sequence = ((count || 0) + 1).toString().padStart(3, '0');
-    return `${prefix}-${dateStr}-${sequence}`;
+    // Format: PREFIX-YYYYMMDD-RAND
+    return `${prefix}-${dateStr}-${randomSuffix}`;
   },
 
   /**

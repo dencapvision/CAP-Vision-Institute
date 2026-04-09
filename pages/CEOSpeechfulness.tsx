@@ -744,6 +744,14 @@ const CEOSpeechfulness: React.FC = () => {
           </p>
         </div>
       </section>
+
+      {/* ── Registration Modal ────────────────────────────────────────────────── */}
+      {showBooking && selectedPackage && (
+        <SpeechfulnessRegistration
+          selectedPackage={selectedPackage}
+          onClose={() => setShowBooking(false)}
+        />
+      )}
     </>
   );
 };

@@ -532,7 +532,6 @@ const CEOTierCommunity: React.FC = () => {
             <p className="text-white/20 text-[9px] uppercase font-black tracking-[0.2em]">© 2024 CAP Vision Institute x NEWDICE · Standard of Excellence</p>
         </div>
       </footer>
-      </footer>
 
       {/* Booking Wizard Modal */}
       <BookingWizard isOpen={isWizardOpen} onClose={() => setIsWizardOpen(false)} />

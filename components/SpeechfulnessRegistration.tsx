@@ -72,7 +72,7 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
     e.preventDefault();
     setLoading(true);
     setError(null);
-
+    try {
       // 1. Auth: Sign up in the background
       // This creates the user but we don't depend on its session for the DB insert
       const { data: authData } = await supabase.auth.signUp({

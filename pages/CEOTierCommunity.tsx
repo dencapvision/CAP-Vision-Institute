@@ -81,7 +81,7 @@ const OUTCOMES = [
   { icon: <Zap className="w-6 h-6" />, title: 'ลดความโดดเดี่ยว', desc: 'ของการเป็นผู้นำ' },
 ];
 
-const CLIENTS = ['Toyota', 'Dell', 'Central', 'Betagro', 'หน่วยงานรัฐ', 'องค์กรชั้นนำ'];
+const CLIENTS = ['AOT', 'Central', 'URC', 'MR.D.I.Y.', 'Land and Houses', 'หน่วยงานรัฐ', 'องค์กรชั้นนำ'];
 
 const FAQS = [
   {

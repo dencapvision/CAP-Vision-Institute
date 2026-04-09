@@ -16,7 +16,7 @@ Write-Host "Deploying to $RemoteUser@$RemoteHost : $RemotePath ..." -ForegroundC
 
 # Use SCP to upload dist folder contents
 # Note: This assumes SSH keys are configured for passwordless login
-scp -r dist/* "${RemoteUser}@${RemoteHost}:${RemotePath}"
+scp -r dist/. "${RemoteUser}@${RemoteHost}:${RemotePath}"
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "Deployment successful!" -ForegroundColor Green

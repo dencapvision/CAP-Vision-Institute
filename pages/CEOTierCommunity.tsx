@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Shield, Users, MessageCircle, Zap, Brain,
-  CheckCircle2, XCircle, ChevronDown, ArrowRight,
+  CheckCircle2, XCircle, ChevronDown, ArrowRight, ChevronRight,
   Star, Lock, TrendingUp, Target, Sparkles,
   Crown, Eye, Clock
 } from 'lucide-react';
@@ -82,7 +82,13 @@ const OUTCOMES = [
   { icon: <Zap className="w-6 h-6" />, title: 'ลดความโดดเดี่ยว', desc: 'ของการเป็นผู้นำ' },
 ];
 
-const CLIENTS = ['AOT', 'Central', 'URC', 'MR.D.I.Y.', 'Land and Houses', 'หน่วยงานรัฐ', 'องค์กรชั้นนำ'];
+const CLIENTS = [
+  { name: 'AOT', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Airports_of_Thailand_Logo.svg.png' },
+  { name: 'Central Food Retail', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/central%20food%20retail%20(CFR).png' },
+  { name: 'URC', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Universal_Robina-Logo.wine.png' },
+  { name: 'MR.D.I.Y.', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Mr-DIY-logo.png' },
+  { name: 'Land and Houses', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/landandhouses.jpg' },
+];
 
 const FAQS = [
   {
@@ -235,6 +241,28 @@ const CEOTierCommunity: React.FC = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-[#0a0a1a] border-y border-white/5 relative bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
+        <div className="max-w-7xl mx-auto px-6">
+          <p className="text-center text-[#c5a059]/50 text-[10px] font-black uppercase tracking-[0.4em] mb-12">
+            Joining the conversation alongside executives from
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 hover:opacity-80 transition-all duration-700">
+             {CLIENTS.map((client, i) => (
+               <div key={i} className="group relative">
+                 <img 
+                   src={client.logo} 
+                   alt={client.name} 
+                   className="h-8 md:h-12 object-contain brightness-0 invert filter hover:brightness-100 hover:invert-0 transition-all duration-500 grayscale group-hover:grayscale-0" 
+                 />
+                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[8px] font-black text-[#c5a059] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap uppercase tracking-widest">
+                   {client.name}
+                 </div>
+               </div>
+             ))}
           </div>
         </div>
       </section>

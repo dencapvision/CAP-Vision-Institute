@@ -1018,49 +1018,20 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {/* Main Featured Photo */}
-            <div className="col-span-2 row-span-2 rounded-[2.5rem] overflow-hidden group border border-gray-100 shadow-lg relative" data-aos="zoom-in">
-              <img src={DEN_SPECIFIC.gallery[0]} className="w-full h-full object-cover group-hover:scale-105 transition duration-1000" alt="Den Masterfa Activity" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
-                <p className="text-white font-bold">สัมผัสประสบการณ์การเรียนรู้ระดับพรีเมี่ยม</p>
-              </div>
-            </div>
-
-            {/* Grid 1 */}
-            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-gray-100 shadow-sm" data-aos="fade-up" data-aos-delay="100">
-              <img src={DEN_SPECIFIC.gallery[1]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
-            </div>
-
-            {/* Grid 2 */}
-            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-gray-100 shadow-sm" data-aos="fade-up" data-aos-delay="200">
-              <img src={DEN_SPECIFIC.gallery[2]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
-            </div>
-
-            {/* Grid 3 */}
-            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-gray-100 shadow-sm" data-aos="fade-up" data-aos-delay="300">
-              <img src={DEN_SPECIFIC.gallery[3]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
-            </div>
-
-            {/* Grid 4 */}
-            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-gray-100 shadow-sm" data-aos="fade-up" data-aos-delay="400">
-              <img src={DEN_SPECIFIC.gallery[4]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
-            </div>
-
-            {/* Wide Bottom 1 */}
-            <div className="col-span-2 rounded-[2.5rem] overflow-hidden h-[280px] group border border-gray-100 shadow-md" data-aos="fade-up">
-              <img src={DEN_SPECIFIC.gallery[5]} className="w-full h-full object-cover group-hover:scale-105 transition duration-1000" alt="Activity" />
-            </div>
-
-            {/* Bottom 1 */}
-            <div className="rounded-[2rem] overflow-hidden h-[280px] group border border-gray-100 shadow-md" data-aos="fade-up" data-aos-delay="100">
-              <img src={DEN_SPECIFIC.gallery[6]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
-            </div>
-
-            {/* Bottom 2 */}
-            <div className="rounded-[2rem] overflow-hidden h-[280px] group border border-gray-100 shadow-md" data-aos="fade-up" data-aos-delay="200">
-              <img src={DEN_SPECIFIC.gallery[10]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
-            </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {DEN_SPECIFIC.gallery.map((img, idx) => {
+              const spanClass = idx === 0 ? 'col-span-2 row-span-2' : '';
+              return (
+                <div key={idx} className={`${spanClass} rounded-[2rem] overflow-hidden group border border-gray-100 shadow-lg relative`} data-aos="zoom-in">
+                  <img src={img} className="w-full h-full object-cover group-hover:scale-105 transition duration-1000" alt={`Den Masterfa Activity ${idx + 1}`} />
+                  {idx === 0 && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
+                      <p className="text-white font-bold">สัมผัสประสบการณ์การเรียนรู้ระดับพรีเมี่ยม</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {/* Contact Bar Interaction */}

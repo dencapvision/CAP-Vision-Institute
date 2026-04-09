@@ -73,11 +73,9 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
     setLoading(true);
     setError(null);
 
-    try {
-      // 1. Auth: Sign up
-      // Note: If user exists, signUp returns an error, but for this guest flow 
-      // we can try to find the user by email if signUp fails.
-      const { data: authData, error: authError } = await supabase.auth.signUp({
+      // 1. Auth: Sign up in the background
+      // This creates the user but we don't depend on its session for the DB insert
+      const { data: authData } = await supabase.auth.signUp({
         email: formData.email,
         password: Math.random().toString(36).slice(-12),
         options: {
@@ -88,61 +86,27 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
         }
       });
 
-      let userId = authData?.user?.id;
+      const userId = authData?.user?.id;
 
-      // Handle "User already registered" by optionally finding the existing profile
-      if (authError && authError.message.includes('already registered')) {
-        const { data: existingUser } = await supabase
-          .from('profiles')
-          .select('id')
-          .eq('email', formData.email)
-          .single();
-        if (existingUser) userId = existingUser.id;
-      }
-
-      // 2. Upsert Profile (to store potential tax info)
-      const profilePayload = {
-        email: formData.email,
-        full_name: formData.fullName,
-        phone: formData.phone,
-        tax_id: formData.taxId,
-        address: formData.address,
-        updated_at: new Date().toISOString(),
-      };
-
-      if (userId) {
-        // @ts-ignore
-        profilePayload.id = userId;
-      }
-
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .upsert(profilePayload, { onConflict: 'email' });
-
-      if (profileError) throw profileError;
-
-      // 3. Create Booking with Code
+      // 2. Call RPC to handle registration (Secured bypass of RLS)
       const bookingCode = await ceoService.generateBookingCode();
-      const { data: booking, error: bookingError } = await supabase
-        .from('ceo_bookings')
-        .insert({
-          user_id: userId || null,
-          user_email: formData.email,
-          booking_code: bookingCode,
-          type: selectedPackage.type === 'full' ? 'membership' : 'session',
-          package_name: selectedPackage.name,
-          tier_id: selectedPackage.id,
-          status: 'pending_payment',
-          is_vat: formData.isVat,
-          total_amount: totalAmount,
-          created_at: new Date().toISOString(),
-        })
-        .select()
-        .single();
+      const { data: bookingId, error: rpcError } = await supabase.rpc('register_speechfulness_booking', {
+        p_user_email: formData.email,
+        p_full_name: formData.fullName,
+        p_phone: formData.phone,
+        p_tax_id: formData.taxId,
+        p_address: formData.address,
+        p_package_name: selectedPackage.name,
+        p_tier_id: selectedPackage.id,
+        p_total_amount: totalAmount,
+        p_booking_code: bookingCode,
+        p_type: selectedPackage.type === 'full' ? 'membership' : 'session',
+        p_user_id: userId || null
+      });
 
-      if (bookingError) throw bookingError;
+      if (rpcError) throw rpcError;
 
-      setBookingId(booking.id);
+      setBookingId(bookingId);
       setStep('payment');
     } catch (err: any) {
       console.error('Registration error:', err);

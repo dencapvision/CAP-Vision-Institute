@@ -107,6 +107,25 @@ const FAQS = [
   },
 ];
 
+const FACilitators = [
+  {
+    name: 'ครูเด่น มาสเตอร์ฟา',
+    realName: 'อนุสรณ์ หนองนา',
+    title: 'Master Facilitator & AI Learning Designer',
+    desc: 'ผู้เชี่ยวชาญด้านการพัฒนาศักยภาพมนุษย์และออกแบบการเรียนรู้ระดับพรีเมี่ยม Founder of CAP-Vision Institute ผู้นำกระบวนการ Facilitation ที่เปลี่ยน Mindset องค์กรชั้นนำมาแล้วมากมาย',
+    image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/denmasterfa.jpg',
+    slug: 'den-masterfa'
+  },
+  {
+    name: 'คุณไนท์ ไกรพุฒิ',
+    realName: 'ไกรพุฒิ อินทรโยรา',
+    title: 'Strategic Policy & Technology Advisor',
+    desc: 'ผู้ช่วยประธานสภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย และคณะทำงานรัฐมนตรีดีอี ผู้เชี่ยวชาญด้านยุทธศาสตร์ดิจิทัลเพื่อเศรษฐกิจและสังคม และความมั่นคงไซเบอร์ระดับประเทศ',
+    image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg',
+    slug: 'kraiput-intarayotha'
+  }
+];
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 const CEOTierCommunity: React.FC = () => {
@@ -375,6 +394,8 @@ const CEOTierCommunity: React.FC = () => {
         </div>
       </section>
 
+      <FacilitatorSection />
+
       {/* ─── FAQ ─────────────────────────────────────────────────────────────── */}
       <section className="py-40 bg-[#0a0a1a]">
         <div className="max-w-4xl mx-auto px-6">
@@ -470,6 +491,66 @@ const CEOTierCommunity: React.FC = () => {
         </div>
       </footer>
     </div>
+  );
+};
+
+/* ─── FACILITATORS ────────────────────────────────────────────────────────── */
+const FacilitatorSection: React.FC = () => {
+  return (
+    <section className="py-40 bg-[#0f0f20] relative overflow-hidden">
+      {/* Background Accent */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#c5a059]/5 rounded-full blur-[120px] opacity-30" />
+      
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="text-center mb-24">
+          <span className="cap-label mb-6 block text-center">The Experts Behind</span>
+          <h2 className="text-5xl md:text-6xl font-black nav-font text-white leading-tight">
+             ผู้ดูแลวงสนทนา <br/> <span className="font-gold">Executive Facilitators</span>
+          </h2>
+          <div className="gold-divider-center" />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+          {FACilitators.map((fac, i) => (
+            <div key={i} className="group relative">
+               <div className="absolute -inset-2 bg-gradient-to-r from-[#c5a059]/20 to-blue-600/10 rounded-[3.5rem] blur opacity-0 group-hover:opacity-100 transition duration-1000" />
+               <div className="relative glass-panel !bg-[#0a0a1a]/60 border-white/5 p-10 md:p-12 rounded-[3rem] h-full flex flex-col md:flex-row gap-10 items-center md:items-start transition-all duration-500 hover:border-[#c5a059]/40">
+                  {/* Image Part */}
+                  <div className="w-48 h-48 md:w-56 md:h-56 shrink-0 relative">
+                     <div className="absolute inset-0 bg-[#c5a059] rounded-[2.5rem] rotate-6 scale-95 opacity-20 group-hover:rotate-12 transition-transform duration-700" />
+                     <img 
+                       src={fac.image} 
+                       alt={fac.name} 
+                       className="w-full h-full object-cover rounded-[2.5rem] relative z-10 grayscale group-hover:grayscale-0 transition-all duration-700 border border-white/10"
+                     />
+                  </div>
+
+                  {/* Info Part */}
+                  <div className="flex-1 text-center md:text-left">
+                     <div className="inline-flex items-center gap-2 bg-[#c5a059]/10 border border-[#c5a059]/30 px-4 py-1.5 rounded-full mb-6">
+                        <Star className="w-3.5 h-3.5 text-[#c5a059]" />
+                        <span className="text-[#c5a059] text-[10px] font-black uppercase tracking-widest">{fac.title}</span>
+                     </div>
+                     <h3 className="text-3xl font-black text-white nav-font mb-2">
+                        {fac.name} <span className="text-white/30 text-lg block md:inline font-bold md:ml-2">({fac.realName})</span>
+                     </h3>
+                     <p className="text-white/50 text-base leading-relaxed mb-8 line-clamp-3 md:line-clamp-none">
+                        {fac.desc}
+                     </p>
+                     <a 
+                       href={`/speakers/${fac.slug}`}
+                       className="inline-flex items-center gap-2 text-[#c5a059] font-black text-sm uppercase tracking-widest hover:gap-4 transition-all"
+                     >
+                        ดูโปรไฟล์เต็ม
+                        <ChevronRight className="w-4 h-4" />
+                     </a>
+                  </div>
+               </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 

@@ -46,6 +46,10 @@ Deno.serve(async (req) => {
     messageText += `──────────────────`;
 
     // Send to LINE Messaging API (Push Message)
+    const targetRecipient = to || LINE_ADMIN_USER_ID;
+    console.log(`Attempting to send LINE notification to: ${targetRecipient}`);
+    console.log(`Message Content:\n${messageText}`);
+
     const lineResponse = await fetch("https://api.line.me/v2/bot/message/push", {
       method: "POST",
       headers: {
@@ -53,7 +57,7 @@ Deno.serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        to: to || LINE_ADMIN_USER_ID,
+        to: targetRecipient,
         messages: [
           {
             type: "text",

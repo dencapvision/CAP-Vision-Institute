@@ -32,6 +32,7 @@ interface RegistrationFormData {
   fullName: string;
   email: string;
   phone: string;
+  lineId: string;
   isVat: boolean;
   taxId?: string;
   address?: string;
@@ -50,6 +51,7 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
     fullName: '',
     email: '',
     phone: '',
+    lineId: '',
     isVat: false,
     taxId: '',
     address: '',
@@ -83,6 +85,7 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
           full_name: formData.fullName,
           email: formData.email,
           phone: formData.phone,
+          line_id: formData.lineId,
           address: formData.address,
           tax_id: formData.taxId,
           package_name: selectedPackage.name,
@@ -132,6 +135,8 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
       const { error: updateError } = await supabase
         .from('ceo_speechfulness_leads')
         .update({
+          line_id: formData.lineId,
+          email: formData.email,
           slip_url: slipUrl,
           status: 'paid',
           metadata: {
@@ -152,6 +157,8 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
             'โปรแกรม': 'CEO Speechfulness',
             'แพคเกจ': selectedPackage.name,
             'ลูกค้า': formData.fullName,
+            'LINE ID': formData.lineId,
+            'เบอร์โทร': formData.phone,
             'ยอดชำระ': `฿${totalAmount.toLocaleString()}`,
             'ออกใบกำกับภาษี': formData.isVat ? 'ใช่' : 'ไม่',
             'สลิปโอนเงิน': slipUrl
@@ -170,32 +177,78 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
 
   if (step === 'success') {
     return (
-      <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
-        <div className="bg-white w-full max-w-2xl rounded-[3rem] shadow-2xl p-12 text-center animate-in zoom-in duration-500">
-          <div className="w-24 h-24 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-8">
-            <CheckCircle className="w-12 h-12" />
+      <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-xl flex items-center justify-center p-4">
+        <div className="bg-white w-full max-w-2xl rounded-[3rem] shadow-2xl p-10 md:p-14 text-center animate-in zoom-in duration-500 overflow-y-auto max-h-[90vh]">
+          <div className="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="w-10 h-10" />
           </div>
-          <h2 className="text-4xl font-black text-[#0f3460] mb-6 nav-font">ลงทะเบียนสำเร็จ!</h2>
-          <p className="text-xl text-gray-500 font-medium mb-10 leading-relaxed">
-            ระะบบได้รับข้อมูลและหลักฐานการชำระเงินเรียบร้อยแล้ว <br />
-            ทีมงานจะตรวจสอบและแจ้งผลกลับไปที่ LINE หรือ Email ของท่านโดยเร็วที่สุด
-          </p>
+          <h2 className="text-3xl md:text-4xl font-black text-[#0f3460] mb-2 nav-font">ลงทะเบียนสำเร็จ!</h2>
+          <p className="text-lg text-[#0f3460]/60 font-medium mb-8">เราได้รับหลักฐานการชำระเงินเรียบร้อยแล้ว</p>
           
-          {selectedPackage.type === 'full' ? (
-            <button 
-              onClick={() => window.location.href = '/ceo-member'}
-              className="bg-[#0f3460] text-white px-12 py-5 rounded-2xl font-bold nav-font hover:bg-[#c5a059] transition-all flex items-center gap-3 mx-auto shadow-xl"
+          {/* Automated Flow 1-2-3 */}
+          <div className="bg-gray-50 rounded-[2.5rem] p-8 mb-8 text-left border border-gray-100">
+            <h3 className="text-[#0f3460] font-black mb-6 flex items-center gap-2">
+              <span className="w-8 h-8 bg-[#0f3460] text-white rounded-full flex items-center justify-center text-sm">!</span> 
+              ขั้นตอนสำคัญ 1-2-3 เพื่อเริ่มการปรึกษา
+            </h3>
+            
+            <div className="space-y-6">
+              <div className="flex gap-4">
+                <div className="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center font-black text-[#c5a059] flex-shrink-0">1</div>
+                <div>
+                  <p className="font-black text-[#0f3460] text-sm">แอดไลน์ทีมงาน (LINE OA)</p>
+                  <p className="text-xs text-gray-500 font-medium">สแกน QR Code ด้านล่าง หรือกดปุ่มเพิ่มเพื่อน</p>
+                </div>
+              </div>
+              
+              <div className="flex gap-4">
+                <div className="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center font-black text-[#c5a059] flex-shrink-0">2</div>
+                <div>
+                  <p className="font-black text-[#0f3460] text-sm">ส่ง "รหัสการจอง" เข้าแชท</p>
+                  <div className="mt-1 px-3 py-1 bg-white border border-dashed border-[#c5a059] rounded-lg inline-block">
+                    <span className="text-[#c5a059] font-black text-sm tracking-widest">{bookingId}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <div className="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center font-black text-[#c5a059] flex-shrink-0">3</div>
+                <div>
+                  <p className="font-black text-[#0f3460] text-sm">รอรับคำปรึกษาเบื้องต้น</p>
+                  <p className="text-xs text-gray-500 font-medium">เจ้าหน้าที่จะตอบกลับท่านในทันทีที่เห็นข้อความ</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* QR & Link */}
+          <div className="mb-10">
+            <div className="relative inline-block mb-6 group">
+              <div className="absolute -inset-4 bg-gold-gradient opacity-20 blur-xl rounded-full transition-all group-hover:opacity-30"></div>
+              <img 
+                src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/contact/Line%20OA%20@denmasterfa.jpg" 
+                alt="LINE OA @denmasterfa" 
+                className="w-48 h-48 rounded-3xl shadow-2xl relative border-4 border-white"
+              />
+            </div>
+            <p className="text-[#0f3460] font-black nav-font mb-6">Line OA : @denmasterfa</p>
+            
+            <a 
+              href="https://lin.ee/nJIDttt"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#00b900] text-white px-10 py-4 rounded-2xl font-black shadow-xl hover:scale-105 transition-transform"
             >
-              ไปที่ Dashboard สมาชิก <ChevronRight className="w-5 h-5" />
-            </button>
-          ) : (
-            <button 
-              onClick={onClose}
-              className="bg-[#0f3460] text-white px-12 py-5 rounded-2xl font-bold nav-font hover:bg-[#c5a059] transition-all shadow-xl"
-            >
-              ตกลง
-            </button>
-          )}
+              เพิ่มเพื่อนทาง LINE
+            </a>
+          </div>
+
+          <button 
+            onClick={onClose}
+            className="text-gray-400 font-bold hover:text-[#0f3460] transition-colors"
+          >
+            ปิดหน้าต่างนี้
+          </button>
         </div>
       </div>
     );
@@ -268,35 +321,51 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
                   </div>
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">อีเมลสำหรับเข้าสู่ระบบ</label>
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">อีเมล (ถ้ามี)</label>
                   <div className="relative">
                     <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input 
                       name="email" 
-                      required 
                       type="email" 
                       value={formData.email}
                       onChange={handleInputChange}
                       className="w-full pl-14 pr-6 py-5 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-medium" 
-                      placeholder="email@example.com" 
+                      placeholder="email@example.com (ไม่บังคับ)" 
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-3">
-                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">เบอร์โทรศัพท์ติดต่อ</label>
-                <div className="relative">
-                  <Phone className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <input 
-                    name="phone" 
-                    required 
-                    type="tel" 
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="w-full pl-14 pr-6 py-5 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-medium" 
-                    placeholder="08X-XXX-XXXX" 
-                  />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-3">
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block">เบอร์โทรศัพท์ติดต่อ</label>
+                  <div className="relative">
+                    <Phone className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input 
+                      name="phone" 
+                      required 
+                      type="tel" 
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="w-full pl-14 pr-6 py-5 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-medium" 
+                      placeholder="08X-XXX-XXXX" 
+                    />
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block text-red-500">LINE ID (สำคัญเพื่อรับการโค้ชชิ่ง)</label>
+                  <div className="relative">
+                    <QrCode className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <input 
+                      name="lineId" 
+                      required 
+                      type="text" 
+                      value={formData.lineId}
+                      onChange={handleInputChange}
+                      className="w-full pl-14 pr-6 py-5 bg-gray-50 rounded-2xl border-none focus:ring-2 focus:ring-[#c5a059] font-medium border-2 border-red-50" 
+                      placeholder="ระบุ LINE ID ของท่าน" 
+                    />
+                  </div>
                 </div>
               </div>
 

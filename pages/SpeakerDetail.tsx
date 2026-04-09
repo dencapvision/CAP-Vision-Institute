@@ -199,50 +199,39 @@ const GenericDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> 
 /* ─── Knight Kraiput Premium Detail Page ─────────────────────── */
 const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = ({ speaker, taughtCourses }) => {
   const K_DATA = {
-    expertise: [
-      {
-        title: 'Communication & Soft Skills',
-        skills: ['Facilitation Skills', 'Dialogue (D-F-A)', 'Public Speaking', 'Effective Communication']
-      },
-      {
-        title: 'Safety & Technical',
-        skills: ['Fire Safety Specialist', 'Communication Technology', 'Industrial Safety', 'Emergency Response']
-      },
-      {
-        title: 'Leadership & Management',
-        skills: ['Team Leadership', 'Community Management', 'Organization Development', 'Strategic Planning']
-      },
-      {
-        title: 'Public Service',
-        skills: ['Alumni Association Management', 'Chamber of Commerce', 'Public Relations', 'Civil Society Development']
-      }
-    ],
-    experience: [
-      'CEO, NewDice Co.,Ltd.',
-      'นายกสมาคมศิษย์เก่าโรงเรียนสาธิตมหาวิทยาลัยศิลปากร (2566 - 2568)',
-      'คณะกรรมการบริหารหอการค้าจังหวัดนครปฐม (2566 - 2568)'
-    ],
-    education: [
-      'กำลังศึกษา ปริญญาโท การจัดการมหาบัณฑิต วิทยาลัยนวัตกรรมฯ มหาวิทยาลัยมหิดล (CMMU)',
-      'ปริญญาตรี วิศวกรรมศาสตรบัณฑิต มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี (KMUTT)'
-    ],
-    experience: [
+    positions: [
+      'ผู้ช่วยประธานสภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย',
+      'คณะทำงานรัฐมนตรีว่าการกระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม',
+      'CEO, Guardian Global Security Co., Ltd.',
+      'ประธานเจ้าหน้าที่บริหาร (CEO) บริษัท นิวไดซ์ จำกัด (Newdice Co., Ltd.)',
+      'นายกสมาคมศิษย์เก่าโรงเรียนสาธิตมหาวิทยาลัยศิลปากร (วาระปี 2566 – 2568)',
+      'คณะกรรมการบริหารหอการค้าจังหวัดนครปฐม (วาระปี 2566 – 2568)',
+      'อนุกรรมการ ยุทธศาสตร์และเทคโนโลยีสารสนเทศ สภาสมาคมสตรีแห่งชาติ ในพระบรมราชินูปถัมภ์',
       'อนุกรรมการ ขับเคลื่อนเศรษฐกิจดิจิทัลฯ (SME/Digital Nomad) สภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย',
-      'เลขานุการ คณะกรรมการยุทธศาสตร์ สภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย',
-      'เลขาธิการ สมาคมศิษย์เก่าโรงเรียนสาธิตมหาวิทยาลัยศิลปากร',
-      'กรรมการ สถาบันวิสาหกิจขนาดกลางและขนาดย่อมอุตสาหกรรมการผลิต (SMI) สภาอุตสาหกรรมแห่งประเทศไทย (2563-2565)'
+      'เลขานุการ คณะกรรมการยุทธศาสตร์ สภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย'
     ],
-    otherWork: [
+    experience: [
+      'ที่ปรึกษาบริษัท Newdice (Digital Marketing & Solution)',
+      'ที่ปรึกษาอาวุโสด้านบริหารจัดการกลยุทธ์และการเปลี่ยนแปลง (Corporate Strategy & Transformation)',
+      'กรรมการ สถาบันวิสาหกิจขนาดกลางและขนาดย่อมอุตสาหกรรมการผลิต (SMI) สภาอุตสาหกรรมแห่งประเทศไทย (2563-2565)',
       'กรรมการบริษัท ประชารัฐรักสามัคคีนครปฐม (วิสาหกิจเพื่อสังคม) จำกัด',
       'ที่ปรึกษาประธานคณะกรรมาธิการการสื่อสาร โทรคมนาคม และดิจิทัลเพื่อเศรษฐกิจและสังคม',
-      'เลขานุการ คณะอนุกรรมาธิการส่งเสริมวิสาหกิจเริ่มต้น (Start-up) และดึงดูดบุคลากรทักษะสูงจากต่างประเทศ (Global Talent)',
-      'คณะทำงาน รัฐมนตรีว่าการกระทรวงประมง (อินโดนีเซีย)'
+      'เลขานุการ คณะอนุกรรมาธิการส่งเสริมวิสาหกิจเริ่มต้น (Start-up) และดึงดูดบุคลากรทักษะสูงจากต่างประเทศ (Global Talent)'
+    ],
+    education: [
+      'ปริญญาโท บริหารธุรกิจมหาบัณฑิต (MBA - Global Business Management) มหาวิทยาลัยรามคำแหง',
+      'ปริญญาตรี ศิลปศาสตรบัณฑิต (BA - International Business Management) มหาวิทยาลัยเกษตรศาสตร์'
     ],
     training: [
       'หลักสูตร ผู้บริหารด้านความมั่นคงปลอดภัยไซเบอร์ (CISO) รุ่นที่ 2 (สกมช.)',
       'หลักสูตร CEO-Smart (รุ่นที่ 1) หอการค้าไทย และมหาวิทยาลัยหอการค้าไทย',
       'หลักสูตร การบริหารจัดการด้านความมั่นคงขั้นสูง (สวพช. มอก. รุ่นที่ 11)',
-      'หลักสูตร ผู้นำยุคใหม่เพื่อการเปลี่ยนแปลง (Leadership for Change รุ่นที่ 10) มูนิธิสัมมาชีพ'
+      'หลักสูตร ผู้นำยุคใหม่เพื่อการเปลี่ยนแปลง (Leadership for Change รุ่นที่ 10) มูลนิธิสัมมาชีพ'
+    ],
+    otherWork: [
+      'ที่ปรึกษาอาวุโสด้านบริหารจัดการกลยุทธ์และการเปลี่ยนแปลง (Corporate Strategy & Transformation)',
+      'ที่ปรึกษาบริษัท Newdice (Digital Marketing & Solution)',
+      'คณะทำงาน รัฐมนตรีว่าการกระทรวงประมง (อินโดนีเซีย)'
     ],
     gallery: [
       'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg',
@@ -458,32 +447,20 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            <div className="col-span-2 row-span-2 rounded-[2rem] overflow-hidden group border border-white/10">
-              <img src={K_DATA.gallery[0]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
-            </div>
-            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-white/10">
-              <img src={K_DATA.gallery[1]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
-            </div>
-            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-white/10">
-              <img src={K_DATA.gallery[2]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
-            </div>
-            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-white/10">
-              <img src={K_DATA.gallery[3]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
-            </div>
-            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-white/10">
-              <img src={K_DATA.gallery[4]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
-            </div>
-            {/* Third Row Section */}
-            <div className="col-span-2 rounded-[2rem] overflow-hidden h-[250px] group border border-white/10">
-              <img src={K_DATA.gallery[9]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
-            </div>
-            <div className="rounded-[2rem] overflow-hidden h-[250px] group border border-white/10">
-              <img src={K_DATA.gallery[6]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
-            </div>
-            <div className="rounded-[2rem] overflow-hidden h-[250px] group border border-white/10">
-              <img src={K_DATA.gallery[10]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
-            </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {K_DATA.gallery.map((img, idx) => {
+              const spanClass = idx === 0 ? 'col-span-2 row-span-2' : '';
+              return (
+                <div key={idx} className={`${spanClass} rounded-[2rem] overflow-hidden group border border-white/10 relative`}>
+                  <img src={img} className="w-full h-full object-cover group-hover:scale-110 transition duration-1000" alt={`Activity ${idx + 1}`} />
+                  {idx === 0 && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
+                       <p className="text-white font-bold text-lg">ประสบการณ์การบรรยายระดับชาติ</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
           
           <div className="mt-20 text-center">

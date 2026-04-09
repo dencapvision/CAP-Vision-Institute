@@ -213,19 +213,19 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
       'หลักสูตร ผู้นำยุคใหม่เพื่อการเปลี่ยนแปลง (Leadership for Change รุ่นที่ 10) มูนิธิสัมมาชีพ'
     ],
     gallery: [
-      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8673.JPG',
-      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8667.JPG',
-      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8666.JPG',
-      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8659.JPG',
-      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8685.JPG',
-      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8687.JPG',
-      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8646.JPG',
-      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8641.JPG',
-      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8604.JPG',
-      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%A3%20Kraiput%20Intarayotha%20(Knight).jpg',
-      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8700%20(1).JPG',
-      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8690.JPG',
-      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8693.JPG'
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha2.jpg',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha3.jpg',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha4.jpg',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha5.jpg',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha6.jpg',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha7.jpg',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha8.jpg',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha9.jpg',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha10.jpg',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha11.jpg',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha12.jpg',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha13.jpg'
     ]
   };
 

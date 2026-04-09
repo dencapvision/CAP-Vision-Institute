@@ -5,7 +5,7 @@ VALUES (
     'kraiput-intarayotha',
     'ไกรพุฒิ อินทรโยรา (ไนท์)',
     'ผู้ช่วยประธานสภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย | คณะทำงานรัฐมนตรีกระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม',
-    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Kraiput%20Intarayotha.jpg'
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg'
 )
 ON CONFLICT (slug) DO UPDATE SET
     name = EXCLUDED.name,

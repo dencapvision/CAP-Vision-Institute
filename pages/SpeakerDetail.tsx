@@ -199,10 +199,25 @@ const GenericDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> 
 /* ─── Knight Kraiput Premium Detail Page ─────────────────────── */
 const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = ({ speaker, taughtCourses }) => {
   const K_DATA = {
-    positions: [
-      'ผู้ช่วยประธานสภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย',
-      'คณะทำงานรัฐมนตรีกระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม (ต.ค. 2022 - ปัจจุบัน)',
-      'CEO, Guardian Global Security Guard Co.,Ltd.',
+    expertise: [
+      {
+        title: 'Communication & Soft Skills',
+        skills: ['Facilitation Skills', 'Dialogue (D-F-A)', 'Public Speaking', 'Effective Communication']
+      },
+      {
+        title: 'Safety & Technical',
+        skills: ['Fire Safety Specialist', 'Communication Technology', 'Industrial Safety', 'Emergency Response']
+      },
+      {
+        title: 'Leadership & Management',
+        skills: ['Team Leadership', 'Community Management', 'Organization Development', 'Strategic Planning']
+      },
+      {
+        title: 'Public Service',
+        skills: ['Alumni Association Management', 'Chamber of Commerce', 'Public Relations', 'Civil Society Development']
+      }
+    ],
+    experience: [
       'CEO, NewDice Co.,Ltd.',
       'นายกสมาคมศิษย์เก่าโรงเรียนสาธิตมหาวิทยาลัยศิลปากร (2566 - 2568)',
       'คณะกรรมการบริหารหอการค้าจังหวัดนครปฐม (2566 - 2568)'

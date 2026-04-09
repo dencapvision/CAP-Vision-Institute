@@ -16,30 +16,37 @@ export const ceoService = {
   },
 
   /**
-   * Creates a full booking record with profile update
+   * Creates a full booking record with profile update (supports guests)
    */
   createBooking: async (profileData: any, bookingType: 'session' | 'membership', planName?: string, sessionDate?: string) => {
-    // 1. Update Profile
+    // 1. Get current user (Optional for guests)
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) throw new Error('User not authenticated');
+    
+    // 2. Update Profile only if user is logged in
+    if (user) {
+      try {
+        await supabase
+          .from('profiles')
+          .upsert({
+            id: user.id,
+            ...profileData,
+            updated_at: new Date().toISOString()
+          });
+      } catch (profileErr) {
+        console.warn('Profile update failed, proceeding with booking:', profileErr);
+      }
+    }
 
-    const { error: profileError } = await supabase
-      .from('profiles')
-      .upsert({
-        id: user.id,
-        ...profileData,
-        updated_at: new Date().toISOString()
-      });
-
-    if (profileError) throw profileError;
-
-    // 2. Create Booking
+    // 3. Create Booking (Robust with contact info redundancy for guests)
     const bookingCode = await ceoService.generateBookingCode();
     const { data: booking, error: bookingError } = await supabase
       .from('ceo_bookings')
       .insert({
         booking_code: bookingCode,
-        user_id: user.id,
+        user_id: user?.id || null,
+        user_email: profileData.email || user?.email,
+        user_full_name: profileData.full_name,
+        user_phone: profileData.phone,
         type: bookingType,
         plan_name: planName || (bookingType === 'session' ? 'Single Session' : 'Monthly Member'),
         session_date: sessionDate,

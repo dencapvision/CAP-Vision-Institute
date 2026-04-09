@@ -87,16 +87,14 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
     setLoading(true);
     setError(null);
     try {
-      // 1. Create or Check User
+      // 1. Get User (Optional)
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        throw new Error('กรุณาเข้าสู่ระบบก่อนดำเนินการจอง');
-      }
 
-      // 2. Create Booking via Service
+      // 2. Create Booking via Service (Supports Guests)
       const booking = await ceoService.createBooking(
         {
           full_name: formData.full_name,
+          email: formData.email,
           company: formData.company,
           position: formData.position,
           revenue_range: formData.revenue_range,
@@ -119,14 +117,15 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
         
         const checkoutUrl = new URL(stripeUrl);
         checkoutUrl.searchParams.append('client_reference_id', booking.id);
-        checkoutUrl.searchParams.append('prefilled_email', user.email || '');
+        checkoutUrl.searchParams.append('prefilled_email', user?.email || formData.email || '');
         
         window.location.href = checkoutUrl.toString();
       } else if (paymentMethod === 'transfer') {
         if (!file) throw new Error('กรุณาอัปโหลดสลิปเพื่อยืนยันการชำระเงิน');
 
-        // Handle File Upload
-        const filePath = `${user.id}/${Date.now()}_${file.name}`;
+        // Handle File Upload (Guest-safe path)
+        const userFolder = user?.id || 'guest';
+        const filePath = `${userFolder}/${Date.now()}_${file.name}`;
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from('payment-slips')
           .upload(filePath, file);

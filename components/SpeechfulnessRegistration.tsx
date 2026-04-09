@@ -149,7 +149,7 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
       if (updateError) throw updateError;
 
       // 3. Send LINE Notification
-      await supabase.functions.invoke('line-notify', {
+      const { data: notifyData, error: notifyError } = await supabase.functions.invoke('line-notify', {
         body: {
           to: 'Ue652c6a963399b81a811eb04fe88c123',
           formType: 'ลงทะเบียน CEO Speechfulness (VIP)',
@@ -166,10 +166,18 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
         }
       });
 
+      if (notifyError) {
+        throw new Error(`LINE Notify Error: ${notifyError.message}`);
+      }
+      
+      if (notifyData?.error) {
+        throw new Error(`LINE API Error: ${notifyData.error}`);
+      }
+
       setStep('success');
     } catch (err: any) {
       console.error('Payment submission error:', err);
-      setError('เกิดข้อผิดพลาดในการอัปโหลดหลักฐานการชำระเงิน');
+      setError(err.message || 'เกิดข้อผิดพลาดในการลงทะเบียน กรุณาลองใหม่อีกครั้ง');
     } finally {
       setLoading(false);
     }

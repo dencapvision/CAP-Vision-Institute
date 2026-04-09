@@ -14,12 +14,18 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const LINE_CHANNEL_ACCESS_TOKEN = Deno.env.get("LINE_CHANNEL_ACCESS_TOKEN");
-    const LINE_ADMIN_USER_ID = Deno.env.get("LINE_ADMIN_USER_ID"); // User ID, Group ID, or Room ID
+    const CEO_SF_LINE_TOKEN = Deno.env.get("CEO_SF_LINE_TOKEN");
+    const CEO_SF_LINE_ADMIN_ID = Deno.env.get("CEO_SF_LINE_ADMIN_ID");
     
-    if (!LINE_CHANNEL_ACCESS_TOKEN || !LINE_ADMIN_USER_ID) {
-      console.error("Missing LINE_CHANNEL_ACCESS_TOKEN or LINE_ADMIN_USER_ID");
-      return new Response(JSON.stringify({ error: "Server configuration error" }), {
+    if (!CEO_SF_LINE_TOKEN || !CEO_SF_LINE_ADMIN_ID) {
+      const missing = [];
+      if (!CEO_SF_LINE_TOKEN) missing.push("CEO_SF_LINE_TOKEN");
+      if (!CEO_SF_LINE_ADMIN_ID) missing.push("CEO_SF_LINE_ADMIN_ID");
+      
+      console.error(`Missing secrets: ${missing.join(", ")}`);
+      return new Response(JSON.stringify({ 
+        error: `Server configuration error: Missing ${missing.join(", ")}` 
+      }), {
         status: 500,
         headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
       });
@@ -46,14 +52,14 @@ Deno.serve(async (req) => {
     messageText += `──────────────────`;
 
     // Send to LINE Messaging API (Push Message)
-    const targetRecipient = to || LINE_ADMIN_USER_ID;
+    const targetRecipient = to || CEO_SF_LINE_ADMIN_ID;
     console.log(`Attempting to send LINE notification to: ${targetRecipient}`);
     console.log(`Message Content:\n${messageText}`);
 
     const lineResponse = await fetch("https://api.line.me/v2/bot/message/push", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${LINE_CHANNEL_ACCESS_TOKEN}`,
+        "Authorization": `Bearer ${CEO_SF_LINE_TOKEN}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -70,8 +76,11 @@ Deno.serve(async (req) => {
     if (!lineResponse.ok) {
       const errorText = await lineResponse.text();
       console.error(`LINE API Error (${lineResponse.status}):`, errorText);
-      return new Response(JSON.stringify({ error: "Failed to send LINE notification" }), {
-        status: 502, // Bad Gateway
+      return new Response(JSON.stringify({ 
+        error: `LINE API Error: ${errorText}`,
+        status: lineResponse.status
+      }), {
+        status: 502,
         headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
       });
     }

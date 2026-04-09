@@ -8,9 +8,10 @@ import {
 import SEO from '../components/SEO';
 import { CONTACT_INFO } from '../constants/brand';
 
-// ─── Logos ────────────────────────────────────────────────────────────────────
+// ─── Logos & Assets ───────────────────────────────────────────────────────────
 const CAP_LOGO = 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/about%20us/cap%20vision%20logo.png';
 const NEWDICE_LOGO = 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/about%20us/Logo-newdice.png';
+const COMMUNITY_HERO = 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/service/CEO%20Tier%20Community.jpg';
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -112,163 +113,169 @@ const CEOTierCommunity: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <div className="bg-[#0a0a1a] text-white min-h-screen">
+    <div className="bg-[#0a0a1a] text-white min-h-screen selection:bg-[#c5a059]/30">
       <SEO
         title="CEO Tier Community | Private Exchange Session สำหรับ CEO ระดับ 50-100 ล้าน | CAP Vision x NEWDICE"
         description="พื้นที่ปลอดภัยสำหรับ CEO คุยได้แค่กับ CEO Private Roundtable สำหรับผู้นำธุรกิจ 50-100 ล้านบาท โดย CAP Vision Institute x NEWDICE"
       />
 
       {/* ─── PARTNERSHIP BADGE ───────────────────────────────────────────────── */}
-      <div className="bg-[#0f0f20] border-b border-[#c5a059]/20 py-3">
-        <div className="max-w-5xl mx-auto px-6 flex items-center justify-center gap-4 flex-wrap">
-          <span className="text-[#c5a059]/60 text-xs font-semibold tracking-widest uppercase">Collaboration by</span>
-          <div className="flex items-center gap-4">
-            <img src={CAP_LOGO} alt="CAP Vision Institute" className="h-7 object-contain brightness-0 invert opacity-80" />
-            <span className="text-[#c5a059]/40 text-lg font-light">×</span>
-            <img src={NEWDICE_LOGO} alt="NEWDICE" className="h-7 object-contain brightness-0 invert opacity-80" />
+      <div className="bg-[#0f0f20]/90 backdrop-blur-xl border-b border-[#c5a059]/10 py-3 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-[#c5a059]/60 text-[10px] font-bold tracking-[0.2em] uppercase hidden sm:block">A Collaboration of Distinction</span>
+          </div>
+          <div className="flex items-center gap-8">
+            <img src={CAP_LOGO} alt="CAP Vision Institute" className="h-6 object-contain brightness-0 invert opacity-60 hover:opacity-100 transition-all cursor-pointer" />
+            <span className="text-[#c5a059]/30 text-xl font-light">|</span>
+            <img src={NEWDICE_LOGO} alt="NEWDICE" className="h-6 object-contain brightness-0 invert opacity-60 hover:opacity-100 transition-all cursor-pointer" />
           </div>
         </div>
       </div>
 
       {/* ─── HERO ────────────────────────────────────────────────────────────── */}
-      <section className="relative pt-28 pb-32 overflow-hidden">
-        {/* Background effects */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[#c5a059]/8 rounded-full blur-[120px]" />
-          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#0f3460]/40 rounded-full blur-[100px]" />
+      <section className="relative pt-24 pb-32 lg:pt-40 lg:pb-48 overflow-hidden">
+        {/* Advanced Background effects */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-[#c5a059]/5 rounded-full blur-[140px] opacity-40 animate-pulse" />
+          <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-[#0f3460]/20 rounded-full blur-[120px] opacity-30" />
+          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, #c5a059 1px, transparent 0)', backgroundSize: '48px 48px' }} />
         </div>
 
-        <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
-          {/* Exclusive badge */}
-          <div className="inline-flex items-center gap-2 bg-[#c5a059]/10 border border-[#c5a059]/30 px-5 py-2.5 rounded-full mb-10">
-            <Crown className="w-4 h-4 text-[#c5a059]" />
-            <span className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.3em] nav-font">
-              Private · Exclusive · CEO Only
-            </span>
-          </div>
-
-          <h1 className="text-5xl md:text-7xl font-black nav-font leading-[1.0] tracking-tight mb-6">
-            <span className="text-[#c5a059]">CEO Tier</span>
-            <br />
-            <span className="text-white">Community</span>
-          </h1>
-
-          <p className="text-2xl md:text-3xl text-white/50 font-light italic mb-6 leading-relaxed">
-            "บางเรื่อง… CEO คุยได้แค่กับ CEO"
-          </p>
-
-          <p className="text-white/70 text-lg md:text-xl leading-relaxed mb-4 max-w-2xl mx-auto">
-            Private Exchange Session สำหรับผู้นำธุรกิจระดับ 50–100 ล้านบาท
-          </p>
-          <p className="text-white/50 text-base leading-relaxed mb-12 max-w-xl mx-auto">
-            พื้นที่ปลอดภัยในการคิด ตัดสินใจ และเติบโตอย่างมีทิศทาง
-          </p>
-
-          {/* Hook bullets */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14 flex-wrap">
-            {['เงียบ ลึก ตรงไปตรงมา', 'ไม่มีลำดับขั้น ไม่มีสปอนเซอร์', 'บทสนทนาที่เปลี่ยนเกมธุรกิจ'].map((t) => (
-              <div key={t} className="flex items-center gap-2 text-white/70 text-sm">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#c5a059]" />
-                {t}
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 items-center">
+            {/* Left Content */}
+            <div className="lg:col-span-7 animate-fade-in-up">
+              <div className="inline-flex items-center gap-2 bg-[#c5a059]/10 border border-[#c5a059]/30 px-5 py-2.5 rounded-full mb-10 group cursor-default">
+                <Crown className="w-4 h-4 text-[#c5a059] group-hover:scale-125 transition-transform" />
+                <span className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.4em] nav-font">
+                  Private · Exclusive · CEO Only
+                </span>
               </div>
-            ))}
-          </div>
 
-          <a
-            href={CONTACT_INFO.lineUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 bg-[#c5a059] text-[#0a0a1a] px-10 py-5 rounded-2xl font-black text-base nav-font hover:bg-[#e0c58e] transition-all shadow-2xl shadow-[#c5a059]/20"
-          >
-            สมัครเข้าร่วมวง CEO Tier
-            <ArrowRight className="w-5 h-5" />
-          </a>
-          <p className="text-white/30 text-xs mt-4 tracking-widest uppercase">Limited Seat · คัดเฉพาะ CEO ตัวจริง</p>
+              <h1 className="text-6xl md:text-7xl lg:text-8xl font-black nav-font leading-[0.95] tracking-tight mb-8">
+                <span className="font-gold block mb-4">CEO Tier</span>
+                <span className="text-white">Community</span>
+              </h1>
+
+              <div className="relative pl-8 mb-12 border-l-4 border-[#c5a059]">
+                <p className="text-3xl md:text-4xl text-white/90 font-light italic leading-relaxed">
+                  "เมื่อคุณอยู่บนยอดเขา… <br/> บางเรื่องคุยได้แค่กับคนที่อยู่ระดับเดียวกัน"
+                </p>
+              </div>
+
+              <div className="space-y-6 mb-14 max-w-2xl">
+                <p className="text-white/80 text-xl md:text-2xl leading-relaxed">
+                  Private Exchange Session สำหรับผู้นำธุรกิจ <br className="hidden md:block"/>
+                  ที่ต้องการ <span className="text-[#c5a059] font-bold underline decoration-[#c5a059]/30 underline-offset-8">โตอย่างมีสติและยั่งยืน</span>
+                </p>
+                <p className="text-white/40 text-lg leading-relaxed italic">
+                  *สิทธิ์เข้าร่วมจำกัด ธุรกิจรายได้ 50–100 ล้านบาทต่อปี*
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+                <a
+                  href={CONTACT_INFO.lineUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-premium inline-flex items-center gap-4 bg-[#c5a059] text-[#0a0a1a] px-12 py-6 rounded-2xl font-black text-lg nav-font shadow-[0_20px_50px_-12px_rgba(197,160,89,0.3)]"
+                >
+                  สมัครเข้าร่วมวง CEO Tier
+                  <ArrowRight className="w-6 h-6" />
+                </a>
+                <div className="flex flex-col gap-1">
+                   <div className="flex -space-x-3">
+                     {[1,2,3,4].map(i => (
+                       <div key={i} className="w-12 h-12 rounded-full border-4 border-[#0a0a1a] bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-[10px] font-black text-[#c5a059]">CEO</div>
+                     ))}
+                   </div>
+                   <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest mt-2 ml-1">Strict Selection Process</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Visual */}
+            <div className="lg:col-span-5 relative group animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+              <div className="absolute -inset-10 bg-[#c5a059]/20 rounded-full blur-[100px] opacity-40 group-hover:opacity-60 transition-opacity duration-1000" />
+              <div className="relative glass-panel p-3 rounded-[3.5rem] border-white/5 shadow-2xl overflow-hidden group-hover:scale-[1.02] transition-transform duration-700">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a1a] via-transparent to-transparent z-10 opacity-60" />
+                <img 
+                  src={COMMUNITY_HERO} 
+                  alt="CEO Tier Community" 
+                  className="w-full h-full object-cover rounded-[2.8rem] aspect-[4/5] lg:aspect-[3.5/4.5] grayscale-[30%] group-hover:grayscale-0 transition-all duration-1000"
+                />
+                
+                {/* Floating Insight Card */}
+                <div className="absolute bottom-12 left-10 right-10 z-20 glass-panel !bg-[#0f0f20]/40 p-8 rounded-3xl border-[#c5a059]/30 translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
+                   <div className="w-10 h-10 rounded-xl bg-[#c5a059] mb-5 flex items-center justify-center text-[#0a0a1a]">
+                      <Sparkles className="w-6 h-6" />
+                   </div>
+                   <p className="text-white text-lg font-black leading-tight mb-2">Exclusive Insight Room</p>
+                   <p className="text-white/50 text-xs">แลกเปลี่ยนกลยุทธ์จากหน้างานจริง ที่ไม่มีเขียนในตำราเล่มไหน</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* ─── PROBLEM ─────────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-[#0d0d1f]">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <p className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.3em] nav-font mb-4">ปัญหาที่ไม่มีใครพูดถึง</p>
-          <h2 className="text-3xl md:text-4xl font-black nav-font text-white mb-4 leading-tight">
-            เมื่อคุณเป็น CEO…<br />
-            <span className="text-white/50">คุณเริ่มไม่มี "พื้นที่พูดความจริง"</span>
+      <section className="py-32 bg-gradient-to-b from-[#0d0d1f] to-[#0a0a1a] relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
+          <span className="cap-label mb-6 block">The Leadership Paradox</span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black nav-font text-white mb-20 leading-tight">
+             เมื่อจุดที่คุณยืนมีคนอยู่น้อย <br/>
+            <span className="text-white/30">ความเข้าใจจึงเป็นของมีค่า</span>
           </h2>
 
-          <div className="mt-12 space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
             {PAIN_POINTS.map((p, i) => (
-              <div key={i} className="flex items-center gap-4 bg-white/3 border border-white/8 rounded-2xl p-5 text-left">
-                {p.icon}
-                <p className="text-white/80 text-base">{p.text}</p>
+              <div key={i} className="glass-panel p-10 rounded-[2.5rem] hover:bg-white/5 transition-all group border-white/5 h-full flex flex-col items-center text-center">
+                <div className="mb-8 scale-150 transform group-hover:scale-175 transition-transform duration-500">
+                  {p.icon}
+                </div>
+                <p className="text-white/80 text-xl font-medium leading-relaxed">{p.text}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-14 bg-[#c5a059]/10 border border-[#c5a059]/25 rounded-3xl p-8">
-            <p className="text-white/50 text-sm mb-3 uppercase tracking-widest">Insight</p>
-            <p className="text-xl md:text-2xl font-bold text-white leading-relaxed">
-              คุณไม่ได้ต้องการ <span className="text-white/40">"คำแนะนำเพิ่ม"</span>
-            </p>
-            <p className="text-xl md:text-2xl font-bold text-[#c5a059] leading-relaxed mt-2">
-              แต่ต้องการ "คนที่เข้าใจระดับเดียวกัน"
-            </p>
+          <div className="mt-24 glass-panel !bg-white/[0.02] border-white/5 p-12 md:p-20 rounded-[3.5rem] relative overflow-hidden group">
+            <div className="absolute -top-1/2 -right-1/4 w-96 h-96 bg-[#c5a059]/5 rounded-full blur-[100px]" />
+            <p className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.5em] mb-8">The Core Insight</p>
+            <h3 className="text-3xl md:text-5xl font-bold text-white leading-[1.25]">
+               "คุณไม่ได้ต้องการ <span className="text-white/30">บทเรียนเพิ่ม</span><br/>
+               แต่คุณต้องการ <span className="font-gold">เพื่อนร่วมทางที่เดินอยู่ในระดับเดียวกับคุณ</span> "
+            </h3>
           </div>
         </div>
       </section>
 
       {/* ─── VALUE PROPOSITION ───────────────────────────────────────────────── */}
-      <section className="py-24 bg-[#0a0a1a]">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.3em] nav-font mb-4">What Makes Us Different</p>
-            <h2 className="text-3xl md:text-4xl font-black nav-font text-white">
-              CEO Tier ไม่ใช่ Community ทั่วไป
-            </h2>
-          </div>
+      <section className="py-40 relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col lg:flex-row gap-24 items-start">
+            <div className="lg:w-5/12 lg:sticky lg:top-40">
+              <span className="cap-label mb-6 block">Beyond Networking</span>
+              <h2 className="text-5xl lg:text-7xl font-black nav-font text-white mb-10 leading-[0.9]">
+                มากกว่าแค่รวบรวม <br/> <span className="font-gold">แต่คือการ "คัดสรร"</span>
+              </h2>
+              <p className="text-white/50 text-xl leading-relaxed mb-12">
+                CEO Tier ไม่ใช่การพบปะเพื่อเพิ่ม Connection <br className="hidden md:block"/>
+                แต่คือการพบปะเพื่อเพิ่ม Clarity ในการตัดสินใจทางธุรกิจ
+              </p>
+              <div className="gold-divider w-24 h-1" />
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {CORE_VALUES.map((v, i) => (
-              <div key={i} className="bg-white/3 border border-white/8 rounded-3xl p-8 hover:border-[#c5a059]/30 transition-all group">
-                <div className="w-14 h-14 rounded-2xl bg-[#c5a059]/10 flex items-center justify-center mb-5 text-[#c5a059] group-hover:bg-[#c5a059]/20 transition-all">
-                  {v.icon}
-                </div>
-                <h3 className="font-black text-white text-lg nav-font mb-3">{v.title}</h3>
-                <p className="text-white/60 text-sm leading-relaxed">{v.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── EXPERIENCE ──────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-[#0d0d1f]">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.3em] nav-font mb-4">Inside the Room</p>
-            <h2 className="text-3xl md:text-4xl font-black nav-font text-white">
-              สิ่งที่เกิดขึ้นในวง CEO Tier
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-14">
-            {EXPERIENCES.map((exp, i) => (
-              <div key={i} className="flex items-start gap-4 bg-white/3 border border-white/8 rounded-2xl p-6">
-                <div className="w-8 h-8 rounded-full bg-[#c5a059]/15 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <span className="text-[#c5a059] text-xs font-black">0{i + 1}</span>
-                </div>
-                <p className="text-white/80 text-base leading-relaxed">{exp}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Format badges */}
-          <div className="bg-[#c5a059]/8 border border-[#c5a059]/20 rounded-3xl p-8">
-            <p className="text-center text-[#c5a059] text-[10px] font-black uppercase tracking-[0.3em] nav-font mb-6">Session Format</p>
-            <div className="flex flex-wrap justify-center gap-4">
-              {['Private Roundtable (Small Group)', 'Facilitated Dialogue', 'No Slide / No Lecture / No Seminar'].map((f) => (
-                <div key={f} className="bg-white/5 border border-white/10 rounded-full px-5 py-2.5 text-white/70 text-sm font-medium">
-                  {f}
+            <div className="lg:w-7/12 grid grid-cols-1 md:grid-cols-2 gap-10">
+              {CORE_VALUES.map((v, i) => (
+                <div key={i} className="cap-card h-full bg-[#111122] border-white/5 p-10 group hover:bg-[#1a1a33] transition-all duration-500">
+                  <div className="w-16 h-16 rounded-2xl bg-[#c5a059]/10 flex items-center justify-center mb-10 text-[#c5a059] group-hover:scale-110 group-hover:bg-[#c5a059]/20 transition-all duration-500">
+                    {v.icon}
+                  </div>
+                  <h3 className="font-black text-2xl text-white nav-font mb-6">{v.title}</h3>
+                  <div className="gold-divider mb-6 opacity-40" />
+                  <p className="text-white/60 text-lg leading-relaxed">{v.desc}</p>
                 </div>
               ))}
             </div>
@@ -276,156 +283,126 @@ const CEOTierCommunity: React.FC = () => {
         </div>
       </section>
 
-      {/* ─── TARGET AUDIENCE ─────────────────────────────────────────────────── */}
-      <section className="py-24 bg-[#0a0a1a]">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.3em] nav-font mb-4">Qualification</p>
-            <h2 className="text-3xl md:text-4xl font-black nav-font text-white">
-              นี่ไม่ใช่สำหรับทุกคน
+      {/* ─── EXPERIENCE ──────────────────────────────────────────────────────── */}
+      <section className="py-32 bg-[#0d0d1f] relative overflow-hidden">
+        <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
+          <div className="mb-24">
+            <span className="cap-label mb-6 block">Internal Dynamics</span>
+            <h2 className="text-5xl md:text-6xl font-black nav-font text-white mb-8">
+               สิ่งที่ถูกพูดถึง <span className="font-gold">ในวงความลับ</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* For you */}
-            <div className="bg-white/3 border border-[#c5a059]/20 rounded-3xl p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-full bg-[#c5a059]/20 flex items-center justify-center">
-                  <CheckCircle2 className="w-5 h-5 text-[#c5a059]" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24 text-left">
+            {EXPERIENCES.map((exp, i) => (
+              <div key={i} className="flex items-center gap-8 glass-panel !bg-white/5 p-10 rounded-[3rem] group hover:border-[#c5a059]/40 transition-all duration-500">
+                <div className="step-number group-hover:bg-[#c5a059] group-hover:text-[#0a0a1a] transition-all duration-500 scale-125">
+                  0{i + 1}
                 </div>
-                <h3 className="font-black text-white text-lg nav-font">เหมาะสำหรับ</h3>
+                <p className="text-white/90 text-2xl font-medium tracking-tight">{exp}</p>
               </div>
-              <div className="space-y-4">
-                {QUALIFIED.map((q, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-[#c5a059] mt-0.5 flex-shrink-0" />
-                    <p className="text-white/80 text-sm leading-relaxed">{q}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
+          </div>
 
-            {/* Not for you */}
-            <div className="bg-white/2 border border-white/8 rounded-3xl p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center">
-                  <XCircle className="w-5 h-5 text-red-400" />
+          <div className="flex flex-wrap justify-center gap-6">
+            {['Private Roundtable (Small Group)', 'Facilitated Dialogue', 'No Selling / No Pitching'].map((f) => (
+              <div key={f} className="border border-white/10 rounded-full py-4 px-10 text-white/30 text-xs font-black uppercase tracking-[0.3em] hover:text-[#c5a059] hover:border-[#c5a059]/40 transition-all cursor-default grow md:grow-0">
+                {f}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── TARGET AUDIENCE ─────────────────────────────────────────────────── */}
+      <section className="py-40 bg-[#0a0a1a] relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
+             <div className="order-2 lg:order-1 relative group">
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#c5a059]/10 to-transparent rounded-[3rem] blur-3xl opacity-20" />
+                <div className="relative glass-panel border-[#c5a059]/20 p-12 md:p-16 rounded-[4rem] text-center bg-white/[0.01]">
+                   <Lock className="w-12 h-12 text-[#c5a059] mx-auto mb-10" />
+                   <h3 className="text-2xl font-black text-white nav-font mb-10">Verification Protocol</h3>
+                   <div className="space-y-6 text-left">
+                      {QUALIFIED.map((q, i) => (
+                        <div key={i} className="flex gap-4 items-center border-b border-white/5 pb-4">
+                           <CheckCircle2 className="w-5 h-5 text-[#c5a059] flex-shrink-0" />
+                           <span className="text-white text-lg font-medium">{q}</span>
+                        </div>
+                      ))}
+                   </div>
                 </div>
-                <h3 className="font-black text-white/60 text-lg nav-font">ไม่เหมาะสำหรับ</h3>
-              </div>
-              <div className="space-y-4">
-                {NOT_FOR.map((n, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-red-400/60 mt-0.5 flex-shrink-0" />
-                    <p className="text-white/50 text-sm leading-relaxed">{n}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+             </div>
+
+             <div className="order-1 lg:order-2">
+                <span className="cap-label mb-8 block">Exclusive Entry</span>
+                <h2 className="text-5xl md:text-7xl font-black nav-font text-white mb-10 leading-[0.95]">
+                   ความลับของวงรักษาได้ <br/> <span className="font-gold">ด้วยการ "กรอง" คน</span>
+                </h2>
+                <div className="gold-divider w-20 h-1.5 mb-10" />
+                <p className="text-white/50 text-xl leading-relaxed">
+                   เราไม่ได้เลือกแค่ใครก็ได้ที่มีเงินถึง แต่เราเลือกคนที่มี Mindset ในการแลกเปลี่ยน เพื่อรักษาคุณภาพของบทสนทนาให้บริสุทธิ์ที่สุด
+                </p>
+             </div>
           </div>
         </div>
       </section>
 
       {/* ─── PROCESS ─────────────────────────────────────────────────────────── */}
       <section className="py-24 bg-[#0d0d1f]">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.3em] nav-font mb-4">How to Join</p>
-            <h2 className="text-3xl md:text-4xl font-black nav-font text-white">
-              กระบวนการเข้าร่วม CEO Tier
-            </h2>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-24">
+            <span className="cap-label mb-6 block">The Membership Arc</span>
+            <h2 className="text-5xl md:text-6xl font-black nav-font text-white mb-4">Journey to Join</h2>
+            <div className="gold-divider-center" />
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 relative h-full">
+            {/* Desktop Link Line */}
+            <div className="hidden lg:block absolute top-[2.5rem] left-[15%] right-[15%] h-px bg-gradient-to-r from-transparent via-[#c5a059]/30 to-transparent z-0" />
+            
             {STEPS.map((s, i) => (
-              <div key={i} className="relative text-center">
-                {i < STEPS.length - 1 && (
-                  <div className="hidden md:block absolute top-10 left-[60%] w-[80%] h-px bg-gradient-to-r from-[#c5a059]/30 to-transparent" />
-                )}
-                <div className="w-20 h-20 rounded-full bg-[#c5a059]/10 border border-[#c5a059]/30 flex items-center justify-center mx-auto mb-4 text-[#c5a059]">
+              <div key={i} className="relative z-10 text-center h-full flex flex-col items-center">
+                <div className="w-24 h-24 rounded-[2rem] bg-[#111122] border border-white/5 flex items-center justify-center mb-8 text-[#c5a059] shadow-2xl transition-all hover:-translate-y-3 hover:border-[#c5a059]/40 duration-500">
                   {s.icon}
                 </div>
-                <p className="text-[#c5a059] text-[10px] font-black tracking-widest mb-1">{s.no}</p>
-                <h3 className="font-black text-white nav-font text-base mb-1">{s.title}</h3>
-                <p className="text-white/50 text-xs leading-relaxed">{s.desc}</p>
+                <span className="text-[#c5a059] text-xs font-black tracking-[0.5em] mb-4">0{s.no}</span>
+                <h3 className="text-2xl font-black text-white nav-font mb-4">{s.title}</h3>
+                <p className="text-white/40 text-base leading-relaxed max-w-[200px]">{s.desc}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── OUTCOMES ────────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-[#0a0a1a]">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.3em] nav-font mb-4">What You'll Get</p>
-            <h2 className="text-3xl md:text-4xl font-black nav-font text-white">
-              สิ่งที่คุณจะได้ <span className="text-white/40">(Beyond Networking)</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-            {OUTCOMES.map((o, i) => (
-              <div key={i} className="bg-white/3 border border-white/8 rounded-2xl p-6 text-center hover:border-[#c5a059]/30 transition-all">
-                <div className="w-12 h-12 rounded-xl bg-[#c5a059]/15 flex items-center justify-center mx-auto mb-4 text-[#c5a059]">
-                  {o.icon}
-                </div>
-                <h3 className="font-black text-white text-sm nav-font mb-1">{o.title}</h3>
-                <p className="text-white/50 text-xs">{o.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── SOCIAL PROOF ────────────────────────────────────────────────────── */}
-      <section className="py-20 bg-[#0d0d1f] border-y border-white/5">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.3em] nav-font mb-3">Trusted by Leaders from</p>
-          <h2 className="text-2xl md:text-3xl font-black nav-font text-white mb-10">
-            Leading Organizations
-          </h2>
-          <div className="flex flex-wrap justify-center gap-4">
-            {CLIENTS.map((c) => (
-              <div key={c} className="bg-white/4 border border-white/10 rounded-full px-6 py-3 text-white/60 text-sm font-semibold hover:border-[#c5a059]/30 hover:text-white/80 transition-all">
-                {c}
-              </div>
-            ))}
-          </div>
-
-          {/* Partner logos again */}
-          <div className="mt-14 flex items-center justify-center gap-8">
-            <img src={CAP_LOGO} alt="CAP Vision Institute" className="h-10 object-contain brightness-0 invert opacity-60 hover:opacity-90 transition-all" />
-            <span className="text-[#c5a059]/30 text-xl">×</span>
-            <img src={NEWDICE_LOGO} alt="NEWDICE" className="h-10 object-contain brightness-0 invert opacity-60 hover:opacity-90 transition-all" />
           </div>
         </div>
       </section>
 
       {/* ─── FAQ ─────────────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-[#0a0a1a]">
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <p className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.3em] nav-font mb-4">FAQ</p>
-            <h2 className="text-3xl md:text-4xl font-black nav-font text-white">คำถามที่พบบ่อย</h2>
+      <section className="py-40 bg-[#0a0a1a]">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="text-center mb-24">
+             <span className="cap-label mb-6 block text-center">Frequently Asked Questions</span>
+             <h2 className="text-5xl font-black nav-font text-white leading-tight">สิ่งที่คุณอาจยังสงสัย</h2>
+             <div className="gold-divider-center mt-6 w-16" />
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-6">
             {FAQS.map((f, i) => (
               <div
                 key={i}
-                className={`bg-white/3 border rounded-2xl overflow-hidden transition-all ${openFaq === i ? 'border-[#c5a059]/40' : 'border-white/8'}`}
+                className={`group border rounded-[2rem] overflow-hidden transition-all duration-700 ${openFaq === i ? 'bg-white/[0.03] border-[#c5a059]/60 shadow-[0_0_50px_rgba(197,160,89,0.05)]' : 'bg-transparent border-white/5 hover:border-white/20'}`}
               >
                 <button
-                  className="w-full flex items-center justify-between p-6 text-left gap-4"
+                  className="w-full flex items-center justify-between p-10 text-left gap-6"
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                 >
-                  <span className="text-white font-semibold text-base leading-snug">{f.q}</span>
-                  <ChevronDown className={`w-5 h-5 text-[#c5a059] flex-shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
+                  <span className={`text-xl md:text-2xl font-bold tracking-tight transition-colors ${openFaq === i ? 'text-white' : 'text-white/60'}`}>{f.q}</span>
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 scale-110 ${openFaq === i ? 'bg-[#c5a059] text-[#0a0a1a]' : 'bg-white/5'}`}>
+                    <ChevronDown className={`w-6 h-6 transition-transform duration-700 ${openFaq === i ? 'rotate-180' : ''}`} />
+                  </div>
                 </button>
                 {openFaq === i && (
-                  <div className="px-6 pb-6">
-                    <p className="text-white/60 text-sm leading-relaxed border-t border-white/5 pt-4">{f.a}</p>
+                  <div className="px-10 pb-12 animate-fade-in-up">
+                    <div className="h-px w-full bg-white/5 mb-8" />
+                    <p className="text-white/50 text-xl leading-relaxed font-light">{f.a}</p>
                   </div>
                 )}
               </div>
@@ -435,50 +412,63 @@ const CEOTierCommunity: React.FC = () => {
       </section>
 
       {/* ─── FINAL CTA ───────────────────────────────────────────────────────── */}
-      <section className="py-28 bg-[#0d0d1f] relative overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0d0d1f] via-[#0a0a1a] to-[#0d0d1f]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#c5a059]/6 rounded-full blur-[100px]" />
+      <section className="py-48 bg-[#0d0d1f] relative overflow-hidden">
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute bottom-0 right-0 w-[1200px] h-[1200px] bg-[#c5a059]/5 rounded-full blur-[150px] opacity-20" />
+           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#0f3460]/10 rounded-full blur-[120px] opacity-30" />
         </div>
 
-        <div className="max-w-2xl mx-auto px-6 text-center relative z-10">
-          <Crown className="w-10 h-10 text-[#c5a059] mx-auto mb-8 opacity-60" />
-
-          <h2 className="text-3xl md:text-5xl font-black nav-font text-white leading-tight mb-6">
-            ถ้าคุณคือ CEO<br />
-            <span className="text-white/40">ที่กำลัง "แบกการตัดสินใจคนเดียว"</span>
-          </h2>
-
-          <div className="bg-[#c5a059]/8 border border-[#c5a059]/20 rounded-3xl p-8 mb-10">
-            <p className="text-white/60 text-lg leading-relaxed mb-2">
-              บางที…คุณไม่ต้องเก่งขึ้น
-            </p>
-            <p className="text-[#c5a059] text-xl font-bold leading-relaxed">
-              แต่ต้อง "คุยกับคนที่เข้าใจคุณมากขึ้น"
-            </p>
+        <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
+          <div className="w-24 h-24 rounded-[2rem] bg-gradient-to-br from-[#c5a059] to-[#e0c58e] p-[1px] mx-auto mb-16 animate-bounce" style={{ animationDuration: '3s' }}>
+             <div className="w-full h-full bg-[#0d0d1f] rounded-[calc(2rem-1px)] flex items-center justify-center text-[#c5a059]">
+                 <Crown className="w-10 h-10" />
+             </div>
           </div>
 
-          <a
-            href={CONTACT_INFO.lineUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 bg-[#c5a059] text-[#0a0a1a] px-12 py-5 rounded-2xl font-black text-lg nav-font hover:bg-[#e0c58e] transition-all shadow-2xl shadow-[#c5a059]/25 mb-4"
-          >
-            สมัคร CEO Tier Community
-            <ArrowRight className="w-5 h-5" />
-          </a>
+          <h2 className="text-5xl md:text-7xl lg:text-8xl font-black nav-font text-white leading-[0.9] mb-16 tracking-tighter">
+             ถ้าคุณคือ CEO <br/> <span className="text-white/20">ตัวจริงที่เราตามหา</span>
+          </h2>
 
-          <p className="text-white/30 text-xs tracking-widest uppercase">
-            จำนวนจำกัด · คัดเฉพาะ CEO ตัวจริง
-          </p>
+          <div className="max-w-3xl mx-auto glass-panel border-white/5 p-16 md:p-24 rounded-[4rem] mb-20 group hover:bg-white/[0.04] transition-all cursor-default">
+            <p className="text-white/60 text-2xl md:text-3xl font-light leading-relaxed italic mb-10">
+               "แลกเปลี่ยนกลยุทธ์ ถอดบทเรียนหัวใจผู้นำ <br className="hidden md:block"/>
+               เพื่อก้าวข้ามทุกความท้าทาย...ไปด้วยกัน"
+            </p>
+            <div className="gold-divider-center w-20 mb-10 h-1.5" />
+            <p className="font-gold text-3xl font-black uppercase tracking-[0.2em]">BECOME THE CEO TIER</p>
+          </div>
 
-          <div className="mt-12 flex items-center justify-center gap-6 opacity-50">
-            <img src={CAP_LOGO} alt="CAP Vision" className="h-7 object-contain brightness-0 invert" />
-            <span className="text-[#c5a059]/50 text-lg">×</span>
-            <img src={NEWDICE_LOGO} alt="NEWDICE" className="h-7 object-contain brightness-0 invert" />
+          <div className="space-y-10">
+            <a
+              href={CONTACT_INFO.lineUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-premium inline-flex items-center gap-6 bg-[#c5a059] text-[#0a0a1a] px-20 py-8 rounded-[2.5rem] font-black text-2xl nav-font shadow-[0_30px_60px_-15px_rgba(197,160,89,0.4)] hover:-translate-y-2 group"
+            >
+              คุยกับเราเพื่อขอเข้ากลุ่ม
+              <ArrowRight className="w-8 h-8 group-hover:translate-x-3 transition-transform duration-500" />
+            </a>
+            
+            <p className="text-white/30 text-xs font-black uppercase tracking-[0.6em] animate-pulse">
+                Selection Strictly Focused on High-Impact Leaders
+            </p>
+
+            <div className="flex items-center justify-center gap-10 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-1000">
+               <img src={CAP_LOGO} alt="CAP Vision" className="h-8" />
+               <div className="w-1.5 h-1.5 rounded-full bg-[#c5a059]" />
+               <img src={NEWDICE_LOGO} alt="NEWDICE" className="h-8" />
+            </div>
           </div>
         </div>
       </section>
+      
+      {/* Absolute Minimal Footer */}
+      <footer className="py-12 bg-[#070715] border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center text-center">
+            <p className="text-white/10 text-[10px] uppercase font-black tracking-[0.5em] mb-2">Designed for the Executive Mindset</p>
+            <p className="text-white/20 text-[9px] uppercase font-black tracking-[0.2em]">© 2024 CAP Vision Institute x NEWDICE · Standard of Excellence</p>
+        </div>
+      </footer>
     </div>
   );
 };

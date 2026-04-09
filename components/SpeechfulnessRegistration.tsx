@@ -174,13 +174,15 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
       // 3. Send LINE Notification
       await supabase.functions.invoke('line-notify', {
         body: {
-          type: 'new_registration',
-          program: 'CEO Speechfulness',
-          package: selectedPackage.name,
-          customer: formData.fullName,
-          amount: totalAmount,
-          hasVat: formData.isVat,
-          slipUrl: slipUrl
+          formType: 'ลงทะเบียน CEO Speechfulness ใหม่',
+          data: {
+            'โปรแกรม': 'CEO Speechfulness',
+            'แพคเกจ': selectedPackage.name,
+            'ลูกค้า': formData.fullName,
+            'ยอดชำระ': `฿${totalAmount.toLocaleString()}`,
+            'ออกใบกำกับภาษี': formData.isVat ? 'ใช่' : 'ไม่',
+            'สลิปโอนเงิน': slipUrl
+          }
         }
       });
 

@@ -73,10 +73,12 @@ export default function SpeechfulnessAdmin() {
       // Notify via Edge Function (optional but recommended)
       await supabase.functions.invoke('line-notify', {
         body: {
-          type: 'status_update',
-          bookingId,
-          status,
-          program: 'CEO Speechfulness'
+          formType: 'อัปเดตสถานะการจอง (CEO)',
+          data: {
+            'รหัสการจอง': bookingId,
+            'สถานะใหม่': status,
+            'โปรแกรม': 'CEO Speechfulness'
+          }
         }
       })
 

@@ -118,6 +118,7 @@ serve(async (req) => {
           },
           body: JSON.stringify({
             formType: "New Payment (Stripe)",
+            project: "CEO_TIER",
             data: {
               "User ID": userId,
               "Booking ID": bookingId,

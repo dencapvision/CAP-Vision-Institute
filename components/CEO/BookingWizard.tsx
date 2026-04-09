@@ -47,7 +47,9 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
     challenge: '',
     expectation: '',
     consent: false,
-    selected_plan: 'session' as 'session' | 'membership'
+    selected_plan: 'session' as 'session' | 'membership',
+    transfer_date: '',
+    transfer_time: ''
   });
 
   // Handle Input Changes
@@ -73,12 +75,18 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
     else if (step === 'payment') setStep('selection');
   };
 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
+
   // Submit Logic
   const handleSubmitBooking = async () => {
     setLoading(true);
     setError(null);
     try {
-      // 1. Create or Check User (Assume user is logged in for simplicity, or we check auth)
+      // 1. Create or Check User
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         throw new Error('กรุณาเข้าสู่ระบบก่อนดำเนินการจอง');
@@ -104,26 +112,56 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
 
       // 3. Handle Payment Redirect or UI
       if (paymentMethod === 'stripe') {
-        const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-handler/create-checkout`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
-          },
-          body: JSON.stringify({
-            priceId: formData.selected_plan === 'session' ? 'price_session_id' : 'price_membership_id', // Needs valid price IDs
-            userEmail: user.email,
-            userId: user.id,
-            bookingId: booking.id,
-            metadata: {
-              isSubscription: formData.selected_plan === 'membership'
-            }
-          })
-        });
+        const stripeUrl = formData.selected_plan === 'session' 
+          ? 'https://buy.stripe.com/6oUaEQbTWdPj5KAemk5EY03' 
+          : 'https://buy.stripe.com/4gMaEQ1ficLf4Gw3HG5EY04';
+        
+        const checkoutUrl = new URL(stripeUrl);
+        checkoutUrl.searchParams.append('client_reference_id', booking.id);
+        checkoutUrl.searchParams.append('prefilled_email', user.email || '');
+        
+        window.location.href = checkoutUrl.toString();
+      } else if (paymentMethod === 'transfer') {
+        if (!file) throw new Error('กรุณาอัปโหลดสลิปเพื่อยืนยันการชำระเงิน');
 
-        const { url } = await response.json();
-        if (url) window.location.href = url;
-      } else {
+        // Handle File Upload
+        const filePath = `${user.id}/${Date.now()}_${file.name}`;
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('payment-slips')
+          .upload(filePath, file);
+
+        if (uploadError) throw uploadError;
+
+        // Record Payment with all details
+        await ceoService.recordPayment(
+          booking.id,
+          formData.selected_plan === 'session' ? PRICING.session : PRICING.membership,
+          'transfer',
+          'pending',
+          uploadData.path,
+          formData.transfer_date,
+          formData.transfer_time
+        );
+
+        // Notify Admin via LINE
+        try {
+          await supabase.functions.invoke('line-notify', {
+            body: { 
+              formType: 'CEO Tier Community (Manual Transfer)', 
+              project: 'CEO_TIER',
+              data: {
+                'Customer': formData.full_name,
+                'Package': formData.selected_plan === 'session' ? 'CEO Tier Session' : 'Monthly Membership',
+                'Booking Code': booking.booking_code,
+                'Transfer Date': formData.transfer_date,
+                'Transfer Time': formData.transfer_time
+              }
+            }
+          });
+        } catch (notifyErr) {
+          console.error('LINE notification failed:', notifyErr);
+        }
+
         setStep('completion');
       }
 
@@ -131,42 +169,6 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
       setError(err.message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const selectedFile = e.target.files[0];
-      setFile(selectedFile);
-      
-      // Upload to Supabase Storage
-      setLoading(true);
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) throw new Error('Auth required');
-
-        const filePath = `${user.id}/${Date.now()}_${selectedFile.name}`;
-        const { data, error } = await supabase.storage
-          .from('payment-slips')
-          .upload(filePath, selectedFile);
-
-        if (error) throw error;
-
-        // Update payment record
-        await ceoService.recordPayment(
-          bookingData.id,
-          formData.selected_plan === 'session' ? PRICING.session : PRICING.membership,
-          'transfer',
-          'pending',
-          data.path
-        );
-
-        setStep('completion');
-      } catch (err: any) {
-        setError('ไม่สามารถอัปโหลดสลิปได้: ' + err.message);
-      } finally {
-        setLoading(false);
-      }
     }
   };
 
@@ -488,11 +490,34 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
                     </div>
                     <div className="flex justify-between items-center text-sm">
                       <div className="font-bold text-gray-500">เลขบัญชี</div>
-                      <div className="font-black text-[#0f3460] text-lg">093-x-xxxxx-x</div>
+                      <div className="font-black text-[#0f3460] text-lg">0983668941</div>
                     </div>
                     <div className="flex justify-between items-center text-sm">
                       <div className="font-bold text-gray-500">ชื่อบัญชี</div>
-                      <div className="font-black text-[#0f3460]">บจก. แคป วิชั่น อินสทิทิวท์</div>
+                      <div className="font-black text-[#0f3460]">บจก.นิวไดซ์</div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3 pt-2">
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-black text-gray-400 uppercase">วันที่โอน (ตามสลิป)</label>
+                        <input 
+                          type="date" 
+                          name="transfer_date"
+                          value={formData.transfer_date}
+                          onChange={handleChange}
+                          className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-sm font-bold focus:border-[#c5a059] outline-none"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-black text-gray-400 uppercase">เวลาที่โอน (ตามสลิป)</label>
+                        <input 
+                          type="time" 
+                          name="transfer_time"
+                          value={formData.transfer_time}
+                          onChange={handleChange}
+                          className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-sm font-bold focus:border-[#c5a059] outline-none"
+                        />
+                      </div>
                     </div>
 
                     <div className="pt-4 border-t border-gray-100">
@@ -514,11 +539,11 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
                 <div className="flex gap-4 pt-4">
                   <button onClick={prevStep} className="px-8 py-5 border-2 border-gray-100 rounded-2xl font-black text-[#0f3460] hover:bg-gray-50 transition-all flex items-center gap-2"><ChevronLeft /> Back</button>
                   <button 
-                    disabled={!paymentMethod || loading}
+                    disabled={!paymentMethod || loading || (paymentMethod === 'transfer' && (!formData.transfer_date || !formData.transfer_time || !file))}
                     onClick={handleSubmitBooking}
                     className="flex-1 bg-[#0f3460] text-white py-5 rounded-2xl font-black text-lg hover:bg-[#0a2545] transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10 disabled:opacity-50"
                   >
-                    {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : paymentMethod === 'stripe' ? 'Pay with Stripe' : 'Confirm Order'}
+                    {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : paymentMethod === 'stripe' ? 'Pay with Stripe' : 'Confirm & Upload Slip'}
                   </button>
                 </div>
               </motion.div>
@@ -529,32 +554,82 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
                 key="completion"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="text-center space-y-8 py-8"
+                className="text-center space-y-6 py-4"
               >
-                <div className="w-24 h-24 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Check className="w-12 h-12 text-green-500" />
+                <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <Check className="w-10 h-10 text-green-500" />
                 </div>
-                <div>
-                  <h2 className="text-4xl font-black text-[#0f3460] mb-4 nav-font leading-tight">ดำเนินการจองสำเร็จ!</h2>
-                  <p className="text-gray-500 font-bold mb-2">Booking ID: <span className="text-[#c5a059]">{bookingData?.booking_code || 'CEO-2026xxxx'}</span></p>
-                  <p className="text-gray-500 text-lg leading-relaxed font-bold max-w-sm mx-auto">ทางทีมงานได้รับข้อมูลแล้ว จะทำการตรวจสอบและส่งการยืนยันผ่านทาง LINE ของคุณภายใน 24 ชม.</p>
-                </div>
-
-                <div className="p-6 bg-[#f8fafc] rounded-3xl border border-gray-100 text-left space-y-4 max-w-xs mx-auto">
-                   <div className="flex items-center gap-3 text-[#0f3460] font-bold">
-                     <ShieldCheck className="w-5 h-5" /> ยืนยันสิทธิ์เรียบร้อย
-                   </div>
-                   <div className="flex items-center gap-3 text-gray-400 font-bold">
-                     <Lock className="w-5 h-5 text-gray-200" /> รับลิงก์เข้า Dashboard (รอตรวจสอบ)
-                   </div>
+                
+                <div className="space-y-2">
+                  <h2 className="text-3xl font-black text-[#0f3460] nav-font leading-tight">ดำเนินการจองสำเร็จ!</h2>
+                  <p className="text-gray-500 font-bold">ขอบคุณที่ร่วมเป็นส่วนหนึ่งของ CEO Tier Community</p>
+                  <div className="bg-[#f8fafc] px-8 py-4 rounded-2xl inline-block border border-gray-100 mt-2">
+                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">รหัสการสมัครของคุณ (Copy ไปแจ้งใน LINE)</p>
+                    <p className="text-3xl font-black text-[#c5a059] tracking-tighter">{bookingData?.booking_code || 'CEO-WAIT'}</p>
+                  </div>
                 </div>
 
-                <div className="pt-8">
+                <div className="bg-white rounded-[2.5rem] p-8 border border-gray-100 shadow-2xl shadow-blue-900/10 text-left space-y-6 max-w-md mx-auto relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#c5a059]/5 rounded-full -mr-16 -mt-16" />
+                  
+                  <h3 className="text-xl font-black text-[#0f3460] nav-font flex items-center gap-3 relative z-10">
+                    <div className="w-8 h-8 rounded-full bg-[#c5a059] text-white flex items-center justify-center text-sm shadow-lg shadow-[#c5a059]/30">3</div>
+                    ขั้นตอนง่ายๆ เพื่อเริ่มใช้งาน
+                  </h3>
+                  
+                  <div className="space-y-6 relative z-10">
+                    <div className="flex gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-[#0f3460]/5 text-[#0f3460] flex items-center justify-center flex-shrink-0 font-bold border border-[#0f3460]/10">1</div>
+                      <div>
+                        <p className="font-black text-[#0f3460] nav-font">แอดไลน์ทีมงาน (LINE OA)</p>
+                        <p className="text-gray-500 text-xs font-medium">สแกน QR code หรือ กดปุ่มเพิ่มเพื่อนด้านล่าง</p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-[#0f3460]/5 text-[#0f3460] flex items-center justify-center flex-shrink-0 font-bold border border-[#0f3460]/10">2</div>
+                      <div>
+                        <p className="font-black text-[#0f3460] nav-font">ส่ง "รหัสการสมัคร" เข้าแชท</p>
+                        <p className="text-gray-500 text-xs font-medium">คลิก Copy รหัสด้านบนแล้วส่งเข้า LINE ได้ทันที</p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-[#0f3460]/5 text-[#0f3460] flex items-center justify-center flex-shrink-0 font-bold border border-[#0f3460]/10">3</div>
+                      <div>
+                        <p className="font-black text-[#0f3460] nav-font">รอรับการประสานงานเบื้องต้น</p>
+                        <p className="text-gray-500 text-xs font-medium">เจ้าหน้าที่จะตอบกลับท่านในทันทีที่เห็นข้อความ</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-4 flex flex-col items-center gap-6 relative z-10">
+                    <div className="relative group">
+                      <div className="absolute -inset-2 bg-gradient-to-tr from-[#c5a059] to-[#0f3460] rounded-3xl blur opacity-20 group-hover:opacity-40 transition-all" />
+                      <img 
+                        src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/contact/Line%20OA%20@denmasterfa.jpg" 
+                        alt="Line OA QR Code"
+                        className="w-40 h-40 rounded-2xl shadow-xl border-4 border-white relative z-10"
+                      />
+                    </div>
+                    <a 
+                      href="https://lin.ee/nJIDttt"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full bg-[#06c755] text-white py-4 rounded-2xl font-black text-center flex items-center justify-center gap-3 hover:scale-[1.02] transition-all shadow-xl shadow-green-500/20 active:scale-95"
+                    >
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINE" className="w-6 h-6" />
+                      เพิ่มเพื่อน LINE OA
+                    </a>
+                  </div>
+                </div>
+
+                <div className="pt-6">
                   <button 
                     onClick={onClose}
-                    className="w-full bg-[#0f3460] text-white py-6 rounded-2xl font-black text-xl hover:bg-[#0a2545] transition-all"
+                    className="text-[#0f3460] font-black hover:text-[#c5a059] transition-all nav-font flex items-center gap-2 mx-auto group"
                   >
-                    กลับสู่หน้าหลัก
+                    กลับสู่หน้าหลัก <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>
               </motion.div>

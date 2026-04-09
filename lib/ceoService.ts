@@ -56,7 +56,15 @@ export const ceoService = {
   /**
    * Records a payment entry
    */
-  recordPayment: async (bookingId: string, amount: number, method: 'stripe' | 'transfer', status = 'pending', slipUrl?: string) => {
+  recordPayment: async (
+    bookingId: string, 
+    amount: number, 
+    method: 'stripe' | 'transfer', 
+    status = 'pending', 
+    slipUrl?: string,
+    transferDate?: string,
+    transferTime?: string
+  ) => {
     const { data: payment, error } = await supabase
       .from('ceo_payments')
       .insert({
@@ -64,7 +72,9 @@ export const ceoService = {
         amount,
         method,
         status,
-        slip_url: slipUrl
+        slip_url: slipUrl,
+        transfer_date: transferDate,
+        transfer_time: transferTime
       })
       .select()
       .single();

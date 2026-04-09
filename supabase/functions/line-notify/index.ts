@@ -7,20 +7,31 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-Deno.serve(async (req) => {
+ Deno.serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: CORS_HEADERS });
   }
 
   try {
-    const CEO_SF_LINE_TOKEN = Deno.env.get("CEO_SF_LINE_TOKEN");
-    const CEO_SF_LINE_ADMIN_ID = Deno.env.get("CEO_SF_LINE_ADMIN_ID");
+    const { formType, data, to, project } = await req.json();
+
+    // Default to SF (Speechfulness) or Main project
+    let LINE_TOKEN = Deno.env.get("CEO_SF_LINE_TOKEN");
+    let LINE_ADMIN_ID = Deno.env.get("CEO_SF_LINE_ADMIN_ID");
+
+    // Override if project-specific variables exist
+    if (project === 'CEO_TIER') {
+      const tierToken = Deno.env.get("CEO_TIER_LINE_TOKEN");
+      const tierAdminId = Deno.env.get("CEO_TIER_LINE_ADMIN_ID");
+      if (tierToken) LINE_TOKEN = tierToken;
+      if (tierAdminId) LINE_ADMIN_ID = tierAdminId;
+    }
     
-    if (!CEO_SF_LINE_TOKEN || !CEO_SF_LINE_ADMIN_ID) {
+    if (!LINE_TOKEN || !LINE_ADMIN_ID) {
       const missing = [];
-      if (!CEO_SF_LINE_TOKEN) missing.push("CEO_SF_LINE_TOKEN");
-      if (!CEO_SF_LINE_ADMIN_ID) missing.push("CEO_SF_LINE_ADMIN_ID");
+      if (!LINE_TOKEN) missing.push("LINE_TOKEN (CEO_TIER or CEO_SF)");
+      if (!LINE_ADMIN_ID) missing.push("LINE_ADMIN_ID (CEO_TIER or CEO_SF)");
       
       console.error(`Missing secrets: ${missing.join(", ")}`);
       return new Response(JSON.stringify({ 
@@ -31,7 +42,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { formType, data, to } = await req.json();
+    const { formType, data, to, project } = await req.json();
 
     if (!formType || !data) {
       return new Response(JSON.stringify({ error: "Invalid request body" }), {
@@ -52,14 +63,14 @@ Deno.serve(async (req) => {
     messageText += `──────────────────`;
 
     // Send to LINE Messaging API (Push Message)
-    const targetRecipient = to || CEO_SF_LINE_ADMIN_ID;
+    const targetRecipient = to || LINE_ADMIN_ID;
     console.log(`Attempting to send LINE notification to: ${targetRecipient}`);
     console.log(`Message Content:\n${messageText}`);
 
     const lineResponse = await fetch("https://api.line.me/v2/bot/message/push", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${CEO_SF_LINE_TOKEN}`,
+        "Authorization": `Bearer ${LINE_TOKEN}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

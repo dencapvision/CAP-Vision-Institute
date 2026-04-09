@@ -179,6 +179,306 @@ const GenericDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> 
   );
 };
 
+/* ─── Knight Kraiput Premium Detail Page ─────────────────────── */
+const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = ({ speaker, taughtCourses }) => {
+  const K_DATA = {
+    positions: [
+      'ผู้ช่วยประธานสภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย',
+      'คณะทำงานรัฐมนตรีกระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม (ต.ค. 2022 - ปัจจุบัน)',
+      'CEO, Guardian Global Security Guard Co.,Ltd.',
+      'CEO, NewDice Co.,Ltd.',
+      'นายกสมาคมศิษย์เก่าโรงเรียนสาธิตมหาวิทยาลัยศิลปากร (2566 - 2568)',
+      'คณะกรรมการบริหารหอการค้าจังหวัดนครปฐม (2566 - 2568)'
+    ],
+    education: [
+      'กำลังศึกษา ปริญญาโท การจัดการมหาบัณฑิต วิทยาลัยนวัตกรรมฯ มหาวิทยาลัยมหิดล (CMMU)',
+      'ปริญญาตรี วิศวกรรมศาสตรบัณฑิต มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี (KMUTT)'
+    ],
+    experience: [
+      'อนุกรรมการ ขับเคลื่อนเศรษฐกิจดิจิทัลฯ (SME/Digital Nomad) สภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย',
+      'เลขานุการ คณะกรรมการยุทธศาสตร์ สภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย',
+      'เลขาธิการ สมาคมศิษย์เก่าโรงเรียนสาธิตมหาวิทยาลัยศิลปากร',
+      'กรรมการ สถาบันวิสาหกิจขนาดกลางและขนาดย่อมอุตสาหกรรมการผลิต (SMI) สภาอุตสาหกรรมแห่งประเทศไทย (2563-2565)'
+    ],
+    otherWork: [
+      'กรรมการบริษัท ประชารัฐรักสามัคคีนครปฐม (วิสาหกิจเพื่อสังคม) จำกัด',
+      'ที่ปรึกษาประธานคณะกรรมาธิการการสื่อสาร โทรคมนาคม และดิจิทัลเพื่อเศรษฐกิจและสังคม',
+      'เลขานุการ คณะอนุกรรมาธิการส่งเสริมวิสาหกิจเริ่มต้น (Start-up) และดึงดูดบุคลากรทักษะสูงจากต่างประเทศ (Global Talent)',
+      'คณะทำงาน รัฐมนตรีว่าการกระทรวงประมง (อินโดนีเซีย)'
+    ],
+    training: [
+      'หลักสูตร ผู้บริหารด้านความมั่นคงปลอดภัยไซเบอร์ (CISO) รุ่นที่ 2 (สกมช.)',
+      'หลักสูตร CEO-Smart (รุ่นที่ 1) หอการค้าไทย และมหาวิทยาลัยหอการค้าไทย',
+      'หลักสูตร การบริหารจัดการด้านความมั่นคงขั้นสูง (สวพช. มอก. รุ่นที่ 11)',
+      'หลักสูตร ผู้นำยุคใหม่เพื่อการเปลี่ยนแปลง (Leadership for Change รุ่นที่ 10) มูนิธิสัมมาชีพ'
+    ],
+    gallery: [
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8673.JPG',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8667.JPG',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8666.JPG',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8659.JPG',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8685.JPG',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8687.JPG',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8646.JPG',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8641.JPG',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8604.JPG',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%A3%20Kraiput%20Intarayotha%20(Knight).jpg',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8700%20(1).JPG',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8690.JPG',
+      'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Speaker/Knight%20Gallery/IMG_8693.JPG'
+    ]
+  };
+
+  return (
+    <div className="bg-[#050a14] min-h-screen text-white overflow-x-hidden font-sans">
+      <SEO 
+        title={`${speaker.name} | วิทยากรผู้เชี่ยวชาญด้านความปลอดภัยและเทคโนโลยีสื่อสาร`}
+        description="ผู้ช่วยประธานสภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย และ CEO Guardian Global Security ผู้เชี่ยวชาญด้านความปลอดภัย ไซเบอร์ และยุทธศาสตร์ดิจิทัลเพื่อเศรษฐกิจและสังคม"
+      />
+
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-24 overflow-hidden">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] -mr-48 -mt-48"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#c5a059]/10 rounded-full blur-[100px] -ml-40 -mb-40"></div>
+        
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <Link to="/speakers" className="inline-flex items-center gap-2 text-white/50 hover:text-[#c5a059] transition-colors font-bold mb-12 text-sm uppercase tracking-widest">
+            <ArrowLeft className="w-4 h-4" /> ย้อนกลับ
+          </Link>
+
+          <div className="flex flex-col lg:flex-row gap-16 items-start">
+            <div className="lg:w-2/5 relative">
+              <div className="relative group">
+                <div className="absolute -inset-4 bg-gradient-to-tr from-[#c5a059] to-blue-600 rounded-[3rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                <div className="relative bg-gray-900 rounded-[2.5rem] overflow-hidden border border-white/10">
+                  <img src={speaker.image} alt={speaker.name} className="w-full h-auto object-cover" />
+                </div>
+                {/* Contact Badge */}
+                <div className="absolute -bottom-6 -right-6 bg-[#0f3460] border-4 border-[#050a14] p-6 rounded-[2rem] shadow-2xl flex flex-col items-center min-w-[160px]">
+                  <p className="text-[#c5a059] font-black text-xs uppercase tracking-widest mb-2">Connect</p>
+                  <div className="flex gap-4">
+                    <a href={`tel:${CONTACT_INFO.phone}`} className="p-2 bg-white/5 rounded-full hover:bg-[#c5a059] transition-colors">
+                      <Phone className="w-4 h-4" />
+                    </a>
+                    <a href={CONTACT_INFO.lineUrl} className="p-2 bg-white/5 rounded-full hover:bg-[#c5a059] transition-colors">
+                      <MessageCircle className="w-4 h-4" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:w-3/5 pt-4">
+              <div className="inline-flex items-center gap-2 bg-[#c5a059]/10 border border-[#c5a059]/30 px-4 py-2 rounded-full mb-6">
+                <Shield className="w-4 h-4 text-[#c5a059]" />
+                <span className="text-[#c5a059] font-black text-xs uppercase tracking-widest leading-none">Senior Advisor & Professional Speaker</span>
+              </div>
+              <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight">
+                {speaker.name.split(' (')[0]}
+                <span className="block text-3xl md:text-4xl text-[#c5a059] mt-2 font-bold">{speaker.name.includes('(') ? `(${speaker.name.split('(')[1]}` : ''}</span>
+              </h1>
+              <div className="space-y-4 mb-10 max-w-xl">
+                <p className="text-xl text-white/90 font-bold border-l-4 border-[#c5a059] pl-6 leading-relaxed bg-white/5 py-4 rounded-r-2xl">
+                  {K_DATA.positions[0]}
+                </p>
+                <p className="text-lg text-white/60 leading-relaxed font-medium pl-6">
+                  {K_DATA.positions[1]}
+                </p>
+              </div>
+              
+              <div className="flex flex-wrap gap-4">
+                <a href={CONTACT_INFO.lineUrl} className="bg-[#c5a059] text-white px-10 py-5 rounded-2xl font-black text-lg shadow-[0_10px_30px_rgba(197,160,89,0.3)] hover:scale-105 transition-all">
+                  ติดต่อวิทยากร
+                </a>
+                <div className="flex items-center gap-4 bg-white/5 border border-white/10 px-8 py-5 rounded-2xl">
+                   <div className="text-center">
+                      <p className="text-2xl font-black text-[#c5a059]">10+</p>
+                      <p className="text-[10px] text-white/40 uppercase font-black tracking-widest">Exp Years</p>
+                   </div>
+                   <div className="w-px h-8 bg-white/10"></div>
+                   <div className="text-center">
+                      <p className="text-2xl font-black text-[#c5a059]">100+</p>
+                      <p className="text-[10px] text-white/40 uppercase font-black tracking-widest">Keynotes</p>
+                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Bio Grid */}
+      <section className="pb-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            {/* Left: Professional Detail */}
+            <div className="lg:col-span-8 space-y-12">
+              
+              {/* Experience */}
+              <div className="bg-white/5 border border-white/10 rounded-[3rem] p-10 backdrop-blur-sm">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="p-3 bg-blue-600/10 rounded-2xl">
+                    <Award className="w-6 h-6 text-blue-400" />
+                  </div>
+                  <h2 className="text-2xl font-black">ตำแหน่งพหุภาคีและประสบการณ์ระดับชาติ</h2>
+                </div>
+                <div className="grid gap-6">
+                  {K_DATA.positions.slice(2).map((pos, i) => (
+                    <div key={i} className="flex gap-5 group items-start">
+                      <div className="mt-1 w-2 h-2 rounded-full bg-[#c5a059] group-hover:scale-150 transition-transform"></div>
+                      <p className="text-lg text-white/80 font-bold group-hover:text-white transition-colors leading-relaxed">{pos}</p>
+                    </div>
+                  ))}
+                  <div className="h-px bg-white/10 my-4"></div>
+                  {K_DATA.experience.map((exp, i) => (
+                    <div key={i} className="flex gap-5 group items-start">
+                      <div className="mt-1.5 w-1.5 h-1.5 rounded-full border border-[#c5a059]"></div>
+                      <p className="text-white/60 group-hover:text-white/80 transition-colors leading-relaxed">{exp}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Training */}
+              <div className="bg-white/5 border border-white/10 rounded-[3rem] p-10 backdrop-blur-sm">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="p-3 bg-emerald-600/10 rounded-2xl">
+                    <BookOpen className="w-6 h-6 text-emerald-400" />
+                  </div>
+                  <h2 className="text-2xl font-black">การศึกษาและการพัฒนาคุณวุฒิ</h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <p className="text-[#c5a059] font-black text-xs uppercase tracking-widest mb-4">Academic Background</p>
+                    <div className="space-y-4">
+                      {K_DATA.education.map((edu, i) => (
+                        <p key={i} className="text-white/80 font-bold leading-relaxed">{edu}</p>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-[#c5a059] font-black text-xs uppercase tracking-widest mb-4">Professional Training</p>
+                    <div className="space-y-4">
+                      {K_DATA.training.map((trn, i) => (
+                        <div key={i} className="flex gap-3 items-start">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-1 flex-shrink-0" />
+                          <p className="text-sm text-white/60">{trn}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Right: Sidebar Info */}
+            <div className="lg:col-span-4 space-y-8">
+              <div className="bg-gradient-to-br from-[#c5a059]/20 to-transparent border border-[#c5a059]/30 rounded-[3rem] p-10">
+                <div className="flex items-center justify-between mb-8">
+                  <h3 className="text-xl font-black">บทบาทที่ปรึกษา</h3>
+                  <Target className="w-6 h-6 text-[#c5a059]" />
+                </div>
+                <div className="space-y-6">
+                  {K_DATA.otherWork.map((work, i) => (
+                    <div key={i} className="pb-6 border-b border-white/10 last:border-0 last:pb-0">
+                      <p className="text-sm text-white/50 mb-2 font-bold uppercase tracking-widest">Advisory {i+1}</p>
+                      <p className="text-white/80 font-bold leading-relaxed">{work}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Taught Courses */}
+              {taughtCourses.length > 0 && (
+                <div className="bg-white/5 border border-white/10 rounded-[3rem] p-10">
+                  <h3 className="text-xl font-black mb-8">หลักสูตรโดยคุณไนท์</h3>
+                  <div className="space-y-6">
+                    {taughtCourses.map(course => (
+                      <Link key={course.id} to={`/courses/${course.id}`} className="group block relative overflow-hidden rounded-2xl border border-white/10 hover:border-[#c5a059] transition-all">
+                        <img src={course.image} className="w-full h-32 object-cover opacity-50 group-hover:opacity-80 transition-opacity" alt={course.title} />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#050a14] to-transparent"></div>
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <h4 className="font-bold text-white text-sm group-hover:text-[#c5a059] transition-colors">{course.title}</h4>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Activity Gallery - Bento Grid */}
+      <section className="py-24 bg-white/5 relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div>
+              <p className="text-[#c5a059] font-black text-xs uppercase tracking-[0.3em] mb-4">Impact & Activities</p>
+              <h2 className="text-4xl font-black leading-tight">ภาพบรรยากาศการบรรยาย<br/>และกิจกรรมต่างๆ</h2>
+            </div>
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 px-8 py-4 rounded-2xl flex items-center gap-4">
+               <Calendar className="w-6 h-6 text-[#c5a059]" />
+               <p className="text-white/80 font-bold leading-none">พร้อมบรรยายทั่วประเทศ</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div className="col-span-2 row-span-2 rounded-[2rem] overflow-hidden group border border-white/10">
+              <img src={K_DATA.gallery[0]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
+            </div>
+            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-white/10">
+              <img src={K_DATA.gallery[1]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
+            </div>
+            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-white/10">
+              <img src={K_DATA.gallery[2]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
+            </div>
+            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-white/10">
+              <img src={K_DATA.gallery[3]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
+            </div>
+            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-white/10">
+              <img src={K_DATA.gallery[4]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
+            </div>
+            {/* Third Row Section */}
+            <div className="col-span-2 rounded-[2rem] overflow-hidden h-[250px] group border border-white/10">
+              <img src={K_DATA.gallery[9]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
+            </div>
+            <div className="rounded-[2rem] overflow-hidden h-[250px] group border border-white/10">
+              <img src={K_DATA.gallery[6]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
+            </div>
+            <div className="rounded-[2rem] overflow-hidden h-[250px] group border border-white/10">
+              <img src={K_DATA.gallery[10]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
+            </div>
+          </div>
+          
+          <div className="mt-20 text-center">
+            <a href={CONTACT_INFO.lineUrl} className="group inline-flex items-center gap-4 bg-white/5 border border-white/10 px-12 py-6 rounded-3xl hover:bg-[#c5a059] transition-all">
+              <span className="font-black text-lg">จองตัววิทยากรคุณไนท์</span>
+              <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer Support */}
+      <section className="py-24 bg-gradient-to-t from-blue-900/20 to-transparent">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <Quote className="w-12 h-12 text-[#c5a059]/30 mx-auto mb-8" />
+          <p className="text-3xl md:text-5xl font-black italic leading-tight mb-12" style={{ letterSpacing: '-0.02em' }}>
+            "การสื่อสารที่ทรงพลังที่สุด<br/>คือการสื่อสารที่ทำให้เกิด<span className="text-[#c5a059]">การลงมือทำ</span>"
+          </p>
+          <div className="w-12 h-1 bg-[#c5a059] mx-auto mb-6"></div>
+          <p className="text-xl font-bold text-white/80">Knight Kraiput Intarayotha</p>
+          <p className="text-white/40 uppercase tracking-widest text-sm font-black mt-2">CEO, NEWDICE</p>
+        </div>
+      </section>
+    </div>
+  );
+};
+
 /* ─── Den Master Fa Premium Detail Page ─────────────────────── */
 const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = ({ speaker, taughtCourses }) => {
   const [activeProblem, setActiveProblem] = useState(0);
@@ -820,6 +1120,11 @@ const SpeakerDetail: React.FC = () => {
   // Den Master Fa gets premium high-converting page
   if (speaker.slug === 'den-masterfa') {
     return <DenMasterFaDetail speaker={speaker} taughtCourses={taughtCourses} />;
+  }
+
+  // Knight Kraiput Premium Profile
+  if (speaker.slug === 'kraiput-intarayotha') {
+    return <KnightKraiputDetail speaker={speaker} taughtCourses={taughtCourses} />;
   }
 
   // Other speakers get generic detail page

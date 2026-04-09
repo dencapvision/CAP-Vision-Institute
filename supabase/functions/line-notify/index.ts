@@ -25,7 +25,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { formType, data } = await req.json();
+    const { formType, data, to } = await req.json();
 
     if (!formType || !data) {
       return new Response(JSON.stringify({ error: "Invalid request body" }), {
@@ -53,7 +53,7 @@ Deno.serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        to: LINE_ADMIN_USER_ID,
+        to: to || LINE_ADMIN_USER_ID,
         messages: [
           {
             type: "text",

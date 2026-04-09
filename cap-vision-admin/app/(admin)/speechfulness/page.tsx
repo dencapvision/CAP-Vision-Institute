@@ -68,16 +68,19 @@ export default function SpeechfulnessAdmin() {
       if (error) throw error
       
       // Update local state
+      const booking = items.find(item => item.id === bookingId)
       setItems(items.map(item => item.id === bookingId ? { ...item, status } : item))
       
-      // Notify via Edge Function (optional but recommended)
+      // Notify via Edge Function
       await supabase.functions.invoke('line-notify', {
         body: {
-          formType: 'อัปเดตสถานะการจอง (CEO)',
+          to: 'Ue652c6a963399b81a811eb04fe88c123',
+          formType: 'อัปเดตสถานะการจอง CEO Speechfulness',
           data: {
-            'รหัสการจอง': bookingId,
-            'สถานะใหม่': status,
-            'โปรแกรม': 'CEO Speechfulness'
+            'ID การจอง': bookingId,
+            'ลูกค้า': booking?.profile?.full_name || booking?.user_email || 'N/A',
+            'สถานะใหม่': status === 'confirmed' ? 'ชำระเงินแล้ว (ยืนยัน)' : status,
+            'ผู้ดำเนินการ': 'Admin Portal'
           }
         }
       })

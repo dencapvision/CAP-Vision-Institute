@@ -303,7 +303,7 @@ const CEOSpeechfulness: React.FC = () => {
                 
                 <div className="relative rounded-[2.5rem] overflow-hidden border border-white/10 aspect-[4/5] shadow-2xl">
                   <img
-                    src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa9.jpg"
+                    src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa7.jpg"
                     alt="Kru Den Master Fa - CEO Speechfulness"
                     className="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-110"
                   />

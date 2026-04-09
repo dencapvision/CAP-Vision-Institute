@@ -25,11 +25,11 @@ export const ceoService = {
 
     const { error: profileError } = await supabase
       .from('profiles')
-      .update({
+      .upsert({
+        id: user.id,
         ...profileData,
         updated_at: new Date().toISOString()
-      })
-      .eq('id', user.id);
+      });
 
     if (profileError) throw profileError;
 

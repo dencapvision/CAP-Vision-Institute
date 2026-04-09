@@ -269,7 +269,7 @@ const CEOTierCommunity: React.FC = () => {
 
             <div className="lg:w-7/12 grid grid-cols-1 md:grid-cols-2 gap-10">
               {CORE_VALUES.map((v, i) => (
-                <div key={i} className="cap-card h-full bg-[#111122] border-white/5 p-10 group hover:bg-[#1a1a33] transition-all duration-500">
+                <div key={i} className="glass-panel !bg-[#111122]/80 backdrop-blur-2xl border-white/5 p-10 group hover:border-[#c5a059]/40 transition-all duration-500 rounded-[2.5rem] flex flex-col h-full">
                   <div className="w-16 h-16 rounded-2xl bg-[#c5a059]/10 flex items-center justify-center mb-10 text-[#c5a059] group-hover:scale-110 group-hover:bg-[#c5a059]/20 transition-all duration-500">
                     {v.icon}
                   </div>
@@ -352,8 +352,8 @@ const CEOTierCommunity: React.FC = () => {
       <section className="py-24 bg-[#0d0d1f]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-24">
-            <span className="cap-label mb-6 block">The Membership Arc</span>
-            <h2 className="text-5xl md:text-6xl font-black nav-font text-white mb-4">Journey to Join</h2>
+            <span className="cap-label mb-6 block text-center">Your Journey</span>
+            <h2 className="text-5xl md:text-6xl font-black nav-font text-white">ขั้นตอนการเป็นส่วนหนึ่ง</h2>
             <div className="gold-divider-center" />
           </div>
 

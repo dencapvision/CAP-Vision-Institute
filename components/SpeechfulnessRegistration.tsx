@@ -19,6 +19,7 @@ import {
   ChevronLeft
 } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
+import { ceoService } from '../lib/ceoService';
 
 interface PackageInfo {
   id: string;
@@ -73,14 +74,12 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
     setError(null);
 
     try {
-      // 1. Check if user exists or create one (Auth)
-      // For this simplified flow, we'll try to sign up. 
-      // If user exists, we might need them to login, but for a "guest-first" flow, 
-      // we'll just proceed with creating booking linked to this email or new user.
-      
+      // 1. Auth: Sign up
+      // Note: If user exists, signUp returns an error, but for this guest flow 
+      // we can try to find the user by email if signUp fails.
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
-        password: Math.random().toString(36).slice(-12), // Random password for new users
+        password: Math.random().toString(36).slice(-12),
         options: {
           data: {
             full_name: formData.fullName,
@@ -89,31 +88,48 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
         }
       });
 
-      // If user already exists, authError will happen, but we can still proceed 
-      // by just using the profile or creating the booking with the email.
-      // In a real app, we'd handle "user exists" better.
+      let userId = authData?.user?.id;
 
-      // 2. Upsert Profile
+      // Handle "User already registered" by optionally finding the existing profile
+      if (authError && authError.message.includes('already registered')) {
+        const { data: existingUser } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('email', formData.email)
+          .single();
+        if (existingUser) userId = existingUser.id;
+      }
+
+      // 2. Upsert Profile (to store potential tax info)
+      const profilePayload = {
+        email: formData.email,
+        full_name: formData.fullName,
+        phone: formData.phone,
+        tax_id: formData.taxId,
+        address: formData.address,
+        updated_at: new Date().toISOString(),
+      };
+
+      if (userId) {
+        // @ts-ignore
+        profilePayload.id = userId;
+      }
+
       const { error: profileError } = await supabase
         .from('profiles')
-        .upsert({
-          id: authData?.user?.id, // Might be null if user exists
-          email: formData.email,
-          full_name: formData.fullName,
-          phone_number: formData.phone,
-          tax_id: formData.taxId,
-          address: formData.address,
-          updated_at: new Date().toISOString(),
-        }, { onConflict: 'email' });
+        .upsert(profilePayload, { onConflict: 'email' });
 
       if (profileError) throw profileError;
 
-      // 3. Create Booking
+      // 3. Create Booking with Code
+      const bookingCode = await ceoService.generateBookingCode();
       const { data: booking, error: bookingError } = await supabase
         .from('ceo_bookings')
         .insert({
-          user_id: authData?.user?.id || null, // Handle guest bookings
+          user_id: userId || null,
           user_email: formData.email,
+          booking_code: bookingCode,
+          type: selectedPackage.type === 'full' ? 'membership' : 'session',
           package_name: selectedPackage.name,
           tier_id: selectedPackage.id,
           status: 'pending_payment',

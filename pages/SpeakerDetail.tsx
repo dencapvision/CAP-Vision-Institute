@@ -80,6 +80,23 @@ const DEN_SPECIFIC = {
     { text: 'สร้างประสบการณ์ที่เปลี่ยน Mindset และนำไปใช้ได้จริง ไม่ใช่การอบรมที่ "จบแล้วก็ลืม" แบบที่เคยเจอมา', author: 'Senior Manager — องค์กรรัฐวิสาหกิจ', role: 'ผู้บริหารระดับ Senior' },
     { text: 'เป็นวิทยากรที่ทำให้ห้องอบรมเงียบน้อยลงมากที่สุด เพราะทุกคนอยากพูด อยากมีส่วนร่วม ผลลัพธ์ชัดเจนมาก', author: 'Learning & Development Lead — MNC', role: 'L&D Director' },
   ],
+  gallery: [
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/denmasterfa.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa1.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa2.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa3.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa4.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa5.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa6.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa7.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa8.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa9.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa10.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa11.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa12.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa13.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa14.jpg'
+  ],
 };
 
 /* ─── Generic fallback detail page ─────────────────────────── */
@@ -970,8 +987,92 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         </section>
       )}
 
+      {/* ── 9.5 IMPACT & ACTIVITIES ──────────────────────────── */}
+      <section className="py-24 bg-white relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div data-aos="fade-up">
+              <p className="text-[#c5a059] font-black text-xs uppercase tracking-[0.3em] mb-4">Impact & Activities</p>
+              <h2 className="text-4xl md:text-5xl font-black text-[#0a1628] leading-tight">
+                ภาพบรรยากาศการบรรยาย<br/>และกิจกรรมต่างๆ
+              </h2>
+            </div>
+            <div className="bg-gray-50 border border-gray-100 px-8 py-4 rounded-2xl flex items-center gap-4 shadow-sm" data-aos="fade-left">
+               <Calendar className="w-6 h-6 text-[#c5a059]" />
+               <p className="text-[#0a1628] font-bold leading-none">พร้อมบรรยายทั่วประเทศ</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {/* Main Featured Photo */}
+            <div className="col-span-2 row-span-2 rounded-[2.5rem] overflow-hidden group border border-gray-100 shadow-lg relative" data-aos="zoom-in">
+              <img src={DEN_SPECIFIC.gallery[0]} className="w-full h-full object-cover group-hover:scale-105 transition duration-1000" alt="Den Masterfa Activity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
+                <p className="text-white font-bold">สัมผัสประสบการณ์การเรียนรู้ระดับพรีเมี่ยม</p>
+              </div>
+            </div>
+
+            {/* Grid 1 */}
+            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-gray-100 shadow-sm" data-aos="fade-up" data-aos-delay="100">
+              <img src={DEN_SPECIFIC.gallery[1]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
+            </div>
+
+            {/* Grid 2 */}
+            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-gray-100 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+              <img src={DEN_SPECIFIC.gallery[2]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
+            </div>
+
+            {/* Grid 3 */}
+            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-gray-100 shadow-sm" data-aos="fade-up" data-aos-delay="300">
+              <img src={DEN_SPECIFIC.gallery[3]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
+            </div>
+
+            {/* Grid 4 */}
+            <div className="rounded-[2rem] overflow-hidden h-[200px] md:h-[300px] group border border-gray-100 shadow-sm" data-aos="fade-up" data-aos-delay="400">
+              <img src={DEN_SPECIFIC.gallery[4]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
+            </div>
+
+            {/* Wide Bottom 1 */}
+            <div className="col-span-2 rounded-[2.5rem] overflow-hidden h-[280px] group border border-gray-100 shadow-md" data-aos="fade-up">
+              <img src={DEN_SPECIFIC.gallery[5]} className="w-full h-full object-cover group-hover:scale-105 transition duration-1000" alt="Activity" />
+            </div>
+
+            {/* Bottom 1 */}
+            <div className="rounded-[2rem] overflow-hidden h-[280px] group border border-gray-100 shadow-md" data-aos="fade-up" data-aos-delay="100">
+              <img src={DEN_SPECIFIC.gallery[6]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
+            </div>
+
+            {/* Bottom 2 */}
+            <div className="rounded-[2rem] overflow-hidden h-[280px] group border border-gray-100 shadow-md" data-aos="fade-up" data-aos-delay="200">
+              <img src={DEN_SPECIFIC.gallery[10]} className="w-full h-full object-cover group-hover:scale-110 transition duration-700" alt="Activity" />
+            </div>
+          </div>
+
+          {/* Contact Bar Interaction */}
+          <div className="mt-20 bg-[#0a1628] rounded-[3rem] p-12 text-center relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#c5a059]/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+            <div className="relative z-10">
+              <h3 className="text-2xl md:text-3xl font-black text-white mb-8">
+                ยกระดับองค์กรของคุณด้วย<br/>
+                <span className="text-[#c5a059]">กระบวนการ Facilitation ระดับมืออาชีพ</span>
+              </h3>
+              <div className="flex flex-wrap gap-4 justify-center">
+                <a href={CONTACT_INFO.lineUrl} className="group inline-flex items-center gap-4 bg-[#c5a059] text-white px-10 py-5 rounded-2xl hover:scale-105 transition-all shadow-xl shadow-[#c5a059]/20">
+                  <span className="font-black text-lg">ปรึกษาคิวงานครูเด่น</span>
+                  <ChevronRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                </a>
+                <a href={`tel:${CONTACT_INFO.phone}`} className="inline-flex items-center gap-4 bg-white/10 border border-white/20 text-white px-10 py-5 rounded-2xl hover:bg-white/20 transition-all font-bold">
+                  <Phone className="w-5 h-5 text-[#c5a059]" />
+                  สอบถามโทรด่วน
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── 10. TESTIMONIALS (Social Proof) ─────────────────── */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-gray-50/50">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <p className="text-[#c5a059] font-bold uppercase tracking-[0.3em] text-sm mb-4">เสียงจากลูกค้า</p>

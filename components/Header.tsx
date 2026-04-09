@@ -85,7 +85,7 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    name: 'บริการองค์กร',
+    name: 'บริการ',
     path: '/services',
     icon: <Building2 className="w-4 h-4" />,
     submenu: [

@@ -391,7 +391,7 @@ const Contact: React.FC = () => {
                      <p className="text-gray-500 text-sm">ดูหลักสูตรทั้งหมดที่เราเปิดสอน</p>
                   </Link>
                   <Link to="/services" className="group p-8 bg-gray-50 rounded-[2rem] border border-gray-100 hover:border-[#c5a059]/30 hover:shadow-lg transition-all text-center">
-                     <h4 className="text-lg font-bold text-[#0f3460] mb-2 nav-font group-hover:text-[#c5a059] transition-colors">บริการองค์กร</h4>
+                     <h4 className="text-lg font-bold text-[#0f3460] mb-2 nav-font group-hover:text-[#c5a059] transition-all text-center">บริการ</h4>
                      <p className="text-gray-500 text-sm">In-house Training, Coaching, OD Consulting</p>
                   </Link>
                   <Link to="/about" className="group p-8 bg-gray-50 rounded-[2rem] border border-gray-100 hover:border-[#c5a059]/30 hover:shadow-lg transition-all text-center">

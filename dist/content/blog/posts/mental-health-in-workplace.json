@@ -1,0 +1,93 @@
+{
+    "id": "mental-health-in-workplace",
+    "title": "สุขภาวะทางจิตในที่ทำงาน (Mental Health) วาระเร่งด่วนขององค์กรยุคใหม่",
+    "slug": "mental-health-in-workplace",
+    "category": "Corporate Culture",
+    "thumbnail": "https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&q=80",
+    "author": "ครูเด่น มาสเตอร์ฟา",
+    "date": "11 ธันวาคม 2566",
+    "createdAt": "2023-12-11T00:00:00Z",
+    "readTime": "8 Min Read",
+    "summary": "Burnout และปัญหาสุขภาพจิตในที่ทำงานทวีความรุนแรงขึ้นทั่วโลก บทความนี้อธิบายสัญญาณอันตราย วิธีสร้างวัฒนธรรมที่ดูแลสุขภาพจิต และ ROI ของการลงทุนใน Employee Wellbeing ที่องค์กรต้องรู้",
+    "description": "Burnout ทวีความรุนแรงขึ้น องค์กรและ HR จะออกแบบสวัสดิการและสภาพแวดล้อมอย่างไร เพื่อป้องกันและดูแลสุขภาพจิตของพนักงานด่านหน้า",
+    "tags": [
+        "Mental Health",
+        "Employee Wellbeing",
+        "Burnout Prevention",
+        "Psychological Safety"
+    ],
+    "context": "WHO ประเมินว่าภาวะซึมเศร้าและ Anxiety Disorder ทำให้ระบบเศรษฐกิจโลกสูญเสียผลผลิตมูลค่า 1 ล้านล้านดอลลาร์ต่อปี ในประเทศไทย สำนักงานสถิติแห่งชาติพบว่า 1 ใน 4 ของพนักงานรู้สึก Burnout สูง และ 60% ไม่กล้าพูดถึงปัญหาสุขภาพจิตกับหัวหน้า",
+    "insight": "Deloitte พบว่าการลงทุนใน Mental Health Program ทุก 1 บาทให้ผลตอบแทน 4-5 บาท ผ่านการลด Absenteeism, Presenteeism (มาทำงานแต่ประสิทธิภาพต่ำ) และ Turnover ที่สัมพันธ์กับ Burnout องค์กรที่ดูแล Mental Health ของพนักงานอย่างจริงจังมี Productivity สูงกว่าองค์กรที่ไม่ดูแล 21%",
+    "framework": [
+        {
+            "step": "ระดับที่ 1",
+            "title": "รู้จักสัญญาณ Burnout ก่อนสายเกินไป",
+            "description": "3 สัญญาณหลัก: Emotional Exhaustion (เหนื่อยล้าทางอารมณ์แม้พักแล้ว), Depersonalization (ห่างเหินจากงานและเพื่อนร่วมงาน มองโลกในแง่ลบ), Reduced Efficacy (ผลงานลดลงโดยหาเหตุผลไม่ได้) ถ้าเห็น 2 ใน 3 อาการ ต้องพูดคุยทันที"
+        },
+        {
+            "step": "ระดับที่ 2",
+            "title": "สร้างวัฒนธรรม Psychological Safety",
+            "description": "ผู้นำต้องแสดงให้เห็นว่าการพูดเรื่องสุขภาพจิตไม่ใช่ความอ่อนแอ โดยการเปิดเผยเรื่องของตัวเองก่อน เช่น 'ช่วงนี้ผมเครียดมาก ผมใช้การออกกำลังกายช่วย' การ Normalize ทำให้พนักงานกล้าขอความช่วยเหลือก่อนถึงจุดวิกฤต"
+        },
+        {
+            "step": "ระดับที่ 3",
+            "title": "ออกแบบระบบสนับสนุน Wellbeing",
+            "description": "สร้างชั้นของการสนับสนุน: (1) ผู้บริหารและหัวหน้าที่ฝึก Mental Health First Aid (2) EAP (Employee Assistance Program) ที่ให้เข้าถึงนักจิตวิทยาได้ (3) นโยบาย Mental Health Days ที่ใช้ได้โดยไม่ต้องอธิบาย และ (4) โปรแกรม Mindfulness หรือ Stress Management สม่ำเสมอ"
+        },
+        {
+            "step": "ระดับที่ 4",
+            "title": "แก้ที่ต้นเหตุ ไม่ใช่แค่ปลายเหตุ",
+            "description": "โปรแกรม Wellbeing ที่ดีแต่ Workload ไม่ลดลงคือการ Patch ไม่ใช่การแก้ ต้องตรวจสอบว่าระบบงานสร้าง Burnout อย่างไร เช่น Meeting ที่มากเกินไป, Unclear Expectations, หรือ Culture ที่ไม่ยอมให้ปฏิเสธงาน"
+        }
+    ],
+    "application": "เริ่มด้วยการทำ Wellbeing Check-in ในการประชุมทีมทุกสัปดาห์ ถามว่า 'ระดับพลังงานของเราอยู่ที่ 1-10 วันนี้คือเท่าไหร่?' แค่การถามทำให้พนักงานรู้ว่าผู้นำสนใจ และเปิดประตูให้พูดถึงสุขภาวะโดยไม่ต้องรู้สึกแปลก เป้าหมายคือ Normalize การพูดเรื่อง Mental Health เหมือนกับการพูดเรื่องสุขภาพกาย",
+    "case_study": {
+        "title": "บริษัทเทคโนโลยี 800 คน: ลด Absenteeism 40% ด้วย Wellbeing Program",
+        "story": "บริษัทเทคโนโลยีแห่งหนึ่งพบว่า Absenteeism เพิ่มขึ้น 35% ใน 2 ปี และ Exit Interview ของ 60% ของคนที่ลาออกพูดถึงความเครียดและ Burnout หลังจากทำ Wellbeing Assessment พบว่าปัญหาหลักคือ Always-on Culture ที่ไม่มีขอบเขตระหว่างงานกับชีวิตส่วนตัว บริษัทออกนโยบาย Right to Disconnect (ไม่รับ Email หลัง 19.00 น.), เพิ่ม Mental Health Days 5 วัน/ปี และฝึก Manager 80 คนให้เป็น Mental Health First Aider ใน 1 ปี Absenteeism ลด 40% และ Turnover ลด 28%",
+        "result": "Absenteeism ลด 40%, Turnover ลด 28%, Employee Wellbeing Score เพิ่มจาก 4.2 เป็น 7.1/10"
+    },
+    "takeaways": [
+        "Burnout มีสัญญาณชัดเจน 3 อย่าง: Emotional Exhaustion, Depersonalization, Reduced Efficacy — รู้จักก่อนสายเกินไป",
+        "Psychological Safety เริ่มจากผู้นำที่กล้าเปิดเผยความอ่อนแอและความเครียดของตัวเองก่อน",
+        "Mental Health Program ที่ดีต้องมีทั้งระดับบุคคล (EAP) และระดับระบบ (ลด Workload และ Always-on Culture)",
+        "การลงทุน 1 บาทใน Mental Health คืนกลับ 4-5 บาท ผ่านการลด Absenteeism และ Turnover",
+        "เราไม่ได้บริหารทรัพยากรมนุษย์ แต่กำลังบริหารชีวิตและหัวใจของผู้คน"
+    ],
+    "faq": [
+        {
+            "question": "HR จะช่วย Manager ตรวจจับ Burnout ในทีมได้อย่างไร?",
+            "answer": "ฝึก Manager ให้สังเกต 3 สัญญาณ: การเปลี่ยนแปลงพฤติกรรมกะทันหัน (เงียบลงมาก หรือหงุดหงิดมากขึ้น), คุณภาพงานลดลงโดยไม่มีเหตุผลชัดเจน, และขาดงานบ่อยขึ้น ให้ Manager ทำ Check-in 1-on-1 สั้นๆ ทุก 2 สัปดาห์ที่ไม่ใช่แค่ถามเรื่องงาน"
+        },
+        {
+            "question": "พนักงานที่มีปัญหา Mental Health ควรได้รับการสนับสนุนอย่างไร?",
+            "answer": "ใช้ 3 ระดับ: (1) ผู้นำและเพื่อนร่วมงานฟังด้วยความเห็นอกเห็นใจและไม่ตัดสิน (2) แนะนำ EAP หรือนักจิตวิทยาองค์กรที่มีความเป็นส่วนตัว (3) ปรับ Workload และสภาพแวดล้อมชั่วคราวถ้าจำเป็น ไม่ควรบังคับให้เปิดเผยรายละเอียดส่วนตัว"
+        },
+        {
+            "question": "องค์กรเล็กๆ ที่ไม่มี EAP จะดูแล Mental Health ของพนักงานได้อย่างไร?",
+            "answer": "เริ่มจากสิ่งที่ไม่ต้องลงทุนมาก: (1) นโยบาย Work-Life Boundary ที่ชัดเจน (2) หัวหน้าที่ Check-in สม่ำเสมอ (3) วัฒนธรรมที่ยอมรับความล้มเหลวและการพักผ่อน และ (4) Mental Health Days ที่พนักงานใช้ได้โดยไม่ต้องอธิบาย ต้นทุนต่ำ แต่ Impact สูง"
+        },
+        {
+            "question": "จะวัดประสิทธิภาพของ Wellbeing Program ได้อย่างไร?",
+            "answer": "วัด 4 ตัวชี้วัด: (1) Absenteeism Rate (วันที่ขาดงานต่อเดือน) (2) Presenteeism (ความรู้สึกว่าประสิทธิภาพลดลงขณะมาทำงาน วัดผ่าน Survey) (3) Turnover Rate (4) Wellbeing Score จาก Pulse Survey รายไตรมาส"
+        }
+    ],
+    "cta": {
+        "title": "สร้างองค์กรที่ดูแลใจพนักงาน",
+        "description": "CAP Vision ออกแบบ Workplace Wellbeing Program และ Mental Health First Aider Training สำหรับผู้บริหารและ HR ที่ต้องการสร้างวัฒนธรรมองค์กรที่ดูแลสุขภาพจิตอย่างจริงจัง",
+        "buttonText": "สอบถามหลักสูตร Wellbeing",
+        "buttonLink": "/contact"
+    },
+    "seo": {
+        "metaTitle": "Mental Health ในที่ทำงาน: วิธีป้องกัน Burnout และสร้าง Wellbeing Culture",
+        "metaDescription": "เรียนรู้วิธีตรวจจับ Burnout, สร้าง Psychological Safety และออกแบบ Wellbeing Program ที่ให้ ROI 4-5 เท่า พร้อม Case Study จากบริษัทเทคโนโลยีที่ลด Absenteeism 40%",
+        "keywords": ["Mental Health workplace", "Burnout prevention", "Employee Wellbeing", "Psychological Safety", "สุขภาพจิตในที่ทำงาน", "Wellbeing Program"]
+    },
+    "hashtags": ["#MentalHealthWorkplace", "#BurnoutPrevention", "#EmployeeWellbeing", "#PsychologicalSafety", "#CAPVision"],
+    "images": [
+        {
+            "url": "https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&q=80",
+            "alt": "Employee finding calm and mental wellness in the workplace",
+            "caption": "เราไม่ได้บริหารทรัพยากรมนุษย์ — เรากำลังบริหารชีวิตและหัวใจของผู้คน"
+        }
+    ]
+}

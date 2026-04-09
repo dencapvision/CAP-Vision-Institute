@@ -1,5 +1,395 @@
 [
     {
+        "id": "10-facilitation-tools",
+        "title": "10 เครื่องมือ Facilitation ที่ช่วยทีมคิดและตัดสินใจเร็วขึ้น",
+        "category": "Facilitation",
+        "thumbnail": "https://images.unsplash.com/photo-1434626881859-194d67b2b86f?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "เครื่องมือ Facilitation ที่ดีเป็นเหมือนชุดกุญแจที่ Facilitator ใช้เปิดประตูสู่ Collective Intelligence ของทีม 10 เครื่อง...",
+        "description": "เครื่องมือ Facilitation ที่ดีเป็นเหมือนชุดกุญแจที่ Facilitator ใช้เปิดประตูสู่ Collective Intelligence ของทีม 10 เครื่องมือนี้คัดเลือกมาจากประสบการณ์จริงกว่า 18 ปีของ CAP Vision ครอบคลุมตั้งแต่การสร้า...",
+        "tags": [
+            "Facilitation",
+            "Workshop",
+            "Team"
+        ],
+        "date": "2026-02-17",
+        "createdAt": "2026-02-17T00:00:00Z"
+    },
+    {
+        "id": "case-study-1day-team-transformation",
+        "title": "Case Study: องค์กรที่เปลี่ยนทีมได้ภายใน 1 วัน ด้วย Workshop",
+        "category": "Facilitation",
+        "thumbnail": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Workshop 1 วันที่ออกแบบดีสามารถสร้างการเปลี่ยนแปลงที่ชัดเจนและวัดได้ในทีม ไม่ใช่เพราะเวทมนตร์ แต่เพราะการออกแบบประสบการณ...",
+        "description": "Workshop 1 วันที่ออกแบบดีสามารถสร้างการเปลี่ยนแปลงที่ชัดเจนและวัดได้ในทีม ไม่ใช่เพราะเวทมนตร์ แต่เพราะการออกแบบประสบการณ์ที่ท้าทาย Assumption เปิดมุมมองใหม่ และสร้าง Commitment ร่วมกัน Case Study 5 เร...",
+        "tags": [
+            "Facilitation",
+            "Workshop",
+            "Team"
+        ],
+        "date": "2026-02-16",
+        "createdAt": "2026-02-16T00:00:00Z"
+    },
+    {
+        "id": "play-to-learn",
+        "title": "Play to Learn: ทำไมการเรียนรู้ที่สนุกถึงได้ผลมากกว่า",
+        "category": "Facilitation",
+        "thumbnail": "https://images.unsplash.com/photo-1493476523860-a6de6ce1b0c3?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "การเล่นไม่ใช่ตรงข้ามกับการเรียนรู้ แต่คือเงื่อนไขที่ดีที่สุดสำหรับการเรียนรู้ Neuroscience พิสูจน์ว่าสมองในสภาวะ Play ดู...",
+        "description": "การเล่นไม่ใช่ตรงข้ามกับการเรียนรู้ แต่คือเงื่อนไขที่ดีที่สุดสำหรับการเรียนรู้ Neuroscience พิสูจน์ว่าสมองในสภาวะ Play ดูดซับข้อมูลได้ดีกว่า สร้าง Connections ใหม่เร็วกว่า และ Retain ความทรงจำไว้นานกว่...",
+        "tags": [
+            "Facilitation",
+            "Workshop",
+            "Team"
+        ],
+        "date": "2026-02-15",
+        "createdAt": "2026-02-15T00:00:00Z"
+    },
+    {
+        "id": "active-vs-passive-learning",
+        "title": "Active Learning vs Passive Learning: อะไรได้ผลจริงในองค์กร",
+        "category": "Facilitation",
+        "thumbnail": "https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Passive Learning คือการรับข้อมูล ส่วน Active Learning คือการประมวลผล นำไปใช้ และสะท้อนคิด งานวิจัยพิสูจน์แล้วว่า Active ...",
+        "description": "Passive Learning คือการรับข้อมูล ส่วน Active Learning คือการประมวลผล นำไปใช้ และสะท้อนคิด งานวิจัยพิสูจน์แล้วว่า Active Learning มี Retention Rate สูงกว่า 5-10 เท่า แต่ยังมีองค์กรจำนวนมากที่ใช้ Lectur...",
+        "tags": [
+            "Facilitation",
+            "Workshop",
+            "Team"
+        ],
+        "date": "2026-02-14",
+        "createdAt": "2026-02-14T00:00:00Z"
+    },
+    {
+        "id": "what-is-facilitation",
+        "title": "Facilitation คืออะไร? ทำไมองค์กรชั้นนำถึงใช้",
+        "category": "Facilitation",
+        "thumbnail": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Facilitation คือศิลปะและวิทยาศาสตร์ของการออกแบบและนำกระบวนการที่ช่วยให้กลุ่มคนคิด สื่อสาร และตัดสินใจได้อย่างมีประสิทธิภ...",
+        "description": "Facilitation คือศิลปะและวิทยาศาสตร์ของการออกแบบและนำกระบวนการที่ช่วยให้กลุ่มคนคิด สื่อสาร และตัดสินใจได้อย่างมีประสิทธิภาพสูงสุด องค์กรชั้นนำทั่วโลกใช้ Facilitation เพราะมันสร้างผลลัพธ์ที่ดีกว่า เร็วก...",
+        "tags": [
+            "Facilitation",
+            "Workshop",
+            "Team"
+        ],
+        "date": "2026-02-13",
+        "createdAt": "2026-02-13T00:00:00Z"
+    },
+    {
+        "id": "growth-mindset-vs-fixed-mindset",
+        "title": "Growth Mindset vs Fixed Mindset: อะไรทำให้คนเติบโตจริง",
+        "category": "Self-Growth",
+        "thumbnail": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Carol Dweck พิสูจน์แล้วว่า Mindset ไม่ใช่บุคลิกภาพที่ติดตัวมา แต่เป็นรูปแบบความเชื่อที่เปลี่ยนได้ คนที่มี Growth Mindset...",
+        "description": "Carol Dweck พิสูจน์แล้วว่า Mindset ไม่ใช่บุคลิกภาพที่ติดตัวมา แต่เป็นรูปแบบความเชื่อที่เปลี่ยนได้ คนที่มี Growth Mindset เชื่อว่าความสามารถพัฒนาได้ด้วยความพยายาม ส่วน Fixed Mindset เชื่อว่าความสามารถเ...",
+        "tags": [
+            "Self-Development",
+            "Mindset",
+            "Psychology"
+        ],
+        "date": "2026-02-12",
+        "createdAt": "2026-02-12T00:00:00Z"
+    },
+    {
+        "id": "why-high-performers-burnout",
+        "title": "ทำไมคนเก่งถึง Burnout? และวิธีรีเซ็ตพลังใจ",
+        "category": "Self-Growth",
+        "thumbnail": "https://images.unsplash.com/photo-1568377210220-3f63f70b1af5?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Burnout ไม่ได้เกิดกับคนขี้เกียจ แต่เกิดกับคนที่ทุ่มเทมากที่สุด สาเหตุหลักไม่ใช่การทำงานหนัก แต่คือการทำงานโดยขาด Recover...",
+        "description": "Burnout ไม่ได้เกิดกับคนขี้เกียจ แต่เกิดกับคนที่ทุ่มเทมากที่สุด สาเหตุหลักไม่ใช่การทำงานหนัก แต่คือการทำงานโดยขาด Recovery, Meaning และ Control การรีเซ็ตพลังใจต้องการมากกว่าแค่วันหยุด แต่คือการเปลี่ยน ...",
+        "tags": [
+            "Self-Development",
+            "Mindset",
+            "Psychology"
+        ],
+        "date": "2026-02-11",
+        "createdAt": "2026-02-11T00:00:00Z"
+    },
+    {
+        "id": "cap-theory-self-discovery",
+        "title": "ค้นหาตัวตนด้วย CAP Theory: คุณกำลังใช้ศักยภาพเต็มหรือยัง",
+        "category": "Self-Growth",
+        "thumbnail": "https://images.unsplash.com/photo-1565843708714-52ecf69ab81f?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "CAP Theory มองศักยภาพของมนุษย์ผ่าน 3 มิติ Consciousness การรับรู้ตัวเอง Awareness การเข้าใจโลกรอบข้าง และ Purpose ความหม...",
+        "description": "CAP Theory มองศักยภาพของมนุษย์ผ่าน 3 มิติ Consciousness การรับรู้ตัวเอง Awareness การเข้าใจโลกรอบข้าง และ Purpose ความหมายที่ขับเคลื่อนชีวิต คนที่พัฒนาครบทั้ง 3 มิติจะอยู่ในสภาวะที่เรียกว่า 'Full Pote...",
+        "tags": [
+            "Self-Development",
+            "Mindset",
+            "Psychology"
+        ],
+        "date": "2026-02-10",
+        "createdAt": "2026-02-10T00:00:00Z"
+    },
+    {
+        "id": "flow-state-at-work",
+        "title": "วิธีเข้าสู่ Flow State ในการทำงาน (ทำงานน้อยลง แต่ได้ผลมากขึ้น)",
+        "category": "Self-Growth",
+        "thumbnail": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Flow State ในการทำงานคือสภาวะที่ทำงานได้อย่างมีสมาธิสูงสุด มีพลังงาน และผลงานออกมาดีกว่าปกติ 3-5 เท่า McKinsey พบว่าผู้บ...",
+        "description": "Flow State ในการทำงานคือสภาวะที่ทำงานได้อย่างมีสมาธิสูงสุด มีพลังงาน และผลงานออกมาดีกว่าปกติ 3-5 เท่า McKinsey พบว่าผู้บริหารระดับสูงที่อยู่ใน Flow 5 เท่ามีประสิทธิภาพสูงกว่าค่าเฉลี่ย เข้าสู่ Flow ไม่...",
+        "tags": [
+            "Self-Development",
+            "Mindset",
+            "Psychology"
+        ],
+        "date": "2026-02-09",
+        "createdAt": "2026-02-09T00:00:00Z"
+    },
+    {
+        "id": "self-talk-change-life",
+        "title": "Self-Talk คืออะไร? เปลี่ยนคำพูดในใจ เปลี่ยนชีวิตได้จริงไหม",
+        "category": "Self-Growth",
+        "thumbnail": "https://images.unsplash.com/photo-1544027993-37dbfe43562a?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Self-Talk คือเสียงในหัวที่พูดกับตัวเองตลอดวัน งานวิจัยพิสูจน์แล้วว่า Self-Talk เชิงลบเป็นรากฐานของ Limiting Beliefs ที่ก...",
+        "description": "Self-Talk คือเสียงในหัวที่พูดกับตัวเองตลอดวัน งานวิจัยพิสูจน์แล้วว่า Self-Talk เชิงลบเป็นรากฐานของ Limiting Beliefs ที่กั้นไม่ให้เราไปถึงศักยภาพสูงสุด การเปลี่ยน Self-Talk ได้เปลี่ยนได้ทั้งความเชื่อมั...",
+        "tags": [
+            "Self-Development",
+            "Mindset",
+            "Psychology"
+        ],
+        "date": "2026-02-08",
+        "createdAt": "2026-02-08T00:00:00Z"
+    },
+    {
+        "id": "training-to-transformative-learning",
+        "title": "จาก Training สู่ Transformative Learning: HR ต้องเปลี่ยนอะไรบ้าง",
+        "category": "Modern HR",
+        "thumbnail": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Transformative Learning เป็นการเรียนรู้ที่เปลี่ยนวิธีมองโลกและวิธีเป็นคน ไม่ใช่แค่เพิ่มความรู้หรือทักษะ Jack Mezirow ผู้...",
+        "description": "Transformative Learning เป็นการเรียนรู้ที่เปลี่ยนวิธีมองโลกและวิธีเป็นคน ไม่ใช่แค่เพิ่มความรู้หรือทักษะ Jack Mezirow ผู้พัฒนาทฤษฎีนี้อธิบายว่าเมื่อ Perspective Transformation เกิดขึ้น พฤติกรรมจะเปลี่ย...",
+        "tags": [
+            "HR",
+            "Learning",
+            "Organization"
+        ],
+        "date": "2026-02-07",
+        "createdAt": "2026-02-07T00:00:00Z"
+    },
+    {
+        "id": "learning-journey-design",
+        "title": "Learning Journey คืออะไร? ออกแบบยังไงให้เกิดการเปลี่ยนแปลง",
+        "category": "Modern HR",
+        "thumbnail": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Learning Journey คือเส้นทางการเรียนรู้ที่ออกแบบอย่างมีระบบเพื่อนำพาผู้เรียนจากจุด A (ทักษะปัจจุบัน) ไปยังจุด B (พฤติกรรม...",
+        "description": "Learning Journey คือเส้นทางการเรียนรู้ที่ออกแบบอย่างมีระบบเพื่อนำพาผู้เรียนจากจุด A (ทักษะปัจจุบัน) ไปยังจุด B (พฤติกรรมที่ต้องการ) ต่างจาก Training Event ที่เป็นแค่จุดเดียว Learning Journey คือกระบวน...",
+        "tags": [
+            "HR",
+            "Learning",
+            "Organization"
+        ],
+        "date": "2026-02-06",
+        "createdAt": "2026-02-06T00:00:00Z"
+    },
+    {
+        "id": "training-roi-measurement",
+        "title": "วัดผลการอบรมอย่างไรให้ผู้บริหาร \"เห็น ROI จริง\"",
+        "category": "Modern HR",
+        "thumbnail": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "ผู้บริหารไม่ได้ต้องการรู้ว่าพนักงาน 'ชอบ' การอบรมหรือ 'รู้' อะไรมาใหม่ แต่ต้องการรู้ว่าพฤติกรรมเปลี่ยนหรือไม่และส่งผลต่อ...",
+        "description": "ผู้บริหารไม่ได้ต้องการรู้ว่าพนักงาน 'ชอบ' การอบรมหรือ 'รู้' อะไรมาใหม่ แต่ต้องการรู้ว่าพฤติกรรมเปลี่ยนหรือไม่และส่งผลต่อธุรกิจอย่างไร Kirkpatrick Model 4 ระดับบวกกับ ROI Calculation คือกรอบที่ HR ต้อง...",
+        "tags": [
+            "HR",
+            "Learning",
+            "Organization"
+        ],
+        "date": "2026-02-05",
+        "createdAt": "2026-02-05T00:00:00Z"
+    },
+    {
+        "id": "ai-facilitation-future",
+        "title": "AI + Facilitation: อนาคตของการพัฒนาคนในองค์กร",
+        "category": "Modern HR",
+        "thumbnail": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "AI เปลี่ยนการพัฒนาบุคลากรอย่างรุนแรง แต่ไม่ใช่การแทนที่ Facilitator แต่คือการ Augment ทักษะมนุษย์ที่ AI ทำแทนไม่ได้ อนาค...",
+        "description": "AI เปลี่ยนการพัฒนาบุคลากรอย่างรุนแรง แต่ไม่ใช่การแทนที่ Facilitator แต่คือการ Augment ทักษะมนุษย์ที่ AI ทำแทนไม่ได้ อนาคตของการพัฒนาคนคือ AI จัดการข้อมูล Personalization และ Content Delivery ในขณะที่ ...",
+        "tags": [
+            "HR",
+            "Learning",
+            "Organization"
+        ],
+        "date": "2026-02-04",
+        "createdAt": "2026-02-04T00:00:00Z"
+    },
+    {
+        "id": "hr-as-learning-designer",
+        "title": "HR ยุคใหม่ต้องเป็น Learning Designer ไม่ใช่แค่ Trainer",
+        "category": "Modern HR",
+        "thumbnail": "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Trainer จัดอบรมและส่งเนื้อหา แต่ Learning Designer สร้างประสบการณ์ที่เปลี่ยนพฤติกรรมได้จริง ในยุคที่ HR ต้องพิสูจน์ ROI ...",
+        "description": "Trainer จัดอบรมและส่งเนื้อหา แต่ Learning Designer สร้างประสบการณ์ที่เปลี่ยนพฤติกรรมได้จริง ในยุคที่ HR ต้องพิสูจน์ ROI ของทุกบาทที่ลงทุนพัฒนาคน การเปลี่ยนบทบาทจาก Trainer เป็น Learning Designer ไม่ใช...",
+        "tags": [
+            "HR",
+            "Learning",
+            "Organization"
+        ],
+        "date": "2026-02-03",
+        "createdAt": "2026-02-03T00:00:00Z"
+    },
+    {
+        "id": "feedback-culture-7-methods",
+        "title": "7 วิธีสร้างวัฒนธรรม Feedback ที่ทีม \"ไม่กลัว\" แต่ \"อยากฟัง\"",
+        "category": "Team & Culture",
+        "thumbnail": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Feedback ที่ดีคือน้ำมันที่หล่อเลี้ยงการเติบโต แต่ Feedback ที่ผิดวิธีคือกรดที่กัดกร่อนความสัมพันธ์ในทีม การสร้างวัฒนธรรม...",
+        "description": "Feedback ที่ดีคือน้ำมันที่หล่อเลี้ยงการเติบโต แต่ Feedback ที่ผิดวิธีคือกรดที่กัดกร่อนความสัมพันธ์ในทีม การสร้างวัฒนธรรม Feedback ที่ทีมอยากฟัง ไม่ใช่กลัว ต้องอาศัย 7 วิธีที่เปลี่ยนทั้งทัศนคติ กระบวนก...",
+        "tags": [
+            "Team",
+            "Culture",
+            "Communication"
+        ],
+        "date": "2026-02-02",
+        "createdAt": "2026-02-02T00:00:00Z"
+    },
+    {
+        "id": "psychological-safety-facilitation",
+        "title": "สร้าง Psychological Safety ในทีม ด้วย Facilitation",
+        "category": "Team & Culture",
+        "thumbnail": "https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Psychological Safety คือความรู้สึกปลอดภัยที่จะพูด ถาม ผิดพลาด และแสดงความคิดเห็นโดยไม่กลัวผลกระทบทางลบ Google พบว่านี่คื...",
+        "description": "Psychological Safety คือความรู้สึกปลอดภัยที่จะพูด ถาม ผิดพลาด และแสดงความคิดเห็นโดยไม่กลัวผลกระทบทางลบ Google พบว่านี่คือปัจจัยที่ 1 ของทีมที่ดีที่สุด การสร้าง Psychological Safety ไม่ใช่เรื่องของความ...",
+        "tags": [
+            "Team",
+            "Culture",
+            "Communication"
+        ],
+        "date": "2026-02-01",
+        "createdAt": "2026-02-01T00:00:00Z"
+    },
+    {
+        "id": "team-talk-flow",
+        "title": "Team Talk Flow คืออะไร? ทำไมทีมเก่งยังสื่อสารพัง",
+        "category": "Team & Culture",
+        "thumbnail": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Team Talk Flow คือรูปแบบการสื่อสารในทีมที่ข้อมูลไหลสะดวก ไม่ติดขัด และทุกคนเข้าใจตรงกัน ทีมที่เก่งแต่สื่อสารพังเป็นเพราะ...",
+        "description": "Team Talk Flow คือรูปแบบการสื่อสารในทีมที่ข้อมูลไหลสะดวก ไม่ติดขัด และทุกคนเข้าใจตรงกัน ทีมที่เก่งแต่สื่อสารพังเป็นเพราะขาด Talk Flow ที่ดี ไม่ใช่ขาดความสามารถ การออกแบบ Communication Protocol ที่ดีจะ...",
+        "tags": [
+            "Team",
+            "Culture",
+            "Communication"
+        ],
+        "date": "2026-01-31",
+        "createdAt": "2026-01-31T00:00:00Z"
+    },
+    {
+        "id": "circle-dialogue-technique",
+        "title": "เทคนิค Circle Dialogue: เปลี่ยนความขัดแย้งเป็นความเข้าใจ",
+        "category": "Team & Culture",
+        "thumbnail": "https://images.unsplash.com/photo-1573497491765-dccce02b29df?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Circle Dialogue คือกระบวนการพูดคุยในวงกลมที่ทุกคนมีสิทธิ์พูดเท่าเทียมกัน ไม่มีใครถูกขัดจังหวะ และไม่มีการตัดสิน เทคนิคนี...",
+        "description": "Circle Dialogue คือกระบวนการพูดคุยในวงกลมที่ทุกคนมีสิทธิ์พูดเท่าเทียมกัน ไม่มีใครถูกขัดจังหวะ และไม่มีการตัดสิน เทคนิคนี้มาจาก Indigenous Wisdom และถูกนำมาใช้ในองค์กรชั้นนำทั่วโลกเพื่อเปลี่ยนความขัดแย...",
+        "tags": [
+            "Team",
+            "Culture",
+            "Communication"
+        ],
+        "date": "2026-01-30",
+        "createdAt": "2026-01-30T00:00:00Z"
+    },
+    {
+        "id": "team-silo-connect-hearts",
+        "title": "ทีมทำงานแบบไซโล แก้อย่างไรให้ \"เชื่อมใจ\" ไม่ใช่แค่ \"เชื่อมงาน\"",
+        "category": "Team & Culture",
+        "thumbnail": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Silo Mentality เกิดขึ้นเมื่อแต่ละทีมหรือแผนกทำงานเพื่อตัวเองมากกว่าเพื่อองค์กร การแก้ไม่ใช่การบังคับให้ทำงานร่วมกัน แต่ค...",
+        "description": "Silo Mentality เกิดขึ้นเมื่อแต่ละทีมหรือแผนกทำงานเพื่อตัวเองมากกว่าเพื่อองค์กร การแก้ไม่ใช่การบังคับให้ทำงานร่วมกัน แต่คือการสร้างความเชื่อมโยงทางอารมณ์และความเข้าใจซึ่งกันและกัน เพราะคนที่ 'เชื่อมใจ'...",
+        "tags": [
+            "Team",
+            "Culture",
+            "Communication"
+        ],
+        "date": "2026-01-29",
+        "createdAt": "2026-01-29T00:00:00Z"
+    },
+    {
+        "id": "leader-as-facilitator",
+        "title": "ทำไมผู้นำที่ดี ต้องเป็น Facilitator ไม่ใช่ Instructor",
+        "category": "Leadership",
+        "thumbnail": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Instructor บอกคำตอบ แต่ Facilitator ช่วยให้คนหาคำตอบด้วยตัวเอง ผู้นำที่เป็น Facilitator สร้างทีมที่คิดเองได้ แก้ปัญหาเอง...",
+        "description": "Instructor บอกคำตอบ แต่ Facilitator ช่วยให้คนหาคำตอบด้วยตัวเอง ผู้นำที่เป็น Facilitator สร้างทีมที่คิดเองได้ แก้ปัญหาเองได้ และเติบโตอย่างอิสระ ซึ่งคือสิ่งที่องค์กรในยุค VUCA ต้องการมากกว่าการมีผู้นำท...",
+        "tags": [
+            "Leadership",
+            "Management",
+            "Team"
+        ],
+        "date": "2026-01-28",
+        "createdAt": "2026-01-28T00:00:00Z"
+    },
+    {
+        "id": "manager-to-leader-cap-theory",
+        "title": "จาก Manager สู่ Leader: เปลี่ยน Mindset ด้วย CAP Theory",
+        "category": "Leadership",
+        "thumbnail": "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "Manager บริหาร 'งาน' แต่ Leader นำ 'คน' สู่เป้าหมายที่ยิ่งใหญ่กว่า การเปลี่ยนจาก Manager เป็น Leader ไม่ใช่แค่การเลื่อนต...",
+        "description": "Manager บริหาร 'งาน' แต่ Leader นำ 'คน' สู่เป้าหมายที่ยิ่งใหญ่กว่า การเปลี่ยนจาก Manager เป็น Leader ไม่ใช่แค่การเลื่อนตำแหน่ง แต่คือการเปลี่ยน Mindset ใน 3 มิติสำคัญตาม CAP Theory ได้แก่ Consciousnes...",
+        "tags": [
+            "Leadership",
+            "Management",
+            "Team"
+        ],
+        "date": "2026-01-27",
+        "createdAt": "2026-01-27T00:00:00Z"
+    },
+    {
+        "id": "leadership-speaking-trust",
+        "title": "Leadership Speaking: พูดอย่างไรให้ทีม \"เชื่อ\" ไม่ใช่แค่ \"ฟัง\"",
+        "category": "Leadership",
+        "thumbnail": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "การพูดให้ทีมเชื่อไม่ใช่เรื่องของน้ำเสียงที่ดังหรือการใช้คำที่หรูหรา แต่คือการพูดจาก 'ความจริงใจ' 'ความเข้าใจคนฟัง' และ '...",
+        "description": "การพูดให้ทีมเชื่อไม่ใช่เรื่องของน้ำเสียงที่ดังหรือการใช้คำที่หรูหรา แต่คือการพูดจาก 'ความจริงใจ' 'ความเข้าใจคนฟัง' และ 'ความชัดเจนในวิสัยทัศน์' ผู้นำที่พูดได้ทรงพลังไม่ใช่คนที่พูดเก่งที่สุด แต่คือคนที...",
+        "tags": [
+            "Leadership",
+            "Management",
+            "Team"
+        ],
+        "date": "2026-01-26",
+        "createdAt": "2026-01-26T00:00:00Z"
+    },
+    {
+        "id": "5-leadership-skills-thai-orgs",
+        "title": "5 ทักษะผู้นำที่องค์กรไทยขาด (และวิธีพัฒนาแบบยั่งยืน)",
+        "category": "Leadership",
+        "thumbnail": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "องค์กรไทยมักส่งเสริมคนเก่งงานขึ้นเป็นหัวหน้าโดยไม่ได้พัฒนาทักษะการนำคน ทักษะที่ขาดมากที่สุด 5 ประการ ได้แก่ Emotional In...",
+        "description": "องค์กรไทยมักส่งเสริมคนเก่งงานขึ้นเป็นหัวหน้าโดยไม่ได้พัฒนาทักษะการนำคน ทักษะที่ขาดมากที่สุด 5 ประการ ได้แก่ Emotional Intelligence การสื่อสารเชิงสร้างสรรค์ การตัดสินใจภายใต้ความไม่แน่นอน การ Coach และ...",
+        "tags": [
+            "Leadership",
+            "Management",
+            "Team"
+        ],
+        "date": "2026-01-25",
+        "createdAt": "2026-01-25T00:00:00Z"
+    },
+    {
+        "id": "leader-deep-listening",
+        "title": "ผู้นำยุคใหม่ต้อง \"ฟังให้ลึก\" ไม่ใช่แค่ \"สั่งให้เร็ว\"",
+        "category": "Leadership",
+        "thumbnail": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200",
+        "excerpt": "ผู้นำที่ฟังเป็นสร้างทีมที่แข็งแกร่งกว่าผู้นำที่สั่งเก่ง Deep Listening ไม่ใช่การรอให้คนพูดจบแล้วตอบ แต่คือการรับรู้ความร...",
+        "description": "ผู้นำที่ฟังเป็นสร้างทีมที่แข็งแกร่งกว่าผู้นำที่สั่งเก่ง Deep Listening ไม่ใช่การรอให้คนพูดจบแล้วตอบ แต่คือการรับรู้ความรู้สึก ความต้องการ และสิ่งที่ยังไม่ถูกพูดออกมา ผู้นำที่ฝึกทักษะนี้ได้จะลดความขัดแ...",
+        "tags": [
+            "Leadership",
+            "Management",
+            "Team"
+        ],
+        "date": "2026-01-24",
+        "createdAt": "2026-01-24T00:00:00Z"
+    },
+    {
+        "id": "flow-state-learning",
+        "title": "Flow State: สภาวะลื่นไหล กุญแจสำคัญสู่การเรียนรู้ระดับสูง (Deep Learning)",
+        "category": "Education",
+        "thumbnail": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80",
+        "excerpt": "จะดีแค่ไหนถ้าพนักงานของคุณเรียนรู้ด้วยความหลงใหลและลืมเวลา? มาสร้างสภาวะ Flow ในห้องเรียนกัน",
+        "description": "ทำความรู้จัก Flow State และเทคนิคการออกแบบการเรียนรู้เพื่อเปลี่ยนบรรยากาศในองค์กรให้มีชีวิตชีวา",
+        "tags": [
+            "Flow State",
+            "Learning",
+            "Psychology"
+        ],
+        "date": "2026-01-23",
+        "createdAt": "2026-01-23T00:00:00Z"
+    },
+    {
         "id": "intro-to-facilitation",
         "title": "ศิลปะการอำนวยความสะดวก (Facilitation Skills) สำหรับผู้นำยุคใหม่",
         "category": "Leadership",
@@ -28,20 +418,5 @@
         ],
         "date": "2026-01-20",
         "createdAt": "2026-01-20T00:00:00Z"
-    },
-    {
-        "id": "flow-state-learning",
-        "title": "Flow State: สภาวะลื่นไหล กุญแจสำคัญสู่การเรียนรู้ระดับสูง (Deep Learning)",
-        "category": "Education",
-        "thumbnail": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80",
-        "excerpt": "จะดีแค่ไหนถ้าพนักงานของคุณเรียนรู้ด้วยความหลงใหลและลืมเวลา? มาสร้างสภาวะ Flow ในห้องเรียนกัน",
-        "description": "ทำความรู้จัก Flow State และเทคนิคการออกแบบการเรียนรู้เพื่อเปลี่ยนบรรยากาศในองค์กรให้มีชีวิตชีวา",
-        "tags": [
-            "Flow State",
-            "Learning",
-            "Psychology"
-        ],
-        "date": "2026-01-23",
-        "createdAt": "2026-01-23T00:00:00Z"
     }
 ]

@@ -1,0 +1,76 @@
+{
+  "title": "Active Learning vs Passive Learning: อะไรได้ผลจริงในองค์กร",
+  "slug": "active-vs-passive-learning",
+  "category": "Facilitation",
+  "thumbnail": "https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&q=80&w=1200",
+  "author": "ครูเด่น มาสเตอร์ฟา",
+  "date": "14 กุมภาพันธ์ 2569",
+  "readTime": "10 นาที",
+
+  "summary": "Passive Learning คือการรับข้อมูล ส่วน Active Learning คือการประมวลผล นำไปใช้ และสะท้อนคิด งานวิจัยพิสูจน์แล้วว่า Active Learning มี Retention Rate สูงกว่า 5-10 เท่า แต่ยังมีองค์กรจำนวนมากที่ใช้ Lecture-based Training เป็นหลัก เพราะง่ายกว่าในการออกแบบ ไม่ใช่เพราะมีประสิทธิภาพกว่า",
+
+  "context": "Edgar Dale เสนอ Cone of Learning ในปี 1969 ซึ่งแสดงให้เห็นว่าคนจำสิ่งที่เรียนได้มากน้อยแค่ไหนตามวิธีการเรียนรู้ แม้ตัวเลขที่แน่ชัดจะถูกถกเถียง แต่ Pattern ชัดเจนว่า Active Methods เช่น การสอนคนอื่น การฝึกปฏิบัติ และการสนทนา ให้ Retention สูงกว่า Passive Methods เช่น การฟัง การอ่าน และการดูสาธิต\n\nในองค์กรไทย Lecture-based Training ยังเป็น Default ของ Training ส่วนใหญ่ เพราะง่ายกว่าในการเตรียม ประหยัดเวลา และดูเป็น 'มืออาชีพ' แต่ผลลัพธ์ที่ได้คือพนักงานที่นั่งฟัง จดบันทึก และลืมส่วนใหญ่ภายใน 1 สัปดาห์\n\nการเปลี่ยนจาก Passive เป็น Active Learning ในองค์กรต้องการการเปลี่ยนทั้ง Design Philosophy ของ HR และ Mindset ของผู้เรียนที่อาจเคยชินกับ Passive Mode",
+
+  "insight": "National Training Laboratory ที่ Maine USA พัฒนา Learning Pyramid ซึ่งแสดง Average Retention Rates ของวิธีการเรียนรู้ต่างๆ จากต่ำไปสูง: Lecture 5%, Reading 10%, Audio-Visual 20%, Demonstration 30%, Discussion 50%, Practice by Doing 75%, Teaching Others 90%\n\nในมุมมองของ CAP Methodology ความแตกต่างที่สำคัญระหว่าง Active และ Passive Learning ไม่ใช่แค่เรื่อง Retention แต่คือระดับของ Cognitive Processing ที่เกิดขึ้น Passive Learning เกิดที่ระดับ Surface Processing ในขณะที่ Active Learning เกิดที่ระดับ Deep Processing ซึ่งสร้าง Long-term Memory และ Transfer ไปยังสถานการณ์ใหม่ได้ดีกว่า\n\nที่น่าสนใจคือ Active Learning ไม่ได้แปลว่า 'สนุกและวุ่นวาย' เสมอไป เพราะ Deep Reading, Reflective Writing และ Problem-solving Alone ล้วนเป็น Active Learning ที่ลึกมาก กุญแจคือ Cognitive Engagement ไม่ใช่แค่ Physical Activity",
+
+  "framework": [
+    "Level 1 — Convert Lecture to Discussion: แทนที่จะบรรยาย 60 นาทีให้เปลี่ยนเป็น Mini-lecture 15 นาที ตามด้วย Discussion 15 นาที แล้ว Mini-lecture 15 นาที ตามด้วย Application 15 นาที สัดส่วน 50:50 ระหว่าง Content และ Active Processing ให้ผลลัพธ์ดีกว่า 100% Lecture มาก",
+    "Level 2 — Think-Pair-Share: หลังนำเสนอ Concept ให้ผู้เรียนคิดคนเดียว 2 นาที จากนั้นคุยกับคู่ 3 นาที แล้วแชร์กับกลุ่มใหญ่ วิธีนี้ง่ายที่สุดในการเปลี่ยน Passive เป็น Active และทำได้ทั้งใน Physical และ Virtual Setting",
+    "Level 3 — Case-based Learning: ใช้ Case Studies ที่ใกล้เคียงกับงานจริงของผู้เรียน ให้ผู้เรียนวิเคราะห์ตัดสินใจ และนำเสนอ วิธีนี้สร้าง Transfer ได้สูงเพราะสมองเห็นความเชื่อมโยงกับสถานการณ์จริง",
+    "Level 4 — Teach-back Method: หลังเรียน Concept ใหม่ ให้ผู้เรียน 'สอน' กลับให้กับเพื่อนในกลุ่มเล็ก การสอนคนอื่นบังคับให้สมองประมวลผลและจัดระเบียบข้อมูลในระดับที่ลึกกว่า รวมถึงระบุ Gap ในความเข้าใจของตัวเอง",
+    "Level 5 — Real-world Application Projects: ออกแบบ Application Assignment ที่ผู้เรียนต้องนำสิ่งที่เรียนไปใช้จริงในงานและรายงานผล วิธีนี้ให้ Retention และ Transfer สูงที่สุด แต่ต้องการ Time และ Follow-up Support จาก Facilitator"
+  ],
+
+  "application": "การเปลี่ยนจาก Passive เป็น Active Learning ในองค์กรไม่จำเป็นต้องทำทีเดียวทั้งหมด เริ่มจากโปรแกรมที่มีอยู่ 1 โปรแกรมแล้วใช้ Level 1 (Convert Lecture to Discussion) ก่อน ผู้เรียนและ Trainer ที่ไม่คุ้นกับ Active Learning อาจรู้สึกไม่สบายในช่วงแรก แต่ Feedback หลังโปรแกรมมักดีกว่าเสมอ\n\nสำหรับ E-learning ที่หลายองค์กรเปลี่ยนมาใช้ หลักการ Active Learning ใช้ได้เช่นกัน เพิ่ม Quizzes, Scenarios, Branching Stories และ Reflection Prompts แทนที่จะเป็นแค่วิดีโอบรรยาย E-learning ที่ Active จะมี Completion Rate สูงกว่าและ Knowledge Retention ดีกว่ามาก\n\nการสร้าง Trainer ให้เป็น Active Learning Designer ต้องเริ่มจาก Mindset Shift ก่อนเสมอ จาก 'ฉันจะสอนอะไร' เป็น 'ฉันจะออกแบบประสบการณ์อะไรที่ทำให้ผู้เรียนคิดและลงมือทำ'",
+
+  "case_study": "บริษัทธนาคารขนาดใหญ่มี Compliance Training ที่ทุกคนต้องผ่าน ปัญหาคือ Completion Rate สูง แต่ Knowledge Retention ต่ำมาก ทดสอบ 2 สัปดาห์หลังอบรมพบว่าคนผ่านเฉลี่ย 52% เท่านั้น CAP Vision ออกแบบใหม่โดยเปลี่ยนจาก 3 ชั่วโมง Lecture เป็น 90 นาที Active Learning ที่รวม Scenario-based Questions, Case Studies และ Peer Discussion ผลการทดสอบ 2 สัปดาห์หลังอบรมเพิ่มเป็น 81% และ Real-world Compliance Violations ลดลง 44%",
+
+  "takeaways": [
+    "Teaching Others ให้ Retention สูงสุด 90% ส่วน Lecture ให้แค่ 5%",
+    "Active Learning ไม่ใช่แค่ 'สนุก' แต่คือ Deep Cognitive Processing ที่สร้าง Long-term Memory",
+    "เริ่มจาก Level 1 แปลง Lecture เป็น Discussion ได้เลยโดยไม่ต้องออกแบบใหม่ทั้งหมด",
+    "E-learning ก็ต้องการ Active Design เพิ่ม Scenarios, Quizzes และ Reflection",
+    "Trainer ต้องเปลี่ยน Mindset จาก 'สอนอะไร' เป็น 'ออกแบบประสบการณ์อะไร'"
+  ],
+
+  "faq": [
+    {
+      "question": "Active Learning เหมาะกับเนื้อหาทุกประเภทหรือไม่?",
+      "answer": "เหมาะกับเนื้อหาส่วนใหญ่ แต่ระดับ Active ที่เหมาะสมอาจต่างกัน เนื้อหาที่เป็น Procedural หรือ Safety-critical อาจต้องการ Passive Learning บางส่วนเพื่อความแม่นยำก่อน จากนั้นค่อยต่อด้วย Active Practice สัดส่วนที่ดีคือ 30% Passive 70% Active"
+    },
+    {
+      "question": "ผู้เรียนที่เคยชินกับ Passive Learning จะต้านทาน Active Methods หรือไม่?",
+      "answer": "มักมีช่วงแรกที่ไม่สบายใจ เพราะ Active Learning ต้องการ Effort มากกว่า วิธีจัดการคือ Explain the Why ให้ผู้เรียนเข้าใจว่าทำไมถึงออกแบบแบบนี้ เริ่มจาก Activity ที่ low-stakes ก่อน และ Acknowledge ว่าการรู้สึกไม่สบายใจคือสัญญาณว่ากำลังเรียนรู้จริงๆ"
+    },
+    {
+      "question": "Virtual Training สามารถเป็น Active Learning ได้ไหม?",
+      "answer": "ได้อย่างมีประสิทธิภาพถ้าออกแบบดี เครื่องมือ Virtual อย่าง Poll Everywhere, Miro, Mentimeter และ Breakout Rooms ช่วยสร้าง Active Learning Experience ในสภาพแวดล้อม Online ได้ดี กุญแจคือออกแบบให้ผู้เรียนมีส่วนร่วมทุก 5-10 นาที ไม่ใช่แค่นั่งดูจอ"
+    }
+  ],
+
+  "cta": "ต้องการเปลี่ยน Training Program ในองค์กรให้เป็น Active Learning ที่วัดผลได้จริง? CAP Vision ช่วยออกแบบ Active Learning Experiences ที่เหมาะกับบริบทและเป้าหมายของคุณ ปรึกษาฟรีวันนี้",
+
+  "seo": {
+    "meta_title": "Active Learning vs Passive Learning อะไรได้ผลจริงในองค์กร",
+    "meta_description": "เปรียบเทียบ Active Learning กับ Passive Learning ว่าอะไรให้ Retention สูงกว่า พร้อม 5 Level ของ Active Learning ที่นำไปใช้ได้ในองค์กรทันที",
+    "keywords": ["active learning", "passive learning", "learning retention", "training design", "HRD Thailand", "CAP Vision", "instructional design", "L&D"]
+  },
+
+  "hashtags": [
+    "#ActiveLearning",
+    "#PassiveLearning",
+    "#CAPVision",
+    "#HRDThailand",
+    "#LearningDesign",
+    "#TrainingEffectiveness"
+  ],
+
+  "images": [
+    {
+      "url": "https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&q=80&w=1200",
+      "alt": "ผู้เรียนกำลังทำ Active Learning ผ่านการอภิปรายกลุ่ม",
+      "title": "Active Learning Group Discussion",
+      "description": "Active Learning สร้าง Retention สูงกว่า Passive Learning ถึง 5-10 เท่า"
+    }
+  ]
+}

@@ -113,6 +113,13 @@ const navItems: NavItem[] = [
         icon: <Trophy className="w-4 h-4" />,
         description: 'Private Exchange Session สำหรับ CEO ระดับ 50-100M',
       },
+      {
+        name: 'The Facilitorium',
+        path: 'https://facilitorium.denmasterfa.com/',
+        icon: <Layers3 className="w-4 h-4" />,
+        external: true,
+        description: 'โรงเรียนวิทยากรและคลังเครื่องมือสำหรับ Facilitator',
+      },
     ],
   },
   {

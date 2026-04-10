@@ -4,7 +4,7 @@ import {
    ArrowRight, MessageCircle, ChevronDown,
    GraduationCap, Users, Target, Laptop,
    Search, BarChart3, Brain, CheckCircle2,
-   Shield
+   Shield, Layers3
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
@@ -102,6 +102,19 @@ const SERVICE_CARDS = [
          'AI-powered Learning',
          'LMS Integration Support'
       ]
+   },
+   {
+      id: 'facilitorium',
+      Icon: Layers3,
+      title: 'The Facilitorium',
+      tagline: 'โรงเรียนวิทยากรและคลังเครื่องมือสร้างการเรียนรู้ยุคใหม่ สำหรับวิทยากรยุคดิจิทัล',
+      features: [
+         'คลังเครื่องมือและเทคนิคการสอนแบบ Facilitation',
+         'AI Tools สำหรับการออกแบบและจัดหลักสูตร',
+         'คอมมูนิตี้วิทยากรและผู้รักการเรียนรู้',
+         'วิดีโอและบทความเจาะลึกทักษะเฉพาะด้าน'
+      ],
+      externalUrl: 'https://facilitorium.denmasterfa.com/'
    }
 ];
 
@@ -282,23 +295,38 @@ const Services: React.FC = () => {
                   </p>
                </div>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {SERVICE_CARDS.map(({ id, Icon, title, tagline, features }) => (
-                     <div key={id} className="bg-white rounded-3xl p-8 shadow-md border border-gray-100 hover:border-[#c5a059] hover:shadow-xl transition-all group">
-                        <div className="w-14 h-14 bg-[#0f3460]/5 text-[#c5a059] rounded-2xl flex items-center justify-center mb-5 group-hover:bg-[#0f3460] group-hover:text-white transition-all">
-                           <Icon className="w-7 h-7" />
+                  {SERVICE_CARDS.map(({ id, Icon, title, tagline, features, externalUrl }) => {
+                     const CardContent = (
+                        <div className="bg-white rounded-3xl p-8 shadow-md border border-gray-100 hover:border-[#c5a059] hover:shadow-xl transition-all group h-full">
+                           <div className="w-14 h-14 bg-[#0f3460]/5 text-[#c5a059] rounded-2xl flex items-center justify-center mb-5 group-hover:bg-[#0f3460] group-hover:text-white transition-all">
+                              <Icon className="w-7 h-7" />
+                           </div>
+                           <h3 className="text-2xl font-black text-[#0f3460] mb-2 nav-font flex items-center gap-2">
+                              {title}
+                              {externalUrl && <ArrowRight className="w-5 h-5 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-[#c5a059]" />}
+                           </h3>
+                           <p className="text-gray-500 text-sm mb-5 leading-relaxed">{tagline}</p>
+                           <ul className="space-y-2">
+                              {features.map((f, i) => (
+                                 <li key={i} className="flex items-center gap-3 text-sm text-gray-700">
+                                    <CheckCircle2 className="w-4 h-4 text-[#c5a059] flex-shrink-0" />
+                                    <span className="font-medium">{f}</span>
+                                 </li>
+                              ))}
+                           </ul>
                         </div>
-                        <h3 className="text-2xl font-black text-[#0f3460] mb-2 nav-font">{title}</h3>
-                        <p className="text-gray-500 text-sm mb-5 leading-relaxed">{tagline}</p>
-                        <ul className="space-y-2">
-                           {features.map((f, i) => (
-                              <li key={i} className="flex items-center gap-3 text-sm text-gray-700">
-                                 <CheckCircle2 className="w-4 h-4 text-[#c5a059] flex-shrink-0" />
-                                 <span className="font-medium">{f}</span>
-                              </li>
-                           ))}
-                        </ul>
-                     </div>
-                  ))}
+                     );
+
+                     return externalUrl ? (
+                        <a key={id} href={externalUrl} target="_blank" rel="noopener noreferrer">
+                           {CardContent}
+                        </a>
+                     ) : (
+                        <div key={id}>
+                           {CardContent}
+                        </div>
+                     );
+                  })}
                </div>
                <div className="text-center mt-10">
                   <Link to="/contact" className="inline-flex items-center gap-3 bg-[#0f3460] text-white px-10 py-4 rounded-2xl font-black text-lg hover:bg-[#c5a059] transition-all nav-font shadow-xl active:scale-95">

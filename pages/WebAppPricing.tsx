@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { CONTACT_INFO } from '../constants/brand';
+import WebAppBookingWizard from '../components/WebAppBookingWizard';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface PlanFeature {
@@ -33,6 +34,7 @@ interface Plan {
   features: PlanFeature[];
   cta: string;
   popular?: boolean;
+  stripeLink?: string;
 }
 
 // ─── Pricing Data ─────────────────────────────────────────────────────────────
@@ -54,6 +56,7 @@ const PLANS: Plan[] = [
     bgGradient: 'from-blue-50 to-indigo-50',
     icon: <Globe className="w-7 h-7" />,
     cta: 'เริ่มสร้างเว็บโปรไฟล์',
+    stripeLink: 'https://buy.stripe.com/test_6oE8wS6tL7q8', // Example link
     features: [
       { text: '1 หน้า Landing Page', included: true },
       { text: 'Section: Hero · บริการ · Portfolio · ติดต่อ', included: true },
@@ -84,6 +87,7 @@ const PLANS: Plan[] = [
     bgGradient: 'from-amber-50 to-yellow-50',
     icon: <Building2 className="w-7 h-7" />,
     cta: 'สร้างเว็บธุรกิจ',
+    stripeLink: 'https://buy.stripe.com/test_5kA7sOeWxfKy', // Example link
     features: [
       { text: '5–8 หน้าหลัก (Multi-page)', included: true },
       { text: 'Admin Dashboard จัดการเนื้อหาเอง', included: true },
@@ -114,6 +118,7 @@ const PLANS: Plan[] = [
     bgGradient: 'from-slate-50 to-blue-50',
     icon: <Layers3 className="w-7 h-7" />,
     cta: 'อัปเกรดสู่ Smart Platform',
+    stripeLink: 'https://buy.stripe.com/test_8wM6oK9Gb3aC', // Example link
     popular: true,
     badge: 'แนะนำ',
     features: [
@@ -146,6 +151,7 @@ const PLANS: Plan[] = [
     bgGradient: 'from-violet-50 to-purple-50',
     icon: <Crown className="w-7 h-7" />,
     cta: 'สร้างแพลตฟอร์มของคุณ',
+    stripeLink: 'https://buy.stripe.com/test_7sI9AW19v9yg', // Example link
     features: [
       { text: 'ทุกอย่างใน P3 รวมถึง...', included: true },
       { text: 'ระบบสมาชิก (สมัคร / Login / โปรไฟล์)', included: true },
@@ -202,6 +208,13 @@ const FAQS = [
 // ─── Component ────────────────────────────────────────────────────────────────
 const WebAppPricing: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const [isWizardOpen, setIsWizardOpen] = useState(false);
+
+  const handleSelectPlan = (plan: Plan) => {
+    setSelectedPlan(plan);
+    setIsWizardOpen(true);
+  };
 
   const formatPrice = (n: number) =>
     n.toLocaleString('th-TH', { style: 'currency', currency: 'THB', maximumFractionDigits: 0 });
@@ -377,11 +390,9 @@ const WebAppPricing: React.FC = () => {
                 </div>
 
                 {/* CTA */}
-                <div className="px-6 pb-6">
-                  <a
-                    href={CONTACT_INFO.lineUrl}
-                    target="_blank"
-                    rel="noreferrer"
+                <div className="px-6 pb-6 mt-auto">
+                  <button
+                    onClick={() => handleSelectPlan(plan)}
                     className="block w-full text-center py-3.5 rounded-2xl font-black text-sm nav-font transition-all duration-200 hover:opacity-90 active:scale-95"
                     style={{
                       backgroundColor: plan.popular ? plan.color : 'transparent',
@@ -390,12 +401,26 @@ const WebAppPricing: React.FC = () => {
                     }}
                   >
                     {plan.cta} →
-                  </a>
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         </div>
+
+        {/* Wizard Modal */}
+        {isWizardOpen && selectedPlan && (
+          <WebAppBookingWizard 
+            selectedPackage={{
+              id: selectedPlan.id,
+              name: selectedPlan.nameTh,
+              price: selectedPlan.price,
+              stripeLink: selectedPlan.stripeLink,
+              features: selectedPlan.features.map(f => f.text)
+            }}
+            onClose={() => setIsWizardOpen(false)}
+          />
+        )}
       </section>
 
       {/* ── Comparison Table ─────────────────────────────────────────────────── */}

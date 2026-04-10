@@ -50,12 +50,12 @@ export default function BlockEditor({ content, onChange, placeholder = 'เร�
 
   function addImage() {
     const url = prompt('URL รูปภาพ:')
-    if (url) editor.chain().focus().setImage({ src: url }).run()
+    if (url && editor) editor.chain().focus().setImage({ src: url }).run()
   }
 
   function addLink() {
     const url = prompt('URL ลิงก์:')
-    if (url) editor.chain().focus().toggleLink({ href: url }).run()
+    if (url && editor) editor.chain().focus().toggleLink({ href: url }).run()
   }
 
   return (

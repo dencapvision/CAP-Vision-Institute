@@ -2,15 +2,16 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { Plus, Users, Pencil, Star } from 'lucide-react'
 import type { Metadata } from 'next'
+import type { Database } from '@/types/database'
 
 export const metadata: Metadata = { title: 'วิทยากร — CAP Vision Admin' }
 
 export default async function SpeakersPage() {
   const supabase = await createClient()
-  const { data: speakers } = await supabase
+  const { data: speakers } = (await supabase
     .from('speakers')
     .select('id, name, position, experience_years, total_stages, is_featured, created_at')
-    .order('sort_order', { ascending: true })
+    .order('sort_order', { ascending: true })) as { data: Database['public']['Tables']['speakers']['Row'][] | null }
 
   return (
     <div className="p-6 lg:p-8 max-w-[1400px] mx-auto">

@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { Plus, Search, FileText, Eye, Pencil } from 'lucide-react'
 import type { Metadata } from 'next'
+import type { Database } from '@/types/database'
 
 export const metadata: Metadata = { title: 'เนื้อหา — CAP Vision Admin' }
 
@@ -33,7 +34,7 @@ export default async function ContentsPage({
   if (type) query = query.eq('content_type', type)
   if (q) query = query.ilike('title', `%${q}%`)
 
-  const { data: contents } = await query.limit(50)
+  const { data: contents } = (await query.limit(50)) as { data: Database['public']['Tables']['contents']['Row'][] | null }
 
   return (
     <div className="p-6 lg:p-8 max-w-[1400px] mx-auto">

@@ -170,6 +170,97 @@ export interface Database {
         Insert: Omit<Database['public']['Tables']['users']['Row'], 'created_at'>
         Update: Partial<Database['public']['Tables']['users']['Insert']>
       }
+      profiles: {
+        Row: {
+          id: string
+          full_name: string | null
+          company: string | null
+          position: string | null
+          revenue_range: string | null
+          line_id: string | null
+          phone: string | null
+          phone_number: string | null
+          email: string | null
+          challenge: string | null
+          expectation: string | null
+          is_ceo_member: boolean | null
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: Omit<Database['public']['Tables']['profiles']['Row'], 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['profiles']['Insert']>
+      }
+      ceo_speechfulness_leads: {
+        Row: {
+          id: string
+          created_at: string
+          full_name: string
+          email: string
+          phone: string | null
+          address: string | null
+          tax_id: string | null
+          package_name: string
+          tier_id: string | null
+          total_amount: number | null
+          booking_code: string | null
+          status: string
+          slip_url: string | null
+          is_vat: boolean | null
+          metadata: Json | null
+        }
+        Insert: Omit<Database['public']['Tables']['ceo_speechfulness_leads']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['ceo_speechfulness_leads']['Insert']>
+      }
+      ceo_bookings: {
+        Row: {
+          id: string
+          booking_code: string
+          user_id: string | null
+          type: string
+          session_date: string | null
+          plan_name: string | null
+          status: string
+          package_name: string | null
+          tier_id: string | null
+          is_vat: boolean | null
+          total_amount: number | null
+          user_email: string | null
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: Omit<Database['public']['Tables']['ceo_bookings']['Row'], 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['ceo_bookings']['Insert']>
+      }
+      ceo_payments: {
+        Row: {
+          id: string
+          booking_id: string
+          amount: number
+          currency: string
+          method: string
+          status: string
+          slip_url: string | null
+          stripe_session_id: string | null
+          paid_at: string | null
+          created_at: string | null
+        }
+        Insert: Omit<Database['public']['Tables']['ceo_payments']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['ceo_payments']['Insert']>
+      }
+      ceo_memberships: {
+        Row: {
+          id: string
+          user_id: string
+          plan_type: string
+          status: string
+          start_date: string
+          end_date: string
+          created_at: string | null
+          updated_at: string | null
+        }
+        Insert: Omit<Database['public']['Tables']['ceo_memberships']['Row'], 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['ceo_memberships']['Insert']>
+      }
     }
   }
 }

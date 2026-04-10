@@ -9,6 +9,11 @@ import SEO from '../components/SEO';
 import { CONTACT_INFO } from '../constants/brand';
 import WebAppBookingWizard from '../components/WebAppBookingWizard';
 
+interface PlanFeature {
+  text: string;
+  included: boolean;
+}
+
 interface Plan {
   id: string;
   badge?: string;

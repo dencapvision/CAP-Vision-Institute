@@ -21,8 +21,8 @@ const schema = z.object({
   expertise: z.string().optional(),
   signature_programs: z.string().optional(),
   profile_pdf_url: z.string().optional(),
-  is_featured: z.boolean().default(false),
-  sort_order: z.coerce.number().default(0),
+  is_featured: z.boolean(),
+  sort_order: z.coerce.number(),
   facebook_url: z.string().optional(),
   line_id: z.string().optional(),
 })
@@ -38,12 +38,19 @@ export default function SpeakerForm({ id }: { id?: string }) {
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      is_featured: false,
+      sort_order: 0,
+      experience_years: 0,
+      total_stages: 0,
+      total_organizations: 0
+    }
   })
 
   useEffect(() => {
     if (!id) return
     async function load() {
-      const { data } = await supabase.from('speakers').select('*').eq('id', id!).single()
+      const { data } = await (supabase.from('speakers') as any).select('*').eq('id', id!).single()
       if (data) {
         setValue('name', data.name)
         setValue('position', data.position ?? '')
@@ -89,9 +96,9 @@ export default function SpeakerForm({ id }: { id?: string }) {
       }
 
       if (isEditing) {
-        await supabase.from('speakers').update(payload).eq('id', id!)
+        await (supabase.from('speakers') as any).update(payload).eq('id', id!)
       } else {
-        await supabase.from('speakers').insert(payload)
+        await (supabase.from('speakers') as any).insert(payload)
       }
       router.push('/speakers')
     } finally {
@@ -102,7 +109,7 @@ export default function SpeakerForm({ id }: { id?: string }) {
   async function onDelete() {
     if (!confirm('ยืนยันการลบวิทยากรนี้?')) return
     setDeleting(true)
-    await supabase.from('speakers').delete().eq('id', id!)
+    await (supabase.from('speakers') as any).delete().eq('id', id!)
     router.push('/speakers')
   }
 

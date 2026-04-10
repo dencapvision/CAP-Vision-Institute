@@ -68,7 +68,7 @@ export default function ContentForm({ id }: ContentFormProps) {
   useEffect(() => {
     if (!id) return
     async function load() {
-      const { data } = await supabase.from('contents').select('*').eq('id', id!).single()
+      const { data } = await (supabase.from('contents') as any).select('*').eq('id', id!).single()
       if (data) {
         setValue('title', data.title)
         setValue('slug', data.slug)
@@ -78,7 +78,7 @@ export default function ContentForm({ id }: ContentFormProps) {
         setContent(data.content as object)
       }
       // Load SEO
-      const { data: seo } = await supabase.from('seo_metadata').select('*').eq('content_id', id!).single()
+      const { data: seo } = await (supabase.from('seo_metadata') as any).select('*').eq('content_id', id!).single()
       if (seo) {
         setValue('meta_title', seo.meta_title ?? '')
         setValue('meta_description', seo.meta_description ?? '')
@@ -104,9 +104,9 @@ export default function ContentForm({ id }: ContentFormProps) {
 
       let contentId = id
       if (isEditing) {
-        await supabase.from('contents').update(payload).eq('id', id!)
+        await (supabase.from('contents') as any).update(payload).eq('id', id!)
       } else {
-        const { data: created } = await supabase.from('contents').insert(payload).select('id').single()
+        const { data: created } = await (supabase.from('contents') as any).insert(payload).select('id').single()
         contentId = created?.id
       }
 
@@ -124,9 +124,9 @@ export default function ContentForm({ id }: ContentFormProps) {
           }),
         }
         if (seoData?.id) {
-          await supabase.from('seo_metadata').update(seoPayload).eq('id', seoData.id)
+          await (supabase.from('seo_metadata') as any).update(seoPayload).eq('id', seoData.id)
         } else {
-          await supabase.from('seo_metadata').insert(seoPayload)
+          await (supabase.from('seo_metadata') as any).insert(seoPayload)
         }
       }
 

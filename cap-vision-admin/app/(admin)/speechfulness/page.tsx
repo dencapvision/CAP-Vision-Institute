@@ -39,8 +39,8 @@ export default function SpeechfulnessAdmin() {
     setLoading(true)
     try {
       // Fetch bookings with their associated payments and profiles
-      const { data, error } = await supabase
-        .from('ceo_bookings')
+      const { data, error } = await (supabase
+        .from('ceo_bookings') as any)
         .select(`
           *,
           payments:ceo_payments(*),
@@ -60,8 +60,8 @@ export default function SpeechfulnessAdmin() {
 
   async function handleUpdateStatus(bookingId: string, status: string) {
     try {
-      const { error } = await supabase
-        .from('ceo_bookings')
+      const { error } = await (supabase
+        .from('ceo_bookings') as any)
         .update({ status })
         .eq('id', bookingId)
 

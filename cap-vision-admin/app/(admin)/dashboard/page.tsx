@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { FileText, Users, BookOpen, Calendar, MessageSquare, Image, TrendingUp, Clock } from 'lucide-react'
 import Link from 'next/link'
+import type { Database } from '@/types/database'
 
 export const metadata = { title: 'Dashboard — CAP Vision Admin' }
 
@@ -16,27 +17,27 @@ async function getStats() {
     { count: newLeads },
     { count: totalMedia },
   ] = await Promise.all([
-    supabase.from('contents').select('*', { count: 'exact', head: true }),
-    supabase.from('contents').select('*', { count: 'exact', head: true }).eq('status', 'published'),
-    supabase.from('speakers').select('*', { count: 'exact', head: true }),
-    supabase.from('courses').select('*', { count: 'exact', head: true }),
-    supabase.from('events').select('*', { count: 'exact', head: true }),
-    supabase.from('leads').select('*', { count: 'exact', head: true }),
-    supabase.from('leads').select('*', { count: 'exact', head: true }).eq('status', 'new'),
-    supabase.from('media').select('*', { count: 'exact', head: true }),
+    (supabase.from('contents') as any).select('*', { count: 'exact', head: true }),
+    (supabase.from('contents') as any).select('*', { count: 'exact', head: true }).eq('status', 'published'),
+    (supabase.from('speakers') as any).select('*', { count: 'exact', head: true }),
+    (supabase.from('courses') as any).select('*', { count: 'exact', head: true }),
+    (supabase.from('events') as any).select('*', { count: 'exact', head: true }),
+    (supabase.from('leads') as any).select('*', { count: 'exact', head: true }),
+    (supabase.from('leads') as any).select('*', { count: 'exact', head: true }).eq('status', 'new'),
+    (supabase.from('media') as any).select('*', { count: 'exact', head: true }),
   ])
   return { totalContents, publishedContents, totalSpeakers, totalCourses, totalEvents, totalLeads, newLeads, totalMedia }
 }
 
 async function getRecentLeads() {
   const supabase = await createClient()
-  const { data } = await supabase.from('leads').select('*').order('created_at', { ascending: false }).limit(5)
+  const { data } = (await supabase.from('leads').select('*').order('created_at', { ascending: false }).limit(5)) as { data: Database['public']['Tables']['leads']['Row'][] | null }
   return data ?? []
 }
 
 async function getRecentContents() {
   const supabase = await createClient()
-  const { data } = await supabase.from('contents').select('id, title, status, content_type, updated_at').order('updated_at', { ascending: false }).limit(5)
+  const { data } = (await supabase.from('contents').select('id, title, status, content_type, updated_at').order('updated_at', { ascending: false }).limit(5)) as { data: Database['public']['Tables']['contents']['Row'][] | null }
   return data ?? []
 }
 

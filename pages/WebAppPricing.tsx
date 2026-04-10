@@ -56,7 +56,7 @@ const PLANS: Plan[] = [
     bgGradient: 'from-blue-50 to-indigo-50',
     icon: <Globe className="w-7 h-7" />,
     cta: 'เริ่มสร้างเว็บโปรไฟล์',
-    stripeLink: 'https://buy.stripe.com/test_6oE8wS6tL7q8', // Example link
+    stripeLink: 'https://buy.stripe.com/4gM9AM5vy6mRgpeba85EY05',
     features: [
       { text: '1 หน้า Landing Page', included: true },
       { text: 'Section: Hero · บริการ · Portfolio · ติดต่อ', included: true },
@@ -87,7 +87,7 @@ const PLANS: Plan[] = [
     bgGradient: 'from-amber-50 to-yellow-50',
     icon: <Building2 className="w-7 h-7" />,
     cta: 'สร้างเว็บธุรกิจ',
-    stripeLink: 'https://buy.stripe.com/test_5kA7sOeWxfKy', // Example link
+    stripeLink: 'https://buy.stripe.com/aFa8wIf684eJ0qgcec5EY06',
     features: [
       { text: '5–8 หน้าหลัก (Multi-page)', included: true },
       { text: 'Admin Dashboard จัดการเนื้อหาเอง', included: true },
@@ -118,7 +118,7 @@ const PLANS: Plan[] = [
     bgGradient: 'from-slate-50 to-blue-50',
     icon: <Layers3 className="w-7 h-7" />,
     cta: 'อัปเกรดสู่ Smart Platform',
-    stripeLink: 'https://buy.stripe.com/test_8wM6oK9Gb3aC', // Example link
+    stripeLink: 'https://buy.stripe.com/fZu14g7DG5iN6OE9205EY07',
     popular: true,
     badge: 'แนะนำ',
     features: [
@@ -151,7 +151,7 @@ const PLANS: Plan[] = [
     bgGradient: 'from-violet-50 to-purple-50',
     icon: <Crown className="w-7 h-7" />,
     cta: 'สร้างแพลตฟอร์มของคุณ',
-    stripeLink: 'https://buy.stripe.com/test_7sI9AW19v9yg', // Example link
+    stripeLink: 'https://buy.stripe.com/bJe00c4rufXr4Gw9205EY08',
     features: [
       { text: 'ทุกอย่างใน P3 รวมถึง...', included: true },
       { text: 'ระบบสมาชิก (สมัคร / Login / โปรไฟล์)', included: true },

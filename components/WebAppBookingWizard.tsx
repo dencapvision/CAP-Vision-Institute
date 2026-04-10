@@ -174,7 +174,10 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
         }
       });
 
-      if (notifyError) console.warn('LINE Notify Error (silently ignored):', notifyError);
+      console.log('LINE Notify Response:', notifyData);
+      if (notifyError) {
+        console.error('LINE Notify Error:', notifyError);
+      }
 
       setStep('success');
     } catch (err: any) {

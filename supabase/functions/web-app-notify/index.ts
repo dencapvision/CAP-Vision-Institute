@@ -49,13 +49,6 @@ serve(async (req) => {
         ],
         backgroundColor: "#0F172A"
       },
-      hero: {
-        type: "image",
-        url: "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/brand/wa-banner.png", // Fallback banner or add a nice one
-        size: "full",
-        aspectRatio: "20:13",
-        aspectMode: "cover"
-      },
       body: {
         type: "box",
         layout: "vertical",
@@ -79,7 +72,7 @@ serve(async (req) => {
                 spacing: "sm",
                 contents: [
                   { type: "text", text: "ลูกค้า", color: "#64748B", size: "sm", flex: 1 },
-                  { type: "text", text: name, wrap: true, color: "#1E293B", size: "sm", flex: 4 }
+                  { type: "text", text: name || "-", wrap: true, color: "#1E293B", size: "sm", flex: 4 }
                 ]
               },
               {
@@ -88,7 +81,7 @@ serve(async (req) => {
                 spacing: "sm",
                 contents: [
                   { type: "text", text: "เบอร์โทร", color: "#64748B", size: "sm", flex: 1 },
-                  { type: "text", text: phone, wrap: true, color: "#1E293B", size: "sm", flex: 4 }
+                  { type: "text", text: phone || "-", wrap: true, color: "#1E293B", size: "sm", flex: 4 }
                 ]
               },
               {
@@ -106,7 +99,7 @@ serve(async (req) => {
                 spacing: "sm",
                 contents: [
                   { type: "text", text: "ยอดเงิน", color: "#64748B", size: "sm", flex: 1 },
-                  { type: "text", text: `฿${amount?.toLocaleString()}`, wrap: true, color: "#0F766E", weight: "bold", size: "md", flex: 4 }
+                  { type: "text", text: `฿${amount?.toLocaleString() || "0"}`, wrap: true, color: "#0F766E", weight: "bold", size: "md", flex: 4 }
                 ]
               },
               {
@@ -124,7 +117,7 @@ serve(async (req) => {
                 spacing: "sm",
                 contents: [
                   { type: "text", text: "รหัสจอง", color: "#64748B", size: "sm", flex: 1 },
-                  { type: "text", text: booking_code, wrap: true, color: "#7C3AED", weight: "bold", size: "sm", flex: 4 }
+                  { type: "text", text: booking_code || "-", wrap: true, color: "#7C3AED", weight: "bold", size: "sm", flex: 4 }
                 ]
               }
             ]
@@ -164,7 +157,7 @@ serve(async (req) => {
             action: {
               type: "uri",
               label: "แชทหาลูกค้า",
-              uri: `https://line.me/ti/p/~${line_id}`
+              uri: line_id ? `https://line.me/ti/p/~${line_id}` : "https://line.me"
             }
           }
         ],
@@ -172,6 +165,7 @@ serve(async (req) => {
       }
     };
 
+    console.log("Sending LINE notification to:", ADMIN_ID);
     const response = await fetch(LINE_MESSAGING_API, {
       method: "POST",
       headers: {
@@ -191,10 +185,15 @@ serve(async (req) => {
     });
 
     const result = await response.json();
+    console.log("LINE API Response:", JSON.stringify(result));
+
+    if (!response.ok) {
+        console.error("LINE API Error:", result);
+    }
 
     return new Response(JSON.stringify(result), {
       headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
-      status: 200,
+      status: response.status,
     });
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {

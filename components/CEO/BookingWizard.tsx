@@ -145,6 +145,10 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
 
         // Notify Admin via LINE
         try {
+          const { data: { publicUrl } } = supabase.storage
+            .from('payment-slips')
+            .getPublicUrl(uploadData.path);
+
           await supabase.functions.invoke('line-notify', {
             body: { 
               formType: 'CEO Tier Community (Manual Transfer)', 
@@ -154,7 +158,8 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
                 'Package': formData.selected_plan === 'session' ? 'CEO Tier Session' : 'Monthly Membership',
                 'Booking Code': booking.booking_code,
                 'Transfer Date': formData.transfer_date,
-                'Transfer Time': formData.transfer_time
+                'Transfer Time': formData.transfer_time,
+                'Slip URL': publicUrl
               }
             }
           });

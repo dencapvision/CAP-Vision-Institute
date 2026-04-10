@@ -151,6 +151,7 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
       // 3. Send LINE Notification
       const { data: notifyData, error: notifyError } = await supabase.functions.invoke('line-notify', {
         body: {
+          project: 'CEO_SPEECHFULNESS',
           to: 'Ue652c6a963399b81a811eb04fe88c123',
           formType: 'ลงทะเบียน CEO Speechfulness (VIP)',
           data: {

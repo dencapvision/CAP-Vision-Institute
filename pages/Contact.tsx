@@ -61,6 +61,7 @@ const Contact: React.FC = () => {
          // 2. Send notification via Supabase Edge Function
          await supabase.functions.invoke('line-notify', {
             body: { 
+               project: 'CONTACT',
                formType: 'ฟอร์มติดต่อสอบถาม / ขอใบเสนอราคา', 
                data: displayData 
             }

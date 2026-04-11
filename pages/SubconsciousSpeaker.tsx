@@ -142,6 +142,15 @@ const FAQS = [
   },
 ];
 
+const GALLERY = [
+  "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.sio_class9.jpg",
+  "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class1.jpg",
+  "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class2.jpg",
+  "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class4.jpg",
+  "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class6.jpg",
+  "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class7.jpg",
+];
+
 // ─── Component ────────────────────────────────────────────────────────────────
 const SubconsciousSpeaker: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -382,7 +391,40 @@ const SubconsciousSpeaker: React.FC = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
+      {/* Gallery Section */}
+      <section className="py-24 px-4 bg-gray-50 overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-[#c5a059] font-black uppercase tracking-widest text-sm mb-4">Experience the Transformation</p>
+            <h2 className="text-4xl md:text-5xl font-black text-[#0f3460] nav-font mb-6">บรรยากาศการจัดกิจกรรมรุ่นที่ผ่านมา</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto">ร่วมสัมผัสพลังแห่งการเปลี่ยนแปลง และรอยยิ้มจากผู้เข้าอบรมจริงที่ผ่านมา</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {GALLERY.map((img, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="relative group aspect-[4/3] overflow-hidden rounded-[2.5rem] shadow-lg"
+              >
+                <img 
+                  src={img} 
+                  alt={`บรรยากาศรุ่นที่ผ่านมา ${i + 1}`} 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0f3460]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+                  <div className="text-white">
+                    <p className="font-black nav-font text-lg">Subconscious Speaker</p>
+                    <p className="text-white/60 text-sm">Class Atmosphere</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
       <section id="pricing" className="py-24 px-4 bg-[#0f3460] text-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">

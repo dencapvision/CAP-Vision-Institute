@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import {
   ArrowLeft, CheckCircle2, Award, Star, MessageCircle, Phone, BookOpen,
   ChevronRight, Zap, Users, Brain, Target, Quote, Calendar, TrendingUp, Shield,
-  Mic2, Sparkles, Heart, Presentation
+  Mic2, Sparkles, Heart, Presentation, ArrowRight
 } from 'lucide-react';
 import { fetchInstructorBySlug } from '../services/instructors';
 import { fetchCourses } from '../services/courses';
@@ -12,6 +12,7 @@ import type { Instructor, Course } from '../types';
 import { CONTACT_INFO, CLIENTS } from '../constants/brand';
 import SEO from '../components/SEO';
 import { DrSoBookingWizard } from '../components/DrSo/BookingWizard';
+import { BookingWizard } from '../components/Speakers/BookingWizard';
 
 /* ─── PREMIUM DATA CONFIG ──────────────────────────────────── */
 
@@ -632,22 +633,138 @@ const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = (
 /* ─── KNIGHT KRAIPUT DETAIL ─────────────────────────────────── */
 
 const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = ({ speaker, taughtCourses }) => {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
   return (
-    <div className="bg-[#050a14] min-h-screen text-white">
-      <SEO title={speaker.name} description={speaker.bio} />
-      <section className="pt-32 pb-24 max-w-7xl mx-auto px-6">
-        <Link to="/speakers" className="text-white/50 hover:text-[#c5a059] mb-12 block"><ArrowLeft /></Link>
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <img src={speaker.image} alt={speaker.name} className="w-full rounded-[3rem] shadow-2xl" />
-          <div>
-            <h1 className="text-6xl font-black mb-6">{speaker.name}</h1>
-            <p className="text-2xl text-[#c5a059] mb-8">{speaker.title}</p>
-            <div className="space-y-4">
-              {K_DATA.positions.map(p => <p key={p} className="text-white/70 border-l-2 border-[#c5a059] pl-4">{p}</p>)}
-            </div>
+    <div className="bg-[#050a14] min-h-screen text-white font-sans">
+      <SEO 
+        title={`${speaker.name} | ผู้เชี่ยวชาญด้านความปลอดภัยและการบริหารระดับสูง`}
+        description={speaker.bio}
+      />
+
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-24 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] to-[#050a14]"></div>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] -mr-64 -mt-64"></div>
+        
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <Link to="/speakers" className="inline-flex items-center gap-2 text-white/50 hover:text-[#c5a059] transition-colors mb-12 uppercase font-black text-sm">
+            <ArrowLeft className="w-4 h-4" /> วิทยากร
+          </Link>
+          
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="relative"
+            >
+              <div className="relative z-10">
+                <img src={speaker.image} alt={speaker.name} className="w-full h-[600px] object-cover rounded-[3.5rem] shadow-2xl border-4 border-white/5" />
+                <div className="absolute -bottom-8 -right-8 bg-[#c5a059] p-8 rounded-[2.5rem] shadow-2xl">
+                  <Shield className="w-10 h-10 text-white mb-2" />
+                  <p className="text-white font-black text-xl leading-tight text-center">Security<br/>Expert</p>
+                </div>
+              </div>
+              <div className="absolute inset-0 bg-[#c5a059]/10 blur-[100px] rounded-full scale-75"></div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+            >
+              <div className="inline-flex items-center gap-2 bg-white/5 text-[#c5a059] px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest mb-6 border border-white/10">
+                <Star className="w-4 h-4" /> Executive Speaker
+              </div>
+              <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight">
+                {speaker.name}
+              </h1>
+              <p className="text-2xl text-[#c5a059] font-bold mb-8 leading-relaxed max-w-xl">
+                {speaker.title}
+              </p>
+              
+              <div className="space-y-6 mb-12">
+                {K_DATA.positions.map((p, idx) => (
+                  <motion.div 
+                    key={idx}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="flex gap-4 items-start bg-white/5 p-5 rounded-3xl border border-white/5 hover:border-[#c5a059]/30 transition-all group"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-[#c5a059]/20 flex items-center justify-center text-[#c5a059] shrink-0 font-black text-xs group-hover:bg-[#c5a059] group-hover:text-white transition-colors">
+                      {idx + 1}
+                    </div>
+                    <p className="text-lg text-white/80 font-bold leading-relaxed">{p}</p>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-4">
+                <button 
+                  onClick={() => setIsBookingOpen(true)}
+                  className="bg-[#c5a059] text-white px-12 py-6 rounded-[2rem] font-black text-xl hover:scale-105 transition-all shadow-2xl shadow-[#c5a059]/20 flex items-center gap-3"
+                >
+                  จองวิทยากร / ติดต่องาน
+                  <Calendar className="w-6 h-6" />
+                </button>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
+
+      {/* Expertise Section */}
+      <section className="py-24 bg-white text-[#0f3460]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-black mb-4">Core Expertise</h2>
+            <p className="text-xl text-gray-500">ความเชี่ยวชาญระดับแนวหน้าเพื่อความมั่นคงของธุรกิจไทย</p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { title: 'Global Security', desc: 'วางระบบรักษาความปลอดภัยระดับสากล สำหรับบุคคลสำคัญและองค์กรธุรกิจระดับสูง', icon: Shield },
+              { title: 'Executive Management', desc: 'กลยุทธ์การบริหารจัดการองค์กรในยุคดิจิทัลและการปรับเปลี่ยนโครงสร้างธุรกิจ', icon: TrendingUp },
+              { title: 'Public Policy', desc: 'การขับเคลื่อนนโยบายดิจิทัลเพื่อเศรษฐกิจและสังคมในระดับประเทศ', icon: Target }
+            ].map((exp, idx) => (
+              <div key={idx} className="bg-gray-50 p-10 rounded-[3rem] border border-gray-100 hover:shadow-2xl transition-all duration-500">
+                <div className="w-16 h-16 bg-[#c5a059]/10 rounded-2xl flex items-center justify-center text-[#c5a059] mb-8">
+                  <exp.icon className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-black mb-4">{exp.title}</h3>
+                <p className="text-gray-600 leading-relaxed font-medium">{exp.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery */}
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {K_DATA.gallery.map((img, idx) => (
+              <motion.div 
+                key={idx}
+                whileHover={{ scale: 1.02 }}
+                className="rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white h-80"
+              >
+                <img src={img} alt={`Knight Kraiput ${idx}`} className="w-full h-full object-cover" />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <BookingWizard 
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
+        instructorId={speaker.id}
+        instructorName={speaker.name}
+        lineOA="@denmasterfa"
+        lineLink="https://lin.ee/3668941" // Placeholder link, usually matches the id
+        avatarUrl={speaker.image}
+      />
     </div>
   );
 };
@@ -655,6 +772,7 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
 /* ─── DEN MASTER FA DETAIL ─────────────────────────────────── */
 
 const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = ({ speaker, taughtCourses }) => {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
   return (
     <div className="bg-white min-h-screen font-sans">
       <SEO 
@@ -709,14 +827,12 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                 </div>
 
                 <div className="flex flex-wrap gap-4">
-                  <a 
-                    href={CONTACT_INFO.lineUrl}
-                    target="_blank"
-                    rel="noreferrer"
+                  <button 
+                    onClick={() => setIsBookingOpen(true)}
                     className="bg-[#c5a059] text-white px-10 py-5 rounded-2xl font-black text-lg hover:scale-105 transition-all shadow-lg shadow-[#c5a059]/20"
                   >
-                    ปรึกษาหลักสูตรองค์กร
-                  </a>
+                    จองวิทยากร / ขอหลักสูตรองค์กร
+                  </button>
                 </div>
               </motion.div>
             </div>
@@ -788,6 +904,16 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
           </div>
         </div>
       </section>
+
+      <BookingWizard 
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
+        instructorId={speaker.id}
+        instructorName={speaker.name}
+        lineOA="@denmasterfa"
+        lineLink="https://lin.ee/3668941"
+        avatarUrl={speaker.image}
+      />
     </div>
   );
 };
@@ -823,10 +949,20 @@ const SpeakerDetail: React.FC = () => {
   if (loading) return <div className="min-h-screen flex items-center justify-center"><div className="w-12 h-12 border-4 border-[#c5a059] border-t-transparent rounded-full animate-spin"></div></div>;
   if (!speaker) return <div className="min-h-screen flex items-center justify-center text-2xl font-black">Speaker Not Found</div>;
 
-  // PREMIUM ROUTING
-  if (speaker.slug === 'den-master-fa') return <DenMasterFaDetail speaker={speaker} taughtCourses={taughtCourses} />;
-  if (speaker.slug === 'kraiput-knight') return <KnightKraiputDetail speaker={speaker} taughtCourses={taughtCourses} />;
-  if (speaker.slug === 'dr-so') return <DrSoDetail speaker={speaker} taughtCourses={taughtCourses} />;
+  // PREMIUM ROUTING - Flexible slug matching to accommodate legacy and new links
+  const slug = speaker.slug?.toLowerCase();
+  
+  if (slug === 'den-master-fa' || slug === 'den-masterfa') {
+    return <DenMasterFaDetail speaker={speaker} taughtCourses={taughtCourses} />;
+  }
+  
+  if (slug === 'kraiput-knight' || slug === 'kraiput-intarayotha') {
+    return <KnightKraiputDetail speaker={speaker} taughtCourses={taughtCourses} />;
+  }
+  
+  if (slug === 'dr-so' || slug === 'dr-so-healing') {
+    return <DrSoDetail speaker={speaker} taughtCourses={taughtCourses} />;
+  }
 
   return <GenericDetail speaker={speaker} taughtCourses={taughtCourses} />;
 };

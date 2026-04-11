@@ -59,6 +59,14 @@ const createInfoRow = (label: string, value: any) => {
       if (drsoToken) LINE_TOKEN = drsoToken;
       if (drsoAdminId) LINE_ADMIN_ID = drsoAdminId;
     }
+
+    // Speaker Booking (Institute) Specific Configuration
+    if (project === 'SPEAKER_BOOKING') {
+      const capToken = Deno.env.get("CAP_VISION_LINE_TOKEN") || Deno.env.get("CEO_SF_LINE_TOKEN");
+      const capAdminId = Deno.env.get("CAP_VISION_LINE_ADMIN_ID") || Deno.env.get("CEO_SF_LINE_ADMIN_ID");
+      if (capToken) LINE_TOKEN = capToken;
+      if (capAdminId) LINE_ADMIN_ID = capAdminId;
+    }
     
     if (!LINE_TOKEN || !LINE_ADMIN_ID) {
       console.error("Missing LINE_TOKEN or LINE_ADMIN_ID");
@@ -72,13 +80,14 @@ const createInfoRow = (label: string, value: any) => {
     const altText = `แจ้งเตือนใหม่: ${formType}`;
 
     // --- TEMPLATE LOGIC ---
-    if (project === 'CEO_SPEECHFULNESS' || project === 'CEO_TIER' || project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER') {
-      const isDrSo = project === 'DR_SO' || project === 'SUB_SPEAKER';
-      const primaryColor = (project === 'CONTACT' || isDrSo) ? "#0F3460" : "#C5A059";
+    if (project === 'CEO_SPEECHFULNESS' || project === 'CEO_TIER' || project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING') {
+      const isAltProject = project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING';
+      const primaryColor = isAltProject ? "#0F3460" : "#C5A059";
       let headerText = "👑 NEW REGISTRATION";
       if (project === 'CONTACT') headerText = "✉️ NEW INQUIRY";
       if (project === 'DR_SO') headerText = "💎 DR. SO - SERVICE BOOKING";
       if (project === 'SUB_SPEAKER') headerText = "🧠 SUB-SPEAKER COURSE";
+      if (project === 'SPEAKER_BOOKING') headerText = "🎤 SPEAKER BOOKING";
       
       const contents = Object.entries(data)
         .map(([key, value]) => createInfoRow(key, value))
@@ -150,7 +159,7 @@ const createInfoRow = (label: string, value: any) => {
       };
 
       // --- BOOKING CODE TICKET VIBE ---
-      if ((project === 'DR_SO' || project === 'SUB_SPEAKER') && data['Booking Code']) {
+      if ((project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING') && data['Booking Code']) {
         messageObj.contents.body.contents.push({
           type: "box",
           layout: "vertical",

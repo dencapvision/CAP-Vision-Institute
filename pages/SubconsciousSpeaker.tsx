@@ -4,7 +4,7 @@ import {
   CheckCircle2, ChevronDown, MessageCircle,
   PhoneCall, Zap, Clock, Shield, Award,
   TrendingUp, Volume2, Eye, ArrowRight, Play,
-  Sparkles, Heart, Presentation, Target
+  Sparkles, Heart, Presentation, Target, Calendar, Quote
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';

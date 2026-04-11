@@ -69,7 +69,8 @@ const Footer: React.FC = () => {
               <li><Link to="/services#coaching" className="hover:text-[#c5a059] transition-colors">Executive Coaching</Link></li>
               <li><Link to="/services#consulting" className="hover:text-[#c5a059] transition-colors">OD Consulting</Link></li>
               <li><Link to="/services#facilitator" className="hover:text-[#c5a059] transition-colors">Facilitator Training</Link></li>
-              <li><Link to="/lms" className="hover:text-[#c5a059] transition-colors">Digital Learning Solutions</Link></li>
+              <li><Link to="/subconscious-speaker" className="hover:text-[#c5a059] transition-colors">Subconscious Speaker</Link></li>
+              <li><Link to="/web-app-pricing" className="hover:text-[#c5a059] transition-colors">Digital Learning Solutions</Link></li>
               <li><Link to="/contact" className="hover:text-[#c5a059] transition-colors">Customized Solutions</Link></li>
               <li><Link to="/services#leadership-roadmap" className="hover:text-[#c5a059] transition-colors">Leadership Roadmap</Link></li>
             </ul>

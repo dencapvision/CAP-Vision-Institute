@@ -7,7 +7,7 @@ import {
   Briefcase, MessageCircle, ExternalLink,
   Sparkles, BookOpen, Trophy, Newspaper,
   Phone, Building2, Layers3, ChevronRight,
-  FileText
+  FileText, Brain
 } from 'lucide-react';
 import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
 import Logo from './Logo';
@@ -112,6 +112,12 @@ const navItems: NavItem[] = [
         path: '/ceo-tier-community',
         icon: <Trophy className="w-4 h-4" />,
         description: 'Private Exchange Session สำหรับ CEO ระดับ 50-100M',
+      },
+      {
+        name: 'Subconscious Speaker',
+        path: '/subconscious-speaker',
+        icon: <Brain className="w-4 h-4" />,
+        description: 'Exclusive Course: ก้าวแรกสู่ วิทยากรจิตใต้สำนึก',
       },
       {
         name: 'The Facilitorium',

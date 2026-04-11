@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import {
   ArrowLeft, CheckCircle2, Award, Star, MessageCircle, Phone, BookOpen,
   ChevronRight, Zap, Users, Brain, Target, Quote, Calendar, TrendingUp, Shield,
-  Mic2, Sparkles, Heart, Presentation, ArrowRight, Building
+  Mic2, Sparkles, Heart, Presentation, ArrowRight, Building, Mail, Maximize2
 } from 'lucide-react';
 import { fetchInstructorBySlug } from '../services/instructors';
 import { fetchCourses } from '../services/courses';
@@ -161,16 +161,50 @@ const SO_SPECIFIC = {
 };
 
 const K_DATA = {
+  fullName: 'ไกรพุฒิ อินทรโยธา (ไนท์)',
+  contact: {
+    email: 'kraiput.i@newdice.co',
+    phone: '095-989-4153',
+    company: 'Newdice Co., Ltd.'
+  },
   positions: [
     'ผู้ช่วยประธานสภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย',
-    'คณะทำงานรัฐมนตรีว่าการกระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม',
+    'คณะทำงานรัฐมนตรีกระทรวงดิจิทัลเพื่อเศรษฐกิจและสังคม (ต.ค. 2022 - ปัจจุบัน)',
     'CEO, Guardian Global Security Co., Ltd.',
-    'ประธานเจ้าหน้าที่บริหาร (CEO) บริษัท นิวไดซ์ จำกัด',
+    'CEO, Newdice Co., Ltd.',
+    'ประธานโครงการท่องเที่ยวระดับพรีเมียม สภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย',
+    'คณะอนุกรรมการขับเคลื่อนอุตสาหกรรมซอฟต์พาวเวอร์ไทย ด้านการท่องเที่ยว'
+  ],
+  education: [
+    'ปริญญาโท รัฐประศาสนศาสตรมหาบัณฑิต (นโยบายสาธารณะและการจัดการเชิงกลยุทธ์) มหาวิทยาลัยเกษมบัณฑิต',
+    'ปริญญาตรี รัฐประศาสนศาสตรบัณฑิต (การบริหารงานตำรวจและกระบวนการยุติธรรม) สถาบันรัชต์ภาคย์'
+  ],
+  experience: [
+    'คณะทำงานประธานผู้ทรงคุณวุฒิสภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย (สทท.)',
+    'คณะทำงานฝ่ายการเมืองพรรคพลังประชารัฐ (2018 - 2022)',
+    'ที่ปรึกษาคณะธรรมาภิบาล กองทัพบก',
+    'ที่ปรึกษาบริษัทรักษาความปลอดภัย ซิลเวอร์ไนท์ โปรเฟสชันแนล จำกัด (2014 - 2022)'
+  ],
+  training: [
+    'หลักสูตรการบริหารจัดการด้านความปลอดภัยขั้นสูง (Advanced Security Management Program) รุ่นที่ 15',
+    'หลักสูตรการพัฒนาผู้บริหารระดับสูง (Executive Development Program) รุ่นที่ 2',
+    'หลักสูตรการบริหารงานยุติธรรมระดับสูง (Advanced Justice Administration) รุ่นที่ 1',
+    'ผ่านการอบรมด้านยุทธวิธีและการบริหารความมั่นคงมากกว่า 200 หลักสูตร'
   ],
   gallery: [
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha2.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha3.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha4.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha5.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha6.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha7.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha8.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha9.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha10.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha11.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha12.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha13.jpg'
   ]
 };
 
@@ -647,76 +681,89 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
   const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   return (
-    <div className="bg-[#050a14] min-h-screen text-white font-sans">
+    <div className="bg-[#050a14] min-h-screen text-white font-['Sarabun'] scroll-smooth">
       <SEO 
-        title={`${speaker.name} | ผู้เชี่ยวชาญด้านความปลอดภัยและการบริหารระดับสูง`}
+        title={`${speaker.name} | Expert in Security & Executive Management`}
         description={speaker.bio}
       />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 overflow-hidden">
+      <section className="relative pt-32 pb-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] to-[#050a14]"></div>
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] -mr-64 -mt-64"></div>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#c5a059]/10 rounded-full blur-[120px] -mr-64 -mt-64"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[120px] -ml-64 -mb-64"></div>
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <Link to="/speakers" className="inline-flex items-center gap-2 text-white/50 hover:text-[#c5a059] transition-colors mb-12 uppercase font-black text-sm">
-            <ArrowLeft className="w-4 h-4" /> วิทยากร
+          <Link to="/speakers" className="inline-flex items-center gap-2 text-white/50 hover:text-[#c5a059] transition-colors mb-12 uppercase font-black text-sm tracking-widest group">
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> วิทยากรทั้งหมด
           </Link>
           
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
               className="relative"
             >
-              <div className="relative z-10">
-                <img src={speaker.image} alt={speaker.name} className="w-full h-[600px] object-cover rounded-[3.5rem] shadow-2xl border-4 border-white/5" />
-                <div className="absolute -bottom-8 -right-8 bg-[#c5a059] p-8 rounded-[2.5rem] shadow-2xl">
-                  <Shield className="w-10 h-10 text-white mb-2" />
-                  <p className="text-white font-black text-xl leading-tight text-center">Security<br/>Expert</p>
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#c5a059] to-amber-200 rounded-[3.8rem] blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                <img 
+                  src={speaker.image} 
+                  alt={speaker.name} 
+                  className="relative w-full h-[650px] object-cover rounded-[3.5rem] shadow-2xl border-2 border-white/10" 
+                />
+                <div className="absolute -bottom-8 -right-8 flex flex-col gap-3">
+                  <div className="bg-[#c5a059] p-8 rounded-[2.5rem] shadow-2xl transform hover:scale-105 transition-all">
+                    <Shield className="w-10 h-10 text-white mb-2 mx-auto" />
+                    <p className="text-white font-black text-xl leading-tight text-center">Security<br/>Expert</p>
+                  </div>
                 </div>
               </div>
-              <div className="absolute inset-0 bg-[#c5a059]/10 blur-[100px] rounded-full scale-75"></div>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
+              initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="inline-flex items-center gap-2 bg-white/5 text-[#c5a059] px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest mb-6 border border-white/10">
-                <Star className="w-4 h-4" /> Executive Speaker
+              <div className="inline-flex items-center gap-3 bg-white/5 text-[#c5a059] px-6 py-3 rounded-full text-sm font-black uppercase tracking-[0.2em] mb-8 border border-[#c5a059]/30 backdrop-blur-md">
+                <Star className="w-4 h-4 fill-current" /> Executive Member
               </div>
-              <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight">
+              <h1 className="text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tight font-['Prompt']">
                 {speaker.name}
               </h1>
-              <p className="text-2xl text-[#c5a059] font-bold mb-8 leading-relaxed max-w-xl">
+              <p className="text-2xl md:text-3xl text-[#c5a059] font-bold mb-10 leading-relaxed border-l-4 border-[#c5a059] pl-6">
                 {speaker.title}
               </p>
               
-              <div className="space-y-6 mb-12">
-                {K_DATA.positions.map((p, idx) => (
-                  <motion.div 
-                    key={idx}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="flex gap-4 items-start bg-white/5 p-5 rounded-3xl border border-white/5 hover:border-[#c5a059]/30 transition-all group"
-                  >
-                    <div className="w-8 h-8 rounded-full bg-[#c5a059]/20 flex items-center justify-center text-[#c5a059] shrink-0 font-black text-xs group-hover:bg-[#c5a059] group-hover:text-white transition-colors">
-                      {idx + 1}
-                    </div>
-                    <p className="text-lg text-white/80 font-bold leading-relaxed">{p}</p>
-                  </motion.div>
-                ))}
+              <div className="grid gap-4 mb-12">
+                <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5 group hover:border-[#c5a059]/30 transition-all">
+                  <div className="w-12 h-12 bg-[#c5a059]/10 rounded-xl flex items-center justify-center text-[#c5a059]">
+                    <Mail className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase font-black text-white/40 tracking-widest">Email Address</p>
+                    <p className="font-bold text-lg">{K_DATA.contact.email}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5 group hover:border-[#c5a059]/30 transition-all">
+                  <div className="w-12 h-12 bg-[#c5a059]/10 rounded-xl flex items-center justify-center text-[#c5a059]">
+                    <Phone className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase font-black text-white/40 tracking-widest">Phone Number</p>
+                    <p className="font-bold text-lg">{K_DATA.contact.phone}</p>
+                  </div>
+                </div>
               </div>
 
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-6">
                 <button 
                   onClick={() => setIsBookingOpen(true)}
-                  className="bg-[#c5a059] text-white px-12 py-6 rounded-[2rem] font-black text-xl hover:scale-105 transition-all shadow-2xl shadow-[#c5a059]/20 flex items-center gap-3"
+                  className="bg-[#c5a059] text-white px-12 py-6 rounded-[2rem] font-black text-xl hover:bg-amber-400 hover:scale-105 transition-all shadow-2xl shadow-[#c5a059]/30 flex items-center gap-4 group"
                 >
-                  จองวิทยากร / ติดต่องาน
-                  <Calendar className="w-6 h-6" />
+                  ติดต่องาน / จองวิทยากร
+                  <Calendar className="w-6 h-6 group-hover:rotate-12 transition-transform" />
                 </button>
               </div>
             </motion.div>
@@ -724,46 +771,173 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
         </div>
       </section>
 
-      {/* Expertise Section */}
+      {/* Career highlights */}
       <section className="py-24 bg-white text-[#0f3460]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-black mb-4">Core Expertise</h2>
-            <p className="text-xl text-gray-500">ความเชี่ยวชาญระดับแนวหน้าเพื่อความมั่นคงของธุรกิจไทย</p>
+          <div className="flex flex-col lg:flex-row gap-20">
+            <div className="lg:w-1/2">
+              <h2 className="text-4xl md:text-5xl font-black mb-12 flex items-center gap-4 font-['Prompt']">
+                <Award className="text-[#c5a059] w-12 h-12" /> Current Positions
+              </h2>
+              <div className="space-y-6">
+                {K_DATA.positions.map((p, idx) => (
+                  <motion.div 
+                    key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="flex gap-6 items-start bg-gray-50 p-8 rounded-[2.5rem] border border-gray-100 hover:border-[#c5a059]/30 hover:bg-white hover:shadow-xl transition-all group"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-[#c5a059]/10 flex items-center justify-center text-[#c5a059] shrink-0 font-black group-hover:bg-[#c5a059] group-hover:text-white transition-colors">
+                      {idx + 1}
+                    </div>
+                    <p className="text-xl text-[#0f3460] font-bold leading-tight">{p}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            <div className="lg:w-1/2">
+              <h2 className="text-4xl md:text-5xl font-black mb-12 flex items-center gap-4 font-['Prompt']">
+                <BookOpen className="text-[#c5a059] w-12 h-12" /> Education & Background
+              </h2>
+              <div className="space-y-6 mb-16">
+                {K_DATA.education.map((edu, idx) => (
+                  <div key={idx} className="flex gap-6 items-start p-6 border-l-4 border-[#c5a059]/20 hover:border-[#c5a059] transition-all">
+                    <CheckCircle2 className="w-6 h-6 text-[#c5a059] shrink-0 mt-1" />
+                    <p className="text-xl font-bold text-[#0f3460] opacity-80">{edu}</p>
+                  </div>
+                ))}
+              </div>
+              
+              <h2 className="text-4xl md:text-5xl font-black mb-12 flex items-center gap-4 font-['Prompt']">
+                <TrendingUp className="text-[#c5a059] w-12 h-12" /> Professional Experience
+              </h2>
+              <div className="space-y-6">
+                {K_DATA.experience.map((exp, idx) => (
+                  <div key={idx} className="flex gap-6 items-start p-6 border-l-4 border-gray-100 hover:border-[#0f3460] transition-all">
+                    <div className="w-3 h-3 rounded-full bg-[#c5a059] shrink-0 mt-3"></div>
+                    <p className="text-xl font-bold text-[#0f3460] opacity-80">{exp}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Expertise & Training */}
+      <section className="py-32 bg-[#0a1628] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[120px] -mr-300 -mt-300"></div>
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl font-black mb-6 font-['Prompt']">Expertise & Milestone</h2>
+            <div className="w-24 h-2 bg-[#c5a059] mx-auto rounded-full"></div>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 gap-8">
+              {K_DATA.training.map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  whileHover={{ x: 10 }}
+                  className="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 flex items-start gap-6 group hover:bg-white/10 transition-all"
+                >
+                  <div className="w-14 h-14 bg-[#c5a059]/20 rounded-2xl flex items-center justify-center text-[#c5a059] group-hover:scale-110 transition-transform">
+                    {idx === 3 ? <Sparkles className="w-8 h-8" /> : <Award className="w-8 h-8" />}
+                  </div>
+                  <div>
+                    <p className="text-xl font-bold text-white leading-relaxed">{item}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            
+            <div className="relative">
+              <div className="absolute -inset-10 bg-[#c5a059]/10 blur-[100px] rounded-full"></div>
+              <div className="relative bg-gradient-to-br from-[#0f3460] to-[#16213e] p-12 rounded-[4rem] border border-[#c5a059]/30 shadow-3xl">
+                <Quote className="w-20 h-20 text-[#c5a059]/20 absolute top-10 right-10" />
+                <h3 className="text-4xl font-black mb-8 text-[#c5a059]">หลักสูตรเพื่อความสำเร็จ</h3>
+                <p className="text-2xl font-bold text-white/90 leading-relaxed mb-10 italic">
+                  "การบริหารจัดการความมั่นคงและนโยบายภาครัฐ คือหัวใจหลักของการขับเคลื่อนเศรษฐกิจในยุคดิจิทัล"
+                </p>
+                <div className="flex items-center gap-6">
+                  <img src={speaker.image} className="w-20 h-20 rounded-full object-cover border-2 border-[#c5a059]" alt={speaker.name} />
+                  <div>
+                    <p className="text-xl font-black">{speaker.name}</p>
+                    <p className="text-[#c5a059] font-bold tracking-widest">{speaker.title}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Premium Gallery Grid */}
+      <section className="py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <div className="md:w-2/3">
+              <h2 className="text-5xl font-black text-[#0f3460] mb-6 font-['Prompt']">Moments of Impact</h2>
+              <p className="text-2xl text-gray-400 font-bold leading-relaxed">
+                ภาพบรรยากาศการบรรยายและการทำงานระดับประเทศ ของคุณไกรพุฒิ อินทรโยธา
+              </p>
+            </div>
+            <p className="text-[#c5a059] font-black uppercase tracking-widest text-sm border-b-2 border-[#c5a059] pb-2">
+              Viewing 13 Exclusive Photos
+            </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { title: 'Global Security', desc: 'วางระบบรักษาความปลอดภัยระดับสากล สำหรับบุคคลสำคัญและองค์กรธุรกิจระดับสูง', icon: Shield },
-              { title: 'Executive Management', desc: 'กลยุทธ์การบริหารจัดการองค์กรในยุคดิจิทัลและการปรับเปลี่ยนโครงสร้างธุรกิจ', icon: TrendingUp },
-              { title: 'Public Policy', desc: 'การขับเคลื่อนนโยบายดิจิทัลเพื่อเศรษฐกิจและสังคมในระดับประเทศ', icon: Target }
-            ].map((exp, idx) => (
-              <div key={idx} className="bg-gray-50 p-10 rounded-[3rem] border border-gray-100 hover:shadow-2xl transition-all duration-500">
-                <div className="w-16 h-16 bg-[#c5a059]/10 rounded-2xl flex items-center justify-center text-[#c5a059] mb-8">
-                  <exp.icon className="w-8 h-8" />
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+            {K_DATA.gallery.map((img, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02 }}
+                className="relative group rounded-[2.5rem] overflow-hidden shadow-xl border-4 border-white cursor-pointer"
+              >
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050a14]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 flex items-end p-8">
+                  <p className="text-white font-black uppercase tracking-widest text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-500 flex items-center gap-2">
+                    <Maximize2 className="w-4 h-4" /> View Moment
+                  </p>
                 </div>
-                <h3 className="text-2xl font-black mb-4">{exp.title}</h3>
-                <p className="text-gray-600 leading-relaxed font-medium">{exp.desc}</p>
-              </div>
+                <img 
+                  src={img} 
+                  alt={`Moment ${idx + 1}`} 
+                  className="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-110" 
+                  loading="lazy"
+                />
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {K_DATA.gallery.map((img, idx) => (
-              <motion.div 
-                key={idx}
-                whileHover={{ scale: 1.02 }}
-                className="rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white h-80"
-              >
-                <img src={img} alt={`Knight Kraiput ${idx}`} className="w-full h-full object-cover" />
-              </motion.div>
-            ))}
-          </div>
+      {/* Final Call to Action */}
+      <section className="py-24 bg-[#0a1628] border-t border-white/5">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Shield className="w-20 h-20 text-[#c5a059] mx-auto mb-10 animate-pulse" />
+            <h2 className="text-5xl md:text-7xl font-black mb-10 leading-tight">
+              Bring Professional Expertise To Your Organization
+            </h2>
+            <p className="text-2xl text-white/60 mb-12 font-bold leading-relaxed">
+              พร้อมสำหรับการยกระดับความมั่นคงและการบริหารจัดการเชิงกลยุทธ์ทีมของคุณไปกับคุณไนท์
+            </p>
+            <button 
+              onClick={() => setIsBookingOpen(true)}
+              className="bg-white text-[#0f3460] px-16 py-8 rounded-[2.5rem] font-black text-2xl hover:bg-[#c5a059] hover:text-white transition-all shadow-3xl shadow-white/5"
+            >
+              ติดต่อจองบรรยาย / ปรึกษา
+            </button>
+          </motion.div>
         </div>
       </section>
 
@@ -773,7 +947,7 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
         instructorId={speaker.id}
         instructorName={speaker.name}
         lineOA="@denmasterfa"
-        lineLink="https://lin.ee/3668941" // Placeholder link, usually matches the id
+        lineLink="https://lin.ee/3668941"
         avatarUrl={speaker.image}
       />
     </div>

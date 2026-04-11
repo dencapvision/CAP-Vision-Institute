@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import {
-   ArrowRight, MessageCircle, ChevronDown,
-   GraduationCap, Users, Target, Laptop,
-   Search, BarChart3, Brain, CheckCircle2,
-   Shield, Layers3
+    ArrowRight, MessageCircle, ChevronDown,
+    GraduationCap, Users, Target, Laptop,
+    Search, BarChart3, Brain, CheckCircle2,
+    Shield, Layers3, Sparkles, Calendar, Rocket
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';

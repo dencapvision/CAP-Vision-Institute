@@ -101,10 +101,12 @@ const TESTIMONIALS = [
 const PACKAGES = [
   {
     id: 'early_bird',
-    tag: 'คุ้มค่าที่สุด',
+    tag: 'สิทธิ์พิเศษเฉพาะคุณ',
     name: 'Early Bird Rate 🕊️',
-    subtitle: 'สมัครก่อนใคร รับราคาพิเศษ',
+    subtitle: 'สมัครก่อนใคร รับราคาพิเศษที่สุด',
     price: 6500,
+    originalPrice: 12500,
+    deadline: '5 พฤษภาคม 2569',
     unit: '/ ท่าน',
     addOn: 'รวมอาหารกลางวัน & Coffee Break',
     color: '#c5a059',
@@ -118,26 +120,6 @@ const PACKAGES = [
     ],
     cta: 'ลงทะเบียน Early Bird',
     highlight: true,
-  },
-  {
-    id: 'regular',
-    tag: 'ราคาปกติ',
-    name: 'Regular Rate 💎',
-    subtitle: 'มาตรฐานการอบรมระดับสากล',
-    price: 12500,
-    unit: '/ ท่าน',
-    addOn: null,
-    color: '#0f3460',
-    features: [
-      'อบรมเข้มข้น 2 วันเต็ม',
-      'เรียนรู้กับวิทยากร 2 ท่านแบบใกล้ชิด',
-      'เอกสารประกอบการเรียนครบถ้วน',
-      'Workbook ส่วนตัวสำหรับโปรแกรมจิต',
-      'ใบประกาศนียบัตรรับรอง',
-      'เข้าถึงกลุ่มลับปรึกษาต่อเนื่อง',
-    ],
-    cta: 'ลงทะเบียนตอนนี้',
-    highlight: false,
   },
 ];
 
@@ -257,7 +239,7 @@ const SubconsciousSpeaker: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Users className="w-4 h-4 text-[#c5a059]" />
-                  จำกัดเพียง 20 ลที่นั่ง
+                  จำกัดเพียง 20 ที่นั่ง
                 </div>
               </motion.div>
             </div>
@@ -406,10 +388,10 @@ const SubconsciousSpeaker: React.FC = () => {
           <div className="text-center mb-16">
             <p className="text-[#c5a059] font-black uppercase tracking-widest text-sm mb-4">การลงทุนที่คุ้มค่าสูงสุดในชีวิต</p>
             <h2 className="text-4xl md:text-5xl font-black nav-font mb-4">บัตรเข้าร่วมการอบรม</h2>
-            <p className="text-white/60">คลาสพิเศษจำกัดเพียง 20 ลที่นั่ง เพื่อดูแลอย่างทั่วถึงที่สุด</p>
+            <p className="text-white/60">คลาสพิเศษจำกัดเพียง 20 ที่นั่ง เพื่อดูแลอย่างทั่วถึงที่สุด</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+          <div className="max-w-md mx-auto">
             {PACKAGES.map((pkg) => (
               <div
                 key={pkg.id}
@@ -425,12 +407,26 @@ const SubconsciousSpeaker: React.FC = () => {
                 
                 <div className="text-center mb-10">
                   <h3 className="text-3xl font-black nav-font mb-2">{pkg.name}</h3>
-                  <p className="text-white/40 mb-8">{pkg.subtitle}</p>
-                  <div className="flex items-end justify-center gap-1">
-                    <span className="text-6xl font-black text-[#c5a059] leading-none tracking-tighter">
-                      ฿{pkg.price.toLocaleString()}
-                    </span>
-                    <span className="text-white/40 font-bold mb-2">{pkg.unit}</span>
+                  <p className="text-white/40 mb-2">{pkg.subtitle}</p>
+                  
+                  {pkg.deadline && (
+                    <div className="bg-red-500/10 text-red-400 px-4 py-1.5 rounded-full text-xs font-black inline-block mb-8 border border-red-500/20">
+                      สิทธิ์นี้ใช้ได้ถึง {pkg.deadline} เท่านั้น
+                    </div>
+                  )}
+
+                  <div className="flex flex-col items-center justify-center gap-1">
+                    {pkg.originalPrice && (
+                      <span className="text-white/30 text-xl font-bold line-through mb-1">
+                        ปกติ ฿{pkg.originalPrice.toLocaleString()}
+                      </span>
+                    )}
+                    <div className="flex items-end gap-1">
+                      <span className="text-6xl font-black text-[#c5a059] leading-none tracking-tighter">
+                        ฿{pkg.price.toLocaleString()}
+                      </span>
+                      <span className="text-white/40 font-bold mb-2">{pkg.unit}</span>
+                    </div>
                   </div>
                   {pkg.addOn && <p className="text-green-400 font-bold mt-4">🎁 {pkg.addOn}</p>}
                 </div>
@@ -444,16 +440,21 @@ const SubconsciousSpeaker: React.FC = () => {
                   ))}
                 </div>
 
-                <button
-                  onClick={() => setShowBooking(true)}
-                  className={`w-full py-6 rounded-[2rem] font-black text-xl nav-transition active:scale-95 ${
-                    pkg.highlight 
-                      ? 'bg-[#c5a059] text-white hover:bg-amber-400 shadow-xl shadow-[#c5a059]/20' 
-                      : 'bg-white/10 text-white hover:bg-white/20'
-                  }`}
-                >
-                  {pkg.cta}
-                </button>
+                <div className="space-y-4">
+                  <button
+                    onClick={() => setShowBooking(true)}
+                    className={`w-full py-6 rounded-[2rem] font-black text-xl nav-transition active:scale-95 ${
+                      pkg.highlight 
+                        ? 'bg-[#c5a059] text-white hover:bg-amber-400 shadow-xl shadow-[#c5a059]/20' 
+                        : 'bg-white/10 text-white hover:bg-white/20'
+                    }`}
+                  >
+                    {pkg.cta}
+                  </button>
+                  <p className="text-center text-xs text-white/40 font-medium">
+                    * หลังจากนั้นปรับเป็นราคาปกติ
+                  </p>
+                </div>
               </div>
             ))}
           </div>

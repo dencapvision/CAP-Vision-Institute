@@ -20,15 +20,9 @@ const CourseConfig = {
   packages: {
     early_bird: {
       id: "early_bird",
-      name: "Early Bird 🕊️",
+      name: "Early Bird Rate 🕊️",
       price: 6500,
-      description: "สมัครล่วงหน้า รับส่วนลดพิเศษ"
-    },
-    regular: {
-      id: "regular",
-      name: "Normal Rate 💎",
-      price: 12500,
-      description: "ราคาปกติสำหรับการอบรม"
+      description: "ราคาส่งเสริมการเรียนรู้ (สิทธิ์ภายใน 5 พ.ค. 69)"
     }
   },
   bank: {
@@ -267,26 +261,26 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
                     <h4 className="text-2xl font-bold text-[#0f3460]">เลือกแพ็กเกจที่คุณต้องการ</h4>
                     <p className="text-gray-500 text-sm mt-2">จำกัดความรู้สู่ 20 ท่านผู้มีหัวใจวิทยากรเท่านั้น</p>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="max-w-md mx-auto">
                     {Object.values(CourseConfig.packages).map((pkg) => (
-                      <button
+                      <div
                         key={pkg.id}
-                        onClick={() => setFormData(f => ({ ...f, packageId: pkg.id }))}
-                        className={`p-6 rounded-2xl border-2 text-left transition-all ${
-                          formData.packageId === pkg.id 
-                            ? 'border-blue-600 bg-blue-50/30' 
-                            : 'border-gray-100 hover:border-blue-200 bg-white'
-                        }`}
+                        className="p-8 rounded-3xl border-2 border-blue-600 bg-blue-50/30 text-left relative overflow-hidden"
                       >
-                        <div className="flex justify-between items-start mb-4">
-                          <span className="font-bold text-[#0f3460]">{pkg.name}</span>
-                          {formData.packageId === pkg.id && <Check className="w-5 h-5 text-blue-600" />}
+                        <div className="absolute top-0 right-0 p-4">
+                          <Check className="w-6 h-6 text-blue-600" />
                         </div>
-                        <div className="text-2xl font-bold text-blue-700 mb-1">
-                          ฿{pkg.price.toLocaleString()}
+                        <div className="flex flex-col gap-2">
+                          <span className="font-bold text-[#0f3460] text-xl">{pkg.name}</span>
+                          <div className="text-4xl font-black text-blue-700">
+                            ฿{pkg.price.toLocaleString()}
+                          </div>
+                          <p className="text-gray-500 font-medium">{pkg.description}</p>
+                          <div className="mt-4 p-3 bg-white/50 rounded-xl border border-blue-100 text-xs text-blue-800 font-bold">
+                            ⚠️ หลังจากวันที่ 5 พ.ค. 69 ราคาจะปรับเป็น 12,500 บาท
+                          </div>
                         </div>
-                        <p className="text-sm text-gray-500">{pkg.description}</p>
-                      </button>
+                      </div>
                     ))}
                   </div>
                 </div>

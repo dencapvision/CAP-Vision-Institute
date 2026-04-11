@@ -427,7 +427,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
                   >
                     <div className="mb-4 text-[#c5a059] font-black text-sm uppercase tracking-widest">Pay per Session</div>
                     <div className="text-4xl font-black text-[#0f3460] mb-2">{PRICING.session.toLocaleString()} <span className="text-lg">THB</span></div>
-                    <p className="text-gray-500 font-bold">เข้าร่วมเฉพาะครั้ง เข้าถึงง่าย เพื่อทดสอบวงสนทนา</p>
+                    <p className="text-gray-500 font-bold">เข้าร่วมเฉพาะครั้ง เพื่อทดสอบวงสนทนา</p>
                     {formData.selected_plan === 'session' && <div className="absolute top-4 right-4 text-[#c5a059]"><Check className="w-6 h-6" /></div>}
                   </div>
 

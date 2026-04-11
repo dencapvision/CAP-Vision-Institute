@@ -89,13 +89,20 @@ const DEN_SPECIFIC = {
     'ท่านเริ่มต้นบรรยายและเป็นผู้นำกระบวนการเรียนรู้มาตั้งแต่ปี 2550 ตลอดเวลากว่า 18 ปี ผ่านเวทีการบรรยายกว่า 1,000 เวที ทั่วประเทศ ครอบคลุมทั้งภาครัฐ เอกชน รัฐวิสาหกิจ และสถาบันการศึกษา',
     'ท่านคือผู้คิดค้น CAP Theory หรือทฤษฎีการพัฒนาศักยภาพมนุษย์ ที่ช่วยให้ผู้เรียนค้นพบตัวตนที่แท้จริง พร้อมปลดล็อกข้อจำกัดทางความคิด และมีความเชี่ยวชาญพิเศษด้าน Learning Design โดยนำศาสตร์ Transformative Learning, Flow Learning และ Play to Learn มาผสมผสานกันอย่างลงตัว'
   ],
-  history: [
-    { year: 'ปัจจุบัน', title: 'ผู้อำนวยการสถาบันแคป วิชั่น', org: 'CAP Vision Institute / The CAP Vision Academy' },
-    { year: 'ปัจจุบัน', title: 'ผู้ร่วมก่อตั้ง', org: 'Facilitator for Thailand (FFT) & Dynamic School Thailand' },
-    { year: '2560', title: 'ผู้อำนวยการแผนกฝึกอบรม', org: 'บริษัท วิชวัน อินโฟ จำกัด' },
-    { year: '2558', title: 'วิทยากรฝึกอบรมฝ่ายขาย', org: 'บริษัท วงจิน โคเวย์ จำกัด' },
-    { year: '2550', title: 'ผู้จัดการฝ่ายวิชาการและการตลาด', org: 'บริษัท กู๊ดทอล์ค จำกัด' },
-    { year: '2549', title: 'ฝ่ายขายทางโทรศัพท์', org: 'บริษัท ไทยประกันชีวิต จำกัด' },
+  education: [
+    'ปริญญาตรี วิทยาศาสตรบัณฑิต (ฟิกสิกส์) มหาวิทยาลัยศรีนครินทรวิโรฒ (นิสิตรุ่น 47)'
+  ],
+  positions: [
+    'ผู้อำนวยการสถาบันแคป วิชั่น (CAP Vision Institute)',
+    'ผู้ร่วมก่อตั้ง Facilitator for Thailand (FFT)',
+    'ผู้ร่วมก่อตั้งโครงการ Dynamic School Thailand'
+  ],
+  experience: [
+    'ผู้อำนวยการแผนกฝึกอบรม บริษัท วิชวัน อินโฟ จำกัด (2560)',
+    'วิทยากรฝึกอบรมฝ่ายขาย บริษัท วงจิน โคเวย์ จำกัด (2558)',
+    'ผู้จัดการฝ่ายวิชาการและการตลาด บริษัท กู๊ดทอล์ค จำกัด (2550)',
+    'ฝ่ายขายทางโทรศัพท์ บริษัท ไทยประกันชีวิต จำกัด (2549)',
+    'ผู้นำกระบวนการเรียนรู้และวิทยากรกว่า 1,000 เวที ทั่วประเทศ'
   ],
   gallery: [
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa1.jpg',
@@ -1009,17 +1016,17 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-white"
             >
-              <div className="inline-flex items-center gap-3 bg-white/5 text-[#c5a059] px-6 py-3 rounded-full text-sm font-black uppercase tracking-[0.2em] mb-8 border border-[#c5a059]/30 backdrop-blur-md">
-                <Star className="w-4 h-4 fill-current" /> Platinum Master
+              <div className="inline-flex items-center gap-3 bg-[#c5a059] text-white px-6 py-3 rounded-full text-sm font-black uppercase tracking-[0.2em] mb-8 border border-white/20 shadow-lg shadow-[#c5a059]/30 backdrop-blur-md">
+                <Star className="w-4 h-4 fill-current text-white animate-pulse" /> Platinum Master
               </div>
               <h1 className="text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tight font-['Prompt']">
                 {speaker.name || "ครูเด่น มาสเตอร์ฟา"}
               </h1>
-              <p className="text-2xl md:text-3xl text-[#c5a059] font-bold mb-10 leading-relaxed border-l-4 border-[#c5a059] pl-6">
+              <p className="text-2xl md:text-3xl text-[#c5a059] font-black mb-10 leading-relaxed border-l-4 border-[#c5a059] pl-6 drop-shadow-md">
                 {speaker.title || DEN_SPECIFIC.heroHeadline}
               </p>
               
-              <p className="text-xl text-white/80 font-medium mb-12 italic max-w-2xl leading-relaxed">
+              <p className="text-xl text-white font-bold mb-12 italic max-w-2xl leading-relaxed drop-shadow-sm opacity-90">
                 {DEN_SPECIFIC.heroSub}
               </p>
 
@@ -1114,31 +1121,58 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         </div>
       </section>
 
-      {/* Career History (List format) */}
-      <section className="py-24 bg-gray-50">
+      {/* Career History (2-Column Premium layout) */}
+      <section className="py-24 bg-white text-[#0f3460]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 text-center md:text-left">
-            <div>
-              <h2 className="text-4xl md:text-6xl font-black text-[#0f3460] mb-4 font-['Prompt']">ประวัติการทำงานในองค์กร</h2>
-              <p className="text-xl text-gray-500 font-bold">ประสบการณ์ 18 ปี บนเส้นทางการพัฒนาบุคลากร</p>
-            </div>
-            <div className="w-24 h-1.5 bg-[#c5a059]"></div>
-          </div>
-          <div className="max-w-4xl mx-auto space-y-4">
-            {DEN_SPECIFIC.history.map((item, i) => (
-              <div key={i} className="flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center bg-white border border-gray-100 p-6 rounded-3xl hover:shadow-xl hover:border-[#c5a059]/30 transition-all group">
-                <div className="bg-[#0f4c75] text-[#c5a059] font-black px-6 py-2 rounded-xl text-lg w-full md:w-36 text-center shrink-0 group-hover:bg-[#c5a059] group-hover:text-white transition-colors">
-                  {item.year}
-                </div>
-                <div>
-                  <h3 className="text-xl font-black text-[#0f3460] mb-1 font-['Prompt']">{item.title}</h3>
-                  <p className="text-gray-600 font-medium flex items-center gap-2">
-                    <Building className="w-4 h-4 text-[#c5a059]" />
-                    {item.org}
-                  </p>
-                </div>
+          <div className="flex flex-col lg:flex-row gap-20">
+            <div className="lg:w-1/2">
+              <h2 className="text-4xl md:text-5xl font-black mb-12 flex items-center gap-4 font-['Prompt']">
+                <Award className="text-[#c5a059] w-12 h-12" /> Current Positions
+              </h2>
+              <div className="space-y-6">
+                {DEN_SPECIFIC.positions.map((p, idx) => (
+                  <motion.div 
+                    key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="flex gap-6 items-start bg-gray-50/80 p-8 rounded-[2.5rem] border border-gray-100 hover:border-[#c5a059]/30 hover:bg-white hover:shadow-2xl transition-all group"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-[#c5a059]/10 flex items-center justify-center text-[#c5a059] shrink-0 font-black group-hover:bg-[#c5a059] group-hover:text-white transition-colors">
+                      {idx + 1}
+                    </div>
+                    <p className="text-xl text-[#0f3460] font-black leading-tight">{p}</p>
+                  </motion.div>
+                ))}
               </div>
-            ))}
+            </div>
+            
+            <div className="lg:w-1/2">
+              <h2 className="text-4xl md:text-5xl font-black mb-12 flex items-center gap-4 font-['Prompt']">
+                <BookOpen className="text-[#c5a059] w-12 h-12" /> Education & Background
+              </h2>
+              <div className="space-y-6 mb-16">
+                {DEN_SPECIFIC.education.map((edu, idx) => (
+                  <div key={idx} className="flex gap-6 items-start p-6 border-l-4 border-[#c5a059]/20 hover:border-[#c5a059] transition-all bg-amber-50/30 rounded-r-2xl">
+                    <CheckCircle2 className="w-6 h-6 text-[#c5a059] shrink-0 mt-1" />
+                    <p className="text-xl font-black text-[#0f3460] opacity-90">{edu}</p>
+                  </div>
+                ))}
+              </div>
+              
+              <h2 className="text-4xl md:text-5xl font-black mb-12 flex items-center gap-4 font-['Prompt']">
+                <TrendingUp className="text-[#c5a059] w-12 h-12" /> Professional Experience
+              </h2>
+              <div className="space-y-6">
+                {DEN_SPECIFIC.experience.map((exp, idx) => (
+                  <div key={idx} className="flex gap-6 items-start p-6 border-l-4 border-gray-100 hover:border-[#0f3460] transition-all">
+                    <div className="w-3 h-3 rounded-full bg-[#c5a059] shrink-0 mt-3"></div>
+                    <p className="text-xl font-bold text-[#0f3460] opacity-80 leading-relaxed">{exp}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>

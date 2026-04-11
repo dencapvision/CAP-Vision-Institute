@@ -17,8 +17,8 @@ import { BookingWizard } from '../components/Speakers/BookingWizard';
 /* ─── PREMIUM DATA CONFIG ──────────────────────────────────── */
 
 const DEN_SPECIFIC = {
-  heroHeadline: 'วิทยากรอบรมองค์กร ที่เปลี่ยนพฤติกรรมคนได้จริง',
-  heroSub: 'ไม่ใช่แค่การพูดบนเวที\nแต่คือการเปลี่ยนวิธีคิดของคนทั้งองค์กร',
+  heroHeadline: 'ครูเด่น มาสเตอร์ฟา [Master Facilitator]',
+  heroSub: 'วิทยากรผู้เชี่ยวชาญด้านการพัฒนาทักษะผู้นำ การพูด การโค้ช การสร้างวิทยากร พัฒนาเครื่องมือการสอน\nและ ออกแบบกระบวนการเรียนรู้แบบครบวงจร เพื่อยกระดับ บุคคล และ องค์กรให้เติบโตอย่างยั่งยืน',
   stats: [
     { value: '18+', label: 'ปีประสบการณ์', icon: Shield },
     { value: '1,000+', label: 'เวทีทั่วประเทศ', icon: Award },
@@ -85,7 +85,7 @@ const DEN_SPECIFIC = {
     { text: 'เป็นวิทยากรที่ทำให้ห้องอบรมเงียบน้อยลงมากที่สุด เพราะทุกคนอยากพูด อยากมีส่วนร่วม ผลลัพธ์ชัดเจนมาก', author: 'Learning & Development Lead — MNC', role: 'L&D Director' },
   ],
   bio: [
-    'อาจารย์อนุสรณ์ หนองนา (ครูเด่น / มาสเตอร์ฟา) ปัจจุบันดำรงตำแหน่งผู้อำนวยการสถาบันแคป วิชั่น (CAP Vision Institute) และเป็นผู้ร่วมก่อตั้ง Facilitator for Thailand (FFT) ตลอดจนร่วมก่อตั้งโครงการ Dynamic School Thailand',
+    'อาจารย์อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา) ปัจจุบันดำรงตำแหน่งผู้อำนวยการสถาบันแคป วิชั่น (CAP Vision Institute) และเป็นผู้ร่วมก่อตั้ง Facilitator for Thailand (FFT) ตลอดจนร่วมก่อตั้งโครงการ Dynamic School Thailand',
     'ท่านเริ่มต้นบรรยายและเป็นผู้นำกระบวนการเรียนรู้มาตั้งแต่ปี 2550 ตลอดเวลากว่า 18 ปี ผ่านเวทีการบรรยายกว่า 1,000 เวที ทั่วประเทศ ครอบคลุมทั้งภาครัฐ เอกชน รัฐวิสาหกิจ และสถาบันการศึกษา',
     'ท่านคือผู้คิดค้น CAP Theory หรือทฤษฎีการพัฒนาศักยภาพมนุษย์ ที่ช่วยให้ผู้เรียนค้นพบตัวตนที่แท้จริง พร้อมปลดล็อกข้อจำกัดทางความคิด และมีความเชี่ยวชาญพิเศษด้าน Learning Design โดยนำศาสตร์ Transformative Learning, Flow Learning และ Play to Learn มาผสมผสานกันอย่างลงตัว'
   ],
@@ -105,10 +105,6 @@ const DEN_SPECIFIC = {
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa13.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa14.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa2.jpg',
-    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa3.jpg',
-    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa4.jpg',
-    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa5.jpg',
-    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa6.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa7.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa8.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa9.jpg',
@@ -789,7 +785,7 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
 const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = ({ speaker, taughtCourses }) => {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   return (
-    <div className="bg-white min-h-screen font-sans">
+    <div className="bg-white min-h-screen font-['Sarabun']">
       <SEO 
         title="ครูเด่น มาสเตอร์ฟา | Master Facilitator & Speaker อบรมองค์กร"
         description="ครูเด่น ผู้เชี่ยวชาญด้านกระบวนการเรียนรู้และพัฒนาผู้นำ เปลี่ยนวัฒนธรรมองค์กรด้วย Facilitation และ Active Learning"
@@ -823,7 +819,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight">
+                <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight font-['Prompt']">
                   {speaker.name}
                 </h1>
                 <p className="text-2xl text-[#c5a059] font-bold mb-4 leading-relaxed">{DEN_SPECIFIC.heroHeadline}</p>
@@ -860,7 +856,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         <div className="max-w-4xl mx-auto px-6">
           <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border border-gray-100 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-amber-50 rounded-full blur-3xl opacity-50 -mr-20 -mt-20"></div>
-            <h2 className="text-3xl font-black text-[#0f3460] mb-8 flex items-center gap-3 relative z-10">
+            <h2 className="text-3xl font-black text-[#0f3460] mb-8 flex items-center gap-3 relative z-10 font-['Prompt']">
               <BookOpen className="text-[#c5a059] w-8 h-8" /> ประวัติวิทยากร
             </h2>
             <div className="space-y-6 text-lg text-gray-700 leading-relaxed font-medium relative z-10">
@@ -876,7 +872,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
       <section className="py-24 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-[#0f3460] mb-4">ความเชี่ยวชาญเฉพาะด้าน</h2>
+            <h2 className="text-4xl font-black text-[#0f3460] mb-4 font-['Prompt']">ความเชี่ยวชาญเฉพาะด้าน</h2>
             <p className="text-xl text-gray-500">ยกระดับศักยภาพด้วยศาสตร์และนวัตกรรมการเรียนรู้</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -885,7 +881,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                 <div className="w-14 h-14 bg-[#0f3460] rounded-2xl flex items-center justify-center text-white mb-6 group-hover:bg-[#c5a059] transition-colors">
                   <Star className="w-6 h-6" />
                 </div>
-                <h3 className="text-xl font-black text-[#0f3460] mb-3">{area.category}</h3>
+                <h3 className="text-xl font-black text-[#0f3460] mb-3 font-['Prompt']">{area.category}</h3>
                 <p className="text-sm text-gray-500 mb-6 font-medium md:h-16">{area.desc}</p>
                 <ul className="space-y-3">
                   {area.items.map((item, i) => (
@@ -905,7 +901,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-[#0f3460] mb-4">ประวัติการทำงานในองค์กร</h2>
+            <h2 className="text-4xl font-black text-[#0f3460] mb-4 font-['Prompt']">ประวัติการทำงานในองค์กร</h2>
             <p className="text-xl text-gray-500">ประสบการณ์ 18 ปี บนเส้นทางการพัฒนาบุคลากร</p>
           </div>
           <div className="max-w-4xl mx-auto space-y-4">
@@ -915,7 +911,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                   {item.year}
                 </div>
                 <div>
-                  <h3 className="text-xl font-black text-[#0f3460] mb-1">{item.title}</h3>
+                  <h3 className="text-xl font-black text-[#0f3460] mb-1 font-['Prompt']">{item.title}</h3>
                   <p className="text-gray-600 font-medium flex items-center gap-2">
                     <Building className="w-4 h-4 text-[#c5a059]" />
                     {item.org}
@@ -931,7 +927,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
       <section className="py-24 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-[#0f3460] mb-4">The CAP Framework</h2>
+            <h2 className="text-4xl font-black text-[#0f3460] mb-4 font-['Prompt']">The CAP Framework</h2>
             <p className="text-xl text-gray-500">ปรัชญาการพัฒนาคนสไตล์ CAP Vision Institute</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -940,7 +936,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                 <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${v.color} text-white flex items-center justify-center mb-8 text-3xl font-black`}>
                   {v.letter}
                 </div>
-                <h3 className="text-2xl font-black text-[#0f3460] mb-2">{v.title}</h3>
+                <h3 className="text-2xl font-black text-[#0f3460] mb-2 font-['Prompt']">{v.title}</h3>
                 <p className="text-[#c5a059] font-black mb-6">{v.titleTh}</p>
                 <p className="text-gray-600 leading-relaxed">{v.desc}</p>
               </div>
@@ -954,7 +950,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div>
-              <h2 className="text-4xl font-black text-[#0f3460] mb-8">Methodology</h2>
+              <h2 className="text-4xl font-black text-[#0f3460] mb-8 font-['Prompt']">Methodology</h2>
               <p className="text-xl text-gray-600 mb-12">เราไม่ได้มองหาแค่การเรียนรู้ แต่เรามองหาการ "ตื่นรู้" และการเปลี่ยนแปลงที่จับต้องได้</p>
               <div className="space-y-6">
                 {DEN_SPECIFIC.methodologies.map((m, i) => (
@@ -963,7 +959,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                       {m.index}
                     </div>
                     <div>
-                      <h4 className="text-xl font-black text-[#0f3460] mb-1">{m.name}</h4>
+                      <h4 className="text-xl font-black text-[#0f3460] mb-1 font-['Prompt']">{m.name}</h4>
                       <p className="text-gray-500">{m.desc}</p>
                     </div>
                   </div>
@@ -986,7 +982,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-end mb-16">
             <div>
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Activity Gallery</h2>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-4 font-['Prompt']">Activity Gallery</h2>
               <div className="h-1.5 w-24 bg-[#c5a059]"></div>
             </div>
             <p className="text-white/50 font-bold italic hidden md:block">Moments in Action</p>

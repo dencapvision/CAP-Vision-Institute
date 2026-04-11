@@ -90,7 +90,7 @@ const DEN_SPECIFIC = {
     'ท่านคือผู้คิดค้น CAP Theory หรือทฤษฎีการพัฒนาศักยภาพมนุษย์ ที่ช่วยให้ผู้เรียนค้นพบตัวตนที่แท้จริง พร้อมปลดล็อกข้อจำกัดทางความคิด และมีความเชี่ยวชาญพิเศษด้าน Learning Design โดยนำศาสตร์ Transformative Learning, Flow Learning และ Play to Learn มาผสมผสานกันอย่างลงตัว'
   ],
   education: [
-    'ปริญญาตรี วิทยาศาสตรบัณฑิต (ฟิกสิกส์) มหาวิทยาลัยศรีนครินทรวิโรฒ (นิสิตรุ่น 47)'
+    'ปริญญาตรี วิทยาศาสตรบัณฑิต (ฟิสิกส์) มหาวิทยาลัยศรีนครินทรวิโรฒ'
   ],
   positions: [
     'ผู้อำนวยการสถาบันแคป วิชั่น (CAP Vision Institute)',
@@ -1019,7 +1019,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
               <div className="inline-flex items-center gap-3 bg-[#c5a059] text-white px-6 py-3 rounded-full text-sm font-black uppercase tracking-[0.2em] mb-8 border border-white/20 shadow-lg shadow-[#c5a059]/30 backdrop-blur-md">
                 <Star className="w-4 h-4 fill-current text-white animate-pulse" /> Platinum Master
               </div>
-              <h1 className="text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tight font-['Prompt']">
+              <h1 className="text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tight font-['Prompt'] text-[#c5a059]">
                 {speaker.name || "ครูเด่น มาสเตอร์ฟา"}
               </h1>
               <p className="text-2xl md:text-3xl text-[#c5a059] font-black mb-10 leading-relaxed border-l-4 border-[#c5a059] pl-6 drop-shadow-md">

@@ -250,6 +250,26 @@ const K_DATA = {
 
 /* ─── GENERIC DETAIL ───────────────────────────────────────── */
 
+const BookingButton: React.FC<{ className?: string, variant?: 'gold' | 'outline' }> = ({ className = "", variant = 'gold' }) => {
+  const baseStyles = "w-full py-5 rounded-2xl font-black text-lg transition-all shadow-xl flex items-center justify-center gap-3";
+  const variants = {
+    gold: "bg-[#c5a059] text-white hover:bg-amber-400 hover:scale-[1.02] shadow-[#c5a059]/30",
+    outline: "bg-white/5 border-2 border-[#c5a059] text-[#c5a059] hover:bg-[#c5a059] hover:text-white"
+  };
+
+  return (
+    <a 
+      href="https://capvisionpartner.com/contact" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className={`${baseStyles} ${variants[variant]} ${className}`}
+    >
+      จองวิทยากร / ขอหลักสูตรองค์กร
+      <Calendar className="w-5 h-5" />
+    </a>
+  );
+};
+
 /* ─── COMPONENTS ───────────────────────────────────────────── */
 
 const CoursePromoCard: React.FC<{ instructorName: string }> = ({ instructorName }) => (
@@ -310,7 +330,8 @@ const GenericDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> 
           </Link>
           <div className="flex flex-col lg:flex-row gap-16 items-center">
             <div className="lg:w-1/3">
-              <img src={speaker.image} alt={speaker.name} className="w-full h-[400px] object-cover rounded-[2.5rem] shadow-2xl" />
+              <img src={speaker.image} alt={speaker.name} className="w-full h-[400px] object-cover rounded-[2.5rem] shadow-2xl mb-6" />
+              <BookingButton />
             </div>
             <div className="lg:w-2/3">
               <h1 className="text-4xl md:text-5xl font-black mb-4">{speaker.name}</h1>
@@ -356,8 +377,11 @@ const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = (
                 className="relative"
               >
                 <img src={speaker.image} alt={SO_SPECIFIC.fullName} className="w-full h-[550px] object-cover rounded-[2.5rem] shadow-2xl border-4 border-white/10" />
-                <div className="absolute -bottom-6 -right-6 bg-[#c5a059] p-6 rounded-3xl shadow-xl hidden md:block">
+                <div className="absolute -bottom-6 -right-6 bg-[#c5a059] p-6 rounded-3xl shadow-xl hidden md:block z-20">
                   <p className="text-white font-black text-center leading-tight">วิทยากร<br/>จิตใต้สำนึก</p>
+                </div>
+                <div className="mt-8">
+                  <BookingButton />
                 </div>
               </motion.div>
             </div>
@@ -377,12 +401,14 @@ const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = (
                   {speaker.title || SO_SPECIFIC.heroSub}
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  <button 
-                    onClick={() => openBooking('personal')} 
-                    className="bg-[#c5a059] text-white px-10 py-5 rounded-2xl font-black text-lg hover:scale-105 transition-all shadow-lg shadow-[#c5a059]/20"
+                  <a 
+                    href="https://capvisionpartner.com/contact" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-[#c5a059] text-white px-10 py-5 rounded-2xl font-black text-lg hover:scale-105 transition-all shadow-lg shadow-[#c5a059]/20 flex items-center gap-3"
                   >
                     จองวิทยากร / ขอหลักสูตรองค์กร
-                  </button>
+                  </a>
                 </div>
               </motion.div>
             </div>
@@ -604,12 +630,14 @@ const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = (
                 <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#c5a059] shrink-0" /> การสื่อสารเพื่อความสำเร็จในงาน</li>
               </ul>
               <div className="mt-auto w-full">
-                <button 
-                  onClick={() => openBooking('workshop')} 
-                  className="w-full bg-[#0f3460] text-white py-5 rounded-2xl font-black hover:bg-[#c5a059] transition-all shadow-xl"
+                <a 
+                  href="https://capvisionpartner.com/contact" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block w-full text-center bg-[#0f3460] text-white py-5 rounded-2xl font-black hover:bg-[#c5a059] transition-all shadow-xl"
                 >
                   ขอเสนอโครงการองค์กร
-                </button>
+                </a>
               </div>
             </motion.div>
           </div>
@@ -756,12 +784,15 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
                   alt={speaker.name} 
                   className="relative w-full h-[650px] object-cover rounded-[3.5rem] shadow-2xl border-2 border-white/10" 
                 />
-                <div className="absolute -bottom-8 -right-8 flex flex-col gap-3">
+                <div className="absolute -bottom-8 -right-8 flex flex-col gap-3 z-20">
                   <div className="bg-[#c5a059] p-8 rounded-[2.5rem] shadow-2xl transform hover:scale-105 transition-all">
                     <Shield className="w-10 h-10 text-white mb-2 mx-auto" />
                     <p className="text-white font-black text-xl leading-tight text-center">Security<br/>Expert</p>
                   </div>
                 </div>
+              </div>
+              <div className="mt-12">
+                <BookingButton />
               </div>
             </motion.div>
 
@@ -802,13 +833,15 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
               </div>
 
               <div className="flex flex-wrap gap-6">
-                <button 
-                  onClick={() => setIsBookingOpen(true)}
+                <a 
+                  href="https://capvisionpartner.com/contact" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
                   className="bg-[#c5a059] text-white px-12 py-6 rounded-[2rem] font-black text-xl hover:bg-amber-400 hover:scale-105 transition-all shadow-2xl shadow-[#c5a059]/30 flex items-center gap-4 group"
                 >
                   ติดต่องาน / จองวิทยากร
                   <Calendar className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-                </button>
+                </a>
               </div>
             </motion.div>
           </div>
@@ -975,12 +1008,14 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
             <p className="text-2xl text-white/60 mb-12 font-bold leading-relaxed">
               พร้อมสำหรับการยกระดับความมั่นคงและการบริหารจัดการเชิงกลยุทธ์ทีมของคุณไปกับคุณไนท์
             </p>
-            <button 
-              onClick={() => setIsBookingOpen(true)}
-              className="bg-white text-[#0f3460] px-16 py-8 rounded-[2.5rem] font-black text-2xl hover:bg-[#c5a059] hover:text-white transition-all shadow-3xl shadow-white/5"
+            <a 
+              href="https://capvisionpartner.com/contact" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-white text-[#0f3460] px-16 py-8 rounded-[2.5rem] font-black text-2xl hover:bg-[#c5a059] hover:text-white transition-all shadow-3xl shadow-white/5 inline-block"
             >
               ติดต่อจองบรรยาย / ปรึกษา
-            </button>
+            </a>
           </motion.div>
         </div>
       </section>
@@ -1034,12 +1069,15 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                   alt={speaker.name} 
                   className="relative w-full h-[650px] object-cover rounded-[3.5rem] shadow-2xl border-2 border-white/10" 
                 />
-                <div className="absolute -bottom-8 -right-8 flex flex-col gap-3">
+                <div className="absolute -bottom-8 -right-8 flex flex-col gap-3 z-20">
                   <div className="bg-[#c5a059] p-8 rounded-[2.5rem] shadow-2xl transform hover:scale-105 transition-all">
                     <Brain className="w-10 h-10 text-white mb-2 mx-auto" />
                     <p className="text-white font-black text-xl leading-tight text-center">Master<br/>Facilitator</p>
                   </div>
                 </div>
+              </div>
+              <div className="mt-12">
+                <BookingButton />
               </div>
             </motion.div>
 
@@ -1076,13 +1114,15 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
               </div>
 
               <div className="flex flex-wrap gap-6 items-center">
-                <button 
-                  onClick={() => setIsBookingOpen(true)}
+                <a 
+                  href="https://capvisionpartner.com/contact" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
                   className="bg-[#c5a059] text-white px-12 py-6 rounded-[2rem] font-black text-xl hover:bg-amber-400 hover:scale-105 transition-all shadow-2xl shadow-[#c5a059]/30 flex items-center gap-4 group"
                 >
                   ติดต่องาน / จองวิทยากร
                   <Calendar className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-                </button>
+                </a>
 
                 <div className="flex flex-wrap gap-4 items-center">
                   <a href={DEN_SPECIFIC.contact.line} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#06C755] rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform shadow-lg border-2 border-white/20" title="Line OA">

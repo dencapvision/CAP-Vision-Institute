@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 import {
   ArrowLeft, CheckCircle2, Award, Star, MessageCircle, Phone, BookOpen,
   ChevronRight, Zap, Users, Brain, Target, Quote, Calendar, TrendingUp, Shield,
-  Mic2, Sparkles, Heart, Presentation, ArrowRight, Building, Mail, Maximize2
+  Mic2, Sparkles, Heart, Presentation, ArrowRight, Building, Mail, Maximize2,
+  Facebook, Instagram, Linkedin, Youtube, Music
 } from 'lucide-react';
 import { fetchInstructorBySlug } from '../services/instructors';
 import { fetchCourses } from '../services/courses';
@@ -119,6 +120,38 @@ const DEN_SPECIFIC = {
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den_dsr.so3.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/denmasterfa.jpg'
   ],
+  contact: {
+    line: 'https://lin.ee/OO6jotG',
+    lineId: '@denmasterfa',
+    tiktok: 'https://www.tiktok.com/@denmasterfa?_r=1&_t=ZS-95SSRs5UGxh',
+    facebook: 'https://www.facebook.com/cheumkon/',
+    instagram: 'https://www.instagram.com/denmasterfa',
+    linkedin: 'https://www.linkedin.com/in/denmasterfa',
+    youtube: 'https://youtube.com/@thecapvision?si=2pij5lz-xIOJs-a5',
+    phone: '093-223-5919'
+  },
+  services: [
+    {
+      title: 'ที่ปรึกษาด้านการพัฒนาบุคลากรภายในองค์กร',
+      link: '/services',
+      icon: Users
+    },
+    {
+      title: 'ที่ปรึกษาการพัฒนาทักษะการสื่อสารสำหรับผู้บริหาร',
+      link: '/ceo-speechfulness',
+      icon: Mic2
+    },
+    {
+      title: 'ที่ปรึกษาดิจิทัลโดยครูเด่น มาสเตอร์ฟา',
+      link: '/web-app-pricing',
+      icon: Zap
+    },
+    {
+      title: 'สร้างพื้นที่และระบบการพัฒนาวิทยากรมืออาชีพ',
+      link: 'https://facilitorium.denmasterfa.com/',
+      icon: Sparkles
+    }
+  ]
 };
 
 const SO_SPECIFIC = {
@@ -1042,7 +1075,7 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                 ))}
               </div>
 
-              <div className="flex flex-wrap gap-6">
+              <div className="flex flex-wrap gap-6 items-center">
                 <button 
                   onClick={() => setIsBookingOpen(true)}
                   className="bg-[#c5a059] text-white px-12 py-6 rounded-[2rem] font-black text-xl hover:bg-amber-400 hover:scale-105 transition-all shadow-2xl shadow-[#c5a059]/30 flex items-center gap-4 group"
@@ -1050,6 +1083,30 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                   ติดต่องาน / จองวิทยากร
                   <Calendar className="w-6 h-6 group-hover:rotate-12 transition-transform" />
                 </button>
+
+                <div className="flex flex-wrap gap-4 items-center">
+                  <a href={DEN_SPECIFIC.contact.line} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#06C755] rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform shadow-lg border-2 border-white/20" title="Line OA">
+                    <MessageCircle className="w-6 h-6" />
+                  </a>
+                  <a href={DEN_SPECIFIC.contact.facebook} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#1877F2] rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform shadow-lg border-2 border-white/20" title="Facebook">
+                    <Facebook className="w-6 h-6" />
+                  </a>
+                  <a href={DEN_SPECIFIC.contact.tiktok} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-black rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform shadow-lg border-2 border-white/20" title="TikTok">
+                    <Music className="w-6 h-6" />
+                  </a>
+                  <a href={DEN_SPECIFIC.contact.instagram} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform shadow-lg border-2 border-white/20" title="Instagram">
+                    <Instagram className="w-6 h-6" />
+                  </a>
+                  <a href={DEN_SPECIFIC.contact.linkedin} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#0077b5] rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform shadow-lg border-2 border-white/20" title="LinkedIn">
+                    <Linkedin className="w-6 h-6" />
+                  </a>
+                  <a href={DEN_SPECIFIC.contact.youtube} target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-[#FF0000] rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform shadow-lg border-2 border-white/20" title="YouTube">
+                    <Youtube className="w-6 h-6" />
+                  </a>
+                  <a href={`tel:${DEN_SPECIFIC.contact.phone}`} className="w-12 h-12 bg-gray-500 rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform shadow-lg border-2 border-white/20" title="โทรเลย">
+                    <Phone className="w-6 h-6" />
+                  </a>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -1249,6 +1306,45 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         </div>
       </section>
 
+      {/* Premium Services Section */}
+      <section className="py-32 bg-white scroll-mt-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-5xl font-black text-[#0f3460] mb-6 font-['Prompt']">Premium Consultation & Services</h2>
+            <p className="text-2xl text-gray-500 font-bold">โซลูชันระดับพรีเมี่ยมเพื่อความสำเร็จอย่างยั่งยืนขององค์กร</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {DEN_SPECIFIC.services.map((item, idx) => {
+              const isExternal = item.link.startsWith('http');
+              const Component = isExternal ? 'a' : Link;
+              const linkProps = isExternal 
+                ? { href: item.link, target: "_blank", rel: "noopener noreferrer" }
+                : { to: item.link };
+
+              return (
+                <Component 
+                  key={idx}
+                  {...(linkProps as any)}
+                  className="group relative bg-[#0f3460] rounded-[3rem] p-12 overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-[#c5a059]/20 border border-white/10 flex flex-col h-full"
+                >
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#c5a059]/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-[#c5a059]/20 transition-all duration-700"></div>
+                  <div className="w-16 h-16 bg-[#c5a059] rounded-2xl flex items-center justify-center text-white mb-8 shadow-xl group-hover:rotate-12 transition-transform duration-500">
+                    <item.icon className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-2xl font-black text-white mb-6 font-['Prompt'] leading-tight group-hover:text-[#c5a059] transition-colors">
+                    {item.title}
+                  </h3>
+                  <div className="mt-auto inline-flex items-center gap-3 text-[#c5a059] font-black uppercase tracking-widest text-sm">
+                    รายละเอียดบริการ <ChevronRight className="w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                  </div>
+                </Component>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Gallery - Masonry Style (Like Kraiput) */}
       <section className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6">
@@ -1298,8 +1394,8 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         onClose={() => setIsBookingOpen(false)}
         instructorId={speaker.id}
         instructorName={speaker.name}
-        lineOA="@denmasterfa"
-        lineLink="https://lin.ee/3668941"
+        lineOA={DEN_SPECIFIC.contact.lineId}
+        lineLink={DEN_SPECIFIC.contact.line}
         avatarUrl={speaker.image}
       />
     </div>

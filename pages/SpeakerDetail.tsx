@@ -103,19 +103,37 @@ const DEN_SPECIFIC = {
 };
 
 const SO_SPECIFIC = {
-  heroHeadline: 'ปลดล็อกศักยภาพ สื่อสารอย่างทรงพลังจากภายใน',
-  heroSub: '“เปลี่ยนคนธรรมดา ให้กลายเป็นวิทยากรมืออาชีพ ด้วยพลังจิตใต้สำนึก”',
+  fullName: 'อาจารย์ ดร.พิศลยา บัวแก้ว (Dr. So)',
+  heroHeadline: 'ปลดล็อกพลังจิตใต้สำนึก สื่อสารให้เข้าถึงใจและเปลี่ยนคนได้จริง',
+  heroSub: '“การสื่อสารที่ทรงพลังที่สุด ไม่ได้เริ่มจากคำพูด…แต่เริ่มจากจิตใต้สำนึก”',
   stats: [
-    { value: 'Dr.', label: 'ปริญญาเอก สันติศึกษา', icon: Award },
-    { value: 'Expert', label: 'Subconscious Guru', icon: Brain },
-    { value: 'Success', label: 'เห็นผลลัพธ์จริง', icon: Target },
-    { value: 'Award', label: 'วิทยากรพหุภาคี', icon: Shield },
+    { value: 'Dr.', label: 'พุทธศาสตรดุษฎีบัณฑิต (สันติศึกษา)', icon: Award },
+    { value: 'Expert', label: 'วิศวกรสันติภาพ', icon: Shield },
+    { value: 'Guru', label: 'Subconscious Guru', icon: Brain },
+    { value: 'Award', label: 'ผู้อำนวยการศูนย์พัฒนาศักยภาพฯ', icon: Star },
+  ],
+  principles: [
+    'ปลดล็อกข้อจำกัดภายใน (Break Free)',
+    'ค้นพบตัวตนที่แท้จริง (Authentic Self)',
+    'พัฒนาการสื่อสารที่ตรงใจผู้ฟัง (Deep Connection)',
   ],
   expertise: [
-    { title: 'Subconscious Mind', desc: 'การใช้พลังจิตใต้สำนึกเพื่อการสื่อสารระดับลึก', icon: Brain },
-    { title: 'Speaking Identity', desc: 'ค้นหาและพัฒนาเสน่ห์การพูดเฉพาะตัว', icon: Zap },
-    { title: 'Heart-to-Heart', desc: 'การสื่อสารเพื่อเข้าถึงใจและเปลี่ยนพฤติกรรม', icon: Heart },
+    { title: 'Subconscious Programming', desc: 'การประยุกต์ใช้พลังจิตใต้สำนึกเพื่อการสื่อสารระดับลึก', icon: Brain },
+    { title: 'Subconscious Script Design', desc: 'การออกแบบบทพูดโปรแกรมจิตเฉพาะบุคคล', icon: Mic2 },
+    { title: 'Healing Tools Integration', desc: 'การใช้เครื่องมือบำบัดเพื่อปลดล็อกศักยภาพภายใน', icon: Heart },
   ],
+  missions: [
+    { title: 'Confidence', desc: 'ปลดล็อกความกลัวและความไม่มั่นใจ' },
+    { title: 'Identity', desc: 'ดึง "เสน่ห์เฉพาะตัว" ออกมาใช้ในการสื่อสาร' },
+    { title: 'Impact', desc: 'ถ่ายทอดเรื่องราวที่ "ตรงใจ" และ "ทรงพลัง"' },
+  ],
+  contact: {
+    phone: '091-789-6529',
+    email: 'souloflightacademy@gmail.com',
+    facebook: 'ศูนย์พัฒนาศักยภาพพลังจิตใต้สำนึก',
+    tiktok: '@dr.so_healing',
+    tiktokUrl: 'https://www.tiktok.com/@souloflightacademy?_r=1&_t=ZS-95RuOyLhp7S'
+  },
   gallery: [
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so2.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so3.jpg',
@@ -182,8 +200,8 @@ const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = (
   return (
     <div className="bg-white min-h-screen font-sans">
       <SEO 
-        title={`${speaker.name} | วิทยากรจิตใต้สำนึก`}
-        description={speaker.bio}
+        title="Dr.So วิทยากรจิตใต้สำนึก | อบรมการสื่อสารและพัฒนาศักยภาพ"
+        description="ดร.พิศลยา บัวแก้ว ผู้เชี่ยวชาญด้านพลังจิตใต้สำนึก ช่วยพัฒนาทักษะการพูด การเล่าเรื่อง และสร้างวิทยากรมืออาชีพ พร้อมหลักสูตรสำหรับองค์กร"
       />
 
       {/* Hero */}
@@ -194,144 +212,346 @@ const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = (
           </Link>
           <div className="flex flex-col lg:flex-row gap-16 items-center">
             <div className="lg:w-2/5">
-              <img src={speaker.image} alt={speaker.name} className="w-full h-[550px] object-cover rounded-[2.5rem] shadow-2xl border-4 border-white/10" />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="relative"
+              >
+                <img src={speaker.image} alt={SO_SPECIFIC.fullName} className="w-full h-[550px] object-cover rounded-[2.5rem] shadow-2xl border-4 border-white/10" />
+                <div className="absolute -bottom-6 -right-6 bg-[#c5a059] p-6 rounded-3xl shadow-xl hidden md:block">
+                  <p className="text-white font-black text-center leading-tight">วิทยากร<br/>จิตใต้สำนึก</p>
+                </div>
+              </motion.div>
             </div>
             <div className="lg:w-3/5">
-              <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
-                {speaker.name.split(' (')[0]}
-                <span className="block text-[#c5a059]">{speaker.name.includes('(') ? `(${speaker.name.split('(')[1]}` : ''}</span>
-              </h1>
-              <p className="text-2xl text-white/80 font-bold mb-10 leading-relaxed">{SO_SPECIFIC.heroHeadline}</p>
-              <div className="flex gap-4">
-                <button onClick={() => openBooking('personal')} className="bg-[#c5a059] text-white px-10 py-5 rounded-2xl font-black text-lg hover:scale-105 transition-all">จองปรึกษาเบื้องต้น</button>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
+                  {SO_SPECIFIC.fullName.split(' (')[0]}
+                  <span className="block text-[#c5a059]">{`(${SO_SPECIFIC.fullName.split('(')[1]}`}</span>
+                </h1>
+                <p className="text-2xl text-white/80 font-bold mb-4 leading-relaxed">{SO_SPECIFIC.heroHeadline}</p>
+                <p className="text-xl text-[#c5a059] font-medium mb-10 italic">{SO_SPECIFIC.heroSub}</p>
+                <div className="flex flex-wrap gap-4">
+                  <button 
+                    onClick={() => openBooking('personal')} 
+                    className="bg-[#c5a059] text-white px-10 py-5 rounded-2xl font-black text-lg hover:scale-105 transition-all shadow-lg shadow-[#c5a059]/20"
+                  >
+                    จองวิทยากร / ขอหลักสูตรองค์กร
+                  </button>
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Expertise & Bio */}
+      {/* About Section */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
-            <motion.div 
+          <div className="grid lg:grid-cols-2 gap-20 items-center mb-24">
+            <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl font-black text-[#0f3460] mb-8 flex items-center gap-3">
-                <Award className="text-[#c5a059]" /> ความเชี่ยวชาญพิเศษ
-              </h2>
-              <div className="grid gap-6">
-                {SO_SPECIFIC.expertise.map((item, idx) => (
-                  <div key={idx} className="flex gap-6 p-6 rounded-3xl bg-gray-50 border border-gray-100 hover:border-[#c5a059]/30 transition-colors">
-                    <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-[#c5a059] shadow-sm shrink-0">
-                      <item.icon className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-black text-[#0f3460] mb-2">{item.title}</h4>
-                      <p className="text-gray-500 leading-relaxed">{item.desc}</p>
-                    </div>
+              <h2 className="text-4xl font-black text-[#0f3460] mb-8">About Dr. So</h2>
+              <div className="prose prose-lg text-gray-600 space-y-6">
+                <p className="font-bold text-xl text-[#0f3460]">
+                  ดร.พิศลยา เป็นทั้งนักพัฒนาและนักถ่ายทอดองค์ความรู้ด้าน “Subconscious Communication” 
+                  ที่ผสานศาสตร์จิตวิทยา การสื่อสาร และเครื่องมือบำบัด (Healing Tools) เข้าด้วยกันอย่างลึกซึ้ง
+                </p>
+                <p>
+                  ด้วยความเชื่อว่า <span className="text-[#c5a059] font-bold">“การสื่อสารที่ทรงพลังที่สุด ไม่ได้เริ่มจากคำพูด…แต่เริ่มจากจิตใต้สำนึก”</span> 
+                </p>
+                <p>
+                  ท่านจึงออกแบบกระบวนการเรียนรู้ที่ช่วยให้ผู้เรียน ปลดล็อกข้อจำกัดภายใน ค้นพบตัวตนที่แท้จริง 
+                  และพัฒนาการสื่อสารให้ “ตรงใจและเข้าถึงใจผู้ฟัง”
+                </p>
+              </div>
+              <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
+                {SO_SPECIFIC.principles.map((p, idx) => (
+                  <div key={idx} className="flex items-center gap-3 bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                    <CheckCircle2 className="text-[#c5a059] w-5 h-5 shrink-0" />
+                    <span className="font-bold text-[#0f3460]">{p}</span>
                   </div>
                 ))}
               </div>
             </motion.div>
-
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-[#0f4c75]/5 p-10 rounded-[3rem] border border-[#0f4c75]/10"
+              className="bg-[#0f4c75]/5 p-12 rounded-[3.5rem] border border-[#0f4c75]/10 relative"
             >
-              <Quote className="w-12 h-12 text-[#c5a059]/20 mb-6" />
-              <h2 className="text-3xl font-black text-[#0f3460] mb-6">เส้นทางการพัฒนาจากภายใน</h2>
-              <div className="prose prose-lg text-gray-600 leading-relaxed">
-                {speaker.longBio?.split('\n').map((para, i) => (
-                  <p key={i} className="mb-4">{para}</p>
-                )) || <p>{speaker.bio}</p>}
+              <Quote className="absolute -top-6 -left-6 w-16 h-16 text-[#c5a059]/20" />
+              <h3 className="text-2xl font-black text-[#0f3460] mb-6 flex items-center gap-3">
+                <Award className="text-[#c5a059]" /> ตำแหน่งและกิตติคุณ
+              </h3>
+              <div className="space-y-8">
+                <div>
+                  <h4 className="font-black text-[#0f3460] mb-3 opacity-60 uppercase tracking-widest text-sm">ตำแหน่งปัจจุบัน</h4>
+                  <ul className="space-y-3">
+                    <li className="flex gap-3 text-lg font-bold text-gray-700">
+                      <ChevronRight className="text-[#c5a059] shrink-0" /> ผู้อำนวยการศูนย์พัฒนาศักยภาพพลังจิตใต้สำนึก
+                    </li>
+                    <li className="flex gap-3 text-lg font-bold text-gray-700">
+                      <ChevronRight className="text-[#c5a059] shrink-0" /> โค้ชผู้พัฒนาหลักสูตรวิทยากรจิตใต้สำนึก
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-black text-[#0f3460] mb-3 opacity-60 uppercase tracking-widest text-sm">การศึกษาและเกียรติประวัติ</h4>
+                  <ul className="space-y-3">
+                    <li className="flex gap-3 text-gray-700">
+                      <ChevronRight className="text-[#c5a059] shrink-0" /> ปริญญาเอก พุทธศาสตรดุษฎีบัณฑิต (สันติศึกษา) มหาจุฬาลงกรณราชวิทยาลัย
+                    </li>
+                    <li className="flex gap-3 text-gray-800 font-black bg-[#c5a059]/10 p-4 rounded-2xl">
+                      <Award className="text-[#2d5a27] shrink-0" /> ได้รับการยกย่องเป็น “วิศวกรสันติภาพ” (10 ธ.ค. 2566)
+                    </li>
+                  </ul>
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Stats Counter */}
-      <section className="py-16 bg-[#0a1628]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {SO_SPECIFIC.stats.map((stat, idx) => (
-              <div key={idx} className="text-center">
-                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-[#c5a059] mx-auto mb-4">
-                  <stat.icon className="w-6 h-6" />
-                </div>
-                <div className="text-3xl font-black text-white mb-1">{stat.value}</div>
-                <div className="text-sm text-white/50 uppercase tracking-widest">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services */}
+      {/* Expertise & Mission */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-[#0f3460] mb-6 tracking-tight">เลือกรูปแบบการปรึกษา</h2>
-            <p className="text-lg text-gray-500 max-w-2xl mx-auto">เริ่มต้นการเปลี่ยนแปลงที่จับต้องได้ ผ่านกระบวนการออกแบบเฉพาะบุคคล</p>
+            <h2 className="text-4xl font-black text-[#0f3460] mb-4">ความเชี่ยวชาญและประสบการณ์</h2>
+            <p className="text-xl text-gray-500">หัวใจของการพัฒนาคนและองค์กรอย่างยั่งยืน</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { id: 'personal' as const, title: 'Personal Coaching', icon: Zap, list: ['ปลดล็อกรายบุคคล (1-on-1)', 'ออกแบบเส้นทางการเติบโต', 'เทคนิคการสื่อสารจิตใต้สำนึก'], color: 'from-[#c5a059] to-[#c5a059]/80' },
-              { id: 'private' as const, title: 'Private Group', icon: Users, list: ['เรียนรู้ร่วมกลุ่ม Elite 5-10 ท่าน', 'กลยุทธ์การสื่อสารวิสัยทัศน์', 'กิจกรรมกลุ่มสะท้อนคิด'], color: 'from-blue-600 to-blue-800' },
-              { id: 'workshop' as const, title: 'Corporate Workshop', icon: Presentation, list: ['Internal Training ทีมงาน', 'ปรับจูนวัฒนธรรมองค์กร', 'พัฒนาทักษะวิทยากรภายใน'], color: 'from-emerald-600 to-emerald-800' },
-            ].map((service) => (
-              <motion.div 
-                key={service.id} 
-                whileHover={{ y: -10 }}
-                className="bg-white p-10 rounded-[3rem] shadow-xl border border-gray-100 flex flex-col items-center text-center relative overflow-hidden group"
+          <div className="grid md:grid-cols-3 gap-8">
+            {SO_SPECIFIC.expertise.map((exp, idx) => (
+              <motion.div
+                key={idx}
+                whileHover={{ y: -5 }}
+                className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-gray-100"
               >
-                <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center text-[#c5a059] mb-8 group-hover:bg-[#0f3460] group-hover:text-white transition-all duration-300">
-                  <service.icon className="w-8 h-8" />
+                <div className="w-14 h-14 bg-[#c5a059]/10 rounded-2xl flex items-center justify-center text-[#c5a059] mb-6">
+                  <exp.icon className="w-7 h-7" />
                 </div>
-                <h3 className="text-2xl font-black text-[#0f3460] mb-4">{service.title}</h3>
-                <ul className="text-gray-500 mb-10 space-y-3">
-                  {service.list.map(l => (
-                    <li key={l} className="flex items-center gap-2 justify-center">
-                      <CheckCircle2 className="w-4 h-4 text-[#c5a059]" /> {l}
+                <h3 className="text-xl font-black text-[#0f3460] mb-4">{exp.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{exp.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+          
+          <div className="mt-20 bg-[#0a1628] rounded-[3.5rem] p-12 md:p-16 text-white relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#c5a059]/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+            <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-black mb-6">Mission & Impact</h2>
+                <p className="text-xl text-[#c5a059] font-bold mb-8 uppercase tracking-widest">
+                  “เปลี่ยนคนธรรมดา ให้กลายเป็นวิทยากรมืออาชีพ”
+                </p>
+                <div className="grid gap-6">
+                  {SO_SPECIFIC.missions.map((m, idx) => (
+                    <div key={idx} className="flex gap-4 items-start">
+                      <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-black shrink-0">{idx+1}</div>
+                      <div>
+                        <h4 className="font-black text-lg mb-1">{m.title}</h4>
+                        <p className="opacity-70">{m.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="bg-white/5 p-8 rounded-3xl border border-white/10">
+                <h3 className="text-2xl font-black mb-6 flex items-center gap-3">
+                  <TrendingUp className="text-[#c5a059]" /> ผลลัพธ์ที่ได้รับ
+                </h3>
+                <ul className="space-y-4">
+                  {[
+                    'พูดอย่างมั่นใจโดยไม่ฝืนธรรมชาติ',
+                    'ถ่ายทอดเนื้อหาได้อย่างมี “พลังและเสน่ห์”',
+                    'เข้าถึงอารมณ์และจิตใจของผู้ฟัง',
+                    'เริ่มต้นเส้นทาง “วิทยากรมืออาชีพ” ได้จริง'
+                  ].map(item => (
+                    <li key={item} className="flex gap-3">
+                      <CheckCircle2 className="text-[#c5a059] shrink-0" />
+                      <span className="font-bold opacity-90">{item}</span>
                     </li>
                   ))}
                 </ul>
-                <button 
-                  onClick={() => openBooking(service.id)} 
-                  className="w-full bg-[#0f3460] text-white py-5 rounded-2xl font-black hover:bg-[#c5a059] active:scale-95 transition-all shadow-lg shadow-[#0f3460]/10"
-                >
-                  เริ่มปรึกษาตอนนี้
-                </button>
-              </motion.div>
-            ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className="py-24 bg-white overflow-hidden">
+      {/* Sales Funnel Services */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black text-[#0f3460] mb-6">เริ่มปลดล็อกศักยภาพของคุณ</h2>
+            <div className="h-1 w-20 bg-[#c5a059] mx-auto mb-6"></div>
+            <p className="text-xl text-gray-500 max-w-2xl mx-auto">เลือกรูปแบบการสื่อสารที่ตรงกับเป้าหมายความสำเร็จของคุณ</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {/* Service 1: Personal */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className="bg-white p-10 rounded-[3.5rem] shadow-2xl border border-gray-100 flex flex-col items-center text-center relative group h-full"
+            >
+              <div className="w-20 h-20 bg-gray-50 rounded-3xl flex items-center justify-center text-[#c5a059] mb-8 group-hover:bg-[#c5a059] group-hover:text-white transition-all duration-300">
+                <Zap className="w-10 h-10" />
+              </div>
+              <h3 className="text-2xl font-black text-[#0f3460] mb-2">Personal Coaching</h3>
+              <p className="text-[#c5a059] font-black mb-6">1-on-1 Subconscious Healing</p>
+              <ul className="text-gray-500 mb-10 space-y-4 text-left w-full border-t border-gray-100 pt-8">
+                <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#c5a059] shrink-0" /> ปลดล็อกความกลัวในรายบุคคล</li>
+                <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#c5a059] shrink-0" /> ออกแบบ Script โปรแกรมจิตเฉพาะคุณ</li>
+                <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#c5a059] shrink-0" /> ค้นหาเสน่ห์การพูดที่ไม่เหมือนใคร</li>
+              </ul>
+              <div className="mt-auto w-full">
+                <button 
+                  onClick={() => openBooking('personal')} 
+                  className="w-full bg-[#0f3460] text-white py-5 rounded-2xl font-black hover:bg-[#c5a059] transition-all shadow-xl"
+                >
+                  เริ่มปรึกษารายบุคคล
+                </button>
+              </div>
+            </motion.div>
+
+            {/* Service 2: Private Group */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className="bg-[#0f3460] p-10 rounded-[3.5rem] shadow-2xl text-white flex flex-col items-center text-center relative h-full scale-105"
+            >
+              <div className="absolute top-8 right-8 bg-[#c5a059] text-white text-xs font-black px-4 py-1 rounded-full uppercase tracking-tighter">Elite</div>
+              <div className="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center text-[#c5a059] mb-8">
+                <Users className="w-10 h-10" />
+              </div>
+              <h3 className="text-2xl font-black mb-2">Private Group</h3>
+              <p className="text-[#c5a059] font-black mb-6 italic">วิทยากรจิตใต้สำนึก (กลุ่มเล็ก)</p>
+              <ul className="text-white/70 mb-10 space-y-4 text-left w-full border-t border-white/10 pt-8">
+                <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#c5a059] shrink-0" /> ฝึกทักษะกับกลุ่ม Elite 5-10 ท่าน</li>
+                <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#c5a059] shrink-0" /> การเล่าเรื่องที่เปลี่ยนพฤติกรรมผู้ฟัง</li>
+                <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#c5a059] shrink-0" /> กระบวนการสะท้อนคิดแบบลึกซึ้ง</li>
+              </ul>
+              <div className="mt-auto w-full">
+                <button 
+                  onClick={() => openBooking('private')} 
+                  className="w-full bg-[#c5a059] text-white py-5 rounded-2xl font-black hover:bg-white hover:text-[#0f3460] transition-all shadow-xl shadow-[#000]/10"
+                >
+                  สมัครรอบกลุ่มส่วนตัว
+                </button>
+              </div>
+            </motion.div>
+
+            {/* Service 3: Workshop */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className="bg-white p-10 rounded-[3.5rem] shadow-2xl border border-gray-100 flex flex-col items-center text-center relative group h-full"
+            >
+              <div className="w-20 h-20 bg-gray-50 rounded-3xl flex items-center justify-center text-[#c5a059] mb-8 group-hover:bg-[#0f4c75] group-hover:text-white transition-all duration-300">
+                <Presentation className="w-10 h-10" />
+              </div>
+              <h3 className="text-2xl font-black text-[#0f3460] mb-2">Corporate Training</h3>
+              <p className="text-[#c5a059] font-black mb-6">Internal Speaker Development</p>
+              <ul className="text-gray-500 mb-10 space-y-4 text-left w-full border-t border-gray-100 pt-8">
+                <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#c5a059] shrink-0" /> พัฒนาวิทยากรภายในองค์กร</li>
+                <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#c5a059] shrink-0" /> ปรับจูน Mindset วัฒนธรรมองค์กร</li>
+                <li className="flex gap-3"><CheckCircle2 className="w-5 h-5 text-[#c5a059] shrink-0" /> การสื่อสารเพื่อความสำเร็จในงาน</li>
+              </ul>
+              <div className="mt-auto w-full">
+                <button 
+                  onClick={() => openBooking('workshop')} 
+                  className="w-full bg-[#0f3460] text-white py-5 rounded-2xl font-black hover:bg-[#c5a059] transition-all shadow-xl"
+                >
+                  ขอเสนอโครงการองค์กร
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery Section */}
+      <section className="py-24 bg-gray-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-end mb-12">
             <div>
-              <h2 className="text-4xl font-black text-[#0f3460] mb-4">Gallery</h2>
-              <p className="text-gray-500 italic">"ความสำเร็จเริ่มต้นจากการลงมือทำด้วยหัวใจ"</p>
+              <h2 className="text-4xl font-black text-[#0f3460] mb-4">บรรยากาศการอบรม</h2>
+              <p className="text-gray-500 italic">“เพราะความสำเร็จเริ่มต้นจากการลงมือทำด้วยหัวใจ”</p>
             </div>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {SO_SPECIFIC.gallery.map((img, idx) => (
               <motion.div 
                 key={idx} 
                 whileHover={{ scale: 1.02 }}
-                className={`rounded-3xl overflow-hidden cursor-pointer shadow-lg ${idx === 0 ? 'md:col-span-2 md:row-span-2' : ''}`}
+                className={`rounded-[2rem] overflow-hidden cursor-pointer shadow-lg ${idx === 0 ? 'lg:col-span-2 lg:row-span-2' : ''}`}
               >
-                <img src={img} alt={`Dr So ${idx}`} className="w-full h-full object-cover aspect-square md:aspect-auto" />
+                <img src={img} alt={`Dr So ${idx}`} className="w-full h-full object-cover min-h-[250px]" />
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer Contact */}
+      <section className="py-24 bg-[#0a1628] text-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <div>
+              <h2 className="text-4xl font-black mb-8">พร้อมปลดล็อกศักยภาพ<br/>การสื่อสารของคุณแล้วหรือยัง?</h2>
+              <p className="text-2xl text-[#c5a059] font-bold mb-10 leading-relaxed">
+                ให้ Dr. So ช่วยคุณ “พูดให้เข้าถึงใจ และเปลี่ยนชีวิตผู้ฟังได้จริง”
+              </p>
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-[#c5a059]">
+                    <Phone className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm opacity-50 uppercase font-black">Call Support</h4>
+                    <p className="text-xl font-black">{SO_SPECIFIC.contact.phone}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-[#c5a059]">
+                    <MessageCircle className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm opacity-50 uppercase font-black">Messenger</h4>
+                    <p className="text-xl font-black">{SO_SPECIFIC.contact.facebook}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white/5 p-10 rounded-[3.5rem] border border-white/10">
+              <h3 className="text-2xl font-black mb-8">Follow Dr. So</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <a href={SO_SPECIFIC.contact.tiktokUrl} target="_blank" rel="noreferrer" className="flex items-center gap-4 bg-black p-6 rounded-3xl hover:scale-105 transition-all">
+                  <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center">
+                    <Zap className="w-5 h-5 text-[#c5a059]" />
+                  </div>
+                  <span className="font-black">TikTok</span>
+                </a>
+                <div className="flex items-center gap-4 bg-blue-900 p-6 rounded-3xl opacity-50">
+                  <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center">
+                    <Users className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="font-black">Facebook</span>
+                </div>
+              </div>
+              <div className="mt-10 text-center">
+                <button 
+                  onClick={() => openBooking('personal')}
+                  className="text-[#c5a059] font-black border-b-2 border-[#c5a059] pb-2 hover:opacity-70 transition-all uppercase text-sm tracking-widest"
+                >
+                  Request Proposal for Organization
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>

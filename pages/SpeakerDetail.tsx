@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import {
   ArrowLeft, CheckCircle2, Award, Star, MessageCircle, Phone, BookOpen,
   ChevronRight, Zap, Users, Brain, Target, Quote, Calendar, TrendingUp, Shield,
-  Mic2, Sparkles, Heart, Presentation, ArrowRight
+  Mic2, Sparkles, Heart, Presentation, ArrowRight, Building
 } from 'lucide-react';
 import { fetchInstructorBySlug } from '../services/instructors';
 import { fetchCourses } from '../services/courses';
@@ -68,10 +68,10 @@ const DEN_SPECIFIC = {
     { name: 'Role Play & Simulation', desc: 'ฝึกทักษะจากสถานการณ์จริง ผิดพลาดได้อย่างปลอดภัย', index: '04' },
   ],
   expertiseAreas: [
-    { category: 'Leadership & Communication', items: ['สื่อสารสำหรับผู้นำยุคใหม่', 'C.O.D. Communication Model', 'Human Communication 4 ระดับ', 'Leadership Presence & Influence'] },
-    { category: 'Team Development', items: ['Team Synergy & Flow Design', 'Conflict Resolution', 'Building Psychological Safety', 'High-Performance Team Culture'] },
-    { category: 'Facilitation & Coaching', items: ['Master Facilitation Skills', 'Coaching for Leaders', 'Group Process Design', 'Learning Experience Design'] },
-    { category: 'Creative & Innovation', items: ['Design Thinking Workshop', 'Problem-Solving Facilitation', 'Creative Brainstorming Techniques', 'Innovation Culture Building'] },
+    { category: 'CAP Theory (ทฤษฎีแคป)', desc: 'ทฤษฎีการพัฒนาศักยภาพมนุษย์ที่ช่วยให้ผู้เรียนได้ค้นพบตัวตนที่แท้จริง', items: ['ค้นพบจุดแข็งจากภายใน', 'ปลดล็อกข้อจำกัดทางความคิด', 'เข้าใจคุณค่าของตนเอง'] },
+    { category: 'Learning Design', desc: 'เชี่ยวชาญการจัดกระบวนการเรียนรู้เพื่อสร้างการเปลี่ยนแปลงพฤติกรรมจากภายในสู่ภายนอก', items: ['Transformative Learning', 'Flow Learning', 'Play to Learn'] },
+    { category: 'Psychological Tools', desc: 'การใช้นวัตกรรมและเครื่องมือเชิงจิตวิทยาร่วมกับการอบรม', items: ['Brainwave Tracker', 'Oracle & Self-Talk Cards', 'Circle Dialogue'] },
+    { category: 'Human Communication', desc: 'การสื่อสารที่ครอบคลุมทุกมิติ เพื่อสร้างสมดุลในทุกความสัมพันธ์', items: ['ระดับบุคคล (Personal)', 'ระดับครอบครัว (Family)', 'ระดับองค์กร (Organization)', 'ระดับสังคม (Society)'] },
   ],
   signaturePrograms: [
     { name: 'Team Talk Flow', duration: '1-2 วัน', outcome: 'ทีมสื่อสารชัดขึ้น ลดความขัดแย้ง 80%', tag: 'bestseller' },
@@ -84,9 +84,26 @@ const DEN_SPECIFIC = {
     { text: 'สร้างประสบการณ์ที่เปลี่ยน Mindset และนำไปใช้ได้จริง ไม่ใช่การอบรมที่ "จบแล้วก็ลืม" แบบที่เคยเจอมา', author: 'Senior Manager — องค์กรรัฐวิสาหกิจ', role: 'ผู้บริหารระดับ Senior' },
     { text: 'เป็นวิทยากรที่ทำให้ห้องอบรมเงียบน้อยลงมากที่สุด เพราะทุกคนอยากพูด อยากมีส่วนร่วม ผลลัพธ์ชัดเจนมาก', author: 'Learning & Development Lead — MNC', role: 'L&D Director' },
   ],
+  bio: [
+    'อาจารย์อนุสรณ์ หนองนา (ครูเด่น / มาสเตอร์ฟา) ปัจจุบันดำรงตำแหน่งผู้อำนวยการสถาบันแคป วิชั่น (CAP Vision Institute) และเป็นผู้ร่วมก่อตั้ง Facilitator for Thailand (FFT) ตลอดจนร่วมก่อตั้งโครงการ Dynamic School Thailand',
+    'ท่านเริ่มต้นบรรยายและเป็นผู้นำกระบวนการเรียนรู้มาตั้งแต่ปี 2550 ตลอดเวลากว่า 18 ปี ผ่านเวทีการบรรยายกว่า 1,000 เวที ทั่วประเทศ ครอบคลุมทั้งภาครัฐ เอกชน รัฐวิสาหกิจ และสถาบันการศึกษา',
+    'ท่านคือผู้คิดค้น CAP Theory หรือทฤษฎีการพัฒนาศักยภาพมนุษย์ ที่ช่วยให้ผู้เรียนค้นพบตัวตนที่แท้จริง พร้อมปลดล็อกข้อจำกัดทางความคิด และมีความเชี่ยวชาญพิเศษด้าน Learning Design โดยนำศาสตร์ Transformative Learning, Flow Learning และ Play to Learn มาผสมผสานกันอย่างลงตัว'
+  ],
+  history: [
+    { year: 'ปัจจุบัน', title: 'ผู้อำนวยการสถาบันแคป วิชั่น', org: 'CAP Vision Institute / The CAP Vision Academy' },
+    { year: 'ปัจจุบัน', title: 'ผู้ร่วมก่อตั้ง', org: 'Facilitator for Thailand (FFT) & Dynamic School Thailand' },
+    { year: '2560', title: 'ผู้อำนวยการแผนกฝึกอบรม', org: 'บริษัท วิชวัน อินโฟ จำกัด' },
+    { year: '2558', title: 'วิทยากรฝึกอบรมฝ่ายขาย', org: 'บริษัท วงจิน โคเวย์ จำกัด' },
+    { year: '2550', title: 'ผู้จัดการฝ่ายวิชาการและการตลาด', org: 'บริษัท กู๊ดทอล์ค จำกัด' },
+    { year: '2549', title: 'ฝ่ายขายทางโทรศัพท์', org: 'บริษัท ไทยประกันชีวิต จำกัด' },
+  ],
   gallery: [
-    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/denmasterfa.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa1.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa10.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa11.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa12.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa13.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa14.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa2.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa3.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa4.jpg',
@@ -95,11 +112,9 @@ const DEN_SPECIFIC = {
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa7.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa8.jpg',
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa9.jpg',
-    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa10.jpg',
-    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa11.jpg',
-    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa12.jpg',
-    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa13.jpg',
-    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den%20masterfa14.jpg'
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den_dsr.so1.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/den_dsr.so3.jpg',
+    'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/denmasterfa.jpg'
   ],
 };
 
@@ -840,6 +855,78 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         </div>
       </section>
 
+      {/* Biography Section */}
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border border-gray-100 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-50 rounded-full blur-3xl opacity-50 -mr-20 -mt-20"></div>
+            <h2 className="text-3xl font-black text-[#0f3460] mb-8 flex items-center gap-3 relative z-10">
+              <BookOpen className="text-[#c5a059] w-8 h-8" /> ประวัติวิทยากร
+            </h2>
+            <div className="space-y-6 text-lg text-gray-700 leading-relaxed font-medium relative z-10">
+              {DEN_SPECIFIC.bio.map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Expertise Section */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-black text-[#0f3460] mb-4">ความเชี่ยวชาญเฉพาะด้าน</h2>
+            <p className="text-xl text-gray-500">ยกระดับศักยภาพด้วยศาสตร์และนวัตกรรมการเรียนรู้</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {DEN_SPECIFIC.expertiseAreas.map((area, idx) => (
+              <div key={idx} className="bg-gray-50 rounded-[2.5rem] p-8 border border-gray-100 hover:shadow-2xl hover:bg-white transition-all duration-300 group">
+                <div className="w-14 h-14 bg-[#0f3460] rounded-2xl flex items-center justify-center text-white mb-6 group-hover:bg-[#c5a059] transition-colors">
+                  <Star className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-black text-[#0f3460] mb-3">{area.category}</h3>
+                <p className="text-sm text-gray-500 mb-6 font-medium md:h-16">{area.desc}</p>
+                <ul className="space-y-3">
+                  {area.items.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-gray-600 font-medium">
+                      <CheckCircle2 className="w-5 h-5 text-[#c5a059] shrink-0 mt-0.5" />
+                      <span className="leading-snug">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Career History (List format) */}
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-black text-[#0f3460] mb-4">ประวัติการทำงานในองค์กร</h2>
+            <p className="text-xl text-gray-500">ประสบการณ์ 18 ปี บนเส้นทางการพัฒนาบุคลากร</p>
+          </div>
+          <div className="max-w-4xl mx-auto space-y-4">
+            {DEN_SPECIFIC.history.map((item, i) => (
+              <div key={i} className="flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center bg-white border border-gray-100 p-6 rounded-3xl hover:shadow-xl hover:border-[#c5a059]/30 transition-all group">
+                <div className="bg-[#0f4c75] text-[#c5a059] font-black px-6 py-2 rounded-xl text-lg w-full md:w-36 text-center shrink-0 group-hover:bg-[#c5a059] group-hover:text-white transition-colors">
+                  {item.year}
+                </div>
+                <div>
+                  <h3 className="text-xl font-black text-[#0f3460] mb-1">{item.title}</h3>
+                  <p className="text-gray-600 font-medium flex items-center gap-2">
+                    <Building className="w-4 h-4 text-[#c5a059]" />
+                    {item.org}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CAP Values Section */}
       <section className="py-24 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
@@ -894,13 +981,39 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         </div>
       </section>
 
-      {/* Gallery */}
-      <section className="py-24 bg-white">
+      {/* Gallery - Bento Grid Style */}
+      <section className="py-24 bg-[#0a1628]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-            {DEN_SPECIFIC.gallery.slice(4).map((img, i) => (
-              <img key={i} src={img} alt="Den Gallery" className="w-full rounded-2xl shadow-sm hover:shadow-xl transition-all" />
-            ))}
+          <div className="flex justify-between items-end mb-16">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Activity Gallery</h2>
+              <div className="h-1.5 w-24 bg-[#c5a059]"></div>
+            </div>
+            <p className="text-white/50 font-bold italic hidden md:block">Moments in Action</p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[250px]">
+            {DEN_SPECIFIC.gallery.slice(4).map((img, idx) => {
+              let colSpan = "col-span-1";
+              let rowSpan = "row-span-1";
+              // Create a dynamic pattern 
+              if (idx === 0) { colSpan = "md:col-span-2 lg:col-span-2"; rowSpan = "md:row-span-2 lg:row-span-2"; }
+              else if (idx === 7) { colSpan = "lg:col-span-2"; }
+              else if (idx === 10) { rowSpan = "md:row-span-2 lg:row-span-2"; }
+              
+              return (
+                <motion.div 
+                  key={idx}
+                  whileHover={{ scale: 1.02, zIndex: 10 }}
+                  className={`${colSpan} ${rowSpan} rounded-3xl overflow-hidden shadow-xl border-2 border-white/10 relative group bg-gray-800`}
+                >
+                  <img src={img} alt={`Den Masterfa Gallery ${idx}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                    <p className="text-white text-xs font-black uppercase tracking-widest text-[#c5a059]">ภาพกิจกรรมที่ {idx + 1}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>

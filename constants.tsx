@@ -89,27 +89,27 @@ export interface Speaker {
 export const SPEAKERS: Speaker[] = [
   {
     id: 'den-master-fa',
-    name: 'อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)',
-    title: 'ผู้อำนวยการและมาสเตอร์ฟาซิลิตเทเตอร์',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80',
-    bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning ประสบการณ์ 18 ปี',
-    longBio: 'วิทยากรผู้สร้างการเปลี่ยนแปลงจากภายใน (Communication Healer and Facilitator) เจ้าของโมเดล DFA Strategy และผู้ก่อตั้ง FFT – Facilitator for Thailand มุ่งเน้นการสร้าง Human Capital ผ่านกระบวนการที่สนุก (Edutainment) และมีส่วนร่วมสูง โดยใช้จิตวิทยาเชิงบวกและการโค้ชด้าน Mindfulness & Meditation',
+    name: 'อ.อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)',
+    title: 'ผู้อำนวยการสถาบัน CAP-Vision Institute',
+    image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/speakers/Profile_D-MasterFa.webp',
+    bio: 'ผู้พัฒนากระบวนการเรียนรู้ (Dynamic Learning Designer) และผู้นำการเปลี่ยนแปลงด้วยแนวคิด Transformative Learning ประสบการณ์กว่า 18 ปี',
+    longBio: 'อาจารย์อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา) ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning และผู้ก่อตั้ง FFT – Facilitator for Thailand เชี่ยวชาญการออกแบบการเรียนรู้แบบ Blended Learning และกระบวนการพัฒนาบุคลากรที่ผสมผสาน AI',
     expertise: [
-      'Transformative Learning & Flow Design',
-      'Communication Styles (C.O.D. Model)',
-      'Facilitation & Coaching Techniques',
-      'Team & Leadership Development',
-      'Mindfulness in Business'
+      'CAP Theory & Learning Design',
+      'Communication Psychology & Peace Communication',
+      'Transformative Leadership',
+      'Mindfulness in Action',
+      'Generative Facilitation'
     ],
     achievements: [
-      'ประสบการณ์กว่า 18 ปี ในการพัฒนาบุคลากรทั้งภาครัฐและเอกชน',
-      'นักจัดและพัฒนาเวิร์กชอปมากกว่า 1,000 เวที',
-      'วิทยากรที่ปรึกษาด้านนวัตกรรมบริการและการสร้างทีม',
-      'ที่ปรึกษาด้าน AI สำหรับธุรกิจสมัยใหม่'
+      'ประสบการณ์กว่า 18 ปี พัฒนาบุคลากรชั้นนำภาครัฐและเอกชน',
+      'ผู้ร่วมก่อตั้ง FFT - Facilitator for Thailand',
+      'ผู้ออกแบบโมเดล 6D CPS และ CAP Framework',
+      'Certificate of Creative Problem Solving (Buffalo College, NY)'
     ],
     socials: {
-      line: '@denmasterfa',
-      facebook: 'thecapvision'
+      line: 'https://lin.ee/zRTBF6K',
+      facebook: 'https://facebook.com/thecapvision'
     }
   }
 ];
@@ -170,7 +170,7 @@ export const COURSES: CourseDetailInfo[] = [
       id: 'den-master-fa',
       name: 'ครูเด่น มาสเตอร์ฟา',
       bio: 'ที่ปรึกษาองค์กรและนักพัฒนาทักษะการสื่อสารเพิ่มพลังบวก',
-      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
+      image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/speakers/Profile_D-MasterFa.webp'
     }
   },
   {
@@ -207,7 +207,7 @@ export const COURSES: CourseDetailInfo[] = [
       id: 'den-master-fa',
       name: 'ครูเด่น มาสเตอร์ฟา',
       bio: 'นักออกแบบกระบวนการเรียนรู้ (Dynamic Learning Designer)',
-      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
+      image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/speakers/Profile_D-MasterFa.webp'
     }
   },
   {
@@ -246,7 +246,7 @@ export const COURSES: CourseDetailInfo[] = [
       id: 'den-master-fa',
       name: 'ครูเด่น มาสเตอร์ฟา',
       bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning',
-      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
+      image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/speakers/Profile_D-MasterFa.webp'
     }
   },
   {
@@ -282,7 +282,7 @@ export const COURSES: CourseDetailInfo[] = [
       id: 'den-master-fa',
       name: 'ครูเด่น มาสเตอร์ฟา',
       bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning',
-      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80'
+      image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/speakers/Profile_D-MasterFa.webp'
     }
   }
 ];

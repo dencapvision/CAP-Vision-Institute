@@ -105,11 +105,11 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
       setBookingResult({ id: booking.id, code: booking.booking_code });
       
       // Notify Admin via LINE (Registration Phase)
-      await fetch(process.env.NEXT_PUBLIC_SUPABASE_URL + '/functions/v1/line-notify', {
+      await fetch(import.meta.env.VITE_SUPABASE_URL + '/functions/v1/line-notify', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
         },
         body: JSON.stringify({
           project: 'SUB_SPEAKER',
@@ -162,11 +162,11 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
       );
 
       // 3. Notify Admin via LINE (Payment Phase)
-      await fetch(process.env.NEXT_PUBLIC_SUPABASE_URL + '/functions/v1/line-notify', {
+      await fetch(import.meta.env.VITE_SUPABASE_URL + '/functions/v1/line-notify', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
         },
         body: JSON.stringify({
           project: 'SUB_SPEAKER',
@@ -206,7 +206,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-navy-900/80 backdrop-blur-sm"
+            className="absolute inset-0 bg-[#0a1628]/80 backdrop-blur-sm"
           />
 
           {/* Modal Container */}
@@ -219,7 +219,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
             {/* Header */}
             <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gradient-to-r from-blue-50 to-white">
               <div>
-                <h3 className="text-xl font-bold text-navy-900 flex items-center gap-2">
+                <h3 className="text-xl font-bold text-[#0f3460] flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-blue-600" />
                   สมัครอบรมวิทยากรจิตใต้สำนึก
                 </h3>
@@ -264,7 +264,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
               {step === 1 && (
                 <div className="space-y-6">
                   <div className="text-center mb-8">
-                    <h4 className="text-2xl font-bold text-navy-900">เลือกแพ็กเกจที่คุณต้องการ</h4>
+                    <h4 className="text-2xl font-bold text-[#0f3460]">เลือกแพ็กเกจที่คุณต้องการ</h4>
                     <p className="text-gray-500 text-sm mt-2">จำกัดความรู้สู่ 20 ท่านผู้มีหัวใจวิทยากรเท่านั้น</p>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -279,7 +279,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
                         }`}
                       >
                         <div className="flex justify-between items-start mb-4">
-                          <span className="font-bold text-navy-900">{pkg.name}</span>
+                          <span className="font-bold text-[#0f3460]">{pkg.name}</span>
                           {formData.packageId === pkg.id && <Check className="w-5 h-5 text-blue-600" />}
                         </div>
                         <div className="text-2xl font-bold text-blue-700 mb-1">
@@ -341,37 +341,37 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
               {step === 3 && (
                 <div className="space-y-6">
                   {/* Bank Account Details */}
-                  <div className="p-6 bg-navy-900 rounded-3xl text-white shadow-xl mb-8 relative overflow-hidden group min-h-[220px]">
-                    <div className="absolute inset-0 opacity-20 transition-transform group-hover:scale-110 duration-700">
+                  <div className="p-6 bg-[#0f3460] rounded-3xl text-white shadow-2xl mb-8 relative overflow-hidden group min-h-[220px]">
+                    <div className="absolute inset-0 opacity-40 transition-transform group-hover:scale-110 duration-700">
                       <img src={CourseConfig.images.bank} alt="Bank Background" className="w-full h-full object-cover" />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-br from-navy-900 to-navy-900/40" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#0f3460] via-[#0f3460]/90 to-transparent" />
                     <div className="relative z-10">
                       <p className="text-blue-300 text-xs font-bold tracking-widest uppercase mb-4">ช่องทางชำระเงิน</p>
-                      <h4 className="text-2xl font-bold mb-6">{CourseConfig.bank.name}</h4>
+                      <h4 className="text-2xl font-bold mb-6 text-white">{CourseConfig.bank.name}</h4>
                       
                       <div className="space-y-4">
-                        <div className="flex justify-between items-center group/item hover:bg-white/5 p-2 rounded-lg transition-colors">
+                        <div className="flex justify-between items-center group/item hover:bg-white/10 p-3 rounded-xl transition-colors border border-white/10 bg-white/5">
                           <div>
-                            <p className="text-white/60 text-xs">เลขที่บัญชี</p>
-                            <p className="text-xl font-mono tracking-wider">{CourseConfig.bank.accountNumber}</p>
+                            <p className="text-white/70 text-[10px] uppercase font-bold tracking-tighter">เลขที่บัญชี</p>
+                            <p className="text-2xl font-mono tracking-wider font-bold text-white">{CourseConfig.bank.accountNumber}</p>
                           </div>
                           <button 
                             onClick={() => copyToClipboard(CourseConfig.bank.accountNumber)}
-                            className="p-2 hover:bg-white/20 rounded-full transition-colors flex items-center gap-2 text-sm"
+                            className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-xl transition-colors flex items-center gap-2 text-xs font-bold"
                           >
                             <Copy className="w-4 h-4" /> คัดลอก
                           </button>
                         </div>
                         
                         <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <p className="text-white/60 text-xs">ชื่อบัญชี</p>
-                            <p className="font-semibold">{CourseConfig.bank.accountName}</p>
+                          <div className="bg-white/5 p-3 rounded-xl border border-white/5">
+                            <p className="text-white/70 text-[10px] uppercase font-bold tracking-tighter">ชื่อบัญชี</p>
+                            <p className="font-bold text-sm text-white">{CourseConfig.bank.accountName}</p>
                           </div>
-                          <div>
-                            <p className="text-white/60 text-xs">ประเภท</p>
-                            <p className="font-semibold">{CourseConfig.bank.type}</p>
+                          <div className="bg-white/5 p-3 rounded-xl border border-white/5">
+                            <p className="text-white/70 text-[10px] uppercase font-bold tracking-tighter">ประเภท</p>
+                            <p className="font-bold text-sm text-white">{CourseConfig.bank.type}</p>
                           </div>
                         </div>
                       </div>
@@ -382,7 +382,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
                   <div className="flex justify-between items-center p-4 bg-blue-50 rounded-2xl border border-blue-100">
                     <div>
                       <p className="text-xs text-blue-600 font-bold uppercase tracking-wider">แพ็กเกจที่เลือก</p>
-                      <p className="text-navy-900 font-bold">{CourseConfig.packages[formData.packageId as keyof typeof CourseConfig.packages].name}</p>
+                      <p className="text-[#0f3460] font-bold">{CourseConfig.packages[formData.packageId as keyof typeof CourseConfig.packages].name}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-xs text-blue-600 font-bold uppercase tracking-wider">ยอดเงินที่ต้องโอน</p>
@@ -439,7 +439,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
                             <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto text-blue-600">
                               <CreditCard className="w-6 h-6" />
                             </div>
-                            <p className="font-semibold text-navy-900">กดเลือกไฟล์รูปภาพสลิป</p>
+                            <p className="font-semibold text-[#0f3460]">กดเลือกไฟล์รูปภาพสลิป</p>
                             <p className="text-xs text-gray-400">รองรับไฟล์ JPG, PNG</p>
                           </div>
                         )}
@@ -459,13 +459,13 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
                       <Check className="w-12 h-12 absolute z-20" />
                     </div>
                   </div>
-                  <h4 className="text-3xl font-black text-navy-900 underline decoration-blue-500/30">สำเร็จ! รอการตรวจสอบ</h4>
+                  <h4 className="text-3xl font-black text-[#0f3460] underline decoration-blue-500/30">สำเร็จ! รอการตรวจสอบ</h4>
                   <div className="max-w-md mx-auto space-y-4">
                     <div className="p-6 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
                       <p className="text-xs text-slate-400 font-bold uppercase mb-1">รหัสยืนยันการสมัครของคุณ</p>
-                      <p className="text-2xl font-black text-navy-900 tracking-tighter">{bookingResult?.code}</p>
+                      <p className="text-2xl font-black text-[#0f3460] tracking-tighter">{bookingResult?.code}</p>
                     </div>
-                    <p className="text-gray-600">กดปุ่มด้านล่างเพื่อแอดไลน์และส่งรหัส <span className="font-bold text-navy-900 border-b-2 border-blue-500">{bookingResult?.code}</span> ให้เจ้าหน้าที่เพื่อรับการประสานงานขั้นต่อไป</p>
+                    <p className="text-gray-600">กดปุ่มด้านล่างเพื่อแอดไลน์และส่งรหัส <span className="font-bold text-[#0f3460] border-b-2 border-blue-500">{bookingResult?.code}</span> ให้เจ้าหน้าที่เพื่อรับการประสานงานขั้นต่อไป</p>
                   </div>
 
                   <div className="pt-8 space-y-4">
@@ -479,7 +479,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
                     </a>
                     <button 
                       onClick={onClose}
-                      className="w-full text-gray-400 font-bold py-2 hover:text-navy-900 transition-colors"
+                      className="w-full text-gray-400 font-bold py-2 hover:text-[#0f3460] transition-colors"
                     >
                       เสร็จสิ้น กลับสู่หน้าหลัก
                     </button>
@@ -506,7 +506,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
                 {step === 1 && (
                   <button 
                     onClick={handleNext}
-                    className="px-10 py-4 bg-navy-900 text-white rounded-2xl font-bold flex items-center gap-2 hover:bg-navy-800 transition-all shadow-xl shadow-navy-900/10 active:scale-95"
+                    className="px-10 py-4 bg-[#0f3460] text-white rounded-2xl font-bold flex items-center gap-2 hover:bg-[#0a2545] transition-all shadow-xl shadow-[#0f3460]/10 active:scale-95"
                   >
                     <span>เลือกแพ็กเกจนี้</span> <ChevronRight className="w-5 h-5" />
                   </button>
@@ -516,7 +516,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
                   <button 
                     onClick={submitRegistration}
                     disabled={loading || !formData.fullName || !formData.phone}
-                    className="px-10 py-4 bg-navy-900 text-white rounded-2xl font-bold flex items-center gap-2 hover:bg-navy-800 disabled:opacity-50 transition-all shadow-xl shadow-navy-900/10"
+                    className="px-10 py-4 bg-[#0f3460] text-white rounded-2xl font-bold flex items-center gap-2 hover:bg-[#0a2545] disabled:opacity-50 disabled:grayscale transition-all shadow-xl shadow-[#0f3460]/10"
                   >
                     {loading ? (
                       <span className="flex items-center gap-2">

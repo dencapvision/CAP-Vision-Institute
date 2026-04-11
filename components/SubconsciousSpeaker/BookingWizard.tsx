@@ -506,9 +506,9 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
                 {step === 1 && (
                   <button 
                     onClick={handleNext}
-                    className="px-10 py-4 bg-navy-900 text-white rounded-2xl font-bold flex items-center gap-2 hover:bg-navy-800 transition-all shadow-xl shadow-navy-900/10"
+                    className="px-10 py-4 bg-navy-900 text-white rounded-2xl font-bold flex items-center gap-2 hover:bg-navy-800 transition-all shadow-xl shadow-navy-900/10 active:scale-95"
                   >
-                    ดำเนินการต่อ <ChevronRight className="w-5 h-5" />
+                    <span>เลือกแพ็กเกจนี้</span> <ChevronRight className="w-5 h-5" />
                   </button>
                 )}
 

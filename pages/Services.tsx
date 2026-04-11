@@ -104,6 +104,19 @@ const SERVICE_CARDS = [
       ]
    },
    {
+      id: 'subconscious-speaker',
+      Icon: Brain,
+      title: 'ก้าวแรกสู่ วิทยากรจิตใต้สำนึก',
+      tagline: 'หลักสูตรพิเศษเพื่อการเป็นวิทยากรที่เปลี่ยนคนจากภายใน (จำกัดเพียง 20 ท่าน)',
+      features: [
+         'Psychological Facilitation Techniques',
+         'Subconscious Communication Skills',
+         'Transformative Learning Design',
+         'Certification by CAP Vision'
+      ],
+      isSpecial: true
+   },
+   {
       id: 'facilitorium',
       Icon: Layers3,
       title: 'The Facilitorium',

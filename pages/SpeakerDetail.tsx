@@ -11,6 +11,7 @@ import { fetchCourses } from '../services/courses';
 import type { Instructor, Course } from '../types';
 import { CONTACT_INFO, CLIENTS } from '../constants/brand';
 import SEO from '../components/SEO';
+import DrSoBookingWizard from '../components/DrSo/BookingWizard';
 
 /* ─── Den Master Fa specific data ──────────────────────────── */
 const DEN_SPECIFIC = {
@@ -1120,6 +1121,14 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
 
 /* ─── Dr. So Premium Detail Page ────────────────────────────── */
 const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = ({ speaker, taughtCourses }) => {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<'personal' | 'private' | 'workshop'>('personal');
+
+  const openBooking = (service: 'personal' | 'private' | 'workshop') => {
+    setSelectedService(service);
+    setIsBookingOpen(true);
+  };
+
   return (
     <div className="bg-white min-h-screen overflow-x-hidden font-sans">
       <SEO
@@ -1398,6 +1407,98 @@ const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = (
         </div>
       </section>
 
+      {/* ── 10. DR. SO SERVICES (Sales Funnel) ── */}
+      <section className="py-32 bg-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#c5a059]/5 rounded-full blur-[100px] -mr-40 -mt-20"></div>
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#0f3460]/5 rounded-full blur-[100px] -ml-20 -mb-20"></div>
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-2 bg-[#0f3460]/5 px-4 py-2 rounded-full mb-6 text-[#0f3460] font-black text-xs uppercase tracking-widest">
+              <Brain className="w-4 h-4" /> Service Ecosystem
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black text-[#0f3460] mb-6 leading-tight">
+              ปลดล็อกศักยภาพของคุณ…<br /><span className="text-[#c5a059]">ใน 3 รูปแบบการพัฒนา</span>
+            </h2>
+            <p className="text-xl text-gray-500 font-medium max-w-3xl mx-auto">
+              Dr. So ได้ออกแบบกระบวนการที่เชื่อมโยงทั้งมิติ “ตัวตน” และ “การสื่อสาร” เพื่อผลลัพธ์ที่ยั่งยืน
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* 1. Personal Coaching */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className="bg-white p-10 rounded-[3rem] border border-gray-100 shadow-2xl shadow-slate-200/50 flex flex-col items-center text-center group"
+            >
+              <div className="w-20 h-20 bg-blue-50 rounded-3xl flex items-center justify-center text-[#0f3460] mb-8 group-hover:bg-[#0f3460] group-hover:text-white transition-all duration-500">
+                <Zap className="w-10 h-10" />
+              </div>
+              <h3 className="text-2xl font-black text-[#0f3460] mb-4">Personal Coaching</h3>
+              <p className="text-[#c5a059] font-black text-sm uppercase tracking-widest mb-6">Premium Mentorship</p>
+              <ul className="text-gray-500 font-medium space-y-4 mb-10 text-sm">
+                <li>• ปลดล็อกปมในใจรายบุคคล</li>
+                <li>• ออกแบบ Career Path วิทยากร</li>
+                <li>• ฝึกเทคนิคการพูดขั้นสูง</li>
+              </ul>
+              <button 
+                onClick={() => openBooking('personal')}
+                className="w-full bg-[#0f3460] text-white py-5 rounded-2xl font-black hover:bg-[#c5a059] transition-all shadow-xl shadow-blue-900/10"
+              >
+                เริ่มปรึกษารายบุคคล
+              </button>
+            </motion.div>
+
+            {/* 2. Private Group */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className="bg-[#0f3460] p-10 rounded-[3rem] shadow-2xl flex flex-col items-center text-center relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -mr-12 -mt-12" />
+              <div className="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center text-[#c5a059] mb-8 group-hover:scale-110 transition-transform duration-500">
+                <Users className="w-10 h-10" />
+              </div>
+              <h3 className="text-2xl font-black text-white mb-4">Private Group</h3>
+              <p className="text-[#c5a059] font-black text-sm uppercase tracking-widest mb-6">Strategic Circle</p>
+              <ul className="text-white/60 font-medium space-y-4 mb-10 text-sm">
+                <li>• เรียนรู้ร่วมกับกลุ่มผู้บริหาร (Elite)</li>
+                <li>• เน้นการสื่อสารเชิงกลยุทธ์</li>
+                <li>• แลกเปลี่ยนประสบการณ์จริง</li>
+              </ul>
+              <button 
+                onClick={() => openBooking('private')}
+                className="w-full bg-[#c5a059] text-white py-5 rounded-2xl font-black hover:bg-white hover:text-[#0f3460] transition-all shadow-xl"
+              >
+                จองกลุ่มพิเศษ (4-6 ท่าน)
+              </button>
+            </motion.div>
+
+            {/* 3. Workshop & Training */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className="bg-white p-10 rounded-[3rem] border border-gray-100 shadow-2xl shadow-slate-200/50 flex flex-col items-center text-center group"
+            >
+              <div className="w-20 h-20 bg-orange-50 rounded-3xl flex items-center justify-center text-orange-500 mb-8 group-hover:bg-orange-500 group-hover:text-white transition-all duration-500">
+                <Presentation className="w-10 h-10" />
+              </div>
+              <h3 className="text-2xl font-black text-[#0f3460] mb-4">Workshop & Training</h3>
+              <p className="text-[#c5a059] font-black text-sm uppercase tracking-widest mb-6">Corporate Solution</p>
+              <ul className="text-gray-500 font-medium space-y-4 mb-10 text-sm">
+                <li>• พัฒนาศักยภาพบุคลากรระดับองค์กร</li>
+                <li>• ปรับจูน Mindset และ Team Spirit</li>
+                <li>• ทักษะการสื่อสารเพื่อประสิทธิภาพงาน</li>
+              </ul>
+              <button 
+                onClick={() => openBooking('workshop')}
+                className="w-full bg-[#0f3460] text-white py-5 rounded-2xl font-black hover:bg-[#c5a059] transition-all shadow-xl shadow-blue-900/10"
+              >
+                ส่งคำขอสำหรับองค์กร
+              </button>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* ── 10. FINAL CTA ── */}
       <section className="py-24 bg-gradient-to-t from-[#0a1628] to-[#0f3460] text-center text-white relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[500px] bg-indigo-500/10 blur-[150px] rounded-full"></div>
@@ -1419,30 +1520,28 @@ const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = (
                 <a href={`tel:${CONTACT_INFO.phone}`} className="text-xl font-black">{ CONTACT_INFO.phone }</a>
              </div>
           </div>
+          </div>
           {/* Schema JSON-LD */}
           <script type="application/ld+json">
             {JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
-              "name": speaker.name,
+              "name": "Dr. Phissalaya Buakeaw",
               "alternateName": "Dr. So",
-              "jobTitle": "Subconscious Communication Trainer",
-              "worksFor": {
-                "@type": "Organization",
-                "name": "CAP Vision Institute"
-              },
-              "knowsAbout": [
-                "Subconscious Communication",
-                "Public Speaking",
-                "Personal Transformation",
-                "Coaching"
-              ],
-              "telephone": CONTACT_INFO.phone,
-              "email": "souloflightacademy@gmail.com"
+              "jobTitle": "Subconscious Mind Expert & Speaker",
+              "description": speaker.bio,
+              "image": speaker.image_url,
+              "url": "https://capvisionpartner.com/speakers/dr-so"
             })}
           </script>
         </div>
       </section>
+
+      <DrSoBookingWizard 
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
+        serviceType={selectedService}
+      />
     </div>
   );
 };

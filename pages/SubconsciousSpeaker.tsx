@@ -343,7 +343,11 @@ const SubconsciousSpeaker: React.FC = () => {
       {/* Instructors Section */}
       <section className="py-24 px-4 bg-[#0a0f1e] text-white">
         <div className="max-w-6xl mx-auto text-center mb-16">
-          <h2 className="text-4xl font-black nav-font mb-6">เรียนรู้กับวิทยากรระดับมาสเตอร์</h2>
+          <h2 className="text-4xl font-black nav-font mb-6">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#c5a059] to-amber-200">
+              เรียนรู้กับวิทยากรระดับมาสเตอร์
+            </span>
+          </h2>
           <p className="text-white/40 text-lg uppercase tracking-widest font-bold">The Perfect Duo: Mindset & Technique</p>
         </div>
 
@@ -357,7 +361,11 @@ const SubconsciousSpeaker: React.FC = () => {
                   {ins.role}
                 </div>
               </div>
-              <h3 className="text-3xl font-black nav-font mb-2">{ins.name}</h3>
+              <h3 className="text-3xl font-black nav-font mb-2">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#c5a059] to-amber-200">
+                  {ins.name}
+                </span>
+              </h3>
               <p className="text-[#c5a059] font-bold mb-6">{ins.title}</p>
               <p className="text-white/60 leading-relaxed mb-8">{ins.bio}</p>
               <Link 

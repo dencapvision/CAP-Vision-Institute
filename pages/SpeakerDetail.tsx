@@ -130,7 +130,9 @@ const SO_SPECIFIC = {
   contact: {
     phone: '091-789-6529',
     email: 'souloflightacademy@gmail.com',
-    facebook: 'ศูนย์พัฒนาศักยภาพพลังจิตใต้สำนึก',
+    facebook: 'https://www.facebook.com/share/17EnJghSkt/',
+    line: 'https://lin.ee/6Baop7M',
+    lineId: '@958wlshf',
     tiktok: '@dr.so_healing',
     tiktokUrl: 'https://www.tiktok.com/@souloflightacademy?_r=1&_t=ZS-95RuOyLhp7S'
   },
@@ -521,8 +523,12 @@ const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = (
                     <MessageCircle className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="text-sm opacity-50 uppercase font-black">Messenger</h4>
-                    <p className="text-xl font-black">{SO_SPECIFIC.contact.facebook}</p>
+                    <h4 className="text-sm opacity-50 uppercase font-black">Messenger / Facebook</h4>
+                    <p className="text-xl font-black">
+                      <a href={SO_SPECIFIC.contact.facebookUrl} target="_blank" rel="noreferrer" className="hover:text-[#c5a059] transition-colors">
+                        {SO_SPECIFIC.contact.facebook}
+                      </a>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -536,12 +542,18 @@ const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = (
                   </div>
                   <span className="font-black">TikTok</span>
                 </a>
-                <div className="flex items-center gap-4 bg-blue-900 p-6 rounded-3xl opacity-50">
+                <a href={SO_SPECIFIC.contact.facebookUrl} target="_blank" rel="noreferrer" className="flex items-center gap-4 bg-[#1877F2] p-6 rounded-3xl hover:scale-105 transition-all">
                   <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center">
                     <Users className="w-5 h-5 text-white" />
                   </div>
                   <span className="font-black">Facebook</span>
-                </div>
+                </a>
+                <a href={SO_SPECIFIC.contact.line} target="_blank" rel="noreferrer" className="flex items-center gap-4 bg-[#06C755] p-6 rounded-3xl hover:scale-105 transition-all">
+                  <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center">
+                    <MessageCircle className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="font-black">LINE OA</span>
+                </a>
               </div>
               <div className="mt-10 text-center">
                 <button 

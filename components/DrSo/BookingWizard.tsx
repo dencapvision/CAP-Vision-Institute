@@ -555,15 +555,15 @@ export const DrSoBookingWizard: React.FC<DrSoBookingWizardProps> = ({
                 </div>
 
                 <div className="flex flex-col items-center gap-4">
-                  <p className="text-xs font-black text-gray-400 uppercase tracking-widest">ขั้นตอนต่อไป</p>
+                  <p className="text-xs font-black text-gray-400 uppercase tracking-widest px-8">ขั้นตอนสุดท้าย: ส่งรหัสยืนยันผ่าน LINE</p>
                   <a 
-                    href="https://lin.ee/nJIDttt"
+                    href={`https://line.me/R/oaMessage/@958wlshf/?รหัสการจองสำหรับคุณคือ: ${bookingData?.booking_code || ''}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full max-w-sm bg-[#06c755] text-white py-5 rounded-2xl font-black text-xl flex items-center justify-center gap-4 hover:scale-[1.02] transition-all shadow-xl shadow-green-500/20 active:scale-95"
                   >
                     <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINE" className="w-8 h-8" />
-                    แจ้งรหัสที่ LINE OA
+                    ยืนยันรับบริการทาง LINE
                   </a>
                   <button 
                     onClick={onClose}

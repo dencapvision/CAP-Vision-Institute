@@ -51,6 +51,15 @@ const createInfoRow = (label: string, value: any) => {
       if (contactToken) LINE_TOKEN = contactToken;
       if (contactAdminId) LINE_ADMIN_ID = contactAdminId;
     }
+
+    // Dr. So Specific Configuration
+    if (project === 'DR_SO') {
+      const drsoToken = Deno.env.get("DR_SO_ACCESS_TOKEN") || Deno.env.get("Dr-So_access token");
+      const drsoAdminId = Deno.env.get("DR_SO_USER_ID") || Deno.env.get("Dr-So_user ID");
+      // Note: DR_SO_CHANNEL_SECRET is stored for future verification but not needed for Push API
+      if (drsoToken) LINE_TOKEN = drsoToken;
+      if (drsoAdminId) LINE_ADMIN_ID = drsoAdminId;
+    }
     
     if (!LINE_TOKEN || !LINE_ADMIN_ID) {
       console.error("Missing LINE_TOKEN or LINE_ADMIN_ID");
@@ -64,9 +73,10 @@ const createInfoRow = (label: string, value: any) => {
     const altText = `แจ้งเตือนใหม่: ${formType}`;
 
     // --- TEMPLATE LOGIC ---
-    if (project === 'CEO_SPEECHFULNESS' || project === 'CEO_TIER' || project === 'CONTACT') {
-      const primaryColor = (project === 'CONTACT') ? "#0F3460" : "#C5A059";
-      const headerText = project === 'CONTACT' ? "✉️ NEW INQUIRY" : "👑 NEW REGISTRATION";
+    if (project === 'CEO_SPEECHFULNESS' || project === 'CEO_TIER' || project === 'CONTACT' || project === 'DR_SO') {
+      const isDrSo = project === 'DR_SO';
+      const primaryColor = (project === 'CONTACT' || isDrSo) ? "#0F3460" : "#C5A059";
+      const headerText = project === 'CONTACT' ? "✉️ NEW INQUIRY" : (isDrSo ? "💎 DR. SO - SERVICE BOOKING" : "👑 NEW REGISTRATION");
       
       const contents = Object.entries(data)
         .map(([key, value]) => createInfoRow(key, value))
@@ -86,15 +96,17 @@ const createInfoRow = (label: string, value: any) => {
                 text: headerText,
                 weight: "bold",
                 color: "#FFFFFF",
-                size: "sm",
-                letterSpacing: "0.1em"
+                size: "xs",
+                letterSpacing: "0.2em"
               }
             ],
-            backgroundColor: primaryColor
+            backgroundColor: primaryColor,
+            paddingAll: "lg"
           },
           body: {
             type: "box",
             layout: "vertical",
+            paddingAll: "xl",
             contents: [
               {
                 type: "text",
@@ -103,6 +115,10 @@ const createInfoRow = (label: string, value: any) => {
                 size: "xl",
                 color: "#0F3460",
                 wrap: true
+              },
+              {
+                type: "separator",
+                margin: "lg"
               },
               {
                 type: "box",
@@ -117,10 +133,11 @@ const createInfoRow = (label: string, value: any) => {
             type: "box",
             layout: "vertical",
             spacing: "sm",
+            paddingAll: "lg",
             contents: [
               {
                 type: "text",
-                text: "CAP Vision Partner © 2024",
+                text: "CAP Vision Partner © 2026",
                 size: "xxs",
                 color: "#CBD5E1",
                 align: "center"
@@ -129,6 +146,36 @@ const createInfoRow = (label: string, value: any) => {
           }
         }
       };
+
+      // --- DR. SO SPECIAL: SERVICE TICKET VIBE ---
+      if (project === 'DR_SO' && data['Booking Code']) {
+        messageObj.contents.body.contents.push({
+          type: "box",
+          layout: "vertical",
+          margin: "xl",
+          paddingAll: "lg",
+          backgroundColor: "#F8FAFC",
+          cornerRadius: "md",
+          contents: [
+            {
+              type: "text",
+              text: "SERVICE TICKET CODE",
+              size: "xxs",
+              color: "#64748B",
+              weight: "bold",
+              letterSpacing: "0.1em"
+            },
+            {
+              type: "text",
+              text: String(data['Booking Code']),
+              size: "xxl",
+              weight: "bold",
+              color: "#0F3460",
+              margin: "sm"
+            }
+          ]
+        });
+      }
 
       // Special handling for slip images if present
       const slipUrl = data['สลิปโอนเงิน'] || data['Slip URL'] || data['slip_url'];

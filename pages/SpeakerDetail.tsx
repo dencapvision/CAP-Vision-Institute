@@ -327,11 +327,15 @@ const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = (
                 animate={{ opacity: 1, y: 0 }}
               >
                 <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
-                  {SO_SPECIFIC.fullName.split(' (')[0]}
-                  <span className="block text-[#c5a059]">{`(${SO_SPECIFIC.fullName.split('(')[1]}`}</span>
+                  {speaker.name ? speaker.name.split(' (')[0] : SO_SPECIFIC.fullName.split(' (')[0]}
+                  <span className="block text-[#c5a059]">
+                    {`(${speaker.name ? speaker.name.split('(')[1] : SO_SPECIFIC.fullName.split('(')[1]}`}
+                  </span>
                 </h1>
                 <p className="text-2xl text-white/80 font-bold mb-4 leading-relaxed">{SO_SPECIFIC.heroHeadline}</p>
-                <p className="text-xl text-[#c5a059] font-medium mb-10 italic">{SO_SPECIFIC.heroSub}</p>
+                <p className="text-xl text-[#c5a059] font-medium mb-10 italic">
+                  {speaker.title || SO_SPECIFIC.heroSub}
+                </p>
                 <div className="flex flex-wrap gap-4">
                   <button 
                     onClick={() => openBooking('personal')} 
@@ -730,10 +734,10 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
                 <Star className="w-4 h-4 fill-current" /> Executive Member
               </div>
               <h1 className="text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tight font-['Prompt']">
-                {speaker.name}
+                {speaker.name || K_DATA.fullName}
               </h1>
               <p className="text-2xl md:text-3xl text-[#c5a059] font-bold mb-10 leading-relaxed border-l-4 border-[#c5a059] pl-6">
-                {speaker.title}
+                {speaker.title || "Expert in Security & Executive Management"}
               </p>
               
               <div className="grid gap-4 mb-12">
@@ -994,9 +998,9 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                 animate={{ opacity: 1, y: 0 }}
               >
                 <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight font-['Prompt']">
-                  {speaker.name}
+                  {speaker.name || "ครูเด่น มาสเตอร์ฟา"}
                 </h1>
-                <p className="text-2xl text-[#c5a059] font-bold mb-4 leading-relaxed">{DEN_SPECIFIC.heroHeadline}</p>
+                <p className="text-2xl text-[#c5a059] font-bold mb-4 leading-relaxed">{speaker.title || DEN_SPECIFIC.heroHeadline}</p>
                 <p className="text-xl text-white/80 font-medium mb-10 italic max-w-2xl">{DEN_SPECIFIC.heroSub}</p>
                 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">

@@ -4,7 +4,7 @@ import {
     GraduationCap, Users, Target, Laptop,
     Search, BarChart3, Brain, CheckCircle2,
     Shield, Layers3, Sparkles, Calendar, Rocket,
-    Crown
+    Crown, MapPin
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -297,190 +297,98 @@ const Services: React.FC = () => {
                </div>
             </section>
 
-            {/* ── 3.5 EXCLUSIVE COURSE (PREMIUM UPGRADE) ─────────────────────── */}
+            {/* ── 3.5 EXCLUSIVE COURSE (CENTRIC PREMIUM DESIGN) ──────────────── */}
             <section className="py-24 relative overflow-hidden bg-[#0a0f1e]" id="exclusive-course">
                {/* Background Decorative Elements */}
-               <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#c5a059] opacity-[0.03] rounded-full -translate-y-1/2 translate-x-1/2 blur-[120px] pointer-events-none" />
-               <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500 opacity-[0.05] rounded-full translate-y-1/2 -translate-x-1/2 blur-[100px] pointer-events-none" />
-               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none" />
+               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#c5a059]/5 blur-[120px] rounded-full pointer-events-none" />
+               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none" />
 
-               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                  <motion.div 
-                     initial={{ opacity: 0, y: 20 }}
+               <div className="max-w-5xl mx-auto px-4 relative z-10 text-center">
+                  <motion.div
+                     initial={{ opacity: 0, y: 30 }}
                      whileInView={{ opacity: 1, y: 0 }}
                      viewport={{ once: true }}
-                     transition={{ duration: 0.8 }}
-                     className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+                     transition={{ duration: 1 }}
+                     className="space-y-12"
                   >
-                     {/* Left Content */}
-                     <div className="space-y-10 order-2 lg:order-1">
-                        <div>
-                           <motion.span 
-                              initial={{ opacity: 0, x: -20 }}
-                              whileInView={{ opacity: 1, x: 0 }}
-                              viewport={{ once: true }}
-                              transition={{ delay: 0.2 }}
-                              className="inline-flex items-center gap-3 bg-[#c5a059]/10 border border-[#c5a059]/30 text-[#c5a059] text-xs font-black uppercase tracking-[0.4em] px-6 py-3 rounded-full mb-8 shadow-2xl backdrop-blur-md nav-font"
-                           >
-                              <Crown className="w-4 h-4" /> EXCLUSIVE COURSE
-                           </motion.span>
-                           
-                           <motion.h2 
-                              initial={{ opacity: 0, y: 20 }}
-                              whileInView={{ opacity: 1, y: 0 }}
-                              viewport={{ once: true }}
-                              transition={{ delay: 0.3 }}
-                              className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight nav-font tracking-tight"
-                           >
-                              ก้าวแรกสู่ <br/>
-                              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#c5a059] via-[#e6d5a7] to-[#c5a059] animate-gradient-x">
-                                 วิทยากรจิตใต้สำนึก
-                              </span>
-                           </motion.h2>
-                           <motion.div 
-                              initial={{ width: 0 }}
-                              whileInView={{ width: 80 }}
-                              viewport={{ once: true }}
-                              transition={{ delay: 0.5, duration: 0.8 }}
-                              className="h-1.5 bg-gradient-to-r from-[#c5a059] to-transparent rounded-full mt-8" 
-                           />
-                        </div>
+                     {/* Badge */}
+                     <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-6 py-2 rounded-full backdrop-blur-md"
+                     >
+                        <Sparkles className="w-4 h-4 text-[#c5a059]" />
+                        <span className="text-white/70 text-sm font-bold tracking-widest nav-font uppercase">EXCLUSIVE COURSE</span>
+                     </motion.div>
 
-                        <motion.p 
-                           initial={{ opacity: 0 }}
-                           whileInView={{ opacity: 1 }}
-                           viewport={{ once: true }}
-                           transition={{ delay: 0.4 }}
-                           className="text-gray-400 text-xl leading-relaxed font-medium"
-                        >
-                           เปลี่ยนการถ่ายทอดแบบเดิม สู่การสื่อสารที่{' '}
-                           <span className="text-white">ทะลุถึงใจคน</span>{' '}
-                           ด้วยศาสตร์ Facilitation และจิตวิทยาขั้นสูง เพื่อสร้างผลลัพธ์ที่ยั่งยืน
-                        </motion.p>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                           <motion.div 
-                              whileHover={{ y: -5 }}
-                              className="flex gap-4 items-center bg-white/5 backdrop-blur-xl p-5 rounded-3xl border border-white/10 hover:border-[#c5a059]/30 transition-all group"
-                           >
-                              <div className="w-12 h-12 bg-[#c5a059]/20 text-[#c5a059] rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                 <Calendar className="w-6 h-6" />
-                              </div>
-                              <div>
-                                 <p className="text-[10px] text-[#c5a059] font-black uppercase tracking-widest nav-font">วันที่จัดงาน</p>
-                                 <p className="font-bold text-white text-lg">20-21 พ.ค. 2569</p>
-                              </div>
-                           </motion.div>
-
-                           <motion.div 
-                              whileHover={{ y: -5 }}
-                              className="flex gap-4 items-center bg-white/5 backdrop-blur-xl p-5 rounded-3xl border border-white/10 hover:border-[#c5a059]/30 transition-all group"
-                           >
-                              <div className="w-12 h-12 bg-amber-500/20 text-amber-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                 <Users className="w-6 h-6" />
-                              </div>
-                              <div>
-                                 <p className="text-[10px] text-amber-500 font-black uppercase tracking-widest nav-font">จำนวนที่นั่ง</p>
-                                 <p className="font-bold text-white text-lg">จำกัดเพียง 20 ท่าน</p>
-                              </div>
-                           </motion.div>
-                        </div>
-
-                        <div className="flex flex-col sm:flex-row gap-8 items-center pt-6">
-                           <motion.button 
-                              whileHover={{ scale: 1.05, boxShadow: "0 20px 40px -10px rgba(197, 160, 89, 0.4)" }}
-                              whileTap={{ scale: 0.95 }}
-                              onClick={() => setIsBookingOpen(true)}
-                              className="bg-[#c5a059] text-[#0a0f1e] px-12 py-6 rounded-[2rem] font-black text-2xl hover:bg-[#e0c58e] transition-all shadow-3xl nav-font flex items-center justify-center gap-4 group w-full sm:w-auto"
-                           >
-                              จองที่นั่งตอนนี้ ๙
-                              <Rocket className="w-7 h-7 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                           </motion.button>
-                           
-                           <div className="text-center sm:text-left">
-                              <p className="text-sm text-gray-500 line-through font-bold tracking-tighter mb-1">ปกติ 12,500 .-</p>
-                              <div className="relative">
-                                 <p className="text-4xl font-black text-[#c5a059] nav-font tracking-tighter">6,500 .-</p>
-                                 <span className="absolute -top-4 -right-12 bg-red-600 text-white text-[10px] font-black px-2 py-1 rounded-md rotate-12 shadow-lg nav-font">EARLY BIRD</span>
-                              </div>
-                           </div>
-                        </div>
+                     {/* Main Title */}
+                     <div className="space-y-4">
+                        <h2 className="text-5xl md:text-7xl font-black text-white nav-font tracking-tight leading-none">
+                           ก้าวแรกสู่
+                        </h2>
+                        <h3 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#c5a059] to-[#8e6d3a] nav-font tracking-tight leading-none">
+                           วิทยากรจิตใต้สำนึก
+                        </h3>
                      </div>
 
-                     {/* Right Visual Image */}
-                     <div className="relative order-1 lg:order-2">
-                        <motion.div 
-                           initial={{ opacity: 0, scale: 0.9 }}
-                           whileInView={{ opacity: 1, scale: 1 }}
-                           viewport={{ once: true }}
-                           transition={{ duration: 1 }}
-                           className="relative"
+                     {/* Quote */}
+                     <motion.p
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.4 }}
+                        className="text-white/80 text-xl md:text-2xl font-medium max-w-3xl mx-auto leading-relaxed italic"
+                     >
+                        “เพราะการสื่อสารที่ทรงพลังที่สุด...ไม่ได้เริ่มจากเทคนิค <br className="hidden md:block" />
+                        แต่เริ่มจากจิตใต้สำนึกที่มีความสุข”
+                     </motion.p>
+
+                     {/* CTAs */}
+                     <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
+                        <motion.button
+                           whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(197, 160, 89, 0.4)" }}
+                           whileTap={{ scale: 0.95 }}
+                           className="bg-[#c5a059] text-[#0a0f1e] px-12 py-5 rounded-2xl font-black text-xl nav-font shadow-xl flex items-center gap-3 group"
                         >
-                           {/* Decorative Frames */}
-                           <div className="absolute -inset-4 border-2 border-[#c5a059]/30 rounded-[4rem] -rotate-3 blur-[2px] pointer-events-none" />
-                           <div className="absolute -inset-4 border-2 border-blue-500/20 rounded-[4rem] rotate-3 blur-[1px] pointer-events-none" />
-
-                           {/* Main Image Container */}
-                           <div className="relative aspect-[4/5] bg-[#1a2235] rounded-[3.5rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.6)] border-4 border-white/10 z-10 group">
-                              <img 
-                                 src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/denmasterfa.jpg" 
-                                 alt="ก้าวแรกสู่ วิทยากรจิตใต้สำนึก"
-                                 className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
-                              />
-                              
-                              {/* Overlay Gradient */}
-                              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1e] via-transparent to-transparent opacity-80" />
-                              
-                              {/* Quote Element */}
-                              <div className="absolute bottom-10 left-10 right-10">
-                                 <motion.div 
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: 0.6 }}
-                                    className="p-8 bg-black/40 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-2xl"
-                                 >
-                                    <Sparkles className="w-8 h-8 text-[#c5a059] mb-4 opacity-70" />
-                                    <p className="text-white text-xl font-medium italic leading-relaxed font-sans">
-                                       "วิทยากร ไม่ใช่คนพูดเก่ง <br/>
-                                       แต่คือคนที่ <span className="text-[#c5a059]">กัมปนาทจิต</span> ผู้เรียนได้"
-                                    </p>
-                                    <div className="mt-4 flex items-center gap-3">
-                                       <div className="h-0.5 w-8 bg-[#c5a059]" />
-                                       <span className="text-gray-400 text-sm uppercase tracking-widest font-bold">Den Masterfa</span>
-                                    </div>
-                                 </motion.div>
-                              </div>
-                           </div>
-
-                           {/* Secondary Floating Assets */}
-                           <motion.div 
-                              animate={{ y: [0, -15, 0] }}
-                              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                              className="absolute -bottom-10 -left-10 w-40 h-40 bg-[#0a0f1e] rounded-[2.5rem] overflow-hidden shadow-3xl border-4 border-white/20 z-20 hidden lg:block"
-                           >
-                              <img 
-                                 src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class1.jpg" 
-                                 alt="Experience"
-                                 className="w-full h-full object-cover"
-                              />
-                           </motion.div>
-
-                           <motion.div 
-                              animate={{ y: [0, 15, 0] }}
-                              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                              className="absolute -top-6 -right-6 w-28 h-28 bg-[#c5a059] rounded-3xl overflow-hidden shadow-3xl border-4 border-white/20 z-20 hidden lg:block p-1"
-                           >
-                              <div className="w-full h-full bg-[#0a0f1e] rounded-[1.25rem] flex items-center justify-center flex-col text-center">
-                                 <p className="text-[#c5a059] text-2xl font-black nav-font">20</p>
-                                 <p className="text-white text-[8px] font-bold uppercase tracking-tighter">Seats Left</p>
-                              </div>
-                           </motion.div>
-                        </motion.div>
+                           รายละเอียดหลักสูตร <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                        </motion.button>
+                        
+                        <motion.button
+                           whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                           onClick={() => setIsBookingOpen(true)}
+                           className="bg-white/5 border border-white/10 text-white px-12 py-5 rounded-2xl font-black text-xl nav-font backdrop-blur-md transition-all"
+                        >
+                           ลงทะเบียน Early Bird
+                        </motion.button>
                      </div>
+
+                     {/* Info Row */}
+                     <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.6 }}
+                        className="flex flex-wrap justify-center items-center gap-8 md:gap-12 pt-12 border-t border-white/5"
+                     >
+                        <div className="flex items-center gap-3 text-white/60">
+                           <Calendar className="w-5 h-5 text-[#c5a059]" />
+                           <span className="text-sm font-bold nav-font">20-21 พฤษภาคม 2569</span>
+                        </div>
+                        <div className="flex items-center gap-3 text-white/60">
+                           <MapPin className="w-5 h-5 text-[#c5a059]" />
+                           <span className="text-sm font-bold nav-font">กรุงเทพมหานคร</span>
+                        </div>
+                        <div className="flex items-center gap-3 text-white/60">
+                           <Users className="w-5 h-5 text-[#c5a059]" />
+                           <span className="text-sm font-bold nav-font">จำกัดเพียง 20 ท่าน</span>
+                        </div>
+                     </motion.div>
                   </motion.div>
                </div>
             </section>
+
 
 
             {/* ── 4. SERVICES ─────────────────────────────────────────────────── */}

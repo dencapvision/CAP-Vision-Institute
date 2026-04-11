@@ -347,13 +347,15 @@ const Services: React.FC = () => {
 
                      {/* CTAs */}
                      <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
-                        <motion.button
-                           whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(197, 160, 89, 0.4)" }}
-                           whileTap={{ scale: 0.95 }}
-                           className="bg-[#c5a059] text-[#0a0f1e] px-12 py-5 rounded-2xl font-black text-xl nav-font shadow-xl flex items-center gap-3 group"
-                        >
-                           รายละเอียดหลักสูตร <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                        </motion.button>
+                        <Link to="/subconscious-speaker">
+                           <motion.button
+                              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(197, 160, 89, 0.4)" }}
+                              whileTap={{ scale: 0.95 }}
+                              className="bg-[#c5a059] text-[#0a0f1e] px-12 py-5 rounded-2xl font-black text-xl nav-font shadow-xl flex items-center gap-3 group"
+                           >
+                              รายละเอียดหลักสูตร <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                           </motion.button>
+                        </Link>
                         
                         <motion.button
                            whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}

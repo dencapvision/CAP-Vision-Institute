@@ -969,107 +969,146 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         description="ครูเด่น ผู้เชี่ยวชาญด้านกระบวนการเรียนรู้และพัฒนาผู้นำ เปลี่ยนวัฒนธรรมองค์กรด้วย Facilitation และ Active Learning"
       />
 
-      {/* Hero */}
-      <section className="relative pt-32 pb-24 bg-[#0f3460] overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-400 rounded-full blur-[120px] -mr-32 -mt-32"></div>
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-amber-400 rounded-full blur-[100px] -ml-20 -mb-20"></div>
-        </div>
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-32 overflow-hidden">
+        <div className="absolute inset-0 bg-[#0f3460]"></div>
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#c5a059]/10 rounded-full blur-[100px] -mr-64 -mt-64"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[100px] -ml-64 -mb-64"></div>
+        
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <Link to="/speakers" className="inline-flex items-center gap-2 text-white/50 hover:text-[#c5a059] transition-colors mb-12 uppercase font-black text-sm">
-            <ArrowLeft className="w-4 h-4" /> วิทยากร
+          <Link to="/speakers" className="inline-flex items-center gap-2 text-white/50 hover:text-[#c5a059] transition-colors mb-12 uppercase font-black text-sm tracking-widest group">
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> วิทยากรทั้งหมด
           </Link>
-          <div className="flex flex-col lg:flex-row gap-16 items-center">
-            <div className="lg:w-2/5">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="relative"
-              >
-                <img src={speaker.image} alt={speaker.name} className="w-full h-[550px] object-cover rounded-[2.5rem] shadow-2xl border-4 border-white/10" />
-                <div className="absolute -bottom-6 -right-6 bg-[#c5a059] p-6 rounded-3xl shadow-xl hidden md:block">
-                  <p className="text-white font-black text-center leading-tight">Master<br/>Facilitator</p>
+          
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#c5a059] to-amber-200 rounded-[3.8rem] blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                <img 
+                  src={speaker.image} 
+                  alt={speaker.name} 
+                  className="relative w-full h-[650px] object-cover rounded-[3.5rem] shadow-2xl border-2 border-white/10" 
+                />
+                <div className="absolute -bottom-8 -right-8 flex flex-col gap-3">
+                  <div className="bg-[#c5a059] p-8 rounded-[2.5rem] shadow-2xl transform hover:scale-105 transition-all">
+                    <Brain className="w-10 h-10 text-white mb-2 mx-auto" />
+                    <p className="text-white font-black text-xl leading-tight text-center">Master<br/>Facilitator</p>
+                  </div>
                 </div>
-              </motion.div>
-            </div>
-            <div className="lg:w-3/5 text-white">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight font-['Prompt']">
-                  {speaker.name || "ครูเด่น มาสเตอร์ฟา"}
-                </h1>
-                <p className="text-2xl text-[#c5a059] font-bold mb-4 leading-relaxed">{speaker.title || DEN_SPECIFIC.heroHeadline}</p>
-                <p className="text-xl text-white/80 font-medium mb-10 italic max-w-2xl">{DEN_SPECIFIC.heroSub}</p>
-                
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-                  {DEN_SPECIFIC.stats.map((s, i) => (
-                    <div key={i} className="bg-white/10 backdrop-blur-md p-6 rounded-3xl text-center border border-white/10">
-                      <div className="flex justify-center mb-2">
-                        <s.icon className="w-6 h-6 text-[#c5a059]" />
-                      </div>
-                      <p className="text-3xl font-black text-white">{s.value}</p>
-                      <p className="text-[10px] uppercase font-black opacity-60 tracking-widest">{s.label}</p>
-                    </div>
-                  ))}
-                </div>
+              </div>
+            </motion.div>
 
-                <div className="flex flex-wrap gap-4">
-                  <button 
-                    onClick={() => setIsBookingOpen(true)}
-                    className="bg-[#c5a059] text-white px-10 py-5 rounded-2xl font-black text-lg hover:scale-105 transition-all shadow-lg shadow-[#c5a059]/20"
-                  >
-                    จองวิทยากร / ขอหลักสูตรองค์กร
-                  </button>
-                </div>
-              </motion.div>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-white"
+            >
+              <div className="inline-flex items-center gap-3 bg-white/5 text-[#c5a059] px-6 py-3 rounded-full text-sm font-black uppercase tracking-[0.2em] mb-8 border border-[#c5a059]/30 backdrop-blur-md">
+                <Star className="w-4 h-4 fill-current" /> Platinum Master
+              </div>
+              <h1 className="text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tight font-['Prompt']">
+                {speaker.name || "ครูเด่น มาสเตอร์ฟา"}
+              </h1>
+              <p className="text-2xl md:text-3xl text-[#c5a059] font-bold mb-10 leading-relaxed border-l-4 border-[#c5a059] pl-6">
+                {speaker.title || DEN_SPECIFIC.heroHeadline}
+              </p>
+              
+              <p className="text-xl text-white/80 font-medium mb-12 italic max-w-2xl leading-relaxed">
+                {DEN_SPECIFIC.heroSub}
+              </p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12">
+                {DEN_SPECIFIC.stats.map((s, i) => (
+                  <div key={i} className="bg-white/5 backdrop-blur-md p-6 rounded-3xl text-center border border-white/10 hover:border-[#c5a059]/30 transition-colors">
+                    <div className="flex justify-center mb-3">
+                      <s.icon className="w-6 h-6 text-[#c5a059]" />
+                    </div>
+                    <p className="text-3xl font-black text-white">{s.value}</p>
+                    <p className="text-[10px] uppercase font-black opacity-40 tracking-widest mt-1">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-6">
+                <button 
+                  onClick={() => setIsBookingOpen(true)}
+                  className="bg-[#c5a059] text-white px-12 py-6 rounded-[2rem] font-black text-xl hover:bg-amber-400 hover:scale-105 transition-all shadow-2xl shadow-[#c5a059]/30 flex items-center gap-4 group"
+                >
+                  ติดต่องาน / จองวิทยากร
+                  <Calendar className="w-6 h-6 group-hover:rotate-12 transition-transform" />
+                </button>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Biography Section */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border border-gray-100 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-50 rounded-full blur-3xl opacity-50 -mr-20 -mt-20"></div>
-            <h2 className="text-3xl font-black text-[#0f3460] mb-8 flex items-center gap-3 relative z-10 font-['Prompt']">
-              <BookOpen className="text-[#c5a059] w-8 h-8" /> ประวัติวิทยากร
-            </h2>
-            <div className="space-y-6 text-lg text-gray-700 leading-relaxed font-medium relative z-10">
-              {DEN_SPECIFIC.bio.map((paragraph, i) => (
-                <p key={i}>{paragraph}</p>
-              ))}
+      <section className="py-32 bg-gray-50/50">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="bg-white rounded-[4rem] p-12 md:p-20 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.05)] border border-gray-100 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-amber-50 rounded-full blur-[100px] opacity-60 -mr-32 -mt-32 transition-transform duration-1000 group-hover:scale-110"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-50 rounded-full blur-[80px] opacity-40 -ml-20 -mb-20"></div>
+            
+            <div className="relative z-10 flex flex-col md:flex-row gap-12 items-start">
+              <div className="w-16 h-16 bg-[#c5a059]/10 rounded-2xl flex items-center justify-center text-[#c5a059] shrink-0">
+                <Quote className="w-8 h-8" />
+              </div>
+              <div>
+                <h2 className="text-4xl font-black text-[#0f3460] mb-10 font-['Prompt'] tracking-tight">
+                  ประวัติและเส้นทางความสำเร็จ
+                </h2>
+                <div className="space-y-8 text-xl text-gray-600 leading-relaxed font-medium">
+                  {DEN_SPECIFIC.bio.map((paragraph, i) => (
+                    <p key={i} className="hover:text-gray-900 transition-colors">{paragraph}</p>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Expertise Section */}
-      <section className="py-24 bg-white relative overflow-hidden">
+      <section className="py-32 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-[#0f3460] mb-4 font-['Prompt']">ความเชี่ยวชาญเฉพาะด้าน</h2>
-            <p className="text-xl text-gray-500">ยกระดับศักยภาพด้วยศาสตร์และนวัตกรรมการเรียนรู้</p>
+          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+            <div className="md:w-2/3">
+              <h2 className="text-4xl md:text-6xl font-black text-[#0f3460] mb-6 font-['Prompt']">Areas of Expertise</h2>
+              <p className="text-2xl text-gray-400 font-bold leading-relaxed">
+                ยกระดับประสิทธิภาพด้วยศาสตร์การเรียนรู้ที่วัดผลได้จริง
+              </p>
+            </div>
+            <div className="w-20 h-1 bg-[#c5a059] mb-4"></div>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {DEN_SPECIFIC.expertiseAreas.map((area, idx) => (
-              <div key={idx} className="bg-gray-50 rounded-[2.5rem] p-8 border border-gray-100 hover:shadow-2xl hover:bg-white transition-all duration-300 group">
-                <div className="w-14 h-14 bg-[#0f3460] rounded-2xl flex items-center justify-center text-white mb-6 group-hover:bg-[#c5a059] transition-colors">
-                  <Star className="w-6 h-6" />
+              <motion.div 
+                key={idx}
+                whileHover={{ y: -10 }}
+                className="bg-gray-50/50 rounded-[3rem] p-10 border border-gray-100 hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.08)] hover:bg-white transition-all duration-500 group relative"
+              >
+                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-[#c5a059] mb-8 shadow-sm group-hover:bg-[#c5a059] group-hover:text-white transition-all duration-500 group-hover:scale-110">
+                  <Star className="w-7 h-7" />
                 </div>
-                <h3 className="text-xl font-black text-[#0f3460] mb-3 font-['Prompt']">{area.category}</h3>
-                <p className="text-sm text-gray-500 mb-6 font-medium md:h-16">{area.desc}</p>
-                <ul className="space-y-3">
+                <h3 className="text-2xl font-black text-[#0f3460] mb-4 font-['Prompt'] leading-tight">{area.category}</h3>
+                <p className="text-base text-gray-500 mb-8 font-semibold h-20 leading-relaxed">{area.desc}</p>
+                <div className="space-y-4 pt-8 border-t border-gray-100">
                   {area.items.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-gray-600 font-medium">
-                      <CheckCircle2 className="w-5 h-5 text-[#c5a059] shrink-0 mt-0.5" />
-                      <span className="leading-snug">{item}</span>
-                    </li>
+                    <div key={i} className="flex items-start gap-3 text-gray-600 font-bold group/item">
+                      <CheckCircle2 className="w-5 h-5 text-[#c5a059] shrink-0 mt-0.5 group-hover/item:scale-125 transition-transform" />
+                      <span className="text-sm leading-relaxed">{item}</span>
+                    </div>
                   ))}
-                </ul>
-              </div>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -1078,9 +1117,12 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
       {/* Career History (List format) */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-[#0f3460] mb-4 font-['Prompt']">ประวัติการทำงานในองค์กร</h2>
-            <p className="text-xl text-gray-500">ประสบการณ์ 18 ปี บนเส้นทางการพัฒนาบุคลากร</p>
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 text-center md:text-left">
+            <div>
+              <h2 className="text-4xl md:text-6xl font-black text-[#0f3460] mb-4 font-['Prompt']">ประวัติการทำงานในองค์กร</h2>
+              <p className="text-xl text-gray-500 font-bold">ประสบการณ์ 18 ปี บนเส้นทางการพัฒนาบุคลากร</p>
+            </div>
+            <div className="w-24 h-1.5 bg-[#c5a059]"></div>
           </div>
           <div className="max-w-4xl mx-auto space-y-4">
             {DEN_SPECIFIC.history.map((item, i) => (
@@ -1101,23 +1143,41 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         </div>
       </section>
 
-      {/* CAP Values Section */}
-      <section className="py-24 bg-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-[#0f3460] mb-4 font-['Prompt']">The CAP Framework</h2>
-            <p className="text-xl text-gray-500">ปรัชญาการพัฒนาคนสไตล์ CAP Vision Institute</p>
+      {/* CAP Framework Section */}
+      <section className="py-32 bg-[#0f3460] overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
+          <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[80%] bg-blue-400 rounded-full blur-[200px]"></div>
+          <div className="absolute bottom-[-20%] left-[-10%] w-[50%] h-[70%] bg-amber-400 rounded-full blur-[180px]"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-24">
+            <span className="inline-block px-6 py-2 rounded-full bg-white/10 text-amber-200 text-sm font-black tracking-[0.2em] mb-6 border border-white/5 uppercase">
+              Core Philosophy
+            </span>
+            <h2 className="text-5xl md:text-8xl font-black text-white mb-8 font-['Prompt'] tracking-tight">The CAP Framework</h2>
+            <p className="text-2xl text-blue-100/60 max-w-3xl mx-auto font-bold leading-relaxed">
+              กุญแจสำคัญสู่การปลดล็อกศักยภาพทีมงานด้วยมาตรฐานจาก CAP Vision Institute
+            </p>
           </div>
+
           <div className="grid md:grid-cols-3 gap-8">
-            {DEN_SPECIFIC.capValues.map((v, i) => (
-              <div key={i} className="relative group p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:bg-white hover:shadow-2xl transition-all duration-500">
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${v.color} text-white flex items-center justify-center mb-8 text-3xl font-black`}>
-                  {v.letter}
+            {DEN_SPECIFIC.capValues.map((v, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white/5 backdrop-blur-xl p-12 rounded-[4rem] border border-white/10 hover:bg-white/10 transition-all duration-500 group"
+              >
+                <div className={`w-20 h-20 rounded-3xl flex items-center justify-center text-white mb-10 shadow-lg shadow-black/20 group-hover:scale-110 transition-transform duration-500 bg-gradient-to-br ${v.color}`}>
+                  <span className="text-4xl font-black">{v.letter}</span>
                 </div>
-                <h3 className="text-2xl font-black text-[#0f3460] mb-2 font-['Prompt']">{v.title}</h3>
-                <p className="text-[#c5a059] font-black mb-6">{v.titleTh}</p>
-                <p className="text-gray-600 leading-relaxed">{v.desc}</p>
-              </div>
+                <h3 className="text-3xl font-black text-white mb-2 font-['Prompt']">{v.title}</h3>
+                <p className="text-[#c5a059] font-black mb-6 text-xl font-['Prompt']">{v.titleTh}</p>
+                <p className="text-lg text-blue-100/60 font-bold leading-relaxed">{v.desc}</p>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -1155,39 +1215,46 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         </div>
       </section>
 
-      {/* Gallery - Bento Grid Style */}
-      <section className="py-24 bg-[#0a1628]">
+      {/* Gallery - Masonry Style (Like Kraiput) */}
+      <section className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex justify-between items-end mb-16">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-4 font-['Prompt']">Activity Gallery</h2>
-              <div className="h-1.5 w-24 bg-[#c5a059]"></div>
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <div className="md:w-2/3">
+              <h2 className="text-5xl md:text-6xl font-black text-[#0f3460] mb-6 font-['Prompt']">Activity & Impact Gallery</h2>
+              <p className="text-2xl text-gray-400 font-bold leading-relaxed">
+                ภาพบรรยากาศการบรรยายและกิจกรรม Workshop โดย ครูเด่น มาสเตอร์ฟา
+              </p>
             </div>
-            <p className="text-white/50 font-bold italic hidden md:block">Moments in Action</p>
+            <p className="text-[#c5a059] font-black uppercase tracking-widest text-sm border-b-2 border-[#c5a059] pb-2">
+              Viewing {DEN_SPECIFIC.gallery.length} Exclusive Photos
+            </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[250px]">
-            {DEN_SPECIFIC.gallery.slice(4).map((img, idx) => {
-              let colSpan = "col-span-1";
-              let rowSpan = "row-span-1";
-              // Create a dynamic pattern 
-              if (idx === 0) { colSpan = "md:col-span-2 lg:col-span-2"; rowSpan = "md:row-span-2 lg:row-span-2"; }
-              else if (idx === 7) { colSpan = "lg:col-span-2"; }
-              else if (idx === 10) { rowSpan = "md:row-span-2 lg:row-span-2"; }
-              
-              return (
-                <motion.div 
-                  key={idx}
-                  whileHover={{ scale: 1.02, zIndex: 10 }}
-                  className={`${colSpan} ${rowSpan} rounded-3xl overflow-hidden shadow-xl border-2 border-white/10 relative group bg-gray-800`}
-                >
-                  <img src={img} alt={`Den Masterfa Gallery ${idx}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                    <p className="text-white text-xs font-black uppercase tracking-widest text-[#c5a059]">ภาพกิจกรรมที่ {idx + 1}</p>
-                  </div>
-                </motion.div>
-              );
-            })}
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+            {DEN_SPECIFIC.gallery.map((img, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.05 }}
+                whileHover={{ scale: 1.02 }}
+                className="relative group rounded-[2.5rem] overflow-hidden shadow-xl border-4 border-white cursor-pointer bg-gray-100"
+              >
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0f3460]/80 via-[#0f3460]/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 z-10 flex items-end p-8">
+                  <p className="text-white font-black uppercase tracking-widest text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-500 flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#c5a059] flex items-center justify-center text-xs">{idx + 1}</span>
+                    View Full Moment
+                  </p>
+                </div>
+                <img 
+                  src={img} 
+                  alt={`Den Masterfa Moment ${idx + 1}`} 
+                  className="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-110" 
+                  loading="lazy"
+                />
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

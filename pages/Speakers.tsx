@@ -202,22 +202,13 @@ const Speakers: React.FC = () => {
                   </h3>
                   <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">{speaker.bio}</p>
 
-                  <div className="pt-6 border-t border-gray-100 flex flex-col gap-4">
+                  <div className="pt-6 border-t border-gray-100 flex items-center justify-between">
                     <Link
                       to={`/speakers/${speaker.slug}`}
-                      className="text-[#0f3460] font-black text-sm flex items-center gap-2 group-hover:gap-3 transition-all hover:text-[#c5a059]"
+                      className="text-[#0f3460] font-black text-sm flex items-center gap-2 group-hover:gap-3 transition-all group-hover:text-[#c5a059]"
                     >
                       ดูประวัติและผลงาน <ArrowRight className="w-4 h-4" />
                     </Link>
-                    <a 
-                      href="https://capvisionpartner.com/contact"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full text-center bg-[#c5a059] text-white py-3 rounded-xl font-black text-sm hover:bg-amber-400 transition-all shadow-lg shadow-[#c5a059]/20 flex items-center justify-center gap-2"
-                    >
-                      จองวิทยากร / ขอสถาบันฯ
-                      <MessageCircle className="w-4 h-4" />
-                    </a>
                   </div>
                 </div>
               </div>

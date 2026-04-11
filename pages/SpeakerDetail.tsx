@@ -247,28 +247,7 @@ const K_DATA = {
     'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha13.jpg'
   ]
 };
-
 /* ─── GENERIC DETAIL ───────────────────────────────────────── */
-
-const BookingButton: React.FC<{ className?: string, variant?: 'gold' | 'outline' }> = ({ className = "", variant = 'gold' }) => {
-  const baseStyles = "w-full py-5 rounded-2xl font-black text-lg transition-all shadow-xl flex items-center justify-center gap-3";
-  const variants = {
-    gold: "bg-[#c5a059] text-white hover:bg-amber-400 hover:scale-[1.02] shadow-[#c5a059]/30",
-    outline: "bg-white/5 border-2 border-[#c5a059] text-[#c5a059] hover:bg-[#c5a059] hover:text-white"
-  };
-
-  return (
-    <a 
-      href="https://capvisionpartner.com/contact" 
-      target="_blank" 
-      rel="noopener noreferrer"
-      className={`${baseStyles} ${variants[variant]} ${className}`}
-    >
-      จองวิทยากร / ขอหลักสูตรองค์กร
-      <Calendar className="w-5 h-5" />
-    </a>
-  );
-};
 
 /* ─── COMPONENTS ───────────────────────────────────────────── */
 
@@ -330,8 +309,7 @@ const GenericDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> 
           </Link>
           <div className="flex flex-col lg:flex-row gap-16 items-center">
             <div className="lg:w-1/3">
-              <img src={speaker.image} alt={speaker.name} className="w-full h-[400px] object-cover rounded-[2.5rem] shadow-2xl mb-6" />
-              <BookingButton />
+              <img src={speaker.image} alt={speaker.name} className="w-full h-[400px] object-cover rounded-[2.5rem] shadow-2xl" />
             </div>
             <div className="lg:w-2/3">
               <h1 className="text-4xl md:text-5xl font-black mb-4">{speaker.name}</h1>
@@ -379,9 +357,6 @@ const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = (
                 <img src={speaker.image} alt={SO_SPECIFIC.fullName} className="w-full h-[550px] object-cover rounded-[2.5rem] shadow-2xl border-4 border-white/10" />
                 <div className="absolute -bottom-6 -right-6 bg-[#c5a059] p-6 rounded-3xl shadow-xl hidden md:block z-20">
                   <p className="text-white font-black text-center leading-tight">วิทยากร<br/>จิตใต้สำนึก</p>
-                </div>
-                <div className="mt-8">
-                  <BookingButton />
                 </div>
               </motion.div>
             </div>
@@ -791,9 +766,6 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
                   </div>
                 </div>
               </div>
-              <div className="mt-12">
-                <BookingButton />
-              </div>
             </motion.div>
 
             <motion.div
@@ -1075,9 +1047,6 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                     <p className="text-white font-black text-xl leading-tight text-center">Master<br/>Facilitator</p>
                   </div>
                 </div>
-              </div>
-              <div className="mt-12">
-                <BookingButton />
               </div>
             </motion.div>
 

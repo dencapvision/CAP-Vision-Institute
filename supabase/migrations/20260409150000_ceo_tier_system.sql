@@ -98,18 +98,26 @@ ALTER TABLE public.ceo_payments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.ceo_memberships ENABLE ROW LEVEL SECURITY;
 
 -- Profiles: Users can view and update their own profile
+DROP POLICY IF EXISTS "Users can view own profile" ON public.profiles;
 CREATE POLICY "Users can view own profile" ON public.profiles FOR SELECT USING (auth.uid() = id);
+
+DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
 CREATE POLICY "Users can update own profile" ON public.profiles FOR UPDATE USING (auth.uid() = id);
 
 -- Bookings: Users can view and insert their own bookings
+DROP POLICY IF EXISTS "Users can view own bookings" ON public.ceo_bookings;
 CREATE POLICY "Users can view own bookings" ON public.ceo_bookings FOR SELECT USING (auth.uid() = user_id);
+
+DROP POLICY IF EXISTS "Users can insert own bookings" ON public.ceo_bookings;
 CREATE POLICY "Users can insert own bookings" ON public.ceo_bookings FOR INSERT WITH CHECK (auth.uid() = user_id);
 
 -- Payments: Users can view their own payments
+DROP POLICY IF EXISTS "Users can view own payments" ON public.ceo_payments;
 CREATE POLICY "Users can view own payments" ON public.ceo_payments FOR SELECT 
 USING (EXISTS (SELECT 1 FROM public.ceo_bookings b WHERE b.id = booking_id AND b.user_id = auth.uid()));
 
 -- Memberships: Users can view their own membership status
+DROP POLICY IF EXISTS "Users can view own membership" ON public.ceo_memberships;
 CREATE POLICY "Users can view own membership" ON public.ceo_memberships FOR SELECT USING (auth.uid() = user_id);
 
 -- -------------------------------------------------------------
@@ -122,11 +130,13 @@ VALUES ('payment-slips', 'payment-slips', false)
 ON CONFLICT (id) DO NOTHING;
 
 -- Policy: Authenticated users can upload their own slips
+DROP POLICY IF EXISTS "Authenticated users can upload slips" ON storage.objects;
 CREATE POLICY "Authenticated users can upload slips" ON storage.objects FOR INSERT 
 TO authenticated 
 WITH CHECK (bucket_id = 'payment-slips' AND (storage.foldername(name))[1] = auth.uid()::text);
 
 -- Policy: Authenticated users can view their own slips
+DROP POLICY IF EXISTS "Authenticated users can view own slips" ON storage.objects;
 CREATE POLICY "Authenticated users can view own slips" ON storage.objects FOR SELECT 
 TO authenticated 
 USING (bucket_id = 'payment-slips' AND (storage.foldername(name))[1] = auth.uid()::text);

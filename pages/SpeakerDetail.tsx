@@ -701,12 +701,14 @@ const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = (
                 </a>
               </div>
               <div className="mt-10 text-center">
-                <button 
-                  onClick={() => openBooking('personal')}
-                  className="text-[#c5a059] font-black border-b-2 border-[#c5a059] pb-2 hover:opacity-70 transition-all uppercase text-sm tracking-widest"
+                <a 
+                  href="https://capvisionpartner.com/contact"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#c5a059] font-black border-b-2 border-[#c5a059] pb-2 hover:opacity-70 transition-all uppercase text-sm tracking-widest inline-block"
                 >
                   Request Proposal for Organization
-                </button>
+                </a>
               </div>
             </div>
           </div>

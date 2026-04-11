@@ -210,29 +210,127 @@ const DrSoDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = (
         </div>
       </section>
 
+      {/* Expertise & Bio */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl font-black text-[#0f3460] mb-8 flex items-center gap-3">
+                <Award className="text-[#c5a059]" /> ความเชี่ยวชาญพิเศษ
+              </h2>
+              <div className="grid gap-6">
+                {SO_SPECIFIC.expertise.map((item, idx) => (
+                  <div key={idx} className="flex gap-6 p-6 rounded-3xl bg-gray-50 border border-gray-100 hover:border-[#c5a059]/30 transition-colors">
+                    <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-[#c5a059] shadow-sm shrink-0">
+                      <item.icon className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-black text-[#0f3460] mb-2">{item.title}</h4>
+                      <p className="text-gray-500 leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-[#0f4c75]/5 p-10 rounded-[3rem] border border-[#0f4c75]/10"
+            >
+              <Quote className="w-12 h-12 text-[#c5a059]/20 mb-6" />
+              <h2 className="text-3xl font-black text-[#0f3460] mb-6">เส้นทางการพัฒนาจากภายใน</h2>
+              <div className="prose prose-lg text-gray-600 leading-relaxed">
+                {speaker.longBio?.split('\n').map((para, i) => (
+                  <p key={i} className="mb-4">{para}</p>
+                )) || <p>{speaker.bio}</p>}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Counter */}
+      <section className="py-16 bg-[#0a1628]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {SO_SPECIFIC.stats.map((stat, idx) => (
+              <div key={idx} className="text-center">
+                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-[#c5a059] mx-auto mb-4">
+                  <stat.icon className="w-6 h-6" />
+                </div>
+                <div className="text-3xl font-black text-white mb-1">{stat.value}</div>
+                <div className="text-sm text-white/50 uppercase tracking-widest">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Services */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-[#0f3460] mb-6">บริการของ Dr. So</h2>
-            <div className="h-1 w-20 bg-[#c5a059] mx-auto"></div>
+            <h2 className="text-4xl md:text-5xl font-black text-[#0f3460] mb-6 tracking-tight">เลือกรูปแบบการปรึกษา</h2>
+            <p className="text-lg text-gray-500 max-w-2xl mx-auto">เริ่มต้นการเปลี่ยนแปลงที่จับต้องได้ ผ่านกระบวนการออกแบบเฉพาะบุคคล</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { id: 'personal' as const, title: 'Personal Coaching', icon: Zap, list: ['ปลดล็อกรายบุคคล', 'ออกแบบ Career Path', 'ฝึกเทคนิคการพูด'] },
-              { id: 'private' as const, title: 'Private Group', icon: Users, list: ['เรียนรู้ร่วมกลุ่ม Elite', 'สื่อสารกลยุทธ์', 'แลกเปลี่ยนประสบการณ์'] },
-              { id: 'workshop' as const, title: 'Corporate Training', icon: Presentation, list: ['พัฒนาบุคลากรองค์กร', 'ปรับจูน Mindset', 'Team Building'] },
+              { id: 'personal' as const, title: 'Personal Coaching', icon: Zap, list: ['ปลดล็อกรายบุคคล (1-on-1)', 'ออกแบบเส้นทางการเติบโต', 'เทคนิคการสื่อสารจิตใต้สำนึก'], color: 'from-[#c5a059] to-[#c5a059]/80' },
+              { id: 'private' as const, title: 'Private Group', icon: Users, list: ['เรียนรู้ร่วมกลุ่ม Elite 5-10 ท่าน', 'กลยุทธ์การสื่อสารวิสัยทัศน์', 'กิจกรรมกลุ่มสะท้อนคิด'], color: 'from-blue-600 to-blue-800' },
+              { id: 'workshop' as const, title: 'Corporate Workshop', icon: Presentation, list: ['Internal Training ทีมงาน', 'ปรับจูนวัฒนธรรมองค์กร', 'พัฒนาทักษะวิทยากรภายใน'], color: 'from-emerald-600 to-emerald-800' },
             ].map((service) => (
-              <div key={service.id} className="bg-white p-10 rounded-[3rem] shadow-xl border border-gray-100 flex flex-col items-center text-center">
-                <div className="w-16 h-16 bg-[#0f3460]/5 rounded-2xl flex items-center justify-center text-[#c5a059] mb-8">
+              <motion.div 
+                key={service.id} 
+                whileHover={{ y: -10 }}
+                className="bg-white p-10 rounded-[3rem] shadow-xl border border-gray-100 flex flex-col items-center text-center relative overflow-hidden group"
+              >
+                <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center text-[#c5a059] mb-8 group-hover:bg-[#0f3460] group-hover:text-white transition-all duration-300">
                   <service.icon className="w-8 h-8" />
                 </div>
                 <h3 className="text-2xl font-black text-[#0f3460] mb-4">{service.title}</h3>
-                <ul className="text-gray-500 mb-10 space-y-2">
-                  {service.list.map(l => <li key={l}>• {l}</li>)}
+                <ul className="text-gray-500 mb-10 space-y-3">
+                  {service.list.map(l => (
+                    <li key={l} className="flex items-center gap-2 justify-center">
+                      <CheckCircle2 className="w-4 h-4 text-[#c5a059]" /> {l}
+                    </li>
+                  ))}
                 </ul>
-                <button onClick={() => openBooking(service.id)} className="w-full bg-[#0f3460] text-white py-4 rounded-2xl font-black hover:bg-[#c5a059] transition-all">เลือกรอบบริการ</button>
-              </div>
+                <button 
+                  onClick={() => openBooking(service.id)} 
+                  className="w-full bg-[#0f3460] text-white py-5 rounded-2xl font-black hover:bg-[#c5a059] active:scale-95 transition-all shadow-lg shadow-[#0f3460]/10"
+                >
+                  เริ่มปรึกษาตอนนี้
+                </button>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery */}
+      <section className="py-24 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex justify-between items-end mb-12">
+            <div>
+              <h2 className="text-4xl font-black text-[#0f3460] mb-4">Gallery</h2>
+              <p className="text-gray-500 italic">"ความสำเร็จเริ่มต้นจากการลงมือทำด้วยหัวใจ"</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {SO_SPECIFIC.gallery.map((img, idx) => (
+              <motion.div 
+                key={idx} 
+                whileHover={{ scale: 1.02 }}
+                className={`rounded-3xl overflow-hidden cursor-pointer shadow-lg ${idx === 0 ? 'md:col-span-2 md:row-span-2' : ''}`}
+              >
+                <img src={img} alt={`Dr So ${idx}`} className="w-full h-full object-cover aspect-square md:aspect-auto" />
+              </motion.div>
             ))}
           </div>
         </div>

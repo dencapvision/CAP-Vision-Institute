@@ -9,6 +9,7 @@ import {
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { CONTACT_INFO, CLIENTS } from '../constants/brand';
+import BookingWizard from '../components/SubconsciousSpeaker/BookingWizard';
 
 // ─── Pain Points ────────────────────────────────────────────────────────────
 const PAIN_POINTS = [
@@ -178,6 +179,7 @@ const FAQS = [
 
 const Services: React.FC = () => {
    const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+   const [isBookingOpen, setIsBookingOpen] = useState(false);
 
    return (
       <div className="bg-gray-50 min-h-screen">
@@ -278,6 +280,107 @@ const Services: React.FC = () => {
                         </div>
                      </div>
                   ))}
+               </div>
+            </section>
+
+            {/* ── 3.5 FEATURED COURSE: SUB-SPEAKER ───────────────────────────── */}
+            <section className="py-20 relative overflow-hidden">
+               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-blue-50/50 -z-10 rounded-[4rem] border border-blue-100/50" />
+               
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center px-4 md:px-8">
+                  <div className="space-y-8">
+                     <div>
+                        <span className="inline-flex items-center gap-2 bg-blue-600 text-white text-xs font-black uppercase tracking-[0.2em] px-4 py-2 rounded-lg mb-6 shadow-lg shadow-blue-500/20">
+                           <Sparkles className="w-4 h-4" /> Exclusive Course
+                        </span>
+                        <h2 className="text-4xl md:text-5xl font-black text-[#0f3460] leading-tight nav-font">
+                           ก้าวแรกสู่ <br/>
+                           <span className="text-blue-600 font-black">วิทยากรจิตใต้สำนึก</span>
+                        </h2>
+                        <div className="w-20 h-1.5 bg-blue-600 rounded-full mt-6" />
+                     </div>
+
+                     <p className="text-gray-600 text-lg leading-relaxed">
+                        ปลดล็อกศักยภาพการถ่ายทอดที่ทรงพลัง เปลี่ยน "ความรู้" ให้เป็น "พลังงาน" 
+                        ที่ขับเคลื่อนผู้คนจากภายในสู่ภายนอก ด้วยกระบวนการ <strong className="text-[#0f3460]">Psychological Facilitation</strong> ขั้นสูง
+                     </p>
+
+                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div className="flex gap-4 items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                           <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center">
+                              <Calendar className="w-5 h-5" />
+                           </div>
+                           <div>
+                              <p className="text-xs text-gray-400 font-bold uppercase">วันที่อบรม</p>
+                              <p className="font-bold text-[#0f3460]">20-21 พ.ค. 2569</p>
+                           </div>
+                        </div>
+                        <div className="flex gap-4 items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                           <div className="w-10 h-10 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center">
+                              <Users className="w-5 h-5" />
+                           </div>
+                           <div>
+                              <p className="text-xs text-gray-400 font-bold uppercase">ที่นั่งว่าง</p>
+                              <p className="font-bold text-[#0f3460]">จำกัดเพียง 20 ท่าน</p>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                        <button 
+                           onClick={() => setIsBookingOpen(true)}
+                           className="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-xl hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 active:scale-95 flex items-center justify-center gap-3"
+                        >
+                           จองที่นั่งตอนนี้ <Rocket className="w-6 h-6" />
+                        </button>
+                        <div className="flex flex-col justify-center">
+                           <p className="text-sm text-gray-400 line-through">ปกติ 12,500.-</p>
+                           <p className="text-xl font-black text-[#0f3460]">Early Bird 6,500.-</p>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div className="relative group lg:pl-12">
+                     {/* Authentic Image Grid / Collage */}
+                     <div className="relative">
+                        {/* Main Featured Image */}
+                        <div className="relative aspect-[4/5] bg-navy-800 rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white z-10">
+                           <img 
+                              src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/denmasterfa.jpg" 
+                              alt="Subconscious Speaker Training"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                           />
+                           <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-transparent to-transparent" />
+                           <div className="absolute bottom-8 left-8 right-8">
+                              <div className="p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20">
+                                 <p className="text-white text-base font-medium italic leading-relaxed">
+                                    "การเป็นวิทยากร ไม่ใช่เรื่องของการพูดเก่ง <br/>
+                                    แต่เป็นเรื่องของการเข้าไปนั่งในใจผู้เรียน"
+                                 </p>
+                              </div>
+                           </div>
+                        </div>
+
+                        {/* Floating Secondary Images */}
+                        <div className="absolute -bottom-6 -left-12 w-48 h-48 bg-navy-800 rounded-3xl overflow-hidden shadow-2xl border-4 border-white z-20 hidden md:block group-hover:translate-x-2 transition-transform">
+                           <img 
+                              src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class1.jpg" 
+                              alt="Class Activity"
+                              className="w-full h-full object-cover"
+                           />
+                        </div>
+                        <div className="absolute -top-6 -right-6 w-32 h-32 bg-navy-800 rounded-2xl overflow-hidden shadow-2xl border-4 border-white z-20 hidden md:block group-hover:-translate-y-2 transition-transform">
+                           <img 
+                              src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class4.jpg" 
+                              alt="Class Atmosphere"
+                              className="w-full h-full object-cover"
+                           />
+                        </div>
+
+                        {/* Decorative background for effect */}
+                        <div className="absolute inset-0 bg-blue-600 rounded-[3rem] rotate-3 scale-105 opacity-10 blur-xl -z-10 group-hover:rotate-6 transition-all" />
+                     </div>
+                  </div>
                </div>
             </section>
 
@@ -492,6 +595,12 @@ const Services: React.FC = () => {
             </section>
 
          </div>
+
+         {/* Course Booking Wizard */}
+         <BookingWizard 
+            isOpen={isBookingOpen} 
+            onClose={() => setIsBookingOpen(false)} 
+         />
       </div>
    );
 };

@@ -52,11 +52,10 @@ const createInfoRow = (label: string, value: any) => {
       if (contactAdminId) LINE_ADMIN_ID = contactAdminId;
     }
 
-    // Dr. So Specific Configuration
-    if (project === 'DR_SO') {
+    // Dr. So Specific Configuration (Services & Courses)
+    if (project === 'DR_SO' || project === 'SUB_SPEAKER') {
       const drsoToken = Deno.env.get("DR_SO_ACCESS_TOKEN") || Deno.env.get("Dr-So_access token");
       const drsoAdminId = Deno.env.get("DR_SO_USER_ID") || Deno.env.get("Dr-So_user ID");
-      // Note: DR_SO_CHANNEL_SECRET is stored for future verification but not needed for Push API
       if (drsoToken) LINE_TOKEN = drsoToken;
       if (drsoAdminId) LINE_ADMIN_ID = drsoAdminId;
     }
@@ -73,10 +72,13 @@ const createInfoRow = (label: string, value: any) => {
     const altText = `แจ้งเตือนใหม่: ${formType}`;
 
     // --- TEMPLATE LOGIC ---
-    if (project === 'CEO_SPEECHFULNESS' || project === 'CEO_TIER' || project === 'CONTACT' || project === 'DR_SO') {
-      const isDrSo = project === 'DR_SO';
+    if (project === 'CEO_SPEECHFULNESS' || project === 'CEO_TIER' || project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER') {
+      const isDrSo = project === 'DR_SO' || project === 'SUB_SPEAKER';
       const primaryColor = (project === 'CONTACT' || isDrSo) ? "#0F3460" : "#C5A059";
-      const headerText = project === 'CONTACT' ? "✉️ NEW INQUIRY" : (isDrSo ? "💎 DR. SO - SERVICE BOOKING" : "👑 NEW REGISTRATION");
+      let headerText = "👑 NEW REGISTRATION";
+      if (project === 'CONTACT') headerText = "✉️ NEW INQUIRY";
+      if (project === 'DR_SO') headerText = "💎 DR. SO - SERVICE BOOKING";
+      if (project === 'SUB_SPEAKER') headerText = "🧠 SUB-SPEAKER COURSE";
       
       const contents = Object.entries(data)
         .map(([key, value]) => createInfoRow(key, value))
@@ -147,8 +149,8 @@ const createInfoRow = (label: string, value: any) => {
         }
       };
 
-      // --- DR. SO SPECIAL: SERVICE TICKET VIBE ---
-      if (project === 'DR_SO' && data['Booking Code']) {
+      // --- BOOKING CODE TICKET VIBE ---
+      if ((project === 'DR_SO' || project === 'SUB_SPEAKER') && data['Booking Code']) {
         messageObj.contents.body.contents.push({
           type: "box",
           layout: "vertical",
@@ -159,7 +161,7 @@ const createInfoRow = (label: string, value: any) => {
           contents: [
             {
               type: "text",
-              text: "SERVICE TICKET CODE",
+              text: "BOOKING TICKET CODE",
               size: "xxs",
               color: "#64748B",
               weight: "bold",

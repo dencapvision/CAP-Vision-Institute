@@ -42,9 +42,15 @@ const createInfoRow = (label: string, value: any) => {
       const capToken = Deno.env.get("LINE_CHANNEL_ACCESS_TOKEN");
       const capAdminId = Deno.env.get("LINE_USER_ID");
       
-      console.log(`[line-notify] Routing ${project} notice to CAP Vision Main OA`);
-      
-      if (!capToken || !capAdminId) {
+      // Check for project-specific override (CEO_TIER)
+      const tierToken = Deno.env.get("CEO_TIER_LINE_TOKEN");
+      const tierAdminId = Deno.env.get("CEO_TIER_LINE_ADMIN_ID");
+
+      if (project === 'CEO_TIER' && tierToken && tierAdminId) {
+        console.log(`[line-notify] Routing CEO_TIER to specific TIER credentials`);
+        LINE_TOKEN = tierToken;
+        LINE_ADMIN_ID = tierAdminId;
+      } else if (!capToken || !capAdminId) {
         console.error(`[${project}] ❌ Missing CAP_VISION secrets! (LINE_CHANNEL_ACCESS_TOKEN or LINE_USER_ID)`);
         // Fallback to CEO_SF if main is missing, but log error
         if (LINE_TOKEN && LINE_ADMIN_ID) {
@@ -59,6 +65,7 @@ const createInfoRow = (label: string, value: any) => {
           });
         }
       } else {
+        console.log(`[line-notify] Routing ${project} notice to CAP Vision Main OA`);
         LINE_TOKEN = capToken;
         LINE_ADMIN_ID = capAdminId;
       }

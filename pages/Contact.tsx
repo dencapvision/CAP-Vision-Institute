@@ -59,13 +59,15 @@ const Contact: React.FC = () => {
          if (dbError) throw dbError;
 
          // 2. Send notification via Supabase Edge Function
-         await supabase.functions.invoke('line-notify', {
+         const { data: invokeData, error: invokeError } = await supabase.functions.invoke('line-notify', {
             body: { 
                project: 'CONTACT',
                formType: 'ฟอร์มติดต่อสอบถาม / ขอใบเสนอราคา', 
                data: displayData 
             }
          });
+
+         if (invokeError) throw new Error(invokeError.message || 'Notification failed');
 
          setSubmitted(true);
       } catch (error) {

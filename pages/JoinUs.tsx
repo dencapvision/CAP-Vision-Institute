@@ -27,13 +27,18 @@ const JoinUs: React.FC = () => {
     };
 
     try {
-       await supabase.functions.invoke('line-notify', {
+       // 2. Send notification via Supabase Edge Function
+       const { data: invokeData, error: invokeError } = await supabase.functions.invoke('line-notify', {
           body: { 
-             formType: 'ฟอร์มสมัครร่วมงาน (Recruitment)', 
              project: 'JOIN_US',
-             data 
+             formType: 'ฟอร์มร่วมงานกับเรา (Application Form)', 
+             data: displayData 
           }
        });
+
+       if (invokeError) throw new Error(invokeError.message || 'Notification failed');
+
+       setSubmitted(true);
     } catch (error) {
        console.error('Failed to send notification:', error);
     }

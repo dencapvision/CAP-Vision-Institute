@@ -46,11 +46,24 @@ const createInfoRow = (label: string, value: any) => {
     
     // CAP Vision General Purpose (Contact, Join Us, Resources, Speaker Booking)
     if (project === 'CONTACT' || project === 'JOIN_US' || project === 'RESOURCES' || project === 'SPEAKER_BOOKING') {
-      // Requested by user: use LINE_CHANNEL_ACCESS_TOKEN and LINE_USER_ID
       const capToken = Deno.env.get("LINE_CHANNEL_ACCESS_TOKEN");
       const capAdminId = Deno.env.get("LINE_USER_ID");
-      if (capToken) LINE_TOKEN = capToken;
-      if (capAdminId) LINE_ADMIN_ID = capAdminId;
+      
+      console.log(`[${project}] Checking CAP Vision secrets...`);
+      
+      if (!capToken || !capAdminId) {
+        console.error(`[${project}] ❌ Missing CAP_VISION secrets! (LINE_CHANNEL_ACCESS_TOKEN or LINE_USER_ID)`);
+        return new Response(JSON.stringify({ 
+          error: `Missing LINE secrets for project: ${project}`,
+          hint: "Ensure LINE_CHANNEL_ACCESS_TOKEN and LINE_USER_ID are set in Supabase Secrets."
+        }), {
+          status: 500,
+          headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+        });
+      }
+      
+      LINE_TOKEN = capToken;
+      LINE_ADMIN_ID = capAdminId;
     }
 
     // Dr. So Specific Configuration (Services & Courses)

@@ -648,15 +648,16 @@ const Resources: React.FC = () => {
                     if (downloadEmail) {
                       setDownloadSubmitted(true);
                       try {
-                        await supabase.functions.invoke('line-notify', {
+                        const { data: invokeData, error: invokeError } = await supabase.functions.invoke('line-notify', {
                           body: { 
-                            formType: 'ดาวน์โหลด Toolkit ฟรี', 
                             project: 'RESOURCES',
+                            formType: 'ดาวน์โหลด Toolkit ฟรี', 
                             data: {
                               'อีเมล': downloadEmail
                             } 
                           }
                         });
+                        if (invokeError) throw new Error(invokeError.message || 'Notification failed');
                       } catch (e) {
                          console.error('Failed to notify resources toolkit download:', e);
                       }

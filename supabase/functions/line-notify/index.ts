@@ -54,10 +54,25 @@ const createInfoRow = (label: string, value: any) => {
 
     // Dr. So Specific Configuration (Services & Courses)
     if (project === 'DR_SO' || project === 'SUB_SPEAKER') {
-      const drsoToken = Deno.env.get("DR_SO_ACCESS_TOKEN") || Deno.env.get("Dr-So_access token");
-      const drsoAdminId = Deno.env.get("DR_SO_USER_ID") || Deno.env.get("Dr-So_user ID");
-      if (drsoToken) LINE_TOKEN = drsoToken;
-      if (drsoAdminId) LINE_ADMIN_ID = drsoAdminId;
+      const drsoToken = Deno.env.get("DR_SO_ACCESS_TOKEN");
+      const drsoAdminId = Deno.env.get("DR_SO_USER_ID");
+      
+      console.log(`[SUB_SPEAKER] DR_SO_ACCESS_TOKEN found: ${!!drsoToken}`);
+      console.log(`[SUB_SPEAKER] DR_SO_USER_ID found: ${!!drsoAdminId}`);
+      
+      if (!drsoToken || !drsoAdminId) {
+        console.error("[SUB_SPEAKER] ❌ Missing DR_SO secrets! Please set DR_SO_ACCESS_TOKEN and DR_SO_USER_ID in Supabase Edge Function secrets.");
+        return new Response(JSON.stringify({ 
+          error: "Missing DR_SO LINE secrets. Please configure DR_SO_ACCESS_TOKEN and DR_SO_USER_ID.",
+          hint: "Go to Supabase Dashboard > Edge Functions > line-notify > Secrets"
+        }), {
+          status: 500,
+          headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+        });
+      }
+      
+      LINE_TOKEN = drsoToken;
+      LINE_ADMIN_ID = drsoAdminId;
     }
 
     // Speaker Booking (Institute) Specific Configuration

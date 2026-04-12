@@ -5,6 +5,7 @@ import {
   Calendar, Users, Rocket, Sparkles, Send, Copy, ExternalLink 
 } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
+import { supabaseAdmin } from '../../lib/supabaseAdmin';
 import { courseService } from '../../lib/courseService';
 
 interface BookingWizardProps {
@@ -133,16 +134,16 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
     setLoading(true);
     setError(null);
     try {
-      // 1. Upload Slip Image to 'media' bucket (public bucket)
+      // 1. Upload Slip Image to 'media' bucket using admin (bypass RLS)
       const fileExt = paymentImage.name.split('.').pop() || 'jpg';
       const fileName = `sub-speaker/${bookingResult.code}_${Date.now()}.${fileExt}`;
-      const { data: uploadData, error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabaseAdmin.storage
         .from('media')
-        .upload(fileName, paymentImage, { upsert: false });
+        .upload(fileName, paymentImage, { upsert: false, contentType: paymentImage.type });
 
       if (uploadError) throw new Error(`อัปโหลดสลิปไม่สำเร็จ: ${uploadError.message}`);
       
-      const { data: { publicUrl } } = supabase.storage
+      const { data: { publicUrl } } = supabaseAdmin.storage
         .from('media')
         .getPublicUrl(fileName);
 

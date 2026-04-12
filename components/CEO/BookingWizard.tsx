@@ -125,9 +125,10 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
 
         // Handle File Upload (Guest-safe path)
         const userFolder = user?.id || 'guest';
-        const filePath = `${userFolder}/${Date.now()}_${file.name}`;
+        const fileName = `ceotier_${booking.id}_${Date.now()}.jpg`;
+        const filePath = `slips/${fileName}`;
         const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('payment-slips')
+          .from('ceo-media')
           .upload(filePath, file);
 
         if (uploadError) throw uploadError;
@@ -146,7 +147,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
         // Notify Admin via LINE
         try {
           const { data: { publicUrl } } = supabase.storage
-            .from('payment-slips')
+            .from('ceo-media')
             .getPublicUrl(uploadData.path);
 
           await supabase.functions.invoke('line-notify', {

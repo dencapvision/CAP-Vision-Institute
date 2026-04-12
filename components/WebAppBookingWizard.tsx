@@ -16,7 +16,8 @@ import {
   ChevronRight,
   ChevronLeft,
   ExternalLink,
-  MessageCircle
+  MessageCircle,
+  Building2
 } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import { ceoService } from '../lib/ceoService';
@@ -436,48 +437,68 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
 
           {step === 'upload' && (
             <div className="space-y-8 animate-in fade-in slide-in-from-right-10 duration-500">
-                <div className="bg-[#0f172a] p-8 rounded-[2.5rem] border border-gray-800 text-center relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                      <QrCode className="w-24 h-24 text-white" />
+                <div className="bg-[#0f172a] p-10 rounded-[3rem] border-2 border-[#c5a059]/30 text-center relative overflow-hidden group shadow-2xl">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-all duration-700">
+                      <QrCode className="w-32 h-32 text-white" />
                     </div>
                     
-                    <img 
-                      src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/ceo_speechfulness/BBL-den%20masterfa.jpg" 
-                      alt="Payment QR" 
-                      className="w-44 h-44 mx-auto rounded-2xl shadow-2xl mb-6 relative z-10 border-4 border-white/10"
-                    />
-                    
-                    <div className="space-y-2 relative z-10">
-                        <p className="text-[#c5a059] font-black text-xs uppercase tracking-[0.2em]">ธนาคารกรุงเทพ (BBL)</p>
-                        <p className="text-3xl font-black text-white tracking-tighter">925-013747-9</p>
-                        <div className="pt-2">
-                           <p className="text-sm font-bold text-gray-300">นายอนุสรณ์ หนองนา</p>
-                           <p className="text-[10px] text-gray-500 uppercase tracking-widest font-black mt-1">ประเภทออมทรัพย์ • สาขาถนนอโศกมนตรี</p>
+                    <div className="relative z-10 flex flex-col items-center">
+                        <div className="bg-white p-4 rounded-3xl shadow-2xl mb-8 transform group-hover:scale-105 transition-transform duration-500">
+                            <img 
+                              src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/ceo_speechfulness/BBL-den%20masterfa.jpg" 
+                              alt="Payment QR" 
+                              className="w-48 h-48 rounded-xl"
+                            />
+                        </div>
+                        
+                        <div className="space-y-3">
+                            <div className="inline-flex items-center gap-2 bg-[#c5a059]/20 px-4 py-1.5 rounded-full border border-[#c5a059]/40 mb-2">
+                                <Building2 className="w-3.5 h-3.5 text-[#c5a059]" />
+                                <span className="text-[#c5a059] font-black text-[10px] uppercase tracking-[0.2em]">ธนาคารกรุงเทพ (BBL)</span>
+                            </div>
+                            <p className="text-4xl md:text-5xl font-black text-white tracking-tighter nav-font">
+                                925-0137-479
+                            </p>
+                            <div className="pt-2">
+                               <p className="text-lg font-black text-gray-100 flex items-center justify-center gap-2">
+                                   <User className="w-5 h-5 text-[#c5a059]" />
+                                   นายอนุสรณ์ หนองนา
+                               </p>
+                               <p className="text-xs text-gray-400 font-bold mt-2 bg-white/5 inline-block px-4 py-1 rounded-full border border-white/10 uppercase tracking-widest">
+                                   ออมทรัพย์ • สาขาถนนอโศกมนตรี
+                               </p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">เลขบัญชีที่โอน (4 ตัวท้าย)</label>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="space-y-3 p-6 bg-gray-50 rounded-3xl border border-gray-100 group hover:border-[#c5a059] transition-all">
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                        <CreditCard className="w-3 h-3 text-[#c5a059]" /> เลขบัญชี 4 ตัวท้าย
+                    </label>
                     <input 
                       name="senderAccount" type="text" value={paymentDetails.senderAccount} onChange={handlePaymentDetailChange}
-                      className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-100 focus:ring-2 focus:ring-[#c5a059] outline-none font-bold" 
+                      className="w-full px-4 py-3 bg-white rounded-xl border-none focus:ring-2 focus:ring-[#c5a059] outline-none font-black text-xl text-[#0f3460]" 
                       placeholder="xxxx" maxLength={4}
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">วันที่โอน</label>
+                  <div className="space-y-3 p-6 bg-gray-50 rounded-3xl border border-gray-100 group hover:border-[#c5a059] transition-all">
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                        <FileText className="w-3 h-3 text-[#c5a059]" /> วันที่โอนเงิน
+                    </label>
                     <input 
                       name="paymentDate" type="date" value={paymentDetails.paymentDate} onChange={handlePaymentDetailChange}
-                      className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-100 focus:ring-2 focus:ring-[#c5a059] outline-none font-bold" 
+                      className="w-full px-4 py-3 bg-white rounded-xl border-none focus:ring-2 focus:ring-[#c5a059] outline-none font-black text-lg text-[#0f3460] [color-scheme:light]" 
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">เวลาที่โอน (โดยประมาณ)</label>
+                  <div className="space-y-3 p-6 bg-gray-50 rounded-3xl border border-gray-100 group hover:border-[#c5a059] transition-all">
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                        <Loader2 className="w-3 h-3 text-[#c5a059]" /> เวลาที่โอนเงิน
+                    </label>
                     <input 
                       name="paymentTime" type="time" value={paymentDetails.paymentTime} onChange={handlePaymentDetailChange}
-                      className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-100 focus:ring-2 focus:ring-[#c5a059] outline-none font-bold" 
+                      className="w-full px-4 py-3 bg-white rounded-xl border-none focus:ring-2 focus:ring-[#c5a059] outline-none font-black text-lg text-[#0f3460] [color-scheme:light]" 
                     />
                   </div>
                 </div>

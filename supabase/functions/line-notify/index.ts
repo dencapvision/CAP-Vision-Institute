@@ -37,33 +37,31 @@ const createInfoRow = (label: string, value: any) => {
     let LINE_ADMIN_ID = Deno.env.get("CEO_SF_LINE_ADMIN_ID");
 
     // Override if project-specific variables exist
-    if (project === 'CEO_TIER') {
-      const tierToken = Deno.env.get("CEO_TIER_LINE_TOKEN");
-      const tierAdminId = Deno.env.get("CEO_TIER_LINE_ADMIN_ID");
-      if (tierToken) LINE_TOKEN = tierToken;
-      if (tierAdminId) LINE_ADMIN_ID = tierAdminId;
-    }
-    
-    // CAP Vision General Purpose (Contact, Join Us, Resources, Speaker Booking)
-    if (project === 'CONTACT' || project === 'JOIN_US' || project === 'RESOURCES' || project === 'SPEAKER_BOOKING' || project === 'WEB_APP') {
+    // CAP Vision General Purpose (Contact, Join Us, Resources, Speaker Booking, CEO Tier)
+    if (project === 'CONTACT' || project === 'JOIN_US' || project === 'RESOURCES' || project === 'SPEAKER_BOOKING' || project === 'WEB_APP' || project === 'CEO_TIER') {
       const capToken = Deno.env.get("LINE_CHANNEL_ACCESS_TOKEN");
       const capAdminId = Deno.env.get("LINE_USER_ID");
       
-      console.log(`[${project}] Checking CAP Vision secrets...`);
+      console.log(`[line-notify] Routing ${project} notice to CAP Vision Main OA`);
       
       if (!capToken || !capAdminId) {
         console.error(`[${project}] ❌ Missing CAP_VISION secrets! (LINE_CHANNEL_ACCESS_TOKEN or LINE_USER_ID)`);
-        return new Response(JSON.stringify({ 
-          error: `Missing LINE secrets for project: ${project}`,
-          hint: "Ensure LINE_CHANNEL_ACCESS_TOKEN and LINE_USER_ID are set in Supabase Secrets."
-        }), {
-          status: 500,
-          headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
-        });
+        // Fallback to CEO_SF if main is missing, but log error
+        if (LINE_TOKEN && LINE_ADMIN_ID) {
+          console.log(`[${project}] ⚠️ Falling back to CEO_SF credentials`);
+        } else {
+          return new Response(JSON.stringify({ 
+            error: `Missing LINE secrets for project: ${project}`,
+            hint: "Ensure LINE_CHANNEL_ACCESS_TOKEN and LINE_USER_ID are set in Supabase Secrets."
+          }), {
+            status: 500,
+            headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+          });
+        }
+      } else {
+        LINE_TOKEN = capToken;
+        LINE_ADMIN_ID = capAdminId;
       }
-      
-      LINE_TOKEN = capToken;
-      LINE_ADMIN_ID = capAdminId;
     }
 
     // Dr. So Specific Configuration (Services & Courses)
@@ -205,7 +203,7 @@ const createInfoRow = (label: string, value: any) => {
       };
 
       // --- BOOKING CODE TICKET VIBE ---
-      if ((project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING' || project === 'WEB_APP') && data['Booking Code']) {
+      if ((project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING' || project === 'WEB_APP' || project === 'CEO_TIER') && data['Booking Code']) {
         messageObj.contents.body.contents.push({
           type: "box",
           layout: "vertical",

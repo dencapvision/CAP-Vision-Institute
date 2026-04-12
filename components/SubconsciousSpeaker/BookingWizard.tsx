@@ -133,17 +133,18 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
     setLoading(true);
     setError(null);
     try {
-      // 1. Upload Slip Image
-      const fileName = `${bookingResult.code}_${Date.now()}.png`;
+      // 1. Upload Slip Image to 'media' bucket (public bucket)
+      const fileExt = paymentImage.name.split('.').pop() || 'jpg';
+      const fileName = `sub-speaker/${bookingResult.code}_${Date.now()}.${fileExt}`;
       const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('slips')
-        .upload(`courses/${fileName}`, paymentImage);
+        .from('media')
+        .upload(fileName, paymentImage, { upsert: false });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) throw new Error(`อัปโหลดสลิปไม่สำเร็จ: ${uploadError.message}`);
       
       const { data: { publicUrl } } = supabase.storage
-        .from('slips')
-        .getPublicUrl(`courses/${fileName}`);
+        .from('media')
+        .getPublicUrl(fileName);
 
       // 2. Record Payment
       const selectedPackage = CourseConfig.packages[formData.packageId as keyof typeof CourseConfig.packages];
@@ -168,10 +169,11 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
           data: {
             'Booking Code': bookingResult.code,
             'Name': formData.fullName,
+            'Phone': formData.phone,
             'Amount': `${selectedPackage.price.toLocaleString()} THB`,
-            'Date': transferDate,
-            'Time': transferTime,
-            'Evidence': publicUrl,
+            'วันที่โอน': transferDate,
+            'เวลาที่โอน': transferTime,
+            'สลิปโอนเงิน': publicUrl,
             'Status': '🟡 รอตรวจสอบสลิป'
           }
         })
@@ -193,7 +195,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
           {/* Backdrop */}
           <motion.div 
             initial={{ opacity: 0 }}
@@ -208,36 +210,36 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+            className="relative w-full max-w-2xl bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh] sm:max-h-[90vh]"
           >
             {/* Header */}
-            <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gradient-to-r from-blue-50 to-white">
+            <div className="px-4 py-4 sm:p-6 border-b border-gray-100 flex justify-between items-center bg-gradient-to-r from-blue-50 to-white flex-shrink-0">
               <div>
-                <h3 className="text-xl font-bold text-[#0f3460] flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-blue-600" />
+                <h3 className="text-lg sm:text-xl font-bold text-[#0f3460] flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
                   สมัครอบรมวิทยากรจิตใต้สำนึก
                 </h3>
-                <p className="text-sm text-gray-500">{CourseConfig.dates}</p>
+                <p className="text-xs sm:text-sm text-gray-500">{CourseConfig.dates}</p>
               </div>
               <button 
                 onClick={onClose}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors flex-shrink-0"
               >
-                <X className="w-6 h-6 text-gray-400" />
+                <X className="w-5 h-5 text-gray-400" />
               </button>
             </div>
 
             {/* Stepper */}
-            <div className="px-8 py-4 bg-gray-50/50 flex justify-between items-center">
+            <div className="px-4 sm:px-8 py-3 sm:py-4 bg-gray-50/50 flex justify-between items-center flex-shrink-0">
               {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="flex items-center">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
+                  <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold transition-all ${
                     step >= i ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'
                   }`}>
-                    {step > i ? <Check className="w-4 h-4" /> : i}
+                    {step > i ? <Check className="w-3 h-3 sm:w-4 sm:h-4" /> : i}
                   </div>
                   {i < 4 && (
-                    <div className={`w-12 h-1 mx-2 rounded ${
+                    <div className={`w-8 sm:w-12 h-1 mx-1 sm:mx-2 rounded ${
                       step > i ? 'bg-blue-600' : 'bg-gray-200'
                     }`} />
                   )}
@@ -246,7 +248,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
             </div>
 
             {/* Content Area */}
-            <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar">
               {error && (
                 <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-xl text-sm border border-red-100 flex items-start gap-3">
                   <div className="mt-0.5">⚠️</div>
@@ -288,42 +290,45 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
 
               {/* STEP 2: Personal Information */}
               {step === 2 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="col-span-1 sm:col-span-2 space-y-2">
-                    <label className="text-sm font-semibold text-gray-700">ชื่อ-นามสกุล (สำหรับใบประกาศ)</label>
+                <div className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-semibold text-gray-700">ชื่อ-นามสกุล (สำหรับใบประกาศ) <span className="text-red-500">*</span></label>
                     <input 
                       type="text" 
                       placeholder="ระบุชื่อ-นามสกุลจริง"
-                      className="w-full p-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none"
+                      className="w-full px-4 py-3 text-base rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none"
                       value={formData.fullName}
                       onChange={e => setFormData(f => ({ ...f, fullName: e.target.value }))}
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-700">เบอร์โทรศัพท์</label>
-                    <input 
-                      type="tel" 
-                      placeholder="08X-XXX-XXXX"
-                      className="w-full p-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 outline-none"
-                      value={formData.phone}
-                      onChange={e => setFormData(f => ({ ...f, phone: e.target.value }))}
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-semibold text-gray-700">เบอร์โทรศัพท์ <span className="text-red-500">*</span></label>
+                      <input 
+                        type="tel" 
+                        placeholder="08X-XXX-XXXX"
+                        inputMode="tel"
+                        className="w-full px-4 py-3 text-base rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 outline-none"
+                        value={formData.phone}
+                        onChange={e => setFormData(f => ({ ...f, phone: e.target.value }))}
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-semibold text-gray-700">Line ID</label>
+                      <input 
+                        type="text" 
+                        placeholder="@lineid"
+                        className="w-full px-4 py-3 text-base rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 outline-none"
+                        value={formData.lineId}
+                        onChange={e => setFormData(f => ({ ...f, lineId: e.target.value }))}
+                      />
+                    </div>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-700">Line ID</label>
-                    <input 
-                      type="text" 
-                      placeholder="@lineid"
-                      className="w-full p-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 outline-none"
-                      value={formData.lineId}
-                      onChange={e => setFormData(f => ({ ...f, lineId: e.target.value }))}
-                    />
-                  </div>
-                  <div className="col-span-1 sm:col-span-2 space-y-2">
+                  <div className="space-y-1.5">
                     <label className="text-sm font-semibold text-gray-700">เป้าหมายในการเรียน (หากมี)</label>
                     <textarea 
                       placeholder="เช่น ต้องการเป็นวิทยากรมืออาชีพ, พัฒนาศักยภาพพนักงาน ฯลฯ"
-                      className="w-full p-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 outline-none min-h-[100px]"
+                      className="w-full px-4 py-3 text-base rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-600 outline-none min-h-[90px] resize-none"
                       value={formData.goals}
                       onChange={e => setFormData(f => ({ ...f, goals: e.target.value }))}
                     />
@@ -484,14 +489,14 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
 
             {/* Sticky Footer */}
             {step < 4 && (
-              <div className="p-6 border-t border-gray-100 bg-white flex justify-between gap-4">
+              <div className="px-4 sm:px-6 py-4 border-t border-gray-100 bg-white flex justify-between gap-3 flex-shrink-0">
                 {step > 1 && (
                   <button 
                     onClick={handleBack}
                     disabled={loading}
-                    className="px-8 py-4 rounded-2xl font-bold text-gray-500 hover:bg-gray-100 transition-colors flex items-center gap-2"
+                    className="px-4 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-gray-500 hover:bg-gray-100 transition-colors flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
                   >
-                    <ChevronLeft className="w-5 h-5" /> ย้อนกลับ
+                    <ChevronLeft className="w-4 h-4" /> ย้อนกลับ
                   </button>
                 )}
                 
@@ -500,9 +505,9 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
                 {step === 1 && (
                   <button 
                     onClick={handleNext}
-                    className="px-10 py-4 bg-[#0f3460] text-white rounded-2xl font-bold flex items-center gap-2 hover:bg-[#0a2545] transition-all shadow-xl shadow-[#0f3460]/10 active:scale-95"
+                    className="px-6 sm:px-10 py-3 sm:py-4 bg-[#0f3460] text-white rounded-xl sm:rounded-2xl font-bold flex items-center gap-2 hover:bg-[#0a2545] transition-all shadow-xl shadow-[#0f3460]/10 active:scale-95 text-sm sm:text-base"
                   >
-                    <span>เลือกแพ็กเกจนี้</span> <ChevronRight className="w-5 h-5" />
+                    <span>เลือกแพ็กเกจนี้</span> <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
                 )}
 
@@ -510,7 +515,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
                   <button 
                     onClick={submitRegistration}
                     disabled={loading || !formData.fullName || !formData.phone}
-                    className="px-10 py-4 bg-[#0f3460] text-white rounded-2xl font-bold flex items-center gap-2 hover:bg-[#0a2545] disabled:opacity-50 disabled:grayscale transition-all shadow-xl shadow-[#0f3460]/10"
+                    className="px-4 sm:px-8 py-3 sm:py-4 bg-[#0f3460] text-white rounded-xl sm:rounded-2xl font-bold flex items-center gap-2 hover:bg-[#0a2545] disabled:opacity-50 disabled:grayscale transition-all shadow-xl shadow-[#0f3460]/10 text-sm sm:text-base"
                   >
                     {loading ? (
                       <span className="flex items-center gap-2">
@@ -518,7 +523,7 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
                         กำลังลงทะเบียน...
                       </span>
                     ) : (
-                      "ลงทะเบียนและรับรหัสชำระเงิน"
+                      "ลงทะเบียนและรับรหัส"
                     )}
                   </button>
                 )}
@@ -527,16 +532,16 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
                   <button 
                     onClick={uploadSlipAndComplete}
                     disabled={loading || !paymentImage}
-                    className="px-10 py-4 bg-blue-600 text-white rounded-2xl font-bold flex items-center gap-2 hover:bg-blue-700 disabled:opacity-50 transition-all shadow-xl shadow-blue-500/20"
+                    className="px-4 sm:px-8 py-3 sm:py-4 bg-blue-600 text-white rounded-xl sm:rounded-2xl font-bold flex items-center gap-2 hover:bg-blue-700 disabled:opacity-50 transition-all shadow-xl shadow-blue-500/20 text-sm sm:text-base"
                   >
                     {loading ? (
                       <span className="flex items-center gap-2">
                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        กำลังตรวจสอบ...
+                        กำลังส่งสลิป...
                       </span>
                     ) : (
                       <span className="flex items-center gap-2">
-                        ยืนยันการแจ้งโอน <Rocket className="w-5 h-5" />
+                        ยืนยันการแจ้งโอน <Rocket className="w-4 h-4" />
                       </span>
                     )}
                   </button>

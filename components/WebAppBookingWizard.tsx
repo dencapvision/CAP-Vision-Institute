@@ -57,6 +57,11 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
     taxId: '',
     address: '',
   });
+  const [paymentDetails, setPaymentDetails] = useState({
+    senderAccount: '',
+    paymentDate: new Date().toISOString().split('T')[0],
+    paymentTime: new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', hour12: false }),
+  });
   const [slipFile, setSlipFile] = useState<File | null>(null);
   const [bookingId, setBookingId] = useState<string | null>(null);
   const [bookingCode, setBookingCode] = useState<string | null>(null);
@@ -70,6 +75,11 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
     const { name, value, type } = e.target as HTMLInputElement;
     const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
     setFormData(prev => ({ ...prev, [name]: val }));
+  };
+
+  const handlePaymentDetailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setPaymentDetails(prev => ({ ...prev, [name]: value }));
   };
 
   const handleRegister = async (e: React.FormEvent) => {
@@ -150,9 +160,10 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
         .update({
           slip_url: slipUrl,
           payment_method: method,
-          status: method === 'transfer' ? 'paid' : 'pending_stripe', // Stripe handles its own status via webhook usually, but here we simplify
+          status: method === 'transfer' ? 'paid' : 'pending_stripe', 
           metadata: {
-            ...formData, // Keep full data
+            ...formData,
+            ...paymentDetails,
             payment_at: new Date().toISOString(),
           }
         })
@@ -160,17 +171,24 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
 
       if (updateError) throw updateError;
 
-      // 3. Send LINE Notification
-      const { data: notifyData, error: notifyError } = await supabase.functions.invoke('web-app-notify', {
+      // 3. Send LINE Notification (Using centralized line-notify)
+      const { data: notifyData, error: notifyError } = await supabase.functions.invoke('line-notify', {
         body: {
-          name: formData.fullName,
-          phone: formData.phone,
-          line_id: formData.lineId,
-          package_name: selectedPackage.name,
-          amount: totalAmount,
-          booking_code: bookingCode,
-          payment_method: method,
-          slip_url: slipUrl
+          project: 'WEB_APP',
+          formType: 'Web App Booking',
+          data: {
+            'โครงการ': selectedPackage.name,
+            'ชื่อลูกค้า': formData.fullName,
+            'เบอร์โทร': formData.phone,
+            'LINE ID': formData.lineId,
+            'ยอดเงิน': `฿${totalAmount.toLocaleString()}`,
+            'ช่องทาง': method === 'stripe' ? 'บัตรเครดิต (Stripe)' : 'โอนเงินผ่านธนาคาร',
+            'Booking Code': bookingCode,
+            'เลขบัญชีที่โอน (4 ตัวท้าย)': paymentDetails.senderAccount || '-',
+            'วันที่โอน': paymentDetails.paymentDate || '-',
+            'เวลาที่โอน': paymentDetails.paymentTime || '-',
+            'slip_url': slipUrl
+          }
         }
       });
 
@@ -418,17 +436,50 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
 
           {step === 'upload' && (
             <div className="space-y-8 animate-in fade-in slide-in-from-right-10 duration-500">
-                <div className="bg-gray-50 p-8 rounded-[2rem] border border-gray-100 text-center">
+                <div className="bg-[#0f172a] p-8 rounded-[2.5rem] border border-gray-800 text-center relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                      <QrCode className="w-24 h-24 text-white" />
+                    </div>
+                    
                     <img 
                       src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/ceo_speechfulness/BBL-den%20masterfa.jpg" 
                       alt="Payment QR" 
-                      className="w-48 h-48 mx-auto rounded-xl shadow-lg mb-4"
+                      className="w-44 h-44 mx-auto rounded-2xl shadow-2xl mb-6 relative z-10 border-4 border-white/10"
                     />
-                    <div className="space-y-1">
-                        <p className="text-[#0f3460] font-black">ธนาคารกรุงเทพ (BBL)</p>
-                        <p className="text-2xl font-black text-[#0f3460]">925-013747-9</p>
-                        <p className="text-sm text-gray-500">นายอนุสรณ์ หนองนา (สาขาถนนอโศกมนตรี)</p>
+                    
+                    <div className="space-y-2 relative z-10">
+                        <p className="text-[#c5a059] font-black text-xs uppercase tracking-[0.2em]">ธนาคารกรุงเทพ (BBL)</p>
+                        <p className="text-3xl font-black text-white tracking-tighter">925-013747-9</p>
+                        <div className="pt-2">
+                           <p className="text-sm font-bold text-gray-300">นายอนุสรณ์ หนองนา</p>
+                           <p className="text-[10px] text-gray-500 uppercase tracking-widest font-black mt-1">ประเภทออมทรัพย์ • สาขาถนนอโศกมนตรี</p>
+                        </div>
                     </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">เลขบัญชีที่โอน (4 ตัวท้าย)</label>
+                    <input 
+                      name="senderAccount" type="text" value={paymentDetails.senderAccount} onChange={handlePaymentDetailChange}
+                      className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-100 focus:ring-2 focus:ring-[#c5a059] outline-none font-bold" 
+                      placeholder="xxxx" maxLength={4}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">วันที่โอน</label>
+                    <input 
+                      name="paymentDate" type="date" value={paymentDetails.paymentDate} onChange={handlePaymentDetailChange}
+                      className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-100 focus:ring-2 focus:ring-[#c5a059] outline-none font-bold" 
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">เวลาที่โอน (โดยประมาณ)</label>
+                    <input 
+                      name="paymentTime" type="time" value={paymentDetails.paymentTime} onChange={handlePaymentDetailChange}
+                      className="w-full px-4 py-3 bg-gray-50 rounded-xl border border-gray-100 focus:ring-2 focus:ring-[#c5a059] outline-none font-bold" 
+                    />
+                  </div>
                 </div>
 
                 <div className="relative group p-10 border-4 border-dashed rounded-3xl border-gray-100 bg-gray-50 text-center hover:border-[#c5a059] transition-all">

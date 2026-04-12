@@ -45,7 +45,7 @@ const createInfoRow = (label: string, value: any) => {
     }
     
     // CAP Vision General Purpose (Contact, Join Us, Resources, Speaker Booking)
-    if (project === 'CONTACT' || project === 'JOIN_US' || project === 'RESOURCES' || project === 'SPEAKER_BOOKING') {
+    if (project === 'CONTACT' || project === 'JOIN_US' || project === 'RESOURCES' || project === 'SPEAKER_BOOKING' || project === 'WEB_APP') {
       const capToken = Deno.env.get("LINE_CHANNEL_ACCESS_TOKEN");
       const capAdminId = Deno.env.get("LINE_USER_ID");
       
@@ -123,8 +123,8 @@ const createInfoRow = (label: string, value: any) => {
     const altText = `แจ้งเตือนใหม่: ${formType}`;
 
     // --- TEMPLATE LOGIC ---
-    if (project === 'CEO_SPEECHFULNESS' || project === 'CEO_TIER' || project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING' || project === 'FA_OS' || project === 'JOIN_US' || project === 'RESOURCES') {
-      const isAltProject = project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING' || project === 'FA_OS' || project === 'JOIN_US' || project === 'RESOURCES';
+    if (project === 'CEO_SPEECHFULNESS' || project === 'CEO_TIER' || project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING' || project === 'FA_OS' || project === 'JOIN_US' || project === 'RESOURCES' || project === 'WEB_APP') {
+      const isAltProject = project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING' || project === 'FA_OS' || project === 'JOIN_US' || project === 'RESOURCES' || project === 'WEB_APP';
       const primaryColor = isAltProject ? "#0F3460" : "#C5A059";
       let headerText = "👑 NEW REGISTRATION";
       if (project === 'CONTACT') headerText = "✉️ NEW INQUIRY";
@@ -134,6 +134,7 @@ const createInfoRow = (label: string, value: any) => {
       if (project === 'SUB_SPEAKER') headerText = "🧠 SUB-SPEAKER COURSE";
       if (project === 'SPEAKER_BOOKING') headerText = "🎤 SPEAKER BOOKING";
       if (project === 'FA_OS') headerText = "🔮 FA-OS WAITLIST";
+      if (project === 'WEB_APP') headerText = "🏢 WEB APP BOOKING";
       
       const contents = Object.entries(data)
         .map(([key, value]) => createInfoRow(key, value))
@@ -204,7 +205,7 @@ const createInfoRow = (label: string, value: any) => {
       };
 
       // --- BOOKING CODE TICKET VIBE ---
-      if ((project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING') && data['Booking Code']) {
+      if ((project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING' || project === 'WEB_APP') && data['Booking Code']) {
         messageObj.contents.body.contents.push({
           type: "box",
           layout: "vertical",

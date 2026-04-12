@@ -122,8 +122,7 @@ const createInfoRow = (label: string, value: any) => {
                 text: headerText,
                 weight: "bold",
                 color: "#FFFFFF",
-                size: "xs",
-                letterSpacing: "0.2em"
+                size: "sm"
               }
             ],
             backgroundColor: primaryColor,
@@ -188,8 +187,7 @@ const createInfoRow = (label: string, value: any) => {
               text: "BOOKING TICKET CODE",
               size: "xxs",
               color: "#64748B",
-              weight: "bold",
-              letterSpacing: "0.1em"
+              weight: "bold"
             },
             {
               type: "text",

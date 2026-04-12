@@ -3,7 +3,8 @@ import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient';
 import {
   LayoutDashboard, BookOpen, Users, Sparkles, FileText,
-  Briefcase, BarChart3, LogOut, Menu, X, ChevronRight, Library, Crown
+  Briefcase, BarChart3, LogOut, Menu, X, ChevronRight, Library, Crown,
+  Calendar, MessageSquare, Tag, Image as ImageIcon
 } from 'lucide-react';
 
 const NAV = [
@@ -13,9 +14,13 @@ const NAV = [
   { to: '/dashboard/resources', label: 'Resources', icon: Library },
   { to: '/dashboard/portfolio', label: 'Portfolio', icon: Briefcase },
   { to: '/dashboard/courses', label: 'หลักสูตร', icon: BookOpen },
-  { to: '/dashboard/seo', label: 'SEO Analyzer', icon: BarChart3 },
+  { to: '/dashboard/events', label: 'อีเวนท์', icon: Calendar },
   { to: '/dashboard/speakers', label: 'วิทยากร', icon: Users },
   { to: '/dashboard/ai-generator', label: 'Course AI', icon: Sparkles },
+  { to: '/dashboard/media', label: 'คลังสื่อ', icon: ImageIcon },
+  { to: '/dashboard/leads', label: 'Leads', icon: MessageSquare },
+  { to: '/dashboard/categories', label: 'หมวดหมู่ / Tags', icon: Tag },
+  { to: '/dashboard/seo', label: 'SEO Analyzer', icon: BarChart3 },
 ];
 
 const DashboardLayout: React.FC = () => {

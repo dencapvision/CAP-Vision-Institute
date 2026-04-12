@@ -44,12 +44,13 @@ const createInfoRow = (label: string, value: any) => {
       if (tierAdminId) LINE_ADMIN_ID = tierAdminId;
     }
     
-    // Support for CONTACT specific if needed
-    if (project === 'CONTACT') {
-      const contactToken = Deno.env.get("CONTACT_LINE_TOKEN") || Deno.env.get("CEO_SF_LINE_TOKEN");
-      const contactAdminId = Deno.env.get("CONTACT_LINE_ADMIN_ID") || Deno.env.get("CEO_SF_LINE_ADMIN_ID");
-      if (contactToken) LINE_TOKEN = contactToken;
-      if (contactAdminId) LINE_ADMIN_ID = contactAdminId;
+    // CAP Vision General Purpose (Contact, Join Us, Resources, Speaker Booking)
+    if (project === 'CONTACT' || project === 'JOIN_US' || project === 'RESOURCES' || project === 'SPEAKER_BOOKING') {
+      // Requested by user: use LINE_CHANNEL_ACCESS_TOKEN and LINE_USER_ID
+      const capToken = Deno.env.get("LINE_CHANNEL_ACCESS_TOKEN");
+      const capAdminId = Deno.env.get("LINE_USER_ID");
+      if (capToken) LINE_TOKEN = capToken;
+      if (capAdminId) LINE_ADMIN_ID = capAdminId;
     }
 
     // Dr. So Specific Configuration (Services & Courses)
@@ -57,11 +58,11 @@ const createInfoRow = (label: string, value: any) => {
       const drsoToken = Deno.env.get("DR_SO_ACCESS_TOKEN");
       const drsoAdminId = Deno.env.get("DR_SO_USER_ID");
       
-      console.log(`[SUB_SPEAKER] DR_SO_ACCESS_TOKEN found: ${!!drsoToken}`);
-      console.log(`[SUB_SPEAKER] DR_SO_USER_ID found: ${!!drsoAdminId}`);
+      console.log(`[DR_SO] DR_SO_ACCESS_TOKEN found: ${!!drsoToken}`);
+      console.log(`[DR_SO] DR_SO_USER_ID found: ${!!drsoAdminId}`);
       
       if (!drsoToken || !drsoAdminId) {
-        console.error("[SUB_SPEAKER] ❌ Missing DR_SO secrets! Please set DR_SO_ACCESS_TOKEN and DR_SO_USER_ID in Supabase Edge Function secrets.");
+        console.error("[DR_SO] ❌ Missing DR_SO secrets! Please set DR_SO_ACCESS_TOKEN and DR_SO_USER_ID in Supabase Edge Function secrets.");
         return new Response(JSON.stringify({ 
           error: "Missing DR_SO LINE secrets. Please configure DR_SO_ACCESS_TOKEN and DR_SO_USER_ID.",
           hint: "Go to Supabase Dashboard > Edge Functions > line-notify > Secrets"
@@ -75,12 +76,26 @@ const createInfoRow = (label: string, value: any) => {
       LINE_ADMIN_ID = drsoAdminId;
     }
 
-    // Speaker Booking (Institute) Specific Configuration
-    if (project === 'SPEAKER_BOOKING') {
-      const capToken = Deno.env.get("CAP_VISION_LINE_TOKEN") || Deno.env.get("CEO_SF_LINE_TOKEN");
-      const capAdminId = Deno.env.get("CAP_VISION_LINE_ADMIN_ID") || Deno.env.get("CEO_SF_LINE_ADMIN_ID");
-      if (capToken) LINE_TOKEN = capToken;
-      if (capAdminId) LINE_ADMIN_ID = capAdminId;
+    // Facilitorium OS (FA_OS) Configuration
+    if (project === 'FA_OS') {
+      // Requested by user: use FA-OS_Access_Token and FA-OS_ID_Channel
+      const faOsToken = Deno.env.get("FA-OS_Access_Token") || Deno.env.get("FA_OS_ACCESS_TOKEN");
+      const faOsAdminId = Deno.env.get("FA-OS_ID_Channel") || Deno.env.get("FA_OS_ID_CHANNEL");
+      
+      console.log(`[FA_OS] FA_OS token found: ${!!faOsToken}`);
+      
+      if (!faOsToken || !faOsAdminId) {
+        console.error("[FA_OS] ❌ Missing FA_OS secrets!");
+        return new Response(JSON.stringify({ 
+          error: "Missing FA_OS LINE secrets.",
+        }), {
+          status: 500,
+          headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+        });
+      }
+      
+      LINE_TOKEN = faOsToken;
+      LINE_ADMIN_ID = faOsAdminId;
     }
     
     if (!LINE_TOKEN || !LINE_ADMIN_ID) {
@@ -95,14 +110,17 @@ const createInfoRow = (label: string, value: any) => {
     const altText = `แจ้งเตือนใหม่: ${formType}`;
 
     // --- TEMPLATE LOGIC ---
-    if (project === 'CEO_SPEECHFULNESS' || project === 'CEO_TIER' || project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING') {
-      const isAltProject = project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING';
+    if (project === 'CEO_SPEECHFULNESS' || project === 'CEO_TIER' || project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING' || project === 'FA_OS' || project === 'JOIN_US' || project === 'RESOURCES') {
+      const isAltProject = project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING' || project === 'FA_OS' || project === 'JOIN_US' || project === 'RESOURCES';
       const primaryColor = isAltProject ? "#0F3460" : "#C5A059";
       let headerText = "👑 NEW REGISTRATION";
       if (project === 'CONTACT') headerText = "✉️ NEW INQUIRY";
+      if (project === 'JOIN_US') headerText = "📄 NEW JOB APPLICATION";
+      if (project === 'RESOURCES') headerText = "📦 TOOLKIT DOWNLOAD";
       if (project === 'DR_SO') headerText = "💎 DR. SO - SERVICE BOOKING";
       if (project === 'SUB_SPEAKER') headerText = "🧠 SUB-SPEAKER COURSE";
       if (project === 'SPEAKER_BOOKING') headerText = "🎤 SPEAKER BOOKING";
+      if (project === 'FA_OS') headerText = "🔮 FA-OS WAITLIST";
       
       const contents = Object.entries(data)
         .map(([key, value]) => createInfoRow(key, value))

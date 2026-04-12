@@ -30,6 +30,7 @@ const JoinUs: React.FC = () => {
        await supabase.functions.invoke('line-notify', {
           body: { 
              formType: 'ฟอร์มสมัครร่วมงาน (Recruitment)', 
+             project: 'JOIN_US',
              data 
           }
        });

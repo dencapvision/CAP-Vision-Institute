@@ -644,7 +644,24 @@ const Resources: React.FC = () => {
                   className="flex-1 bg-white/10 border border-white/20 text-white placeholder-white/30 px-5 py-4 rounded-2xl font-medium focus:outline-none focus:border-[#c5a059] transition-colors"
                 />
                 <button
-                  onClick={() => downloadEmail && setDownloadSubmitted(true)}
+                  onClick={async () => {
+                    if (downloadEmail) {
+                      setDownloadSubmitted(true);
+                      try {
+                        await supabase.functions.invoke('line-notify', {
+                          body: { 
+                            formType: 'ดาวน์โหลด Toolkit ฟรี', 
+                            project: 'RESOURCES',
+                            data: {
+                              'อีเมล': downloadEmail
+                            } 
+                          }
+                        });
+                      } catch (e) {
+                         console.error('Failed to notify resources toolkit download:', e);
+                      }
+                    }
+                  }}
                   className="bg-[#c5a059] text-white px-8 py-4 rounded-2xl font-black nav-font hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all whitespace-nowrap"
                 >
                   รับฟรีเลย

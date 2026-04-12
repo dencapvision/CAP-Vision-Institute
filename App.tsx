@@ -45,6 +45,10 @@ const DashboardPortfolioEditor = lazy(() => import('./pages/dashboard/DashboardP
 const DashboardSEO = lazy(() => import('./pages/dashboard/DashboardSEO'));
 const DashboardResources = lazy(() => import('./pages/dashboard/DashboardResources'));
 const DashboardCEOTier = lazy(() => import('./pages/dashboard/DashboardCEOTier'));
+const DashboardEvents = lazy(() => import('./pages/dashboard/DashboardEvents'));
+const DashboardEventEditor = lazy(() => import('./pages/dashboard/DashboardEventEditor'));
+const DashboardLeads = lazy(() => import('./pages/dashboard/DashboardLeads'));
+const DashboardCategories = lazy(() => import('./pages/dashboard/DashboardCategories'));
 
 
 import { CONTACT_INFO } from './constants/brand';
@@ -118,6 +122,12 @@ const AppShell: React.FC = () => {
               <Route path="seo" element={<DashboardSEO />} />
               <Route path="ai-generator" element={<DashboardAIGenerator />} />
               <Route path="ceo-tier" element={<DashboardCEOTier />} />
+              <Route path="events" element={<DashboardEvents />} />
+              <Route path="events/new" element={<DashboardEventEditor />} />
+              <Route path="events/edit/:id" element={<DashboardEventEditor />} />
+              <Route path="leads" element={<DashboardLeads />} />
+              <Route path="categories" element={<DashboardCategories />} />
+              <Route path="media" element={<MediaManager />} />
 
             </Route>
           </Routes>

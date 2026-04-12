@@ -32,7 +32,7 @@ const JoinUs: React.FC = () => {
           body: { 
              project: 'JOIN_US',
              formType: 'ฟอร์มร่วมงานกับเรา (Application Form)', 
-             data: displayData 
+             data: data 
           }
        });
 

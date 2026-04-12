@@ -11,6 +11,7 @@ import { CONTACT_INFO } from '../constants/brand';
 import SEO from '../components/SEO';
 import { fetchPublishedArticles, type BlogArticleRow } from '../services/blog-articles';
 import { fetchPublishedVideos, fetchPublishedToolkits, type MicroVideo, type ToolkitDownload } from '../services/resources-admin';
+import { supabase } from '../lib/supabaseClient';
 
 const FEATURED_IDS = ['flow-state-learning', 'intro-to-facilitation', 'hrd-future-skills-2025', 'building-growth-mindset-culture'];
 

@@ -262,34 +262,62 @@ const createInfoRow = (label: string, value: any) => {
       };
     }
 
-    // Send to LINE
-    const targetRecipient = to || LINE_ADMIN_ID;
-    const lineResponse = await fetch("https://api.line.me/v2/bot/message/push", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${LINE_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        to: targetRecipient,
-        messages: [messageObj]
-      }),
-    });
+    // Helper function to send message to LINE
+    async function sendToLine(token: string, recipient: string, obj: any) {
+      return await fetch("https://api.line.me/v2/bot/message/push", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          to: recipient,
+          messages: [obj]
+        }),
+      });
+    }
+
+    // Attempt 1: Send with preferred tokens
+    let lineResponse = await sendToLine(LINE_TOKEN!, LINE_ADMIN_ID!, messageObj);
+    let primaryErrorDetail = "";
 
     if (!lineResponse.ok) {
-      const errorText = await lineResponse.text();
-      let hint = "Check if LINE_TOKEN and LINE_ADMIN_ID are valid. Ensure ID starts with 'U'.";
-      if (!targetRecipient?.startsWith('U')) {
-        hint = "LINE_ADMIN_ID seems invalid. It must be a User ID starting with 'U' (found: " + targetRecipient + ")";
+      primaryErrorDetail = await lineResponse.text();
+      console.error(`Primary LINE API Error:`, primaryErrorDetail);
+
+      // Attempt 2: Fallback to CEO_SF if the primary was different
+      const fallbackToken = Deno.env.get("CEO_SF_LINE_TOKEN");
+      const fallbackId = Deno.env.get("CEO_SF_LINE_ADMIN_ID");
+
+      if (fallbackToken && fallbackId && (LINE_TOKEN !== fallbackToken || LINE_ADMIN_ID !== fallbackId)) {
+        console.log("Attempting fallback to CEO_SF credentials...");
+        const fallbackResponse = await sendToLine(fallbackToken, fallbackId, messageObj);
+        
+        if (fallbackResponse.ok) {
+          console.log("Fallback successful.");
+          return new Response(JSON.stringify({ 
+            success: true, 
+            warning: "Primary tokens failed, sent via fallback.",
+            primaryError: primaryErrorDetail 
+          }), {
+            status: 200,
+            headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+          });
+        }
       }
-      
-      console.error(`LINE API Error:`, errorText);
+
+      // If both fail or no fallback possible
+      let hint = "Check if LINE_TOKEN and LINE_ADMIN_ID are valid. Ensure ID starts with 'U'.";
+      if (!LINE_ADMIN_ID?.startsWith('U')) {
+        hint = "LINE_ADMIN_ID seems invalid. It must be a User ID starting with 'U' (found: " + LINE_ADMIN_ID + ")";
+      }
+
       return new Response(JSON.stringify({ 
-        error: "LINE API Error", 
-        detail: errorText,
+        error: "LINE API Error (Both attempts failed)", 
+        detail: primaryErrorDetail,
         hint: hint,
         project: project,
-        recipient: targetRecipient
+        recipient: LINE_ADMIN_ID
       }), {
         status: 502,
         headers: { ...CORS_HEADERS, "Content-Type": "application/json" },

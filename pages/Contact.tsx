@@ -70,9 +70,10 @@ const Contact: React.FC = () => {
          if (invokeError) throw new Error(invokeError.message || 'Notification failed');
 
          setSubmitted(true);
-      } catch (error) {
+      } catch (error: any) {
          console.error('Failed to submit form:', error);
-         alert('ขออภัยครับ เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
+         const errorMsg = error.message || 'เกิดข้อผิดพลาดในการส่งข้อมูล';
+         alert(`ขออภัยครับ: ${errorMsg}\n\nหากปัญหายังคงอยู่ กรุณาติดต่อทีมเทคนิค`);
       }
    };
 

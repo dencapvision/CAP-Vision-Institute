@@ -278,8 +278,19 @@ const createInfoRow = (label: string, value: any) => {
 
     if (!lineResponse.ok) {
       const errorText = await lineResponse.text();
+      let hint = "Check if LINE_TOKEN and LINE_ADMIN_ID are valid. Ensure ID starts with 'U'.";
+      if (!targetRecipient?.startsWith('U')) {
+        hint = "LINE_ADMIN_ID seems invalid. It must be a User ID starting with 'U' (found: " + targetRecipient + ")";
+      }
+      
       console.error(`LINE API Error:`, errorText);
-      return new Response(JSON.stringify({ error: errorText }), {
+      return new Response(JSON.stringify({ 
+        error: "LINE API Error", 
+        detail: errorText,
+        hint: hint,
+        project: project,
+        recipient: targetRecipient
+      }), {
         status: 502,
         headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
       });

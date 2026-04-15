@@ -1,0 +1,59 @@
+====================================================
+PHASE 2: Copy files Supabase Storage → Cloudflare R2
+using rclone (ทำหลัง billing cycle reset ต้นเดือน)
+====================================================
+
+1. ติดตั้ง rclone
+   Download จาก: https://rclone.org/downloads/
+   Windows: แค่ extract rclone.exe ไว้ที่ C:\rclone\rclone.exe
+
+2. Config rclone (รันใน PowerShell)
+
+   C:\rclone\rclone.exe config
+
+   --- สร้าง remote "supabase" ---
+   n → new remote
+   name: supabase
+   Storage: s3 (Amazon S3 Compliant)
+   Provider: Other
+   Access Key ID: [จาก Supabase Dashboard → Settings → API → S3 Access Key]
+   Secret Access Key: [จาก Supabase Dashboard → Settings → API → S3 Secret]
+   Endpoint: https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/s3
+   Region: (ว่างไว้)
+   → Save
+
+   --- สร้าง remote "r2" ---
+   n → new remote
+   name: r2
+   Storage: s3
+   Provider: Cloudflare
+   Access Key ID: [R2 API Token Access Key ID]
+   Secret Access Key: [R2 API Token Secret]
+   Endpoint: https://a4d8ae8fe93b091cd331e77580e5aaba.r2.cloudflarestorage.com
+   → Save
+
+3. ทดสอบ list ไฟล์ใน Supabase
+   C:\rclone\rclone.exe ls supabase:media --max-depth 1
+
+4. Copy ทุกไฟล์จาก Supabase → R2
+   C:\rclone\rclone.exe copy supabase:media r2:cap-vision-assets/media --progress --transfers 10 --s3-no-check-bucket
+
+   (คำสั่งนี้จะ copy เฉพาะไฟล์ที่ยังไม่มีใน R2 หาก run ซ้ำ)
+
+5. ตรวจสอบผลลัพธ์
+   C:\rclone\rclone.exe check supabase:media r2:cap-vision-assets/media
+
+====================================================
+หลัง copy สำเร็จ ทำต่อ Phase 3 และ 4:
+
+Phase 3 — อัปเดต URL ในโค้ด:
+   node scripts/replace-storage-urls.mjs --dry-run   # ดูก่อน
+   node scripts/replace-storage-urls.mjs             # apply
+
+Phase 4 — อัปเดต URL ในฐานข้อมูล:
+   supabase db push
+
+Phase 5 — Deploy:
+   git add -A && git commit -m "chore: migrate storage URLs to R2"
+   git push
+====================================================

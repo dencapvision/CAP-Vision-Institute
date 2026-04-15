@@ -1,5 +1,5 @@
 export function generateCourseAssets(courseName: string) {
-  const baseUrl = "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Course/";
+  const baseUrl = "https://assets.capvisionpartner.com/media/Course/";
 
   // 1. Generate slug
   const slug = courseName

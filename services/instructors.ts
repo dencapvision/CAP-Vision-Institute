@@ -3,8 +3,17 @@ import type { Instructor } from '../types';
 
 const TABLE_NAME = 'instructors';
 
+let _instructorsCache: Instructor[] | null = null;
+let _instructorsCacheAt = 0;
+const CACHE_TTL_MS = 5 * 60 * 1000;
+
 export const fetchInstructors = async (): Promise<Instructor[]> => {
   assertSupabaseEnv();
+
+  const now = Date.now();
+  if (_instructorsCache && now - _instructorsCacheAt < CACHE_TTL_MS) {
+    return _instructorsCache;
+  }
 
   const { data, error } = await supabase
     .from(TABLE_NAME)
@@ -15,7 +24,9 @@ export const fetchInstructors = async (): Promise<Instructor[]> => {
     throw new Error(`Failed to fetch instructors: ${error.message}`);
   }
 
-  return (data ?? []) as Instructor[];
+  _instructorsCache = (data ?? []) as Instructor[];
+  _instructorsCacheAt = now;
+  return _instructorsCache;
 };
 
 export const fetchInstructorBySlug = async (slugOrId: string): Promise<Instructor | null> => {

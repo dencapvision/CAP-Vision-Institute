@@ -33,7 +33,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onUploadSuccess, bucketName =
 
             const { error: uploadError } = await supabase.storage
                 .from(bucketName)
-                .upload(filePath, file);
+                .upload(filePath, file, { cacheControl: '604800', upsert: false }); // 7 days
 
             if (uploadError) throw uploadError;
 

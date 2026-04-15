@@ -63,14 +63,14 @@ const INSTRUCTORS = [
   {
     name: 'ดร.โส (Dr. So)',
     title: 'ผู้เชี่ยวชาญด้านพลังจิตใต้สำนึก',
-    image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so2.jpg',
+    image: 'https://assets.capvisionpartner.com/media/dr.so_healing/dr.so2.jpg',
     bio: 'พุทธศาสตรดุษฎีบัณฑิต (สันติศึกษา) ผู้เชี่ยวชาญการใช้เครื่องมือบำบัดเพื่อปลดล็อกศักยภาพภายในและโปรแกรมจิตใต้สำนึก',
     role: 'ปลดล็อกภายใน'
   },
   {
     name: 'ครูเด่น มาสเตอร์ฟา',
     title: 'Master Facilitator & Digital Expert',
-    image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/Den%20Service/denmasterfa.jpg',
+    image: 'https://assets.capvisionpartner.com/Den%20Service/denmasterfa.jpg',
     bio: 'ผู้นำด้านกระบวนการเรียนรู้ Transformative Learning ประสบการณ์กว่า 18 ปี ในการพัฒนาวิทยากรและผู้นำองค์กร',
     role: 'จุดประกายภายนอก'
   }
@@ -87,13 +87,13 @@ const TESTIMONIALS = [
   {
     name: 'คุณนพดล',
     role: 'Entrepreneur',
-    img: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg',
+    img: 'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg',
     quote: 'ไม่เคยคิดว่าตัวเองจะพูดได้ดีขนาดนี้ การเรียนกับครูเด่นและดร.โส ช่วยให้ผมเห็นจุดดำที่ซ่อนอยู่ในใจและลบมันออกไปได้จริง ๆ ตอนนี้ผมกล้าขยายธุรกิจด้วยการพูดแล้วครับ',
   },
   {
     name: 'คุณเมลิศา',
     role: 'HR Manager',
-    img: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class1.jpg',
+    img: 'https://assets.capvisionpartner.com/media/dr.so_healing/dr.so_class1.jpg',
     quote: 'เป็นหลักสูตรที่ไม่ได้มีแต่เทคนิค แต่มี "หัวใจ" อยู่ในนั้น ดร.โสช่วยพาสัมผัสความรู้สึกข้างใน ส่วนครูเด่นช่วยพาลงมือทำ เป็นส่วนผสมที่ลงตัวมากค่ะ',
   },
 ];
@@ -143,12 +143,12 @@ const FAQS = [
 ];
 
 const GALLERY = [
-  "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.sio_class9.jpg",
-  "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class1.jpg",
-  "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class2.jpg",
-  "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class4.jpg",
-  "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class6.jpg",
-  "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class7.jpg",
+  "https://assets.capvisionpartner.com/media/dr.so_healing/dr.sio_class9.jpg",
+  "https://assets.capvisionpartner.com/media/dr.so_healing/dr.so_class1.jpg",
+  "https://assets.capvisionpartner.com/media/dr.so_healing/dr.so_class2.jpg",
+  "https://assets.capvisionpartner.com/media/dr.so_healing/dr.so_class4.jpg",
+  "https://assets.capvisionpartner.com/media/dr.so_healing/dr.so_class6.jpg",
+  "https://assets.capvisionpartner.com/media/dr.so_healing/dr.so_class7.jpg",
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -283,7 +283,7 @@ const SubconsciousSpeaker: React.FC = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-[#c5a059]/10 rounded-[3rem] blur-3xl" />
               <img 
-                src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class3.jpg" 
+                src="https://assets.capvisionpartner.com/media/dr.so_healing/dr.so_class3.jpg" 
                 alt="บรรยากาศการเรียน" 
                 className="relative rounded-[2.5rem] shadow-2xl border-8 border-white"
               />
@@ -536,7 +536,7 @@ const SubconsciousSpeaker: React.FC = () => {
       {/* Final CTA */}
       <section className="py-32 px-4 bg-[#0a0f1e] text-center relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <img src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class2.jpg" alt="BG" className="w-full h-full object-cover" />
+          <img src="https://assets.capvisionpartner.com/media/dr.so_healing/dr.so_class2.jpg" alt="BG" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-6xl font-black text-white nav-font mb-8">

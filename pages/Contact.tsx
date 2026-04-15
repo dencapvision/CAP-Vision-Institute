@@ -288,7 +288,7 @@ const Contact: React.FC = () => {
                <div className="bg-[#0f3460] rounded-[3rem] md:rounded-[4.5rem] overflow-hidden shadow-2xl relative group">
                   <div className="absolute inset-0 bg-gradient-to-r from-[#0f3460] to-transparent z-10 opacity-60"></div>
                   <img 
-                     src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/activity/BKK%20THE%20ONE%20SOCIETY%202025%20By%20AOT%20SUVARNABHUMI_251031_25.jpg" 
+                     src="https://assets.capvisionpartner.com/media/activity/BKK%20THE%20ONE%20SOCIETY%202025%20By%20AOT%20SUVARNABHUMI_251031_25.jpg" 
                      className="w-full h-[400px] md:h-[600px] object-cover transition-transform duration-1000 group-hover:scale-105" 
                      alt="BKK THE ONE SOCIETY 2025 By AOT SUVARNABHUMI" 
                   />

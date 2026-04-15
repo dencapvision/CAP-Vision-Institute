@@ -34,9 +34,9 @@ const CourseConfig = {
     lineLink: "https://lin.ee/6Baop7M"
   },
   images: {
-    hero: "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Den%20Masterfa%20Gallery/denmasterfa.jpg",
-    success: "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class2.jpg",
-    bank: "https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/dr.so_healing/dr.so_class3.jpg"
+    hero: "https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/denmasterfa.jpg",
+    success: "https://assets.capvisionpartner.com/media/dr.so_healing/dr.so_class2.jpg",
+    bank: "https://assets.capvisionpartner.com/media/dr.so_healing/dr.so_class3.jpg"
   }
 };
 

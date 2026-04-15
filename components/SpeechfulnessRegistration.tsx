@@ -235,7 +235,7 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
             <div className="relative inline-block mb-6 group">
               <div className="absolute -inset-4 bg-gold-gradient opacity-20 blur-xl rounded-full transition-all group-hover:opacity-30"></div>
               <img 
-                src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/contact/Line%20OA%20@denmasterfa.jpg" 
+                src="https://assets.capvisionpartner.com/media/contact/Line%20OA%20@denmasterfa.jpg" 
                 alt="LINE OA @denmasterfa" 
                 className="w-48 h-48 rounded-3xl shadow-2xl relative border-4 border-white"
               />
@@ -455,7 +455,7 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
                     {/* Placeholder for QR Code */}
                     <div className="w-48 h-48 bg-white flex items-center justify-center rounded-xl relative overflow-hidden shadow-sm">
                       <img 
-                        src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/ceo_speechfulness/BBL-den%20masterfa.jpg" 
+                        src="https://assets.capvisionpartner.com/ceo_speechfulness/BBL-den%20masterfa.jpg" 
                         alt="BBL Payment QR" 
                         className="w-full h-full object-contain" 
                       />

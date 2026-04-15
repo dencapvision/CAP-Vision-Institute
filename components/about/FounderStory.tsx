@@ -64,7 +64,7 @@ const FounderStory: React.FC = () => {
           <div className="lg:col-span-4">
             <div className="relative">
               <img
-                src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/about%20us/CAP%20Vision%20CEO.jpg"
+                src="https://assets.capvisionpartner.com/media/about%20us/CAP%20Vision%20CEO.jpg"
                 alt="ครูเด่น มาสเตอร์ฟา"
                 className="w-full aspect-[4/5] object-cover grayscale hover:grayscale-0 transition-all duration-700"
               />

@@ -45,22 +45,22 @@ export const BRAND_INFO = {
 };
 
 export const CLIENTS = [
-  { name: 'Tops (Central Food Retail)', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/central%20food%20retail%20(CFR).png' },
-  { name: 'Mr.D.I.Y. (Thailand)', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Mr-DIY-logo.png' },
-  { name: 'AOT', type: 'State Enterprise', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Airports_of_Thailand_Logo.svg.png' },
-  { name: 'PEA', type: 'State Enterprise', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/PEA.png' },
-  { name: 'Land & Houses', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/landandhouses.jpg' },
-  { name: 'Toyota', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Toyota_Symbol.svg.png' },
-  { name: 'Dell Technologies', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Dell%20Corperation%20(Thailand)%20Co.,%20Ltd..png' },
-  { name: 'Betagro', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Betagro.png' },
-  { name: 'EXAT', type: 'State Enterprise', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/EXAT.png' },
-  { name: 'Universal Robina', type: 'Corporate', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Universal_Robina-Logo.wine.png' },
-  { name: 'ศอบต.', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/sbpac.go.th.jpg' },
-  { name: 'สสส. SOOK', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/sook.png' },
-  { name: 'กรมวิทยาศาสตร์บริการ', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/dss.go.th.png' },
-  { name: 'สภากาชาดไทย', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/Thai_Red_Cross_Society_Logo_(2022).svg' },
-  { name: 'มหาวิทยาลัยศรีนครินทรวิโรฒ', type: 'Academic', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/SWU.png' },
-  { name: 'TISTR วว.', type: 'Government', logo: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/clients%20logo/tistr.or.th.svg' }
+  { name: 'Tops (Central Food Retail)', type: 'Corporate', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/central%20food%20retail%20(CFR).png' },
+  { name: 'Mr.D.I.Y. (Thailand)', type: 'Corporate', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/Mr-DIY-logo.png' },
+  { name: 'AOT', type: 'State Enterprise', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/Airports_of_Thailand_Logo.svg.png' },
+  { name: 'PEA', type: 'State Enterprise', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/PEA.png' },
+  { name: 'Land & Houses', type: 'Corporate', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/landandhouses.jpg' },
+  { name: 'Toyota', type: 'Corporate', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/Toyota_Symbol.svg.png' },
+  { name: 'Dell Technologies', type: 'Corporate', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/Dell%20Corperation%20(Thailand)%20Co.,%20Ltd..png' },
+  { name: 'Betagro', type: 'Corporate', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/Betagro.png' },
+  { name: 'EXAT', type: 'State Enterprise', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/EXAT.png' },
+  { name: 'Universal Robina', type: 'Corporate', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/Universal_Robina-Logo.wine.png' },
+  { name: 'ศอบต.', type: 'Government', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/sbpac.go.th.jpg' },
+  { name: 'สสส. SOOK', type: 'Government', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/sook.png' },
+  { name: 'กรมวิทยาศาสตร์บริการ', type: 'Government', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/dss.go.th.png' },
+  { name: 'สภากาชาดไทย', type: 'Government', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/Thai_Red_Cross_Society_Logo_(2022).svg' },
+  { name: 'มหาวิทยาลัยศรีนครินทรวิโรฒ', type: 'Academic', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/SWU.png' },
+  { name: 'TISTR วว.', type: 'Government', logo: 'https://assets.capvisionpartner.com/media/clients%20logo/tistr.or.th.svg' }
 ];
 
 export const TIMELINE = [
@@ -91,7 +91,7 @@ export const SPEAKERS: Speaker[] = [
     id: 'den-master-fa',
     name: 'อ.อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)',
     title: 'ผู้อำนวยการสถาบัน CAP-Vision Institute',
-    image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/speakers/Profile_D-MasterFa.webp',
+    image: 'https://assets.capvisionpartner.com/media/speakers/Profile_D-MasterFa.webp',
     bio: 'ผู้พัฒนากระบวนการเรียนรู้ (Dynamic Learning Designer) และผู้นำการเปลี่ยนแปลงด้วยแนวคิด Transformative Learning ประสบการณ์กว่า 18 ปี',
     longBio: 'อาจารย์อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา) ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning และผู้ก่อตั้ง FFT – Facilitator for Thailand เชี่ยวชาญการออกแบบการเรียนรู้แบบ Blended Learning และกระบวนการพัฒนาบุคลากรที่ผสมผสาน AI',
     expertise: [
@@ -170,7 +170,7 @@ export const COURSES: CourseDetailInfo[] = [
       id: 'den-master-fa',
       name: 'ครูเด่น มาสเตอร์ฟา',
       bio: 'ที่ปรึกษาองค์กรและนักพัฒนาทักษะการสื่อสารเพิ่มพลังบวก',
-      image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/speakers/Profile_D-MasterFa.webp'
+      image: 'https://assets.capvisionpartner.com/media/speakers/Profile_D-MasterFa.webp'
     }
   },
   {
@@ -207,7 +207,7 @@ export const COURSES: CourseDetailInfo[] = [
       id: 'den-master-fa',
       name: 'ครูเด่น มาสเตอร์ฟา',
       bio: 'นักออกแบบกระบวนการเรียนรู้ (Dynamic Learning Designer)',
-      image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/speakers/Profile_D-MasterFa.webp'
+      image: 'https://assets.capvisionpartner.com/media/speakers/Profile_D-MasterFa.webp'
     }
   },
   {
@@ -246,7 +246,7 @@ export const COURSES: CourseDetailInfo[] = [
       id: 'den-master-fa',
       name: 'ครูเด่น มาสเตอร์ฟา',
       bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning',
-      image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/speakers/Profile_D-MasterFa.webp'
+      image: 'https://assets.capvisionpartner.com/media/speakers/Profile_D-MasterFa.webp'
     }
   },
   {
@@ -282,7 +282,7 @@ export const COURSES: CourseDetailInfo[] = [
       id: 'den-master-fa',
       name: 'ครูเด่น มาสเตอร์ฟา',
       bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning',
-      image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/speakers/Profile_D-MasterFa.webp'
+      image: 'https://assets.capvisionpartner.com/media/speakers/Profile_D-MasterFa.webp'
     }
   }
 ];

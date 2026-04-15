@@ -408,7 +408,7 @@ const LeadershipRoadmap: React.FC = () => {
         {/* Background */}
         <div className="absolute inset-0 z-0">
           <img
-            src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/Course/cap-vision-leadership-roadmap-strategic-course.png"
+            src="https://assets.capvisionpartner.com/media/Course/cap-vision-leadership-roadmap-strategic-course.png"
             alt="Leadership Roadmap เส้นทางพัฒนาผู้นำองค์กร จาก Potential สู่ Strategic Leader อย่างมีแบบแผน โดย CAP Vision Institute"
             className="w-full h-full object-cover opacity-15"
           />

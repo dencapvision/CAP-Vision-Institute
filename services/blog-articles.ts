@@ -16,10 +16,11 @@ export interface BlogArticleRow {
   updated_at: string;
 }
 
+// List view: exclude heavy `content` JSON — fetch it only in detail/edit views
 export async function fetchPublishedArticles(): Promise<BlogArticleRow[]> {
   const { data, error } = await supabase
     .from('blog_articles')
-    .select('*')
+    .select('id, slug, title, category, thumbnail, author, date_label, read_time, published, created_at, updated_at')
     .eq('published', true)
     .order('created_at', { ascending: false });
   if (error) throw error;

@@ -637,7 +637,7 @@ export const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose })
                     <div className="relative group">
                       <div className="absolute -inset-2 bg-gradient-to-tr from-[#c5a059] to-[#0f3460] rounded-3xl blur opacity-20 group-hover:opacity-40 transition-all" />
                       <img 
-                        src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/media/contact/Line%20OA%20@denmasterfa.jpg" 
+                        src="https://assets.capvisionpartner.com/media/contact/Line%20OA%20@denmasterfa.jpg" 
                         alt="Line OA QR Code"
                         className="w-40 h-40 rounded-2xl shadow-xl border-4 border-white relative z-10"
                       />

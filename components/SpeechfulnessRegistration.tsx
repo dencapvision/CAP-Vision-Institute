@@ -455,7 +455,7 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
                     {/* Placeholder for QR Code */}
                     <div className="w-48 h-48 bg-white flex items-center justify-center rounded-xl relative overflow-hidden shadow-sm">
                       <img 
-                        src="https://assets.capvisionpartner.com/ceo_speechfulness/BBL-den%20masterfa.jpg" 
+                        src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/ceo_speechfulness/BBL-den%20masterfa.jpg" 
                         alt="BBL Payment QR" 
                         className="w-full h-full object-contain" 
                       />

@@ -70,7 +70,7 @@ const INSTRUCTORS = [
   {
     name: 'ครูเด่น มาสเตอร์ฟา',
     title: 'Master Facilitator & Digital Expert',
-    image: 'https://assets.capvisionpartner.com/Den%20Service/denmasterfa.jpg',
+    image: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/Den%20Service/denmasterfa.jpg',
     bio: 'ผู้นำด้านกระบวนการเรียนรู้ Transformative Learning ประสบการณ์กว่า 18 ปี ในการพัฒนาวิทยากรและผู้นำองค์กร',
     role: 'จุดประกายภายนอก'
   }

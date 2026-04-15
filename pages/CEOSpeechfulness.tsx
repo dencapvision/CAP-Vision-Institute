@@ -69,7 +69,7 @@ const TESTIMONIALS = [
     role: 'CEO บริษัท เอ็น เอช เค แบริ่ง จำกัด',
     page: 'เจ้าของเพจ "ชีวิตเหี้ยๆก็เป็นเสี่ยได้"',
     age: null,
-    img: 'https://assets.capvisionpartner.com/Den%20Service/P.Joe%20(2).jpg',
+    img: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/Den%20Service/P.Joe%20(2).jpg',
     quote: 'เมื่อก่อนผมไม่อยากพูดหน้ากล้อง หรือต่อหน้าคนเยอะๆเลย เพราะพูดไม่ออก ไม่รู้จะพูดอะไร จะเริ่มแบบไหน เลยไม่พูดดีกว่า แต่พอมาเรียนกับครูเด่น ช่วยปลดล็อคความคิดของผมนิดเดียว ตอนนี้ผมพูดได้ทุกอย่าง ทุกเรื่อง ทุกที่ ทุกเวลาแบบสบายๆเลยครับ',
   },
   {
@@ -77,7 +77,7 @@ const TESTIMONIALS = [
     role: 'เจ้าของเพจ SMEs Money Clinic',
     page: 'ที่ปรึกษาการเงินกว่า 25 ปี',
     age: null,
-    img: 'https://assets.capvisionpartner.com/Den%20Service/P.Pae%20(2).jpg',
+    img: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/Den%20Service/P.Pae%20(2).jpg',
     quote: 'ปกติผมพูดอยู่แล้ว เพราะอาชีพผมต้องให้คำปรึกษาเรื่องการหาแหล่งเงินทุน ผมมาเรียนพูดกับครูเด่น ก็เพื่ออยากเอาประสบการณ์กว่า 25 ปี ออกมาแบ่งปัน แต่พอจะพูดก็อาย ไม่กล้าสู้กล้อง เจอกัน 2 วัน ตอนนี้พูดหน้ากล้อง หน้าเวทีได้อย่างสบายๆเลยครับ',
   },
   {
@@ -85,7 +85,7 @@ const TESTIMONIALS = [
     role: 'ที่ปรึกษาทางการเงิน & เจ้าของกิจการ',
     page: 'ร้านอาหาร & ร้านคาร์แคร์',
     age: 32,
-    img: 'https://assets.capvisionpartner.com/Den%20Service/P.Tor.jpg',
+    img: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/Den%20Service/P.Tor.jpg',
     quote: 'หลังจากที่ได้คุยกับครูเด่น นี่คือสิ่งที่เรียกว่าการเปิดหูเปิดตา ได้มากกว่าแค่มุมมอง แต่คือการต่อยอด การคิดวิเคราะห์ที่รอบคอบ มันเหมือนการมองภาพที่ไม่ชัด แต่เราก็ไม่รู้ว่ามันไม่ชัด การมาพบกับครูเด่นทำให้รู้ว่าภาพชัดขึ้นกว่าเดิมมากๆ',
   },
   {
@@ -93,7 +93,7 @@ const TESTIMONIALS = [
     role: 'อาจารย์มหาวิทยาลัย / HRM Expert & Lecturer',
     page: null,
     age: 47,
-    img: 'https://assets.capvisionpartner.com/Den%20Service/dr.goi.jpg',
+    img: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/Den%20Service/dr.goi.jpg',
     quote: 'ขอบคุณครูเด่นมากเลยนะคะ ที่มาแบ่งปันทั้งความรู้และแนวทาง เป็น session สั้นๆ แต่มีคุณค่ากับ Mind & Soul ของพี่ก้อย และได้ guideline ในการใช้ชีวิตที่ดีมากเลยค่ะ',
   },
   {
@@ -101,7 +101,7 @@ const TESTIMONIALS = [
     role: 'นักพัฒนาอสังหาริมทรัพย์ / นักลงทุน',
     page: null,
     age: 44,
-    img: 'https://assets.capvisionpartner.com/Den%20Service/K.AUM.png',
+    img: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/Den%20Service/K.AUM.png',
     quote: 'คุยครูทุกครั้ง จิตวิญญาณมันตื่นรับพลังดีดี เห็นภาพตัวเองชัดขึ้น และเห็นการเดินทางของชีวิตตัวเองมากขึ้นค่ะ ครูผู้ที่ร้อยเรื่องราว พลัง ความรู้สึก ผ่านศาสตร์การบำบัด ทำให้สิ่งที่ดูแรง กลับเป็นพลังงานให้คิดใหม่ทำใหม่',
   },
   {
@@ -109,7 +109,7 @@ const TESTIMONIALS = [
     role: 'นักสะสม Art Toy & เจ้าของผลิตภัณฑ์ Scoop B Doh',
     page: null,
     age: 49,
-    img: 'https://assets.capvisionpartner.com/Den%20Service/P.Pouy.jpg',
+    img: 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/Den%20Service/P.Pouy.jpg',
     quote: 'สิ่งที่ชอบเป็นพิเศษคือการที่ครูชี้ให้เห็น "จุดเด่นเฉพาะตัว" ทั้งแนวทางการพูด มุมกล้อง การใช้น้ำเสียง ครูเน้นเสมอว่า "เสียงของเราเองดีที่สุด" วิธีพูดในแบบของเรา คือเสน่ห์ที่แท้จริง',
   },
 ];
@@ -680,7 +680,7 @@ const CEOSpeechfulness: React.FC = () => {
             <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
               <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl flex-shrink-0 overflow-hidden shadow-lg border-2 border-[#c5a059]/30">
                 <img
-                  src="https://assets.capvisionpartner.com/Den%20Service/denmasterfa.jpg"
+                  src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/Den%20Service/denmasterfa.jpg"
                   alt="ครูเด่น มาสเตอร์ฟา"
                   className="w-full h-full object-cover"
                 />

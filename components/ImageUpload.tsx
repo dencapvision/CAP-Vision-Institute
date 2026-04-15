@@ -27,24 +27,20 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onUploadSuccess, bucketName =
             };
             reader.readAsDataURL(file);
 
-            const fileExt = file.name.split('.').pop();
-            const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-            const filePath = `${fileName}`;
+            // Upload to Cloudflare R2 via Edge Function
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('folder', bucketName);
 
-            const { error: uploadError } = await supabase.storage
-                .from(bucketName)
-                .upload(filePath, file, { cacheControl: '604800', upsert: false }); // 7 days
+            const { data, error: fnError } = await supabase.functions.invoke('upload-to-r2', {
+                body: formData,
+            });
 
-            if (uploadError) throw uploadError;
+            if (fnError) throw fnError;
+            if (!data?.url) throw new Error('No URL returned');
 
-            const { data } = supabase.storage
-                .from(bucketName)
-                .getPublicUrl(filePath);
-
-            if (data?.publicUrl) {
-                onUploadSuccess(data.publicUrl);
-                setStatus('success');
-            }
+            onUploadSuccess(data.url);
+            setStatus('success');
 
         } catch (error: any) {
             console.error('Upload error:', error);

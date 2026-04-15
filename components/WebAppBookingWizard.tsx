@@ -445,7 +445,7 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
                     <div className="relative z-10 flex flex-col items-center">
                         <div className="bg-white p-4 rounded-3xl shadow-2xl mb-8 transform group-hover:scale-105 transition-transform duration-500">
                             <img 
-                              src="https://assets.capvisionpartner.com/ceo_speechfulness/BBL-den%20masterfa.jpg" 
+                              src="https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/ceo_speechfulness/BBL-den%20masterfa.jpg" 
                               alt="Payment QR" 
                               className="w-48 h-48 rounded-xl"
                             />

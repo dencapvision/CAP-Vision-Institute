@@ -100,7 +100,7 @@ const JoinUs: React.FC = () => {
             <div className="relative group">
               <div className="absolute -inset-4 bg-[#c5a059]/10 rounded-[3rem] blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
               <img 
-                src="https://assets.capvisionpartner.com/media/about%20us/join-us.jpg" 
+                src="https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/about%20us/join-us.jpg" 
                 className="relative z-10 rounded-[3rem] shadow-2xl w-full h-[300px] md:h-[400px] object-cover transition-transform duration-700 group-hover:scale-[1.02]" 
                 alt="CAP Vision Support Team" 
               />

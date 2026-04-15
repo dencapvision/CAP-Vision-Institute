@@ -70,6 +70,6 @@ export const DOWNLOAD_RESOURCES = [
     //     type: 'PDF',
     //     category: 'Facilitation',
     //     thumbnail: 'https://...',
-    //     downloadUrl: 'https://assets.capvisionpartner.com/media/toolkit/...',
+    //     downloadUrl: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/toolkit/...',
     // },
 ];

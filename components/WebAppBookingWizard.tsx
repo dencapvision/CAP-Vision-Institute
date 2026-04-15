@@ -251,7 +251,7 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
 
           <div className="mb-10 text-center">
             <img 
-                src="https://assets.capvisionpartner.com/media/contact/Line%20OA%20@denmasterfa.jpg" 
+                src="https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/contact/Line%20OA%20@denmasterfa.jpg" 
                 alt="LINE OA" 
                 className="w-40 h-40 mx-auto rounded-2xl shadow-lg mb-4"
             />

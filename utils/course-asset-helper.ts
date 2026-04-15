@@ -1,5 +1,5 @@
 export function generateCourseAssets(courseName: string) {
-  const baseUrl = "https://assets.capvisionpartner.com/media/Course/";
+  const baseUrl = "https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Course/";
 
   // 1. Generate slug
   const slug = courseName

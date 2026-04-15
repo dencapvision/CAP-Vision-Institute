@@ -17,7 +17,7 @@ BEGIN
     'เล่าเรื่องให้ธุรกิจเดิน (Storytelling for Business)',
     'Communication Skills',
     'เปลี่ยนข้อมูลและตัวเลขให้กลายเป็นเรื่องเล่าที่จับใจ สร้างแรงบันดาลใจ และขับเคลื่อนการตัดสินใจในองค์กร',
-    'https://assets.capvisionpartner.com/media/Course/Storytelling%20for%20Business.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Course/Storytelling%20for%20Business.jpg',
     'หลักสูตร Storytelling for Business - เล่าเรื่องให้ธุรกิจเดิน โดย ครูเด่น มาสเตอร์ฟา CAP Vision Institute',
     'ในยุคที่ข้อมูลล้นหลาม สิ่งที่ทำให้ผู้คนหยุดฟัง จดจำ และลงมือทำ ไม่ใช่ตัวเลขหรือ Data แต่คือเรื่องเล่าที่ดีหนึ่งเรื่อง นักธุรกิจที่ยิ่งใหญ่ ไม่ว่าจะเป็น Steve Jobs, Simon Sinek หรือ Elon Musk ล้วนเป็นนักเล่าเรื่องชั้นยอด หลักสูตรนี้ไม่ได้สอนให้พูดเก่งขึ้น แต่สอนให้สื่อสารด้วยหัวใจ ผ่านโครงสร้าง Story ที่ออกแบบมาเพื่องานธุรกิจโดยเฉพาะ',
     'In-house Training 1-2 วัน | 20-40 คน',

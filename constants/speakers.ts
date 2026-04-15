@@ -50,7 +50,7 @@ export const SPEAKERS: Speaker[] = [
         id: 'trainer-team',
         name: 'ทีมวิทยากรคุณภาพ (Trainer Team)',
         title: 'High-Performance Trainers & Facilitators',
-        image: 'https://assets.capvisionpartner.com/media/about%20us/Trainer%20Team.jpg',
+        image: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/about%20us/Trainer%20Team.jpg',
         bio: 'ทีมงานผู้เชี่ยวชาญด้านการจัดกระบวนการเรียนรู้และกิจกรรมกลุ่มสัมพันธ์ (Team Building) ที่มีพลังและสร้างสรรค์',
         longBio: 'ทีมวิทยากรและ Facilitator มืออาชีพจาก CAP Vision Institute ที่มีความเชี่ยวชาญในการออกแบบและดำเนินการฝึกอบรมเชิงรุก (Active Learning) มุ่งเน้นการดึงศักยภาพของผู้เรียนผ่านกิจกรรมที่สนุกและได้แง่คิดในการทำงานร่วมกัน',
         expertise: [
@@ -69,7 +69,7 @@ export const SPEAKERS: Speaker[] = [
         id: 'personality-coach',
         name: 'ผู้เชี่ยวชาญด้านบุคลิกภาพ (Personality Coach)',
         title: 'Image & Personality Expert',
-        image: 'https://assets.capvisionpartner.com/media/about%20us/Personality%20Coach.jpg',
+        image: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/about%20us/Personality%20Coach.jpg',
         bio: 'ที่ปรึกษาด้านภาพลักษณ์และบุคลิกภาพเชิงธุรกิจ เพื่อเพิ่มความมั่นใจและเสน่ห์ในการทำงาน',
         longBio: 'วิทยากรและโค้ชผู้เชี่ยวชาญด้านบุคลิกภาพที่ช่วยปรับภาพลักษณ์องค์กรผ่านบุคคล เน้นการสื่อสารด้วยภาพลักษณ์ (Visual Communication) ท่วงท่า และความมั่นใจที่เป็นธรรมชาติ เพื่อสร้างความประทับใจตั้งแต่แรกพบ',
         expertise: [
@@ -88,7 +88,7 @@ export const SPEAKERS: Speaker[] = [
         id: 'relationship-trainer',
         name: 'วิทยากรด้านความสัมพันธ์ (Relationship Trainer)',
         title: 'Communication & Relationship Specialist',
-        image: 'https://assets.capvisionpartner.com/media/about%20us/Relationship%20trainer.jpg',
+        image: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/about%20us/Relationship%20trainer.jpg',
         bio: 'ผู้เชี่ยวชาญด้านการสื่อสารเพื่อสร้างความสัมพันธ์และความสุขในองค์กร (Happy Workplace)',
         longBio: 'เน้นกระบวนการจิตวิทยาเชิงบวก (Positive Psychology) เพื่อลดความขัดแย้งและสร้างความเข้าใจระหว่างบุคคลในที่ทำงาน ช่วยให้ทีมงานมีทัศนคติที่ดีต่อกันและทำงานร่วมกันได้อย่างราบรื่น',
         expertise: [

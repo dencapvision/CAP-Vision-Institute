@@ -3,7 +3,7 @@ import { GoogleGenAI } from '@google/genai';
 const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
 const SUPABASE_STORAGE_BASE =
-  'https://assets.capvisionpartner.com/media/Course';
+  'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Course';
 
 const SYSTEM_PROMPT = `You are CAP Vision Visual & SEO Generator AI.
 Brand: CAP Vision Institute — Thailand's premium corporate training institute.

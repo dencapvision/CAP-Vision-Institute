@@ -106,19 +106,19 @@ const DEN_SPECIFIC = {
     'ผู้นำกระบวนการเรียนรู้และวิทยากรกว่า 1,000 เวที ทั่วประเทศ'
   ],
   gallery: [
-    'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa1.jpg',
-    'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa10.jpg',
-    'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa11.jpg',
-    'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa12.jpg',
-    'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa13.jpg',
-    'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa14.jpg',
-    'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa2.jpg',
-    'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa7.jpg',
-    'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa8.jpg',
-    'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa9.jpg',
-    'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den_dsr.so1.jpg',
-    'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den_dsr.so3.jpg',
-    'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/denmasterfa.jpg'
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa1.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa10.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa11.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa12.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa13.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa14.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa2.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa7.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa8.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa9.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den_dsr.so1.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den_dsr.so3.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/denmasterfa.jpg'
   ],
   contact: {
     line: 'https://lin.ee/OO6jotG',
@@ -189,14 +189,14 @@ const SO_SPECIFIC = {
     tiktokUrl: 'https://www.tiktok.com/@souloflightacademy?_r=1&_t=ZS-95RuOyLhp7S'
   },
   gallery: [
-    'https://assets.capvisionpartner.com/media/dr.so_healing/dr.so2.jpg',
-    'https://assets.capvisionpartner.com/media/dr.so_healing/dr.so3.jpg',
-    'https://assets.capvisionpartner.com/media/dr.so_healing/dr.so4.jpg',
-    'https://assets.capvisionpartner.com/media/dr.so_healing/dr.so5.jpg',
-    'https://assets.capvisionpartner.com/media/dr.so_healing/dr.so6.jpg',
-    'https://assets.capvisionpartner.com/media/dr.so_healing/dr.so_class1.jpg',
-    'https://assets.capvisionpartner.com/media/dr.so_healing/dr.so_class2.jpg',
-    'https://assets.capvisionpartner.com/media/dr.so_healing/dr.so_class3.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/dr.so_healing/dr.so2.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/dr.so_healing/dr.so3.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/dr.so_healing/dr.so4.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/dr.so_healing/dr.so5.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/dr.so_healing/dr.so6.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/dr.so_healing/dr.so_class1.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/dr.so_healing/dr.so_class2.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/dr.so_healing/dr.so_class3.jpg',
   ],
 };
 
@@ -232,19 +232,19 @@ const K_DATA = {
     'ผ่านการอบรมด้านยุทธวิธีและการบริหารความมั่นคงมากกว่า 200 หลักสูตร'
   ],
   gallery: [
-    'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg',
-    'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha2.jpg',
-    'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha3.jpg',
-    'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha4.jpg',
-    'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha5.jpg',
-    'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha6.jpg',
-    'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha7.jpg',
-    'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha8.jpg',
-    'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha9.jpg',
-    'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha10.jpg',
-    'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha11.jpg',
-    'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha12.jpg',
-    'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha13.jpg'
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha2.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha3.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha4.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha5.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha6.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha7.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha8.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha9.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha10.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha11.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha12.jpg',
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha13.jpg'
   ]
 };
 /* ─── GENERIC DETAIL ───────────────────────────────────────── */
@@ -264,7 +264,7 @@ const CoursePromoCard: React.FC<{ instructorName: string }> = ({ instructorName 
         <div className="relative">
           <div className="absolute -inset-4 bg-[#c5a059]/20 rounded-[2.5rem] blur-2xl animate-pulse"></div>
           <img 
-            src="https://assets.capvisionpartner.com/media/dr.so_healing/dr.so_class2.jpg" 
+            src="https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/dr.so_healing/dr.so_class2.jpg" 
             alt="Subconscious Speaker Course" 
             className="relative rounded-[2rem] border-2 border-[#c5a059]/50 shadow-2xl w-full h-64 object-cover"
           />

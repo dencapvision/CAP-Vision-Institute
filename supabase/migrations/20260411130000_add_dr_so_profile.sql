@@ -5,7 +5,7 @@ VALUES (
     'dr-so',
     'อาจารย์ ดร.พิศลยา บัวแก้ว (Dr. So)',
     'วิทยากรพลังจิตใต้สำนึก | ปลดล็อกศักยภาพ สื่อสารอย่างทรงพลังจากภายใน',
-    'https://assets.capvisionpartner.com/media/dr.so_healing/dr.so.jpg'
+    'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/dr.so_healing/dr.so.jpg'
 )
 ON CONFLICT (slug) DO UPDATE SET
     name = EXCLUDED.name,

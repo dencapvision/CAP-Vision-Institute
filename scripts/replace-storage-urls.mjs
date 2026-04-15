@@ -6,7 +6,7 @@
  *   node scripts/replace-storage-urls.mjs             (apply changes)
  *
  * Set R2_BASE_URL before running:
- *   With custom domain:  https://assets.capvisionpartner.com
+ *   With custom domain:  https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev
  *   With R2.dev URL:     https://pub-xxxxxxxxxxxxxxxx.r2.dev
  */
 
@@ -15,7 +15,7 @@ import { resolve, join, extname } from 'path';
 import { fileURLToPath } from 'url';
 
 // ─── CONFIGURE THIS ──────────────────────────────────────────────────────────
-const R2_BASE_URL = 'https://assets.capvisionpartner.com';
+const R2_BASE_URL = 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev';
 // ─────────────────────────────────────────────────────────────────────────────
 
 const OLD_BASE = 'https://nheppvjayzxlblkeanxs.supabase.co/storage/v1/object/public/';

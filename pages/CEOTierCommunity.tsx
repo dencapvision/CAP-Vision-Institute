@@ -10,9 +10,9 @@ import { CONTACT_INFO, CLIENTS as BRAND_CLIENTS } from '../constants/brand';
 import { BookingWizard } from '../components/CEO/BookingWizard';
 
 // ─── Logos & Assets ───────────────────────────────────────────────────────────
-const CAP_LOGO = 'https://assets.capvisionpartner.com/media/about%20us/cap%20vision%20logo.png';
-const NEWDICE_LOGO = 'https://assets.capvisionpartner.com/media/about%20us/Logo-newdice.png';
-const COMMUNITY_HERO = 'https://assets.capvisionpartner.com/media/service/CEO%20Tier%20Community.jpg';
+const CAP_LOGO = 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/about%20us/cap%20vision%20logo.png';
+const NEWDICE_LOGO = 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/about%20us/Logo-newdice.png';
+const COMMUNITY_HERO = 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/service/CEO%20Tier%20Community.jpg';
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -84,12 +84,12 @@ const OUTCOMES = [
 ];
 
 const ACTIVITIES = [
-  { url: 'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa1.jpg', title: 'CEO Roundtable' },
-  { url: 'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa2.jpg', title: 'Strategic Planning' },
-  { url: 'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa3.jpg', title: 'Executive Coaching' },
-  { url: 'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa4.jpg', title: 'Leadership Workshop' },
-  { url: 'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa5.jpg', title: 'Organizational Design' },
-  { url: 'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/den%20masterfa6.jpg', title: 'Mindset Transformation' },
+  { url: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa1.jpg', title: 'CEO Roundtable' },
+  { url: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa2.jpg', title: 'Strategic Planning' },
+  { url: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa3.jpg', title: 'Executive Coaching' },
+  { url: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa4.jpg', title: 'Leadership Workshop' },
+  { url: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa5.jpg', title: 'Organizational Design' },
+  { url: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/den%20masterfa6.jpg', title: 'Mindset Transformation' },
 ];
 
 const FAQS = [
@@ -121,7 +121,7 @@ const FACilitators = [
     realName: 'อนุสรณ์ หนองนา',
     title: 'Master Facilitator & AI Learning Designer',
     desc: 'ผู้เชี่ยวชาญด้านการพัฒนาศักยภาพมนุษย์และออกแบบการเรียนรู้ระดับพรีเมี่ยม Founder of CAP-Vision Institute ผู้นำกระบวนการ Facilitation ที่เปลี่ยน Mindset องค์กรชั้นนำมาแล้วมากมาย',
-    image: 'https://assets.capvisionpartner.com/media/Den%20Masterfa%20Gallery/denmasterfa.jpg',
+    image: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Den%20Masterfa%20Gallery/denmasterfa.jpg',
     slug: 'den-masterfa'
   },
   {
@@ -129,7 +129,7 @@ const FACilitators = [
     realName: 'ไกรพุฒิ อินทรโยรา',
     title: 'Strategic Policy & Technology Advisor',
     desc: 'ผู้ช่วยประธานสภาอุตสาหกรรมท่องเที่ยวแห่งประเทศไทย และคณะทำงานรัฐมนตรีดีอี ผู้เชี่ยวชาญด้านยุทธศาสตร์ดิจิทัลเพื่อเศรษฐกิจและสังคม และความมั่นคงไซเบอร์ระดับประเทศ',
-    image: 'https://assets.capvisionpartner.com/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg',
+    image: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg',
     slug: 'kraiput-intarayotha'
   }
 ];

@@ -235,7 +235,7 @@ const SpeechfulnessRegistration: React.FC<SpeechfulnessRegistrationProps> = ({ s
             <div className="relative inline-block mb-6 group">
               <div className="absolute -inset-4 bg-gold-gradient opacity-20 blur-xl rounded-full transition-all group-hover:opacity-30"></div>
               <img 
-                src="https://assets.capvisionpartner.com/media/contact/Line%20OA%20@denmasterfa.jpg" 
+                src="https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/contact/Line%20OA%20@denmasterfa.jpg" 
                 alt="LINE OA @denmasterfa" 
                 className="w-48 h-48 rounded-3xl shadow-2xl relative border-4 border-white"
               />

@@ -227,12 +227,18 @@ button:focus-visible {
 .btn-premium {
   position: relative;
   overflow: hidden;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   min-height: 44px; /* a11y touch target */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  isolation: isolate;
 }
 .btn-premium:hover {
-  transform: translateY(-3px) scale(1.015);
-  box-shadow: 0 16px 36px -8px rgba(15, 52, 96, 0.25);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px -12px rgba(197, 160, 89, 0.35);
+  filter: brightness(1.1);
 }
 .btn-premium::after {
   content: '';

@@ -10,6 +10,7 @@ import Logo from '../components/Logo';
 import ClientsSection from '../components/ClientsSection';
 import SEO from '../components/SEO';
 import { Calendar, User } from 'lucide-react';
+import StatCounter from '../components/StatCounter';
 
 
 const Home: React.FC = () => {
@@ -38,7 +39,12 @@ const Home: React.FC = () => {
       />
 
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] md:min-h-screen flex items-center overflow-hidden bg-[#0f3460] pt-16 md:pt-0">
+      <motion.section 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        className="relative min-h-[100svh] flex items-center overflow-hidden bg-[#0f3460] pt-12 md:pt-0"
+      >
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80"
@@ -63,8 +69,8 @@ const Home: React.FC = () => {
             </div>
 
             {/* H1 */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1.05] mb-6 md:mb-8 nav-font tracking-tight">
-              <span className="text-white">พัฒนาคน สร้างทีม</span><br />
+            <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1.1] md:leading-[1.05] mb-6 md:mb-8 nav-font tracking-tight">
+              <span className="text-white block md:inline">พัฒนาคน สร้างทีม</span><br className="hidden md:block" />
               <span className="text-[#c5a059]">ยกระดับองค์กร</span>
             </h1>
 
@@ -93,11 +99,13 @@ const Home: React.FC = () => {
             <div className="flex flex-wrap gap-8 md:gap-14 border-t border-white/10 pt-8">
               {[
                 { value: '10,000+', label: 'ผู้เรียนสำเร็จ' },
-                { value: '100+',    label: 'องค์กรพันธมิตร' },
+                { value: '200+',    label: 'องค์กรพันธมิตร' },
                 { value: '18+',     label: 'ปีประสบการณ์' },
               ].map((stat, i) => (
                 <div key={i}>
-                  <div className="text-2xl md:text-3xl font-black text-[#c5a059] nav-font">{stat.value}</div>
+                  <div className="text-2xl md:text-3xl font-black text-[#c5a059] nav-font">
+                    <StatCounter value={stat.value} />
+                  </div>
                   <div className="text-white/85 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">{stat.label}</div>
                 </div>
               ))}
@@ -171,7 +179,13 @@ const Home: React.FC = () => {
       </motion.section>
 
       {/* Featured Courses Section */}
-      <section className="py-24 md:py-32 bg-white relative">
+      <motion.section 
+        initial={{ y: 50, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+        className="py-24 md:py-32 bg-white relative"
+      >
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-50/50 rounded-full blur-[100px] pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 md:mb-20 gap-8">
@@ -238,7 +252,13 @@ const Home: React.FC = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-24 md:py-32 bg-[#0f3460] relative overflow-hidden">
+      <motion.section 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="py-24 md:py-32 bg-[#0f3460] relative overflow-hidden"
+      >
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#c5a059] rounded-full blur-[100px]"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-400 rounded-full blur-[100px]"></div>
@@ -256,7 +276,9 @@ const Home: React.FC = () => {
                 <div className="text-[#c5a059] mb-6 flex justify-center group-hover:scale-110 transition-transform duration-500">
                   {stat.icon}
                 </div>
-                <div className="text-3xl md:text-6xl font-black text-white mb-2 md:mb-4 nav-font tracking-tight">{stat.value}</div>
+                <div className="text-3xl md:text-6xl font-black text-white mb-2 md:mb-4 nav-font tracking-tight">
+                  <StatCounter value={stat.value} />
+                </div>
                 <div className="text-white/80 font-black tracking-[0.2em] text-[10px] md:text-sm uppercase nav-font">{stat.label}</div>
               </div>
             ))}
@@ -265,7 +287,13 @@ const Home: React.FC = () => {
       </section>
 
       {/* Instructor Section */}
-      <section className="py-16 md:py-32 bg-gray-50 overflow-hidden">
+      <motion.section 
+        initial={{ y: 60, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+        className="py-16 md:py-32 bg-gray-50 overflow-hidden"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center gap-12 md:gap-24">
             <div className="lg:w-1/2 relative">
@@ -312,12 +340,19 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
+
 
       <ClientsSection />
 
       {/* Insights & Articles Section */}
-      <section className="py-24 md:py-32 bg-white">
+      <motion.section 
+        initial={{ y: 60, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+        className="py-24 md:py-32 bg-white"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 gap-6">
             <div className="max-w-2xl">
@@ -381,11 +416,18 @@ const Home: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
+
 
       {/* Final CTA */}
 
-      <section className="py-24 md:py-40 bg-gradient-to-br from-[#0f3460] to-[#0a2545] text-white relative overflow-hidden">
+      <motion.section 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.2 }}
+        className="py-24 md:py-40 bg-gradient-to-br from-[#0f3460] to-[#0a2545] text-white relative overflow-hidden"
+      >
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-5 pointer-events-none">
           <Logo className="w-full h-full p-20" />
         </div>
@@ -403,7 +445,8 @@ const Home: React.FC = () => {
             </a>
           </div>
         </div>
-      </section>
+      </motion.section>
+
     </div>
   );
 };

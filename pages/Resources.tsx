@@ -156,10 +156,10 @@ const Resources: React.FC = () => {
               อ่านบทความแนะนำ <ArrowRight className="w-5 h-5" />
             </a>
             <a
-              href="#toolkit"
+              href="#teaching-docs"
               className="bg-white/5 border-2 border-white/20 text-white px-8 py-4 rounded-2xl font-black text-base nav-font flex items-center justify-center gap-3 hover:bg-white/10 transition-all"
             >
-              ดาวน์โหลดเครื่องมือฟรี <Download className="w-5 h-5" />
+              ดาวน์โหลด Worksheet ฟรี <Download className="w-5 h-5" />
             </a>
           </div>
         </div>
@@ -673,6 +673,119 @@ const Resources: React.FC = () => {
             <p className="text-white/65 text-[10px] mt-4 nav-font">
               ไม่มี Spam · ยกเลิกได้ทุกเมื่อ
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── TEACHING DOCS & WORKSHEETS ──────────────────────── */}
+      <section id="teaching-docs" className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <p className="text-[#c5a059] font-black uppercase tracking-[0.3em] text-[10px] nav-font mb-3">
+              เอกสารการสอนและแบบฝึกหัด
+            </p>
+            <h2 className="text-3xl md:text-4xl font-black text-[#0f3460] nav-font">
+              Worksheet พร้อมใช้ · ดาวน์โหลดได้เลย
+            </h2>
+            <p className="text-gray-500 mt-3 max-w-xl mx-auto">
+              สื่อการสอนจากหลักสูตรจริง ออกแบบโดยครูเด่น มาสเตอร์ฟา · ใช้ Prompt + Sarabun font · พิมพ์ได้ทันที
+            </p>
+          </div>
+
+          {/* Course label */}
+          <div className="flex items-center gap-3 mb-10">
+            <span className="text-[9px] font-black uppercase tracking-widest text-[#c5a059] nav-font">หลักสูตร</span>
+            <a
+              href="/courses/self-esteem-smart-style.html"
+              className="inline-flex items-center gap-2 bg-[#0f3460]/5 border border-[#0f3460]/10 px-4 py-2 rounded-xl text-[#0f3460] font-black text-sm nav-font hover:bg-[#c5a059]/10 hover:border-[#c5a059]/30 transition-all"
+            >
+              <BookOpen className="w-4 h-4" />
+              Self Esteem · Smart · Style Myself
+              <ChevronRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Card 1 — My Worth Tree */}
+            <div className="group bg-white rounded-3xl border border-gray-100 p-8 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+              <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 text-2xl">
+                🌳
+              </div>
+              <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest nav-font block mb-2">
+                Module 1 · Self Esteem
+              </span>
+              <h3 className="font-black text-[#0f3460] nav-font text-xl leading-tight mb-3">
+                My Worth Tree Worksheet
+              </h3>
+              <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                ช่วยนักเรียนค้นพบค่านิยมและจุดแข็งของตัวเอง พร้อม Checkbox และช่องกรอก 2 หน้า A4
+              </p>
+              <a
+                href="https://docs.google.com/document/d/1fZKByd2im107nRiFxmV06qFt5AwRJEJ5Rn4nDZSd_Z4/edit?tab=t.0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#0f3460] text-white py-3.5 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-[#c5a059] transition-all nav-font text-sm"
+              >
+                <Download className="w-4 h-4" /> ดาวน์โหลด Worksheet
+              </a>
+            </div>
+
+            {/* Card 2 — Smart Profile */}
+            <div className="group bg-white rounded-3xl border border-gray-100 p-8 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+              <div className="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mb-6 text-2xl">
+                📊
+              </div>
+              <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest nav-font block mb-2">
+                Module 2 · Smart
+              </span>
+              <h3 className="font-black text-[#0f3460] nav-font text-xl leading-tight mb-3">
+                Smart Profile Worksheet
+              </h3>
+              <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                ตารางประเมิน Multiple Intelligences 8 ด้าน + Grid วาดกราฟ + ช่อง Reflection &amp; Dialog
+              </p>
+              <a
+                href="https://docs.google.com/document/d/1jXAOrgX6JmdFQZBk8hxTs70FcGYDP934ncGhGhOtjx8/edit?tab=t.0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#0f3460] text-white py-3.5 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-[#c5a059] transition-all nav-font text-sm"
+              >
+                <Download className="w-4 h-4" /> ดาวน์โหลด Worksheet
+              </a>
+            </div>
+
+            {/* Card 3 — Style Myself */}
+            <div className="group bg-white rounded-3xl border border-gray-100 p-8 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+              <div className="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 text-2xl">
+                🎨
+              </div>
+              <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest nav-font block mb-2">
+                Module 3 · Style Myself
+              </span>
+              <h3 className="font-black text-[#0f3460] nav-font text-xl leading-tight mb-3">
+                Style Myself Worksheet
+              </h3>
+              <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                สำรวจ 3 มิติ Inner · Social · Visual Style + My Style Statement + My Identity Card
+              </p>
+              <a
+                href="https://docs.google.com/document/d/1Gz7nnCfFtwdVtxylIemXIVpRYPvxbyimD_ceSQur9Hc/edit?tab=t.0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#0f3460] text-white py-3.5 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-[#c5a059] transition-all nav-font text-sm"
+              >
+                <Download className="w-4 h-4" /> ดาวน์โหลด Worksheet
+              </a>
+            </div>
+          </div>
+
+          <div className="text-center mt-10">
+            <a
+              href="/courses/self-esteem-smart-style.html"
+              className="inline-flex items-center gap-2 text-[#0f3460] font-black text-sm nav-font border-2 border-[#0f3460]/20 px-6 py-3 rounded-2xl hover:border-[#c5a059] hover:text-[#c5a059] transition-all"
+            >
+              ดูรายละเอียดหลักสูตรเต็ม <ChevronRight className="w-4 h-4" />
+            </a>
           </div>
         </div>
       </section>

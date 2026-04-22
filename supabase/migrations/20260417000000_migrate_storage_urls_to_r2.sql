@@ -40,14 +40,19 @@ BEGIN
   RAISE NOTICE 'blog_articles updated: % rows', (SELECT COUNT(*) FROM public.blog_articles WHERE thumbnail LIKE '%pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev%');
 
   -- resources (ถ้ามี)
-  UPDATE public.resources
-  SET thumbnail = REPLACE(thumbnail, old_base, new_base)
-  WHERE thumbnail LIKE '%nheppvjayzxlblkeanxs.supabase.co%';
+  IF EXISTS (SELECT FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'resources') THEN
+    EXECUTE 'UPDATE public.resources SET thumbnail = REPLACE(thumbnail, $1, $2) WHERE thumbnail LIKE $3'
+      USING old_base, new_base, '%nheppvjayzxlblkeanxs.supabase.co%';
+  END IF;
 
-  -- speakers (ถ้ามี)
-  UPDATE public.speakers
-  SET image = REPLACE(image, old_base, new_base)
-  WHERE image LIKE '%nheppvjayzxlblkeanxs.supabase.co%';
+  -- speakers (ถ้ามี และมี column image)
+  IF EXISTS (
+    SELECT FROM information_schema.columns
+    WHERE table_schema = 'public' AND table_name = 'speakers' AND column_name = 'image'
+  ) THEN
+    EXECUTE 'UPDATE public.speakers SET image = REPLACE(image, $1, $2) WHERE image LIKE $3'
+      USING old_base, new_base, '%nheppvjayzxlblkeanxs.supabase.co%';
+  END IF;
 
   RAISE NOTICE 'Migration complete.';
 

@@ -117,7 +117,7 @@ const Home: React.FC = () => {
           <span className="text-[10px] items-center font-bold tracking-widest uppercase rotate-90 origin-left translate-x-3 mb-8">Scroll</span>
           <div className="w-0.5 h-16 bg-gradient-to-b from-white/40 to-transparent"></div>
         </div>
-      </section>
+      </motion.section>
       {/* Video Intro Section */}
       <motion.section 
         initial={{ opacity: 0 }}
@@ -249,10 +249,10 @@ const Home: React.FC = () => {
             )}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Stats Section */}
-      <motion.section 
+      <motion.section
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -284,7 +284,7 @@ const Home: React.FC = () => {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Instructor Section */}
       <motion.section 

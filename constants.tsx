@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Users, User, Award, TrendingUp, Handshake, Target, BookOpen, PlayCircle, Clock, FileText, Download, Layout, Video, Sparkles, Heart, Zap, Globe, Cpu, ShieldCheck, BarChart2, Lightbulb, Puzzle, MessageCircle, BarChart3, LineChart, RefreshCcw, Brain, PenTool, Layers, Rocket, Search, Stethoscope, Calendar, MapPin, HelpCircle, Plus, Smile, Shield, GraduationCap, Laptop, Facebook } from 'lucide-react';
+import { Users, User, Award, TrendingUp, Handshake, Target, BookOpen, PlayCircle, Clock, FileText, Download, Layout, Video, Sparkles, Heart, Zap, Globe, Cpu, ShieldCheck, BarChart2, Lightbulb, Puzzle, MessageCircle, BarChart3, LineChart, RefreshCcw, Brain, PenTool, Layers, Rocket, Search, Stethoscope, Calendar, MapPin, HelpCircle, Plus, Smile, Shield, GraduationCap, Laptop, Facebook, Mic } from 'lucide-react';
 
 export const COLORS = {
   primaryBlue: '#0f3460', // Deep Navy Professional Blue

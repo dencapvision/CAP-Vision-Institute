@@ -88,7 +88,7 @@ export interface Speaker {
 
 export const SPEAKERS: Speaker[] = [
   {
-    id: 'den-master-fa',
+    id: 'den-masterfa',
     name: 'อ.อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)',
     title: 'ผู้อำนวยการสถาบัน CAP-Vision Institute',
     image: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/speakers/Profile_D-MasterFa.webp',
@@ -167,7 +167,7 @@ export const COURSES: CourseDetailInfo[] = [
       'ฝึกทัศนคติเชิงบวกต่อการพัฒนาตนเองและเพื่อนร่วมงาน'
     ],
     instructor: {
-      id: 'den-master-fa',
+      id: 'den-masterfa',
       name: 'ครูเด่น มาสเตอร์ฟา',
       bio: 'ที่ปรึกษาองค์กรและนักพัฒนาทักษะการสื่อสารเพิ่มพลังบวก',
       image: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/speakers/Profile_D-MasterFa.webp'
@@ -204,7 +204,7 @@ export const COURSES: CourseDetailInfo[] = [
       'ตอบสนองต่อสิ่งเร้าอย่างมีสติและมีเหตุผล'
     ],
     instructor: {
-      id: 'den-master-fa',
+      id: 'den-masterfa',
       name: 'ครูเด่น มาสเตอร์ฟา',
       bio: 'นักออกแบบกระบวนการเรียนรู้ (Dynamic Learning Designer)',
       image: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/speakers/Profile_D-MasterFa.webp'
@@ -243,7 +243,7 @@ export const COURSES: CourseDetailInfo[] = [
       'ลดปัญหาการสื่อสารและเพิ่มประสิทธิภาพทีม'
     ],
     instructor: {
-      id: 'den-master-fa',
+      id: 'den-masterfa',
       name: 'ครูเด่น มาสเตอร์ฟา',
       bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning',
       image: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/speakers/Profile_D-MasterFa.webp'
@@ -279,7 +279,7 @@ export const COURSES: CourseDetailInfo[] = [
       'พัฒนาทักษะการฟังที่ลึกซึ้ง (Empathetic Listening) เพื่อลดการตัดสิน'
     ],
     instructor: {
-      id: 'den-master-fa',
+      id: 'den-masterfa',
       name: 'ครูเด่น มาสเตอร์ฟา',
       bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning',
       image: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/speakers/Profile_D-MasterFa.webp'
@@ -316,7 +316,7 @@ export const COURSES: CourseDetailInfo[] = [
       'สร้างระบบการสื่อสารที่ลื่นไหลภายในทีมสหวิชาชีพ'
     ],
     instructor: {
-      id: 'den-master-fa',
+      id: 'den-masterfa',
       name: 'ครูเด่น มาสเตอร์ฟา',
       bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning',
       image: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/speakers/Profile_D-MasterFa.webp'

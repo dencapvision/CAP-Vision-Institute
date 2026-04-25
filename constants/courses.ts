@@ -63,7 +63,7 @@ export const COURSES: CourseDetailInfo[] = [
             'สร้างผลลัพธ์ที่ยั่งยืนในระยะยาวผ่านการเปลี่ยนแปลงจากภายใน'
         ],
         instructor: {
-            id: 'den-master-fa',
+            id: 'den-masterfa',
             name: 'ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)',
             bio: 'ผู้อำนวยการสถาบัน CAP Vision Institute ผู้เชี่ยวชาญด้าน Transformative Learning, Leadership Development และ Facilitation กว่า 20 ปี',
             image: '/images/denmasterfa.jpg'
@@ -101,7 +101,7 @@ export const COURSES: CourseDetailInfo[] = [
             'ฝึกทัศนคติเชิงบวกต่อการพัฒนาตนเองและเพื่อนร่วมงาน'
         ],
         instructor: {
-            id: 'den-master-fa',
+            id: 'den-masterfa',
             name: 'ครูเด่น มาสเตอร์ฟา',
             bio: 'ที่ปรึกษาองค์กรและนักพัฒนาทักษะการสื่อสารเพิ่มพลังบวก',
             image: '/images/denmasterfa.jpg'
@@ -143,7 +143,7 @@ export const COURSES: CourseDetailInfo[] = [
             'Module 6: Deep Reflection – สะท้อนคิดและต่อยอดการเรียนรู้ (Learning Loop)'
         ],
         instructor: {
-            id: 'den-master-fa',
+            id: 'den-masterfa',
             name: 'ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)',
             bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning and Facilitation และผู้ก่อตั้ง FFT',
             image: '/images/denmasterfa.jpg'
@@ -187,7 +187,7 @@ export const COURSES: CourseDetailInfo[] = [
             'ฝึกนำเสนองานจริงและรับ Feedback เพื่อนำไปใช้ได้ทันทีหลังจบหลักสูตร'
         ],
         instructor: {
-            id: 'den-master-fa',
+            id: 'den-masterfa',
             name: 'ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)',
             bio: 'ผู้อำนวยการสถาบัน CAP Vision Institute นักพูด นักฝึกอบรม และ Facilitator ที่มีประสบการณ์กว่า 20 ปีในการพัฒนาทักษะการนำเสนอให้กับผู้บริหารและพนักงานองค์กรชั้นนำ',
             image: '/images/denmasterfa.jpg'
@@ -231,7 +231,7 @@ export const COURSES: CourseDetailInfo[] = [
             'เล่าเรื่องได้อย่างมั่นใจ มีโครงสร้าง และสร้างผลลัพธ์ที่วัดได้จริง'
         ],
         instructor: {
-            id: 'den-master-fa',
+            id: 'den-masterfa',
             name: 'ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)',
             bio: 'ผู้อำนวยการสถาบัน CAP Vision Institute นักเล่าเรื่องและ Facilitator ที่ใช้พลัง Storytelling ในการพัฒนาผู้นำและขับเคลื่อนองค์กรมากว่า 20 ปี',
             image: '/images/denmasterfa.jpg'
@@ -269,7 +269,7 @@ export const COURSES: CourseDetailInfo[] = [
             'พัฒนาทักษะการฟังและการถาม'
         ],
         instructor: {
-            id: 'den-master-fa',
+            id: 'den-masterfa',
             name: 'ครูเด่น มาสเตอร์ฟา',
             bio: 'ผู้เชี่ยวชาญด้านการสื่อสารและการพัฒนาทีม',
             image: '/images/denmasterfa.jpg'
@@ -307,7 +307,7 @@ export const COURSES: CourseDetailInfo[] = [
             'สื่อสารกันอย่างเปิดใจ'
         ],
         instructor: {
-            id: 'den-master-fa',
+            id: 'den-masterfa',
             name: 'ครูเด่น มาสเตอร์ฟา',
             bio: 'Certified Team Coach & Facilitator',
             image: '/images/denmasterfa.jpg'

@@ -360,7 +360,7 @@ const SubconsciousSpeaker: React.FC = () => {
               <p className="text-[#c5a059] font-bold mb-6">{ins.title}</p>
               <p className="text-white/60 leading-relaxed mb-8">{ins.bio}</p>
               <Link 
-                to={`/speakers/${i === 0 ? 'dr-so' : 'den-master-fa'}`}
+                to={`/speakers/${i === 0 ? 'dr-so' : 'den-masterfa'}`}
                 className="text-white/40 hover:text-[#c5a059] text-sm font-bold flex items-center justify-center gap-2 transition-colors"
               >
                 ดูประวัติเต็ม <ArrowRight className="w-4 h-4" />

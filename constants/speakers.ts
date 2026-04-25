@@ -19,7 +19,7 @@ export interface Speaker {
 
 export const SPEAKERS: Speaker[] = [
     {
-        id: 'den-master-fa',
+        id: 'den-masterfa',
         name: 'อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)',
         title: 'ผู้อำนวยการและมาสเตอร์ฟาซิลิตเทเตอร์',
         image: '/images/denmasterfa.jpg',

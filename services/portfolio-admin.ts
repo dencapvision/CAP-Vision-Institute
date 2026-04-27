@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabaseClient';
+import { supabaseAdmin } from '../lib/supabaseAdmin';
 import type { Portfolio, PortfolioImage } from './portfolio';
 
 export interface PortfolioFormData {
@@ -99,9 +100,25 @@ export async function fetchCoursesForSelect(): Promise<{ id: string; title: stri
   return (data ?? []) as { id: string; title: string; category: string }[];
 }
 
+export async function uploadPortfolioImage(file: File): Promise<string> {
+  const ext = file.name.split('.').pop()?.toLowerCase() ?? 'jpg';
+  const path = `portfolio/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const { error } = await supabaseAdmin.storage.from('images').upload(path, file, {
+    cacheControl: '3600',
+    upsert: false,
+    contentType: file.type,
+  });
+  if (error) throw error;
+  const { data } = supabaseAdmin.storage.from('images').getPublicUrl(path);
+  return data.publicUrl;
+}
+
 export function slugify(text: string): string {
-  return text.toLowerCase().trim()
+  const base = text.toLowerCase().trim()
     .replace(/[^\w\s-]/g, '')
     .replace(/[\s_-]+/g, '-')
     .replace(/^-+|-+$/g, '');
+  // Fallback for Thai-only titles where Latin chars are stripped
+  if (base.length > 0) return base;
+  return `case-study-${Date.now()}`;
 }

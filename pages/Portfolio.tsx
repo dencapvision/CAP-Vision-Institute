@@ -78,11 +78,18 @@ const Portfolio: React.FC = () => {
             ยังไม่มี Case Study ในหมวดนี้
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7 mb-16">
-            {filtered.map((item) => (
-              <PortfolioCard key={item.id} item={item} />
-            ))}
-          </div>
+          <>
+            <p className="text-xs font-bold text-gray-400 mb-5">
+              {activeCategory === 'ทั้งหมด'
+                ? `Case Studies ทั้งหมด ${filtered.length} รายการ`
+                : `${activeCategory} · ${filtered.length} รายการ`}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7 mb-16">
+              {filtered.map((item) => (
+                <PortfolioCard key={item.id} item={item} />
+              ))}
+            </div>
+          </>
         )}
 
         {/* ── CLIENTS ──────────────────────────────────────── */}

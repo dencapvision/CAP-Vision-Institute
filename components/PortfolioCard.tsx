@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Building2 } from 'lucide-react';
+import { ArrowRight, Building2, Briefcase } from 'lucide-react';
 import type { Portfolio } from '../services/portfolio';
 
 interface Props {
@@ -32,7 +32,10 @@ const PortfolioCard: React.FC<Props> = ({ item }) => {
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-[#0f3460] to-[#1a4a8a]" />
+          <div className="w-full h-full bg-gradient-to-br from-[#0f3460] to-[#1a4a8a] flex flex-col items-center justify-center gap-3">
+            <Briefcase className="w-10 h-10 text-white/30" />
+            <span className="text-white/40 text-xs font-bold uppercase tracking-widest">Case Study</span>
+          </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
         <span className={`absolute top-4 left-4 text-xs font-black px-3 py-1.5 rounded-xl ${colorClass}`}>

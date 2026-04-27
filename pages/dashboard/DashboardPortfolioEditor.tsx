@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   ArrowLeft, Save, Plus, Trash2, Loader2,
-  Sparkles, CheckCircle2, AlertCircle, Image as ImageIcon, X
+  Sparkles, CheckCircle2, AlertCircle, Image as ImageIcon, X, Upload
 } from 'lucide-react';
 import { generateCaption } from '../../services/ai-caption-generator';
 import {
   createPortfolioAdmin, updatePortfolioAdmin,
-  fetchPortfolioForEdit, fetchCoursesForSelect, slugify,
+  fetchPortfolioForEdit, fetchCoursesForSelect, slugify, uploadPortfolioImage,
   type PortfolioFormData, type PortfolioImageInput,
 } from '../../services/portfolio-admin';
 
 const CATEGORIES = ['Leadership', 'Team', 'Communication', 'Mindset', 'Work Skills'];
 
-interface ImageRow extends PortfolioImageInput { _generating?: boolean }
+interface ImageRow extends PortfolioImageInput { _generating?: boolean; _uploading?: boolean }
 
 const DashboardPortfolioEditor: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -36,6 +36,7 @@ const DashboardPortfolioEditor: React.FC = () => {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [saved, setSaved] = useState(false);
+  const [uploadingCover, setUploadingCover] = useState(false);
 
   useEffect(() => {
     fetchCoursesForSelect().then(setCourses);
@@ -87,6 +88,28 @@ const DashboardPortfolioEditor: React.FC = () => {
       setKeywordInput(newKws.join(', '));
     } catch { /* ignore */ }
     finally { updateImage(i, '_generating', false); }
+  };
+
+  const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingCover(true);
+    try {
+      const url = await uploadPortfolioImage(file);
+      setField('cover_image', url);
+    } catch { setError('อัปโหลดรูป cover ไม่สำเร็จ'); }
+    finally { setUploadingCover(false); e.target.value = ''; }
+  };
+
+  const handleGalleryUpload = async (i: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    updateImage(i, '_uploading', true);
+    try {
+      const url = await uploadPortfolioImage(file);
+      updateImage(i, 'image_url', url);
+    } catch { setError('อัปโหลดรูปไม่สำเร็จ'); }
+    finally { updateImage(i, '_uploading', false); e.target.value = ''; }
   };
 
   const toggleCourse = (courseId: string) =>
@@ -207,10 +230,15 @@ const DashboardPortfolioEditor: React.FC = () => {
               placeholder="Leadership, Team Building, Facilitation" className="input" />
           </div>
           <div>
-            <Label>Cover Image URL</Label>
-            <div className="flex gap-2">
+            <Label>Cover Image</Label>
+            <div className="flex gap-2 items-start">
               <input value={form.cover_image} onChange={e => setField('cover_image', e.target.value)}
-                placeholder="https://images.unsplash.com/..." className="input flex-1" />
+                placeholder="https://... หรืออัปโหลดไฟล์" className="input flex-1" />
+              <label className={`shrink-0 flex items-center gap-1.5 px-3 py-2.5 rounded-xl border border-gray-200 text-xs font-bold cursor-pointer transition-all ${uploadingCover ? 'opacity-50 pointer-events-none' : 'hover:bg-[#0f3460] hover:text-white hover:border-[#0f3460]'}`}>
+                {uploadingCover ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+                {uploadingCover ? 'กำลังอัปโหลด...' : 'อัปโหลด'}
+                <input type="file" accept="image/*" className="hidden" onChange={handleCoverUpload} disabled={uploadingCover} />
+              </label>
               {form.cover_image && (
                 <img src={form.cover_image} alt="" className="w-14 h-10 rounded-lg object-cover shrink-0 border border-gray-200"
                   onError={e => (e.currentTarget.style.display = 'none')} />
@@ -243,14 +271,18 @@ const DashboardPortfolioEditor: React.FC = () => {
                     <X className="w-3.5 h-3.5" />
                   </button>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex gap-2 items-end">
                   <div className="flex-1">
                     <Label>Image URL</Label>
                     <input value={img.image_url} onChange={e => updateImage(i, 'image_url', e.target.value)}
-                      placeholder="https://..." className="input text-xs" />
+                      placeholder="https://... หรืออัปโหลดไฟล์" className="input text-xs" />
                   </div>
+                  <label className={`shrink-0 flex items-center gap-1 px-2.5 py-2.5 rounded-xl border border-gray-200 text-[10px] font-bold cursor-pointer transition-all mb-0.5 ${img._uploading ? 'opacity-50 pointer-events-none' : 'hover:bg-[#0f3460] hover:text-white hover:border-[#0f3460]'}`}>
+                    {img._uploading ? <Loader2 className="w-3 h-3 animate-spin" /> : <Upload className="w-3 h-3" />}
+                    <input type="file" accept="image/*" className="hidden" onChange={e => handleGalleryUpload(i, e)} disabled={!!img._uploading} />
+                  </label>
                   {img.image_url && (
-                    <img src={img.image_url} alt="" className="w-16 h-12 rounded-lg object-cover border border-gray-200 mt-5 shrink-0"
+                    <img src={img.image_url} alt="" className="w-14 h-10 rounded-lg object-cover border border-gray-200 shrink-0 mb-0.5"
                       onError={e => (e.currentTarget.style.display = 'none')} />
                   )}
                 </div>

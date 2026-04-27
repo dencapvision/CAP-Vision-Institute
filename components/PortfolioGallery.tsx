@@ -17,13 +17,17 @@ const PortfolioGallery: React.FC<Props> = ({ images }) => {
   const next = () => setLightboxIdx((i) => (i !== null ? (i + 1) % images.length : 0));
 
   const [cover, ...rest] = images;
+  const isSingle = rest.length === 0;
+  const isDouble = rest.length === 1;
 
   return (
     <>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-        {/* Cover — spans 2 cols */}
+      <div className={`grid gap-3 md:gap-4 ${isSingle ? 'grid-cols-1' : isDouble ? 'grid-cols-2' : 'grid-cols-2 md:grid-cols-3'}`}>
+        {/* Cover — full width when single, half when double, 2-cols when 3+ */}
         <div
-          className="col-span-2 relative rounded-2xl overflow-hidden cursor-pointer group h-64 md:h-80"
+          className={`relative rounded-2xl overflow-hidden cursor-pointer group ${
+            isSingle ? 'h-72 md:h-96' : isDouble ? 'h-56 md:h-72' : 'col-span-2 h-64 md:h-80'
+          }`}
           onClick={() => open(0)}
         >
           <img
@@ -45,7 +49,7 @@ const PortfolioGallery: React.FC<Props> = ({ images }) => {
         {rest.map((img, i) => (
           <div
             key={img.id}
-            className="relative rounded-2xl overflow-hidden cursor-pointer group h-40 md:h-48"
+            className={`relative rounded-2xl overflow-hidden cursor-pointer group ${isDouble ? 'h-56 md:h-72' : 'h-40 md:h-48'}`}
             onClick={() => open(i + 1)}
           >
             <img

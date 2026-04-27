@@ -30,6 +30,8 @@ const SubconsciousSpeaker = lazy(() => import('./pages/SubconsciousSpeaker'));
 const CEOTierCommunity = lazy(() => import('./pages/CEOTierCommunity'));
 const CEOMemberDashboard = lazy(() => import('./pages/CEOMemberDashboard'));
 const LeadershipRoadmap = lazy(() => import('./pages/LeadershipRoadmap'));
+const WebAppOnboarding = lazy(() => import('./pages/WebAppOnboarding'));
+
 
 // Dashboard pages
 const DashboardLayout = lazy(() => import('./pages/dashboard/DashboardLayout'));
@@ -106,6 +108,8 @@ const AppShell: React.FC = () => {
             <Route path="/ceo-tier-community" element={<CEOTierCommunity />} />
             <Route path="/ceo-member-dashboard" element={<CEOMemberDashboard />} />
             <Route path="/leadership-roadmap" element={<LeadershipRoadmap />} />
+            <Route path="/web-app-onboarding" element={<WebAppOnboarding />} />
+
 
             {/* Dashboard routes */}
             <Route path="/dashboard" element={<DashboardLayout />}>

@@ -17,10 +17,13 @@ import {
   ChevronLeft,
   ExternalLink,
   MessageCircle,
-  Building2
+  Building2,
+  Rocket
 } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import { ceoService } from '../lib/ceoService';
+import { useNavigate } from 'react-router-dom';
+
 
 interface PackageInfo {
   id: string;
@@ -46,7 +49,9 @@ interface WebAppBookingWizardProps {
 }
 
 const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPackage, onClose }) => {
+  const navigate = useNavigate();
   const [step, setStep] = useState<'register' | 'payment' | 'upload' | 'success'>('register');
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState<RegistrationFormData>({
@@ -249,7 +254,27 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
             </div>
           </div>
 
+          {/* New Onboarding Action */}
+          <div className="bg-[#0f3460] rounded-3xl p-8 mb-10 text-white relative overflow-hidden group shadow-xl">
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-700">
+              <Rocket className="w-20 h-20" />
+            </div>
+            <div className="relative z-10">
+              <h4 className="text-xl font-black nav-font mb-2">เริ่มสร้าง Web App ของคุณทันที!</h4>
+              <p className="text-white/70 text-sm font-medium mb-6">
+                กรอกข้อมูลรายละเอียดโปรเจกต์เพื่อให้ทีมงานเริ่มออกแบบโครงสร้างให้คุณได้ทันที
+              </p>
+              <button 
+                onClick={() => navigate(`/web-app-onboarding?booking_id=${bookingId}&package=${encodeURIComponent(selectedPackage.name)}`)}
+                className="w-full bg-[#c5a059] text-[#0f3460] py-4 rounded-xl font-black flex items-center justify-center gap-2 hover:bg-white transition-all shadow-lg hover:shadow-amber-500/20"
+              >
+                กรอกข้อมูลรายละเอียดโปรเจกต์ <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
           <div className="mb-10 text-center">
+
             <img 
                 src="https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/contact/Line%20OA%20@denmasterfa.jpg" 
                 alt="LINE OA" 

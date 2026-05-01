@@ -3,8 +3,8 @@ import { S3Client, PutObjectCommand } from 'npm:@aws-sdk/client-s3';
 const R2_ACCOUNT_ID = Deno.env.get('R2_ACCOUNT_ID')!;
 const R2_ACCESS_KEY_ID = Deno.env.get('R2_ACCESS_KEY_ID')!;
 const R2_SECRET_ACCESS_KEY = Deno.env.get('R2_SECRET_ACCESS_KEY')!;
-const R2_BUCKET = Deno.env.get('R2_BUCKET_NAME') ?? 'cap-vision-assets';
-const R2_PUBLIC_URL = Deno.env.get('R2_PUBLIC_URL') ?? 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev';
+const R2_BUCKET = Deno.env.get('R2_BUCKET_NAME') ?? 'capvisionpartner.com';
+const R2_PUBLIC_URL = Deno.env.get('R2_PUBLIC_URL') ?? 'https://assets.capvisionpartner.com';
 
 const s3 = new S3Client({
   region: 'auto',
@@ -42,15 +42,7 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Validate file type
-    if (!file.type.startsWith('image/')) {
-      return new Response(JSON.stringify({ error: 'Only image files allowed' }), {
-        status: 400,
-        headers: { ...CORS, 'Content-Type': 'application/json' },
-      });
-    }
-
-    const ext = file.name.split('.').pop()?.toLowerCase() ?? 'jpg';
+    const ext = file.name.split('.').pop()?.toLowerCase() ?? 'bin';
     const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
     const key = `${folder}/${fileName}`;
 

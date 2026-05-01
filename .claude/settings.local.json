@@ -59,7 +59,9 @@
       "Bash(cp:*)",
       "Bash(python -c \"import pptx; print\\('pptx ok'\\)\")",
       "Bash(grep -ri \"portfolio\" . --include=\"*.tsx\" -l --max-depth=2)",
-      "Bash(supabase db:*)"
+      "Bash(supabase db:*)",
+      "Bash(cmd:*)",
+      "Bash(powershell:*)"
     ]
   }
 }

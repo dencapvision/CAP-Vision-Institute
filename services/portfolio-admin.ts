@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabaseClient';
-import { supabaseAdmin } from '../lib/supabaseAdmin';
+import { uploadToR2 } from '../lib/uploadToR2';
 import type { Portfolio, PortfolioImage } from './portfolio';
 
 export interface PortfolioFormData {
@@ -101,16 +101,7 @@ export async function fetchCoursesForSelect(): Promise<{ id: string; title: stri
 }
 
 export async function uploadPortfolioImage(file: File): Promise<string> {
-  const ext = file.name.split('.').pop()?.toLowerCase() ?? 'jpg';
-  const path = `portfolio/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  const { error } = await supabaseAdmin.storage.from('media').upload(path, file, {
-    cacheControl: '3600',
-    upsert: false,
-    contentType: file.type,
-  });
-  if (error) throw error;
-  const { data } = supabaseAdmin.storage.from('media').getPublicUrl(path);
-  return data.publicUrl;
+  return uploadToR2(file, 'media/portfolio');
 }
 
 export function slugify(text: string): string {

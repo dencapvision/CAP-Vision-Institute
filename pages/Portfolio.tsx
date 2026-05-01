@@ -17,6 +17,7 @@ const Portfolio: React.FC = () => {
   useEffect(() => {
     fetchPortfolios()
       .then(setItems)
+      .catch(() => setItems([]))
       .finally(() => setLoading(false));
   }, []);
 

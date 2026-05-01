@@ -29,7 +29,9 @@ const PortfolioCard: React.FC<Props> = ({ item }) => {
           <img
             src={item.cover_image}
             alt={item.title}
+            loading="lazy"
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-[#0f3460] to-[#1a4a8a] flex flex-col items-center justify-center gap-3">

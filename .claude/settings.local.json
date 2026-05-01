@@ -58,7 +58,8 @@
       "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'manifest has {len\\(d\\)} entries'\\)\")",
       "Bash(cp:*)",
       "Bash(python -c \"import pptx; print\\('pptx ok'\\)\")",
-      "Bash(grep -ri \"portfolio\" . --include=\"*.tsx\" -l --max-depth=2)"
+      "Bash(grep -ri \"portfolio\" . --include=\"*.tsx\" -l --max-depth=2)",
+      "Bash(supabase db:*)"
     ]
   }
 }

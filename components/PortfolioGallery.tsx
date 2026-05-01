@@ -33,7 +33,9 @@ const PortfolioGallery: React.FC<Props> = ({ images }) => {
           <img
             src={cover.image_url}
             alt={cover.caption || ''}
+            loading="lazy"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
           />
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
             <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -55,7 +57,9 @@ const PortfolioGallery: React.FC<Props> = ({ images }) => {
             <img
               src={img.image_url}
               alt={img.caption || `ภาพที่ ${i + 2}`}
+              loading="lazy"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors flex items-center justify-center">
               <ZoomIn className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition-opacity" />

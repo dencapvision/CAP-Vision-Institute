@@ -58,9 +58,10 @@ export async function updatePortfolioAdmin(
   // Replace images
   await supabase.from('portfolio_images').delete().eq('portfolio_id', id);
   if (images.length > 0) {
-    await supabase.from('portfolio_images').insert(
+    const { error: imgError } = await supabase.from('portfolio_images').insert(
       images.map(img => ({ ...img, portfolio_id: id }))
     );
+    if (imgError) throw new Error(`บันทึกรูปภาพไม่สำเร็จ: ${imgError.message}`);
   }
 
   // Replace course links

@@ -61,7 +61,11 @@
       "Bash(grep -ri \"portfolio\" . --include=\"*.tsx\" -l --max-depth=2)",
       "Bash(supabase db:*)",
       "Bash(cmd:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(cat ./supabase/migrations/*.sql)",
+      "Bash(find . -path \"*/supabase/*\" -name \"*.sql\" -exec grep -l \"CREATE TABLE\" {} \\\\;)",
+      "Bash(grep -r \"portfolio\" ./supabase/migrations/*.sql)",
+      "Bash(where supabase:*)"
     ]
   }
 }

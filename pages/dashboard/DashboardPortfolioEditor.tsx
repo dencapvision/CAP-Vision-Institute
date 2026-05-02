@@ -123,7 +123,9 @@ const DashboardPortfolioEditor: React.FC = () => {
     setError('');
     const keywords = keywordInput.split(',').map(k => k.trim()).filter(Boolean);
     const payload = { ...form, keywords };
-    const validImages = images.filter(img => img.image_url.trim());
+    const validImages = images
+      .filter(img => img.image_url.trim())
+      .map(({ image_url, caption, sort_order }) => ({ image_url, caption, sort_order }));
     try {
       if (isEdit && id) {
         await updatePortfolioAdmin(id, payload, validImages, selectedCourseIds);

@@ -31,6 +31,7 @@ const CEOTierCommunity = lazy(() => import('./pages/CEOTierCommunity'));
 const CEOMemberDashboard = lazy(() => import('./pages/CEOMemberDashboard'));
 const LeadershipRoadmap = lazy(() => import('./pages/LeadershipRoadmap'));
 const WebAppOnboarding = lazy(() => import('./pages/WebAppOnboarding'));
+const SalesPageFormBuilder = lazy(() => import('./pages/SalesPageFormBuilder'));
 
 
 // Dashboard pages
@@ -109,6 +110,7 @@ const AppShell: React.FC = () => {
             <Route path="/ceo-member-dashboard" element={<CEOMemberDashboard />} />
             <Route path="/leadership-roadmap" element={<LeadershipRoadmap />} />
             <Route path="/web-app-onboarding" element={<WebAppOnboarding />} />
+            <Route path="/sales-page-builder" element={<SalesPageFormBuilder />} />
 
 
             {/* Dashboard routes */}

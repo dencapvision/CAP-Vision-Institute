@@ -38,7 +38,7 @@ const createInfoRow = (label: string, value: any) => {
 
     // Override if project-specific variables exist
     // CAP Vision General Purpose (Contact, Join Us, Resources, Speaker Booking, CEO Tier)
-    if (project === 'CONTACT' || project === 'JOIN_US' || project === 'RESOURCES' || project === 'SPEAKER_BOOKING' || project === 'WEB_APP' || project === 'CEO_TIER') {
+    if (project === 'CONTACT' || project === 'JOIN_US' || project === 'RESOURCES' || project === 'SPEAKER_BOOKING' || project === 'WEB_APP' || project === 'CEO_TIER' || project === 'ONBOARDING') {
       const capToken = Deno.env.get("LINE_CHANNEL_ACCESS_TOKEN");
       const capAdminId = Deno.env.get("LINE_USER_ID");
       
@@ -128,8 +128,8 @@ const createInfoRow = (label: string, value: any) => {
     const altText = `แจ้งเตือนใหม่: ${formType}`;
 
     // --- TEMPLATE LOGIC ---
-    if (project === 'CEO_SPEECHFULNESS' || project === 'CEO_TIER' || project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING' || project === 'FA_OS' || project === 'JOIN_US' || project === 'RESOURCES' || project === 'WEB_APP') {
-      const isAltProject = project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING' || project === 'FA_OS' || project === 'JOIN_US' || project === 'RESOURCES' || project === 'WEB_APP';
+    if (project === 'CEO_SPEECHFULNESS' || project === 'CEO_TIER' || project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING' || project === 'FA_OS' || project === 'JOIN_US' || project === 'RESOURCES' || project === 'WEB_APP' || project === 'ONBOARDING') {
+      const isAltProject = project === 'CONTACT' || project === 'DR_SO' || project === 'SUB_SPEAKER' || project === 'SPEAKER_BOOKING' || project === 'FA_OS' || project === 'JOIN_US' || project === 'RESOURCES' || project === 'WEB_APP' || project === 'ONBOARDING';
       const primaryColor = isAltProject ? "#0F3460" : "#C5A059";
       let headerText = "👑 NEW REGISTRATION";
       if (project === 'CONTACT') headerText = "✉️ NEW INQUIRY";
@@ -140,10 +140,41 @@ const createInfoRow = (label: string, value: any) => {
       if (project === 'SPEAKER_BOOKING') headerText = "🎤 SPEAKER BOOKING";
       if (project === 'FA_OS') headerText = "🔮 FA-OS WAITLIST";
       if (project === 'WEB_APP') headerText = "🏢 WEB APP BOOKING";
+      if (project === 'ONBOARDING') headerText = "🚀 NEW PROJECT ONBOARDING";
       
       const contents = Object.entries(data)
         .map(([key, value]) => createInfoRow(key, value))
         .filter(row => row !== null);
+
+      // --- DATABASE PERSISTENCE (ONBOARDING) ---
+      if (project === 'ONBOARDING') {
+        try {
+          const supabaseUrl = Deno.env.get("SUPABASE_URL");
+          const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+          if (supabaseUrl && supabaseKey) {
+            console.log("[ONBOARDING] Saving brief to database...");
+            await fetch(`${supabaseUrl}/rest/v1/onboarding_briefs`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'apikey': supabaseKey,
+                'Authorization': `Bearer ${supabaseKey}`,
+                'Prefer': 'return=minimal'
+              },
+              body: JSON.stringify({
+                project_id: data.projectId || 'N/A',
+                biz_name_th: data.biz || 'N/A',
+                contact_email: data.email || 'N/A',
+                contact_line: data.lineContact || 'N/A',
+                full_data: data
+              })
+            });
+          }
+        } catch (dbErr) {
+          console.error("[ONBOARDING] DB Save Error:", dbErr.message);
+          // Continue to LINE notification even if DB fails
+        }
+      }
 
       messageObj = {
         type: "flex",

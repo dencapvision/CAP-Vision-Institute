@@ -238,6 +238,24 @@ const createInfoRow = (label: string, value: any) => {
         });
       }
 
+      // --- DEMO BUTTON ---
+      const demoUrl = data['Demo URL'] || data['DEMO'];
+      if (demoUrl && messageObj.contents.footer) {
+        const bizName = data['ธุรกิจ'] || 'ลูกค้า';
+        messageObj.contents.footer.contents.unshift({
+          type: "button",
+          style: "secondary",
+          height: "sm",
+          color: "#F1F5F9",
+          margin: "sm",
+          action: {
+            type: "uri",
+            label: `🔮 ดู Demo ${bizName}`,
+            uri: demoUrl
+          }
+        });
+      }
+
       // Special handling for slip images if present
       const slipUrl = data['สลิปโอนเงิน'] || data['Slip URL'] || data['slip_url'];
       if (slipUrl && messageObj.contents.footer) {

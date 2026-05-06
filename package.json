@@ -1,30 +1,15 @@
 {
-  "name": "cap-vision-partner",
-  "version": "1.0.0",
+  "name": "life-academy-landing",
   "private": true,
-  "dependencies": {
-    "@google/genai": "^1.37.0",
-    "@supabase/supabase-js": "^2.57.4",
-    "@tailwindcss/vite": "^4.2.2",
-    "framer-motion": "^12.38.0",
-    "lucide-react": "^0.562.0",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "react-helmet-async": "^2.0.5",
-    "react-router-dom": "^7.12.0",
-    "tailwindcss": "^4.2.2"
-  },
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "upweb": "powershell -ExecutionPolicy Bypass -File ./scripts/deploy.ps1"
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.3",
-    "@vitejs/plugin-react": "^5.1.2",
-    "typescript": "^5.7.3",
-    "vite": "^7.3.1"
+    "typescript": "^5.3.3",
+    "vite": "^5.1.4"
   }
 }

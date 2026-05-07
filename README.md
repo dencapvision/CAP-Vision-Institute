@@ -15,7 +15,7 @@ View your app in AI Studio: https://ai.studio/apps/drive/1in3n9DB7Ub0H6TRH5_1CCV
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+2. Set only browser-safe `VITE_*` variables locally. Server secrets such as AI provider keys and Supabase service role keys must live in Supabase Edge Function secrets, Cloudflare Worker secrets, or Next.js server-only env vars.
 3. Run the app:
    `npm run dev`
 # CAP-Vision-Institute

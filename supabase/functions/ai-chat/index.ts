@@ -6,7 +6,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY")!;
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
-const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+const SERVICE_ROLE_KEY = Deno.env.get("SERVICE_ROLE_KEY")!;
 
 // ─── SYSTEM PROMPT ────────────────────────────────────────────────────────────
 const SYSTEM_PROMPT = `คุณคือ "ครูเด่น AI" (Den AI Advisor) — AI Consultant & Facilitator จาก CAP Vision Institute (capvisionpartner.com)
@@ -206,6 +206,10 @@ Deno.serve(async (req) => {
       { role: "user" as const, content: message },
     ];
 
+    const dynamicContext = Object.keys(user_context ?? {}).length
+      ? `\n\nDynamic website context for this session:\n${JSON.stringify(user_context).slice(0, 6000)}`
+      : "";
+
     // Call Claude API
     const claudeRes = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
@@ -217,7 +221,7 @@ Deno.serve(async (req) => {
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
         max_tokens: 800,
-        system: SYSTEM_PROMPT,
+        system: SYSTEM_PROMPT + dynamicContext,
         messages,
       }),
     });
@@ -259,7 +263,7 @@ Deno.serve(async (req) => {
 
     // Save to Supabase chat logs (best-effort)
     try {
-      const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+      const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
       await supabase.from("ai_chat_logs").insert([
         {
           session_id: session_id || crypto.randomUUID(),

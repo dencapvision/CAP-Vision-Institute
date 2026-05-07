@@ -1,103 +1,67 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { GoogleGenAI, Chat } from "@google/genai";
-import { MessageSquare, X, Send, User, Sparkles } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { MessageSquare, Send, Sparkles, User, X } from 'lucide-react';
 import { CONTACT_INFO } from '../constants/brand';
 import { SERVICES_LIST as SERVICES } from '../constants/services';
+import { supabase } from '../lib/supabaseClient';
 import { fetchCourses } from '../services/courses';
 import { fetchOnlineCourses } from '../services/onlineCourses';
 import type { Course, OnlineCourse } from '../types';
 
+type ChatMessage = {
+  role: 'user' | 'model';
+  text: string;
+};
+
+const INITIAL_MESSAGE =
+  'สวัสดีครับ ผมคือ KruDen AI Advisor พร้อมช่วยวิเคราะห์โจทย์การเรียนรู้ ภาวะผู้นำ ทีม และหลักสูตรที่เหมาะกับองค์กรของคุณครับ';
+
+const FALLBACK_MESSAGE =
+  'ขออภัยครับ ระบบ AI ยังไม่พร้อมใช้งานในขณะนี้ กรุณาลองใหม่อีกครั้ง หรือทัก LINE เพื่อให้ทีมช่วยดูแลต่อครับ';
+
 const ChatBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<{ role: 'user' | 'model'; text: string }[]>([
-    {
-      role: 'model',
-      text: `สวัสดีครับ ผม "ครูเด่น มาสเตอร์ฟา" ยินดีที่ได้ร่วมทางในการเติบโตของคุณครับ 🌟\n\nในฐานะ Master Facilitator ผมพร้อมช่วยคุณออกแบบกระบวนการเรียนรู้ (Learning Design) พัฒนาภาวะผู้นำ หรือสร้างทีมที่เปี่ยมด้วยพลัง (Flow) ด้วยประสบการณ์กว่า 18 ปี วันนี้คุณอยากให้ผมช่วย Transformation ในส่วนไหนดีครับ?`
-    }
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    { role: 'model', text: INITIAL_MESSAGE },
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const chatRef = useRef<Chat | null>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
   const [isInitializing, setIsInitializing] = useState(false);
+  const sessionIdRef = useRef(`web-chat-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+  const contextRef = useRef<Record<string, unknown> | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Function to initialize the chat with dynamic context
-  const initChat = async () => {
-    if (chatRef.current || isInitializing) return;
-    
+  const initContext = async () => {
+    if (contextRef.current || isInitializing) return;
+
     setIsInitializing(true);
     try {
-      // Fetch dynamic context
       const [allCourses, allOnlineCourses] = await Promise.all([
         fetchCourses().catch(() => [] as Course[]),
-        fetchOnlineCourses().catch(() => [] as OnlineCourse[])
+        fetchOnlineCourses().catch(() => [] as OnlineCourse[]),
       ]);
 
-      const coursesContext = [
-          ...allCourses.map(c => `- ${c.title}: ${c.description}`),
-          ...allOnlineCourses.map(c => `- [Online] ${c.title}: ประยุกต์ใช้ในองค์กรยุคใหม่`)
-      ].join('\n');
-
-      const servicesContext = SERVICES.map(s => `- ${s.title}: ${s.description}`).join('\n');
-
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
-      const systemInstruction = `
-        คุณคือ "ครูเด่น มาสเตอร์ ฟา" (Den Master Fa) หรือ อาจารย์อนุสรณ์ หนองนา ผู้อำนวยการสถาบัน CAP Vision Institute
-        
-        # กฎเหล็กในการตอบ (AI Mode):
-        - **กระชับ (Concise):** ตอบให้สั้น ตรงประเด็นที่สุด ไม่เยิ่นเย้อ
-        - **เน้นคำถามสไตล์โค้ช (Coaching Style):** ใช้การตั้งคำถามเพื่อให้ผู้ใช้งานได้คิดต่อหรือขยายความต้องการของตนเอง
-        - **ตรงคำถาม (Focus):** ตอบเฉพาะสิ่งที่ผู้ใช้งานถามเท่านั้น ไม่ต้องร่ายยาวเรื่องอื่นหากไม่จำเป็น
-        
-        # ประวัติและตัวตน:
-        - ประสบการณ์ 18 ปี ในการเป็น "ครูผู้สร้างครู สร้างวิทยากร และสร้างผู้นำ" (Train the Trainer)
-        - เป็น Master Facilitator ที่เชี่ยวชาญด้าน Human Communication และ Transformative Learning
-        - เจ้าของโมเดลการสอนเฉพาะตัว "DFA Model"
-        
-        # ปรัชญาการทำงาน (DFA Model):
-        1. D - Dynamic Learning Design: ออกแบบการเรียนรู้แบบพลวัต
-        2. F - FLOW State: สร้างบรรยากาศลื่นไหล สนุก ท้าทาย
-        3. A - Art of personal GROWTH: เน้นการเติบโตจากภายใน (Inside-out Transformation)
-        
-        # Frameworks & Tools:
-        - C.O.D.E Model: วิเคราะห์สไตล์การสื่อสาร (Commander, Organizer, Diplomat, Entertainer)
-        - 5Ps Process: Plan, Purpose, Participants, Problem, Product
-        
-        # คำแนะนำการตอบพิเศษ:
-        1. หากถามเรื่องการออกแบบหลักสูตร ให้สรุปสั้นๆ ตามโครงสร้าง (DFA Strategy, C.O.D.E, Agenda, Outcome) และปิดท้ายด้วยคำถามโค้ชเพื่อเช็คความต้องการที่แท้จริง
-        2. หากขอสไลด์ 20 สไลด์ ให้ลิสต์หัวข้อสั้นๆ ครบ 20 หัวข้อ
-        
-        # Tone of Voice:
-        - Masterful, Wise, Encouraging & Warm
-        - ภาษาไทยสละสลวย ผสมคำศัพท์ภาษาอังกฤษ (Transformation, Flow, Reflection)
-        
-        # ข้อมูลบริบทสถาบัน (Dynamic Data):
-        - หลักสูตรและวิชาที่สอน: 
-        ${coursesContext}
-        - บริการหลัก: 
-        ${servicesContext}
-        - ช่องทางการติดต่อ: LINE OA ${CONTACT_INFO.line} (${CONTACT_INFO.lineUrl}), โทร ${CONTACT_INFO.phone}
-      `;
-
-      chatRef.current = ai.chats.create({
-        model: 'gemini-2.5-flash',
-        config: {
-          systemInstruction: systemInstruction,
-          temperature: 0.7,
+      contextRef.current = {
+        courses: [
+          ...allCourses.map((course) => `- ${course.title}: ${course.description}`),
+          ...allOnlineCourses.map((course) => `- [Online] ${course.title}`),
+        ].join('\n'),
+        services: SERVICES.map((service) => `- ${service.title}: ${service.description}`).join('\n'),
+        contact: {
+          line: CONTACT_INFO.line,
+          lineUrl: CONTACT_INFO.lineUrl,
+          phone: CONTACT_INFO.phone,
         },
-      });
+      };
     } catch (error) {
-      console.error("Failed to initialize chat context:", error);
+      console.error('Failed to initialize chat context:', error);
+      contextRef.current = {};
     } finally {
       setIsInitializing(false);
     }
   };
 
   useEffect(() => {
-    if (isOpen) {
-      initChat();
-    }
+    if (isOpen) void initContext();
   }, [isOpen]);
 
   useEffect(() => {
@@ -107,23 +71,37 @@ const ChatBot: React.FC = () => {
   }, [messages, isTyping]);
 
   const handleSend = async () => {
-    if (!input.trim() || isTyping || isInitializing) return;
-
     const userMessage = input.trim();
+    if (!userMessage || isTyping || isInitializing) return;
+
     setInput('');
-    setMessages(prev => [...prev, { role: 'user', text: userMessage }]);
+    setMessages((prev) => [...prev, { role: 'user', text: userMessage }]);
     setIsTyping(true);
 
     try {
-      if (!chatRef.current) await initChat();
+      if (!contextRef.current) await initContext();
 
-      const response = await chatRef.current!.sendMessage({ message: userMessage });
-      const text = response.text || "ขออภัยครับ พลังงานขัดข้องเล็กน้อย รบกวนคุณลองส่งข้อความใหม่อีกครั้งนะครับ";
+      const { data, error } = await supabase.functions.invoke('ai-chat', {
+        body: {
+          message: userMessage,
+          history: messages.map((message) => ({
+            role: message.role === 'model' ? 'assistant' : 'user',
+            content: message.text,
+          })),
+          session_id: sessionIdRef.current,
+          user_context: contextRef.current ?? {},
+        },
+      });
 
-      setMessages(prev => [...prev, { role: 'model', text }]);
+      if (error) throw error;
+
+      setMessages((prev) => [
+        ...prev,
+        { role: 'model', text: data?.reply || FALLBACK_MESSAGE },
+      ]);
     } catch (error) {
-      console.error("Chat Error:", error);
-      setMessages(prev => [...prev, { role: 'model', text: "ขออภัยครับ เกิดข้อผิดพลาดในการเชื่อมต่อจักรวาลการเรียนรู้ กรุณาลองใหม่ในภายหลังครับ" }]);
+      console.error('Chat error:', error);
+      setMessages((prev) => [...prev, { role: 'model', text: FALLBACK_MESSAGE }]);
     } finally {
       setIsTyping(false);
     }
@@ -131,106 +109,96 @@ const ChatBot: React.FC = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-[100] font-sans">
-      {/* Floating Button */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-gold-gradient text-white p-5 rounded-full shadow-[0_15px_40px_-10px_rgba(197,160,89,0.5)] hover:scale-110 active:scale-95 transition-all group relative border-4 border-white"
+          className="bg-gold-gradient text-white p-5 rounded-full shadow-[0_15px_40px_-10px_rgba(197,160,89,0.5)] hover:scale-110 active:scale-95 transition-all border-4 border-white"
+          aria-label="Open KruDen AI chat"
         >
-          <div className="absolute -top-12 right-0 bg-white text-[#0f3460] px-4 py-2 rounded-2xl text-xs font-bold shadow-xl border border-gray-100 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap nav-font">
-            ปรึกษาครูเด่น (AI) ✨
-          </div>
           <MessageSquare className="w-8 h-8" />
         </button>
       )}
 
-      {/* Chat Window */}
       {isOpen && (
-        <div className="bg-white w-[95vw] md:w-[450px] h-[650px] max-h-[85vh] rounded-[2.5rem] shadow-[0_25px_60px_-15px_rgba(15,52,96,0.3)] flex flex-col overflow-hidden border border-gray-100 animate-in slide-in-from-bottom-10 duration-500">
-          {/* Header */}
-          <div className="bg-[#0f3460] p-6 flex items-center justify-between text-white border-b-4 border-[#c5a059]">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20 overflow-hidden shadow-inner">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80" alt="Den Master Fa" className="w-full h-full object-cover" />
+        <div className="bg-white w-[95vw] md:w-[450px] h-[650px] max-h-[85vh] rounded-[2rem] shadow-[0_25px_60px_-15px_rgba(15,52,96,0.3)] flex flex-col overflow-hidden border border-gray-100">
+          <div className="bg-[#0f3460] p-5 flex items-center justify-between text-white border-b-4 border-[#c5a059]">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-[#c5a059]" />
               </div>
               <div>
-                <h3 className="font-bold nav-font text-base leading-tight">ครูเด่น มาสเตอร์ฟา</h3>
+                <h3 className="font-bold nav-font text-base leading-tight">KruDen AI Advisor</h3>
                 <div className="flex items-center gap-1.5">
-                  <div className={`w-2 h-2 rounded-full ${isInitializing ? 'bg-yellow-400' : 'bg-green-400 animate-pulse'}`}></div>
+                  <div className={`w-2 h-2 rounded-full ${isInitializing ? 'bg-yellow-400' : 'bg-green-400'}`} />
                   <span className="text-[10px] font-bold text-blue-200 uppercase tracking-widest">
-                    {isInitializing ? 'Initializing context...' : 'Coaching AI Mode'}
+                    {isInitializing ? 'Preparing context' : 'Server-side AI'}
                   </span>
                 </div>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="hover:bg-white/10 p-2 rounded-xl transition-colors">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="hover:bg-white/10 p-2 rounded-xl transition-colors"
+              aria-label="Close KruDen AI chat"
+            >
               <X className="w-6 h-6" />
             </button>
           </div>
 
-          {/* Messages Area */}
-          <div
-            ref={scrollRef}
-            className="flex-grow overflow-y-auto p-6 space-y-6 bg-gray-50/50 scroll-smooth"
-          >
-            {messages.map((msg, i) => (
-              <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[90%] flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-                  <div className={`w-8 h-8 rounded-xl flex-shrink-0 flex items-center justify-center shadow-sm ${msg.role === 'user' ? 'bg-[#c5a059] text-white' : 'bg-white text-[#0f3460] border border-gray-100'}`}>
-                    {msg.role === 'user' ? <User className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
+          <div ref={scrollRef} className="flex-grow overflow-y-auto p-6 space-y-5 bg-gray-50/50">
+            {messages.map((message, index) => (
+              <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[90%] flex gap-3 ${message.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                  <div className={`w-8 h-8 rounded-xl flex-shrink-0 flex items-center justify-center shadow-sm ${message.role === 'user' ? 'bg-[#c5a059] text-white' : 'bg-white text-[#0f3460] border border-gray-100'}`}>
+                    {message.role === 'user' ? <User className="w-4 h-4" /> : <Sparkles className="w-4 h-4" />}
                   </div>
-                  <div className={`p-4 rounded-3xl text-[15px] shadow-sm ${msg.role === 'user'
-                    ? 'bg-[#0f3460] text-white rounded-tr-none'
-                    : 'bg-white text-gray-700 rounded-tl-none border border-gray-100'
-                    }`}>
-                    <p className="whitespace-pre-wrap font-medium">{msg.text}</p>
+                  <div className={`p-4 rounded-3xl text-[15px] shadow-sm ${message.role === 'user' ? 'bg-[#0f3460] text-white rounded-tr-none' : 'bg-white text-gray-700 rounded-tl-none border border-gray-100'}`}>
+                    <p className="whitespace-pre-wrap font-medium">{message.text}</p>
                   </div>
                 </div>
               </div>
             ))}
+
             {isTyping && (
               <div className="flex justify-start">
                 <div className="bg-white p-4 rounded-3xl rounded-tl-none shadow-sm border border-gray-100 flex gap-1.5 items-center">
-                  <div className="w-1.5 h-1.5 bg-[#c5a059] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                  <div className="w-1.5 h-1.5 bg-[#c5a059] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-1.5 h-1.5 bg-[#c5a059] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  <div className="w-1.5 h-1.5 bg-[#c5a059] rounded-full animate-bounce" />
+                  <div className="w-1.5 h-1.5 bg-[#c5a059] rounded-full animate-bounce [animation-delay:150ms]" />
+                  <div className="w-1.5 h-1.5 bg-[#c5a059] rounded-full animate-bounce [animation-delay:300ms]" />
                 </div>
               </div>
             )}
           </div>
 
-          {/* Input Area */}
-          <div className="p-6 bg-white border-t border-gray-100">
-            <div className="relative group">
+          <div className="p-5 bg-white border-t border-gray-100">
+            <div className="relative">
               <textarea
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSend();
+                onChange={(event) => setInput(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
+                    void handleSend();
                   }
                 }}
                 disabled={isInitializing}
-                placeholder={isInitializing ? "กำลังเตรียมข้อมูล..." : "คุยกับครูเด่น..."}
+                placeholder={isInitializing ? 'กำลังเตรียมข้อมูล...' : 'พิมพ์โจทย์ที่อยากปรึกษา...'}
                 rows={1}
-                className="w-full pl-6 pr-14 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-[#c5a059] focus:bg-white transition-all text-sm font-medium resize-none overflow-hidden"
+                className="w-full pl-5 pr-14 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-[#c5a059] focus:bg-white transition-all text-sm font-medium resize-none overflow-hidden"
               />
               <button
-                onClick={handleSend}
+                onClick={() => void handleSend()}
                 disabled={!input.trim() || isTyping || isInitializing}
-                className={`absolute right-3 top-3 p-2 rounded-xl transition-all ${input.trim() && !isTyping && !isInitializing ? 'bg-[#0f3460] text-white shadow-lg shadow-blue-900/20' : 'bg-gray-200 text-gray-400'
-                  }`}
+                className={`absolute right-3 top-3 p-2 rounded-xl transition-all ${input.trim() && !isTyping && !isInitializing ? 'bg-[#0f3460] text-white shadow-lg shadow-blue-900/20' : 'bg-gray-200 text-gray-400'}`}
+                aria-label="Send chat message"
               >
                 <Send className="w-4 h-4" />
               </button>
             </div>
             <div className="mt-3 flex items-center justify-between px-2">
-              <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-                โหมดกระชับและเน้นการโค้ช
-              </p>
-              <a href={CONTACT_INFO.lineUrl} target="_blank" className="text-[10px] text-[#c5a059] font-black underline nav-font">
-                นัดปรึกษาตัวจริง
+              <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">AI runs via secure Edge Function</p>
+              <a href={CONTACT_INFO.lineUrl} target="_blank" rel="noreferrer" className="text-[10px] text-[#c5a059] font-black underline nav-font">
+                นัดปรึกษากับทีม
               </a>
             </div>
           </div>

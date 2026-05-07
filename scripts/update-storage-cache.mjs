@@ -2,7 +2,7 @@
  * One-time script: Update cacheControl for existing files in Supabase Storage
  * Run: node scripts/update-storage-cache.mjs
  *
- * Reads VITE_SUPABASE_URL and VITE_SUPABASE_service_role from .env
+ * Reads VITE_SUPABASE_URL and SERVICE_ROLE_KEY from .env
  */
 
 import { createClient } from '@supabase/supabase-js';
@@ -32,7 +32,7 @@ function loadEnv() {
 const env = loadEnv();
 const supabase = createClient(
   env.VITE_SUPABASE_URL,
-  env.VITE_SUPABASE_service_role
+  env.SERVICE_ROLE_KEY
 );
 
 const BUCKETS = ['media'];

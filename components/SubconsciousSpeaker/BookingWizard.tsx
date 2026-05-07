@@ -4,9 +4,8 @@ import {
   X, Check, ChevronRight, ChevronLeft, CreditCard, 
   Calendar, Users, Rocket, Sparkles, Send, Copy, ExternalLink 
 } from 'lucide-react';
-import { supabase } from '../../lib/supabaseClient';
-import { supabaseAdmin } from '../../lib/supabaseAdmin';
 import { courseService } from '../../lib/courseService';
+import { uploadToR2 } from '../../lib/uploadToR2';
 
 interface BookingWizardProps {
   isOpen: boolean;
@@ -134,18 +133,8 @@ const BookingWizard: React.FC<BookingWizardProps> = ({ isOpen, onClose }) => {
     setLoading(true);
     setError(null);
     try {
-      // 1. Upload Slip Image to 'media' bucket using admin (bypass RLS)
-      const fileExt = paymentImage.name.split('.').pop() || 'jpg';
-      const fileName = `sub-speaker/${bookingResult.code}_${Date.now()}.${fileExt}`;
-      const { error: uploadError } = await supabaseAdmin.storage
-        .from('media')
-        .upload(fileName, paymentImage, { upsert: false, contentType: paymentImage.type });
-
-      if (uploadError) throw new Error(`อัปโหลดสลิปไม่สำเร็จ: ${uploadError.message}`);
-      
-      const { data: { publicUrl } } = supabaseAdmin.storage
-        .from('media')
-        .getPublicUrl(fileName);
+      // 1. Upload slip through the server-side R2 Edge Function.
+      const publicUrl = await uploadToR2(paymentImage, 'media/sub-speaker');
 
       // 2. Record Payment
       const selectedPackage = CourseConfig.packages[formData.packageId as keyof typeof CourseConfig.packages];

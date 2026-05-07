@@ -1,0 +1,13 @@
+{
+  "name": "@kru-den/integrations",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./cloudflare": "./src/cloudflare.ts",
+    "./line": "./src/line.ts",
+    "./resend": "./src/resend.ts"
+  }
+}

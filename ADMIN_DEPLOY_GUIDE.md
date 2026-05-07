@@ -9,7 +9,7 @@
 
 1. **NEXT_PUBLIC_SUPABASE_URL** = (ใช้ค่าเดียวกับ VITE_SUPABASE_URL)
 2. **NEXT_PUBLIC_SUPABASE_ANON_KEY** = (ใช้ค่าเดียวกับ VITE_SUPABASE_ANON_KEY)
-3. **SUPABASE_SERVICE_ROLE_KEY** = (ใช้ค่าเดียวกับ VITE_SUPABASE_service_role)
+3. **SERVICE_ROLE_KEY** = (server-only service role key; ห้ามตั้งเป็น `VITE_*` และห้ามขึ้นต้นด้วย `SUPABASE_`)
 4. **NEXT_PUBLIC_SITE_URL** = `https://admin.capvisionpartner.com`
 
 ---

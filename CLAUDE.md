@@ -33,6 +33,7 @@ npm run start
 supabase functions deploy line-notify    # Deploy LINE notification function
 supabase functions deploy web-app-notify # Deploy web-app specific notifier
 supabase functions deploy ai-chat        # Deploy AI chat function
+supabase functions deploy ai-generate    # Deploy AI generation gateway
 supabase db push                         # Apply migrations
 ```
 
@@ -42,12 +43,11 @@ Push to `main` → GitHub Actions sends webhook to `capvisionpartner.com/webhook
 ## Architecture
 
 ### Supabase Clients — IMPORTANT
-Two separate clients exist with different permission scopes:
+The browser app must use only the public anon client:
 
 - **`lib/supabaseClient.ts`** — uses `VITE_SUPABASE_ANON_KEY`. Use for all normal data reads/writes (respects RLS).
-- **`lib/supabaseAdmin.ts`** — uses `VITE_SUPABASE_service_role`. Only for operations that must bypass RLS (e.g., file uploads to Storage). Never use for user-data queries.
 
-The admin dashboard has its own server-side Supabase client in `cap-vision-admin/lib/`.
+There is intentionally no `lib/supabaseAdmin.ts` in the Vite app. Service role operations, AI provider calls, privileged uploads, notifications, payment verification, and admin mutations that must bypass RLS belong in Supabase Edge Functions, Cloudflare Workers, or Next.js server code. The admin dashboard has its own server-side Supabase client in `cap-vision-admin/lib/`.
 
 ### LINE Notification System
 All form submissions trigger the `line-notify` Supabase Edge Function via `supabase.functions.invoke('line-notify', { body: { project, formType, data } })`.
@@ -67,7 +67,7 @@ CEO_SF is also the global fallback when primary tokens fail.
 ### Key Service Layer
 - **`services/`** — Supabase queries for courses, instructors, events, blog articles, portfolio, resources
 - **`lib/`** — Domain-specific services: `courseService.ts`, `speakerService.ts`, `ceoService.ts`, `drsoService.ts`
-- **`services/ai-*.ts`** — Google Gemini (`@google/genai`) integrations for article/caption/course generation
+- **`services/ai-*.ts`** — client wrappers around the `ai-generate` Supabase Edge Function
 - **`constants/`** — Static brand data (contact info, speakers, services). Import from here rather than hardcoding.
 
 ### Page Structure
@@ -83,14 +83,15 @@ All schema changes go in `supabase/migrations/` with timestamp-prefixed filename
 **Main site** (`.env`):
 - `VITE_SUPABASE_URL`
 - `VITE_SUPABASE_ANON_KEY`
-- `VITE_SUPABASE_service_role` — service role key for admin operations
-- `VITE_GEMINI_API_KEY`
 
 **Admin dashboard** (`cap-vision-admin/.env.local`):
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
+- `SERVICE_ROLE_KEY`
 - `NEXT_PUBLIC_SITE_URL`
 
-**Edge Function secrets** (set in Supabase dashboard, not in files):
-LINE tokens for each project (see routing table above).
+**Server-only secrets** (set in Supabase dashboard, Cloudflare, or Next.js server runtime; never prefix with `VITE_`):
+- `SERVICE_ROLE_KEY`
+- `GEMINI_API_KEY`
+- `ANTHROPIC_API_KEY`
+- LINE tokens for each project (see routing table above)

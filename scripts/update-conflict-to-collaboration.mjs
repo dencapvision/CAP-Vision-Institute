@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
 const SUPABASE_URL = 'https://nheppvjayzxlblkeanxs.supabase.co';
-const SERVICE_ROLE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5oZXBwdmpheXp4bGJsa2VhbnhzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MTA3NjIwNywiZXhwIjoyMDg2NjUyMjA3fQ.F5vnxMcpf2Pieh-lgKx7dFLk0j2oUmT30qE2SENhcHY';
+const SERVICE_ROLE_KEY = process.env.SERVICE_ROLE_KEY || '';
 
 const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
 const COURSE_SLUG = 'conflict-to-collaboration';

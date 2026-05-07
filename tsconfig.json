@@ -6,6 +6,7 @@
     "pages/**/*",
     "lib/**/*",
     "services/**/*",
+    "packages/**/*",
     "scripts/**/*",
     "www/**/*"
   ],
@@ -38,6 +39,21 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@kru-den/core": [
+        "./packages/core/src/index.ts"
+      ],
+      "@kru-den/core/*": [
+        "./packages/core/src/*"
+      ],
+      "@kru-den/database": [
+        "./packages/database/src/index.ts"
+      ],
+      "@kru-den/integrations": [
+        "./packages/integrations/src/index.ts"
+      ],
+      "@kru-den/integrations/*": [
+        "./packages/integrations/src/*"
       ]
     },
     "allowImportingTsExtensions": true,

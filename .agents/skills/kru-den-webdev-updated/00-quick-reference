@@ -1,0 +1,104 @@
+# 🚀 KruDen WebDev — Master Prompt Guide
+## ชุดคำสั่งครบวงจร ตั้งแต่ Demo ถึง Onboarding
+
+---
+
+## ภาพรวม 7-Step Flow
+
+```
+Step 1-2  วิเคราะห์ธุรกิจ          → kru-den-webdev
+Step 3    Demo HTML                → kru-den-webdev
+Step 4    Next.js Structure        → kru-den-webdev
+Step 5    Proposal PDF             → kru-den-webdev
+────────── ลูกค้าตัดสินใจ ──────────
+Step 6    Closing Form + ยืนยัน    → kru-den-closing
+Step 7    Onboarding Form + Brief  → kru-den-onboarding
+```
+
+---
+
+## STAGE A: วิเคราะห์และเสนอ (Steps 1-5)
+
+### คำสั่งทีละขั้น
+- "วิเคราะห์ [ชื่อธุรกิจ]"             → Business Blueprint
+- "demo [ชื่อธุรกิจ] ธีม [ชื่อธีม]"    → HTML Demo
+- "starter [ชื่อธุรกิจ]"               → Next.js Structure
+- "proposal [ชื่อธุรกิจ] ฿XX,XXX"      → PDF Proposal
+
+### คำสั่งครบทีเดียว
+- "ครบ [ชื่อธุรกิจ] [ข้อมูล]"           → ทุก Output Steps 1-5
+
+---
+
+## STAGE B: ปิดการขาย (Step 6) → kru-den-closing
+
+- "closing form [ชื่อธุรกิจ] Phase 1"           → ฟอร์ม Phase เดียว
+- "closing form [ชื่อธุรกิจ] Phase 1 Phase 2"   → ฟอร์มหลาย Phase
+- "closing form ครบ [ชื่อธุรกิจ]"               → ฟอร์ม Dynamic ทุก Phase
+- "confirm pdf [ชื่อธุรกิจ] [Phase] [ราคา]"     → PDF ยืนยันหลังชำระ
+- "closing ครบ [ชื่อธุรกิจ]"                    → Form + PDF Template
+
+---
+
+## STAGE C: เริ่มโปรเจกต์ (Step 7) → kru-den-onboarding
+
+- "onboarding form [ชื่อธุรกิจ] Phase 1"   → ฟอร์มข้อมูล Phase 1 (Section 1,2,4,6)
+- "onboarding form [ชื่อธุรกิจ] Phase 2"   → ฟอร์มครบ (Section 1-6)
+- "onboarding form ครบ [ชื่อธุรกิจ]"       → ทุก Section + localStorage
+- "brief pdf [ชื่อธุรกิจ] [ข้อมูล]"        → Project Brief PDF
+- "kickoff checklist [ชื่อธุรกิจ]"         → Checklist ประชุม
+- "onboarding ครบ [ชื่อธุรกิจ]"            → Form + Brief + Checklist
+
+---
+
+## MEGA COMMAND
+
+- "ครบ+ปิด [ชื่อธุรกิจ] [ข้อมูล]"
+  → ได้ Output ทั้ง 7 Steps พร้อมกัน (Demo / Proposal / Closing / Onboarding)
+
+---
+
+## ตัวอย่างชุดคำสั่งตามประเภทธุรกิจ
+
+### สถาบันติวเตอร์
+```
+1. "ครบ [ชื่อสถาบัน] [ข้อมูล] /kru-den-webdev"
+2. "closing form [ชื่อ] Phase 1 Phase 2"
+3. "confirm pdf [ชื่อ] Phase 1,2 ฿63,000 [วันที่]"
+4. "onboarding form [ชื่อ] Phase 2"
+5. "brief pdf [ชื่อ] [ข้อมูลที่กรอก]"
+```
+
+### คลินิก / สปา (Calm Wellness)
+```
+1. "ครบ [ชื่อคลินิก] ธีม Calm Wellness [ข้อมูล]"
+2. "closing form [ชื่อ] Phase 1"
+3. "onboarding form [ชื่อ] Phase 1"
+```
+
+### ร้านอาหาร / Cafe (Warm Editorial)
+```
+1. "ครบ [ชื่อร้าน] ธีม Warm Editorial [ข้อมูล]"
+2. "closing ครบ [ชื่อ]"
+3. "onboarding ครบ [ชื่อ]"
+```
+
+### B2B / ที่ปรึกษา (Executive Dark)
+```
+1. "ครบ [ชื่อบริษัท] ธีม Executive Dark [ข้อมูล]"
+2. "closing ครบ [ชื่อ]"
+3. "onboarding ครบ [ชื่อ]"
+```
+
+---
+
+## Files ที่ส่งลูกค้าตามลำดับ
+
+| ลำดับ | ไฟล์ | ส่งเมื่อ |
+|---|---|---|
+| 1 | demo-[business].html | นำเสนอ |
+| 2 | proposal-[business].pdf | หลังดู Demo |
+| 3 | closing-form-[business].html | ลูกค้าสนใจ |
+| 4 | confirmation-[business].pdf | หลังชำระงวด 1 |
+| 5 | onboarding-form-[business].html | วันเดียวกับ Confirm |
+| 6 | project-brief-[business].pdf | หลังกรอก Onboarding ครบ |

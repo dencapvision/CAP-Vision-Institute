@@ -1,0 +1,219 @@
+# 03 — Demo HTML Template Guide
+
+## โครงสร้าง HTML มาตรฐาน
+
+ทุก Demo ต้องมีครบ 9 ส่วนนี้:
+
+```
+1. <head>      fonts + meta
+2. <nav>       sticky, scroll-aware
+3. #hero       full-screen, particles/animation
+4. #story      why us / brand identity
+5. #services   products/services (interactive tabs)
+6. #feature    UNIQUE INTERACTIVE FEATURE ← จุดขาย!
+7. #proof      testimonials / results
+8. #booking    contact / booking form
+9. #pricing    3-phase pricing preview
+   <footer>    info + developer credit
+   .demo-bar   fixed bottom: "Demo by ครูเด่น"
+```
+
+---
+
+## CSS Variables Boilerplate
+
+เปลี่ยนแค่ section นี้เพื่อเปลี่ยน Theme ทั้งหมด:
+
+```css
+:root {
+  /* เปลี่ยนค่าพวกนี้ตาม Theme */
+  --bg:         #080604;
+  --bg2:        #1a1612;
+  --bg3:        #2d2420;
+  --fg:         #faf6f0;
+  --fg2:        rgba(255,255,255,.5);
+  --fg3:        rgba(255,255,255,.25);
+  --accent:     #c9a96e;
+  --accent2:    #e8d5b0;
+  --accent3:    #9a7a4a;
+  --font-d:     'Playfair Display', serif;
+  --font-b:     'Sarabun', sans-serif;
+}
+```
+
+---
+
+## Hero Section Variants
+
+### Variant 1: Dark with Particles (Luxury)
+```html
+<section id="hero" style="background:var(--bg);min-height:100vh;...">
+  <!-- Radial gradient atmosphere -->
+  <!-- SVG geometric shape (diamond/circle/hexagon) -->
+  <!-- Floating particles via JS -->
+  <!-- Center: eyebrow + name + tagline + 2 CTAs + trust stats -->
+  <!-- Bottom: scroll hint -->
+</section>
+<script>
+// Particle generator (copy from MigiJames demo)
+[...Array(16)].forEach((_,i)=>{
+  const el=document.createElement('div')
+  el.className='particle'
+  el.style.cssText=`left:${6+(i*5.8)%86}%;...`
+  document.getElementById('hero').appendChild(el)
+})
+</script>
+```
+
+### Variant 2: Light with Image Overlay (Academic/Wellness)
+```html
+<section id="hero" style="background:var(--bg);position:relative">
+  <!-- Subtle pattern overlay -->
+  <!-- Text-heavy, no particles -->
+  <!-- Photo placeholder with overlay gradient -->
+  <!-- Stats row: students / years / success rate -->
+</section>
+```
+
+### Variant 3: Split Layout (Food/Editorial)
+```html
+<section id="hero" style="display:grid;grid-template-columns:1fr 1fr">
+  <!-- Left: Big headline + CTA -->
+  <!-- Right: Featured image / signature dish -->
+</section>
+```
+
+---
+
+## Unique Interactive Features
+
+### Feature 1: Match/Finder Tool
+**ใช้กับ:** ติวเตอร์ (หาครู), เพชร (Gem Match), คลินิก (Treatment)
+```javascript
+// Pattern: เลือก input → คำนวณ → แสดง recommendation
+function findMatch() {
+  const inputs = collectFormInputs()
+  const results = matchAlgorithm(inputs, DATA_ARRAY)
+  renderResults(results)
+}
+// DATA_ARRAY = array of items with matchable properties
+// matchAlgorithm = scoring function
+// renderResults = show cards with CTA
+```
+
+### Feature 2: Quiz/Assessment
+**ใช้กับ:** Coach, Consultant, Education
+```javascript
+// Pattern: คำถาม → เก็บ score → แสดง profile/result
+const QUESTIONS = [...]  // 3-5 คำถาม
+let currentQ = 0
+let scores = {}
+function nextQuestion(answer) { ... }
+function showResult() { ... }
+```
+
+### Feature 3: Interactive Calculator
+**ใช้กับ:** ร้านอาหาร (คำนวณ catering), อสังหา (ROI), Finance
+```javascript
+// Pattern: กรอกตัวเลข → คำนวณทันที
+function calculate() {
+  const inputs = getInputValues()
+  const result = formula(inputs)
+  updateDisplay(result)
+}
+```
+
+### Feature 4: Menu/Catalog with Filter
+**ใช้กับ:** ร้านอาหาร, OTOP, ร้านค้า
+```javascript
+// Pattern: filter tags → show/hide items
+function filterItems(category) {
+  document.querySelectorAll('.item').forEach(el => {
+    el.style.display = 
+      category === 'all' || el.dataset.cat === category 
+      ? 'block' : 'none'
+  })
+}
+```
+
+---
+
+## Pricing Section มาตรฐาน (ใส่ทุก Demo)
+
+```html
+<section id="pricing" style="background:var(--ivory/--bg2)">
+  <!-- Header: "แผนการพัฒนา 3 Phase" -->
+  
+  <!-- 3 Cards: Phase 1 / 2 / 3 -->
+  <!-- แต่ละ card: label + title + list items + price -->
+  
+  <!-- Summary bar: รวม ฿XX,XXX -->
+  
+  <!-- Highlight box: "ปีที่ 2+ จ่ายแค่ ฿680/ปี (โดเมน)" -->
+  
+  <!-- Tech stack chips: Next.js / Supabase / Cloudflare / ... -->
+</section>
+```
+
+---
+
+## Demo Bar (ทุก Demo ต้องมี)
+
+```html
+<div style="
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  background:rgba(8,6,4,.95);backdrop-filter:blur(20px);
+  border-top:1px solid rgba(201,169,110,.1);
+  padding:10px 32px;
+  display:flex;align-items:center;justify-content:space-between;
+">
+  <span style="font-size:9px;color:rgba(255,255,255,.3)">
+    🔮 <strong style="color:#c9a96e">Demo Proposal</strong> 
+    &nbsp;·&nbsp; 
+    พัฒนาโดย ครูเด่น มาสเตอร์ฟา · CAP Vision Institute
+  </span>
+  <div>
+    <!-- Phase navigation buttons -->
+    <button onclick="scrollTo('#phase1')">Phase 1</button>
+    <button onclick="scrollTo('#phase2')">Phase 2</button>
+    <button onclick="scrollTo('#pricing')">ค่าบริการ</button>
+  </div>
+</div>
+```
+
+---
+
+## Scroll Animation (ใส่ทุก Demo)
+
+```javascript
+// Intersection Observer สำหรับ fade-in sections
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.style.opacity = '1'
+      e.target.style.transform = 'translateY(0)'
+    }
+  })
+}, { threshold: 0.1 })
+
+document.querySelectorAll('section').forEach(s => {
+  s.style.cssText = 'opacity:0;transform:translateY(24px);transition:all .8s ease'
+  observer.observe(s)
+})
+```
+
+---
+
+## Checklist ก่อน Deliver Demo
+
+```
+□ เปิดได้ใน Browser โดยไม่ต้อง server
+□ ทุก Section ทำงานได้ (ไม่มี broken)
+□ Interactive Feature รันได้จริง
+□ Pricing Section แสดงราคาถูกต้อง
+□ Demo Bar แสดงและ link ถูก
+□ ชื่อลูกค้า/ธุรกิจ ถูกต้องทุกจุด
+□ ทดสอบบนมือถือ (responsive)
+□ CTA buttons scroll ไปยังส่วนที่ถูก
+□ ไม่มี Lorem Ipsum เหลือ
+```

@@ -1,0 +1,241 @@
+# 05 — PDF Proposal Template Guide
+
+## วิธีใช้
+
+สร้าง PDF Proposal ด้วย Python + ReportLab
+ปรับแค่ "PROJECT CONFIG" section ข้างล่าง ทุกอย่างอื่นเหมือนกัน
+
+---
+
+## Python Config Block (ปรับทุกโปรเจกต์)
+
+```python
+# ══ PROJECT CONFIG — แก้ตรงนี้อย่างเดียว ══════════
+PROJECT = {
+    # ข้อมูลลูกค้า
+    "client_name":    "คุณมิกิ",
+    "business_name":  "MigiJames",
+    "business_sub":   "Jewelry Story Telling",
+    "doc_number":     "MJ-PROP-001",
+    "date":           "9 พฤษภาคม 2568",
+    
+    # ข้อมูลผู้เสนอ
+    "developer_name": "ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)",
+    "org_name":       "CAP Vision Institute",
+    "contact":        "@denmasterfa",
+    "website":        "capvisionpartner.com",
+    
+    # Tagline
+    "tagline": '"เพชรที่เลือกคุณ — ไม่ใช่คุณเลือกเพชร"',
+    
+    # Feature pills (max 4)
+    "features": ["Dark Luxury Design", "Astro-Gem Matching", "CRM System", "Cloudflare Stack"],
+    
+    # Phase details
+    "phases": [
+        {
+            "name": "Brand Presence",
+            "weeks": "4–6 สัปดาห์",
+            "price": "25,000",
+            "items": [
+                "หน้าแรก Dark Luxury Premium",
+                "Portfolio ผลงาน + Jewelry Story",
+                "Contact Form + Email อัตโนมัติ",
+                "Mobile Responsive ทุก Device",
+                "SEO พื้นฐาน + Social Meta Tags",
+                "Deploy บน Cloudflare (ฟรี)",
+            ]
+        },
+        {
+            "name": "CRM & Portal",
+            "weeks": "6–8 สัปดาห์",
+            "price": "35,000",
+            "items": [
+                "ระบบ CRM ลูกค้า VIP ครบ",
+                "บันทึกดวง / ธาตุ / อัญมณีมงคล",
+                "Private Client Login Portal",
+                "Bespoke Order Tracker",
+                "Email / Line แจ้งเตือนอัตโนมัติ",
+                "Admin Dashboard",
+            ]
+        },
+        {
+            "name": "AI & Growth",
+            "weeks": "ต่อเนื่อง",
+            "price": "40,000",
+            "items": [
+                "Astro-Gem AI Matching System",
+                "Workshop Booking + ชำระเงิน",
+                "Blog / Content Marketing System",
+                "Line OA Integration",
+                "Analytics Dashboard",
+                "Retainer Support รายเดือน",
+            ]
+        },
+    ],
+    "total": "100,000",
+    "annual": "680",
+    "annual_note": "จ่ายเฉพาะค่าโดเมนเนม migijames.com — Hosting ฟรีทั้งหมด",
+    
+    # Scope
+    "scope_include": [
+        "Source Code ทั้งหมด (Next.js + TypeScript)",
+        "Database Schema (Supabase SQL)",
+        "Environment Setup (.env.example)",
+        "Deploy ขึ้น Cloudflare Pages",
+        "ทดสอบบน Desktop + Mobile",
+        "คู่มือการใช้งาน Admin Dashboard",
+    ],
+    "scope_exclude": [
+        "ค่าโดเมนเนม (ลูกค้าจัดหาเอง ~฿680/ปี)",
+        "Content รูปภาพสินค้าจริง",
+        "Payment Gateway (Phase 3)",
+        "Line OA Premium (ตามแพ็กเกจ LINE)",
+    ],
+    
+    # Timeline
+    "timeline": [
+        ("สัปดาห์ 1–2",  "วางแผน / Setup / Design System"),
+        ("สัปดาห์ 3–6",  "Phase 1 — Brand Presence"),
+        ("สัปดาห์ 7–14", "Phase 2 — CRM & Client Portal"),
+        ("สัปดาห์ 15+",  "Phase 3 — AI & Growth Features"),
+    ],
+    
+    # Why choose
+    "why_items": [
+        ("18+ ปี",       "ประสบการณ์ด้านการออกแบบและพัฒนา"),
+        ("Vibe Coding",  "ใช้ Claude Code + Antigravity IDE"),
+        ("Full Stack",   "Next.js + Supabase + Cloudflare"),
+        ("ประหยัด",      "Infrastructure ปีแรกฟรีทั้งหมด"),
+        ("ต่อเนื่อง",    "Support และ Retainer รายเดือน"),
+    ],
+    
+    # Output
+    "output_path": "/home/claude/quotation.pdf",
+}
+# ══════════════════════════════════════════════════
+```
+
+---
+
+## ตัวอย่าง Config สำหรับสถาบันติวเตอร์
+
+```python
+PROJECT = {
+    "client_name":    "ผอ.สมชาย",
+    "business_name":  "BrainBoost Academy",
+    "business_sub":   "สถาบันติวเตอร์ออนไลน์",
+    "doc_number":     "BB-PROP-001",
+    "date":           "9 พฤษภาคม 2568",
+    "tagline": '"เรียนกับครูที่ใช่ — ผลลัพธ์ที่ต้องการ"',
+    "features": ["Course Catalog", "Teacher Matching", "Booking System", "Progress Tracker"],
+    "phases": [
+        {
+            "name": "Brand & Catalog",
+            "weeks": "4–5 สัปดาห์",
+            "price": "22,000",
+            "items": [
+                "หน้าแรก + Brand Story",
+                "หน้า Courses ครบทุกวิชา",
+                "Profile ครูทุกคน",
+                "Contact / สมัครเรียน Form",
+                "Mobile Responsive",
+                "SEO พื้นฐาน",
+            ]
+        },
+        {
+            "name": "Booking & CRM",
+            "weeks": "6–7 สัปดาห์",
+            "price": "32,000",
+            "items": [
+                "ระบบจองคาบเรียนออนไลน์",
+                "CRM นักเรียนและผู้ปกครอง",
+                "ตารางสอน / Calendar",
+                "Email แจ้งเตือนนัดเรียน",
+                "Admin Dashboard ครู",
+                "ประวัติการเรียน",
+            ]
+        },
+        {
+            "name": "AI Matching & Growth",
+            "weeks": "ต่อเนื่อง",
+            "price": "36,000",
+            "items": [
+                "Teacher Matching AI",
+                "ระบบ Mock Test / Quiz",
+                "Payment Gateway",
+                "Line OA Integration",
+                "Analytics + Progress Report",
+                "Retainer Support",
+            ]
+        },
+    ],
+    "total": "90,000",
+    "annual": "680",
+    "annual_note": "จ่ายเฉพาะค่าโดเมนเนม brainboost.co.th — Hosting ฟรีทั้งหมด",
+    ...
+}
+```
+
+---
+
+## Pricing Guidelines ตาม Business Type
+
+```
+ความงาม / เครื่องประดับ (Premium)
+  Phase 1: 25,000–30,000
+  Phase 2: 32,000–40,000
+  Phase 3: 38,000–50,000
+  รวม: 95,000–120,000
+
+สถาบันติวเตอร์ / การศึกษา
+  Phase 1: 20,000–25,000
+  Phase 2: 28,000–35,000
+  Phase 3: 32,000–42,000
+  รวม: 80,000–100,000
+
+คลินิก / สุขภาพ / สปา
+  Phase 1: 22,000–28,000
+  Phase 2: 30,000–38,000
+  Phase 3: 35,000–45,000
+  รวม: 87,000–110,000
+
+ร้านอาหาร / Cafe
+  Phase 1: 18,000–24,000
+  Phase 2: 25,000–32,000
+  Phase 3: 28,000–38,000
+  รวม: 71,000–94,000
+
+Coaching / ที่ปรึกษา
+  Phase 1: 20,000–26,000
+  Phase 2: 28,000–36,000
+  Phase 3: 32,000–44,000
+  รวม: 80,000–106,000
+
+OTOP / ชุมชน (ราคาพิเศษ)
+  Phase 1: 15,000–20,000
+  Phase 2: 20,000–28,000
+  Phase 3: 25,000–35,000
+  รวม: 60,000–83,000
+
+ทุกโปรเจกต์ — ปีถัดไป: ฿680/ปี (โดเมน .com เท่านั้น)
+```
+
+---
+
+## เรียก Script สร้าง PDF
+
+```bash
+# ติดตั้ง (ครั้งแรกเท่านั้น)
+pip install reportlab --break-system-packages
+
+# Run script
+python3 build_proposal.py
+
+# ไฟล์จะออกมาที่ PROJECT["output_path"]
+```
+
+> **Note:** Script build_proposal.py ใช้ Thai Font (Kinnari + Garuda)
+> จาก `/usr/share/fonts/truetype/tlwg/`
+> ต้องติดตั้ง `fonts-thai-tlwg` บน Ubuntu
+> `apt-get install -y fonts-thai-tlwg`

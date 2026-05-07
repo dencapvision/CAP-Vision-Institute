@@ -1,0 +1,225 @@
+# 04 — Next.js Starter Structure
+
+## Folder Structure มาตรฐาน
+
+```
+[project-name]/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx              ← fonts + meta + body
+│   │   ├── globals.css             ← design tokens + utilities
+│   │   ├── page.tsx                ← homepage (imports sections)
+│   │   ├── api/
+│   │   │   ├── contact/route.ts    ← POST: save + email
+│   │   │   ├── booking/route.ts    ← POST: appointments
+│   │   │   └── [feature]/route.ts  ← unique feature API
+│   │   └── (admin)/
+│   │       └── admin/
+│   │           ├── page.tsx        ← dashboard home
+│   │           ├── customers/      ← CRM
+│   │           └── bookings/       ← appointments
+│   ├── components/
+│   │   ├── layout/
+│   │   │   ├── NavBar.tsx
+│   │   │   └── FooterSection.tsx
+│   │   ├── sections/
+│   │   │   ├── HeroSection.tsx
+│   │   │   ├── StorySection.tsx
+│   │   │   ├── ServicesSection.tsx
+│   │   │   ├── [Feature]Section.tsx  ← unique
+│   │   │   ├── TestimonialsSection.tsx
+│   │   │   └── BookingSection.tsx
+│   │   └── ui/
+│   │       ├── Button.tsx
+│   │       ├── Card.tsx
+│   │       └── Input.tsx
+│   ├── lib/
+│   │   ├── supabase.ts             ← client + server
+│   │   ├── r2.ts                   ← Cloudflare R2
+│   │   ├── email.ts                ← Resend wrapper
+│   │   └── [business-logic].ts    ← e.g. astro.ts, matching.ts
+│   └── types/
+│       └── index.ts                ← all domain types
+├── public/
+│   └── images/
+├── .env.example
+├── [project].schema.sql            ← Supabase schema
+├── next.config.js
+├── tailwind.config.ts
+├── tsconfig.json
+└── package.json
+```
+
+---
+
+## package.json มาตรฐาน
+
+```json
+{
+  "dependencies": {
+    "next": "14.2.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "@supabase/supabase-js": "^2.43.0",
+    "@supabase/ssr": "^0.3.0",
+    "resend": "^3.2.0",
+    "@aws-sdk/client-s3": "^3.554.0",
+    "@aws-sdk/s3-request-presigner": "^3.554.0",
+    "date-fns": "^3.6.0",
+    "lucide-react": "^0.378.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.0"
+  }
+}
+```
+
+---
+
+## .env.example มาตรฐาน
+
+```bash
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+SUPABASE_SERVICE_ROLE_KEY=eyJ...
+
+# Cloudflare R2
+R2_ACCOUNT_ID=your_cloudflare_account_id
+R2_ACCESS_KEY_ID=your_r2_access_key
+R2_SECRET_ACCESS_KEY=your_r2_secret_key
+R2_BUCKET_NAME=[project]-images
+R2_PUBLIC_URL=https://pub-YOUR_HASH.r2.dev
+
+# Resend Email
+RESEND_API_KEY=re_your_api_key
+
+# App
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NOTIFICATION_EMAIL=owner@[business].com
+```
+
+---
+
+## Supabase Schema Template
+
+```sql
+-- ปรับ table names และ fields ตามธุรกิจ
+
+-- Universal: Contacts / Inquiries
+create table contact_inquiries (
+  id           uuid primary key default gen_random_uuid(),
+  name         text not null,
+  phone        text not null,
+  email        text,
+  inquiry_type text,
+  message      text,
+  status       text default 'new',
+  created_at   timestamptz default now()
+);
+
+-- Universal: Bookings / Appointments
+create table bookings (
+  id             uuid primary key default gen_random_uuid(),
+  customer_name  text not null,
+  phone          text,
+  service_type   text,
+  scheduled_at   timestamptz,
+  status         text default 'pending',
+  notes          text,
+  created_at     timestamptz default now()
+);
+
+-- ธุรกิจ-specific tables (เพิ่มตาม category):
+-- สถาบันติวเตอร์: courses, teachers, enrollments
+-- คลินิก: patients, treatments, medical_records
+-- ร้านอาหาร: menu_items, reservations, orders
+-- Coaching: clients, programs, sessions
+
+-- RLS Policies
+alter table contact_inquiries enable row level security;
+alter table bookings enable row level security;
+create policy "Anyone can insert" on contact_inquiries for insert with check (true);
+create policy "Anyone can insert booking" on bookings for insert with check (true);
+```
+
+---
+
+## lib/supabase.ts (เหมือนกันทุกโปรเจกต์)
+
+```typescript
+import { createClient } from '@supabase/supabase-js'
+
+export const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
+
+export function createServerSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  )
+}
+```
+
+---
+
+## lib/email.ts (เหมือนกันทุกโปรเจกต์)
+
+```typescript
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
+
+export async function sendNotification(subject: string, html: string) {
+  return resend.emails.send({
+    from: 'System <noreply@[domain].com>',
+    to: [process.env.NOTIFICATION_EMAIL!],
+    subject,
+    html,
+  })
+}
+
+export async function sendConfirmation(to: string, name: string, message: string) {
+  return resend.emails.send({
+    from: '[Business] <hello@[domain].com>',
+    to: [to],
+    subject: `ขอบคุณ ${name} — ได้รับข้อความแล้ว`,
+    html: `<p>${message}</p>`,
+  })
+}
+```
+
+---
+
+## Deployment: Cloudflare Pages
+
+```bash
+# 1. Push to GitHub
+git init && git add . && git commit -m "Initial commit"
+git remote add origin https://github.com/USERNAME/[project]
+git push -u origin main
+
+# 2. Cloudflare Dashboard
+#    Workers & Pages → Create → Pages → Connect to Git
+#    Framework: Next.js
+#    Build command: npm run build
+#    Output directory: .next
+#    Add all .env variables
+
+# 3. Custom domain
+#    Pages → Custom domains → Add [domain].com
+#    Update DNS in Cloudflare automatically
+```

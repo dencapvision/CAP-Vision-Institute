@@ -71,6 +71,84 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
   const [slipFile, setSlipFile] = useState<File | null>(null);
   const [bookingId, setBookingId] = useState<string | null>(null);
   const [bookingCode, setBookingCode] = useState<string | null>(null);
+  const [signatureData, setSignatureData] = useState<string | null>(null);
+  const sigCanvasRef = React.useRef<HTMLCanvasElement>(null);
+
+  // Canvas Handlers
+  const [isDrawing, setIsDrawing] = useState(false);
+
+  const startDrawing = (e: React.MouseEvent | React.TouchEvent) => {
+    setIsDrawing(true);
+    const canvas = sigCanvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    const rect = canvas.getBoundingClientRect();
+    let x, y;
+    if ('touches' in e) {
+        x = e.touches[0].clientX - rect.left;
+        y = e.touches[0].clientY - rect.top;
+    } else {
+        x = e.clientX - rect.left;
+        y = e.clientY - rect.top;
+    }
+    
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+  };
+
+  const draw = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!isDrawing) return;
+    const canvas = sigCanvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const rect = canvas.getBoundingClientRect();
+    let x, y;
+    if ('touches' in e) {
+        x = e.touches[0].clientX - rect.left;
+        y = e.touches[0].clientY - rect.top;
+    } else {
+        x = e.clientX - rect.left;
+        y = e.clientY - rect.top;
+    }
+
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#0f3460';
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  };
+
+  const stopDrawing = () => {
+    setIsDrawing(false);
+    saveSignature();
+  };
+
+  const clearSignature = () => {
+    const canvas = sigCanvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        setSignatureData(null);
+      }
+    }
+  };
+
+  const saveSignature = () => {
+    const canvas = sigCanvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      const pixelData = ctx?.getImageData(0, 0, canvas.width, canvas.height).data;
+      const isCanvasEmpty = !pixelData?.some(p => p !== 0);
+      if (!isCanvasEmpty) {
+        setSignatureData(canvas.toDataURL());
+      }
+    }
+  };
 
   // VAT Calculation
   const basePrice = selectedPackage.price;
@@ -90,6 +168,10 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!signatureData) {
+        setError('กรุณาลงลายมือชื่ออิเล็กทรอนิกส์เพื่อยืนยันข้อตกลง');
+        return;
+    }
     setLoading(true);
     setError(null);
     try {
@@ -112,7 +194,8 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
           status: 'pending_payment',
           metadata: {
             tax_id: formData.taxId,
-            address: formData.address
+            address: formData.address,
+            signature: signatureData
           }
         })
         .select()
@@ -394,6 +477,59 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
                 </div>
               </div>
 
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="md:col-span-2 space-y-2">
+                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">ที่อยู่ (สำหรับออกใบกำกับภาษี/จัดส่งเอกสาร)</label>
+                  <textarea 
+                    name="address" value={formData.address} onChange={handleInputChange}
+                    className="w-full px-4 py-4 bg-gray-50 rounded-xl border border-gray-100 focus:ring-2 focus:ring-[#c5a059] outline-none font-medium resize-none" 
+                    placeholder="เลขที่อาคาร, ถนน, แขวง/ตำบล, เขต/อำเภอ, จังหวัด, รหัสไปรษณีย์"
+                    rows={2}
+                  />
+                </div>
+              </div>
+
+              {/* Section 4: ข้อตกลงและลายเซ็น */}
+              <div className="space-y-6">
+                <div className="p-6 bg-amber-50/50 rounded-3xl border border-amber-100">
+                    <h4 className="font-black text-[#0f3460] mb-3 flex items-center gap-2">
+                        <ShieldCheck className="w-5 h-5 text-[#c5a059]" /> ข้อตกลงการใช้บริการ
+                    </h4>
+                    <div className="text-[11px] text-[#0f3460]/70 space-y-2 font-medium leading-relaxed">
+                        <p>1. ข้าพเจ้ายืนยันว่าข้อมูลที่ระบุข้างต้นเป็นความจริงทุกประการ</p>
+                        <p>2. ข้าพเจ้าตกลงชำระเงินมัดจำ 50% ก่อนเริ่มดำเนินการ และส่วนที่เหลือ 50% เมื่อส่งมอบงาน</p>
+                        <p>3. ข้าพเจ้ายอมรับเงื่อนไขการดำเนินงานตามขอบเขตของแพ็กเกจที่เลือก</p>
+                    </div>
+                </div>
+
+                <div className="space-y-3">
+                    <div className="flex justify-between items-end">
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">ลายมือชื่ออิเล็กทรอนิกส์ (Digital Signature)</label>
+                        <button type="button" onClick={clearSignature} className="text-[10px] font-bold text-red-400 hover:text-red-600">ล้างหน้าจอ</button>
+                    </div>
+                    <div className="relative h-40 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 overflow-hidden group hover:border-[#c5a059] transition-all">
+                        <canvas 
+                            ref={sigCanvasRef}
+                            width={800}
+                            height={160}
+                            onMouseDown={startDrawing}
+                            onMouseMove={draw}
+                            onMouseUp={stopDrawing}
+                            onMouseOut={stopDrawing}
+                            onTouchStart={startDrawing}
+                            onTouchMove={draw}
+                            onTouchEnd={stopDrawing}
+                            className="w-full h-full cursor-crosshair touch-none"
+                        />
+                        {!signatureData && (
+                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-gray-300 text-xs font-bold">
+                                เซ็นชื่อตรงนี้
+                            </div>
+                        )}
+                    </div>
+                </div>
+              </div>
+
               <div className="p-6 bg-gray-50 rounded-2xl border border-gray-100 flex items-center justify-between">
                 <div>
                   <h4 className="font-bold text-[#0f3460]">ต้องการใบกำกับภาษี (VAT 7%)</h4>
@@ -482,14 +618,22 @@ const WebAppBookingWizard: React.FC<WebAppBookingWizardProps> = ({ selectedPacka
                                 <span className="text-[#c5a059] font-black text-[10px] uppercase tracking-[0.2em]">ธนาคารกรุงเทพ (BBL)</span>
                             </div>
                             <p className="text-4xl md:text-5xl font-black text-white tracking-tighter nav-font">
-                                925-0137-479
+                                925-0-13747-9
                             </p>
                             <div className="pt-2">
                                <p className="text-lg font-black text-gray-100 flex items-center justify-center gap-2">
                                    <User className="w-5 h-5 text-[#c5a059]" />
                                    นายอนุสรณ์ หนองนา
                                </p>
-                               <p className="text-xs text-gray-400 font-bold mt-2 bg-white/5 inline-block px-4 py-1 rounded-full border border-white/10 uppercase tracking-widest">
+                               <div className="mt-6 bg-white p-4 rounded-3xl inline-block shadow-2xl transform hover:scale-105 transition-transform duration-500">
+                                   <img 
+                                        src="https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/contact/PromptPay%203-4506-00689-95-1.jpg" 
+                                        alt="PromptPay QR" 
+                                        className="w-48 h-48 rounded-xl"
+                                   />
+                                   <div className="mt-2 text-black font-black text-xs uppercase tracking-widest">PromptPay: 3-4506-00689-95-1</div>
+                               </div>
+                               <p className="text-xs text-gray-400 font-bold mt-4 bg-white/5 inline-block px-4 py-1 rounded-full border border-white/10 uppercase tracking-widest">
                                    ออมทรัพย์ • สาขาถนนอโศกมนตรี
                                </p>
                             </div>

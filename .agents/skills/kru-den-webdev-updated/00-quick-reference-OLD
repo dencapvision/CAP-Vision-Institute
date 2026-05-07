@@ -1,0 +1,76 @@
+# ⚡ Quick Reference Card
+## KruDen WebDev Framework — คำสั่งลัด
+
+---
+
+## 🚀 คำสั่งเริ่มต้น
+
+| พูดว่า | Claude จะทำ |
+|---|---|
+| `"วิเคราะห์ [ธุรกิจ]"` | ถามคำถาม 14 ข้อ → สร้าง Blueprint |
+| `"demo [ธุรกิจ]"` | สร้าง HTML Demo พร้อม Interactive Feature |
+| `"starter [ธุรกิจ]"` | สร้าง Next.js โครงสร้างครบ |
+| `"proposal [ธุรกิจ] ฿XX,XXX"` | สร้าง PDF Proposal |
+| `"ครบ [ธุรกิจ]"` | ทำทุกอย่าง Step 1–5 |
+
+---
+
+## 🎨 เลือก Theme
+
+| ธุรกิจ | Theme | Command |
+|---|---|---|
+| เครื่องประดับ/Beauty | Dark Luxury | `theme=luxury` |
+| ติวเตอร์/การศึกษา | Clean Academic | `theme=academic` |
+| คลินิก/สปา | Calm Wellness | `theme=wellness` |
+| ร้านอาหาร/Cafe | Warm Editorial | `theme=editorial` |
+| Corporate/B2B | Executive Minimal | `theme=executive` |
+| OTOP/ชุมชน | Heritage Warm | `theme=heritage` |
+
+---
+
+## 💰 Pricing Quick Reference
+
+```
+Premium (เพชร/Beauty/Coaching)  → 95k–120k
+Education (ติวเตอร์/สถาบัน)    → 80k–100k
+Health (คลินิก/สปา)            → 87k–110k
+Food (ร้านอาหาร/Cafe)          → 71k–94k
+OTOP/ชุมชน (พิเศษ)             → 60k–83k
+ปีถัดไปทุกโปรเจกต์             → ฿680/ปี
+```
+
+---
+
+## 🔧 Stack (เหมือนกันทุกโปรเจกต์)
+
+```
+Next.js 14 + TypeScript    Frontend + Backend
+Supabase                   Database + CRM + Auth
+Cloudflare Pages           Hosting (ฟรี)
+Cloudflare R2              Image Storage (ฟรี 10GB)
+Resend                     Email (ฟรี 3k/เดือน)
+```
+
+---
+
+## 📋 Checklist ก่อน Deliver
+
+```
+□ Blueprint สมบูรณ์ (ชื่อ/USP/Theme/ราคา)
+□ Demo HTML — ทุก Section ทำงาน
+□ Interactive Feature — รันได้จริง
+□ Pricing Section — ราคาถูกต้อง
+□ PDF — 3 หน้าครบ (Cover/Pricing/Terms)
+□ ชื่อลูกค้าถูกต้องทุกจุด
+□ ทดสอบมือถือ (responsive)
+```
+
+---
+
+## 📁 Files ที่ Deliver ให้ลูกค้า
+
+```
+1. [business]-demo.html       → เปิดเสนองานทันที
+2. [business]-quotation.pdf   → เซ็นสัญญา
+3. (หลังตกลง) Next.js project files
+```

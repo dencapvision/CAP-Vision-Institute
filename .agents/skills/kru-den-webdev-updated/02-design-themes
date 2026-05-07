@@ -1,0 +1,173 @@
+# 02 — Design Themes
+
+## Theme A: DARK LUXURY
+**ใช้กับ:** เครื่องประดับ, Beauty Premium, Coaching ระดับบน, Fashion
+```css
+/* Tokens */
+--bg-primary:    #080604;
+--bg-secondary:  #1a1612;
+--bg-card:       #2d2420;
+--accent:        #c9a96e;  /* gold */
+--accent-light:  #e8d5b0;
+--accent-dark:   #9a7a4a;
+--text-primary:  #faf6f0;
+--text-muted:    #b8a898;
+--text-dim:      #6b5d52;
+
+/* Typography */
+--font-display: 'Playfair Display', serif;
+--font-body:    'Sarabun', sans-serif;
+
+/* Feel: อำนาจ, หรูหรา, ลึกซึ้ง */
+```
+
+---
+
+## Theme B: CLEAN ACADEMIC
+**ใช้กับ:** สถาบันการศึกษา, ติวเตอร์, คอร์สออนไลน์, Tech Startup
+```css
+--bg-primary:    #f8fafc;
+--bg-secondary:  #f1f5f9;
+--bg-card:       #ffffff;
+--accent:        #3b82f6;  /* blue */
+--accent-light:  #dbeafe;
+--accent-dark:   #1d4ed8;
+--text-primary:  #0f172a;
+--text-muted:    #64748b;
+--text-dim:      #94a3b8;
+
+--font-display: 'IBM Plex Sans Thai', sans-serif;
+--font-body:    'Sarabun', sans-serif;
+
+/* Feel: น่าเชื่อถือ, ชัดเจน, มืออาชีพ */
+```
+
+---
+
+## Theme C: CALM WELLNESS
+**ใช้กับ:** คลินิก, สปา, สุขภาพ, Organic, Yoga
+```css
+--bg-primary:    #faf8f5;
+--bg-secondary:  #f2ede8;
+--bg-card:       #ffffff;
+--accent:        #7c9a7e;  /* sage green */
+--accent-light:  #d4e4d5;
+--accent-dark:   #4a6b4c;
+--text-primary:  #2d2420;
+--text-muted:    #8a7a70;
+--text-dim:      #b8a898;
+
+--font-display: 'Cormorant Garamond', serif;
+--font-body:    'Sarabun', sans-serif;
+
+/* Feel: สงบ, ไว้ใจ, เยียวยา */
+```
+
+---
+
+## Theme D: WARM EDITORIAL
+**ใช้กับ:** ร้านอาหาร, Cafe, Bakery, Lifestyle Brand
+```css
+--bg-primary:    #fffbf7;
+--bg-secondary:  #fef3e8;
+--bg-card:       #ffffff;
+--accent:        #d97706;  /* amber */
+--accent-light:  #fde68a;
+--accent-dark:   #92400e;
+--text-primary:  #1c1008;
+--text-muted:    #78716c;
+--text-dim:      #a8a29e;
+
+--font-display: 'Lora', serif;
+--font-body:    'Sarabun', sans-serif;
+
+/* Feel: อบอุ่น, น่ากิน, เชิญชวน */
+```
+
+---
+
+## Theme E: EXECUTIVE MINIMAL
+**ใช้กับ:** B2B, Corporate, Law Firm, Finance, Consultant
+```css
+--bg-primary:    #ffffff;
+--bg-secondary:  #f9fafb;
+--bg-card:       #ffffff;
+--accent:        #111827;  /* near-black */
+--accent-light:  #e5e7eb;
+--accent-dark:   #000000;
+--text-primary:  #111827;
+--text-muted:    #6b7280;
+--text-dim:      #9ca3af;
+--highlight:     #dc2626; /* red accent */
+
+--font-display: 'DM Serif Display', serif;
+--font-body:    'Inter', 'Sarabun', sans-serif;
+
+/* Feel: เชื่อถือได้, ชัดเจน, ไม่มีลูกเล่น */
+```
+
+---
+
+## Theme F: HERITAGE WARM
+**ใช้กับ:** OTOP, ชุมชน, งานฝีมือ, วัฒนธรรม, ท่องเที่ยว
+```css
+--bg-primary:    #fdf6ee;
+--bg-secondary:  #f5e6d3;
+--bg-card:       #fffdf9;
+--accent:        #8b4513;  /* brown */
+--accent-light:  #d4956a;
+--accent-dark:   #5c2d0a;
+--text-primary:  #2c1810;
+--text-muted:    #7a5c4a;
+--text-dim:      #a68a78;
+
+--font-display: 'Noto Serif Thai', serif;
+--font-body:    'Sarabun', sans-serif;
+
+/* Feel: รากเหง้า, ภูมิใจ, มีคุณค่า */
+```
+
+---
+
+## Tailwind Config สำเร็จรูปแต่ละ Theme
+
+### ใส่ใน tailwind.config.ts:
+```typescript
+// Theme A: Dark Luxury
+colors: {
+  bg: { primary:'#080604', secondary:'#1a1612', card:'#2d2420' },
+  gold: { DEFAULT:'#c9a96e', light:'#e8d5b0', dark:'#9a7a4a' },
+  text: { primary:'#faf6f0', muted:'#b8a898', dim:'#6b5d52' },
+}
+
+// Theme B: Clean Academic
+colors: {
+  bg: { primary:'#f8fafc', secondary:'#f1f5f9', card:'#ffffff' },
+  brand: { DEFAULT:'#3b82f6', light:'#dbeafe', dark:'#1d4ed8' },
+  text: { primary:'#0f172a', muted:'#64748b', dim:'#94a3b8' },
+}
+```
+
+---
+
+## Google Fonts per Theme
+
+```html
+<!-- Theme A: Dark Luxury -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Sarabun:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+
+<!-- Theme B: Clean Academic -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Sarabun:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<!-- Theme C: Calm Wellness -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Sarabun:wght@200;300;400&display=swap" rel="stylesheet"/>
+
+<!-- Theme D: Warm Editorial -->
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Sarabun:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<!-- Theme E: Executive Minimal -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sarabun:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<!-- Theme F: Heritage Warm -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@300;400;600;700&family=Sarabun:wght@300;400&display=swap" rel="stylesheet"/>
+```

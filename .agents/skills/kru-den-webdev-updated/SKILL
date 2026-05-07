@@ -1,0 +1,232 @@
+---
+name: kru-den-webdev
+description: >
+  ครูเด่น มาสเตอร์ฟา — Framework พัฒนาเว็บแอปพลิเคชันสำหรับลูกค้าธุรกิจ ครบทุก Stage ตั้งแต่วิเคราะห์ธุรกิจ → Demo → Proposal → Full Stack Design → ปิดการขาย → Onboarding
+
+  ใช้ทักษะนี้ทุกครั้งที่ต้องการ:
+  - วิเคราะห์ธุรกิจและออกแบบเว็บแอป (Step 1-2)
+  - สร้าง Demo HTML เสนอลูกค้า (Step 3)
+  - สร้าง Next.js Project Structure (Step 4)
+  - สร้างใบเสนอราคา PDF (Step 5)
+  - สร้างฟอร์มปิดการขาย + ชำระเงิน + ยืนยัน (Step 6) → ใช้ร่วมกับ kru-den-closing
+  - สร้างฟอร์ม Onboarding เก็บข้อมูลเริ่มโปรเจกต์ (Step 7) → ใช้ร่วมกับ kru-den-onboarding
+
+  ทุก output ใช้ Stack เดียวกัน (Next.js + Supabase + Cloudflare) และ Pricing Framework เดียวกัน แต่ Design และ Content ปรับตามธุรกิจของลูกค้าแต่ละราย
+
+  Trigger: "ออกแบบเวบให้ลูกค้า", "สร้าง demo เสนอ", "ทำใบเสนอราคา", "พัฒนาเว็บ", "สร้างเว็บ [ธุรกิจ]", "web app proposal", "ใบเสนอราคาเว็บ", "demo เว็บ", "ปิดดีล", "ฟอร์มสมัคร", "ฟอร์มเก็บข้อมูลลูกค้า", "เริ่มโปรเจกต์", "onboarding ลูกค้า", หรือเมื่อมีการระบุธุรกิจลูกค้าและต้องการเริ่มต้นหรือดำเนินโปรเจกต์พัฒนาเว็บ
+---
+
+# 🚗 KruDen WebDev Framework
+## "สร้างรถยนต์คันใหม่ — ด้วยเครื่องยนต์เดิม"
+
+---
+
+## ภาพรวม Framework
+
+```
+ลูกค้าใหม่ทุกราย
+       ↓
+[STEP 1] วิเคราะห์ธุรกิจ       → Business Blueprint
+       ↓
+[STEP 2] เลือก Design Theme    → Visual Direction
+       ↓
+[STEP 3] สร้าง Demo HTML       → ปิดดีล
+       ↓
+[STEP 4] สร้าง Next.js Starter → เริ่มพัฒนา
+       ↓
+[STEP 5] ออก PDF Proposal      → เซ็นสัญญา
+       ↓
+[STEP 6] ฟอร์มปิดการขาย       → ชำระเงิน + ยืนยัน Phase   ← kru-den-closing
+       ↓
+[STEP 7] ฟอร์ม Onboarding      → เก็บข้อมูลเริ่มโปรเจกต์  ← kru-den-onboarding
+```
+
+**Engine เดียวกันทุกโปรเจกต์:**
+```
+Next.js 14 + TypeScript + Tailwind
+Supabase (DB + Auth)
+Cloudflare (Pages + R2 + Workers)
+Resend (Email)
+```
+
+**ราคาตาม Phase เดียวกันทุกโปรเจกต์** (ปรับตาม complexity)
+
+---
+
+## STEP 1 — วิเคราะห์ธุรกิจลูกค้า
+
+อ่าน `references/01-business-analysis.md` เพื่อถามคำถามที่ถูกต้อง
+
+ข้อมูลที่ต้องได้ก่อนเริ่ม:
+- ชื่อธุรกิจ + เจ้าของ
+- ประเภทธุรกิจ (ดู Category ด้านล่าง)
+- USP / จุดต่างที่ไม่มีคนอื่น
+- กลุ่มเป้าหมาย (Premium / Mid / Mass)
+- Social ที่ใช้อยู่ปัจจุบัน
+- ตัวอย่างเว็บที่ชอบ (ถ้ามี)
+- Budget ประมาณ
+
+**Business Categories (กำหนด Template Direction):**
+
+| Category | Design Theme | DB ที่ใช้หลัก | Feature พิเศษ |
+|---|---|---|---|
+| ความงาม / เครื่องประดับ | Dark Luxury | Products, CRM | Gem/Style Match |
+| สถาบันการศึกษา / ติวเตอร์ | Clean Academic | Courses, Students | Booking, Progress |
+| สุขภาพ / คลินิก / สปา | Calm Wellness | Appointments, Records | Booking, Reminder |
+| ร้านอาหาร / Cafe | Warm Editorial | Menu, Reservations | QR Menu, Booking |
+| ที่ปรึกษา / Coaching | Executive Dark | Clients, Sessions | CRM, Packages |
+| อสังหาริมทรัพย์ | Premium Property | Listings, Leads | Search, Virtual Tour |
+| ธุรกิจ B2B / Corporate | Minimal Corporate | Clients, Projects | CRM, Proposals |
+| ผลิตภัณฑ์ OTOP / ชุมชน | Heritage Warm | Products, Orders | Story, QR Cert |
+
+---
+
+## STEP 2 — เลือก Design Theme
+
+อ่าน `references/02-design-themes.md` เพื่อ Palette + Font + Layout ที่เหมาะ
+
+**3 สูตรหลักที่ใช้บ่อย:**
+
+```
+A. DARK LUXURY
+   Background: #080604  Accent: #c9a96e (gold)
+   Font: Playfair Display + Sarabun
+   → ความงาม, เครื่องประดับ, Coaching ระดับบน
+
+B. CLEAN ACADEMIC
+   Background: #f8fafc  Accent: #3b82f6 (blue)
+   Font: IBM Plex Sans + Sarabun
+   → ติวเตอร์, โรงเรียน, คอร์สออนไลน์
+
+C. CALM WELLNESS
+   Background: #faf8f5  Accent: #7c9a7e (sage)
+   Font: Cormorant Garamond + Sarabun
+   → คลินิก, สปา, สุขภาพ
+```
+
+---
+
+## STEP 3 — สร้าง Demo HTML
+
+อ่าน `references/03-demo-template.md` เพื่อ HTML Template พร้อม Interactive Feature
+
+**โครงสร้าง Demo HTML มาตรฐาน:**
+```html
+1. NAV BAR          — Logo + Links + CTA
+2. HERO             — Full-screen, Business USP
+3. STORY/ABOUT      — ทำไมต้องเลือกร้านนี้
+4. SERVICES/MENU    — สินค้า/บริการ (interactive tabs)
+5. UNIQUE FEATURE   — Feature ที่มีเฉพาะร้านนี้ (interactive)
+6. SOCIAL PROOF     — ผลลัพธ์/Reviews
+7. BOOKING/CONTACT  — CTA form
+8. PRICING PREVIEW  — สรุป 3 Phase + ราคา
+9. DEMO BAR         — Banner บอกว่านี่คือ Demo
+```
+
+**Interactive Feature ตาม Category:**
+```
+ความงาม/เครื่องประดับ → Astro/Style Matching
+สถาบันติวเตอร์         → Course Finder / Quiz
+คลินิก/สปา            → Symptom Checker / Treatment Match
+ร้านอาหาร             → Menu Filter / Reservation
+Coaching              → Assessment Tool
+OTOP                  → Product Story / Certificate Check
+```
+
+---
+
+## STEP 4 — โครงสร้าง Next.js
+
+อ่าน `references/04-nextjs-starter.md` เพื่อ Boilerplate code และ folder structure
+
+**Standard Folder Structure (ทุกโปรเจกต์):**
+```
+src/
+├── app/
+│   ├── layout.tsx          (fonts + metadata)
+│   ├── globals.css         (design tokens)
+│   ├── page.tsx            (homepage)
+│   ├── api/
+│   │   ├── contact/        (POST: save + email)
+│   │   ├── booking/        (POST: appointment)
+│   │   └── [feature]/      (unique feature API)
+│   └── (admin)/admin/      (dashboard)
+├── components/
+│   ├── layout/             (Nav, Footer)
+│   ├── sections/           (Hero, About, Services...)
+│   ├── ui/                 (Button, Card, Input...)
+│   └── [feature]/          (feature-specific)
+├── lib/
+│   ├── supabase.ts         (client + server)
+│   ├── r2.ts               (image upload)
+│   └── [business-logic].ts
+└── types/index.ts          (all TypeScript types)
+```
+
+---
+
+## STEP 5 — ใบเสนอราคา PDF
+
+อ่าน `references/05-pdf-proposal.md` เพื่อ Python code สร้าง PDF
+
+**Pricing Framework มาตรฐาน:**
+
+| Phase | ขอบเขต | ราคาเริ่มต้น | ปรับตาม |
+|---|---|---|---|
+| Phase 1 | Brand Presence | ฿20,000–30,000 | complexity + pages |
+| Phase 2 | CRM + Portal | ฿30,000–45,000 | ระบบที่ต้องการ |
+| Phase 3 | AI + Growth | ฿35,000–50,000 | feature พิเศษ |
+| **รวม** | | **฿85,000–125,000** | |
+| **ปีถัดไป** | Domain only | **฿680/ปี** | .com standard |
+
+**Infrastructure (ฟรีทุกโปรเจกต์):**
+```
+Cloudflare Pages  → Hosting       ฟรี
+Supabase          → Database      ฟรี (500MB)
+Cloudflare R2     → Storage       ฟรี (10GB)
+Resend            → Email         ฟรี (3,000/เดือน)
+```
+
+---
+
+## คำสั่งลัด (Quick Commands)
+
+```
+"วิเคราะห์ [ธุรกิจ]"
+→ ทำ Step 1 เต็ม
+
+"demo [ธุรกิจ]"
+→ สร้าง HTML Demo พร้อม Interactive feature
+
+"starter [ธุรกิจ]"
+→ สร้าง Next.js project structure ครบ
+
+"proposal [ธุรกิจ] ฿XX,XXX"
+→ สร้าง PDF Proposal พร้อมราคาที่กำหนด
+
+"ครบ [ธุรกิจ]"
+→ ทำครบทุก Step (1-5) ในคราวเดียว
+
+"closing [ธุรกิจ] Phase [1/2/3]"
+→ สร้างฟอร์มปิดการขาย + ชำระเงิน (Step 6) → ใช้ kru-den-closing
+
+"onboarding [ธุรกิจ]"
+→ สร้างฟอร์มเก็บข้อมูลเริ่มโปรเจกต์ (Step 7) → ใช้ kru-den-onboarding
+
+"ครบ+ปิด [ธุรกิจ]"
+→ ทำครบทุก Step (1-7) ตั้งแต่ Demo จนถึง Onboarding
+```
+
+---
+
+## ตัวอย่างโปรเจกต์ที่ผ่านมา
+
+| โปรเจกต์ | Theme | Feature พิเศษ | ราคา |
+|---|---|---|---|
+| MigiJames (เพชร) | Dark Luxury | Astro-Gem Match | ฿100,000 |
+| [ติวเตอร์] | Clean Academic | Course Finder | ฿85,000 |
+| [คลินิก] | Calm Wellness | Booking System | ฿90,000 |
+
+---
+
+> อ่าน references/ ที่เกี่ยวข้องก่อนเริ่ม Step นั้นๆ เสมอ

@@ -65,7 +65,9 @@
       "Bash(cat ./supabase/migrations/*.sql)",
       "Bash(find . -path \"*/supabase/*\" -name \"*.sql\" -exec grep -l \"CREATE TABLE\" {} \\\\;)",
       "Bash(grep -r \"portfolio\" ./supabase/migrations/*.sql)",
-      "Bash(where supabase:*)"
+      "Bash(where supabase:*)",
+      "WebFetch(domain:dencapvision.github.io)",
+      "mcp__claude_ai_Cloudflare_Developer_Platform__workers_get_worker_code"
     ]
   }
 }

@@ -29,13 +29,13 @@ export const BRAND_INFO = {
   thaiName: 'แคป วิชั่น อินสติทิวต์',
   slogan: 'Transform People, Transform Organization',
   director: 'ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)',
-  vision: 'เชื่อมโยงข้อมูลระดับโลก เพื่อช่วยให้บุคคลและองค์กรค้นพบทุกกลยุทธ์และพัฒนาศักยภาพสูงสุดในเวลาที่จำกัด',
+  vision: 'ปลุกจิตสำนึกแห่งการเติบโตและศักยภาพอันไร้ขีดจำกัดของมนุษย์ เพื่อนำพาบุคคลและองค์กรสู่การเปลี่ยนแปลงที่แท้จริงจากรากลึก',
   mission: [
-    'ออกแบบโซลูชันการเรียนรู้ที่ทันสมัย – ผสมผสานแนวคิด Blended Learning และ AI-powered Learning',
+    'ออกแบบกระบวนการเรียนรู้เพื่อการเปลี่ยนแปลง (Transformative Learning Design) ที่ผสานมิติของประสบการณ์จริงและการสะท้อนคิดอย่างลึกซึ้ง',
     'พัฒนาผู้นำและบุคลากรองค์กร – สร้าง Leadership Development Programs ที่ตอบโจทย์อนาคต',
     'สนับสนุนองค์กรสร้าง Learning Culture – วางรากฐานวัฒนธรรมการเรียนรู้ผ่าน Reskilling & Upskilling',
     'เป็น Facilitator ในการเปลี่ยนแปลง – ใช้เทคนิค Facilitation & Coaching เพื่อพัฒนาแนวคิดและพฤติกรรม',
-    'นำเทคโนโลยีมาขับเคลื่อนการเรียนรู้ – สร้างแพลตฟอร์ม Digital Learning Solutions ที่ตอบโจทย์องค์กรยุคใหม่'
+    'สร้างสภาวะแวดล้อมแห่งการเติบโต – วางรากฐานและระบบการเรียนรู้เพื่อการเปลี่ยนผ่านที่ยั่งยืนในยุคแห่งความผันผวน'
   ],
   coreBeliefs: [
     { title: 'Human Potential', desc: 'ศักยภาพมนุษย์ไม่ได้ถูกจำกัดด้วยสภาพแวดล้อม แต่ถูกปลดปล่อยผ่านการเรียนรู้ที่แท้จริง', icon: <Sparkles className="w-6 h-6" /> },
@@ -67,7 +67,7 @@ export const TIMELINE = [
   { year: '2552', title: 'จุดเริ่มต้น CAP Vision', desc: 'ก่อตั้งขึ้นจากความเชื่อที่ว่าศักยภาพมนุษย์ถูกปลดปล่อยผ่านการเรียนรู้ที่แท้จริง มุ่งเน้นการพัฒนาจากภายใน' },
   { year: '2554 - 2558', title: 'ภารกิจเพื่อสังคมและชุมชน (ศอบต.)', desc: 'ลงพื้นที่ภาคใต้ช่วยเหลือผู้ได้รับผลกระทบจากเหตุการณ์ความไม่สงบ พิสูจน์ว่าการเรียนรู้สามารถเปลี่ยนแปลงชีวิตและสังคมได้จริง' },
   { year: '2561', title: 'DFA Model Generation', desc: 'คิดค้นและพัฒนาหลักสูตร Dynamic Learning Design (DFA) ที่เป็นเอกลักษณ์ เชื่อมโยง Transformative Learning' },
-  { year: 'ปัจจุบัน', title: 'Transformation Partner', desc: 'เป็นผู้นำด้าน L&D ที่เชื่อมโยงองค์ความรู้สมัยใหม่เข้ากับ Digital Learning และ AI Solutions' }
+  { year: 'ปัจจุบัน', title: 'Transformative Learning Partner', desc: 'ผู้นำและผู้บุกเบิกกระบวนการเรียนรู้เพื่อการเปลี่ยนแปลง (Transformative Learning) ที่ร่วมเคียงข้างการเปลี่ยนผ่านของผู้นำและองค์กรชั้นนำทั่วประเทศ' }
 ];
 
 export interface Speaker {
@@ -93,7 +93,7 @@ export const SPEAKERS: Speaker[] = [
     title: 'ผู้อำนวยการสถาบัน CAP-Vision Institute',
     image: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/speakers/Profile_D-MasterFa.webp',
     bio: 'ผู้พัฒนากระบวนการเรียนรู้ (Dynamic Learning Designer) และผู้นำการเปลี่ยนแปลงด้วยแนวคิด Transformative Learning ประสบการณ์กว่า 18 ปี',
-    longBio: 'อาจารย์อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา) ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning และผู้ก่อตั้ง FFT – Facilitator for Thailand เชี่ยวชาญการออกแบบการเรียนรู้แบบ Blended Learning และกระบวนการพัฒนาบุคลากรที่ผสมผสาน AI',
+    longBio: 'อาจารย์อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา) ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญระดับแนวหน้าของประเทศด้าน Transformative Learning และผู้ก่อตั้ง FFT – Facilitator for Thailand ผู้อุทิศตนให้กับการออกแบบการเรียนรู้แบบลึกซึ้ง (Dynamic Learning Design) และกระบวนการจัดกระบวนการเรียนรู้ระดับสูงที่ผสานจิตวิทยาการสื่อสารเชิงบวก และการเรียนรู้เพื่อการเปลี่ยนแปลงจากภายในสู่ภายนอกอย่างแท้จริง',
     expertise: [
       'CAP Theory & Learning Design',
       'Communication Psychology & Peace Communication',

@@ -694,7 +694,7 @@ const CEOSpeechfulness: React.FC = () => {
                   อนุสรณ์ หนองนา · ผู้เชี่ยวชาญด้านการสื่อสารสำหรับผู้บริหาร & Master Facilitator
                 </p>
                 <p className="text-gray-500 text-sm leading-relaxed mb-6">
-                  ประสบการณ์การสอนและโค้ชผู้บริหารระดับสูงมากกว่า 18 ปี ผู้สร้าง DFA Model ที่เชื่อมโยง Transformative Learning เข้ากับ Digital Communication และ AI Solutions ลูกค้าองค์กรชั้นนำกว่า 25+ บริษัท ทั้งรัฐวิสาหกิจ มหาวิทยาลัย และ Corporate
+                  ประสบการณ์การสอนและโค้ชผู้บริหารระดับสูงมากกว่า 18 ปี ผู้สร้าง DFA Model ที่เชื่อมโยงกระบวนการเรียนรู้เพื่อการเปลี่ยนแปลง (Transformative Learning) เข้ากับการสื่อสารและกระบวนการสะท้อนคิดขั้นลึก (Deep Reflection) ลูกค้าองค์กรชั้นนำกว่า 25+ บริษัท ทั้งรัฐวิสาหกิจ มหาวิทยาลัย และ Corporate
                 </p>
                 <div className="flex flex-wrap gap-3">
                   {[

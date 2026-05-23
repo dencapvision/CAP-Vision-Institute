@@ -24,7 +24,7 @@ export const SPEAKERS: Speaker[] = [
         title: 'ผู้อำนวยการและมาสเตอร์ฟาซิลิตเทเตอร์',
         image: '/images/denmasterfa.jpg',
         bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning ประสบการณ์ 18 ปี',
-        longBio: 'วิยากรผู้สร้างการเปลี่ยนแปลงจากภายใน (Communication Healer and Facilitator) เจ้าของโมเดล DFA Strategy และผู้ก่อตั้ง FFT – Facilitator for Thailand มุ่งเน้นการสร้าง Human Capital ผ่านกระบวนการที่สนุก (Edutainment) และมีส่วนร่วมสูง โดยใช้จิตวิทยาเชิงบวกและการโค้ชด้าน Mindfulness & Meditation',
+        longBio: 'กระบวนกรและผู้สร้างการเปลี่ยนแปลงจากภายในอย่างลึกซึ้ง (Transformative Facilitator & Communication Healer) เจ้าของโมเดล DFA Strategy และผู้ก่อตั้ง FFT – Facilitator for Thailand มุ่งเน้นการจุดประกายศักยภาพมนุษย์ผ่านสุนทรียภาพแห่งกระบวนการเรียนรู้ การสะท้อนคิดอย่างมีส่วนร่วมสูง โดยใช้จิตวิทยาเชิงบวกและการปฏิบัติสติ (Mindfulness & Dialogue) เพื่อการพัฒนาองค์กรระดับมาสเตอร์',
         expertise: [
             'Transformative Learning & Flow Design',
             'Communication Styles (C.O.D. Model)',
@@ -36,7 +36,7 @@ export const SPEAKERS: Speaker[] = [
             'ประสบการณ์กว่า 18 ปี ในการพัฒนาบุคลากรทั้งภาครัฐและเอกชน',
             'นักจัดและพัฒนาเวิร์กชอปมากกว่า 1,000 เวที',
             'วิทยากรที่ปรึกษาด้านนวัตกรรมบริการและการสร้างทีม',
-            'ที่ปรึกษาด้าน AI สำหรับธุรกิจสมัยใหม่'
+            'ที่ปรึกษาและผู้ออกแบบกระบวนการพัฒนาภาวะผู้นำและการเปลี่ยนผ่านทางกรอบคิด (Mindset Transformation)'
         ],
         socials: {
             phone: '093-223-5919',

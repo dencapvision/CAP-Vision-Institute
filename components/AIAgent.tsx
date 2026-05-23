@@ -40,7 +40,7 @@ const QUICK_STARTERS = [
 
 const WELCOME: Message = {
   role: 'assistant',
-  content: 'สวัสดีครับ ยินดีต้อนรับสู่ CAP Vision Institute ครับ\n\nผมครูเด่น AI ที่ปรึกษาด้านการพัฒนาคนและองค์กร ผมไม่ได้มาแค่แนะนำหลักสูตร แต่จะช่วยวิเคราะห์โจทย์ขององค์กรคุณก่อนครับ\n\nก่อนอื่นเลย ผมอยากรู้จักคุณสักหน่อย... คุณรับผิดชอบงานด้านไหนในองค์กรครับ? (เช่น HR, ผู้บริหาร, ผู้จัดการทีม)',
+  content: 'สวัสดีครับ ยินดีต้อนรับสู่ CAP Vision Institute ครับ\n\nผมคือ "กระบวนกรคู่คิด" (Dialogue Partner) เพื่อนร่วมสนทนาทางปัญญาเพื่อการเรียนรู้และการพัฒนาคนอย่างลึกซึ้ง ผมพร้อมเป็นคู่คิดสะท้อนมุมมองเพื่อช่วยค้นหาความต้องการที่แท้จริงขององค์กรคุณครับ\n\nก่อนอื่นเลย ผมอยากรู้จักคุณสักหน่อย... คุณรับผิดชอบงานด้านไหนในองค์กรครับ? (เช่น HR, ผู้บริหาร, ผู้จัดการทีม)',
 };
 
 // ─── LEAD FORM ────────────────────────────────────────────────────────────────
@@ -322,14 +322,14 @@ const AIAgent: React.FC = () => {
             <div className="flex items-center gap-3">
               <div className="relative">
                 <div className="w-11 h-11 rounded-full border-2 border-[#c5a059] overflow-hidden bg-white/20">
-                  <img src="/images/denmasterfa.jpg" alt="ครูเด่น AI" className="w-full h-full object-cover" />
+                  <img src="/images/denmasterfa.jpg" alt="กระบวนกรคู่คิด" className="w-full h-full object-cover" />
                 </div>
                 <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-[#0f3460]" />
               </div>
               <div>
-                <h3 className="font-black text-[15px] nav-font leading-none">ครูเด่น AI</h3>
+                <h3 className="font-black text-[15px] nav-font leading-none">กระบวนกรคู่คิด</h3>
                 <span className="text-[10px] text-[#c5a059] font-bold tracking-wider uppercase">
-                  AI Advisor · ออนไลน์
+                  Dialogue Partner · ออนไลน์
                 </span>
               </div>
             </div>
@@ -431,7 +431,7 @@ const AIAgent: React.FC = () => {
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && !e.shiftKey && handleSend()}
-              placeholder="คุยกับครูเด่น AI ได้ที่นี่..."
+              placeholder="เริ่มต้นสนทนาเชิงลึกเพื่อการเรียนรู้..."
               disabled={isTyping}
               className="flex-1 bg-gray-50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0f3460]/20 border border-gray-200 disabled:opacity-60 transition-all"
             />
@@ -449,7 +449,7 @@ const AIAgent: React.FC = () => {
       {/* ── TOGGLE BUTTON ────────────────────────────────────────────────── */}
       <button
         onClick={() => setIsOpen(o => !o)}
-        aria-label="ปรึกษาครูเด่น AI"
+        aria-label="ปรึกษาคู่คิดทางปัญญา"
         className={`group relative flex items-center justify-center transition-all duration-400 rounded-full shadow-[0_8px_32px_rgba(15,52,96,0.45)] ${
           isOpen
             ? 'bg-gray-800 p-3 rotate-90 scale-90'
@@ -469,7 +469,7 @@ const AIAgent: React.FC = () => {
         {!isOpen && (
           <div className="absolute right-full mr-4 bg-white text-[#0f3460] px-5 py-3 rounded-2xl shadow-2xl font-black nav-font text-[13px] whitespace-nowrap opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 pointer-events-none border border-blue-50 flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-[#c5a059]" />
-            ปรึกษาครูเด่น AI
+            ปรึกษาคู่คิดทางปัญญา
             <div className="absolute top-1/2 right-[-7px] -translate-y-1/2 w-0 h-0 border-l-[7px] border-l-white border-y-[5px] border-y-transparent" />
           </div>
         )}

@@ -1,0 +1,67 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.tsx';
+import Footer from '../../components/Footer.tsx';
+import CoursesList from '../../components/CoursesList.tsx';
+import { supabase } from '../../lib/supabase';
+
+// Fetch courses from Supabase server-side (SSR)
+let courses = [];
+let fetchError = null;
+
+try {
+  const { data, error } = await supabase
+    .from('courses')
+    .select('*, instructor:instructor_id(*)')
+    .eq('is_published', true)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    throw error;
+  }
+  courses = data || [];
+} catch (err: any) {
+  console.error('Error fetching courses in Astro SSR:', err);
+  fetchError = err.message || err;
+}
+---
+
+<Layout 
+  title="หลักสูตรทั้งหมด | CAP Vision Institute" 
+  description="50+ หลักสูตรพัฒนาบุคลากร Leader Skills, People Skills, Communication, Work Skills ออกแบบด้วย Transformative Learning โดย Master Facilitator ประสบการณ์ 18+ ปี"
+>
+	<Header pathname="/courses" client:load />
+	
+	<main class="flex-grow pt-24">
+		{fetchError && (
+			<div class="max-w-7xl mx-auto px-4 py-8 text-center bg-red-50 text-red-700 rounded-2xl border border-red-200 my-6">
+				<p class="font-bold">เกิดข้อผิดพลาดในการโหลดข้อมูลหลักสูตร:</p>
+				<p class="text-sm mt-1">{fetchError}</p>
+				<p class="text-xs text-gray-500 mt-2">โปรดติดต่อผู้ดูแลระบบ</p>
+			</div>
+		)}
+
+		{/* Hero Header Section */}
+		<div class="bg-gradient-to-br from-[#0f3460] to-[#16213e] text-white py-20 md:py-28 relative overflow-hidden">
+			<div class="absolute inset-0 bg-grid-white/[0.03] bg-[size:30px_30px]" />
+			<div class="absolute top-0 right-0 w-96 h-96 bg-[#c5a059]/10 rounded-full -translate-y-1/2 translate-x-1/4 blur-3xl pointer-events-none" />
+			<div class="absolute bottom-0 left-0 w-96 h-96 bg-indigo-600/10 rounded-full translate-y-1/2 -translate-x-1/4 blur-3xl pointer-events-none" />
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+				<span class="text-[#c5a059] text-xs md:text-sm font-black uppercase tracking-[0.3em] block mb-4">
+					IN-HOUSE TRAINING COURSES
+				</span>
+				<h1 class="text-3xl md:text-6xl font-black mb-6 leading-tight tracking-tight text-white font-gold">
+					หลักสูตรฝึกอบรมสำหรับองค์กร
+				</h1>
+				<div class="w-20 h-1 bg-[#c5a059] rounded-full mx-auto mb-6" />
+				<p class="text-white/90 text-base md:text-xl max-w-3xl mx-auto leading-relaxed font-medium">
+					หลักสูตร Signature ที่เน้นการปรับ Mindset และพัฒนา Skills เพื่อสร้างการเปลี่ยนแปลงที่วัดผลได้จริงในองค์กรคุณ
+				</p>
+			</div>
+		</div>
+
+		<CoursesList courses={courses} client:load />
+	</main>
+
+	<Footer />
+</Layout>

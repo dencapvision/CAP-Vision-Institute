@@ -1,0 +1,19 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/constants/*": ["../../constants/*"],
+      "@kru-den/core": ["../../packages/core/src/index.ts"],
+      "@kru-den/core/*": ["../../packages/core/src/*"],
+      "@kru-den/database": ["../../packages/database/src/index.ts"],
+      "@kru-den/integrations": ["../../packages/integrations/src/index.ts"],
+      "@kru-den/integrations/*": ["../../packages/integrations/src/*"]
+    }
+  },
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
+}

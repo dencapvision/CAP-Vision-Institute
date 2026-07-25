@@ -1,0 +1,352 @@
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { Search, ChevronLeft, ChevronRight, ArrowRight, ChevronDown, Filter as FilterIcon, Layout, Target, Zap, Users, MessageCircle, Layers } from 'lucide-react';
+import type { Course } from '../types';
+import { CONTACT_INFO } from '@/constants/brand';
+
+interface CoursesListProps {
+  courses: Course[];
+}
+
+const categories = ['All', 'Leader Skills', 'People Skills', 'Work Skills', 'Communication Skills'];
+
+const CoursesList: React.FC<CoursesListProps> = ({ courses = [] }) => {
+  const [filter, setFilter] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // Sync state with URL parameter 'cat' on client side
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const cat = params.get('cat');
+      if (cat && categories.includes(cat)) {
+        setFilter(cat);
+      }
+    }
+  }, []);
+
+  const handleFilterChange = (cat: string) => {
+    setFilter(cat);
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      if (cat === 'All') {
+        url.searchParams.delete('cat');
+      } else {
+        url.searchParams.set('cat', cat);
+      }
+      window.history.pushState({}, '', url.pathname + url.search);
+    }
+  };
+
+  const getCategoryInfo = (category: string) => {
+    switch (category) {
+      case 'Leader Skills':
+        return { bg: 'bg-indigo-600', text: 'text-indigo-600', icon: <Target />, desc: 'พัฒนาภาวะผู้นำและการบริหารจัดการเพื่อนำพาองค์กรสู่อนาคต' };
+      case 'People Skills':
+        return { bg: 'bg-emerald-600', text: 'text-emerald-600', icon: <Users />, desc: 'สร้างทีมงานที่แข็งแกร่งและความร่วมมือที่เป็นหนึ่งเดียว' };
+      case 'Work Skills':
+        return { bg: 'bg-orange-500', text: 'text-orange-500', icon: <Layers />, desc: 'ยกระดับประสิทธิภาพการทำงานด้วยทักษะสมัยใหม่' };
+      case 'Communication Skills':
+        return { bg: 'bg-sky-500', text: 'text-sky-500', icon: <MessageCircle />, desc: 'ศิลปะการสื่อสารที่ทรงพลังเพื่อการทำงานที่ราบรื่น' };
+      default:
+        return { bg: 'bg-[#0f3460]', text: 'text-[#0f3460]', icon: <Layout />, desc: 'ยกระดับศักยภาพด้วยหลักสูตรที่ออกแบบมาเพื่อการเปลี่ยนแปลงที่แท้จริง' };
+    }
+  };
+
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { All: courses.length };
+    categories.forEach(cat => {
+      if (cat !== 'All') {
+        counts[cat] = courses.filter(c => c.category === cat).length;
+      }
+    });
+    return counts;
+  }, [courses]);
+
+  const featuredCourses = useMemo(() => courses.slice(0, 4), [courses]);
+
+  const nextSlide = useCallback(() => {
+    setActiveSlide((prev) => (prev === featuredCourses.length - 1 ? 0 : prev + 1));
+  }, [featuredCourses.length]);
+
+  const prevSlide = () => {
+    setActiveSlide((prev) => (prev === 0 ? featuredCourses.length - 1 : prev - 1));
+  };
+
+  useEffect(() => {
+    if (featuredCourses.length > 0) {
+      const timer = setInterval(nextSlide, 5000);
+      return () => clearInterval(timer);
+    }
+  }, [nextSlide, featuredCourses.length]);
+
+  const filteredCourses = useMemo(() => {
+    return courses.filter(c => {
+      const matchesCategory = filter === 'All' || c.category === filter;
+      const matchesSearch = c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        c.description.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [courses, filter, searchQuery]);
+
+  const categoryInfo = getCategoryInfo(filter);
+
+  return (
+    <div className="bg-gray-50 min-h-screen pb-20 overflow-x-hidden">
+      {courses.length === 0 && (
+        <div className="max-w-7xl mx-auto px-4 py-20 text-center">
+          <h2 className="text-2xl font-black text-[#0f3460] mb-4 nav-font">ยังไม่มีหลักสูตรในขณะนี้</h2>
+          <p className="text-gray-500">ทางสถาบันกำลังอัปเดตหลักสูตรใหม่ๆ โปรดติดตาม เร็วๆ นี้</p>
+        </div>
+      )}
+
+      {/* Featured Carousel Section - Only show when "All" is selected */}
+      {courses.length > 0 && filter === 'All' && (
+        <div className="max-w-7xl mx-auto px-4 -mt-12 md:-mt-20 relative z-20 mb-12 md:mb-20">
+          <div className="relative group">
+            <div className="overflow-hidden rounded-[1.5rem] md:rounded-[2.5rem] shadow-2xl bg-white border border-white/20">
+              <div
+                className="flex transition-transform duration-700 ease-in-out"
+                style={{ transform: `translateX(-${activeSlide * 100}%)` }}
+              >
+                {featuredCourses.map((course) => (
+                  <div key={course.id} className="w-full flex-shrink-0 relative h-[400px] md:h-[600px]">
+                    <img
+                      src={course.image}
+                      alt={course.alt_text || course.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80';
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/45 to-transparent flex flex-col justify-end p-6 md:p-16">
+                      <div className="max-w-3xl">
+                        <span className="bg-[#c5a059] text-white px-3 md:px-5 py-1 md:py-2 rounded-lg text-[9px] md:text-[10px] font-black uppercase tracking-widest nav-font mb-4 inline-block">
+                          Featured Course
+                        </span>
+                        <h2 className="text-2xl md:text-5xl font-black text-white mb-4 leading-tight nav-font text-shadow-premium">
+                          {course.title}
+                        </h2>
+                        <p className="text-white/90 text-sm md:text-lg mb-6 leading-relaxed line-clamp-2 md:line-clamp-3 font-medium">
+                          {course.description}
+                        </p>
+                        <a
+                          href={`/courses/${course.slug || course.id}`}
+                          className="bg-[#c5a059] hover:bg-[#0f3460] text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-black text-xs md:text-sm inline-flex items-center gap-2 md:gap-3 transition-all nav-font shadow-lg active:scale-95 border border-[#c5a059]/30"
+                        >
+                          รายละเอียดหลักสูตร <ArrowRight className="w-4 h-4" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <button
+              onClick={prevSlide}
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 h-14 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl md:rounded-2xl flex items-center justify-center text-white hover:bg-white hover:text-[#0f3460] transition-all opacity-0 md:group-hover:opacity-100 z-30 shadow-xl"
+            >
+              <ChevronLeft className="w-6 h-6 md:w-8 h-8" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 h-14 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl md:rounded-2xl flex items-center justify-center text-white hover:bg-white hover:text-[#0f3460] transition-all opacity-0 md:group-hover:opacity-100 z-30 shadow-xl"
+            >
+              <ChevronRight className="w-6 h-6 md:w-8 h-8" />
+            </button>
+
+            <div className="absolute bottom-4 md:bottom-8 right-4 md:right-8 flex gap-2 md:gap-3 z-30">
+              {featuredCourses.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveSlide(idx)}
+                  className={`h-1.5 md:h-2 transition-all duration-300 rounded-full shadow-sm ${activeSlide === idx ? 'w-8 md:w-12 bg-[#c5a059]' : 'w-2 md:w-3 bg-white/30 hover:bg-white/50'
+                    }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Filters and Search */}
+      <div className={`max-w-7xl mx-auto px-4 ${filter !== 'All' ? '-mt-12 md:-mt-20 relative z-20' : ''}`}>
+        
+        {/* Visual Category Cards (Desktop) */}
+        {courses.length > 0 && (
+          <div className="hidden lg:grid grid-cols-5 gap-6 mb-12">
+            {categories.map(cat => {
+              const info = getCategoryInfo(cat);
+              const isActive = filter === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => handleFilterChange(cat)}
+                  className={`p-6 rounded-[2.5rem] text-left transition-all duration-500 border group flex flex-col h-full ${isActive
+                    ? 'bg-white border-[#c5a059] shadow-2xl shadow-gold-500/10 -translate-y-2'
+                    : 'bg-white border-transparent shadow-sm hover:shadow-lg hover:border-gray-200'
+                    }`}
+                >
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 transition-all duration-500 ${isActive ? info.bg + ' text-white scale-110 shadow-lg' : 'bg-gray-50 text-gray-400 group-hover:bg-[#0f3460]/5 group-hover:text-[#c5a059]'
+                    }`}>
+                    {React.cloneElement(info.icon as any, { className: "w-7 h-7" })}
+                  </div>
+                  <div className="flex-grow">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className={`font-black text-sm nav-font tracking-tight ${isActive ? 'text-[#0f3460]' : 'text-gray-600'}`}>
+                        {cat}
+                      </h4>
+                      <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${isActive ? 'bg-[#c5a059] text-white' : 'bg-gray-100 text-gray-400'
+                        }`}>
+                        {categoryCounts[cat]}
+                      </span>
+                    </div>
+                    <p className="text-[11px] leading-relaxed text-gray-400 font-medium line-clamp-2">
+                      {info.desc}
+                    </p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Search & Mobile Filter Bar */}
+        <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-xl p-6 md:p-8 mb-12 md:mb-16 border border-gray-100">
+          <div className="flex flex-col lg:flex-row gap-6 md:gap-8 items-center justify-between">
+            <div className="lg:hidden w-full relative">
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="w-full flex items-center justify-between px-6 py-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold text-[#0f3460] nav-font text-sm"
+              >
+                <div className="flex items-center gap-3">
+                  <FilterIcon className="w-4 h-4 text-[#c5a059]" />
+                  <span>หมวดหมู่: {filter}</span>
+                </div>
+                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {isDropdownOpen && (
+                <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
+                  {categories.map(cat => (
+                    <button
+                      key={cat}
+                      onClick={() => {
+                        handleFilterChange(cat);
+                        setIsDropdownOpen(false);
+                      }}
+                      className={`w-full text-left px-6 py-4 font-bold nav-font transition-colors flex items-center justify-between text-sm ${filter === cat ? 'bg-[#0f3460] text-white' : 'text-gray-600 hover:bg-gray-50'
+                        }`}
+                    >
+                      {cat}
+                      <span className={`text-[9px] px-1.5 py-0.5 rounded-full ${filter === cat ? 'bg-[#c5a059] text-white' : 'bg-gray-100 text-gray-400'
+                        }`}>
+                        {categoryCounts[cat]}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="relative w-full lg:w-full">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="ค้นหาหลักสูตรที่คุณสนใจ เช่น Leadership, Communication..."
+                className="w-full pl-12 pr-6 py-4 bg-gray-50 border-none rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#c5a059] font-medium text-gray-700 text-sm"
+              />
+              <Search className="absolute left-4 top-4 w-4 h-4 text-gray-400" />
+            </div>
+          </div>
+        </div>
+
+        {/* Category Description Header */}
+        {courses.length > 0 && (
+          <div className="mb-12 flex items-center gap-6 animate-in fade-in duration-700">
+            <div className={`w-16 h-16 ${categoryInfo.bg} text-white rounded-2xl flex items-center justify-center shadow-lg`}>
+              {React.cloneElement(categoryInfo.icon as any, { className: "w-8 h-8" })}
+            </div>
+            <div>
+              <h2 className="text-2xl font-black text-[#0f3460] nav-font">หลักสูตร {filter}</h2>
+              <p className="text-gray-400 text-sm font-medium">มี {filteredCourses.length} หลักสูตรที่ตรงตามเงื่อนไข</p>
+            </div>
+          </div>
+        )}
+
+        {/* Course Grid */}
+        <div id="courses-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+          {filteredCourses.map((course) => {
+            const colors = getCategoryInfo(course.category);
+            return (
+              <div key={course.id} className="bg-white rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all group border border-gray-100 flex flex-col h-full hover:-translate-y-3 hover:scale-[1.02] duration-500 relative">
+                <div className={`absolute top-0 left-0 right-0 h-1 md:h-1.5 ${colors.bg} transition-colors duration-500`} />
+                <div className="relative h-48 md:h-64 overflow-hidden">
+                  <img
+                    src={course.image}
+                    alt={course.alt_text || course.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80';
+                    }}
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className={`${colors.bg} text-white px-3 md:px-5 py-1 md:py-2 rounded-lg text-[9px] md:text-[10px] font-black uppercase tracking-widest nav-font shadow-lg`}>
+                      {course.category}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-6 md:p-10 flex flex-col flex-grow">
+                  <h3 className="text-xl md:text-2xl font-bold text-[#0f3460] mb-3 md:mb-4 group-hover:text-[#c5a059] transition-colors nav-font leading-tight whitespace-pre-line">{course.title}</h3>
+                  <p className="text-gray-500 text-sm md:text-lg mb-6 md:mb-8 flex-grow leading-relaxed font-medium opacity-80 line-clamp-2 md:line-clamp-3">{course.description}</p>
+                  <div className="pt-6 md:pt-8 border-t border-gray-50">
+                    <a
+                      href={`/courses/${course.slug || course.id}`}
+                      className="w-full bg-[#0f3460] hover:bg-[#c5a059] text-white py-3 rounded-xl font-black text-sm md:text-base flex items-center justify-center gap-2 transition-all nav-font shadow-md active:scale-95"
+                    >
+                      ดูรายละเอียดหลักสูตร <ArrowRight className="w-4 h-4" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Bottom CTA — In-house Training prompt */}
+        <div className="mt-20 bg-gradient-to-br from-[#0f3460] to-[#1a4a7a] rounded-[3rem] px-8 md:px-16 py-14 text-white text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#c5a059]/15 rounded-full -translate-y-1/2 translate-x-1/4 blur-3xl pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#c5a059]/10 rounded-full translate-y-1/2 -translate-x-1/4 blur-3xl pointer-events-none"></div>
+          <div className="relative z-10">
+            <div className="w-14 h-14 bg-[#c5a059]/20 border border-[#c5a059]/40 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <span className="w-7 h-7 text-[#c5a059] flex items-center justify-center">
+                <Layout />
+              </span>
+            </div>
+            <h2 className="text-2xl md:text-4xl font-black nav-font mb-2 leading-tight text-white">
+              ไม่เห็นหลักสูตรที่ใช่?
+            </h2>
+            <div className="w-16 h-1 bg-[#c5a059] rounded-full mx-auto mb-5 mt-3" />
+            <p className="text-white/90 text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed font-medium">
+              เราออกแบบ <strong className="text-white">In-house Training</strong> เฉพาะองค์กรคุณ — เริ่มจาก TNA วิเคราะห์ปัญหาจริง ไม่มี Template สำเร็จรูป
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <a href="/contact" className="bg-[#c5a059] text-white px-10 py-4 rounded-2xl font-black text-lg hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all nav-font shadow-xl active:scale-95 inline-flex items-center justify-center gap-3">
+                ขอ In-house Training <ArrowRight className="w-5 h-5" />
+              </a>
+              <a href={CONTACT_INFO.lineUrl} target="_blank" rel="noopener noreferrer" className="bg-white/10 border border-white/20 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all nav-font inline-flex items-center justify-center gap-3">
+                <MessageCircle className="w-5 h-5 text-[#c5a059]" /> ปรึกษาฟรีผ่าน Line
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+export default CoursesList;

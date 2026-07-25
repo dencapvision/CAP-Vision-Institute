@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.tsx';
+import Footer from '../../components/Footer.tsx';
+import CourseDetailView from '../../components/CourseDetailView.tsx';
+import { supabase } from '../../lib/supabase';
+
+// Enable server SSR
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+// Fetch individual course from Supabase by slug
+let course = null;
+let fetchError = null;
+
+try {
+  const { data, error } = await supabase
+    .from('courses')
+    .select('*, instructor:instructor_id(*)')
+    .eq('slug', slug)
+    .eq('is_published', true)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+  course = data;
+} catch (err: any) {
+  console.error(`Error fetching course [${slug}] in Astro SSR:`, err);
+  fetchError = err.message || err;
+}
+---
+
+<Layout 
+  title={course ? `${course.title} | CAP Vision Institute` : "ไม่พบหลักสูตร | CAP Vision Institute"}
+  description={course ? course.description : "ขออภัย ไม่พบหลักสูตรที่คุณต้องการในระบบ"}
+>
+	<Header pathname="/courses" client:load />
+	
+	<main class="flex-grow pt-20">
+		{!course ? (
+			<div class="min-h-[60vh] bg-gray-50 flex items-center justify-center p-4">
+				<div class="text-center bg-white p-12 rounded-[3rem] shadow-xl max-w-lg border border-gray-100 my-12">
+					<div class="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+						<span class="text-4xl font-bold">!</span>
+					</div>
+					<h2 class="text-3xl font-black text-[#0f3460] mb-4 nav-font">ขออภัย ไม่พบหลักสูตรที่คุณต้องการ</h2>
+					<p class="text-gray-500 mb-8 font-medium">หลักสูตรนี้อาจถูกย้าย หรือไม่มีอยู่ในระบบปัจจุบัน</p>
+					{fetchError && <p class="text-xs text-red-400 mb-6">Error Log: {fetchError}</p>}
+					<a href="/courses" class="inline-flex items-center gap-2 bg-[#0f3460] text-white px-8 py-4 rounded-2xl font-bold nav-font transition-all hover:bg-[#c5a059]">
+						กลับสู่หน้าหลักสูตร
+					</a>
+				</div>
+			</div>
+		) : (
+			<CourseDetailView course={course} client:load />
+		)}
+	</main>
+
+	<Footer />
+</Layout>

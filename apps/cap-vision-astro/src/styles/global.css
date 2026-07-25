@@ -1,0 +1,428 @@
+@import "tailwindcss";
+
+/* =====================================================
+   Global UI Polish & Animations — CAP Vision Institute
+   ===================================================== */
+
+/* -------- Design Tokens -------- */
+:root {
+  --primary: #0f3460;
+  --primary-dark: #0a2545;
+  --primary-light: #1a4d8c;
+  --secondary: #c5a059;
+  --secondary-dark: #a68444;
+  --secondary-light: #dcc188;
+  --bg-soft: #f8fafc;
+  --accent-gold: linear-gradient(135deg, #c5a059 0%, #e0c58e 50%, #c5a059 100%);
+  --accent-navy: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+  --mesh-gradient:
+    radial-gradient(at 100% 0%, rgba(197, 160, 89, 0.15) 0%, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(15, 52, 96, 0.10) 0%, transparent 50%);
+
+  /* Spacing rhythm (8pt grid) */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Typography scale */
+  --text-xs:  11px;
+  --text-sm:  13px;
+  --text-base: 16px;
+  --text-lg:  18px;
+  --text-xl:  22px;
+  --text-2xl: 28px;
+  --text-3xl: 36px;
+  --text-4xl: 48px;
+}
+
+/* -------- Base Reset -------- */
+html {
+  scroll-behavior: smooth;
+  /* Use dvh (dynamic viewport height) to correctly handle mobile browsers */
+  scroll-padding-top: 80px;
+}
+
+body {
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-soft);
+  /* Minimum 16px body text to prevent iOS auto-zoom on inputs */
+  font-size: var(--text-base);
+  line-height: 1.6;
+}
+
+/* -------- Base Typography (inside @layer so Tailwind utilities can override) -------- */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+    color: var(--primary);
+    line-height: 1.25;
+    font-weight: 800;
+  }
+
+  p, li {
+    max-width: 72ch;
+    line-height: 1.7;
+  }
+}
+
+/* ============================================================
+   DARK SECTION TEXT — Permanent High-Specificity Override
+   Outside @layer → wins over @layer utilities (Tailwind)
+   Fixes headings & paragraphs on ALL dark navy backgrounds
+   ============================================================ */
+
+/* ── Direct dark bg classes ── */
+.bg-\[\#0f3460\] h1, .bg-\[\#0f3460\] h2, .bg-\[\#0f3460\] h3,
+.bg-\[\#0f3460\] h4, .bg-\[\#0f3460\] h5,
+.bg-\[\#0a1628\] h1, .bg-\[\#0a1628\] h2, .bg-\[\#0a1628\] h3,
+.bg-\[\#0a1628\] h4, .bg-\[\#0a1628\] h5,
+.bg-\[\#1a4a7a\] h1, .bg-\[\#1a4a7a\] h2, .bg-\[\#1a4a7a\] h3,
+.bg-\[\#1a4a7a\] h4, .bg-\[\#1a4a7a\] h5,
+.bg-\[\#0a2545\] h1, .bg-\[\#0a2545\] h2, .bg-\[\#0a2545\] h3,
+.bg-\[\#0a2545\] h4, .bg-\[\#0a2545\] h5 {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.bg-\[\#0f3460\] p, .bg-\[\#0a1628\] p,
+.bg-\[\#1a4a7a\] p, .bg-\[\#0a2545\] p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  opacity: 1 !important;
+}
+
+/* ── Gradient dark sections (from-[#0f3460], from-[#0a1628]) ── */
+.from-\[\#0f3460\] h1, .from-\[\#0f3460\] h2, .from-\[\#0f3460\] h3,
+.from-\[\#0f3460\] h4, .from-\[\#0f3460\] h5,
+.from-\[\#0a1628\] h1, .from-\[\#0a1628\] h2, .from-\[\#0a1628\] h3,
+.from-\[\#0a1628\] h4, .from-\[\#0a1628\] h5 {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.from-\[\#0f3460\] p, .from-\[\#0a1628\] p {
+  color: rgba(255, 255, 255, 0.9) !important;
+  opacity: 1 !important;
+}
+
+/* ── Protect Gold accent — never override ── */
+.text-\[\#c5a059\],
+.text-\[\#c5a059\] * {
+  color: #c5a059 !important;
+}
+
+/* ── Protect white text utility explicitly set ── */
+.text-white { color: #ffffff !important; }
+.text-white\/90 { color: rgba(255,255,255,0.9) !important; }
+.text-white\/85 { color: rgba(255,255,255,0.85) !important; }
+.text-white\/80 { color: rgba(255,255,255,0.8) !important; }
+.text-white\/75 { color: rgba(255,255,255,0.75) !important; }
+.text-white\/70 { color: rgba(255,255,255,0.7) !important; }
+
+.font-gold {
+  background: var(--accent-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-glow-gold {
+  text-shadow: 0 0 20px rgba(197, 160, 89, 0.4), 0 0 40px rgba(197, 160, 89, 0.1);
+}
+
+.text-shadow-premium {
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.text-content-premium {
+  color: #4b5563; /* text-gray-600 */
+  line-height: 1.8;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.font-heading-premium {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.letter-spacing-tight {
+  letter-spacing: -0.04em;
+}
+
+/* -------- Safe area support (iPhone notch, home indicator) -------- */
+.safe-area-pb {
+  padding-bottom: max(var(--space-md), env(safe-area-inset-bottom));
+}
+.safe-area-pt {
+  padding-top: max(var(--space-md), env(safe-area-inset-top));
+}
+
+/* -------- Touch improvements -------- */
+a, button, [role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* -------- Focus states (Accessibility) -------- */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* -------- Reveal animations -------- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-staggered > * { opacity: 0; }
+.reveal-staggered.active > * {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.reveal-staggered-0 > *:nth-child(1) { animation-delay: 0.05s; }
+.reveal-staggered-0 > *:nth-child(2) { animation-delay: 0.15s; }
+.reveal-staggered-0 > *:nth-child(3) { animation-delay: 0.25s; }
+.reveal-staggered-1 > *:nth-child(1) { animation-delay: 0.20s; }
+.reveal-staggered-1 > *:nth-child(2) { animation-delay: 0.30s; }
+.reveal-staggered-1 > *:nth-child(3) { animation-delay: 0.40s; }
+
+/* -------- Glassmorphism -------- */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+/* -------- Button Variants -------- */
+.btn-premium {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  min-height: 44px; /* a11y touch target */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  isolation: isolate;
+}
+.btn-premium:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px -12px rgba(197, 160, 89, 0.35);
+  filter: brightness(1.1);
+}
+.btn-premium::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -60%;
+  width: 200%; height: 200%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.12), transparent);
+  transform: rotate(45deg);
+  transition: 0.55s;
+}
+.btn-premium:hover::after { left: 120%; }
+.btn-premium:active { transform: scale(0.97); }
+
+/* -------- Card Polish -------- */
+.card-premium {
+  background: white;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 8px 24px -4px rgba(0,0,0,0.06);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-premium:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px -10px rgba(15, 52, 96, 0.12);
+  border-color: rgba(197, 160, 89, 0.25);
+}
+
+/* -------- Course category chip (mobile filtering) -------- */
+.course-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1.5px solid rgba(15, 52, 96, 0.15);
+  background: white;
+  color: var(--primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 36px;
+  white-space: nowrap;
+}
+.course-chip:hover,
+.course-chip.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+.course-chip.active-gold {
+  background: var(--secondary);
+  color: white;
+  border-color: var(--secondary);
+}
+
+/* -------- Responsive: Tablet -------- */
+@media (min-width: 640px) and (max-width: 1023px) {
+  h1 { font-size: clamp(28px, 5vw, 42px); }
+  h2 { font-size: clamp(22px, 4vw, 32px); }
+  h3 { font-size: clamp(18px, 3vw, 24px); }
+  p  { font-size: 15px; }
+}
+
+/* -------- Mobile (< 640px) -------- */
+@media (max-width: 639px) {
+  h1 { font-size: clamp(22px, 7vw, 32px); }
+  h2 { font-size: clamp(18px, 5.5vw, 26px); }
+  h3 { font-size: clamp(16px, 4.5vw, 20px); }
+  /* Prevent iOS auto-zoom on inputs */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+  /* Content padding on small screens */
+  .container-mobile {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* -------- Scrollbar Styling -------- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(15, 52, 96, 0.15);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(197, 160, 89, 0.5); }
+
+/* ============================================================
+   CAP VISION DESIGN SYSTEM — Typography-First Premium Layer
+   ============================================================ */
+
+/* ── Global Card Component ── */
+.cap-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.cap-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(15, 52, 96, 0.09);
+}
+
+/* ── Dark Section System ── */
+.dark-bg {
+  background: #0a1628;
+  color: #ffffff;
+}
+.dark-bg h1,
+.dark-bg h2,
+.dark-bg h3,
+.dark-bg h4,
+.dark-bg h5,
+.dark-bg h6 {
+  color: #ffffff !important;
+}
+.dark-bg p {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* ── Highlight Box (left-border accent) ── */
+.box-highlight {
+  border-left: 3px solid var(--secondary);
+  padding: 20px 24px;
+  background: #f8fafc;
+  border-radius: 0 12px 12px 0;
+}
+
+/* ── Section spacing ── */
+.section-py {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+/* ── Label / Badge (text-only) ── */
+.cap-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+
+/* ── Number Step Indicator ── */
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(197, 160, 89, 0.12);
+  color: var(--secondary);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+/* ── Gold Divider ── */
+.gold-divider {
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--secondary);
+  border-radius: 2px;
+  margin: 12px 0;
+}
+.gold-divider-center {
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--secondary);
+  border-radius: 2px;
+  margin: 12px auto;
+}
+
+/* ── Typography — refined heading sizes ── */
+@layer base {
+  h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 800; line-height: 1.2; }
+  h2 { font-size: clamp(22px, 3.5vw, 32px); font-weight: 700; line-height: 1.25; }
+  h3 { font-size: clamp(18px, 2.5vw, 22px); font-weight: 700; line-height: 1.35; }
+}

@@ -20,6 +20,8 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "tailwindcss": "^4.3.3",
-    "@tailwindcss/vite": "^4.3.3"
+    "@tailwindcss/vite": "^4.3.3",
+    "lucide-react": "^0.468.0",
+    "@supabase/supabase-js": "^2.47.10"
   }
 }

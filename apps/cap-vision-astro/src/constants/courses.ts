@@ -1,0 +1,334 @@
+
+import React from 'react';
+import { Smile, ShieldCheck, Layout, Search, Zap, Brain, Layers, Users, MessageCircle, Target, Heart, Compass, Eye, Flame, Star } from 'lucide-react';
+
+export interface CourseDetailInfo {
+    id: string;
+    title: string;
+    category: string;
+    description: string;
+    image: string;
+    altText?: string;
+    longDescription?: string;
+    objectives?: string[];
+    instructor?: {
+        id?: string;
+        name: string;
+        bio: string;
+        image: string;
+    };
+    duration?: string;
+    audience?: string;
+    why?: { label: string; stat: string; desc: string; icon?: React.ReactNode }[];
+    how?: { title: string; desc: string; icon?: React.ReactNode }[];
+    what?: string[];
+}
+
+export const COURSES: CourseDetailInfo[] = [
+    {
+        id: 'transformational-leadership',
+        title: 'ผู้นำการเปลี่ยนแปลงจากภายใน สร้างผลลัพธ์ที่ยั่งยืน\n(Transformational Leadership)',
+        category: 'Leader Skills',
+        description: 'เปลี่ยนจาก "ผู้นำที่สั่งงาน" สู่ผู้นำที่เข้าใจตนเอง เห็นคน และขับเคลื่อนการเปลี่ยนแปลงได้จริง',
+        image: '/images/courses/transformational_leadership.png',
+        altText: 'หลักสูตร Transformational Leadership - พัฒนาผู้นำองค์กร CAP Vision Institute',
+        longDescription: 'ผู้นำจำนวนมาก "เก่งงาน" แต่ไม่สามารถ "เปลี่ยนทีม" ได้จริง เพราะสิ่งที่องค์กรต้องการวันนี้ไม่ใช่แค่คนที่บริหารงานได้ แต่คือผู้นำที่เปลี่ยนคน เปลี่ยนทีม และเปลี่ยนผลลัพธ์ได้ หลักสูตรนี้ออกแบบให้ผู้นำเข้าใจ "ตัวเอง" อย่างลึก เห็น "ศักยภาพของคน" อย่างแท้จริง และสร้างการเปลี่ยนแปลงจากภายในสู่ภายนอก เมื่อผู้นำเปลี่ยน ทีมจะเปลี่ยน องค์กรจะเปลี่ยน',
+        duration: 'In-house Training 1–2 วัน | Online / Hybrid | 20–50 คน',
+        audience: 'ผู้บริหาร / CEO, ผู้จัดการ / หัวหน้างาน, High Potential Leader',
+        why: [
+            { label: 'Self-Awareness', stat: '100%', desc: 'ค้นพบ Core Identity และศักยภาพภายในของผู้นำแต่ละคน', icon: React.createElement(Eye) },
+            { label: 'Behavioral Change', stat: 'จริง', desc: 'ออกแบบให้เกิดการเปลี่ยนแปลงพฤติกรรมจริง ไม่ใช่แค่ความรู้', icon: React.createElement(Flame) },
+            { label: 'Team Engagement', stat: '+85%', desc: 'ผู้นำที่เปลี่ยนแปลงส่งผลให้ทีมมี Ownership สูงขึ้น', icon: React.createElement(Users) },
+            { label: 'Sustainable Results', stat: 'ยาวนาน', desc: 'สร้างผลลัพธ์ที่ยั่งยืนจากการเปลี่ยนแปลงจากภายใน', icon: React.createElement(Star) }
+        ],
+        how: [
+            { title: 'Workshop 70%', desc: 'Learning by Doing — เรียนรู้ผ่านการลงมือทำจริงทุกกิจกรรม', icon: React.createElement(Zap) },
+            { title: 'Reflection & Dialogue', desc: 'สะท้อนคิดเชิงลึกและ Circle Dialogue เรียนรู้ผ่านวงสนทนา', icon: React.createElement(MessageCircle) },
+            { title: 'Real Case Application', desc: '"เรียนรู้ → ตกผลึก → ทดลองใช้ → เปลี่ยนจริง" Signature CAP Vision', icon: React.createElement(Target) }
+        ],
+        what: [
+            'Module 1: Self-Leadership — CAP Theory ตัวตนผู้นำ + Reflection จุดแข็ง / Blind Spot',
+            'Module 2: Leadership Mindset — เปลี่ยนจาก Manager → Leader วิธีคิดที่สร้าง/จำกัดทีม',
+            'Module 3: Vision & Purpose — สร้าง Vision ที่มีพลัง + Alignment ระหว่างคนกับองค์กร',
+            'Module 4: Leading People — เข้าใจคน (Psychology + Behavior) + Motivation จากภายใน',
+            'Module 5: Leading Change — การนำการเปลี่ยนแปลง + รับมือแรงต้าน Resistance → Engagement',
+            'Module 6: Facilitative Leadership — การตั้งคำถามทรงพลัง + Circle Dialogue / Team Facilitation'
+        ],
+        objectives: [
+            'เข้าใจสไตล์ผู้นำของตนเอง (Self-awareness) และค้นพบ Core Identity',
+            'ปรับ Mindset และพฤติกรรมการนำทีม จาก "ควบคุม" สู่ "สร้างแรงบันดาลใจ"',
+            'สร้างทีมที่มี Engagement และ Ownership อย่างแท้จริง',
+            'นำการเปลี่ยนแปลงในองค์กรได้จริง เปลี่ยน Resistance → Engagement',
+            'สร้าง Vision ที่ทีมเชื่อและอยากไปด้วย เชื่อมเป้าหมายองค์กรกับความหมายของทีม',
+            'สร้างผลลัพธ์ที่ยั่งยืนในระยะยาวผ่านการเปลี่ยนแปลงจากภายใน'
+        ],
+        instructor: {
+            id: 'den-masterfa',
+            name: 'ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)',
+            bio: 'ผู้อำนวยการสถาบัน CAP Vision Institute ผู้เชี่ยวชาญด้าน Transformative Learning, Leadership Development และ Facilitation กว่า 20 ปี',
+            image: '/images/denmasterfa.jpg'
+        }
+    },
+    {
+        id: 'service-mind-excellence',
+        title: 'ใช้หัวใจบริการ คนสำราญ งานสำเร็จ\n(Service Mind Excellence)',
+        category: 'People Skills',
+        description: 'สร้างความแตกต่างด้วยหัวใจบริการ พร้อมปรับบุคลิกภาพแห่งตัวตนอย่างแท้จริง',
+        image: '/images/courses/service_mind.png',
+        altText: 'หลักสูตร ใช้หัวใจบริการ คนสำราญ งานสำเร็จ - CAP Vision Institute',
+        longDescription: 'หลักสูตรที่มุ่งเน้นการสร้างบุคลิกภาพแห่งตัวตน (Smart Personality) ทั้งด้านทักษะความรู้และความเข้าใจในหลักการให้บริการด้วยใจ (Service Mind) โดยใช้จิตวิทยาการบริการอย่างมีศิลปะเพื่อภาพลักษณ์องค์กรที่ดีเยี่ยม',
+        duration: '1 วัน (09.00 - 16.30 น.)',
+        audience: 'พนักงานส่วนหน้า (Front-line), เจ้าหน้าที่บริการลูกค้า, พนักงานทุกคนในองค์กร',
+        why: [
+            { label: 'ดัชนีความสุขผู้รับบริการ', stat: '98%', desc: 'ยกระดับความพึงพอใจด้วยการบริการที่เหนือความคาดหมาย', icon: React.createElement(Smile) },
+            { label: 'ภาพลักษณ์องค์กร', stat: '100%', desc: 'สร้างความเชื่อมั่นผ่านการสื่อสารที่เป็นมืออาชีพ', icon: React.createElement(ShieldCheck) }
+        ],
+        how: [
+            { title: 'Smart Personality', desc: 'ปรับบุคลิกภาพและสร้างเสน่ห์สำหรับผู้ให้บริการ', icon: React.createElement(Layout) },
+            { title: 'Empathy Analysis', desc: 'วิเคราะห์ความต้องการของผู้รับบริการ 4 ประเภท', icon: React.createElement(Search) },
+            { title: 'Conflict Management', desc: 'ทักษะการจัดการอารมณ์และสถานการณ์ยากลำบาก', icon: React.createElement(Zap) }
+        ],
+        what: [
+            'Personality Adjustment for Service Excellence',
+            'Effective Communication & Peace Communication',
+            'Emotional Intelligence in Service',
+            'Scenario-based Management Workshop'
+        ],
+        objectives: [
+            'เข้าใจประโยชน์ของคุณค่าการบริการต่อตนเองและองค์กร',
+            'พัฒนาบุคลิกภาพให้น่าเชื่อถือและมีเสน่ห์ดึงดูด',
+            'เรียนรู้ทักษะการฟังเชิงลึก (Deep Listening)',
+            'ฝึกทัศนคติเชิงบวกต่อการพัฒนาตนเองและเพื่อนร่วมงาน'
+        ],
+        instructor: {
+            id: 'den-masterfa',
+            name: 'ครูเด่น มาสเตอร์ฟา',
+            bio: 'ที่ปรึกษาองค์กรและนักพัฒนาทักษะการสื่อสารเพิ่มพลังบวก',
+            image: '/images/denmasterfa.jpg'
+        }
+    },
+    {
+        id: 'creative-problem-solving',
+        title: 'Creative Problem Solving for Innovative Work\n(คิดเป็นระบบ แก้ปัญหาเป็น สร้างทางเลือกใหม่)',
+        category: 'Creative Thinking & Problem Solving',
+        description: 'คิดเป็นระบบ แก้ปัญหาเป็น สร้างทางเลือกใหม่ในการทำงานอย่างสร้างสรรค์',
+        image: '/images/courses/creative_solving.png',
+        altText: 'หลักสูตร Creative Problem Solving for Innovative Work - CAP Vision Institute',
+        longDescription: 'หลักสูตรที่มุ่งเน้นการเปลี่ยนกรอบความคิด (Mindset) และพฤติกรรมของผู้เรียน ผ่านกระบวนการเรียนรู้แบบมีส่วนร่วม (Facilitation) และการสะท้อนคิด (Reflection) เพื่อให้สามารถ “เข้าใจปัญหาอย่างลึกซึ้ง คิดทางเลือกใหม่ และนำไปใช้ได้จริงในงาน” โดยออกแบบตามแนวคิด Transformative Learning',
+        duration: '1 วัน (09.00 - 16.00 น.)',
+        audience: 'พนักงานทุกระดับ, หัวหน้างาน, ผู้จัดการ และทีมงานที่ต้องแก้ปัญหาและตัดสินใจ',
+        why: [
+            { label: 'Real-world Focus', stat: '100%', desc: 'ใช้ปัญหาจริงขององค์กรเป็นโจทย์ในการเรียนรู้', icon: React.createElement(Target) },
+            { label: 'Innovation Rate', stat: '45%+', desc: 'เพิ่มขีดความสามารถในการสร้างทางเลือกที่แตกต่างและเป็นไปได้จริง', icon: React.createElement(Layers) },
+            { label: 'Team Synergy', stat: 'High', desc: 'ส่งเสริมการทำงานร่วมกันและการระดมความคิดอย่างมีประสิทธิภาพ', icon: React.createElement(Users) }
+        ],
+        how: [
+            { title: 'Interactive Learning', desc: 'บรรยาย 30% ฝึกปฏิบัติ 40% และการสะท้อนคิด 30%', icon: React.createElement(Zap) },
+            { title: 'CPS 6-Modules', desc: 'กระบวนการตั้งแต่ Define จนถึง Deep Reflection', icon: React.createElement(Layers) },
+            { title: 'Reflective Tools', desc: 'ใช้ Reflection Card และ Coaching Card เพื่อการเปลี่ยนแปลงภายใน', icon: React.createElement(Brain) }
+        ],
+        what: [
+            'ใช้เครื่องมือ CPS แก้ปัญหาในงานจริงได้ทันที',
+            'มี Action Plan สำหรับแก้ปัญหาจริงขององค์กร',
+            'กล้าคิด กล้าตัดสินใจ และทำงานเชิงรุกมากขึ้น',
+            'ทำงานร่วมกันเป็นทีมได้อย่างมีประสิทธิภาพ',
+            'มี Mindset เชิงบวกและมองปัญหาเป็นโอกาส'
+        ],
+        objectives: [
+            'Module 1: Define Problem – เข้าใจโจทย์และบริบทปัญหา (Problem Framing)',
+            'Module 2: Discover Insight – วิเคราะห์สาเหตุและมองปัญหาใหม่ (Root Cause Analysis)',
+            'Module 3: Develop Idea – สร้างทางเลือกอย่างสร้างสรรค์ (Divergent Thinking)',
+            'Module 4: Decide Solution – คัดเลือกและออกแบบแนวทาง (Impact vs Effort)',
+            'Module 5: Deploy Action – วางแผนและลงมือทำ (Action Plan & OKRs)',
+            'Module 6: Deep Reflection – สะท้อนคิดและต่อยอดการเรียนรู้ (Learning Loop)'
+        ],
+        instructor: {
+            id: 'den-masterfa',
+            name: 'ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)',
+            bio: 'ผู้อำนวยการสถาบันแคป วิชั่น ผู้เชี่ยวชาญด้าน Transformative Learning and Facilitation และผู้ก่อตั้ง FFT',
+            image: '/images/denmasterfa.jpg'
+        }
+    },
+    {
+        id: 'presentation-like-a-pro',
+        title: 'นำเสนองานอย่างมืออาชีพ\n(Presentation Like a Pro)',
+        category: 'Communication Skills',
+        description: 'เปลี่ยนทุกการนำเสนอให้ทรงพลัง น่าเชื่อถือ และสร้าง Impact ได้จริง ตั้งแต่การออกแบบสไลด์ไปจนถึงการ Deliver บนเวที',
+        image: '/images/courses/powerful-speaking.png',
+        altText: 'หลักสูตร Presentation Like a Pro - CAP Vision Institute',
+        longDescription: 'คนจำนวนมากกลัวการนำเสนอ ไม่ใช่เพราะไม่รู้เรื่อง แต่เพราะ "ไม่รู้จะพูดอย่างไรให้คนฟัง" หลักสูตรนี้ออกแบบมาเพื่อเปลี่ยนทุกคนให้กลายเป็นนักนำเสนอที่มั่นใจ ครอบคลุมทั้ง Mindset (เชื่อในคุณค่าของสิ่งที่นำเสนอ), Skillset (โครงสร้าง Storytelling, Voice & Body Language, Visual Design) และ Toolset (PowerPoint/Canva เทคนิค) เพราะการนำเสนอที่ดีไม่ใช่แค่ความรู้ที่แม่นยำ แต่คือการเชื่อมใจผู้ฟังให้เข้าถึงเนื้อหาได้ทุกนาที',
+        duration: 'In-house Training 1–2 วัน | 20–40 คน',
+        audience: 'ผู้จัดการ / หัวหน้างาน, พนักงานที่นำเสนองานประจำ, Sales & Marketing, ผู้บริหารที่ต้องพรีเซนต์ต่อ C-Suite หรือลูกค้า',
+        why: [
+            { label: 'Executive Presence', stat: '+80%', desc: 'ผู้เข้าอบรมมีความมั่นใจในการนำเสนอเพิ่มขึ้นชัดเจน', icon: React.createElement(Star) },
+            { label: 'Audience Engagement', stat: 'สูงขึ้น', desc: 'ผู้ฟังจดจำและอยากนำสิ่งที่ได้ยินไปใช้', icon: React.createElement(Users) },
+            { label: 'Message Clarity', stat: '3X', desc: 'โครงสร้างที่ชัดทำให้ผู้ฟังเข้าใจเร็วและตัดสินใจได้เลย', icon: React.createElement(Target) },
+            { label: 'Presentation Anxiety', stat: '-70%', desc: 'ลดความกลัวเวทีด้วยเทคนิค Mindset Shift และการฝึกซ้ำ', icon: React.createElement(Heart) }
+        ],
+        how: [
+            { title: 'Practice-First', desc: 'ฝึกนำเสนอจริงตั้งแต่ชั่วโมงแรก รับ Feedback ทันที ไม่ใช่แค่ฟังทฤษฎี', icon: React.createElement(Flame) },
+            { title: 'Video Playback', desc: 'อัดวีดิโอการนำเสนอของตัวเอง เห็น Blind Spot และปรับปรุงได้ทันที', icon: React.createElement(Eye) },
+            { title: 'Real Case Workshop', desc: 'นำหัวข้องานจริงขององค์กรมาฝึก ได้สไลด์และสคริปต์ใช้งานได้ทันที', icon: React.createElement(Zap) }
+        ],
+        what: [
+            'Module 1: Presentation Mindset — เปลี่ยนจาก "กลัว" เป็น "กล้า" + Audience-First Thinking',
+            'Module 2: Story Architecture — โครงสร้าง PREP / Problem-Solution / Hero\'s Journey + Opening Hook',
+            'Module 3: Slide Design Mastery — One Idea Per Slide, Visual Hierarchy, Data Storytelling',
+            'Module 4: Voice & Body Language — Vocal Variety, Eye Contact, Gesture, Stage Presence',
+            'Module 5: Q&A Mastery — รับมือคำถามยาก Hostile Questions และการรักษาความน่าเชื่อถือ',
+            'Module 6: Live Presentation Lab — นำเสนอจริงต่อกลุ่ม + Peer Feedback + Coaching จากวิทยากร'
+        ],
+        objectives: [
+            'ออกแบบโครงสร้างการนำเสนอด้วย Storytelling ที่ดึงดูดและจูงใจผู้ฟังได้ตั้งแต่ต้น',
+            'สร้างสไลด์ที่สื่อความชัดเจน ดูน่าเชื่อถือ และไม่ทำให้ผู้ฟังหลับ',
+            'ใช้น้ำเสียง ภาษากาย และสายตาในการสร้าง Executive Presence บนเวที',
+            'รับมือกับความประหม่าและคำถามยากได้อย่างมั่นใจและเป็นมืออาชีพ',
+            'ปรับการนำเสนอให้เหมาะกับผู้ฟังแต่ละประเภท ตั้งแต่ C-Suite ถึงทีมงาน',
+            'ฝึกนำเสนองานจริงและรับ Feedback เพื่อนำไปใช้ได้ทันทีหลังจบหลักสูตร'
+        ],
+        instructor: {
+            id: 'den-masterfa',
+            name: 'ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)',
+            bio: 'ผู้อำนวยการสถาบัน CAP Vision Institute นักพูด นักฝึกอบรม และ Facilitator ที่มีประสบการณ์กว่า 20 ปีในการพัฒนาทักษะการนำเสนอให้กับผู้บริหารและพนักงานองค์กรชั้นนำ',
+            image: '/images/denmasterfa.jpg'
+        }
+    },
+    {
+        id: 'storytelling-for-business',
+        title: 'เล่าเรื่องให้ธุรกิจเดิน\n(Storytelling for Business)',
+        category: 'Communication Skills',
+        description: 'เปลี่ยนข้อมูลและตัวเลขให้กลายเป็นเรื่องเล่าที่จับใจ สร้างแรงบันดาลใจ และขับเคลื่อนการตัดสินใจในองค์กร',
+        image: 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Course/Storytelling%20for%20Business.jpg',
+        altText: 'หลักสูตร Storytelling for Business - CAP Vision Institute',
+        longDescription: 'ในยุคที่ข้อมูลล้นหลาม สิ่งที่ทำให้ผู้คนหยุดฟัง จดจำ และลงมือทำ ไม่ใช่ตัวเลขหรือ Data แต่คือ "เรื่องเล่า" ที่ดีหนึ่งเรื่อง นักธุรกิจที่ยิ่งใหญ่ที่สุดในโลก ไม่ว่าจะเป็น Steve Jobs, Simon Sinek หรือ Elon Musk ล้วนเป็นนักเล่าเรื่องชั้นยอด หลักสูตรนี้ไม่ได้สอนให้คุณพูดเก่งขึ้น แต่สอนให้คุณ "สื่อสารด้วยหัวใจ" ผ่านโครงสร้าง Story ที่ถูกออกแบบมาเพื่องานธุรกิจโดยเฉพาะ ตั้งแต่การ Pitch ผู้บริหาร การสร้าง Brand Story ไปจนถึงการ Lead Change ผ่านพลังของเรื่องเล่า',
+        duration: 'In-house Training 1–2 วัน | 20–40 คน',
+        audience: 'ผู้บริหาร / CEO, Sales & Marketing, HR & L&D, Project Manager, ทุกคนที่ต้องโน้มน้าวและสร้างแรงบันดาลใจให้ผู้อื่น',
+        why: [
+            { label: 'Retention Rate', stat: '22X', desc: 'ข้อมูลที่นำเสนอผ่านเรื่องเล่าถูกจดจำได้มากกว่าข้อมูลล้วนๆ ถึง 22 เท่า (Stanford Research)', icon: React.createElement(Brain) },
+            { label: 'Persuasion Power', stat: '+65%', desc: 'การตัดสินใจซื้อหรือสนับสนุนเพิ่มขึ้นเมื่อใช้ Story แทนการนำเสนอ Feature/Spec', icon: React.createElement(Target) },
+            { label: 'Emotional Connection', stat: 'Deep', desc: 'Story กระตุ้นสมองส่วน Emotion ทำให้ผู้ฟัง Feel ก่อน Think และ Act ตามมา', icon: React.createElement(Heart) },
+            { label: 'Leadership Impact', stat: 'สูงขึ้น', desc: 'ผู้นำที่เล่าเรื่องเป็นสร้าง Vision Alignment และ Team Engagement ได้ดีกว่า 3 เท่า', icon: React.createElement(Star) }
+        ],
+        how: [
+            { title: 'Story Deconstruction', desc: 'ถอดแบบเรื่องเล่าที่ทรงพลังจากผู้นำระดับโลก แล้วนำ Framework มาประยุกต์ใช้จริง', icon: React.createElement(Layers) },
+            { title: 'Story Building Workshop', desc: 'เขียนและเล่าเรื่องธุรกิจของตัวเองในคลาส รับ Feedback ทันทีจากวิทยากรและเพื่อน', icon: React.createElement(Zap) },
+            { title: 'Real Business Cases', desc: 'ฝึกผ่านโจทย์จริง เช่น Pitch ผู้บริหาร, เปิดตัวโปรเจกต์, Lead Change ด้วย Story', icon: React.createElement(Target) }
+        ],
+        what: [
+            'Module 1: Why Story Works — วิทยาศาสตร์เบื้องหลังพลังของ Storytelling',
+            'Module 2: Story Frameworks — Hero\'s Journey, Problem-Solution, Before-After-Bridge',
+            'Module 3: Business Story Types — Pitch Story, Brand Story, Change Story, Teaching Story',
+            'Module 4: Story Ingredients — Character, Conflict, Transformation, Stakes',
+            'Module 5: Data Storytelling — เปลี่ยนตัวเลขและ Data ให้มีชีวิต',
+            'Module 6: Story in Action — เล่าเรื่องจริงต่อกลุ่ม รับ Feedback + Coaching'
+        ],
+        objectives: [
+            'เข้าใจโครงสร้างของเรื่องเล่าที่ทรงพลังและนำไปประยุกต์ใช้ในงานธุรกิจได้ทันที',
+            'สร้าง Business Story ของตัวเองได้ ตั้งแต่ Pitch Story, Change Story ถึง Brand Story',
+            'เปลี่ยน Data และตัวเลขให้กลายเป็นเรื่องเล่าที่ผู้ฟังจำได้และรู้สึกได้',
+            'ใช้ Storytelling ในการนำเสนอแผนงาน โน้มน้าวผู้บริหาร และ Lead Change',
+            'สร้าง Emotional Connection กับผู้ฟังผ่านเทคนิค Character และ Conflict',
+            'เล่าเรื่องได้อย่างมั่นใจ มีโครงสร้าง และสร้างผลลัพธ์ที่วัดได้จริง'
+        ],
+        instructor: {
+            id: 'den-masterfa',
+            name: 'ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)',
+            bio: 'ผู้อำนวยการสถาบัน CAP Vision Institute นักเล่าเรื่องและ Facilitator ที่ใช้พลัง Storytelling ในการพัฒนาผู้นำและขับเคลื่อนองค์กรมากว่า 20 ปี',
+            image: '/images/denmasterfa.jpg'
+        }
+    },
+    {
+        id: 'effective-communication',
+        title: 'ศิลปะการสื่อสารเพื่อประสิทธิผลงาน\n(Effective Communication)',
+        category: 'Communication Skills',
+        description: 'สื่อสารอย่างมีชั้นเชิง ลดความขัดแย้ง และสร้างความร่วมมือในทีม',
+        image: '/images/courses/communication.png',
+        altText: 'หลักสูตร ศิลปะการสื่อสารเพื่อประสิทธิผลงาน - CAP Vision Institute',
+        longDescription: 'หลักสูตรที่ช่วยให้คุณเข้าใจรูปแบบการสื่อสารของตนเองและผู้อื่น พร้อมเทคนิคการฟังและการพูดที่สร้างสรรค์',
+        duration: '1 วัน (09.00 - 16.30 น.)',
+        audience: 'พนักงานทุกระดับ',
+        why: [
+            { label: 'ความร่วมมือ', stat: '85%', desc: 'เพิ่มประสิทธิภาพการทำงานร่วมกัน', icon: React.createElement(Users) },
+            { label: 'ลดข้อขัดแย้ง', stat: '60%', desc: 'ลดปัญหาความเข้าใจผิดในการทำงาน', icon: React.createElement(MessageCircle) }
+        ],
+        how: [
+            { title: 'DISC Analysis', desc: 'วิเคราะห์สไตล์การสื่อสารด้วย DISC Model', icon: React.createElement(Brain) },
+            { title: 'Active Listening', desc: 'ฝึกทักษะการฟังอย่างตั้งใจ', icon: React.createElement(Target) },
+            { title: 'Feedback Techniques', desc: 'เทคนิคการให้และรับข้อมูลป้อนกลับ', icon: React.createElement(MessageCircle) }
+        ],
+        what: [
+            'Communication Styles Assessment',
+            '3 levels of Listening',
+            'I-Message & Feedback',
+            'Non-verbal Communication'
+        ],
+        objectives: [
+            'เข้าใจสไตล์การสื่อสารของตนเองและผู้อื่น',
+            'สามารถสื่อสารเพื่อสร้างความร่วมมือได้',
+            'ลดความขัดแย้งจากการสื่อสาร',
+            'พัฒนาทักษะการฟังและการถาม'
+        ],
+        instructor: {
+            id: 'den-masterfa',
+            name: 'ครูเด่น มาสเตอร์ฟา',
+            bio: 'ผู้เชี่ยวชาญด้านการสื่อสารและการพัฒนาทีม',
+            image: '/images/denmasterfa.jpg'
+        }
+    },
+    {
+        id: 'team-synergy',
+        title: 'สร้างทีมแกร่งด้วยพลังบวก\n(Positive Team Synergy)',
+        category: 'Work Skills',
+        description: 'เปลี่ยนความแตกต่างให้เป็นพลัง ผสานจุดแข็งเพื่อเป้าหมายเดียวกัน',
+        image: '/images/courses/team_synergy.png',
+        altText: 'หลักสูตร สร้างทีมแกร่งด้วยพลังบวก - CAP Vision Institute',
+        longDescription: 'กิจกรรม Team Building ที่เน้นกระบวนการกลุ่มสัมพันธ์และการเรียนรู้ผ่านประสบการณ์ (Experiential Learning)',
+        duration: '1-2 วัน',
+        audience: 'ทีมงานทุกแผนก',
+        why: [
+            { label: 'ความผูกพัน', stat: '90%', desc: 'สร้างความรู้สึกเป็นเจ้าของร่วมกัน', icon: React.createElement(Heart) },
+            { label: 'พลังทีม', stat: 'MAX', desc: 'ดึงศักยภาพสูงสุดของทีมออกมาใช้', icon: React.createElement(Zap) }
+        ],
+        how: [
+            { title: 'Trust Building', desc: 'กิจกรรมสร้างความไว้วางใจ', icon: React.createElement(ShieldCheck) },
+            { title: 'Team Canvas', desc: 'ออกแบบข้อตกลงและเป้าหมายร่วมกัน', icon: React.createElement(Layout) },
+            { title: 'Synergy Games', desc: 'เกมจำลองสถานการณ์เพื่อการทำงานเป็นทีม', icon: React.createElement(Smile) }
+        ],
+        what: [
+            'The 5 Dysfunctions of a Team',
+            'Psychological Safety',
+            'Collaborative Mindset',
+            'Team Charter Design'
+        ],
+        objectives: [
+            'สร้างความไว้วางใจในทีม',
+            'ยอมรับความแตกต่างและทำงานร่วมกันได้',
+            'มีเป้าหมายและพันธสัญญาต่อทีมร่วมกัน',
+            'สื่อสารกันอย่างเปิดใจ'
+        ],
+        instructor: {
+            id: 'den-masterfa',
+            name: 'ครูเด่น มาสเตอร์ฟา',
+            bio: 'Certified Team Coach & Facilitator',
+            image: '/images/denmasterfa.jpg'
+        }
+    }
+];
+
+export const ONLINE_COURSES = [
+    {
+        id: 'leadership-mastery',
+        title: 'Leadership Mastery: DFA Strategy',
+        category: 'Leader Skills',
+        image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80',
+        progress: 45,
+        duration: '12 ชม.',
+        lessons: 24,
+        instructor: 'ครูเด่น มาสเตอร์ฟา',
+        price: 5900,
+        curriculum: [
+            { title: 'Introduction to Leadership', duration: '15:00', completed: true },
+            { title: 'The DFA Model', duration: '45:00', completed: false, resources: [{ name: 'DFA Guide', url: '#' }], quiz: [{ question: 'What does D stand for?', options: ['Dynamic', 'Digital', 'Design'], answer: 0 }] }
+        ]
+    }
+];

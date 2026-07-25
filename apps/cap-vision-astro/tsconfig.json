@@ -6,7 +6,6 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/constants/*": ["../../constants/*"],
       "@kru-den/core": ["../../packages/core/src/index.ts"],
       "@kru-den/core/*": ["../../packages/core/src/*"],
       "@kru-den/database": ["../../packages/database/src/index.ts"],

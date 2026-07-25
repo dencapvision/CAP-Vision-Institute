@@ -35,7 +35,7 @@ try {
   }
   
   fs.writeFileSync(outputPath, JSON.stringify(wranglerConfig, null, 2));
-  console.log('[Post-Build] Successfully generated dist/wrangler.json');
+  console.log('[Post-Build] Successfully generated dist/wrangler.json for Cloudflare Pages SSR');
 } catch (err) {
   console.error('[Post-Build] Failed to generate dist/wrangler.json:', err);
   process.exit(1);

@@ -7,7 +7,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Flow State: สภาวะลื่นไหล กุญแจสำคัญสู่การเรียนรู้ระดับสูง (Deep Learning)',
     excerpt: 'ทำความรู้จัก Flow State และเทคนิคการออกแบบการเรียนรู้เพื่อเปลี่ยนบรรยากาศในองค์กรให้มีชีวิตชีวา',
     date: '2026-01-23',
-    thumbnail: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/flow-state-learning.png',
   },
   {
     id: 'intro-to-facilitation',
@@ -15,7 +15,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'ศิลปะการอำนวยความสะดวก (Facilitation Skills) สำหรับผู้นำยุคใหม่',
     excerpt: 'เจาะลึกบทบาทผู้นำในฐานะ Facilitator เพื่อสร้างการมีส่วนร่วมและผลลัพธ์ที่ยั่งยืน',
     date: '2026-01-22',
-    thumbnail: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/intro-to-facilitation.png',
   },
   {
     id: 'training-management-guide',
@@ -23,7 +23,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Training Management 101: 4 ขั้นตอนปั้นแผนพัฒนาคนให้เห็นผลจริง (T1-T4 Cycle)',
     excerpt: 'คู่มือการวางแผนฝึกอบรมอย่างเป็นระบบด้วย T1-T4 Cycle เพื่อผลลัพธ์ที่วัดผลได้จริง',
     date: '2026-01-20',
-    thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/training-management-guide.png',
   },
   {
     id: 'ai-proof-skills-hr-2026',
@@ -31,7 +31,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'ทักษะที่ AI แทนที่ไม่ได้ ในงานบริหารคนยุค 2026',
     excerpt: 'เมื่อ AI ก้าวเข้าสู่ยุค Agentic HR พรมแดนระหว่างงานเทคนิคและงานหัวใจก็ชัดเจนขึ้น มาดู 5 ทักษะที่ AI ไม่มีวันเลียนแบบได้ในการบริหารคนยุคใหม่',
     date: '2026-03-23',
-    thumbnail: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/ai-facilitation-future.png',
   },
   {
     id: 'hrd-future-skills-2025',
@@ -39,7 +39,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Future Skills 2025: ทักษะแห่งอนาคตที่ผู้นำองค์กรและ HRD ต้องรู้',
     excerpt: 'สำรวจทักษะสำคัญที่จำเป็นต่อการขับเคลื่อนองค์กรในโลกยุค BANI World พร้อมแนวทางการ Reskill และ Upskill พนักงานเพื่อให้พร้อมรับมือกับการเปลี่ยนแปลง',
     date: '2024-03-15',
-    thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/hrd-future-skills-2025.png',
   },
   {
     id: 'building-growth-mindset-culture',
@@ -47,7 +47,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'สร้างจิตสำนึกแห่งการเติบโต (Growth Mindset) ให้กลายเป็นวัฒนธรรมองค์กร',
     excerpt: 'Growth Mindset ไม่ใช่แค่ Buzzword แต่เป็นรากฐานสำคัญขององค์กรนวัตกรรม ครูเด่น มาสเตอร์ฟา เผยเคล็ดลับการปลูกฝัง Growth Mindset อย่างยั่งยืน',
     date: '2024-03-02',
-    thumbnail: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/building-growth-mindset-culture.png',
   },
   {
     id: 'effective-leadership-communication',
@@ -55,7 +55,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'ศิลปะการสื่อสารสำหรับผู้นำ: เปลี่ยนคำพูดให้เป็นพลังขับเคลื่อนทีม',
     excerpt: 'ปัญหาความขัดแย้ง 80% เกิดจากการสื่อสารที่ไม่ชัดเจน เรียนรู้เทคนิคการสื่อสารแบบ Empathic Communication เพื่อซื้อใจลูกน้องและลดปัญหาในทีม',
     date: '2024-02-18',
-    thumbnail: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/effective-leadership-communication.png',
   },
   {
     id: 'employee-engagement-strategies',
@@ -63,7 +63,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: '5 กลยุทธ์รักษาคนเก่ง (Talent Retention) ด้วย Employee Engagement',
     excerpt: 'การขึ้นเงินเดือนอาจไม่ใช่คำตอบเดียวเสมอไป ค้นพบปัจจัยทางจิตวิทยาและกระบวนการจัดการที่ทำให้คนเก่งอยากอยู่กับองค์กรของคุณไปนานๆ',
     date: '2024-02-05',
-    thumbnail: 'https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/employee-engagement-strategies.png',
   },
   {
     id: 'agile-hr-transformation',
@@ -71,7 +71,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Agile HR: ปรับโฉมงานทรัพยากรบุคคลให้รวดเร็วและตอบโจทย์ธุรกิจ',
     excerpt: 'เมื่อวงจรธุรกิจสั้นลง HR ต้องเร็วกว่าเดิม เรียนรู้วิธีการนำหลักการ Agile มาใช้ในกระบวนการประเมินผล การพัฒนาบุคลากร และสรรหาบุคลากร',
     date: '2024-01-20',
-    thumbnail: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/agile-hr-transformation.png',
   },
   {
     id: 'coaching-skills-for-managers',
@@ -79,7 +79,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'จาก Manager สู่ Coach: ทักษะการโค้ชเพื่อดึงศักยภาพสูงสุดของลูกทีม',
     excerpt: 'หมดยุคการสั่งงานแบบ Micro-management หัวหน้างานยุคใหม่ต้องเป็น Facilitator และ Coach ที่ช่วยให้ทีมหาคำตอบและเติบโตด้วยตัวเองได้',
     date: '2024-01-08',
-    thumbnail: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/coaching-skills-for-managers.png',
   },
   {
     id: 'okrs-implementation-guide',
@@ -87,7 +87,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'เจาะลึก OKRs: ตั้งเป้าหมายอย่างไรให้สอดคล้องและท้าทายทั้งองค์กร',
     excerpt: 'อธิบายแนวคิด OKRs ให้เข้าใจง่าย พร้อมข้อควรระวังและปัจจัยความสำเร็จ (Critical Success Factors) ในการนำ OKRs ไปใช้จริงในภาคธุรกิจ',
     date: '2023-12-25',
-    thumbnail: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/okrs-implementation-guide.png',
   },
   {
     id: 'mental-health-in-workplace',
@@ -95,7 +95,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'สุขภาวะทางจิตในที่ทำงาน (Mental Health) วาระเร่งด่วนขององค์กรยุคใหม่',
     excerpt: 'Burnout ทวีความรุนแรงขึ้น องค์กรและ HR จะออกแบบสวัสดิการและสภาพแวดล้อมอย่างไร เพื่อป้องกันและดูแลสุขภาพจิตของพนักงานด่านหน้า',
     date: '2023-12-11',
-    thumbnail: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/mental-health-in-workplace.png',
   },
   {
     id: 'design-thinking-for-hr',
@@ -103,7 +103,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Design Thinking for HR: ออกแบบประสบการณ์พนักงาน (EX) ให้โดนใจ',
     excerpt: 'ใช้กระบวนการคิดเชิงออกแบบ เพื่อเข้าไปนั่งในใจพนักงาน ตั้งแต่กระบวนการ Onboarding ไปจนถึง Offboarding ลดอัตราการลาออกและเพิ่มความผูกพัน',
     date: '2023-11-28',
-    thumbnail: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/design-thinking-for-hr.png',
   },
   {
     id: 'data-driven-hr',
@@ -111,7 +111,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Data-Driven HR: เปลี่ยนสัญชาตญาณเป็นการตัดสินใจด้วยข้อมูล',
     excerpt: 'ก้าวข้ามการบริหารคนแบบเดิมด้วย HR Analytics เรียนรู้วิธีการจัดเก็บ วิเคราะห์ และนำข้อมูลมาใช้ในการพยากรณ์และป้องกันพนักงานลาออกล่วงหน้า',
     date: '2023-11-15',
-    thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/data-driven-hr.png',
   },
   {
     id: '10-facilitation-tools',
@@ -119,7 +119,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: '10 เครื่องมือ Facilitation ที่ช่วยทีมคิดและตัดสินใจเร็วขึ้น',
     excerpt: 'เครื่องมือ Facilitation ที่ดีเป็นเหมือนชุดกุญแจที่ Facilitator ใช้เปิดประตูสู่ Collective Intelligence ของทีม',
     date: '2026-02-17',
-    thumbnail: 'https://images.unsplash.com/photo-1434626881859-194d67b2b86f?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/10-facilitation-tools.png',
   },
   {
     id: 'case-study-1day-team-transformation',
@@ -127,7 +127,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Case Study: องค์กรที่เปลี่ยนทีมได้ภายใน 1 วัน ด้วย Workshop',
     excerpt: 'Workshop 1 วันที่ออกแบบดีสามารถสร้างการเปลี่ยนแปลงที่ชัดเจนและวัดได้ในทีม ไม่ใช่แค่ความรู้สึกดีชั่วคราว',
     date: '2026-02-16',
-    thumbnail: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/case-study-1day-team-transformation.png',
   },
   {
     id: 'play-to-learn',
@@ -135,7 +135,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Play to Learn: ทำไมการเรียนรู้ที่สนุกถึงได้ผลมากกว่า',
     excerpt: 'การเล่นไม่ใช่ตรงข้ามกับการเรียนรู้ แต่คือเงื่อนไขที่ดีที่สุดสำหรับการเรียนรู้ที่ยั่งยืนในองค์กร',
     date: '2026-02-15',
-    thumbnail: 'https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/play-to-learn.png',
   },
   {
     id: 'active-vs-passive-learning',
@@ -143,7 +143,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Active Learning vs Passive Learning: อะไรได้ผลจริงในองค์กร',
     excerpt: 'Passive Learning คือการรับข้อมูล ส่วน Active Learning คือการประมวลผล นำไปใช้ และสร้างความหมายด้วยตนเอง',
     date: '2026-02-14',
-    thumbnail: 'https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/active-vs-passive-learning.png',
   },
   {
     id: 'what-is-facilitation',
@@ -151,7 +151,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Facilitation คืออะไร? ทำไมองค์กรชั้นนำถึงใช้',
     excerpt: 'Facilitation คือศิลปะและวิทยาศาสตร์ของการออกแบบและนำกระบวนการที่ช่วยให้กลุ่มคนคิด สื่อสาร และตัดสินใจได้อย่างมีประสิทธิภาพสูงสุด',
     date: '2026-02-13',
-    thumbnail: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/what-is-facilitation.png',
   },
   {
     id: 'growth-mindset-vs-fixed-mindset',
@@ -159,7 +159,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Growth Mindset vs Fixed Mindset: อะไรทำให้คนเติบโตจริง',
     excerpt: 'Carol Dweck พิสูจน์แล้วว่า Mindset ไม่ใช่บุคลิกภาพที่ติดตัวมา แต่เป็นรูปแบบความเชื่อที่เปลี่ยนได้และส่งผลต่อความสำเร็จในระยะยาว',
     date: '2026-02-12',
-    thumbnail: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/growth-mindset-vs-fixed-mindset.png',
   },
   {
     id: 'why-high-performers-burnout',
@@ -167,7 +167,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'ทำไมคนเก่งถึง Burnout? และวิธีรีเซ็ตพลังใจ',
     excerpt: 'Burnout ไม่ได้เกิดกับคนขี้เกียจ แต่เกิดกับคนที่ทุ่มเทมากที่สุด สาเหตุหลักไม่ใช่การทำงานหนัก แต่คือการขาด Meaning และ Autonomy',
     date: '2026-02-11',
-    thumbnail: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/why-high-performers-burnout.png',
   },
   {
     id: 'cap-theory-self-discovery',
@@ -175,7 +175,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'ค้นหาตัวตนด้วย CAP Theory: คุณกำลังใช้ศักยภาพเต็มหรือยัง',
     excerpt: 'CAP Theory มองศักยภาพของมนุษย์ผ่าน 3 มิติ: Consciousness, Awareness และ Presence เพื่อช่วยให้คุณรู้จักตัวเองในระดับที่ลึกขึ้น',
     date: '2026-02-10',
-    thumbnail: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/cap-theory-self-discovery.png',
   },
   {
     id: 'flow-state-at-work',
@@ -183,7 +183,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'วิธีเข้าสู่ Flow State ในการทำงาน (ทำงานน้อยลง แต่ได้ผลมากขึ้น)',
     excerpt: 'Flow State ในการทำงานคือสภาวะที่ทำงานได้อย่างมีสมาธิสูงสุด มีพลังงาน และผลงานออกมาดีที่สุด โดยไม่รู้สึกว่ากำลังทำงานหนัก',
     date: '2026-02-09',
-    thumbnail: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/flow-state-at-work.png',
   },
   {
     id: 'self-talk-change-life',
@@ -191,7 +191,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Self-Talk คืออะไร? เปลี่ยนคำพูดในใจ เปลี่ยนชีวิตได้จริงไหม',
     excerpt: 'Self-Talk คือเสียงในหัวที่พูดกับตัวเองตลอดวัน งานวิจัยพิสูจน์แล้วว่า Self-Talk เชิงบวกและเชิงลบส่งผลต่อสมรรถภาพและสุขภาพจิตอย่างมีนัยสำคัญ',
     date: '2026-02-08',
-    thumbnail: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/self-talk-change-life.png',
   },
   {
     id: 'training-to-transformative-learning',
@@ -199,7 +199,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'จาก Training สู่ Transformative Learning: HR ต้องเปลี่ยนอะไรบ้าง',
     excerpt: 'Transformative Learning เป็นการเรียนรู้ที่เปลี่ยนวิธีมองโลกและวิธีเป็นคน ไม่ใช่แค่การเพิ่มความรู้หรือทักษะ',
     date: '2026-02-07',
-    thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/training-to-transformative-learning.png',
   },
   {
     id: 'learning-journey-design',
@@ -207,7 +207,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Learning Journey คืออะไร? ออกแบบยังไงให้เกิดการเปลี่ยนแปลง',
     excerpt: 'Learning Journey คือเส้นทางการเรียนรู้ที่ออกแบบอย่างมีระบบเพื่อนำพาผู้เรียนจากจุดเริ่มต้นสู่เป้าหมายที่ต้องการ',
     date: '2026-02-06',
-    thumbnail: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/learning-journey-design.png',
   },
   {
     id: 'training-roi-measurement',
@@ -215,7 +215,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'วัดผลการอบรมอย่างไรให้ผู้บริหาร "เห็น ROI จริง"',
     excerpt: 'ผู้บริหารไม่ได้ต้องการรู้ว่าพนักงาน "ชอบ" การอบรมหรือ "รู้" อะไรมาใหม่ แต่ต้องการเห็นว่าการอบรมสร้างผลลัพธ์ทางธุรกิจอย่างไร',
     date: '2026-02-05',
-    thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/training-roi-measurement.png',
   },
   {
     id: 'ai-facilitation-future',
@@ -223,7 +223,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'AI + Facilitation: อนาคตของการพัฒนาคนในองค์กร',
     excerpt: 'AI เปลี่ยนการพัฒนาบุคลากรอย่างรุนแรง แต่ไม่ใช่การแทนที่ Facilitator แต่คือการ Augment ความสามารถของ Facilitator ให้ทรงพลังยิ่งขึ้น',
     date: '2026-02-04',
-    thumbnail: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/ai-facilitation-future.png',
   },
   {
     id: 'hr-as-learning-designer',
@@ -231,7 +231,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'HR ยุคใหม่ต้องเป็น Learning Designer ไม่ใช่แค่ Trainer',
     excerpt: 'Trainer จัดอบรมและส่งเนื้อหา แต่ Learning Designer สร้างประสบการณ์ที่เปลี่ยนพฤติกรรมได้จริงและวัดผลได้',
     date: '2026-02-03',
-    thumbnail: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/hr-as-learning-designer.png',
   },
   {
     id: 'feedback-culture-7-methods',
@@ -239,7 +239,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: '7 วิธีสร้างวัฒนธรรม Feedback ที่ทีม "ไม่กลัว" แต่ "อยากฟัง"',
     excerpt: 'Feedback ที่ดีคือน้ำมันที่หล่อเลี้ยงการเติบโต แต่ Feedback ที่ผิดวิธีคือกรดที่กัดกร่อนความไว้วางใจในทีม',
     date: '2026-02-02',
-    thumbnail: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/feedback-culture-7-methods.png',
   },
   {
     id: 'psychological-safety-facilitation',
@@ -247,7 +247,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'สร้าง Psychological Safety ในทีม ด้วย Facilitation',
     excerpt: 'Psychological Safety คือความรู้สึกปลอดภัยที่จะพูด ถาม ผิดพลาด และแสดงความคิดเห็นโดยไม่กลัวการถูกตัดสินหรือลงโทษ',
     date: '2026-02-01',
-    thumbnail: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/psychological-safety-facilitation.png',
   },
   {
     id: 'team-talk-flow',
@@ -255,7 +255,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Team Talk Flow คืออะไร? ทำไมทีมเก่งยังสื่อสารพัง',
     excerpt: 'Team Talk Flow คือรูปแบบการสื่อสารในทีมที่ข้อมูลไหลสะดวก ไม่ติดขัด และทุกคนเข้าใจตรงกันโดยไม่ต้องอธิบายซ้ำ',
     date: '2026-01-31',
-    thumbnail: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/team-talk-flow.png',
   },
   {
     id: 'circle-dialogue-technique',
@@ -263,7 +263,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'เทคนิค Circle Dialogue: เปลี่ยนความขัดแย้งเป็นความเข้าใจ',
     excerpt: 'Circle Dialogue คือกระบวนการพูดคุยในวงกลมที่ทุกคนมีสิทธิ์พูดเท่าเทียมกัน ไม่มีใครครอบงำการสนทนา',
     date: '2026-01-30',
-    thumbnail: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/circle-dialogue-technique.png',
   },
   {
     id: 'team-silo-connect-hearts',
@@ -271,7 +271,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'ทีมทำงานแบบไซโล แก้อย่างไรให้ "เชื่อมใจ" ไม่ใช่แค่ "เชื่อมงาน"',
     excerpt: 'Silo Mentality เกิดขึ้นเมื่อแต่ละทีมหรือแผนกทำงานเพื่อตัวเองมากกว่าเพื่อองค์กร การแก้ต้องเริ่มจากการเชื่อมใจ ไม่ใช่แค่เชื่อมระบบ',
     date: '2026-01-29',
-    thumbnail: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/team-silo-connect-hearts.png',
   },
   {
     id: 'leader-as-facilitator',
@@ -279,7 +279,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'ทำไมผู้นำที่ดี ต้องเป็น Facilitator ไม่ใช่ Instructor',
     excerpt: 'Instructor บอกคำตอบ แต่ Facilitator ช่วยให้คนหาคำตอบด้วยตัวเอง ผู้นำที่เป็น Facilitator สร้างทีมที่คิดเองได้และเติบโตอย่างยั่งยืน',
     date: '2026-01-28',
-    thumbnail: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/leader-as-facilitator.png',
   },
   {
     id: 'manager-to-leader-cap-theory',
@@ -287,7 +287,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'จาก Manager สู่ Leader: เปลี่ยน Mindset ด้วย CAP Theory',
     excerpt: 'Manager บริหาร "งาน" แต่ Leader นำ "คน" สู่เป้าหมายที่ยิ่งใหญ่กว่า การเปลี่ยนจาก Manager เป็น Leader เริ่มจากการเปลี่ยน Mindset ด้วย CAP Theory',
     date: '2026-01-27',
-    thumbnail: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/manager-to-leader-cap-theory.png',
   },
   {
     id: 'leadership-speaking-trust',
@@ -295,7 +295,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'Leadership Speaking: พูดอย่างไรให้ทีม "เชื่อ" ไม่ใช่แค่ "ฟัง"',
     excerpt: 'การพูดให้ทีมเชื่อไม่ใช่เรื่องของน้ำเสียงที่ดังหรือการใช้คำที่หรูหรา แต่คือการพูดด้วยความจริงใจและความชัดเจนที่สร้างความไว้วางใจ',
     date: '2026-01-26',
-    thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/leadership-speaking-trust.png',
   },
   {
     id: '5-leadership-skills-thai-orgs',
@@ -303,7 +303,7 @@ export const HRD_ARTICLES: Resource[] = [
     title: '5 ทักษะผู้นำที่องค์กรไทยขาด (และวิธีพัฒนาแบบยั่งยืน)',
     excerpt: 'องค์กรไทยมักส่งเสริมคนเก่งงานขึ้นเป็นหัวหน้าโดยไม่ได้พัฒนาทักษะการนำคน ทักษะที่ขาดนี้สร้างปัญหาใหญ่ในระยะยาว',
     date: '2026-01-25',
-    thumbnail: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/5-leadership-skills-thai-orgs.png',
   },
   {
     id: 'leader-deep-listening',
@@ -311,6 +311,6 @@ export const HRD_ARTICLES: Resource[] = [
     title: 'ผู้นำยุคใหม่ต้อง "ฟังให้ลึก" ไม่ใช่แค่ "สั่งให้เร็ว"',
     excerpt: 'ผู้นำที่ฟังเป็นสร้างทีมที่แข็งแกร่งกว่าผู้นำที่สั่งเก่ง Deep Listening ไม่ใช่การรอให้อีกฝ่ายพูดจบ แต่คือการรับรู้ทั้งคำพูดและสิ่งที่ไม่ได้พูด',
     date: '2026-01-24',
-    thumbnail: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80',
+    thumbnail: 'https://assets.capvisionpartner.com/media/resources/leader-deep-listening.png',
   },
 ];

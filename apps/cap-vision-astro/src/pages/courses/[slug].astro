@@ -1,7 +1,5 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.tsx';
-import Footer from '../../components/Footer.tsx';
 import CourseDetailView from '../../components/CourseDetailView.tsx';
 import { supabase } from '../../lib/supabase';
 
@@ -36,8 +34,6 @@ try {
   title={course ? `${course.title} | CAP Vision Institute` : "ไม่พบหลักสูตร | CAP Vision Institute"}
   description={course ? course.description : "ขออภัย ไม่พบหลักสูตรที่คุณต้องการในระบบ"}
 >
-	<Header pathname="/courses" client:load />
-	
 	<main class="flex-grow pt-20">
 		{!course ? (
 			<div class="min-h-[60vh] bg-gray-50 flex items-center justify-center p-4">
@@ -57,6 +53,5 @@ try {
 			<CourseDetailView course={course} client:load />
 		)}
 	</main>
-
-	<Footer />
 </Layout>
+

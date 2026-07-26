@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import JoinUsPage from '../components/JoinUsPage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="ร่วมงานกับเรา | CAP Vision Institute" 
+  description="ร่วมเป็นส่วนหนึ่งของสถาบันฝึกอบรมระดับพรีเมี่ยม เพื่อร่วมส่งต่อความรู้และจิตสำนึกแห่งการเติบโตไปด้วยกัน"
+>
+  <div class="pt-16">
+    <JoinUsPage client:load />
+  </div>
+</Layout>

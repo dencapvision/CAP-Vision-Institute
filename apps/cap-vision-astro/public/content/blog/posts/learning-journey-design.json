@@ -1,0 +1,76 @@
+{
+  "title": "Learning Journey คืออะไร? ออกแบบยังไงให้เกิดการเปลี่ยนแปลง",
+  "slug": "learning-journey-design",
+  "category": "Modern HR",
+  "thumbnail": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80&w=1200",
+  "author": "ครูเด่น มาสเตอร์ฟา",
+  "date": "6 กุมภาพันธ์ 2569",
+  "readTime": "11 นาที",
+
+  "summary": "Learning Journey คือเส้นทางการเรียนรู้ที่ออกแบบอย่างมีระบบเพื่อนำพาผู้เรียนจากจุด A (ทักษะปัจจุบัน) ไปยังจุด B (พฤติกรรมที่ต้องการ) ต่างจาก Training Event ที่เป็นแค่จุดเดียว Learning Journey คือกระบวนการที่ต่อเนื่อง ซึ่งทำให้การเปลี่ยนแปลงที่ยั่งยืนเกิดขึ้นได้จริง",
+
+  "context": "Training Event เดี่ยวๆ ไม่ว่าจะยอดเยี่ยมแค่ไหนก็ไม่สามารถสร้างการเปลี่ยนแปลงพฤติกรรมที่ยั่งยืนได้ งานวิจัยด้านประสาทวิทยาพบว่าสมองต้องการการ Reinforce ซ้ำๆ หลายครั้งเพื่อสร้าง Neural Pathway ใหม่ที่แข็งแรงพอที่จะเปลี่ยนนิสัยและพฤติกรรม\n\nการลืมเป็นปรากฏการณ์ตามธรรมชาติ Ebbinghaus Forgetting Curve แสดงว่าคนลืมสิ่งที่เรียนรู้ 70% ภายใน 24 ชั่วโมง และ 90% ภายใน 1 สัปดาห์ ถ้าไม่มีการ Review หรือ Application วิธีเดียวที่จะต่อสู้กับ Forgetting Curve คือการออกแบบ Learning Journey ที่มี Spaced Repetition และ Application บ่อยครั้ง\n\nองค์กรที่เปลี่ยนจาก One-time Training เป็น Learning Journey รายงานว่า Retention Rate เพิ่มขึ้น 50-60% และ Behavior Change ที่วัดได้ใน 90 วันสูงกว่าถึง 3 เท่า ตัวเลขเหล่านี้พิสูจน์ว่า Journey คือ Future of L&D",
+
+  "insight": "Learning Journey ที่ดีมีองค์ประกอบที่สำคัญ 5 ประการ ได้แก่ Clear Destination รู้ว่าผู้เรียนต้องไปถึงจุดไหน Meaningful Context เนื้อหาและกิจกรรมเกี่ยวข้องกับงานจริงของผู้เรียน Multiple Touchpoints มีการ Reinforce ผ่านหลายช่องทางและหลายรูปแบบ Social Learning มีการแลกเปลี่ยนและเรียนรู้จากกันและกัน และ Feedback and Reflection มีจุดสะท้อนคิดและ Feedback ตลอดเส้นทาง\n\nใน CAP Methodology เราใช้ 70-20-10 Model เป็น Architecture ของ Learning Journey โดย 70% เกิดจากประสบการณ์จริงในงาน ซึ่ง Journey ต้องออกแบบให้มี On-the-job Challenges ที่ชัดเจน 20% เกิดจาก Social Learning ผ่าน Peer Groups, Coaching และ Mentoring และ 10% เกิดจาก Formal Learning เช่น Workshop และ E-learning\n\nความสำเร็จของ Learning Journey ขึ้นอยู่กับการ Design ที่ดีและการ Manage ของ HR เป็น Learning Experience Designer ที่คิดตลอดทั้งเส้นทาง ไม่ใช่แค่คิดในช่วง Training",
+
+  "framework": [
+    "Phase 1 — Ignite (2-4 สัปดาห์ก่อนโปรแกรม): สร้างความอยากรู้และ Readiness ก่อนเริ่ม ส่ง Pre-reading หรือ Podcast ที่กระตุ้นความสนใจ ให้ทำ Self-assessment เพื่อรู้ Starting Point และทำ Stakeholder Alignment ให้ผู้บังคับบัญชารู้ว่าจะมีการส่งคนไปเรียนรู้และจะ Support อย่างไร",
+    "Phase 2 — Learn (Core Program 1-3 วัน): ออกแบบ Learning Event หลักที่ใช้ Active Learning สูง มี Micro-goals ชัดเจนในแต่ละส่วน และมี Commitment Action Plan ที่ผู้เรียนออกแบบเองว่าจะนำอะไรไปใช้ในสัปดาห์แรก",
+    "Phase 3 — Apply (30 วันหลังโปรแกรม): ให้ผู้เรียนนำทักษะไปใช้จริงในงานตามที่ Commit ไว้ ผู้บังคับบัญชาต้องให้ Opportunity และ Support ทีม HR ส่ง Check-in Brief สัปดาห์ละครั้ง เพื่อ Reinforce และ Remove Blockers",
+    "Phase 4 — Reflect and Reinforce (30-60 วัน): นัด Peer Learning Session เพื่อแลกเปลี่ยนประสบการณ์การนำไปใช้ ส่ง Spaced Repetition Content เพื่อ Reinforce ความรู้หลัก และทำ Progress Check-in กับผู้บังคับบัญชา",
+    "Phase 5 — Sustain (60-90 วัน): ประเมิน Behavior Change อย่างเป็นทางการ Celebrate Success และ Share Stories ของคนที่นำสิ่งที่เรียนไปใช้ได้จริง สร้าง Learning Community ที่ยั่งยืนสำหรับการ Peer Support ต่อเนื่อง"
+  ],
+
+  "application": "การออกแบบ Learning Journey ในทางปฏิบัติต้องเริ่มจากการ Map ว่า Stakeholders ทุกฝ่ายต้องการอะไร ผู้เรียนต้องการประสบการณ์ที่ Relevant ผู้บังคับบัญชาต้องการเห็นพฤติกรรมที่เปลี่ยน และ Senior Management ต้องการเห็น Business Results ออกแบบ Journey ให้ตอบโจทย์ทั้ง 3 กลุ่มพร้อมกัน\n\nอุปสรรคที่พบบ่อยที่สุดคือการไม่ได้รับ Support จากผู้บังคับบัญชาในช่วง Application Phase HR ต้องทำ Manager Briefing ก่อนโปรแกรมเสมอ เพื่ออธิบายว่าผู้บังคับบัญชาต้องทำอะไรเพื่อให้ Journey สำเร็จ และให้ Manager เซ็น 'Learning Contract' ที่ Commit ว่าจะ Support\n\nเพื่อลด Complexity ให้เริ่มจาก Mini Journey 4-6 สัปดาห์สำหรับทักษะที่สำคัญที่สุด แทนที่จะพยายามออกแบบ Journey ที่ครอบคลุมทุกอย่าง ทดสอบ Iterate และขยายขนาดเมื่อพิสูจน์แล้วว่าได้ผล",
+
+  "case_study": "บริษัทประกันชีวิตออกแบบ Sales Skills Program แบบ 2 วัน Workshop ทุกปีมา 3 ปี แต่ยอดขายไม่ดีขึ้น CAP Vision ออกแบบ Learning Journey ใหม่ที่ใช้เวลา 12 สัปดาห์ เริ่มจาก Pre-Journey Assessment แล้วตามด้วย 2 วัน Core Workshop, 4 สัปดาห์ On-the-job Challenge พร้อม Coaching สัปดาห์ละครั้ง, Peer Learning Session ทุก 2 สัปดาห์ และ Reflection Session สัปดาห์ที่ 12 หลัง 90 วัน Sales Conversion Rate เพิ่มขึ้น 28% และ Revenue per Salesperson เพิ่มขึ้น 19% เทียบกับปีก่อนที่ใช้ One-time Training",
+
+  "takeaways": [
+    "Learning Journey ต่างจาก Training Event ตรงที่เป็นกระบวนการต่อเนื่อง ไม่ใช่จุดเดียว",
+    "Ebbinghaus Forgetting Curve: คนลืม 70% ใน 24 ชั่วโมง ถ้าไม่มี Reinforcement",
+    "70-20-10 Architecture: Journey ต้องมีทั้ง On-the-job Learning, Social Learning และ Formal Learning",
+    "Manager Support ใน Application Phase คืออุปสรรคที่ใหญ่ที่สุด ต้องได้รับ Manager Commitment ก่อน",
+    "เริ่มจาก Mini Journey 4-6 สัปดาห์ก่อน ทดสอบและขยายเมื่อพิสูจน์ว่าได้ผล"
+  ],
+
+  "faq": [
+    {
+      "question": "Learning Journey เหมาะกับการพัฒนาทักษะทุกประเภทหรือไม่?",
+      "answer": "เหมาะที่สุดกับทักษะที่ต้องการ Behavior Change ระยะยาว เช่น Leadership, Communication, Sales สำหรับทักษะที่ต้องการ Knowledge หรือ Procedural Learning เช่น การใช้ Software ใหม่ อาจไม่จำเป็นต้องมี Journey ที่ยาวนาน"
+    },
+    {
+      "question": "องค์กรที่ยุ่งมากจะหาเวลาทำ Learning Journey ได้อย่างไร?",
+      "answer": "ออกแบบ Journey ให้ใช้เวลาน้อยต่อครั้ง (15-30 นาทีต่อสัปดาห์ในช่วง Application) แทนที่จะรวม Learning ทุกอย่างไว้ในวันเดียว วิธีนี้ลด Learning Load ต่อครั้งและทำให้ Learning เข้ากับ Workflow ได้ง่ายกว่า"
+    },
+    {
+      "question": "ถ้าผู้บังคับบัญชาไม่ให้ Support จะทำอย่างไร?",
+      "answer": "สร้าง Manager Buy-in ตั้งแต่ก่อนโปรแกรม ให้ Manager เข้าใจ Business Case ของ Journey และบทบาทที่ตัวเองต้องทำ ถ้า Manager ยังไม่ Support ให้ Escalate ไปยังผู้บริหารระดับสูงกว่า เพราะ Manager Support ใน Application Phase สำคัญพอๆ กับ Program Design"
+    }
+  ],
+
+  "cta": "ต้องการออกแบบ Learning Journey ที่สร้างการเปลี่ยนแปลงพฤติกรรมที่ยั่งยืนในองค์กร? CAP Vision ช่วยออกแบบ Journey ที่ครอบคลุมทุก Phase ตั้งแต่ Ignite จนถึง Sustain ปรึกษาฟรีวันนี้",
+
+  "seo": {
+    "meta_title": "Learning Journey คืออะไร วิธีออกแบบให้เกิดการเปลี่ยนแปลง",
+    "meta_description": "Learning Journey คือเส้นทางการเรียนรู้ที่ต่อเนื่อง ต่างจาก Training Event ตรงที่สร้างการเปลี่ยนแปลงพฤติกรรมที่ยั่งยืนได้จริง เรียนรู้วิธีออกแบบจาก CAP Vision",
+    "keywords": ["learning journey", "learning design", "behavior change", "L&D Thailand", "HRD Thailand", "CAP Vision", "70-20-10", "transformative learning"]
+  },
+
+  "hashtags": [
+    "#LearningJourney",
+    "#LearningDesign",
+    "#CAPVision",
+    "#HRDThailand",
+    "#BehaviorChange",
+    "#TransformativeLearning"
+  ],
+
+  "images": [
+    {
+      "url": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80&w=1200",
+      "alt": "เส้นทางการเรียนรู้ที่ต่อเนื่อง Learning Journey ในองค์กร",
+      "title": "Learning Journey Design for Transformation",
+      "description": "Learning Journey ที่ออกแบบดีสร้างการเปลี่ยนแปลงพฤติกรรมที่ยั่งยืนได้จริง"
+    }
+  ]
+}

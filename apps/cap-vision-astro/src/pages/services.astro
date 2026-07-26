@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ServicesPage from '../components/ServicesPage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="บริการของเรา | CAP Vision Institute" 
+  description="บริการจัดฝึกอบรมภายในองค์กร (In-house Training) และการให้คำปรึกษาด้านการพัฒนาองค์กร (OD Consulting) รวมถึงการเป็นคู่คิดกลยุทธ์การบริหารคน"
+>
+  <div class="pt-16">
+    <ServicesPage client:load />
+  </div>
+</Layout>

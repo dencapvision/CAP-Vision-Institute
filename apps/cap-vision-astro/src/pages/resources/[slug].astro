@@ -1,0 +1,542 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { HRD_ARTICLES } from '../../constants/articles';
+import { COURSES } from '../../constants/courses';
+import { fetchArticleBySlug, fetchRelatedArticles } from '../../lib/services/blog-articles';
+import ShareButtons from '../../components/ShareButtons';
+import NewsletterBox from '../../components/NewsletterBox';
+import ReflectionPanel from '../../components/LearningHub/ReflectionPanel';
+import AICoachSidebar from '../../components/LearningHub/AICoachSidebar';
+
+// Enable SSR
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+let articleData: any = null;
+let isAeo = false;
+
+// 1. Try fetching from static JSON file using Vite's glob import (Cloudflare Worker safe)
+try {
+  const posts = import.meta.glob('/public/content/blog/posts/*.json');
+  const postPath = `/public/content/blog/posts/${slug}.json`;
+  
+  if (posts[postPath]) {
+    const module: any = await posts[postPath]();
+    articleData = module.default;
+    isAeo = articleData.summary !== undefined;
+  }
+} catch (err) {
+  console.error(`Failed to read static article JSON via glob for ${slug}:`, err);
+}
+
+// 2. Fallback to Supabase Database
+if (!articleData) {
+  try {
+    const row = await fetchArticleBySlug(slug!);
+    if (row) {
+      articleData = {
+        ...row.content,
+        slug: row.slug,
+        category: row.category,
+        thumbnail: row.thumbnail,
+        author: row.author,
+        date: row.date_label,
+        readTime: row.read_time
+      };
+      isAeo = true;
+    }
+  } catch (err) {
+    console.error(`Failed to fetch article from Supabase for ${slug}:`, err);
+  }
+}
+
+// 3. Fallback to static HRD_ARTICLES constants
+if (!articleData) {
+  const staticArt = HRD_ARTICLES.find(a => a.id === slug);
+  if (staticArt) {
+    articleData = {
+      id: staticArt.id,
+      title: staticArt.title,
+      category: staticArt.category || 'HRD Insight',
+      thumbnail: staticArt.thumbnail,
+      author: 'ครูเด่น มาสเตอร์ฟา',
+      date: staticArt.date,
+      readTime: '5 นาที',
+      excerpt: staticArt.excerpt,
+      sections: [
+        { type: 'text', content: staticArt.excerpt }
+      ]
+    };
+  }
+}
+
+// Fetch Related Articles
+let relatedArticles: any[] = [];
+if (articleData) {
+  try {
+    const keywords = articleData.seo?.keywords || [];
+    relatedArticles = await fetchRelatedArticles(slug!, keywords);
+  } catch (err) {
+    console.error('Failed to fetch related articles:', err);
+  }
+}
+
+// Fetch Recommended static articles
+const recommendedArticles = HRD_ARTICLES
+  .filter(a => a.id !== slug)
+  .slice(0, 3);
+
+// Prepare SEO metadata
+const metaTitle = articleData?.seo?.meta_title || articleData?.seo?.metaTitle || (articleData ? `${articleData.title} | CAP Vision Insight` : 'ไม่พบหน้า | CAP Vision Institute');
+const metaDesc = articleData?.seo?.meta_description || articleData?.seo?.metaDescription || articleData?.summary || articleData?.excerpt || '';
+const activeThumbnail = articleData?.thumbnail || (articleData?.images?.[0]?.url ?? '');
+
+// Text content for AI Coach
+const articleTextForAI = articleData
+  ? (isAeo
+      ? [articleData.summary, articleData.context, articleData.insight, articleData.application].join(' ')
+      : articleData.sections?.map((s: any) => s.content || '').join(' ') || '')
+  : '';
+---
+
+<Layout title={metaTitle} description={metaDesc}>
+  {/* Client-Side Reading Progress Bar */}
+  <div id="reading-progress" class="fixed top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-600 to-amber-500 origin-left z-[100] w-0 transition-all duration-75"></div>
+
+  {!articleData ? (
+    <div class="min-h-screen flex flex-col items-center justify-center bg-white px-4 text-center">
+      <h2 class="text-3xl font-black text-[#0f3460] mb-4 nav-font">ไม่พบหน้าที่คุณต้องการ</h2>
+      <p class="text-gray-500 mb-8 font-medium">บทความนี้อาจถูกลบหรือย้ายที่อยู่แล้ว</p>
+      <a href="/resources" class="bg-[#0f3460] text-white px-10 py-4 rounded-2xl font-black nav-font uppercase tracking-widest text-xs shadow-lg hover:bg-[#c5a059] transition-colors">
+        กลับไปหน้า Resources
+      </a>
+    </div>
+  ) : (
+    <div class="bg-white min-h-screen">
+      {/* AI Coach Sidebar (Floating) */}
+      <AICoachSidebar
+        client:load
+        articleTitle={articleData.title}
+        articleContent={articleTextForAI}
+      />
+
+      {/* Hero Header */}
+      <div class="max-w-7xl mx-auto px-6 pt-24 md:pt-32 pb-16">
+        <div class="flex flex-col lg:flex-row gap-20">
+          
+          {/* Left Content Area */}
+          <div class="lg:w-2/3">
+            <a href="/resources" class="inline-flex items-center gap-2 text-gray-400 hover:text-blue-600 transition-colors font-black mb-12 nav-font text-[10px] uppercase tracking-[0.3em] cursor-pointer">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+              Resources Hub
+            </a>
+
+            <div class="space-y-10 mb-16">
+              <div class="flex flex-wrap gap-3">
+                <span class="bg-blue-600 text-white px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] inline-block nav-font shadow-lg shadow-blue-100">
+                  {articleData.category || 'Insight'}
+                </span>
+                {articleData.hashtags?.map((tag: string) => (
+                  <span class="bg-gray-50 text-gray-400 px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest inline-block nav-font border border-gray-100">
+                    {tag.startsWith('#') ? tag : `#${tag}`}
+                  </span>
+                ))}
+              </div>
+
+              <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-[#0f3460] nav-font leading-[1.1] tracking-tighter uppercase whitespace-pre-line">
+                {articleData.title}
+              </h1>
+
+              <div class="flex flex-wrap items-center gap-10 py-8 border-y border-gray-100">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-[#0f3460] shadow-inner border border-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                  </div>
+                  <div>
+                    <span class="block text-[9px] font-black text-gray-400 uppercase tracking-widest nav-font">Author</span>
+                    <span class="text-sm font-bold text-[#0f3460]">{articleData.author || 'ครูเด่น มาสเตอร์ฟา'}</span>
+                  </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-6 md:gap-10">
+                  <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span class="text-xs font-black uppercase tracking-widest text-gray-400 nav-font">{articleData.date}</span>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span class="text-xs font-black uppercase tracking-widest text-gray-400 nav-font">{articleData.readTime || '5 นาที'}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {activeThumbnail && (
+              <img
+                src={activeThumbnail}
+                class="w-full h-[300px] md:h-[500px] object-cover rounded-[4rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] mb-24"
+                alt={articleData.title}
+                loading="lazy"
+              />
+            )}
+
+            {/* Content Body */}
+            <article class="max-w-none text-[#0f3460] prose prose-blue">
+              {isAeo ? (
+                <div class="space-y-10">
+                  {/* 1. Answer-first Summary */}
+                  <div class="bg-[#0f3460] text-white rounded-[2rem] p-8 md:p-10 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-48 h-48 bg-[#c5a059]/10 rounded-full -translate-y-1/2 translate-x-1/4 blur-2xl pointer-events-none" />
+                    <p class="text-[10px] font-black text-[#c5a059] uppercase tracking-[0.4em] mb-3 nav-font">สรุปสั้น — ตอบทันที</p>
+                    <p class="text-lg md:text-xl font-bold leading-relaxed text-white/90">{articleData.summary}</p>
+                  </div>
+
+                  {/* 2. Context */}
+                  {articleData.context && (
+                    <section class="mt-12">
+                      <h2 class="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-5 flex items-center gap-3">
+                        <span class="w-1.5 h-8 bg-[#c5a059] rounded-full inline-block" />
+                        ทำไมเรื่องนี้สำคัญในองค์กร
+                      </h2>
+                      {articleData.context.split('\n\n').filter(Boolean).map((para: string) => (
+                        <p class="text-gray-700 text-base md:text-lg leading-relaxed font-medium mb-4">{para}</p>
+                      ))}
+                    </section>
+                  )}
+
+                  {/* 3. Insight */}
+                  {articleData.insight && (
+                    <section class="mt-12">
+                      <h2 class="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-5 flex items-center gap-3">
+                        <span class="w-1.5 h-8 bg-[#c5a059] rounded-full inline-block" />
+                        แนวคิดสำคัญ — CAP Vision Insight
+                      </h2>
+                      {articleData.insight.split('\n\n').filter(Boolean).map((para: string) => (
+                        <p class="text-gray-700 text-base md:text-lg leading-relaxed font-medium mb-4">{para}</p>
+                      ))}
+                    </section>
+                  )}
+
+                  {/* 4. Framework */}
+                  {articleData.framework && articleData.framework.length > 0 && (
+                    <section class="bg-[#f8fafc] rounded-[2rem] p-8 md:p-10 border border-gray-100 mt-12">
+                      <h2 class="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-7">Framework ที่ใช้ได้จริง</h2>
+                      <ol class="space-y-6 list-none p-0 m-0">
+                        {articleData.framework.map((step: any, i: number) => {
+                          if (typeof step === 'string') {
+                            return (
+                              <li class="flex gap-5 items-start">
+                                <span class="w-9 h-9 bg-[#0f3460] text-white text-xs font-black rounded-xl flex items-center justify-center flex-shrink-0">
+                                  {String(i + 1).padStart(2, '0')}
+                                </span>
+                                <p class="text-gray-700 text-base md:text-lg font-medium leading-relaxed pt-1 m-0">{step}</p>
+                              </li>
+                            );
+                          }
+                          return (
+                            <li class="flex gap-5 items-start">
+                              <span class="w-9 h-9 bg-[#0f3460] text-white text-xs font-black rounded-xl flex items-center justify-center flex-shrink-0">
+                                {String(i + 1).padStart(2, '0')}
+                              </span>
+                              <div class="pt-1">
+                                {(step.step || step.title) && (
+                                  <p class="font-black text-[#0f3460] text-sm md:text-base nav-font mb-1 m-0">
+                                    {step.step ? `${step.step}${step.title ? ` — ${step.title}` : ''}` : step.title}
+                                  </p>
+                                )}
+                                {step.description && <p class="text-gray-700 text-base md:text-lg font-medium leading-relaxed m-0 mt-1">{step.description}</p>}
+                              </div>
+                            </li>
+                          );
+                        })}
+                      </ol>
+                    </section>
+                  )}
+
+                  {/* 5. Application */}
+                  {articleData.application && (
+                    <section class="mt-12">
+                      <h2 class="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-5 flex items-center gap-3">
+                        <span class="w-1.5 h-8 bg-[#c5a059] rounded-full inline-block" />
+                        นำไปใช้ในองค์กรอย่างไร
+                      </h2>
+                      {articleData.application.split('\n\n').filter(Boolean).map((para: string) => (
+                        <p class="text-gray-700 text-base md:text-lg leading-relaxed font-medium mb-4">{para}</p>
+                      ))}
+                    </section>
+                  )}
+
+                  {/* 6. Case Study */}
+                  {articleData.case_study && (
+                    <section class="border-l-4 border-[#c5a059] pl-8 py-6 bg-amber-50/45 rounded-r-[2rem] mt-12">
+                      <p class="text-[10px] font-black text-[#c5a059] uppercase tracking-[0.4em] mb-3 nav-font">ตัวอย่างจากองค์กรจริง</p>
+                      {typeof articleData.case_study === 'string' ? (
+                        articleData.case_study.split('\n\n').filter(Boolean).map((para: string) => (
+                          <p class="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-3 m-0">{para}</p>
+                        ))
+                      ) : (
+                        <div>
+                          {articleData.case_study.title && (
+                            <p class="font-black text-[#0f3460] text-sm md:text-base nav-font mb-3 m-0">{articleData.case_study.title}</p>
+                          )}
+                          {articleData.case_study.story && (
+                            <p class="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-3 m-0">{articleData.case_study.story}</p>
+                          )}
+                          {articleData.case_study.result && (
+                            <p class="text-sm font-black text-[#c5a059] mt-3 m-0">{articleData.case_study.result}</p>
+                          )}
+                        </div>
+                      )}
+                    </section>
+                  )}
+
+                  {/* 7. Takeaways */}
+                  {articleData.takeaways && articleData.takeaways.length > 0 && (
+                    <section class="bg-[#0f3460]/5 rounded-[2rem] p-8 md:p-10 mt-12">
+                      <h2 class="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-6">สรุปสิ่งที่ได้</h2>
+                      <ul class="space-y-4 list-none p-0 m-0">
+                        {articleData.takeaways.map((item: string) => (
+                          <li class="flex items-start gap-4">
+                            <span class="text-[#c5a059] mt-0.5 shrink-0">
+                              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            </span>
+                            <span class="text-gray-700 text-base font-medium leading-relaxed">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  )}
+
+                  {/* 8. FAQ Accordions using details tags for SEO optimization */}
+                  {articleData.faq && articleData.faq.length > 0 && (
+                    <section class="mt-16">
+                      <h2 class="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-7 flex items-center gap-3">
+                        <span class="w-1.5 h-8 bg-[#c5a059] rounded-full inline-block" />
+                        คำถามที่พบบ่อย
+                      </h2>
+                      <div class="space-y-4">
+                        {articleData.faq.map((item: any) => (
+                          <details class="group border border-gray-200 rounded-2xl overflow-hidden [&_summary::-webkit-details-marker]:hidden">
+                            <summary class="w-full flex items-center justify-between px-6 py-5 text-left font-bold text-[#0f3460] cursor-pointer hover:bg-gray-50/50 list-none select-none transition-colors">
+                              <span class="text-sm md:text-base pr-4">{item.question}</span>
+                              <span class="text-[#c5a059] font-black text-xl transition-transform duration-300 group-open:rotate-45">+</span>
+                            </summary>
+                            <div class="px-6 pb-5 text-gray-600 text-sm md:text-base leading-relaxed font-medium border-t border-gray-100 pt-4">
+                              {item.answer}
+                            </div>
+                          </details>
+                        ))}
+                      </div>
+                    </section>
+                  )}
+
+                  {/* 9. CTA Box */}
+                  <div class="bg-gray-900 text-white p-10 md:p-14 rounded-[2.5rem] relative overflow-hidden mt-16">
+                    <div class="absolute bottom-0 right-0 p-8 opacity-5 pointer-events-none">
+                      <svg class="w-48 h-48" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl md:text-4xl font-black mb-5 nav-font text-[#c5a059] leading-tight uppercase tracking-tight whitespace-pre-line">
+                      {typeof articleData.cta === 'object' && articleData.cta ? articleData.cta.title : 'พร้อมออกแบบการพัฒนา\nยกระดับองค์กรหรือยัง?'}
+                    </h3>
+                    <p class="text-white/70 mb-8 text-base md:text-lg font-medium max-w-xl leading-relaxed">
+                      {typeof articleData.cta === 'object' && articleData.cta ? articleData.cta.description : (typeof articleData.cta === 'string' ? articleData.cta : 'สถาบัน CAP Vision พร้อมออกแบบหลักสูตรที่ตรงกับปัญหาขององค์กรคุณ ปรึกษาฟรีภายใน 24 ชั่วโมง')}
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                      {typeof articleData.cta === 'object' && articleData.cta?.buttonLink ? (
+                        <a href={articleData.cta.buttonLink} class="bg-[#c5a059] text-white px-10 py-4 rounded-2xl font-black hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all nav-font shadow-lg uppercase tracking-widest text-sm cursor-pointer">
+                          {articleData.cta.buttonText || 'ปรึกษาฟรี'}
+                        </a>
+                      ) : (
+                        <a href={CONTACT_INFO.lineUrl} class="bg-[#c5a059] text-white px-10 py-4 rounded-2xl font-black hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all nav-font shadow-lg uppercase tracking-widest text-sm cursor-pointer">
+                          {typeof articleData.cta === 'object' && articleData.cta ? articleData.cta.buttonText : 'ปรึกษาฟรี'}
+                        </a>
+                      )}
+                      <a href="/contact" class="border-2 border-white/20 px-10 py-4 rounded-2xl font-black hover:bg-white/10 transition-all nav-font uppercase tracking-widest text-sm cursor-pointer">
+                        ขอใบเสนอราคา
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                /* Legacy Sections rendering */
+                <div class="space-y-8">
+                  {articleData.sections?.map((section: any) => {
+                    switch (section.type) {
+                      case 'heading':
+                        return <h2 class="text-3xl md:text-4xl font-black text-[#0f3460] nav-font mb-8 mt-12 uppercase tracking-tighter">{section.content}</h2>;
+                      case 'subheading':
+                        return <h3 class="text-2xl font-black text-[#0f3460] mb-8 nav-font border-b-4 border-[#c5a059] pb-4 inline-block uppercase tracking-tight">{section.content}</h3>;
+                      case 'text':
+                        return <p class="text-lg mb-8 leading-relaxed text-gray-700 font-medium" set:html={section.content}></p>;
+                      case 'quote':
+                        return (
+                          <div class="border-l-4 border-blue-600 pl-8 py-10 my-16 bg-blue-50/55 rounded-r-[3rem] shadow-sm">
+                            <span class="text-blue-600 text-4xl font-serif">“</span>
+                            <p class="text-2xl md:text-3xl font-black nav-font italic leading-snug text-[#0f3460] tracking-tight -mt-4">{section.content}</p>
+                            {section.author && <cite class="block mt-6 text-gray-400 font-black uppercase tracking-widest text-xs">— {section.author}</cite>}
+                          </div>
+                        );
+                      case 'image':
+                        return (
+                          <div class="my-16 group relative">
+                            <img src={section.imageUrl} class="w-full rounded-[3rem] shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]" alt={section.content || 'post image'} />
+                            {section.content && <p class="mt-4 text-center text-xs font-bold text-gray-400 uppercase tracking-widest">{section.content}</p>}
+                          </div>
+                        );
+                      case 'list':
+                        return (
+                          <ul class="space-y-5 mb-12 list-none p-0 m-0">
+                            {section.items?.map((item: string) => (
+                              <li class="flex items-start gap-4 p-4 rounded-2xl hover:bg-gray-50 transition-colors">
+                                <span class="text-blue-600 mt-0.5 shrink-0">
+                                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </span>
+                                <span class="text-lg text-gray-700 font-medium" set:html={item}></span>
+                              </li>
+                            ))}
+                          </ul>
+                        );
+                      case 'box':
+                        const boxStyles = {
+                          info: 'bg-blue-50 border-blue-100/50 text-[#0f3460]',
+                          warning: 'bg-amber-50 border-amber-100/50 text-[#0f3460]',
+                          success: 'bg-green-50 border-green-100/50 text-[#0f3460]',
+                          danger: 'bg-red-50 border-red-100/50 text-[#0f3460]'
+                        };
+                        const variant = section.variant || 'info';
+                        return (
+                          <div class={`${boxStyles[variant]} p-10 rounded-[2.5rem] border shadow-sm mb-12 relative overflow-hidden`}>
+                            {section.title && <h4 class="font-black mb-6 uppercase tracking-widest text-[10px] nav-font text-blue-600">{section.title}</h4>}
+                            <p class="text-xl font-bold nav-font tracking-tight leading-relaxed mb-6" set:html={section.content}></p>
+                            {section.items && (
+                              <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 text-xs font-black uppercase tracking-widest nav-font opacity-60 list-none p-0 m-0">
+                                {section.items.map((item: string) => (
+                                  <li class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> 
+                                    {item}
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </div>
+                        );
+                      case 'highlight':
+                        return (
+                          <div class="bg-[#0f3460] text-white p-12 md:p-16 rounded-[4rem] shadow-2xl my-24 relative overflow-hidden group">
+                            <h3 class="text-2xl md:text-3xl font-black text-amber-500 mb-8 nav-font uppercase tracking-tighter">{section.title}</h3>
+                            <p class="text-blue-100/80 text-xl leading-relaxed font-medium" set:html={section.content}></p>
+                          </div>
+                        );
+                      default:
+                        return null;
+                    }
+                  })}
+
+                  {/* Reflection Panel */}
+                  <div class="mt-24">
+                    <ReflectionPanel client:load articleTitle={articleData.title} />
+                  </div>
+
+                  {/* Legacy CTA */}
+                  <div class="bg-gray-900 text-white p-14 md:p-20 rounded-[4rem] my-24 shadow-2xl relative overflow-hidden group">
+                    <div class="absolute bottom-0 right-0 p-12 opacity-5 scale-150"><svg class="w-64 h-64" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></div>
+                    <h3 class="text-3xl md:text-5xl font-black mb-10 nav-font text-amber-500 leading-tight uppercase tracking-tighter">
+                      พร้อมออกแบบการพัฒนา <br/> ยกระดับองค์กรหรือยังครับ?
+                    </h3>
+                    <p class="text-blue-100/70 mb-14 text-lg font-medium max-w-2xl leading-relaxed">
+                      สถาบันแคป วิชั่น พร้อมเป็นพาร์ทเนอร์ในการวิเคราะห์ความต้องการ (TNA) และออกแบบระบบนิเวศแห่งการเรียนรู้ (Learning Ecosystem) ที่เห็นผลจริงให้กับองค์กรของคุณ
+                    </p>
+                    <div class="flex flex-wrap gap-8">
+                      <a href={CONTACT_INFO.lineUrl} class="bg-amber-500 text-white px-12 py-5 rounded-2xl font-black text-xl hover:bg-white hover:text-amber-500 transition-all nav-font shadow-xl shadow-amber-500/20 uppercase tracking-widest cursor-pointer">
+                        Consult now
+                      </a>
+                      <a href="/contact" class="border-2 border-white/20 px-12 py-5 rounded-2xl font-black text-xl hover:bg-white/10 transition-all nav-font uppercase tracking-widest cursor-pointer">
+                        Get Proposal
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </article>
+          </div>
+
+          {/* Right Sidebar Area */}
+          <aside class="lg:w-1/3">
+            <div class="sticky top-32 space-y-16">
+              <ShareButtons client:load title={articleData.title} />
+
+              {/* Recommended Insights */}
+              <div>
+                <h3 class="text-xl font-black text-[#0f3460] uppercase tracking-tighter nav-font mb-10 flex items-center gap-4">
+                  <div class="w-1.5 h-8 bg-blue-600 rounded-full" />
+                  Recommended Insights
+                </h3>
+                <div class="space-y-12">
+                  {recommendedArticles.map((a: any) => (
+                    <a href={`/resources/${a.id}`} class="group block cursor-pointer">
+                      <div class="flex gap-6 items-center">
+                        <div class="w-24 h-24 rounded-[1.8rem] overflow-hidden flex-shrink-0 shadow-sm">
+                          <img src={a.thumbnail} alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                        </div>
+                        <div>
+                          <h4 class="font-bold text-[#0f3460] leading-tight mb-2 group-hover:text-blue-600 transition-colors nav-font tracking-tight">{a.title}</h4>
+                          <div class="flex items-center gap-4">
+                            <span class="text-[9px] font-black text-gray-400 uppercase tracking-widest">{a.date}</span>
+                            <span class="w-1 h-1 bg-gray-200 rounded-full" />
+                            <span class="text-[9px] font-black text-blue-600 uppercase tracking-widest">{a.category}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Related AEO Insights */}
+              {relatedArticles.length > 0 && (
+                <div>
+                  <h3 class="text-xl font-black text-[#0f3460] uppercase tracking-tighter nav-font mb-8 flex items-center gap-4">
+                    <div class="w-1.5 h-8 bg-[#c5a059] rounded-full" />
+                    Related Insights
+                  </h3>
+                  <div class="space-y-8">
+                    {relatedArticles.map((a: any) => (
+                      <a href={`/resources/${a.slug}`} class="group block cursor-pointer">
+                        <div class="flex gap-5 items-center">
+                          <div class="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm bg-[#0f3460]/5">
+                            {a.thumbnail ? <img src={a.thumbnail} alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" /> : <div class="w-full h-full flex items-center justify-center"><svg class="w-6 h-6 text-[#c5a059]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg></div>}
+                          </div>
+                          <div>
+                            <h4 class="font-bold text-[#0f3460] leading-tight mb-1.5 group-hover:text-[#c5a059] transition-colors nav-font tracking-tight text-sm line-clamp-2">{a.title}</h4>
+                            <span class="text-[9px] font-black text-[#c5a059] uppercase tracking-widest">{a.category}</span>
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <NewsletterBox client:load />
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  )}
+</Layout>
+
+<script>
+  // Simple Vanilla JS scroll progress indicator for client-side
+  document.addEventListener('DOMContentLoaded', () => {
+    const progressBar = document.getElementById('reading-progress');
+    if (!progressBar) return;
+
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      progressBar.style.width = scrolled + '%';
+    });
+  });
+</script>

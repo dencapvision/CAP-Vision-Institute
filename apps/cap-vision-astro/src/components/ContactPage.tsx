@@ -1,0 +1,409 @@
+
+import React, { useState } from 'react';
+
+import { Phone, MessageCircle, MapPin, Facebook, Youtube, Instagram, Send, Globe, Mail, Clock, CheckCircle, ArrowRight, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
+import { FAQS } from '../constants/faqs';
+import { supabase } from '../lib/supabase';
+
+
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.01.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.6-4.12-1.31a6.34 6.34 0 0 1-2.9-2.8V15.22c.07 1.96-.58 4.02-2.01 5.43-1.61 1.64-4.14 2.21-6.32 1.44-2.18-.74-3.79-2.78-4.10-5.06-.31-2.12.51-4.41 2.14-5.83 1.64-1.45 4.09-1.89 6.22-1.12.03.01.06.02.09.03v4.02c-1.39-.46-3.03-.2-4.16.89-1.14 1.1-1.28 3.01-.26 4.21.96 1.19 2.8 1.48 4.07.64.92-.61 1.34-1.74 1.3-2.83V.02z"/>
+  </svg>
+);
+
+const Contact: React.FC = () => {
+   const [submitted, setSubmitted] = useState(false);
+   const [openFaq, setOpenFaq] = useState<number | null>(0);
+
+   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      
+      const formData = new FormData(e.currentTarget);
+      const fullName = formData.get('fullName') as string;
+      const organization = formData.get('organization') as string;
+      const phone = formData.get('phone') as string;
+      const email = formData.get('email') as string;
+      const lineId = formData.get('lineId') as string;
+      const service = formData.get('service') as string;
+      const requirements = formData.get('requirements') as string;
+
+      const displayData = {
+         'ชื่อ-นามสกุล': fullName,
+         'หน่วยงาน/องค์กร': organization,
+         'เบอร์ติดต่อ': phone,
+         'อีเมล': email,
+         'Line ID': lineId,
+         'บริการที่สนใจ': service,
+         'ความต้องการเพิ่มเติม': requirements
+      };
+
+      try {
+         // 1. Persist to Supabase Database
+         const { error: dbError } = await supabase
+            .from('leads')
+            .insert([
+               {
+                  name: fullName,
+                  company: organization,
+                  phone: phone,
+                  email: email,
+                  line_id: lineId,
+                  interest_topic: `Service: ${service} | ${requirements}`,
+                  source: 'contact_form',
+                  status: 'new'
+               }
+            ]);
+
+         if (dbError) throw dbError;
+
+         // 2. Send notification via Supabase Edge Function
+         const { data: invokeData, error: invokeError } = await supabase.functions.invoke('line-notify', {
+            body: { 
+               project: 'CONTACT',
+               formType: 'ฟอร์มติดต่อสอบถาม / ขอใบเสนอราคา', 
+               data: displayData 
+            }
+         });
+
+         if (invokeError) throw new Error(invokeError.message || 'Notification failed');
+
+         setSubmitted(true);
+      } catch (error: any) {
+         console.error('Failed to submit form:', error);
+         const errorMsg = error.message || 'เกิดข้อผิดพลาดในการส่งข้อมูล';
+         alert(`ขออภัยครับ: ${errorMsg}\n\nหากปัญหายังคงอยู่ กรุณาติดต่อทีมเทคนิค`);
+      }
+   };
+
+   const toggleFaq = (index: number) => {
+      setOpenFaq(openFaq === index ? null : index);
+   };
+
+   if (submitted) {
+      return (
+         <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+            <div className="bg-white p-16 rounded-[3.5rem] shadow-2xl max-w-2xl text-center border border-gray-100 animate-in zoom-in duration-500">
+               <div className="w-24 h-24 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
+                  <CheckCircle className="w-12 h-12" />
+               </div>
+               <h2 className="text-4xl font-black text-[#0f3460] mb-6 nav-font">ขอบคุณที่ติดต่อเรา!</h2>
+               <p className="text-xl text-gray-500 font-medium leading-relaxed mb-10">
+                  ทีมงานสถาบันแคป วิชั่น ได้รับข้อมูลของคุณแล้ว เราจะติดต่อกลับเพื่อแจ้งรายละเอียดหรือนัดปรึกษาโดยเร็วที่สุด
+               </p>
+               <button
+                  onClick={() => setSubmitted(false)}
+                  className="bg-[#0f3460] text-white px-12 py-5 rounded-2xl font-bold nav-font hover:bg-[#c5a059] transition-all shadow-lg"
+               >
+                  ส่งข้อความใหม่
+               </button>
+            </div>
+         </div>
+      );
+   }
+
+   return (
+      <div className="bg-white min-h-screen overflow-x-hidden">
+         
+         {/* Hero Header */}
+         <div className="bg-[#0f3460] pt-24 pb-48 text-white relative overflow-hidden text-center">
+            <div className="absolute top-0 right-0 w-1/3 h-full opacity-5 pointer-events-none">
+               <Globe className="w-full h-full transform translate-x-1/4" />
+            </div>
+            <div className="max-w-4xl mx-auto px-4 relative z-10">
+               <span className="text-[#c5a059] font-black text-xs uppercase tracking-[0.5em] mb-6 block nav-font">Contact Us</span>
+               <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-5 nav-font tracking-tight leading-tight">
+                  <span className="text-[#c5a059]">ปรึกษาฟรี</span><br />
+                  <span className="text-white">ไม่มีข้อผูกมัด</span>
+               </h1>
+               <p className="text-white/90 text-base md:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-8">
+                  บอกเราถึงปัญหาและเป้าหมายขององค์กรคุณ<br />
+                  เราวิเคราะห์ ออกแบบแนวทาง และส่งใบเสนอราคา<strong className="text-white"> ภายใน 24 ชั่วโมง</strong>
+               </p>
+               {/* Quick contact shortcuts */}
+               <div className="flex flex-col sm:flex-row justify-center gap-3">
+                  <a href={CONTACT_INFO.lineUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 bg-green-500 hover:bg-green-400 text-white px-8 py-3 rounded-2xl font-black text-base nav-font transition-all shadow-xl active:scale-95">
+                     <MessageCircle className="w-5 h-5" /> ทักเลยผ่าน LINE
+                  </a>
+                  <a href={`tel:${CONTACT_INFO.phone}`} className="inline-flex items-center justify-center gap-3 bg-white/10 border border-white/20 text-white px-8 py-3 rounded-2xl font-bold text-base nav-font hover:bg-white/20 transition-all active:scale-95">
+                     <Phone className="w-5 h-5 text-[#c5a059]" /> {CONTACT_INFO.phone}
+                  </a>
+               </div>
+               <p className="text-white/85 text-xs mt-5">หรือกรอกฟอร์มด้านล่าง — เราจะติดต่อกลับเร็วที่สุด</p>
+            </div>
+         </div>
+
+         <div className="max-w-7xl mx-auto px-4 -mt-32 relative z-20 pb-24">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+               {/* Contact Form Section */}
+               <div className="lg:col-span-8 bg-white rounded-[3.5rem] shadow-2xl p-10 md:p-20 border border-gray-100">
+                  <div className="mb-10">
+                     <h2 className="text-2xl md:text-3xl font-black text-[#0f3460] nav-font mb-2">ขอใบเสนอราคา / สอบถามหลักสูตร</h2>
+                     <p className="text-gray-400 text-sm font-medium mb-5">Consultation & Quotation Request</p>
+                     <div className="flex flex-wrap gap-3">
+                        {['ตอบกลับภายใน 24 ชั่วโมง', 'ปรึกษาฟรี', 'ไม่มีข้อผูกมัด'].map((t, i) => (
+                           <span key={i} className="inline-flex items-center gap-2 bg-green-50 text-green-600 text-xs font-bold px-4 py-2 rounded-full border border-green-100">
+                              <CheckCircle className="w-3.5 h-3.5" /> {t}
+                           </span>
+                        ))}
+                     </div>
+                  </div>
+
+                  <form onSubmit={handleSubmit} className="space-y-10">
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div className="space-y-3 group">
+                           <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">Full Name</label>
+                           <input name="fullName" required type="text" className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="ชื่อ-นามสกุล ของคุณ" />
+                        </div>
+                        <div className="space-y-3 group">
+                           <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">Organization</label>
+                           <input name="organization" required type="text" className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="ชื่อหน่วยงาน / บริษัท" />
+                        </div>
+                        <div className="space-y-3 group">
+                           <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">Phone Number</label>
+                           <input name="phone" required type="tel" className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="เบอร์โทรศัพท์ที่ติดต่อได้" />
+                        </div>
+                        <div className="space-y-3 group">
+                           <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">E-mail Address</label>
+                           <input name="email" required type="email" className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="อีเมลสำหรับส่งข้อมูล" />
+                        </div>
+                        <div className="space-y-3 group">
+                           <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">Line ID</label>
+                           <input name="lineId" required type="text" className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="ID สำหรับส่งข้อมูล / ติดต่อกลับ" />
+                        </div>
+                        <div className="space-y-3 group">
+                           <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">Service Interest</label>
+                           <select name="service" required className="w-full px-6 py-5 rounded-[1.5rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-black text-[#0f3460] transition-all nav-font appearance-none">
+                              <option value="">เลือกบริการที่สนใจ...</option>
+                              <option value="inhouse">In-house Training</option>
+                              <option value="coaching">Executive Coaching</option>
+                              <option value="od">OD Consulting</option>
+                              <option value="facilitator">Facilitator Training</option>
+                              <option value="events">Seminar & Workshops</option>
+                              <option value="other">อื่นๆ</option>
+                           </select>
+                        </div>
+                     </div>
+                     <div className="space-y-3 group">
+                        <label className="block text-xs font-black text-gray-400 uppercase tracking-widest nav-font transition-colors group-focus-within:text-[#c5a059]">Your Requirements</label>
+                        <textarea name="requirements" required rows={5} className="w-full px-6 py-5 rounded-[2rem] border border-gray-100 focus:ring-4 focus:ring-[#c5a059]/10 focus:border-[#c5a059] focus:outline-none bg-gray-50/50 font-bold text-[#0f3460] transition-all" placeholder="เป้าหมายที่ต้องการพัฒนา / จำนวนผู้เข้าอบรม / ช่วงเวลาที่สะดวก..."></textarea>
+                     </div>
+                     <div className="pt-6">
+                        <button type="submit" className="w-full bg-[#c5a059] text-white px-12 py-6 rounded-2xl font-black text-xl hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all flex items-center justify-center gap-4 shadow-2xl group nav-font active:scale-95">
+                           ขอใบเสนอราคา / ปรึกษาฟรี
+                           <Send className="w-6 h-6 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                     </div>
+                     <p className="text-center text-xs text-gray-400 font-medium">ทีมงานจะติดต่อกลับภายใน 24 ชั่วโมงทำการ · ข้อมูลของคุณปลอดภัย 100%</p>
+                  </form>
+               </div>
+
+               {/* Contact Details Sidebar */}
+               <div className="lg:col-span-4 space-y-8">
+                  {/* Channels */}
+                  <div className="bg-[#0f3460] rounded-[3.5rem] p-12 text-white shadow-2xl relative overflow-hidden">
+                     <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
+                        <MessageCircle className="w-32 h-32" />
+                     </div>
+                     <h3 className="text-2xl font-black mb-10 nav-font border-b border-white/10 pb-6 uppercase tracking-widest">Channels</h3>
+                     <div className="space-y-10 relative z-10">
+                        <a href={`tel:${CONTACT_INFO.phone}`} className="flex items-center gap-6 group">
+                           <div className="bg-white/10 p-5 rounded-2xl group-hover:bg-[#c5a059] transition-all border border-white/5"><Phone className="w-7 h-7" /></div>
+                           <div>
+                              <p className="text-[10px] text-blue-300 font-black uppercase tracking-widest nav-font mb-1">Hotline</p>
+                              <p className="text-xl font-black nav-font tracking-tight">{CONTACT_INFO.phone}</p>
+                           </div>
+                        </a>
+                        <a href={CONTACT_INFO.lineUrl} className="flex items-center gap-6 group">
+                           <div className="bg-white/10 p-5 rounded-2xl group-hover:bg-[#c5a059] transition-all border border-white/5"><MessageCircle className="w-7 h-7" /></div>
+                           <div>
+                              <p className="text-[10px] text-blue-300 font-black uppercase tracking-widest nav-font mb-1">LINE Official</p>
+                              <p className="text-xl font-black nav-font tracking-tight">{CONTACT_INFO.line}</p>
+                           </div>
+                        </a>
+                        <div className="flex items-center gap-6 group">
+                           <div className="bg-white/10 p-5 rounded-2xl group-hover:bg-[#c5a059] transition-all border border-white/5"><Mail className="w-7 h-7" /></div>
+                           <div>
+                              <p className="text-[10px] text-blue-300 font-black uppercase tracking-widest nav-font mb-1">Email Support</p>
+                              <p className="text-sm font-black nav-font tracking-tight break-all">{CONTACT_INFO.email}</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  {/* Location / Hours */}
+                  <div className="bg-white rounded-[3.5rem] p-12 shadow-xl border border-gray-100">
+                     <div className="space-y-10">
+                        <div>
+                           <div className="flex items-center gap-3 mb-6">
+                              <MapPin className="w-6 h-6 text-[#c5a059]" />
+                              <h4 className="text-lg font-black text-[#0f3460] nav-font">ที่ตั้งสำนักงาน</h4>
+                           </div>
+                           <p className="text-gray-500 font-bold leading-relaxed mb-1 nav-font">สถาบันแคป วิชั่น (CAP Vision Partner)</p>
+                           <p className="text-gray-500 font-medium leading-relaxed mb-6">
+                              {CONTACT_INFO.address}
+                           </p>
+                           <div className="aspect-video bg-gray-100 rounded-[2.5rem] overflow-hidden shadow-inner border border-gray-50 relative group cursor-pointer">
+                              <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&q=80" className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" alt="Office location" />
+                              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20">
+                                 <a href={CONTACT_INFO.mapsUrl} target="_blank" rel="noreferrer" className="bg-[#c5a059] text-white px-6 py-3 rounded-xl font-bold nav-font text-xs flex items-center gap-2">
+                                    <MapPin className="w-4 h-4" /> ดูแผนที่ Google Maps
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div className="pt-10 border-t border-gray-100">
+                           <div className="flex items-center gap-3 mb-6">
+                              <Clock className="w-6 h-6 text-[#c5a059]" />
+                              <h4 className="text-lg font-black text-[#0f3460] nav-font">เวลาทำการ</h4>
+                           </div>
+                           <div className="space-y-2">
+                              <div className="flex justify-between text-sm font-bold nav-font">
+                                 <span className="text-gray-400 uppercase tracking-widest">จันทร์ - ศุกร์</span>
+                                 <span className="text-[#0f3460]">{CONTACT_INFO.businessHours.weekdays}</span>
+                              </div>
+                              <div className="flex justify-between text-sm font-bold nav-font">
+                                 <span className="text-gray-400 uppercase tracking-widest">เสาร์</span>
+                                 <span className="text-[#0f3460]">{CONTACT_INFO.businessHours.saturday}</span>
+                              </div>
+                              <div className="flex justify-between text-sm font-bold nav-font">
+                                 <span className="text-gray-400 uppercase tracking-widest">อาทิตย์</span>
+                                 <span className="text-red-400">{CONTACT_INFO.businessHours.sunday}</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            {/* Activity Showcase Section */}
+            <section className="mt-32">
+               <div className="bg-[#0f3460] rounded-[3rem] md:rounded-[4.5rem] overflow-hidden shadow-2xl relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#0f3460] to-transparent z-10 opacity-60"></div>
+                  <img 
+                     src="https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/activity/BKK%20THE%20ONE%20SOCIETY%202025%20By%20AOT%20SUVARNABHUMI_251031_25.jpg" 
+                     className="w-full h-[400px] md:h-[600px] object-cover transition-transform duration-1000 group-hover:scale-105" 
+                     alt="BKK THE ONE SOCIETY 2025 By AOT SUVARNABHUMI" 
+                  />
+                  <div className="absolute inset-0 z-20 flex flex-col justify-end p-10 md:p-20">
+                     <span className="text-[#c5a059] font-black text-xs uppercase tracking-[0.5em] mb-4 block nav-font">Our Impact in Action</span>
+                     <h2 className="text-3xl md:text-5xl font-black text-white nav-font mb-6 leading-tight max-w-2xl">
+                        สร้างแรงบันดาลใจและพัฒนาศักยภาพผู้คนในทุกระดับ
+                     </h2>
+                     <p className="text-white/85 font-medium max-w-xl text-sm md:text-lg">
+                        บรรยากาศกิจกรรม BKK THE ONE SOCIETY 2025 โดยท่าอากาศยานสุวรรณภูมิ (AOT) — หนึ่งในความภูมิใจที่เราได้ร่วมเป็นส่วนหนึ่งของการพัฒนา
+                     </p>
+                  </div>
+               </div>
+            </section>
+
+            {/* FAQs Section */}
+            <section className="mt-32">
+               <div className="text-center mb-16">
+                  <span className="text-[#c5a059] font-black text-xs uppercase tracking-[0.5em] mb-4 block nav-font">Frequently Asked Questions</span>
+                  <h2 className="text-3xl md:text-5xl font-black text-[#0f3460] nav-font leading-tight">ทุกข้อสงสัย เรามีคำตอบให้คุณ</h2>
+               </div>
+
+               <div className="max-w-4xl mx-auto space-y-6">
+                  {FAQS.map((faq, idx) => (
+                     <div key={idx} className="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden transition-all hover:shadow-md">
+                        <button
+                           onClick={() => toggleFaq(idx)}
+                           className="w-full flex items-center justify-between p-8 text-left group"
+                        >
+                           <div className="flex items-center gap-4">
+                              <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${openFaq === idx ? 'bg-[#0f3460] text-white' : 'bg-gray-50 text-[#c5a059]'}`}>
+                                 <HelpCircle className="w-5 h-5" />
+                              </div>
+                              <span className={`text-lg font-bold nav-font transition-all ${openFaq === idx ? 'text-[#0f3460]' : 'text-gray-700 group-hover:text-[#0f3460]'}`}>
+                                 {faq.question}
+                              </span>
+                           </div>
+                           <div className={`transition-transform duration-300 ${openFaq === idx ? 'rotate-180' : ''}`}>
+                              <ChevronDown className={`w-6 h-6 ${openFaq === idx ? 'text-[#c5a059]' : 'text-gray-300'}`} />
+                           </div>
+                        </button>
+
+                        <div className={`transition-all duration-300 ease-in-out ${openFaq === idx ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                           <div className="px-24 pb-10 pt-0 text-gray-500 font-medium leading-relaxed border-t border-gray-50/50">
+                              <p className="pt-6">{faq.answer}</p>
+                           </div>
+                        </div>
+                     </div>
+                  ))}
+               </div>
+
+               <div className="text-center mt-12">
+                  <p className="text-gray-400 font-bold nav-font text-sm">ยังมีคำถามอื่นเพิ่มเติม?</p>
+                  <a href={CONTACT_INFO.lineUrl} target="_blank" rel="noreferrer" className="text-[#c5a059] font-black underline decoration-[#c5a059]/30 underline-offset-8 mt-2 inline-block hover:text-[#0f3460] transition-colors">ทักแชทคุยกับเราใน LINE ได้เลยครับ</a>
+               </div>
+            </section>
+         </div>
+
+         {/* Social Bar Section */}
+         <div className="bg-gray-50 py-20 border-t border-gray-100">
+            <div className="max-w-7xl mx-auto px-4">
+               <div className="text-center mb-12">
+                  <h3 className="text-2xl font-black text-[#0f3460] nav-font">Follow Us on Social Media</h3>
+                  <p className="text-gray-400 text-sm font-medium mt-2">ติดตามข่าวสารและกิจกรรมการเรียนรู้จากเราได้ทุกช่องทาง</p>
+               </div>
+               <div className="flex flex-wrap justify-center gap-6 md:gap-12">
+                  <a href={CONTACT_INFO.facebookUrl} target="_blank" rel="noreferrer" className="flex flex-col items-center group">
+                     <div className="w-20 h-20 bg-white rounded-3xl shadow-sm flex items-center justify-center text-blue-600 mb-4 group-hover:bg-blue-600 group-hover:text-white group-hover:-translate-y-2 transition-all">
+                        <Facebook className="w-8 h-8" />
+                     </div>
+                     <span className="text-xs font-black nav-font uppercase tracking-widest text-gray-400 group-hover:text-[#0f3460]">Facebook</span>
+                  </a>
+                  <a href={CONTACT_INFO.youtubeUrl} target="_blank" rel="noreferrer" className="flex flex-col items-center group">
+                     <div className="w-20 h-20 bg-white rounded-3xl shadow-sm flex items-center justify-center text-red-600 mb-4 group-hover:bg-red-600 group-hover:text-white group-hover:-translate-y-2 transition-all">
+                        <Youtube className="w-8 h-8" />
+                     </div>
+                     <span className="text-xs font-black nav-font uppercase tracking-widest text-gray-400 group-hover:text-[#0f3460]">YouTube</span>
+                  </a>
+                  <a href={CONTACT_INFO.instagramUrl} target="_blank" rel="noreferrer" className="flex flex-col items-center group">
+                     <div className="w-20 h-20 bg-white rounded-3xl shadow-sm flex items-center justify-center text-pink-600 mb-4 group-hover:bg-pink-600 group-hover:text-white group-hover:-translate-y-2 transition-all">
+                        <Instagram className="w-8 h-8" />
+                     </div>
+                     <span className="text-xs font-black nav-font uppercase tracking-widest text-gray-400 group-hover:text-[#0f3460]">Instagram</span>
+                  </a>
+                  <a href={CONTACT_INFO.tiktokUrl} target="_blank" rel="noreferrer" className="flex flex-col items-center group">
+                     <div className="w-20 h-20 bg-white rounded-3xl shadow-sm flex items-center justify-center text-black mb-4 group-hover:bg-black group-hover:text-white group-hover:-translate-y-2 transition-all">
+                        <TikTokIcon className="w-8 h-8" />
+                     </div>
+                     <span className="text-xs font-black nav-font uppercase tracking-widest text-gray-400 group-hover:text-[#0f3460]">TikTok</span>
+                  </a>
+               </div>
+            </div>
+         </div>
+
+         {/* Cross-link Navigation Section */}
+         <div className="bg-white py-16 border-t border-gray-100">
+            <div className="max-w-7xl mx-auto px-4">
+               <div className="text-center mb-10">
+                  <h3 className="text-2xl font-black text-[#0f3460] nav-font">สำรวจข้อมูลเพิ่มเติม</h3>
+               </div>
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <a href="/courses" className="group p-8 bg-gray-50 rounded-[2rem] border border-gray-100 hover:border-[#c5a059]/30 hover:shadow-lg transition-all text-center">
+                     <h4 className="text-lg font-bold text-[#0f3460] mb-2 nav-font group-hover:text-[#c5a059] transition-colors">หลักสูตรฝึกอบรม</h4>
+                     <p className="text-gray-500 text-sm">ดูหลักสูตรทั้งหมดที่เราเปิดสอน</p>
+                  </a>
+                  <a href="/services" className="group p-8 bg-gray-50 rounded-[2rem] border border-gray-100 hover:border-[#c5a059]/30 hover:shadow-lg transition-all text-center">
+                     <h4 className="text-lg font-bold text-[#0f3460] mb-2 nav-font group-hover:text-[#c5a059] transition-all text-center">บริการ</h4>
+                     <p className="text-gray-500 text-sm">In-house Training, Coaching, OD Consulting</p>
+                  </a>
+                  <a href="/about" className="group p-8 bg-gray-50 rounded-[2rem] border border-gray-100 hover:border-[#c5a059]/30 hover:shadow-lg transition-all text-center">
+                     <h4 className="text-lg font-bold text-[#0f3460] mb-2 nav-font group-hover:text-[#c5a059] transition-colors">เกี่ยวกับ CAP Vision</h4>
+                     <p className="text-gray-500 text-sm">วิสัยทัศน์ พันธกิจ และทีมวิทยากร</p>
+                  </a>
+               </div>
+            </div>
+         </div>
+      </div>
+   );
+};
+
+export default Contact;

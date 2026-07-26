@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CEOTierCommunityPage from '../components/CEOTierCommunityPage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="CEO Tier Community | CAP Vision Institute" 
+  description="กลุ่มสัมมนาและแลกเปลี่ยนความรู้สุดเอกซ์คลูซีฟสำหรับผู้บริหารระดับสูง (CEO) ที่ต้องการยกระดับองค์กรสู่ความเป็นผู้นำ"
+>
+  <div class="pt-16">
+    <CEOTierCommunityPage client:load />
+  </div>
+</Layout>

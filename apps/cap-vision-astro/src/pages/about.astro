@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AboutPage from '../components/AboutPage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="เกี่ยวกับเรา | CAP Vision Institute" 
+  description="รู้จักสถาบันแคป วิชั่น ผู้นำด้านการจัดอบรมพัฒนาศักยภาพมนุษย์เพื่อสร้างการเติบโตอย่างยั่งยืน นำโดยครูเด่นและทีมงานวิทยากรผู้ทรงคุณวุฒิ"
+>
+  <div class="pt-16">
+    <AboutPage client:load />
+  </div>
+</Layout>

@@ -1,4 +1,4 @@
-import { Resource } from '../types';
+import type { Resource } from '../types';
 
 export const HRD_ARTICLES: Resource[] = [
   {

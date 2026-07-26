@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SubconsciousSpeakerPage from '../components/SubconsciousSpeakerPage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="Subconscious Speaker | CAP Vision Institute" 
+  description="ก้าวแรกสู่วิทยากรจิตใต้สำนึก คอร์สเรียนเจาะลึกจิตวิทยาการสื่อสารเพื่อการนำเสนองานและพูดต่อหน้าชุมชนให้ตราตรึงใจ"
+>
+  <div class="pt-16">
+    <SubconsciousSpeakerPage client:load />
+  </div>
+</Layout>

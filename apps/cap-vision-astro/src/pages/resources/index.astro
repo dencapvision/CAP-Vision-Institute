@@ -1,0 +1,14 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ResourcesPage from '../../components/ResourcesPage.tsx';
+
+// SSR Page
+export const prerender = false;
+---
+
+<Layout 
+  title="Learning Hub | ศูนย์รวมความรู้พัฒนาคนและองค์กร | CAP Vision Institute"
+  description="รวมบทความ วิดีโอ และเครื่องมือฟรีด้านภาวะผู้นำ การสื่อสาร และการพัฒนาบุคลากร โดย ครูเด่น มาสเตอร์ฟา"
+>
+  <ResourcesPage client:load />
+</Layout>

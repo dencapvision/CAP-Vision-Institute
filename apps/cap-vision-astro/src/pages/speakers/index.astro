@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SpeakersPage from '../../components/SpeakersPage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="วิทยากร & Facilitators | CAP Vision Institute" 
+  description="ทีมวิทยากรและผู้จัดกระบวนการเรียนรู้อาวุโส นำโดยครูเด่นและทีมงานวิทยากรเฉพาะทางเพื่อการเปลี่ยนแปลงในองค์กร"
+>
+  <div class="pt-16">
+    <SpeakersPage client:load />
+  </div>
+</Layout>

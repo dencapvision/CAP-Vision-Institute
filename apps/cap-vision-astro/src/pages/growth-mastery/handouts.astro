@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import WorkshopHandoutsPage from '../../components/workshop/WorkshopHandoutsPage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="Workshop Handouts | CAP Vision Institute" 
+  description="เอกสารประกอบการฝึกอบรมแบบโต้ตอบอิเล็กทรอนิกส์ สำหรับผู้เรียนหลักสูตร Growth Mastery"
+>
+  <div class="pt-16">
+    <WorkshopHandoutsPage client:load />
+  </div>
+</Layout>

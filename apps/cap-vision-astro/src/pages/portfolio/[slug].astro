@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PortfolioDetailPage from '../../components/PortfolioDetailPage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="รายละเอียดผลงาน | CAP Vision Institute" 
+  description="กรณีศึกษาการจัดฝึกอบรมเชิงรุกเพื่อสร้างการเปลี่ยนแปลงพฤติกรรมจริงในองค์กรลูกค้า"
+>
+  <div class="pt-16">
+    <PortfolioDetailPage client:load />
+  </div>
+</Layout>

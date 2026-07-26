@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CEOSpeechfulnessPage from '../components/CEOSpeechfulnessPage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="CEO Speechfulness | CAP Vision Institute" 
+  description="โปรแกรมโค้ชการพูดและการสื่อสารส่วนบุคคลระดับพรีเมี่ยมสำหรับผู้บริหารระดับสูงและ CEO โดยครูเด่น มาสเตอร์ฟา"
+>
+  <div class="pt-16">
+    <CEOSpeechfulnessPage client:load />
+  </div>
+</Layout>

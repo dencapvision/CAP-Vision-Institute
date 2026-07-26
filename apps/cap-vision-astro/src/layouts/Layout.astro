@@ -9,6 +9,8 @@ const {
   description = "สถาบันพัฒนาศักยภาพผู้นำและฝึกอบรมครบวงจร โดย ครูเด่น มาสเตอร์ฟา [Master Facilitator]"
 } = Astro.props;
 
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import '../styles/global.css';
 ---
 
@@ -36,7 +38,11 @@ import '../styles/global.css';
 			}
 		</style>
 	</head>
-	<body class="bg-[#f8fafc] text-[#1a202c] min-h-screen flex flex-col">
-		<slot />
+	<body class="bg-[#f8fafc] text-[#1a202c] min-h-screen flex flex-col overflow-x-hidden">
+		<Header client:load />
+		<main class="flex-grow">
+			<slot />
+		</main>
+		<Footer client:visible />
 	</body>
 </html>

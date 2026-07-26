@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SpeakerDetailPage from '../../components/SpeakerDetailPage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="ข้อมูลวิทยากร | CAP Vision Institute" 
+  description="ประวัติ ผลงาน และความเชี่ยวชาญของวิทยากรและผู้จัดกระบวนการเรียนรู้ CAP Vision Institute"
+>
+  <div class="pt-16">
+    <SpeakerDetailPage client:load />
+  </div>
+</Layout>

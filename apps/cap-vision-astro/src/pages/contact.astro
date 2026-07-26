@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactPage from '../components/ContactPage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="ติดต่อเรา | CAP Vision Institute" 
+  description="ปรึกษาฟรีกับ Master Facilitator — ออกแบบหลักสูตร In-house Training, Executive Coaching, OD Consulting เฉพาะองค์กรคุณ ตอบกลับภายใน 24 ชั่วโมง"
+>
+  <div class="pt-16">
+    <ContactPage client:load />
+  </div>
+</Layout>

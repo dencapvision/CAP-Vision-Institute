@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PortfolioPage from '../../components/PortfolioPage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="ผลงานการจัดอบรม | CAP Vision Institute" 
+  description="กรณีศึกษาและผลลัพธ์ความสำเร็จในการจัดอบรมพัฒนาผู้นำ วัฒนธรรมองค์กร และทีมงาน ให้กับลูกค้าองค์กรชั้นนำ"
+>
+  <div class="pt-16">
+    <PortfolioPage client:load />
+  </div>
+</Layout>

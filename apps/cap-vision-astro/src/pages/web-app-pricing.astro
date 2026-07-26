@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WebAppPricingPage from '../components/WebAppPricingPage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="แพ็คเกจสร้างเว็บแอป AI พร้อมใช้ | CAP Vision Institute" 
+  description="พัฒนาเว็บแอปพรีเมี่ยมสำหรับธุรกิจ คอร์สเรียนออนไลน์ หรือบริการของวิทยากรพร้อมติดตั้งระบบ AI คลุมฟังก์ชันครบครัน"
+>
+  <div class="pt-16">
+    <WebAppPricingPage client:load />
+  </div>
+</Layout>

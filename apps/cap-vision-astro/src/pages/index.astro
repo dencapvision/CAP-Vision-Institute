@@ -1,17 +1,400 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import { BRAND_INFO, CONTACT_INFO, CLIENTS } from '../constants/brand';
+import { COURSES } from '../constants/courses';
+import { HRD_ARTICLES } from '../constants/articles';
 
+// ดึง 3 หลักสูตรแรกไปแสดงผลเด่นที่หน้าแรก
+const featuredCourses = COURSES.slice(0, 3);
+// ดึง 3 บทความแรกไปแสดงผล
+const featuredArticles = HRD_ARTICLES.slice(0, 3);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout 
+  title="หน้าหลัก | CAP Vision Institute - พัฒนาคน สร้างทีม ยกระดับองค์กร"
+  description="CAP Vision Institute สถาบันฝึกอบรมระดับมืออาชีพ ผู้นำด้าน Transformative Learning นำโดย ครูเด่น (อนุสรณ์ หนองนา) และ Master Fa จุดประกายคน เปลี่ยนวิธีคิด สร้างผลลัพธ์จริง"
+>
+  <!-- Hero Section -->
+  <section class="relative min-h-[100svh] flex items-center overflow-hidden bg-[#0f3460] pt-12 md:pt-0">
+    <div class="absolute inset-0 z-0">
+      <img
+        src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80"
+        alt="CAP Vision Institute - ทีมเวิร์คและการพัฒนาองค์กร"
+        class="w-full h-full object-cover scale-110 md:scale-100 opacity-35"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-[#0f3460] via-[#0f3460]/90 to-transparent"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(197,160,89,0.15),transparent_70%)]"></div>
+      <div class="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 bg-[#c5a059]/10 rounded-full blur-[120px]"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 md:py-32">
+      <div class="max-w-4xl">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full mb-8 md:mb-10 animate-pulse">
+          <span class="w-2 h-2 bg-[#c5a059] rounded-full flex-shrink-0"></span>
+          <span class="text-white/80 font-bold tracking-[0.15em] text-[10px] md:text-xs nav-font uppercase leading-none mt-0.5">
+            Transformative Learning Programs
+          </span>
+        </div>
+
+        <!-- H1 -->
+        <h1 class="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1.1] md:leading-[1.05] mb-6 md:mb-8 nav-font tracking-tight text-white">
+          พัฒนาคน สร้างทีม<br class="hidden md:block" />
+          <span class="text-[#c5a059]">ยกระดับองค์กร</span>
+        </h1>
+
+        <!-- Highlight -->
+        <p class="text-xl md:text-2xl font-bold text-[#c5a059] mb-4">
+          Inspire People. Transform Mindsets. Create Real Impact.
+        </p>
+
+        <!-- Sub -->
+        <p class="text-base md:text-xl text-white/85 leading-relaxed mb-10 md:mb-12 max-w-2xl">
+          จุดประกายคน เปลี่ยนวิธีคิด สร้างผลลัพธ์ที่จับต้องได้จริงในองค์กรผ่านประสบการณ์การเรียนรู้เชิงประสบการณ์
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-10 md:mb-14">
+          <a href="/contact" class="bg-[#c5a059] text-[#0f3460] hover:bg-white hover:text-[#0f3460] px-8 md:px-12 py-4 md:py-5 rounded-2xl font-black text-base md:text-lg transition-all duration-300 flex items-center justify-center gap-3 shadow-2xl nav-font transform hover:scale-[1.03] active:scale-95">
+            ขอใบเสนอราคา
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </a>
+          <a href="/courses" class="bg-white/5 backdrop-blur-xl text-white border-2 border-white/20 hover:bg-white/10 px-8 md:px-12 py-4 md:py-5 rounded-2xl font-black text-base md:text-lg transition-all duration-300 flex items-center justify-center gap-3 nav-font active:scale-95">
+            ดูหลักสูตรทั้งหมด
+          </a>
+        </div>
+
+        <!-- Trust stats -->
+        <div class="flex flex-wrap gap-8 md:gap-14 border-t border-white/10 pt-8">
+          <div>
+            <div class="text-2xl md:text-3xl font-black text-[#c5a059] nav-font">10,000+</div>
+            <div class="text-white/85 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">ผู้เรียนสำเร็จ</div>
+          </div>
+          <div>
+            <div class="text-2xl md:text-3xl font-black text-[#c5a059] nav-font">200+</div>
+            <div class="text-white/85 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">องค์กรพันธมิตร</div>
+          </div>
+          <div>
+            <div class="text-2xl md:text-3xl font-black text-[#c5a059] nav-font">18+ ปี</div>
+            <div class="text-white/85 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">ประสบการณ์</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-3 text-white/80">
+      <span class="text-[10px] items-center font-bold tracking-widest uppercase rotate-90 origin-left translate-x-3 mb-8">Scroll</span>
+      <div class="w-0.5 h-16 bg-gradient-to-b from-white/40 to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- Video Intro Section -->
+  <section class="py-24 md:py-32 bg-[#0a2545] relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+      <div class="absolute top-0 left-0 w-96 h-96 bg-[#c5a059] rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center mb-16 md:mb-24">
+        <span class="text-[#c5a059] font-black text-[10px] md:text-sm uppercase tracking-[0.4em] mb-4 block nav-font underline decoration-2 underline-offset-8">
+          Experience the Transformation
+        </span>
+        <h2 class="text-3xl md:text-5xl lg:text-7xl font-black text-white nav-font leading-tight">
+          สัมผัสประสบการณ์ <span class="text-[#c5a059]">การเรียนรู้</span> ที่แท้จริง
+        </h2>
+      </div>
+      
+      <div class="max-w-5xl mx-auto">
+        <div class="relative aspect-video rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border-8 border-white/5 ring-1 ring-white/10">
+          <iframe
+            src="https://www.youtube.com/embed/nTdeTEWVeWE?si=JTWQI8tXb57_e7SL"
+            title="CAP Vision Institute - Intro Video"
+            class="absolute inset-0 w-full h-full border-0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+        
+        <div class="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+          <div class="p-6 rounded-2xl hover:bg-white/5 transition-all duration-300">
+            <h4 class="text-[#c5a059] font-black text-lg mb-2 nav-font uppercase tracking-tight">Visionary Learning</h4>
+            <p class="text-white/85 text-sm font-medium">กระบวนการเรียนรู้ที่มองไกลกว่าแค่ทฤษฎี เน้นพัฒนาคุณลักษณะและแก่นแท้ภายใน</p>
+          </div>
+          <div class="p-6 rounded-2xl hover:bg-white/5 transition-all duration-300">
+            <h4 class="text-[#c5a059] font-black text-lg mb-2 nav-font uppercase tracking-tight">Interactive Flow</h4>
+            <p class="text-white/85 text-sm font-medium">การมีส่วนร่วมและกิจกรรมเชิงกลุ่มสัมพันธ์ที่สร้างพลังการตื่นรู้และการเปลี่ยนแปลงร่วมกัน</p>
+          </div>
+          <div class="p-6 rounded-2xl hover:bg-white/5 transition-all duration-300">
+            <h4 class="text-[#c5a059] font-black text-lg mb-2 nav-font uppercase tracking-tight">Result Oriented</h4>
+            <p class="text-white/85 text-sm font-medium">มุ่งเน้นผลลัพธ์และทัศนคติการทํางานที่นําไปประยุกต์ใช้เพื่อความก้าวหน้าขององค์กรได้จริง</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Courses Section -->
+  <section class="py-24 md:py-32 bg-white relative">
+    <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-50/50 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-16 md:mb-20 gap-8">
+        <div class="max-w-2xl">
+          <span class="text-[#c5a059] font-black text-[10px] md:text-sm uppercase tracking-[0.4em] mb-4 block nav-font">Course Selection</span>
+          <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-[#0f3460] nav-font leading-tight">
+            หลักสูตรที่ <span class="text-[#c5a059]">ดีที่สุด</span> สำหรับคุณ
+          </h2>
+        </div>
+        <a href="/courses" class="group flex items-center gap-3 text-lg font-bold text-[#0f3460] hover:text-[#c5a059] transition-all duration-300 nav-font">
+          ดูหลักสูตรทั้งหมด 
+          <svg class="w-5 h-5 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+        {featuredCourses.map((course) => (
+          <div class="group flex flex-col h-full bg-white relative overflow-hidden transition-all duration-500 rounded-3xl border border-gray-100 shadow-sm hover:shadow-2xl hover:scale-[1.01]">
+            <div class="relative overflow-hidden aspect-[16/10] bg-[#0f3460]/5">
+              <img
+                src={course.image}
+                alt={course.altText || course.title}
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-[#0f3460]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div class="absolute top-4 left-4 bg-[#c5a059] text-white px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase z-10 shadow-lg">
+                {course.category || 'Premium Workshop'}
+              </div>
+            </div>
+            <div class="p-8 md:p-10 flex flex-col flex-grow">
+              <h3 class="text-xl md:text-2xl font-black text-[#0f3460] mb-4 nav-font group-hover:text-[#c5a059] transition-colors leading-tight min-h-[3.5rem] whitespace-pre-line">
+                {course.title}
+              </h3>
+              <p class="text-gray-500 text-sm md:text-base mb-8 line-clamp-3 opacity-80 leading-relaxed font-medium flex-grow">
+                {course.description}
+              </p>
+              <div class="pt-8 border-t border-gray-100 mt-auto">
+                <a 
+                  href={`/courses/${course.id}`} 
+                  class="w-full bg-[#0f3460] hover:bg-[#c5a059] text-white hover:text-white py-4 rounded-xl font-black text-sm md:text-base flex items-center justify-center gap-3 transition-all duration-300 nav-font shadow-lg transform active:scale-95"
+                >
+                  ดูรายละเอียดหลักสูตร
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-24 md:py-32 bg-[#0f3460] relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-0 right-0 w-96 h-96 bg-[#c5a059] rounded-full blur-[100px]"></div>
+      <div class="absolute bottom-0 left-0 w-96 h-96 bg-blue-400 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
+        <div class="group">
+          <div class="text-[#c5a059] mb-6 flex justify-center group-hover:scale-110 transition-transform duration-500">
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          </div>
+          <div class="text-3xl md:text-6xl font-black text-white mb-2 md:mb-4 nav-font tracking-tight">10,000+</div>
+          <div class="text-white/80 font-black tracking-[0.2em] text-[10px] md:text-sm uppercase nav-font">ผู้สำเร็จการอบรม</div>
+        </div>
+        <div class="group">
+          <div class="text-[#c5a059] mb-6 flex justify-center group-hover:scale-110 transition-transform duration-500">
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+          </div>
+          <div class="text-3xl md:text-6xl font-black text-white mb-2 md:mb-4 nav-font tracking-tight">50+</div>
+          <div class="text-white/80 font-black tracking-[0.2em] text-[10px] md:text-sm uppercase nav-font">หลักสูตรคุณภาพ</div>
+        </div>
+        <div class="group">
+          <div class="text-[#c5a059] mb-6 flex justify-center group-hover:scale-110 transition-transform duration-500">
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+          </div>
+          <div class="text-3xl md:text-6xl font-black text-white mb-2 md:mb-4 nav-font tracking-tight">200+</div>
+          <div class="text-white/80 font-black tracking-[0.2em] text-[10px] md:text-sm uppercase nav-font">องค์กรพันธมิตร</div>
+        </div>
+        <div class="group">
+          <div class="text-[#c5a059] mb-6 flex justify-center group-hover:scale-110 transition-transform duration-500">
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+          </div>
+          <div class="text-3xl md:text-6xl font-black text-white mb-2 md:mb-4 nav-font tracking-tight">99%</div>
+          <div class="text-white/80 font-black tracking-[0.2em] text-[10px] md:text-sm uppercase nav-font">ความพึงพอใจ</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instructor Section -->
+  <section class="py-16 md:py-32 bg-gray-50 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row items-center gap-12 md:gap-24">
+        <div class="lg:w-1/2 relative">
+          <div class="absolute -top-16 -left-16 w-64 md:w-80 h-64 md:h-80 bg-[#c5a059] rounded-full mix-blend-multiply filter blur-[80px] opacity-10 animate-pulse"></div>
+          <div class="bg-white p-4 md:p-6 rounded-[3rem] md:rounded-[4rem] shadow-2xl relative z-10 border border-gray-100">
+            <img
+              src="/images/denmasterfa.jpg"
+              alt="ครูเด่น มาสเตอร์ฟา"
+              class="rounded-[2.5rem] md:rounded-[3rem] w-full max-w-lg mx-auto"
+            />
+          </div>
+          <div class="absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 bg-[#c5a059] text-white p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] z-20 shadow-2xl hidden md:block border-8 border-white">
+            <p class="text-3xl md:text-5xl font-black mb-1 nav-font">18+</p>
+            <p class="text-[8px] md:text-xs font-bold uppercase tracking-[0.3em] nav-font">Experience Years</p>
+          </div>
+        </div>
+        <div class="lg:w-1/2">
+          <span class="inline-block text-[#c5a059] font-black text-xs uppercase tracking-[0.5em] mb-6 md:mb-8 nav-font">Master Facilitator</span>
+          <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-[#0f3460] mb-6 md:mb-10 nav-font leading-tight">{BRAND_INFO.director}</h2>
+          <p class="text-lg md:text-xl text-gray-700 leading-relaxed mb-8 md:mb-12 font-medium opacity-80">
+            ผู้อำนวยการสถาบัน แคป วิชั่น อินสติทิวต์ ผู้เชี่ยวชาญด้านกระบวนการเรียนรู้เพื่อการเปลี่ยนแปลง (Transformative Learning) และจัดกระบวนการเรียนรู้พัฒนาผู้นำองค์กรชั้นนำมากว่า 18 ปี
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8 mb-10 md:mb-16">
+            <div class="flex items-center gap-3">
+              <svg class="w-6 h-6 text-[#c5a059]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span class="font-bold text-[#0f3460] text-base md:text-lg nav-font">Activity Based Learning</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <svg class="w-6 h-6 text-[#c5a059]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span class="font-bold text-[#0f3460] text-base md:text-lg nav-font">Transformative Facilitator</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <svg class="w-6 h-6 text-[#c5a059]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span class="font-bold text-[#0f3460] text-base md:text-lg nav-font">Leadership Development</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <svg class="w-6 h-6 text-[#c5a059]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span class="font-bold text-[#0f3460] text-base md:text-lg nav-font">Corporate Culture Coaching</span>
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-4 md:gap-6">
+            <a href="/speakers" class="bg-[#0f3460] hover:bg-[#c5a059] text-white hover:text-white px-10 md:px-12 py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg transition-all duration-300 nav-font shadow-xl text-center">
+              ทีมวิทยากรทั้งหมด
+            </a>
+            <a href={CONTACT_INFO.lineUrl} class="flex items-center justify-center gap-3 bg-white border-2 border-gray-200 text-[#0f3460] px-8 md:px-10 py-4 md:py-5 rounded-2xl font-bold hover:border-[#c5a059] transition-all duration-300 nav-font">
+              <svg class="w-6 h-6 text-[#c5a059]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg> 
+              {CONTACT_INFO.line}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clients Section -->
+  <section class="py-20 md:py-32 bg-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 md:mb-24">
+        <span class="text-[#c5a059] font-black text-xs uppercase tracking-[0.5em] mb-4 md:mb-6 block nav-font">พันธมิตรที่ไว้วางใจเรา</span>
+        <h2 class="text-3xl md:text-5xl font-black text-[#0f3460] mb-6 md:mb-8 nav-font">ลูกค้าและพันธมิตรที่ไว้วางใจ</h2>
+        <div class="w-16 md:w-24 h-1 bg-[#c5a059] mx-auto rounded-full mb-8"></div>
+        <p class="text-gray-500 font-medium max-w-3xl mx-auto text-sm md:text-lg">
+          กว่า 18 ปีที่เราได้ร่วมเดินทางเพื่อ Transform บุคลากรให้กับหน่วยงานภาครัฐ รัฐวิสาหกิจ และบริษัทมหาชนชั้นนำทั่วประเทศ
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 md:gap-12 items-center justify-items-center">
+        {CLIENTS.map((client) => (
+          <div class="group relative flex flex-col items-center justify-center p-4 md:p-6 w-full h-32 md:h-40 transition-all duration-500 hover:scale-110">
+            <div class="absolute inset-0 bg-gray-50/50 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 border border-gray-100"></div>
+            <img
+              src={client.logo}
+              alt={client.name}
+              class="relative z-10 max-w-[80%] max-h-[70%] object-contain filter grayscale group-hover:grayscale-0 transition-all duration-700"
+            />
+            <span class="mt-4 text-[10px] font-black text-gray-400 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300 nav-font text-center">
+              {client.name}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Insights & Articles Section -->
+  <section class="py-24 md:py-32 bg-[#f8fafc]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 gap-6">
+        <div class="max-w-2xl">
+          <span class="inline-block text-[#c5a059] font-black text-xs uppercase tracking-[0.5em] mb-4 nav-font">Knowledge Hub</span>
+          <h2 class="text-3xl md:text-5xl font-black text-[#0f3460] nav-font">Insights & Articles</h2>
+        </div>
+        <a 
+          href="/resources" 
+          class="group flex items-center gap-2 text-[#0f3460] font-bold hover:text-[#c5a059] transition-colors duration-300 nav-font text-lg"
+        >
+          ดูบทความทั้งหมด
+          <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {featuredArticles.map((article) => (
+          <div class="group bg-white rounded-[2rem] overflow-hidden hover:shadow-2xl transition-all duration-500 flex flex-col h-full border border-gray-100">
+            <a href={`/resources/${article.id}`} class="relative h-64 overflow-hidden block">
+              <img
+                src={article.thumbnail}
+                alt={article.title}
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#0f3460] px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest z-10 shadow-sm">
+                {article.category || 'HRD Insight'}
+              </div>
+            </a>
+            <div class="p-8 flex flex-col flex-grow">
+              <div class="flex items-center gap-4 text-gray-400 text-xs mb-4 font-bold uppercase tracking-wider">
+                <span class="flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                  {article.date}
+                </span>
+                <span class="flex items-center gap-1.5">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                  {article.author || 'CAP Editor'}
+                </span>
+              </div>
+              <h3 class="text-xl font-black text-[#0f3460] mb-4 group-hover:text-[#c5a059] transition-colors duration-300 line-clamp-2 leading-tight">
+                <a href={`/resources/${article.id}`}>{article.title}</a>
+              </h3>
+              <p class="text-gray-500 text-sm line-clamp-3 mb-8 flex-grow">
+                {article.excerpt}
+              </p>
+              <a
+                href={`/resources/${article.id}`}
+                class="inline-flex items-center gap-2 text-[#0f3460] font-black text-sm uppercase tracking-wider group/link hover:text-[#c5a059] transition-colors duration-300"
+              >
+                อ่านต่อ
+                <svg class="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="py-24 md:py-40 bg-gradient-to-br from-[#0f3460] to-[#0a2545] text-white relative overflow-hidden text-center">
+    <div class="absolute inset-0 opacity-5 pointer-events-none flex items-center justify-center">
+      <span class="text-white text-[15rem] md:text-[25rem] font-black tracking-tighter opacity-10">CAP</span>
+    </div>
+    <div class="max-w-4xl mx-auto px-4 relative z-10">
+      <h2 class="text-3xl md:text-5xl lg:text-7xl font-black mb-8 md:mb-12 nav-font leading-tight tracking-tight uppercase text-white">
+        ยกระดับ<br />องค์กรของคุณ
+      </h2>
+      <p class="text-white/85 text-base md:text-xl lg:text-2xl mb-12 md:mb-20 font-light max-w-2xl mx-auto leading-relaxed">
+        ปรึกษาพวกเราเพื่อร่วมออกแบบโซลูชันการพัฒนาผู้นำ วัฒนธรรมองค์กร และทีมงานที่ทันสมัย วัดผลสัมฤทธิ์ได้จริง
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4 md:gap-8">
+        <a href={CONTACT_INFO.lineUrl} class="bg-[#c5a059] text-[#0f3460] hover:bg-white hover:text-[#0f3460] px-10 md:px-16 py-4 md:py-6 rounded-[2rem] font-bold text-lg md:text-2xl transition-all duration-300 shadow-2xl nav-font transform hover:scale-[1.05]">
+          พูดคุยกับพวกเรา
+        </a>
+        <a href={`tel:${CONTACT_INFO.phone}`} class="bg-white/10 border-2 border-white/20 text-white hover:bg-white/20 px-10 md:px-16 py-4 md:py-6 rounded-[2rem] font-bold text-lg md:text-2xl transition-all duration-300 nav-font">
+          {CONTACT_INFO.phone}
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

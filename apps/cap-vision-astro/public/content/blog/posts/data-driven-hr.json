@@ -1,0 +1,93 @@
+{
+    "id": "data-driven-hr",
+    "title": "Data-Driven HR: เปลี่ยนพฤติกรรม สัญชาตญาณเป็นการตัดสินใจด้วยข้อมูล",
+    "slug": "data-driven-hr",
+    "category": "HR Strategy",
+    "thumbnail": "https://images.unsplash.com/photo-1551288049-bbda4766ef38?auto=format&fit=crop&q=80",
+    "author": "ครูเด่น มาสเตอร์ฟา",
+    "date": "15 พฤศจิกายน 2566",
+    "createdAt": "2023-11-15T00:00:00Z",
+    "readTime": "8 Min Read",
+    "summary": "Data-Driven HR คือการใช้ข้อมูลและ Analytics เพื่อตัดสินใจด้านบุคลากรอย่างแม่นยำ ตั้งแต่การพยากรณ์ความเสี่ยงการลาออก ไปจนถึงการวัด ROI ของการอบรม และเชื่อมโยง HR กับ Business Results",
+    "description": "ก้าวข้ามการบริหารคนแบบเดิมด้วย HR Analytics เรียนรู้วิธีการจัดเก็บ วิเคราะห์ และนำข้อมูลมาใช้ในการพยากรณ์และป้องกันพนักงานลาออกล่วงหน้า",
+    "tags": [
+        "HR Analytics",
+        "Data-Driven",
+        "Decision Making",
+        "HR Technology"
+    ],
+    "context": "HR ส่วนใหญ่ยังบริหารคนด้วยประสบการณ์และสัญชาตญาณ ซึ่งไม่ผิด แต่ไม่เพียงพออีกต่อไปในยุคที่ CEO ต้องการหลักฐานเป็นตัวเลขก่อนอนุมัติงบพัฒนาบุคลากร Data-Driven HR ไม่ใช่การแทนที่ความเข้าใจมนุษย์ แต่คือการเสริมมันด้วยความแม่นยำ",
+    "insight": "IBM Research พบว่าองค์กรที่ใช้ People Analytics อย่างจริงจังสามารถลด Turnover ได้ถึง 50% เพราะสามารถตรวจจับ Flight Risk ได้ล่วงหน้า 6-12 เดือน และเข้าแทรกแซงได้ก่อนที่พนักงานจะเริ่มหางานใหม่",
+    "framework": [
+        {
+            "step": "ระดับที่ 1",
+            "title": "Descriptive Analytics — เกิดอะไรขึ้น?",
+            "description": "เริ่มจากการดูข้อมูลพื้นฐาน เช่น Turnover Rate แยกแผนก, Time-to-Hire, Absenteeism Rate, Training Completion Rate ข้อมูลเหล่านี้บอกว่าปัจจุบันองค์กรเป็นอย่างไร เปรียบเทียบกับเดือนก่อนและปีก่อน"
+        },
+        {
+            "step": "ระดับที่ 2",
+            "title": "Diagnostic Analytics — ทำไมถึงเกิด?",
+            "description": "เจาะลึกว่าทำไม Turnover ในแผนก X ถึงสูง หรือทำไม Time-to-Hire ของตำแหน่ง Y ถึงยาวนาน อาจพบว่า Turnover สูงมาจาก Manager คนเดียว ไม่ใช่ปัญหาทั้งแผนก"
+        },
+        {
+            "step": "ระดับที่ 3",
+            "title": "Predictive Analytics — จะเกิดอะไรขึ้น?",
+            "description": "ใช้ Pattern จากข้อมูลอดีตเพื่อทำนายอนาคต เช่น พนักงานที่มีคะแนน Engagement ต่ำ + ไม่ได้รับ Promotion ใน 18 เดือน + ทำงานมา 3 ปี มีโอกาสลาออกสูง 70% ใน 6 เดือนข้างหน้า"
+        },
+        {
+            "step": "ระดับที่ 4",
+            "title": "Prescriptive Analytics — ควรทำอะไร?",
+            "description": "ระดับสูงสุดคือระบบที่แนะนำ Action ที่ควรทำ เช่น 'พนักงาน A มีความเสี่ยงลาออกสูง แนะนำให้ Manager ทำ Stay Interview ภายใน 2 สัปดาห์' ทำให้ HR กลายเป็น Proactive แทนที่จะ Reactive"
+        }
+    ],
+    "application": "เริ่มต้น Data-Driven HR ด้วยการตั้ง 3 KPI ที่คุณจะติดตามทุกเดือนและนำเสนอต่อผู้บริหาร เช่น Turnover Rate, Time-to-Fill, Training ROI เปิด HRIS ดูข้อมูล แล้วบอกเล่าเรื่องราวที่ซ่อนอยู่ในตัวเลข การที่ HR นำเสนอด้วยตัวเลขต่อผู้บริหารคือการสร้าง Credibility ในระยะยาว",
+    "case_study": {
+        "title": "ธนาคารพาณิชย์ขนาดกลาง: ลด Turnover จาก 22% เหลือ 14% ด้วย Predictive Analytics",
+        "story": "ทีม HR Analytics ของธนาคารแห่งหนึ่งพบว่า Pattern ของพนักงานที่ลาออกภายใน 1 ปีมักมีลักษณะร่วม 3 อย่าง: ไม่ได้รับ Feedback จาก Manager ใน 3 เดือนที่ผ่านมา, Overtime เฉลี่ยเกิน 20 ชั่วโมง/สัปดาห์ใน 2 เดือนติดต่อกัน, และคะแนน Engagement Survey ลดลง 15%+ จากปีก่อน ทีม HR ใช้ Pattern นี้ระบุกลุ่มเสี่ยง 45 คน และทำ Intervention ผ่าน Retention Conversation และ Workload Rebalancing ใน 6 เดือน อัตราการลาออกในกลุ่มนี้อยู่ที่ 8% เทียบกับค่าเฉลี่ยองค์กร 22%",
+        "result": "Turnover Rate ลดจาก 22% เหลือ 14% ประหยัดค่าสรรหาและฝึกอบรม 4.2 ล้านบาท/ปี"
+    },
+    "takeaways": [
+        "เริ่ม Data-Driven HR จาก 3 KPI ที่ติดตามได้จาก HRIS ที่มีอยู่แล้ว ไม่ต้องซื้อระบบใหม่",
+        "Predictive Analytics ที่ดีที่สุดคือการหา Pattern จากพนักงานที่เคยลาออกแล้วนำมาทำนายคนที่เหลือ",
+        "ตัวเลข HR ที่ดีต้องเชื่อมได้กับ Business Results เช่น Turnover ที่ลดลง = ประหยัดต้นทุนเท่าไหร่",
+        "HR ที่นำเสนอด้วย Data ต่อผู้บริหารมีโอกาสได้งบและอำนาจตัดสินใจมากกว่า HR ที่นำเสนอด้วยความรู้สึก",
+        "Data ไม่ได้แทนที่ความเข้าใจมนุษย์ แต่ช่วยให้รู้ว่าควรเอาเวลาไปใส่ใจใครก่อน"
+    ],
+    "faq": [
+        {
+            "question": "ถ้าองค์กรยังไม่มี HRIS จะเริ่ม Data-Driven HR ได้ไหม?",
+            "answer": "ได้ เริ่มจาก Excel ก็ได้ ติดตาม 3-5 Metrics ที่สำคัญที่สุดก่อน เช่น Turnover, Absenteeism, Training Hours เมื่อเห็นคุณค่าแล้วค่อย Justify การลงทุนใน HRIS ที่มีระบบ Analytics"
+        },
+        {
+            "question": "Data-Driven HR จะทำให้พนักงานรู้สึกถูกสอดส่องไหม?",
+            "answer": "ขึ้นอยู่กับการสื่อสาร ถ้า HR แจ้งให้พนักงานรู้ว่าข้อมูลอะไรถูกเก็บและนำไปใช้อะไร (Transparency) และแสดงให้เห็นว่าข้อมูลนั้นถูกใช้เพื่อประโยชน์ของพนักงาน ความกังวลจะลดลง"
+        },
+        {
+            "question": "HR ต้องเรียน Data Science ไหมถึงจะทำ Data-Driven HR ได้?",
+            "answer": "ไม่จำเป็น ทักษะที่ต้องการคือการอ่านกราฟ คิดเชิงตัวเลข และการ Storytelling จาก Data ที่ HRIS สร้างให้แล้ว Data Science เป็น Plus แต่ไม่ใช่ Requirement สำหรับ HR Analytics ระดับพื้นฐานถึงกลาง"
+        },
+        {
+            "question": "จะรู้ได้อย่างไรว่าโปรแกรมอบรมได้ผลจริง?",
+            "answer": "ใช้ Kirkpatrick Model: วัด Reaction (ความพอใจหลังอบรม), Learning (ความรู้ที่เพิ่มขึ้น ทดสอบก่อน-หลัง), Behavior (พฤติกรรมเปลี่ยนไปในหน้างาน 30-90 วันหลังอบรม) และ Results (ตัวเลขธุรกิจที่เปลี่ยนแปลง)"
+        }
+    ],
+    "cta": {
+        "title": "พร้อมนำ Data มาขับเคลื่อนการบริหารคน?",
+        "description": "CAP Vision ออกแบบ Workshop HR Analytics for Non-Data Scientists สำหรับทีม HR ที่ต้องการเริ่มต้นใช้ Data โดยไม่ต้องมีพื้นหลัง Technical",
+        "buttonText": "สอบถามหลักสูตร",
+        "buttonLink": "/contact"
+    },
+    "seo": {
+        "metaTitle": "Data-Driven HR คืออะไร? วิธีใช้ HR Analytics ลด Turnover และเพิ่มประสิทธิภาพ",
+        "metaDescription": "เรียนรู้ Data-Driven HR ตั้งแต่ Descriptive ถึง Predictive Analytics พร้อม Case Study ธนาคารที่ลด Turnover จาก 22% เหลือ 14% ด้วยข้อมูล",
+        "keywords": ["Data-Driven HR", "HR Analytics", "People Analytics", "Predictive Analytics", "Turnover Prevention", "HR Strategy"]
+    },
+    "hashtags": ["#DataDrivenHR", "#HRAnalytics", "#PeopleAnalytics", "#HRStrategy", "#CAPVision"],
+    "images": [
+        {
+            "url": "https://images.unsplash.com/photo-1551288049-bbda4766ef38?auto=format&fit=crop&q=80",
+            "alt": "HR Analytics dashboard showing employee data and trends",
+            "caption": "ตัวเลขไม่มีชีวิต แต่สามารถบอกเล่าเรื่องราวของหัวใจคนในองค์กรได้ดีที่สุด"
+        }
+    ]
+}

@@ -8,6 +8,7 @@ const __dirname = path.dirname(__filename);
 const wranglerConfig = {
   name: "cap-vision-institute",
   main: "./server/entry.mjs",
+  pages_build_output_dir: "./client",
   compatibility_date: "2026-04-15",
   compatibility_flags: [
     "nodejs_compat"

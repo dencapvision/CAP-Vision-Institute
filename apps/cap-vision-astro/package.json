@@ -10,7 +10,7 @@
     "build": "astro build && node copy-wrangler.js",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "npm run build && npx wrangler pages deploy dist --project-name=cap-vision-astro"
+    "deploy": "npm run build && npx wrangler pages deploy dist --project-name=cap-vision-astro --commit-dirty=true"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.1.4",

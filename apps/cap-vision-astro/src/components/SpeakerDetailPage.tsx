@@ -5,7 +5,7 @@ import {
   ArrowLeft, CheckCircle2, Award, Star, MessageCircle, Phone, BookOpen,
   ChevronRight, Zap, Users, Brain, Target, Quote, Calendar, TrendingUp, Shield,
   Mic2, Sparkles, Heart, Presentation, ArrowRight, Building, Mail, Maximize2,
-  Facebook, Instagram, Linkedin, Youtube, Music
+  Facebook, Instagram, Linkedin, Youtube, Music, Download, FileText, ExternalLink
 } from 'lucide-react';
 import { fetchInstructorBySlug } from '../lib/services/instructors';
 import { fetchCourses } from '../lib/services/courses';
@@ -1386,6 +1386,101 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                 />
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Download Documents Section ─── */}
+      <section className="py-24 bg-gray-50/60">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <p className="text-[#c5a059] font-black uppercase tracking-[0.3em] text-[10px] mb-3">เอกสารสำหรับดาวน์โหลด</p>
+            <h2 className="text-4xl md:text-5xl font-black text-[#0f3460] font-['Prompt']">Speaker Profile & Documents</h2>
+            <p className="text-gray-400 mt-4 text-lg font-medium">เอกสารแนะนำวิทยากรและ Portfolio สำหรับผู้จัดงานและฝ่าย HR</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            {/* 1 — การ์ดแนะนำ 1 หน้า */}
+            <a
+              href="https://drive.google.com/file/d/1yKP7QsyGxeerCHTpsOatlx1ExSZL_hR7/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-white rounded-3xl border border-gray-100 p-8 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-5"
+            >
+              <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <FileText className="w-7 h-7 text-[#c5a059]" />
+              </div>
+              <div className="flex-1">
+                <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest block mb-2">1 Page Profile</span>
+                <h3 className="font-black text-[#0f3460] text-lg leading-tight">การ์ดแนะนำวิทยากร</h3>
+                <p className="text-gray-400 text-sm mt-2">อนุสรณ์ หนองนา · 1 หน้า A4</p>
+              </div>
+              <div className="flex items-center gap-2 text-[#0f3460] font-black text-sm group-hover:text-[#c5a059] transition-colors">
+                <Download className="w-4 h-4" /> ดาวน์โหลด / เปิดดู
+              </div>
+            </a>
+
+            {/* 2 — เอกสารแนะนำวิทยากร */}
+            <a
+              href="https://drive.google.com/file/d/14efkoH7DfK7F9Bc3L6ZtsN3VJITBn5YV/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-white rounded-3xl border border-gray-100 p-8 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-5"
+            >
+              <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <BookOpen className="w-7 h-7 text-blue-500" />
+              </div>
+              <div className="flex-1">
+                <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest block mb-2">Speaker Profile</span>
+                <h3 className="font-black text-[#0f3460] text-lg leading-tight">เอกสารแนะนำวิทยากร</h3>
+                <p className="text-gray-400 text-sm mt-2">ครูเด่น มาสเตอร์ฟา · ฉบับสมบูรณ์</p>
+              </div>
+              <div className="flex items-center gap-2 text-[#0f3460] font-black text-sm group-hover:text-[#c5a059] transition-colors">
+                <Download className="w-4 h-4" /> ดาวน์โหลด / เปิดดู
+              </div>
+            </a>
+
+            {/* 3 — Portfolio */}
+            <a
+              href="https://drive.google.com/file/d/1Lv9HEv6AUYzyjeTmKFkPBCduIMtpQur-/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-white rounded-3xl border border-gray-100 p-8 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-5"
+            >
+              <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Presentation className="w-7 h-7 text-emerald-500" />
+              </div>
+              <div className="flex-1">
+                <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest block mb-2">Portfolio</span>
+                <h3 className="font-black text-[#0f3460] text-lg leading-tight">Portfolio วิทยากร</h3>
+                <p className="text-gray-400 text-sm mt-2">Humance Communication · ผลงานเต็มรูปแบบ</p>
+              </div>
+              <div className="flex items-center gap-2 text-[#0f3460] font-black text-sm group-hover:text-[#c5a059] transition-colors">
+                <Download className="w-4 h-4" /> ดาวน์โหลด / เปิดดู
+              </div>
+            </a>
+
+            {/* 4 — Business Resume CV */}
+            <a
+              href="https://drive.google.com/file/d/1NqsTiFBbKSqhLqO1wSoXQdccR3Q99h91/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-white rounded-3xl border border-gray-100 p-8 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col gap-5"
+            >
+              <div className="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Award className="w-7 h-7 text-purple-500" />
+              </div>
+              <div className="flex-1">
+                <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest block mb-2">Business Resume</span>
+                <h3 className="font-black text-[#0f3460] text-lg leading-tight">Resume CV 2025</h3>
+                <p className="text-gray-400 text-sm mt-2">อนุสรณ์ หนองนา · ฉบับธุรกิจ</p>
+              </div>
+              <div className="flex items-center gap-2 text-[#0f3460] font-black text-sm group-hover:text-[#c5a059] transition-colors">
+                <Download className="w-4 h-4" /> ดาวน์โหลด / เปิดดู
+              </div>
+            </a>
+
           </div>
         </div>
       </section>

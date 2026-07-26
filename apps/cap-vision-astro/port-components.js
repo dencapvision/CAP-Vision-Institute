@@ -107,14 +107,33 @@ function portFile(srcRel, destRel) {
   // 4. Replace useNavigate mockup
   content = content.replace(/const\s+navigate\s*=\s*useNavigate\(\s*\);?/g, "const navigate = (path) => { if (typeof window !== 'undefined') { window.location.href = path; } };");
   
-  // 5. Replace useParams mockup
-  content = content.replace(/const\s+\{\s*id\s*\}\s*=\s*useParams\(\s*\);?/g, "const { id } = (typeof window !== 'undefined' ? { id: window.location.pathname.split('/').pop() } : { id: '' });");
-  content = content.replace(/const\s+\{\s*slug\s*\}\s*=\s*useParams\(\s*\);?/g, "const { slug } = (typeof window !== 'undefined' ? { slug: window.location.pathname.split('/').pop() } : { slug: '' });");
+  // 5. Replace useParams mockup & support props injection
+  content = content.replace(
+    /const\s+PortfolioDetail:\s*React\.FC\s*=\s*\(\s*\)\s*=>\s*\{/g, 
+    "const PortfolioDetail: React.FC<{ slug?: string }> = ({ slug: propSlug }) => {"
+  );
+  content = content.replace(
+    /const\s+\{\s*slug\s*\}\s*=\s*useParams.*?\(.*?\);?/g, 
+    "const slug = propSlug || (typeof window !== 'undefined' ? window.location.pathname.split('/').pop() : '');"
+  );
+  
+  content = content.replace(
+    /const\s+SpeakerDetail:\s*React\.FC\s*=\s*\(\s*\)\s*=>\s*\{/g, 
+    "const SpeakerDetail: React.FC<{ id?: string }> = ({ id: propId }) => {"
+  );
+  content = content.replace(
+    /const\s+\{\s*id\s*\}\s*=\s*useParams.*?\(.*?\);?/g, 
+    "const id = propId || (typeof window !== 'undefined' ? window.location.pathname.split('/').pop() : '');"
+  );
   
   // 6. Replace useLocation mockup
   content = content.replace(/const\s+location\s*=\s*useLocation\(\s*\);?/g, "const location = (typeof window !== 'undefined' ? window.location : { pathname: '', search: '' });");
   
-  // 7. Replace useSearchParams mockup
+  // 6.5 Replace residual dynamic Link bindings to anchor tags
+  content = content.replace(/const\s+Component\s*=\s*isExternal\s*\?\s*'a'\s*:\s*Link;?/g, "const Component = 'a';");
+  content = content.replace(/:\s*\{\s*to:\s*([a-zA-Z0-9._()]+)\s*\}/g, ": { href: $1 }");
+  
+  // 7. Remove react-router-dom importsckup
   content = content.replace(/const\s+\[\s*searchParams\s*[^\]]*\]\s*=\s*useSearchParams\(\s*\);?/g, "const searchParams = (typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams());");
   
   fs.writeFileSync(destPath, content);

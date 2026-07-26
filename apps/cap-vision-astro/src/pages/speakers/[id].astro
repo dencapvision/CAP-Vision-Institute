@@ -3,6 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import SpeakerDetailPage from '../../components/SpeakerDetailPage.tsx';
 
 export const prerender = false;
+
+const { id } = Astro.params;
 ---
 
 <Layout 
@@ -10,6 +12,6 @@ export const prerender = false;
   description="ประวัติ ผลงาน และความเชี่ยวชาญของวิทยากรและผู้จัดกระบวนการเรียนรู้ CAP Vision Institute"
 >
   <div class="pt-16">
-    <SpeakerDetailPage client:load />
+    <SpeakerDetailPage client:load id={id} />
   </div>
 </Layout>

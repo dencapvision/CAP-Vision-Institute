@@ -1318,10 +1318,10 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {DEN_SPECIFIC.services.map((item, idx) => {
               const isExternal = item.link.startsWith('http');
-              const Component = isExternal ? 'a' : Link;
+              const Component = 'a';
               const linkProps = isExternal 
                 ? { href: item.link, target: "_blank", rel: "noopener noreferrer" }
-                : { to: item.link };
+                : { href: item.link };
 
               return (
                 <Component 
@@ -1405,8 +1405,8 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
 
 /* ─── MAIN COMPONENT ───────────────────────────────────────── */
 
-const SpeakerDetail: React.FC = () => {
-  const { id } = (typeof window !== 'undefined' ? { id: window.location.pathname.split('/').pop() } : { id: '' });
+const SpeakerDetail: React.FC<{ id?: string }> = ({ id: propId }) => {
+  const id = propId || (typeof window !== 'undefined' ? window.location.pathname.split('/').pop() : '');
   const [speaker, setSpeaker] = useState<Instructor | null>(null);
   const [taughtCourses, setTaughtCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);

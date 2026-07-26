@@ -3,6 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import PortfolioDetailPage from '../../components/PortfolioDetailPage.tsx';
 
 export const prerender = false;
+
+const { slug } = Astro.params;
 ---
 
 <Layout 
@@ -10,6 +12,6 @@ export const prerender = false;
   description="กรณีศึกษาการจัดฝึกอบรมเชิงรุกเพื่อสร้างการเปลี่ยนแปลงพฤติกรรมจริงในองค์กรลูกค้า"
 >
   <div class="pt-16">
-    <PortfolioDetailPage client:load />
+    <PortfolioDetailPage client:load slug={slug} />
   </div>
 </Layout>

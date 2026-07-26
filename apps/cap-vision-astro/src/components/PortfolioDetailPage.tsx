@@ -14,8 +14,8 @@ const CATEGORY_COLORS: Record<string, string> = {
   'Work Skills': 'bg-teal-50 text-teal-700 border-teal-200',
 };
 
-const PortfolioDetail: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
+const PortfolioDetail: React.FC<{ slug?: string }> = ({ slug: propSlug }) => {
+  const slug = propSlug || (typeof window !== 'undefined' ? window.location.pathname.split('/').pop() : '');
   const [portfolio, setPortfolio] = useState<Portfolio | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);

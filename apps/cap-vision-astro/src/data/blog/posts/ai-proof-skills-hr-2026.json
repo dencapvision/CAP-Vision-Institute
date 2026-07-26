@@ -1,0 +1,99 @@
+{
+    "id": "ai-proof-skills-hr-2026",
+    "title": "ทักษะที่ AI แทนที่ไม่ได้ ในงานบริหารคนยุค 2026",
+    "slug": "ai-proof-skills-hr-2026",
+    "category": "HR Strategy",
+    "thumbnail": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80",
+    "author": "ครูเด่น มาสเตอร์ฟา",
+    "date": "23 มีนาคม 2569",
+    "createdAt": "2026-03-23T00:00:00Z",
+    "readTime": "15 Min Read",
+    "summary": "ในยุค AI Agents ที่สามารถสรรหา วิเคราะห์ และวางแผนได้อัตโนมัติ มี 5 ทักษะที่ยังเป็นสิ่งที่มนุษย์เท่านั้นทำได้ บทความนี้ชี้ชัดว่า HR และผู้นำต้องพัฒนาอะไรเพื่อให้ยังมีคุณค่าในปี 2026",
+    "description": "เมื่อ AI เข้าสู่ยุค Agentic HR พรมแดนระหว่างงานเทคนิคและงานหัวใจก็ชัดเจนขึ้น มาดู 5 ทักษะที่ AI ไม่มีวันเลียนแบบได้ในการบริหารคนยุคใหม่",
+    "tags": [
+        "HR 2026",
+        "AI Trends",
+        "Soft Skills",
+        "Leadership",
+        "Human-Centric"
+    ],
+    "context": "ปี 2026 AI Agents สามารถสรรหาผู้สมัคร วิเคราะห์ผลงาน วางแผนอบรม และออก JD ได้อัตโนมัติ นักวิเคราะห์จาก WEF ประเมินว่า 30% ของงาน HR แบบเดิมจะถูก Automate ภายใน 3 ปี คำถามสำคัญไม่ใช่ว่า AI จะเข้ามาแทนที่ไหม แต่คือ เราจะนำเสนอคุณค่าอะไรที่ AI ทำไม่ได้?",
+    "insight": "งานวิจัยจาก IBM Institute for Business Value (2025) พบว่าทักษะที่องค์กรต้องการมากที่สุดในยุค AI ไม่ใช่ทักษะเทคนิค แต่คือ Complex Problem Solving, Emotional Intelligence, และ Ethical Judgment — ซึ่งล้วนเป็นทักษะที่ต้องฝึกฝนผ่านประสบการณ์มนุษย์จริงๆ",
+    "framework": [
+        {
+            "step": "ทักษะที่ 1",
+            "title": "Deep Empathy และการสร้าง Psychological Safety",
+            "description": "AI อ่านสีหน้าและวิเคราะห์ Sentiment ได้ แต่ไม่สามารถ 'นั่งลงข้างๆ' และสร้างพื้นที่ที่คนกล้าเปิดเผยความกังวลลึกๆ ได้จริง ทักษะนี้ต้องฝึกผ่านการฟังแบบ Deep Listening และการสร้างความไว้วางใจทีละคน"
+        },
+        {
+            "step": "ทักษะที่ 2",
+            "title": "Ethical Judgment และการตัดสินใจเชิงมโนธรรม",
+            "description": "เมื่อต้องตัดสินใจเรื่อง Promotion, Termination หรือ Conflict ที่ซับซ้อน AI แนะนำได้จาก Data แต่การตัดสินใจที่รับผิดชอบต่อหัวใจคนต้องใช้มโนธรรมและความเข้าใจบริบทที่มนุษย์เท่านั้นมี"
+        },
+        {
+            "step": "ทักษะที่ 3",
+            "title": "Complex Conflict Facilitation",
+            "description": "ความขัดแย้งในองค์กรมักเกิดจากสิ่งที่ไม่ได้พูดออกมา — ความเจ็บปวดส่วนตัว ความเชื่อฝังลึก หรือพลวัตอำนาจ การไกล่เกลี่ยความขัดแย้งต้องอาศัยทักษะการฟัง การตั้งคำถาม และการสร้างความเข้าใจที่ AI ไม่มีสัมผัสเพียงพอ"
+        },
+        {
+            "step": "ทักษะที่ 4",
+            "title": "Culture Design และ Employee Experience",
+            "description": "วัฒนธรรมองค์กรถูกสร้างผ่านพฤติกรรมและการตัดสินใจเล็กๆ น้อยๆ ทุกวัน HR ที่เข้าใจว่าอะไรทำให้คนรู้สึก 'เป็นส่วนหนึ่ง' และ 'มีคุณค่า' คือผู้ออกแบบประสบการณ์ที่ AI สร้างไม่ได้"
+        },
+        {
+            "step": "ทักษะที่ 5",
+            "title": "Human-AI Synergy และการกำกับดูแล AI",
+            "description": "ทักษะใหม่ที่สำคัญที่สุดคือการรู้จักใช้ AI ให้เกิดประโยชน์สูงสุด และรู้ว่าเมื่อไหร่ต้องกำกับดูแล ตรวจสอบ หรือ Override การตัดสินใจของ AI เพื่อความยุติธรรม"
+        }
+    ],
+    "application": "ประเมินตัวเองว่าสัปดาห์ที่ผ่านมา คุณใช้เวลากี่ % กับงาน Transactional ที่ AI ทำได้ (เช่น จัดการเอกสาร ออก Report) และกี่ % กับงาน Human-Centric ที่ต้องใช้หัวใจ (เช่น การโค้ช การดูแล Wellbeing การจัดการความขัดแย้ง) เป้าหมายคือเพิ่ม Human-Centric Work ขึ้นอย่างน้อย 20% ในไตรมาสหน้า",
+    "case_study": {
+        "title": "HR Director บริษัท Tech ขนาดกลาง: Re-invent ตัวเองในยุค AI",
+        "story": "HR Director รายหนึ่งพบว่า 60% ของงานตนเองถูก AI ทำแทนได้ใน 6 เดือน แทนที่จะกังวล เธอตัดสินใจลงทุนเวลาใหม่ใน 3 ด้าน: (1) ฝึก Coaching Certification เพื่อเป็น Executive Coach ภายในองค์กร (2) สร้างระบบ Psychological Safety ใน 5 ทีม (3) เป็น Ethics Advisor สำหรับการตัดสินใจ AI ขององค์กร ใน 1 ปี บทบาทของเธอมีคุณค่าสูงขึ้นกว่าเดิม เพราะทำในสิ่งที่ระบบ AI ในองค์กรทำแทนไม่ได้",
+        "result": "เลื่อนตำแหน่งเป็น Chief People Experience Officer, ทีม Engagement Score เพิ่มขึ้น 28%, กลายเป็น Internal Coach ให้ผู้บริหาร 8 คน"
+    },
+    "takeaways": [
+        "AI Agents ปี 2026 ทำงาน HR แบบ Transactional ได้มากกว่า 30% — ต้องย้ายเวลาไปงาน Human-Centric",
+        "Deep Empathy และ Psychological Safety คือทักษะที่ AI ไม่มีและองค์กรต้องการมากที่สุด",
+        "Ethical Judgment ในการใช้ AI คือทักษะใหม่ที่ HR ต้องเรียนรู้ด่วนที่สุด",
+        "Complex Conflict Facilitation ต้องฝึกผ่านประสบการณ์จริง ไม่มีทางลัด",
+        "คำถามสำคัญไม่ใช่ 'AI จะแทนที่เราไหม' แต่คือ 'เราจะทำงานร่วมกับ AI อย่างไรให้ได้ผลดีที่สุด'"
+    ],
+    "faq": [
+        {
+            "question": "HR ที่ไม่เก่ง Tech จะอยู่รอดในยุค AI ได้ไหม?",
+            "answer": "ได้ ถ้าเก่งทักษะ Human-Centric เพราะนั่นคือสิ่งที่ยังขาดอยู่ในยุค AI สิ่งที่ต้องทำคือเรียนรู้การใช้ AI Tools เบื้องต้นเพื่อไม่ถูกทิ้งไว้ข้างหลัง แล้วลงทุนเวลาที่ได้คืนมาไปกับการพัฒนา Coaching, Facilitation และ Empathy"
+        },
+        {
+            "question": "องค์กรควรเริ่มนำ AI มาใช้ใน HR จากตรงไหนก่อน?",
+            "answer": "เริ่มจากงาน Transactional ที่ทำซ้ำๆ เช่น Screening เบื้องต้น, การส่ง Onboarding Documents, การรวบรวม Feedback Surveys จากนั้นค่อยขยายสู่ Analytics เพื่อสนับสนุนการตัดสินใจ ไม่แนะนำให้ใช้ AI ในการตัดสินใจเรื่องคนโดยตรงโดยไม่มี Human Oversight"
+        },
+        {
+            "question": "จะพัฒนา Deep Empathy ได้อย่างไร?",
+            "answer": "ฝึกด้วยการฟังแบบ Active Listening อย่างน้อย 1 ครั้งต่อวัน — ฟังโดยไม่ขัด ไม่ให้คำแนะนำ แค่ฟังและสะท้อนสิ่งที่ได้ยิน การฝึก Mindfulness และ Coaching Skills ก็ช่วยพัฒนา Empathy ได้อย่างเป็นระบบ"
+        },
+        {
+            "question": "AI จะแทนที่ HR Director ได้ไหมใน 5 ปีข้างหน้า?",
+            "answer": "ไม่แทนที่ แต่จะเปลี่ยนบทบาทอย่างมีนัยสำคัญ HR Director ที่เน้น Strategic People Leadership, Culture Architecture และ Executive Coaching จะมีคุณค่าสูงขึ้น ส่วน HR ที่ทำงาน Transactional เป็นหลักต้องปรับตัว"
+        }
+    ],
+    "cta": {
+        "title": "พัฒนาทักษะ Human-Centric ที่ AI แทนไม่ได้",
+        "description": "CAP Vision ออกแบบหลักสูตร HR in AI Era สำหรับทีม HR และผู้นำที่ต้องการ Re-skill ตัวเองให้พร้อมกับโลกยุค AI Agents",
+        "buttonText": "ดูหลักสูตรที่เกี่ยวข้อง",
+        "buttonLink": "/courses"
+    },
+    "seo": {
+        "metaTitle": "5 ทักษะที่ AI แทนที่ไม่ได้สำหรับ HR และผู้นำยุค 2026",
+        "metaDescription": "เรียนรู้ว่าทักษะอะไรที่ HR และผู้นำต้องมีในยุค AI Agents ปี 2026 ตั้งแต่ Deep Empathy, Ethical Judgment ไปจนถึง Human-AI Synergy",
+        "keywords": ["AI proof skills", "HR 2026", "ทักษะ HR", "AI HR", "Human-centric leadership", "future of HR"]
+    },
+    "hashtags": ["#AIHR2026", "#HumanCentric", "#FutureOfWork", "#HRSkills", "#CAPVision"],
+    "images": [
+        {
+            "url": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80",
+            "alt": "HR professional working alongside AI technology",
+            "caption": "AI มีสมอง แต่หัวใจยังเป็นของมนุษย์"
+        }
+    ]
+}

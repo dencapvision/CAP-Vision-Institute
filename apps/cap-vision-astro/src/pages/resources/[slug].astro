@@ -1,12 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import BlogArticleDetailPage from '../../components/BlogArticleDetailPage';
+import { HRD_ARTICLES } from '../../constants/articles';
 
 export const prerender = false;
 const { slug } = Astro.params;
 const decodedSlug = decodeURIComponent(slug || '');
+
+// Pre-render metadata from static constants for SEO, AEO, and GEO
+const staticArt = HRD_ARTICLES.find(a => a.id === decodedSlug);
+const metaTitle = staticArt ? `${staticArt.title} | CAP Vision Insight` : "CAP Vision Insight | คลังความรู้พัฒนาคนและองค์กร";
+const metaDesc = staticArt ? staticArt.excerpt : "บทความ เทคนิค และเครื่องมือการพัฒนาบุคลากร การสื่อสาร และการสร้างภาวะผู้นำสำหรับผู้นำองค์กรยุคใหม่ โดย ครูเด่น มาสเตอร์ฟา";
 ---
 
-<Layout title="CAP Vision Insight" description="สถาบันพัฒนาศักยภาพผู้นำและฝึกอบรมครบวงจร">
+<Layout title={metaTitle} description={metaDesc}>
   <BlogArticleDetailPage client:load slug={decodedSlug} />
 </Layout>

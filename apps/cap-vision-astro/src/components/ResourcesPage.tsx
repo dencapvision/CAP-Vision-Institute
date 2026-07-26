@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {
   BookOpen, PlayCircle, Clock, Download, FileText, ChevronRight,
   ArrowRight, Sparkles, Users, Target, Zap, Brain, MessageCircle,
-  TrendingUp, GraduationCap, CheckCircle2, Star, Shield, Award, Cpu
+  TrendingUp, GraduationCap, CheckCircle2, Star, Shield, Award, Cpu,
+  ExternalLink
 } from 'lucide-react';
 import { MICRO_LEARNING_VIDEOS, DOWNLOAD_RESOURCES } from '../constants/resources';
 import { HRD_ARTICLES } from '../constants/articles';
@@ -673,16 +674,136 @@ const Resources: React.FC = () => {
       {/* ─── TEACHING DOCS & WORKSHEETS ────────────────ี ─── */}
       <section id="teaching-docs" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             <p className="text-[#c5a059] font-black uppercase tracking-[0.3em] text-[10px] nav-font mb-3">
               เอกสารการสอนและแบบฝึกหัด
             </p>
             <h2 className="text-3xl md:text-4xl font-black text-[#0f3460] nav-font">
-              Worksheet พร้อมใช้ · ดาวน์โหลดได้เลย
+              สื่อการเรียนรู้และเอกสารประกอบการสอน
             </h2>
             <p className="text-gray-500 mt-3 max-w-xl mx-auto">
-              สื่อการสอนจากหลักสูตรจริง ออกแบบโดยครูเด่น มาสเตอร์ฟา · ใช้ Prompt + Sarabun font · พิมพ์ได้ทันที
+              เอกสารประกอบการอบรมและแบบฝึกหัดจากหลักสูตรจริง ออกแบบโดยครูเด่น มาสเตอร์ฟา · พิมพ์ได้ทันที
             </p>
+          </div>
+
+          {/* ─── Training Handouts ─── */}
+          <div className="mb-20">
+            <div className="flex items-center gap-3 mb-8">
+              <span className="text-[9px] font-black uppercase tracking-widest text-[#c5a059] nav-font">หมวดหมู่</span>
+              <div className="inline-flex items-center gap-2 bg-[#0f3460]/5 border border-[#0f3460]/10 px-4 py-2 rounded-xl text-[#0f3460] font-black text-sm nav-font">
+                📂 เอกสารประกอบการอบรม (Training Handouts)
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Card 1 — MIND STAR */}
+              <div className="group bg-white rounded-3xl border border-gray-100 p-8 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">
+                  ⭐
+                </div>
+                <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest nav-font block mb-2">
+                  MIND STAR x อุตสาหกรรมภูเก็ต 2026
+                </span>
+                <h3 className="font-black text-[#0f3460] nav-font text-xl leading-tight mb-3">
+                  ยกระดับทุนวัฒนธรรม สู่ตลาดพรีเมียม ด้วย AI
+                </h3>
+                <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                  ระบบและเอกสารเวิร์กชอปเพื่อการพัฒนาผลิตภัณฑ์และบรรจุภัณฑ์ท้องถิ่นด้วย AI พรีเมียม
+                </p>
+                <a
+                  href="https://mind-star-workshop-2026.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-[#0f3460] text-white py-3.5 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-[#c5a059] transition-all nav-font text-sm cursor-pointer"
+                >
+                  <ExternalLink className="w-4 h-4" /> เปิดเอกสาร/ระบบเรียน
+                </a>
+              </div>
+
+              {/* Card 2 — Comm for Leader */}
+              <div className="group bg-white rounded-3xl border border-gray-100 p-8 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">
+                  🗣️
+                </div>
+                <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest nav-font block mb-2">
+                  ผู้บริหารสาธารณสุขภาคเหนือ (6 ชม. Zoom)
+                </span>
+                <h3 className="font-black text-[#0f3460] nav-font text-xl leading-tight mb-3">
+                  ทักษะการสื่อสารและการนำเสนอสำหรับผู้นำ
+                </h3>
+                <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                  เครื่องมือและแนวทางพัฒนาการนำเสนออย่างมีพลัง การโน้มน้าวใจ และการสื่อสารระดับผู้นำ
+                </p>
+                <a
+                  href="https://workshop-communicaion-for-leader.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-[#0f3460] text-white py-3.5 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-[#c5a059] transition-all nav-font text-sm cursor-pointer"
+                >
+                  <ExternalLink className="w-4 h-4" /> เปิดเอกสาร/ระบบเรียน
+                </a>
+              </div>
+
+              {/* Card 3 — DIPROM x CAP VISION */}
+              <div className="group bg-white rounded-3xl border border-gray-100 p-8 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">
+                  💡
+                </div>
+                <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest nav-font block mb-2">
+                  DIPROM x CAP VISION
+                </span>
+                <h3 className="font-black text-[#0f3460] nav-font text-xl leading-tight mb-3">
+                  พัฒนาผลิตภัณฑ์ชุมชนด้วย AI
+                </h3>
+                <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                  แนวทางการยกระดับทุนวัฒนธรรมสู่ผลิตภัณฑ์ต้นแบบที่ลอกเลียนไม่ได้ด้วยพลังของ AI
+                </p>
+                <a
+                  href="https://diprom-flow-tha7.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-[#0f3460] text-white py-3.5 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-[#c5a059] transition-all nav-font text-sm cursor-pointer"
+                >
+                  <ExternalLink className="w-4 h-4" /> เปิดเอกสาร/ระบบเรียน
+                </a>
+              </div>
+
+              {/* Card 4 — NotebookLM Workshop */}
+              <div className="group bg-white rounded-3xl border border-gray-100 p-8 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                <div>
+                  <div className="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 text-2xl group-hover:scale-110 transition-transform">
+                    📓
+                  </div>
+                  <span className="text-[#c5a059] text-[9px] font-black uppercase tracking-widest nav-font block mb-2">
+                    NotebookLM Workshop
+                  </span>
+                  <h3 className="font-black text-[#0f3460] nav-font text-xl leading-tight mb-3">
+                    ยินดีต้อนรับสู่โลกศักยภาพแห่งความสร้างสรรค์
+                  </h3>
+                  <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                    NotebookLM พลังสมองอัจฉริยะช่วยวิเคราะห์จิตวิทยาผู้บริโภค ถอดรหัสความคิด นำทางไอเดียสี และย่อยสคริปต์สไลด์ให้กระชับ
+                  </p>
+                </div>
+                <a
+                  href="https://notebook-lm-workshop.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-[#0f3460] text-white py-3.5 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-[#c5a059] transition-all nav-font text-sm cursor-pointer mt-auto"
+                >
+                  <ExternalLink className="w-4 h-4" /> เปิดเอกสาร/ระบบเรียน
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* ─── Course Worksheets ─── */}
+          <div className="border-t border-gray-100 pt-16 mb-8">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="text-[9px] font-black uppercase tracking-widest text-[#c5a059] nav-font">หมวดหมู่</span>
+              <div className="inline-flex items-center gap-2 bg-[#0f3460]/5 border border-[#0f3460]/10 px-4 py-2 rounded-xl text-[#0f3460] font-black text-sm nav-font">
+                📝 Worksheet จากหลักสูตรยอดนิยม (Course Worksheets)
+              </div>
+            </div>
           </div>
 
           {/* Course label */}

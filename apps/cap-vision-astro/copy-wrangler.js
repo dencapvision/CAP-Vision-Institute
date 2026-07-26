@@ -13,14 +13,9 @@ const wranglerConfig = {
     "nodejs_compat"
   ],
   assets: {
-    binding: "ASSETS",
     directory: "./client"
   },
-  kv_namespaces: [
-    {
-      binding: "SESSION"
-    }
-  ],
+
   images: {
     binding: "IMAGES"
   }

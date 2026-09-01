@@ -144,7 +144,7 @@ const Home: React.FC = () => {
     },
     {
       category: 'Facilitator & Process Design',
-      thTitle: 'หลักสูตรวิทยากร & ฟาซิลิตี้',
+      thTitle: 'หลักสูตรวิทยากร & Facilitator',
       desc: 'ศาสตร์และศิลป์แห่งการเป็น Modern Facilitator ออกแบบกระบวนการเรียนรู้ที่มีพลัง',
       icon: IconFacilitatorMastery,
       count: '8+ หลักสูตร',

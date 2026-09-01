@@ -170,6 +170,7 @@ const K_DATA = {
     'ผ่านการอบรมด้านยุทธวิธีและการบริหารความมั่นคงมากกว่า 200 หลักสูตร'
   ],
   gallery: [
+    'https://res.cloudinary.com/dmo4kq7ej/image/upload/v1786514509/NewProfile_Kraiput_bgvjeo.jpg',
     'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg',
     'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha2.jpg',
     'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha3.jpg',
@@ -182,6 +183,8 @@ const K_DATA = {
 /* ─── 2. KRAIPUT INTARAYOTHA DETAIL COMPONENT ───────────────── */
 
 const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = ({ speaker }) => {
+  const profileImg = 'https://res.cloudinary.com/dmo4kq7ej/image/upload/v1786514509/NewProfile_Kraiput_bgvjeo.jpg';
+
   return (
     <div className="bg-[#FFFFFF] min-h-screen text-[#111827] overflow-x-hidden pb-20">
       
@@ -203,11 +206,11 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
             <div className="lg:col-span-5">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-white/10 bg-gray-900">
                 <img
-                  src={speaker.image || K_DATA.gallery[0]}
+                  src={profileImg}
                   alt={K_DATA.fullName}
                   className="w-full h-[450px] sm:h-[520px] object-cover object-top"
                   onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = K_DATA.gallery[0];
+                    (e.currentTarget as HTMLImageElement).src = K_DATA.gallery[1];
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/80 via-transparent to-transparent" />

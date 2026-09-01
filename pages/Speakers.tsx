@@ -198,7 +198,11 @@ export const Speakers: React.FC = () => {
                     {/* Speaker Image */}
                     <div className="relative h-72 overflow-hidden bg-gray-100">
                       <img
-                        src={speaker.image}
+                        src={
+                          speaker.slug === 'kraiput-intarayotha'
+                            ? 'https://res.cloudinary.com/dmo4kq7ej/image/upload/v1786514509/NewProfile_Kraiput_bgvjeo.jpg'
+                            : speaker.image
+                        }
                         alt={speaker.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         onError={(e) => {

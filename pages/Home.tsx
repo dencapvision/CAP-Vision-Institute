@@ -170,9 +170,9 @@ const Home: React.FC = () => {
             alt="CAP Vision Institute Workshop and Collaborative Learning"
             className="w-full h-full object-cover scale-105 opacity-20 transition-transform duration-[12s] ease-out"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#111827] via-[#111827]/90 to-[#0F2557]/80"></div>
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#2563EB]/15 rounded-full blur-[140px] pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#F59E0B]/10 rounded-full blur-[120px] pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#111827] via-[#111827]/95 to-[#0F2557]/85"></div>
+          <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-[#2563EB]/15 rounded-full blur-[140px] pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-[#F59E0B]/10 rounded-full blur-[120px] pointer-events-none"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
@@ -185,21 +185,24 @@ const Home: React.FC = () => {
               <div className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-md border border-white/15 px-4 py-2 rounded-full mb-6 animate-fade-in-down">
                 <span className="w-2.5 h-2.5 bg-[#F59E0B] rounded-full animate-pulse flex-shrink-0"></span>
                 <span className="text-white font-bold tracking-wider text-xs uppercase nav-font">
-                  Transformative Learning & OD Consulting
+                  Transformative Learning & Executive OD Consulting
                 </span>
               </div>
 
               {/* Main Headline */}
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.1] mb-6 nav-font tracking-tight">
-                <span className="text-white block">Transform People</span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] via-[#2563EB] to-[#F59E0B]">
-                  Transform Organization
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.12] mb-6 nav-font tracking-tight !text-white text-white">
+                <span className="block">พัฒนาคน</span>
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] via-[#38BDF8] to-[#93C5FD]">
+                  เปลี่ยนวิธีคิด
+                </span>
+                <span className="block text-[#F59E0B]">
+                  ยกระดับทั้งองค์กร
                 </span>
               </h1>
 
-              {/* Subheadline & Value Proposition */}
+              {/* Subheadline */}
               <p className="text-lg sm:text-xl text-gray-300 font-light leading-relaxed mb-8 max-w-2xl">
-                จุดประกายศักยภาพผู้นำ เสริมพลังทีมงาน และยกระดับวัฒนธรรมองค์กร ด้วยกระบวนการ <strong className="text-white font-bold">Activity-Based Learning</strong> ที่สร้างการเปลี่ยนแปลงพฤติกรรมจริงจากภายใน
+                ออกแบบประสบการณ์การเรียนรู้ที่เปลี่ยนคนจากภายใน สู่ทีมที่ทำงานร่วมกันได้ดี และองค์กรที่พร้อมเติบโต
               </p>
 
               {/* Dual CTAs (Conversion-Focused) */}
@@ -209,7 +212,7 @@ const Home: React.FC = () => {
                   className="btn-premium bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-8 py-4 sm:py-5 rounded-2xl font-black text-base shadow-2xl flex items-center justify-center gap-3 active:scale-95 group transition-all"
                 >
                   <Sparkles className="w-5 h-5 text-[#F59E0B]" />
-                  ทำแบบประเมินองค์กรฟรี (3 นาที)
+                  ประเมินองค์กรของคุณ ⭐
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
                 </Link>
 
@@ -217,16 +220,16 @@ const Home: React.FC = () => {
                   to="/contact"
                   className="btn-premium bg-white/10 hover:bg-white/20 text-white border-2 border-white/20 px-8 py-4 sm:py-5 rounded-2xl font-bold text-base flex items-center justify-center gap-3 active:scale-95 transition-all"
                 >
-                  ขอใบเสนอราคา / ปรึกษาหลักสูตร
+                  คุยกับ CAP Vision
                 </Link>
               </div>
 
               {/* Trust Stats */}
               <div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/10 max-w-xl">
                 {[
-                  { value: '10,000+', label: 'ผู้ผ่านการอบรม' },
-                  { value: '200+', label: 'องค์กรพันธมิตร' },
-                  { value: '18+', label: 'ปีประสบการณ์' }
+                  { value: '18+', label: 'Years Experience' },
+                  { value: '10,000+', label: 'Learners Trained' },
+                  { value: '200+', label: 'Organizations' }
                 ].map((stat, i) => (
                   <div key={i}>
                     <div className="text-2xl sm:text-3xl font-black text-[#F59E0B] nav-font">
@@ -248,16 +251,16 @@ const Home: React.FC = () => {
                 <div className="relative bg-white/10 backdrop-blur-2xl border border-white/20 p-6 sm:p-8 rounded-[2rem] shadow-2xl">
                   <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center font-black">
+                      <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center font-black text-base shadow-md">
                         ⭐
                       </div>
                       <div>
-                        <div className="text-sm font-bold text-white">CAP Transformation Assessment</div>
-                        <div className="text-xs text-gray-400">แบบประเมินความพร้อม 4 มิติ</div>
+                        <div className="text-sm font-bold text-white">Organization Diagnostic Tool</div>
+                        <div className="text-xs text-gray-400">ประเมินความพร้อม 4 มิติ (3 นาที)</div>
                       </div>
                     </div>
                     <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#F59E0B]/20 text-[#F59E0B] border border-[#F59E0B]/30">
-                      FREE TOOL
+                      FREE DIAGNOSTIC
                     </span>
                   </div>
 
@@ -267,7 +270,7 @@ const Home: React.FC = () => {
                       { name: 'Strategic Leadership', score: 85, color: '#2563EB' },
                       { name: 'People & Team Synergy', score: 78, color: '#60A5FA' },
                       { name: 'Culture & Growth Mindset', score: 92, color: '#F59E0B' },
-                      { name: 'Execution & Measurable Impact', score: 80, color: '#10B981' }
+                      { name: 'Execution & Creative Innovation', score: 80, color: '#10B981' }
                     ].map((item, idx) => (
                       <div key={idx} className="space-y-1.5">
                         <div className="flex justify-between text-xs font-bold text-gray-200">
@@ -276,7 +279,7 @@ const Home: React.FC = () => {
                         </div>
                         <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
                           <div
-                            className="h-full rounded-full"
+                            className="h-full rounded-full transition-all duration-1000"
                             style={{ width: `${item.score}%`, backgroundColor: item.color }}
                           ></div>
                         </div>
@@ -285,7 +288,7 @@ const Home: React.FC = () => {
                   </div>
 
                   <p className="text-xs text-gray-300 mb-6 leading-relaxed">
-                    ค้นหาจุดคานงัดและข้อเสนอแนะเชิงกลยุทธ์ที่ปรับแต่งสำหรับองค์กรของคุณทันที พร้อมรับรายงานสรุปและนัดปรึกษาผู้เชี่ยวชาญ 30 นาที
+                    วินิจฉัยจุดติดขัดในองค์กร รับผลวิเคราะห์ Radar Chart ทันที พร้อมรับรายงานสรุปกลยุทธ์เฉพาะองค์กร
                   </p>
 
                   <Link
@@ -303,37 +306,142 @@ const Home: React.FC = () => {
         </div>
       </motion.section>
 
-      {/* ── 2. ASSESSMENT CALLOUT SPOTLIGHT ⭐ ─────────────────────────────────── */}
-      <section className="bg-gradient-to-r from-[#0F2557] via-[#111827] to-[#0F2557] text-white py-12 border-y border-white/10 relative overflow-hidden">
+      {/* ── 2. PAIN POINTS SECTION: “ปัญหาขององค์กรคุณ อยู่ตรงไหน?” ─────────────── */}
+      <section className="py-20 md:py-28 bg-[#F8FAFC] border-b border-gray-200 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div className="flex items-start gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-[#2563EB]/20 border border-[#2563EB]/40 text-[#F59E0B] flex items-center justify-center flex-shrink-0 mt-1">
-                <BarChart3 className="w-7 h-7" />
+          
+          {/* Section Header */}
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+              ORGANIZATION DIAGNOSTIC
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+              “ปัญหาขององค์กรคุณ <span className="text-[#2563EB]">อยู่ตรงไหน?</span>”
+            </h2>
+            <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed font-light">
+              การพัฒนาองค์กรที่เห็นผลจริง ต้องเริ่มต้นจากการระบุสาเหตุที่แท้จริง ไม่ใช่แค่การจัดอบรมตามหลักสูตรทั่วไป
+            </p>
+          </div>
+
+          {/* 4 Pain Point Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {[
+              {
+                pillar: 'LEADERSHIP',
+                num: '01',
+                title: 'ผู้นำยังไม่สามารถดึงศักยภาพทีมออกมาได้',
+                description: 'ผู้นำเน้นการสั่งการมากกว่าการ Facilitate ขาดทักษะการสร้างแรงบันดาลใจ และยังติดกับดักการทำงานแบบเดิม',
+                impact: 'ทีมขาด Ownership & ทำงานแบบรอคำสั่ง',
+                icon: Trophy,
+                color: '#2563EB',
+                bgBadge: 'bg-blue-50 text-blue-700 border-blue-200'
+              },
+              {
+                pillar: 'TEAM',
+                num: '02',
+                title: 'คนเก่ง แต่ทำงานร่วมกันไม่ได้',
+                description: 'แต่ละฝ่ายทำงานแยกส่วน (Silo) ขาดความปลอดภัยทางจิตวิทยา (Psychological Safety) และการสื่อสารไม่เปิดใจ',
+                impact: 'เกิดความขัดแย้ง ประสิทธิภาพงานลดลง',
+                icon: Users,
+                color: '#0F2557',
+                bgBadge: 'bg-indigo-50 text-indigo-700 border-indigo-200'
+              },
+              {
+                pillar: 'CULTURE',
+                num: '03',
+                title: 'องค์กรต้องการเปลี่ยน แต่คนยังไม่เปลี่ยน',
+                description: 'คนในองค์กรมี Fixed Mindset ยึดติดกับ Comfort Zone กลัวความผิดพลาด และต่อต้านการเปลี่ยนแปลงกลยุทธ์ใหม่',
+                impact: 'การทรานส์ฟอร์มองค์กรสะดุด ล่าช้า',
+                icon: Zap,
+                color: '#F59E0B',
+                bgBadge: 'bg-amber-50 text-amber-700 border-amber-200'
+              },
+              {
+                pillar: 'INNOVATION',
+                num: '04',
+                title: 'มีปัญหา แต่ทีมยังคิดทางออกแบบเดิม',
+                description: 'ขาดทักษะ Creative Problem Solving (CPS Model) และการคิดวิเคราะห์เชิงระบบ ทำให้ไม่เกิดนวัตกรรมหรือทางเลือกใหม่',
+                impact: 'สูญเสียความได้เปรียบในการแข่งขัน',
+                icon: Lightbulb,
+                color: '#10B981',
+                bgBadge: 'bg-emerald-50 text-emerald-700 border-emerald-200'
+              }
+            ].map((card, idx) => {
+              const Icon = card.icon;
+              return (
+                <div
+                  key={idx}
+                  className="bg-white rounded-2xl p-7 border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-5">
+                      <span className={`text-[11px] font-black tracking-wider uppercase px-3 py-1 rounded-full border ${card.bgBadge}`}>
+                        {card.pillar}
+                      </span>
+                      <span className="text-xs font-black text-gray-400 font-mono">
+                        {card.num}
+                      </span>
+                    </div>
+
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform group-hover:scale-110" style={{ backgroundColor: `${card.color}15`, color: card.color }}>
+                      <Icon className="w-6 h-6" />
+                    </div>
+
+                    <h3 className="text-lg font-black text-[#111827] mb-3 nav-font leading-snug">
+                      {card.title}
+                    </h3>
+
+                    <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-4 font-light">
+                      {card.description}
+                    </p>
+                  </div>
+
+                  <div className="pt-4 border-t border-gray-100 mt-2">
+                    <div className="text-[11px] font-bold text-gray-500 mb-3 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                      ผลกระทบ: <span className="text-gray-700">{card.impact}</span>
+                    </div>
+
+                    <Link
+                      to="/assessment"
+                      className="text-xs font-bold flex items-center gap-1 group-hover:gap-2 transition-all"
+                      style={{ color: card.color }}
+                    >
+                      ประเมินมิตินี้ในองค์กร
+                      <ChevronRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Direct Funnel CTA Card */}
+          <div className="bg-gradient-to-r from-[#111827] via-[#0F2557] to-[#111827] rounded-3xl p-8 sm:p-10 text-white shadow-2xl border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="space-y-2 text-center md:text-left">
+              <div className="inline-flex items-center gap-2 text-xs font-bold text-[#F59E0B] uppercase tracking-wider">
+                <Sparkles className="w-4 h-4" />
+                Strategic Lead-Generation Funnel
               </div>
-              <div>
-                <span className="text-xs font-bold text-[#F59E0B] uppercase tracking-widest block mb-1">
-                  ⭐ Organization Diagnostic Tool
-                </span>
-                <h3 className="text-xl sm:text-2xl font-black text-white nav-font">
-                  องค์กรของคุณพร้อมสำหรับการเปลี่ยนแปลงในระดับใด?
-                </h3>
-                <p className="text-gray-300 text-xs sm:text-sm mt-1 max-w-2xl">
-                  ประเมิน 4 มิติสำคัญ (Leadership, People, Culture, Execution) รับผลวิเคราะห์แบบ Radar Chart ทันที
-                </p>
-              </div>
+              <h3 className="text-xl sm:text-2xl font-black text-white nav-font">
+                พร้อมค้นหาจุดคานงัดเพื่อ Transform องค์กรของคุณแล้วหรือยัง?
+              </h3>
+              <p className="text-gray-300 text-xs sm:text-sm max-w-xl font-light">
+                ทำแบบประเมิน 12 ข้อ รับผลวิเคราะห์ Radar Chart และข้อเสนอแนะ Solutions เฉพาะองค์กรฟรีทันที
+              </p>
             </div>
 
-            <div className="flex-shrink-0 flex items-center gap-3 w-full sm:w-auto">
+            <div className="flex-shrink-0 w-full sm:w-auto">
               <Link
                 to="/assessment"
-                className="btn-premium w-full sm:w-auto bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] font-black px-6 py-3.5 rounded-xl text-sm shadow-xl flex items-center justify-center gap-2"
+                className="btn-premium w-full sm:w-auto bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] font-black px-8 py-4 rounded-xl text-base shadow-xl flex items-center justify-center gap-3 transition-all"
               >
-                เริ่มทำแบบประเมิน (ฟรี)
-                <ArrowRight className="w-4 h-4" />
+                <Sparkles className="w-5 h-5" />
+                เริ่ม Organization Assessment →
               </Link>
             </div>
           </div>
+
         </div>
       </section>
 

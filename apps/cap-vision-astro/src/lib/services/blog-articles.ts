@@ -47,11 +47,11 @@ export async function fetchArticleBySlug(slug: string): Promise<BlogArticleRow |
   return data as BlogArticleRow;
 }
 
-export async function saveArticle(article: GeneratedArticle): Promise<BlogArticleRow> {
+export async function saveArticle(article: GeneratedArticle, category: string = 'Leadership'): Promise<BlogArticleRow> {
   const row = {
     slug: article.slug,
     title: article.title,
-    category: article.seo?.keywords?.[0] ? 'Insight' : 'Insight',
+    category: category || 'Leadership',
     thumbnail: article.images?.[0]?.url ?? '',
     author: 'ครูเด่น มาสเตอร์ฟา',
     date_label: new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' }),

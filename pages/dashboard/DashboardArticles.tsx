@@ -19,9 +19,18 @@ const PRESET_IMAGES = [
   { label: 'Modern Office', url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200' }
 ];
 
+const OFFICIAL_CATEGORIES = [
+  { id: 'Leadership', label: 'Leadership (ผู้นำทีม)' },
+  { id: 'Team & Culture', label: 'Team & Culture (วัฒนธรรม)' },
+  { id: 'Modern HR', label: 'Modern HR (เทคโนโลยี/HR)' },
+  { id: 'Self-Growth', label: 'Self-Growth (พัฒนาตนเอง)' },
+  { id: 'Insight', label: 'Insight (บทความทั่วไป)' }
+];
+
 const DashboardArticles: React.FC = () => {
   const [title, setTitle] = useState('ทักษะ Emotional Intelligence ที่ผู้นำองค์กรไทยต้องมี');
   const [context, setContext] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('Leadership');
   const [generating, setGenerating] = useState(false);
   const [saving, setSaving] = useState(false);
   const [generated, setGenerated] = useState<GeneratedArticle | null>(null);
@@ -40,7 +49,7 @@ const DashboardArticles: React.FC = () => {
   const [editTitle, setEditTitle] = useState('');
   const [editThumbnail, setEditThumbnail] = useState('');
   const [editSummary, setEditSummary] = useState('');
-  const [editCategory, setEditCategory] = useState('');
+  const [editCategory, setEditCategory] = useState('Leadership');
   const [editSaving, setEditSaving] = useState(false);
 
   useEffect(() => {
@@ -92,8 +101,8 @@ const DashboardArticles: React.FC = () => {
     setSaving(true);
     setError('');
     try {
-      await saveArticle(generated);
-      setSavedMsg('บันทึกสำเร็จ! บทความอยู่ในคลังแล้ว (สามารถกดเผยแพร่ได้ในแถบ "บทความทั้งหมด")');
+      await saveArticle(generated, selectedCategory);
+      setSavedMsg(`บันทึกสำเร็จ! บทความจัดอยู่ในหมวดหมู่ "${selectedCategory}"`);
       await loadArticles();
       setTimeout(() => setSavedMsg(''), 5000);
     } catch (e: any) {
@@ -252,16 +261,36 @@ const DashboardArticles: React.FC = () => {
                 className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#c5a059] resize-none mb-3"
               />
 
-              <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">
-                บริบทเพิ่มเติม / คีย์เวิร์ดเน้นย้ำ (Optional)
-              </label>
-              <input
-                type="text"
-                value={context}
-                onChange={e => setContext(e.target.value)}
-                placeholder="เช่น เน้นผู้นำระดับกลาง, ธุรกิจบริการ, การแก้ปัญหา Silo"
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#c5a059] mb-4"
-              />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                <div>
+                  <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-1.5">
+                    หมวดหมู่ความรู้ *
+                  </label>
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-bold text-[#0f3460] bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#c5a059]"
+                  >
+                    {OFFICIAL_CATEGORIES.map((cat) => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-1.5">
+                    บริบทเพิ่มเติม (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={context}
+                    onChange={e => setContext(e.target.value)}
+                    placeholder="เช่น เน้นผู้นำระดับกลาง"
+                    className="w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-[#c5a059]"
+                  />
+                </div>
+              </div>
 
               <div className="flex gap-3">
                 <button
@@ -654,14 +683,18 @@ const DashboardArticles: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1">หมวดหมู่</label>
-                <input
-                  type="text"
+                <label className="block text-xs font-bold text-gray-700 mb-1">หมวดหมู่ความรู้ *</label>
+                <select
                   value={editCategory}
                   onChange={(e) => setEditCategory(e.target.value)}
-                  placeholder="Leadership / Team / Culture"
-                  className="w-full px-4 py-2.5 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:ring-2 focus:ring-[#c5a059] outline-none"
-                />
+                  className="w-full px-4 py-2.5 bg-gray-50 rounded-xl text-sm font-bold text-[#0f3460] border border-gray-200 focus:ring-2 focus:ring-[#c5a059] outline-none"
+                >
+                  {OFFICIAL_CATEGORIES.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.label}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div>

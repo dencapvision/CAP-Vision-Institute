@@ -906,15 +906,26 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                   </p>
                 </div>
 
-                <a
-                  href="https://drive.google.com/drive/folders/1r8tk_BFvXVQ96JiKDjlUBSGqJG_fS6d3"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full btn-premium bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-3.5 px-6 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition-all"
-                >
-                  <Download className="w-4 h-4" />
-                  ดาวน์โหลดประวัติวิทยากร (Google Drive)
-                </a>
+                <div className="space-y-2.5">
+                  <a
+                    href="https://drive.google.com/file/d/1J0yWIbtdmEDnRUo35YGhlxAb7Kq6W-8A/view?usp=drive_link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full btn-premium bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-3 px-5 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all"
+                  >
+                    <Download className="w-4 h-4" />
+                    ดาวน์โหลดประวัติวิทยากร (ชุดที่ 1)
+                  </a>
+                  <a
+                    href="https://drive.google.com/file/d/1KXsvxzlbslui9CTwGkn7AzbhhNShQNxf/view?usp=drive_link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-white/10 hover:bg-white/20 border border-white/20 text-white py-3 px-5 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all"
+                  >
+                    <Download className="w-4 h-4" />
+                    ดาวน์โหลดประวัติวิทยากร (ชุดที่ 2)
+                  </a>
+                </div>
               </div>
 
               {/* Resource 2: Portfolio & Case Studies */}
@@ -937,15 +948,26 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
                   </p>
                 </div>
 
-                <a
-                  href="https://drive.google.com/drive/folders/1r8tk_BFvXVQ96JiKDjlUBSGqJG_fS6d3"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full btn-premium bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition-all"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  เข้าดู Portfolio & ภาพกิจกรรม (Google Drive)
-                </a>
+                <div className="space-y-2.5">
+                  <a
+                    href="https://drive.google.com/file/d/1jnCycwYCw3UfVJDzUMFoAci0NEkz0X0i/view?usp=drive_link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full btn-premium bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] py-3 px-5 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    เข้าดูแฟ้มผลงาน Portfolio (ชุดที่ 1)
+                  </a>
+                  <a
+                    href="https://drive.google.com/file/d/1yoo5KO7psfgtBcFPwawhhvokg5oqFcP-/view?usp=drive_link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-white/10 hover:bg-white/20 border border-white/20 text-white py-3 px-5 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    เข้าดูแฟ้มผลงาน Portfolio (ชุดที่ 2)
+                  </a>
+                </div>
               </div>
             </div>
           </div>

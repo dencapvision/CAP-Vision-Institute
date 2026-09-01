@@ -11,50 +11,50 @@ const AboutHero: React.FC = () => {
   ];
 
   return (
-    <section className="bg-[#0f3460] pt-28 md:pt-44 pb-28 md:pb-44 relative overflow-hidden">
+    <section className="bg-gradient-to-b from-[#111827] via-[#0F2557] to-[#111827] pt-28 md:pt-40 pb-24 md:pb-36 relative overflow-hidden text-white">
       {/* Subtle background texture */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#c5a059]/8 rounded-full blur-[160px]" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-white/3 rounded-full blur-[120px]" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#2563EB]/15 rounded-full blur-[140px]" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#F59E0B]/10 rounded-full blur-[120px]" />
       </div>
 
       <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
         {/* Label badge */}
-        <p className="text-[#c5a059] text-[10px] md:text-[11px] font-black uppercase tracking-[0.6em] mb-8 nav-font">
-          The Visionary Leader
-        </p>
+        <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-[#60A5FA] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-8 nav-font backdrop-blur-md">
+          About CAP Vision Institute
+        </div>
 
         {/* Main headline */}
-        <h1 className="text-5xl md:text-7xl lg:text-[96px] font-black text-white nav-font leading-[0.9] tracking-tight mb-8">
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white nav-font leading-[1.05] tracking-tight mb-6">
           ผู้นำกระบวนการ
           <br />
-          <span className="text-[#c5a059]">เปลี่ยนผ่าน</span>
+          <span className="text-[#F59E0B]">Transform องค์กรแห่งอนาคต</span>
         </h1>
 
         {/* Divider */}
-        <div className="w-12 h-[2px] bg-[#c5a059] mx-auto mb-8" />
+        <div className="w-16 h-1 bg-[#2563EB] rounded-full mx-auto mb-8" />
 
         {/* Subheadline */}
-        <p className="text-white/80 text-lg md:text-2xl max-w-2xl mx-auto font-medium leading-relaxed mb-12">
-          ไม่ใช่แค่การเรียนรู้
+        <p className="text-gray-300 text-base sm:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-10">
+          "Transform People → Transform Organization"
           <br />
-          แต่คือการเปลี่ยนแปลงจากภายในสู่ผลลัพธ์จริงในองค์กร
+          ไม่ใช่แค่การจัดฝึกอบรม แต่คือการขับเคลื่อนการเปลี่ยนแปลงพฤติกรรมจากภายในสู่ผลลัพธ์จริง
         </p>
 
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
           <a
             href={CONTACT_INFO.lineUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#c5a059] text-white px-10 py-4 font-black text-sm md:text-base uppercase tracking-widest nav-font hover:bg-[#d4b06a] transition-colors"
+            className="btn-premium bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-widest nav-font shadow-xl transition-all"
           >
-            ขอคำปรึกษา
+            ปรึกษาหลักสูตรองค์กร
           </a>
           <a href="/courses"
-            className="border border-white/30 text-white px-10 py-4 font-bold text-sm md:text-base uppercase tracking-widest nav-font hover:border-[#c5a059] hover:text-[#c5a059] transition-colors"
+            className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest nav-font transition-all"
           >
-            ดูหลักสูตร
+            ดูหลักสูตรทั้งหมด
           </a>
         </div>
 

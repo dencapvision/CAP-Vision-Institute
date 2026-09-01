@@ -37,17 +37,17 @@ const Methodology: React.FC = () => {
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Label + Headline */}
-        <div className="max-w-2xl mb-20 md:mb-28">
-          <p className="text-[#c5a059] text-[10px] md:text-[11px] font-black uppercase tracking-[0.6em] mb-6 nav-font">
-            Methodology
-          </p>
-          <h2 className="text-4xl md:text-6xl font-black text-[#0f3460] nav-font leading-[1.05] tracking-tight mb-6">
+        <div className="max-w-2xl mb-16 md:mb-20">
+          <span className="text-[#2563EB] text-xs font-black uppercase tracking-widest block mb-3 nav-font">
+            Methodology & Framework
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-black text-[#0F2557] nav-font leading-[1.1] tracking-tight mb-4">
             4 เสาหลักที่อยู่เบื้องหลัง
             <br />
-            ทุกกระบวนการ
+            ทุกกระบวนการพัฒนาองค์กร
           </h2>
-          <p className="text-gray-500 text-lg leading-relaxed">
-            ไม่ใช่เทคนิคที่เลือกตามกระแส แต่คือปรัชญาที่พิสูจน์ผ่านการทำงานจริงกับมากกว่า 100 องค์กร
+          <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+            ไม่ใช่เทคนิคที่เลือกตามกระแส แต่คือปรัชญาที่พิสูจน์ผ่านการทำงานจริงกับองค์กรชั้นนำกว่า 200+ แห่ง
           </p>
         </div>
 
@@ -56,41 +56,39 @@ const Methodology: React.FC = () => {
           {pillars.map((p, i) => (
             <div
               key={i}
-              className={`grid grid-cols-1 md:grid-cols-12 gap-0 border-t border-gray-100 py-12 md:py-16 items-start group ${
+              className={`grid grid-cols-1 md:grid-cols-12 gap-0 border-t border-gray-100 py-10 md:py-14 items-start group ${
                 i === pillars.length - 1 ? 'border-b' : ''
               }`}
             >
               {/* Number */}
               <div className="md:col-span-1">
-                <span className="text-5xl md:text-7xl font-black text-[#0f3460]/10 nav-font select-none group-hover:text-[#c5a059]/30 transition-colors">
+                <span className="text-4xl sm:text-6xl font-black text-[#2563EB]/20 nav-font select-none group-hover:text-[#2563EB] transition-colors">
                   {p.number}
                 </span>
               </div>
 
-              {/* Title */}
-              <div className="md:col-span-3 md:pt-2">
-                <p className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.4em] mb-2 nav-font">
-                  {p.thai}
-                </p>
-                <h3 className="text-xl md:text-2xl font-black text-[#0f3460] nav-font">
+              {/* English + Thai Title */}
+              <div className="md:col-span-4 mt-2 md:mt-0">
+                <h3 className="text-xl sm:text-2xl font-black text-[#0F2557] nav-font mb-1 group-hover:text-[#2563EB] transition-colors">
                   {p.title}
                 </h3>
+                <p className="text-sm font-bold text-gray-400">
+                  {p.thai}
+                </p>
               </div>
 
               {/* Body */}
-              <div className="md:col-span-5 md:pt-2">
-                <p className="text-gray-500 text-base md:text-lg leading-relaxed">
+              <div className="md:col-span-4 mt-3 md:mt-0">
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed font-normal">
                   {p.body}
                 </p>
               </div>
 
               {/* Quote */}
-              <div className="md:col-span-3 md:pt-2 md:pl-8">
-                <div className="border-l-2 border-[#c5a059] pl-4">
-                  <p className="text-[#0f3460] text-sm font-bold nav-font italic leading-snug">
-                    "{p.quote}"
-                  </p>
-                </div>
+              <div className="md:col-span-3 mt-3 md:mt-0 md:pl-6">
+                <p className="text-xs sm:text-sm font-medium text-amber-700 italic border-l-2 border-[#F59E0B] pl-3 py-1">
+                  "{p.quote}"
+                </p>
               </div>
             </div>
           ))}

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Header from './components/Header';
 import Footer from './components/Footer';
 import AIAgent from './components/AIAgent';
+import FloatingLineWidget from './components/FloatingLineWidget';
 import { HelmetProvider } from 'react-helmet-async';
 
 // Lazy load pages for performance
@@ -150,10 +151,13 @@ const AppShell: React.FC = () => {
           {/* AI Agent Integrated Globally */}
           <AIAgent />
 
+          {/* Floating Line OA Quick Widget */}
+          <FloatingLineWidget />
+
           {/* Sticky CTA for Mobile */}
           <div className="md:hidden sticky bottom-0 z-40 bg-white/80 backdrop-blur-md border-t border-gray-100 p-4 safe-area-pb flex gap-3">
-            <a href={`tel:${CONTACT_INFO.phone}`} className="flex-1 bg-[#0f3460] text-white py-4 rounded-2xl font-bold text-center nav-font text-sm">โทรปรึกษา</a>
-            <a href={CONTACT_INFO.lineUrl} className="flex-1 bg-[#c5a059] text-white py-4 rounded-2xl font-bold text-center nav-font text-sm">ไลน์ทางการ</a>
+            <a href={`tel:${CONTACT_INFO.phone}`} className="flex-1 bg-[#111827] text-white py-3.5 rounded-2xl font-bold text-center nav-font text-xs">โทรปรึกษา</a>
+            <a href={CONTACT_INFO.lineUrl} className="flex-1 bg-[#06C755] text-white py-3.5 rounded-2xl font-bold text-center nav-font text-xs">LINE ทางการ</a>
           </div>
         </>
       )}

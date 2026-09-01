@@ -4,53 +4,53 @@ import { CONTACT_INFO } from '../../constants/brand';
 
 const CTASection: React.FC = () => {
   return (
-    <section className="py-24 md:py-40 bg-[#f8fafc]">
+    <section className="py-20 md:py-32 bg-[#FFFFFF]">
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Main CTA block */}
-        <div className="bg-[#0f3460] p-12 md:p-20">
-          <div className="max-w-4xl">
+        <div className="bg-gradient-to-br from-[#111827] via-[#0F2557] to-[#111827] rounded-3xl p-10 md:p-16 shadow-2xl relative overflow-hidden text-white">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#2563EB]/20 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="max-w-4xl relative z-10">
             {/* Label */}
-            <p className="text-[#c5a059] text-[10px] md:text-[11px] font-black uppercase tracking-[0.6em] mb-8 nav-font">
-              พร้อมร่วมงานกับเรา
-            </p>
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-[#F59E0B] text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 nav-font backdrop-blur-md">
+              Start Your Transformation Journey
+            </div>
 
             {/* Headline */}
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white nav-font leading-[0.95] tracking-tight mb-8">
-              เริ่มต้น
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white nav-font leading-[1.05] tracking-tight mb-6">
+              เริ่มต้นการเปลี่ยนแปลง
               <br />
-              การเปลี่ยนแปลง
-              <br />
-              <span className="text-[#c5a059]">วันนี้</span>
+              <span className="text-[#F59E0B]">ขับเคลื่อนองค์กรสู่ระดับถัดไป</span>
             </h2>
 
             {/* Divider */}
-            <div className="w-12 h-[2px] bg-[#c5a059] mb-8" />
+            <div className="w-16 h-1 bg-[#2563EB] rounded-full mb-6" />
 
-            <p className="text-white/70 text-lg md:text-xl leading-relaxed mb-12 max-w-2xl">
+            <p className="text-gray-300 text-sm sm:text-lg leading-relaxed mb-8 max-w-2xl font-light">
               ปรึกษาฟรีกับ Master Facilitator — เราวิเคราะห์ปัญหา ออกแบบแนวทาง และนำเสนอหลักสูตรที่เหมาะกับองค์กรของคุณโดยเฉพาะ
             </p>
 
             {/* CTA buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <a href="/contact"
-                className="bg-[#c5a059] text-white px-10 py-4 font-black text-sm md:text-base uppercase tracking-widest nav-font hover:bg-[#d4b06a] transition-colors text-center"
+              <a href="/assessment"
+                className="btn-premium bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-widest nav-font shadow-xl transition-all text-center"
               >
-                ขอ In-house Training
+                ทำแบบประเมินองค์กรฟรี
               </a>
               <a
                 href={CONTACT_INFO.lineUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-white/30 text-white px-10 py-4 font-bold text-sm md:text-base uppercase tracking-widest nav-font hover:border-[#c5a059] hover:text-[#c5a059] transition-colors text-center"
+                className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest nav-font transition-all text-center"
               >
-                นัดคุยผ่าน Line
+                ปรึกษาด่วนผ่าน LINE OA
               </a>
             </div>
 
             {/* Micro-copy */}
-            <p className="text-white/30 text-xs mt-6 uppercase tracking-widest">
-              ไม่มีข้อผูกมัด — ตอบกลับภายใน 24 ชั่วโมง
+            <p className="text-gray-400 text-xs mt-6 font-light">
+              ไม่มีข้อผูกมัด · ตอบกลับภายใน 24 ชั่วโมง · ปรึกษาฟรี
             </p>
           </div>
         </div>

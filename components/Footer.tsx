@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Facebook, Youtube, MessageCircle, Phone, MapPin, Instagram, Sparkles, ArrowRight } from 'lucide-react';
 import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
 import Logo from './Logo';
+import { IconGoldCrestStar } from './icons/CapBrandIcons';
 
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
@@ -18,15 +19,18 @@ const Footer: React.FC = () => {
         {/* Top Feature Banner */}
         <div className="bg-[#0F2557] rounded-3xl p-6 sm:p-10 mb-16 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-[#2563EB] text-white flex items-center justify-center flex-shrink-0 font-black">
-              ⭐
+            <div className="w-12 h-12 rounded-2xl bg-[#2563EB] text-white flex items-center justify-center flex-shrink-0 shadow-md">
+              <IconGoldCrestStar className="w-6 h-6 text-[#F59E0B]" />
             </div>
             <div>
+              <div className="text-[11px] font-bold text-[#F59E0B] uppercase tracking-wider mb-0.5">
+                Strategic Lead Diagnostic
+              </div>
               <h4 className="text-lg font-black text-white nav-font">
-                CAP Organization Transformation Assessment
+                ค้นหาพลังขับเคลื่อน และจุดปลดล็อกองค์กรของคุณ
               </h4>
               <p className="text-xs sm:text-sm text-gray-300">
-                ประเมินความพร้อม 4 มิติสำคัญ เพื่อรับข้อเสนอแนะเชิงกลยุทธ์เฉพาะองค์กรคุณทันที
+                ประเมินคน ทีม และองค์กร เพื่อค้นหาว่า อะไรคือจุดแข็งที่ควรต่อยอด และอะไรคือจุดที่ควรเปลี่ยน
               </p>
             </div>
           </div>

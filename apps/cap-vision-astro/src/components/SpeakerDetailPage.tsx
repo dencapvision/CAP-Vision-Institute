@@ -865,6 +865,93 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         </div>
       </section>
 
+      {/* ── 3. DOWNLOAD & RESOURCE CENTER ── */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+        <div className="bg-gradient-to-br from-[#111827] via-[#0F2557] to-[#111827] rounded-3xl p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#2563EB]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#F59E0B]/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative z-10">
+            <div className="text-center max-w-2xl mx-auto mb-10">
+              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-[#60A5FA] text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3 nav-font backdrop-blur-md">
+                <Download className="w-4 h-4 text-[#F59E0B]" />
+                Resource & Document Center
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black text-white nav-font mb-3">
+                ดาวน์โหลดเอกสารประวัติ & Portfolio
+              </h2>
+              <p className="text-gray-300 text-xs sm:text-sm font-light leading-relaxed">
+                ดาวน์โหลดไฟล์เอกสารทางการ สำหรับนำเสนอผู้บริหาร คณะกรรมการจัดซื้อ หรือฝ่ายพัฒนาบุคลากร (HRD) ผ่าน Google Drive
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {/* Resource 1: ประวัติวิทยากร */}
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 backdrop-blur-sm hover:border-[#2563EB]/60 hover:bg-white/10 transition-all flex flex-col justify-between group">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-2xl bg-blue-500/20 text-[#60A5FA] flex items-center justify-center">
+                      <FileText className="w-6 h-6" />
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-[#2563EB] text-white px-3 py-1 rounded-full shadow-xs">
+                      Official Bio Docs
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-black text-white nav-font mb-2 group-hover:text-[#60A5FA] transition-colors">
+                    เอกสารประวัติวิทยากร (Bio & Profile)
+                  </h3>
+                  <p className="text-gray-300 text-xs sm:text-sm font-light leading-relaxed mb-6">
+                    ไฟล์ประวัติฉบับสมบูรณ์ วุฒิการศึกษา หนังสือรับรอง และข้อมูลการบรรยาย สำหรับกระบวนการจัดซื้อและพิจารณาหลักสูตร
+                  </p>
+                </div>
+
+                <a
+                  href="https://drive.google.com/drive/folders/1r8tk_BFvXVQ96JiKDjlUBSGqJG_fS6d3"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full btn-premium bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-3.5 px-6 rounded-2xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition-all"
+                >
+                  <Download className="w-4 h-4" />
+                  ดาวน์โหลดประวัติวิทยากร (Google Drive)
+                </a>
+              </div>
+
+              {/* Resource 2: Portfolio & Case Studies */}
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 backdrop-blur-sm hover:border-[#F59E0B]/60 hover:bg-white/10 transition-all flex flex-col justify-between group">
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-2xl bg-amber-500/20 text-[#F59E0B] flex items-center justify-center">
+                      <Award className="w-6 h-6" />
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-[#F59E0B] text-[#111827] px-3 py-1 rounded-full shadow-xs font-black">
+                      Workshop Portfolio
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-black text-white nav-font mb-2 group-hover:text-[#F59E0B] transition-colors">
+                    แฟ้มผลงาน & Portfolio (Case Studies)
+                  </h3>
+                  <p className="text-gray-300 text-xs sm:text-sm font-light leading-relaxed mb-6">
+                    รวมภาพถ่ายกิจกรรมการอบรมบรรยาย ภาพบรรยากาศ Workshop จากองค์กรชั้นนำ และกรณีศึกษาความสำเร็จจริง
+                  </p>
+                </div>
+
+                <a
+                  href="https://drive.google.com/drive/folders/1r8tk_BFvXVQ96JiKDjlUBSGqJG_fS6d3"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full btn-premium bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] py-3.5 px-6 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition-all"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  เข้าดู Portfolio & ภาพกิจกรรม (Google Drive)
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Signature Programs */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
         <div className="text-center mb-10">

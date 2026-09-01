@@ -200,7 +200,7 @@ export const Speakers: React.FC = () => {
                       <img
                         src={
                           speaker.slug === 'kraiput-intarayotha'
-                            ? 'https://res.cloudinary.com/dmo4kq7ej/image/upload/v1786514509/NewProfile_Kraiput_bgvjeo.jpg'
+                            ? 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg'
                             : speaker.image
                         }
                         alt={speaker.name}

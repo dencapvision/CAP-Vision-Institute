@@ -5,7 +5,7 @@ import {
   ArrowLeft, CheckCircle2, Award, Star, MessageCircle, Phone, BookOpen,
   ChevronRight, Zap, Users, Brain, Target, Quote, Calendar, TrendingUp, Shield,
   Mic2, Sparkles, Heart, Presentation, ArrowRight, Building, Mail, Maximize2,
-  Clock, ShieldCheck
+  Clock, ShieldCheck, ExternalLink, Download, FileText
 } from 'lucide-react';
 import { fetchInstructorBySlug } from '../lib/services/instructors';
 import { fetchCourses } from '../lib/services/courses';
@@ -170,20 +170,20 @@ const K_DATA = {
     'ผ่านการอบรมด้านยุทธวิธีและการบริหารความมั่นคงมากกว่า 200 หลักสูตร'
   ],
   gallery: [
-    'https://res.cloudinary.com/dmo4kq7ej/image/upload/v1786514509/NewProfile_Kraiput_bgvjeo.jpg',
     'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg',
     'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha2.jpg',
     'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha3.jpg',
     'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha4.jpg',
     'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha5.jpg',
     'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha6.jpg',
-  ]
+  ],
+  onePagerImage: 'https://res.cloudinary.com/dmo4kq7ej/image/upload/v1786514509/NewProfile_Kraiput_bgvjeo.jpg'
 };
 
 /* ─── 2. KRAIPUT INTARAYOTHA DETAIL COMPONENT ───────────────── */
 
 const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[] }> = ({ speaker }) => {
-  const profileImg = 'https://res.cloudinary.com/dmo4kq7ej/image/upload/v1786514509/NewProfile_Kraiput_bgvjeo.jpg';
+  const profileImg = 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/Kraiput%20Gallery/Kraiput%20Intarayotha.jpg';
 
   return (
     <div className="bg-[#FFFFFF] min-h-screen text-[#111827] overflow-x-hidden pb-20">
@@ -210,7 +210,7 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
                   alt={K_DATA.fullName}
                   className="w-full h-[450px] sm:h-[520px] object-cover object-top"
                   onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = K_DATA.gallery[1];
+                    (e.currentTarget as HTMLImageElement).src = K_DATA.gallery[0];
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/80 via-transparent to-transparent" />
@@ -342,6 +342,56 @@ const KnightKraiputDetail: React.FC<{ speaker: Instructor, taughtCourses: Course
             </div>
           </div>
         </div>
+
+        {/* ── 1-PAGE EXECUTIVE PROFILE / ONE-PAGER SUMMARY ── */}
+        <section className="mb-20">
+          <div className="bg-[#F8FAFC] rounded-3xl p-6 sm:p-12 border border-gray-200/80 shadow-xl">
+            <div className="max-w-3xl mx-auto text-center mb-8">
+              <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 text-[#2563EB] text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3 nav-font">
+                <FileText className="w-4 h-4" />
+                Official Executive Profile
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black text-[#0F2557] nav-font mb-3">
+                ประวัติย่อ 1-Page Executive Summary
+              </h2>
+              <p className="text-gray-600 text-xs sm:text-sm font-normal max-w-xl mx-auto leading-relaxed">
+                เอกสารสรุปประวัติ ผลงาน ตำแหน่ง และคุณวุฒิความเชี่ยวชาญแบบย่อ 1 หน้า สำหรับคณะกรรมการจัดซื้อ, ผู้บริหาร และฝ่ายพัฒนาทรัพยากรมนุษย์ (HRD)
+              </p>
+            </div>
+
+            {/* Infographic Poster Frame */}
+            <div className="max-w-4xl mx-auto bg-white rounded-3xl overflow-hidden shadow-2xl border-2 sm:border-4 border-gray-100 p-2 sm:p-4 group relative">
+              <div className="relative overflow-hidden rounded-2xl bg-gray-900">
+                <img
+                  src={K_DATA.onePagerImage}
+                  alt={`${K_DATA.fullName} — ประวัติย่อ 1-Page`}
+                  className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.01]"
+                  loading="lazy"
+                />
+              </div>
+
+              {/* Action Toolbar */}
+              <div className="pt-4 px-2 sm:px-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-gray-100 mt-4">
+                <div className="flex items-center gap-2 text-xs font-bold text-gray-500">
+                  <IconGoldCrestStar className="w-4 h-4 text-[#F59E0B]" />
+                  <span>เอกสารทางการจากสถาบัน CAP Vision Institute</span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <a
+                    href={K_DATA.onePagerImage}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-[#0F2557] hover:bg-[#2563EB] text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-sm transition-all"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    เปิดดูรูปขนาดเต็ม (Full Resolution)
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Gallery Showcase */}
         <section className="mb-20">

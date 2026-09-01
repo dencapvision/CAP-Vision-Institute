@@ -2,10 +2,14 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Sparkles, CheckCircle2, ArrowRight, ArrowLeft, BarChart3, 
-  Target, Users, Zap, Trophy, RefreshCw, Send,
+  Target, RefreshCw, Send,
   MessageSquare, Building2,
   Mail, Phone, User, Compass
 } from 'lucide-react';
+import { 
+  IconLeadership, IconTeamSynergy, IconGrowthCulture, 
+  IconCreativeCPS, IconGoldCrestStar, IconInstituteShield 
+} from './icons/CapBrandIcons';
 import { supabase } from '../lib/supabase';
 import { CONTACT_INFO } from '../constants/brand';
 
@@ -116,28 +120,28 @@ const DIMENSION_CONFIG = {
     title: 'Strategic Leadership',
     thTitle: 'ภาวะผู้นำเชิงกลยุทธ์',
     color: '#2563EB',
-    icon: Trophy,
+    icon: IconLeadership,
     desc: 'ความชัดเจนของวิสัยทัศน์และการนำพาองค์กรผ่าน Facilitative Leadership'
   },
   people: {
     title: 'People & Team Synergy',
     thTitle: 'พลังทีมและการประสานงาน',
     color: '#0F2557',
-    icon: Users,
+    icon: IconTeamSynergy,
     desc: 'ความปลอดภัยทางจิตวิทยา การสื่อสารเชิงบวก และการทลายกำแพง Silo'
   },
   culture: {
     title: 'Culture & Growth Mindset',
     thTitle: 'วัฒนธรรม & กรอบคิดเติบโต',
     color: '#F59E0B',
-    icon: Zap,
+    icon: IconGrowthCulture,
     desc: 'การเปิดรับการเปลี่ยนแปลง ความคิดสร้างสรรค์ และการสร้างนวัตกรรม'
   },
   execution: {
     title: 'Execution & Impact',
     thTitle: 'การขับเคลื่อน & วัดผลลัพธ์',
     color: '#10B981',
-    icon: Target,
+    icon: IconCreativeCPS,
     desc: 'การแปลงทักษะสู่การปฏิบัติจริง และการประเมินผลลัพธ์ที่จับต้องได้'
   }
 };

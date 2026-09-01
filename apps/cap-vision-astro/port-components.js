@@ -57,7 +57,8 @@ const FILES_TO_PORT = [
   { src: 'pages/dashboard/DashboardLeads.tsx', dest: 'admin/DashboardLeads.tsx' },
   { src: 'pages/dashboard/DashboardCategories.tsx', dest: 'admin/DashboardCategories.tsx' },
   { src: 'pages/dashboard/DashboardSEO.tsx', dest: 'admin/DashboardSEO.tsx' },
-  { src: 'pages/MediaManager.tsx', dest: 'admin/MediaManager.tsx' }
+  { src: 'pages/MediaManager.tsx', dest: 'admin/MediaManager.tsx' },
+  { src: 'components/icons/CapBrandIcons.tsx', dest: 'icons/CapBrandIcons.tsx' }
 ];
 
 function portFile(srcRel, destRel) {

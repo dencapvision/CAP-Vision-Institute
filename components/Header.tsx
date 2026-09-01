@@ -4,10 +4,15 @@ import {
   Menu, X, PhoneCall, ChevronDown,
   GraduationCap, Users, Info,
   Briefcase, MessageCircle, ExternalLink,
-  Sparkles, BookOpen, Trophy,
+  Sparkles, BookOpen,
   Phone, Building2, Layers3, ChevronRight,
-  FileText, Brain, Target, Zap, Lightbulb, Compass
+  FileText, Target
 } from 'lucide-react';
+import { 
+  IconLeadership, IconTeamSynergy, IconGrowthCulture, 
+  IconCreativeCPS, IconCustomArchitecture, IconFacilitatorMastery, 
+  IconGoldCrestStar, IconInstituteShield 
+} from './icons/CapBrandIcons';
 import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
 import Logo from './Logo';
 
@@ -37,8 +42,8 @@ const navItems: NavItem[] = [
   {
     name: 'ประเมินองค์กร',
     path: '/assessment',
-    icon: <Sparkles className="w-4 h-4 text-[#F59E0B]" />,
-    badge: '⭐ Assessment',
+    icon: <IconGoldCrestStar className="w-4 h-4 text-[#F59E0B]" />,
+    badge: 'Diagnostic',
   },
   {
     name: 'โซลูชัน',
@@ -48,37 +53,37 @@ const navItems: NavItem[] = [
       {
         name: 'Leadership Transformation',
         path: '/services#leadership',
-        icon: <Trophy className="w-4 h-4 text-[#2563EB]" />,
+        icon: <IconLeadership className="w-4 h-4" />,
         description: 'พัฒนาภาวะผู้นำเพื่อการเปลี่ยนแปลง',
       },
       {
         name: 'People & Team Synergy',
         path: '/services#people-team',
-        icon: <Users className="w-4 h-4 text-[#0F2557]" />,
+        icon: <IconTeamSynergy className="w-4 h-4" />,
         description: 'ทลาย Silo & เสริมพลังทีมงาน',
       },
       {
         name: 'Organization Culture',
         path: '/services#culture',
-        icon: <Zap className="w-4 h-4 text-[#F59E0B]" />,
+        icon: <IconGrowthCulture className="w-4 h-4" />,
         description: 'สร้างวัฒนธรรม Growth Mindset',
       },
       {
         name: 'Customized In-house Solutions',
         path: '/services#customized',
-        icon: <Compass className="w-4 h-4 text-[#10B981]" />,
+        icon: <IconCustomArchitecture className="w-4 h-4" />,
         description: 'ออกแบบหลักสูตรจาก TNA เฉพาะองค์กร',
       },
       {
         name: 'CEO Speechfulness',
         path: '/ceo-speechfulness',
-        icon: <Sparkles className="w-4 h-4 text-[#2563EB]" />,
+        icon: <IconLeadership className="w-4 h-4" />,
         description: 'Coaching พูด & สื่อสาร สำหรับผู้บริหาร',
       },
       {
         name: 'The Facilitorium',
         path: 'https://facilitorium.denmasterfa.com/',
-        icon: <Layers3 className="w-4 h-4 text-[#F59E0B]" />,
+        icon: <IconFacilitatorMastery className="w-4 h-4" />,
         external: true,
         description: 'โรงเรียนวิทยากรและคลังเครื่องมือ Facilitator',
       },
@@ -92,31 +97,31 @@ const navItems: NavItem[] = [
       {
         name: 'Leadership Programs',
         path: '/courses?cat=Leader+Skills',
-        icon: <Trophy className="w-4 h-4 text-[#2563EB]" />,
+        icon: <IconLeadership className="w-4 h-4" />,
         description: 'Transformative Leadership, Strategic Vision',
       },
       {
         name: 'People Skills',
         path: '/courses?cat=People+Skills',
-        icon: <Users className="w-4 h-4 text-[#0F2557]" />,
+        icon: <IconTeamSynergy className="w-4 h-4" />,
         description: 'Service Mind, Empathetic Communication',
       },
       {
         name: 'Creative Thinking',
         path: '/courses?cat=Work+Skills',
-        icon: <Lightbulb className="w-4 h-4 text-[#F59E0B]" />,
+        icon: <IconCreativeCPS className="w-4 h-4" />,
         description: 'Creative Problem Solving (CPS Model)',
       },
       {
         name: 'Facilitator & Process Design',
         path: '/courses',
-        icon: <Brain className="w-4 h-4 text-[#10B981]" />,
+        icon: <IconFacilitatorMastery className="w-4 h-4" />,
         description: 'ศาสตร์การจัดกระบวนการเรียนรู้ที่มีพลัง',
       },
       {
         name: 'Growth Mastery Workshop',
         path: '/resources/building-growth-mindset-culture',
-        icon: <Sparkles className="w-4 h-4 text-[#2563EB]" />,
+        icon: <IconGrowthCulture className="w-4 h-4" />,
         description: 'หลักสูตร Signature สำหรับผู้นำ',
       },
       {
@@ -130,12 +135,12 @@ const navItems: NavItem[] = [
   {
     name: 'CAP Framework',
     path: '/about#cap-framework',
-    icon: <Compass className="w-4 h-4" />,
+    icon: <IconInstituteShield className="w-4 h-4" />,
   },
   {
     name: 'Case Studies',
     path: '/portfolio',
-    icon: <Trophy className="w-4 h-4" />,
+    icon: <IconGoldCrestStar className="w-4 h-4 text-[#F59E0B]" />,
   },
   {
     name: 'วิทยากร',

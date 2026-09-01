@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  ArrowRight, Users, GraduationCap, Award, Sparkles, CheckCircle2, 
-  ChevronRight, MessageCircle, BarChart3, Target, Zap, Shield, 
-  Compass, Layers3, Trophy, PhoneCall, Play, Clock, ArrowUpRight,
-  Lightbulb, Brain, HeartHandshake, Rocket
+  ArrowRight, Award, Sparkles, CheckCircle2, 
+  ChevronRight, MessageCircle, BarChart3, Target,
+  Compass, Layers3, PhoneCall, Play, Clock, ArrowUpRight
 } from 'lucide-react';
+import { 
+  IconLeadership, IconTeamSynergy, IconGrowthCulture, 
+  IconCreativeCPS, IconCustomArchitecture, IconFacilitatorMastery, 
+  IconGoldCrestStar, IconInstituteShield 
+} from '../components/icons/CapBrandIcons';
 import { motion } from 'framer-motion';
 import { BRAND_INFO, CONTACT_INFO } from '../constants/brand';
 import { HRD_ARTICLES } from '../constants/articles';
@@ -37,7 +41,7 @@ const Home: React.FC = () => {
     loadCourses();
   }, []);
 
-  // 4 Core Solutions
+  // 4 Core Solutions with Custom Brand Emblems
   const SOLUTIONS = [
     {
       id: 'leadership',
@@ -45,7 +49,7 @@ const Home: React.FC = () => {
       thTitle: 'ภาวะผู้นำเพื่อการเปลี่ยนแปลง',
       tagline: 'ยกระดับผู้นำทุกระดับจาก "ผู้สั่งการ" สู่ "Facilitative & Inspiring Leader"',
       description: 'พัฒนา Mindset และทักษะการนำพาทีมในยุคแห่งความผันผวน สร้างวิสัยทัศน์ร่วม (Shared Vision) และการตัดสินใจเชิงกลยุทธ์ที่ขับเคลื่อนผลลัพธ์องค์กรอย่างแท้จริง',
-      icon: Trophy,
+      icon: IconLeadership,
       color: '#2563EB',
       bgLight: 'bg-blue-50',
       highlights: [
@@ -62,7 +66,7 @@ const Home: React.FC = () => {
       thTitle: 'พัฒนาคนและพลังทีมงาน',
       tagline: 'ทลายกำแพง Silo สร้างความปลอดภัยทางจิตวิทยา และการสื่อสารที่ไร้รอยต่อ',
       description: 'ปรับกระบวนการทำงานร่วมกันผ่านการสื่อสารด้วย Empathy การเข้าใจความหลากหลายของบุคคล และการสร้างบรรยากาศที่ทุกคนกล้าคิด กล้าเสนอ และร่วมมือกันอย่างเต็มใจ',
-      icon: Users,
+      icon: IconTeamSynergy,
       color: '#0F2557',
       bgLight: 'bg-indigo-50',
       highlights: [
@@ -79,7 +83,7 @@ const Home: React.FC = () => {
       thTitle: 'วัฒนธรรมองค์กร & กรอบคิดเติบโต',
       tagline: 'ปลูกฝัง Growth Mindset และสร้างวัฒนธรรมแห่งการเรียนรู้ที่ยั่งยืน',
       description: 'เปลี่ยน Mindset ของคนในองค์กรให้มองปัญหาเป็นความท้าทาย เปิดรับนวัตกรรม และสร้างความยืดหยุ่น (Agility) เพื่อให้องค์กรพร้อมปรับตัวต่อการเปลี่ยนแปลงทุกรูปแบบ',
-      icon: Zap,
+      icon: IconGrowthCulture,
       color: '#F59E0B',
       bgLight: 'bg-amber-50',
       highlights: [
@@ -96,7 +100,7 @@ const Home: React.FC = () => {
       thTitle: 'โซลูชันออกแบบเฉพาะองค์กร',
       tagline: 'เริ่มจาก TNA วิเคราะห์ปัญหาจริง สู่ Workshop ที่ปรับแต่ง 100%',
       description: 'ไม่มีหลักสูตรสำเร็จรูป (No One-Size-Fits-All) เราลงลึกศึกษาบริบท Pain Points และเป้าหมายธุรกิจขององค์กรคุณ เพื่อออกแบบ Learning Journey ที่ตอบโจทย์เฉพาะองค์กรอย่างแท้จริง',
-      icon: Compass,
+      icon: IconCustomArchitecture,
       color: '#10B981',
       bgLight: 'bg-emerald-50',
       highlights: [
@@ -115,7 +119,7 @@ const Home: React.FC = () => {
       category: 'Leadership Programs',
       thTitle: 'หลักสูตรภาวะผู้นำ',
       desc: 'สร้างผู้นำที่จุดประกายทีม กล้าคิดเชิงกลยุทธ์ และนำการเปลี่ยนแปลง',
-      icon: Trophy,
+      icon: IconLeadership,
       count: '15+ หลักสูตร',
       color: '#2563EB',
       link: '/courses?cat=Leader+Skills'
@@ -124,7 +128,7 @@ const Home: React.FC = () => {
       category: 'People Skills',
       thTitle: 'ทักษะคนและการทำงานร่วมกัน',
       desc: 'การสื่อสาร, Service Mind, การให้ Feedback และการเข้าใจพฤติกรรมมนุษย์',
-      icon: HeartHandshake,
+      icon: IconTeamSynergy,
       count: '18+ หลักสูตร',
       color: '#0F2557',
       link: '/courses?cat=People+Skills'
@@ -133,7 +137,7 @@ const Home: React.FC = () => {
       category: 'Creative Thinking',
       thTitle: 'การคิดเชิงสร้างสรรค์ & แก้ปัญหา',
       desc: 'Creative Problem Solving (CPS Model), Design Thinking และการพัฒนานวัตกรรม',
-      icon: Lightbulb,
+      icon: IconCreativeCPS,
       count: '10+ หลักสูตร',
       color: '#F59E0B',
       link: '/courses?cat=Work+Skills'
@@ -142,7 +146,7 @@ const Home: React.FC = () => {
       category: 'Facilitator & Process Design',
       thTitle: 'หลักสูตรวิทยากร & ฟาซิลิตี้',
       desc: 'ศาสตร์และศิลป์แห่งการเป็น Modern Facilitator ออกแบบกระบวนการเรียนรู้ที่มีพลัง',
-      icon: Brain,
+      icon: IconFacilitatorMastery,
       count: '8+ หลักสูตร',
       color: '#10B981',
       link: '/courses'
@@ -211,8 +215,8 @@ const Home: React.FC = () => {
                   to="/assessment"
                   className="btn-premium bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-8 py-4 sm:py-5 rounded-2xl font-black text-base shadow-2xl flex items-center justify-center gap-3 active:scale-95 group transition-all"
                 >
-                  <Sparkles className="w-5 h-5 text-[#F59E0B]" />
-                  ประเมินองค์กรของคุณ ⭐
+                  <IconGoldCrestStar className="w-5 h-5 text-[#F59E0B]" />
+                  ประเมินองค์กรของคุณ (Diagnostic)
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
                 </Link>
 
@@ -251,8 +255,8 @@ const Home: React.FC = () => {
                 <div className="relative bg-white/10 backdrop-blur-2xl border border-white/20 p-6 sm:p-8 rounded-[2rem] shadow-2xl">
                   <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center font-black text-base shadow-md">
-                        ⭐
+                      <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#1E293B] to-[#0F172A] border border-white/20 flex items-center justify-center shadow-lg">
+                        <IconGoldCrestStar className="w-6 h-6 text-[#F59E0B]" />
                       </div>
                       <div>
                         <div className="text-sm font-bold text-white">Organization Diagnostic Tool</div>
@@ -295,6 +299,7 @@ const Home: React.FC = () => {
                     to="/assessment"
                     className="w-full btn-premium bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] font-black py-3.5 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg transition-all"
                   >
+                    <IconGoldCrestStar className="w-4 h-4 text-[#111827]" />
                     เริ่มทำแบบประเมินเดี๋ยวนี้
                     <ArrowRight className="w-4 h-4" />
                   </Link>
@@ -332,7 +337,7 @@ const Home: React.FC = () => {
                 title: 'ผู้นำยังไม่สามารถดึงศักยภาพทีมออกมาได้',
                 description: 'ผู้นำเน้นการสั่งการมากกว่าการ Facilitate ขาดทักษะการสร้างแรงบันดาลใจ และยังติดกับดักการทำงานแบบเดิม',
                 impact: 'ทีมขาด Ownership & ทำงานแบบรอคำสั่ง',
-                icon: Trophy,
+                icon: IconLeadership,
                 color: '#2563EB',
                 bgBadge: 'bg-blue-50 text-blue-700 border-blue-200'
               },
@@ -342,7 +347,7 @@ const Home: React.FC = () => {
                 title: 'คนเก่ง แต่ทำงานร่วมกันไม่ได้',
                 description: 'แต่ละฝ่ายทำงานแยกส่วน (Silo) ขาดความปลอดภัยทางจิตวิทยา (Psychological Safety) และการสื่อสารไม่เปิดใจ',
                 impact: 'เกิดความขัดแย้ง ประสิทธิภาพงานลดลง',
-                icon: Users,
+                icon: IconTeamSynergy,
                 color: '#0F2557',
                 bgBadge: 'bg-indigo-50 text-indigo-700 border-indigo-200'
               },
@@ -352,7 +357,7 @@ const Home: React.FC = () => {
                 title: 'องค์กรต้องการเปลี่ยน แต่คนยังไม่เปลี่ยน',
                 description: 'คนในองค์กรมี Fixed Mindset ยึดติดกับ Comfort Zone กลัวความผิดพลาด และต่อต้านการเปลี่ยนแปลงกลยุทธ์ใหม่',
                 impact: 'การทรานส์ฟอร์มองค์กรสะดุด ล่าช้า',
-                icon: Zap,
+                icon: IconGrowthCulture,
                 color: '#F59E0B',
                 bgBadge: 'bg-amber-50 text-amber-700 border-amber-200'
               },
@@ -362,7 +367,7 @@ const Home: React.FC = () => {
                 title: 'มีปัญหา แต่ทีมยังคิดทางออกแบบเดิม',
                 description: 'ขาดทักษะ Creative Problem Solving (CPS Model) และการคิดวิเคราะห์เชิงระบบ ทำให้ไม่เกิดนวัตกรรมหรือทางเลือกใหม่',
                 impact: 'สูญเสียความได้เปรียบในการแข่งขัน',
-                icon: Lightbulb,
+                icon: IconCreativeCPS,
                 color: '#10B981',
                 bgBadge: 'bg-emerald-50 text-emerald-700 border-emerald-200'
               }
@@ -383,8 +388,8 @@ const Home: React.FC = () => {
                       </span>
                     </div>
 
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform group-hover:scale-110" style={{ backgroundColor: `${card.color}15`, color: card.color }}>
-                      <Icon className="w-6 h-6" />
+                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110 shadow-md bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200/80">
+                      <Icon className="w-7 h-7" />
                     </div>
 
                     <h3 className="text-lg font-black text-[#111827] mb-3 nav-font leading-snug">
@@ -420,7 +425,7 @@ const Home: React.FC = () => {
           <div className="bg-gradient-to-r from-[#111827] via-[#0F2557] to-[#111827] rounded-3xl p-8 sm:p-10 text-white shadow-2xl border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-2 text-center md:text-left">
               <div className="inline-flex items-center gap-2 text-xs font-bold text-[#F59E0B] uppercase tracking-wider">
-                <Sparkles className="w-4 h-4" />
+                <IconGoldCrestStar className="w-4 h-4 text-[#F59E0B]" />
                 Strategic Lead-Generation Funnel
               </div>
               <h3 className="text-xl sm:text-2xl font-black text-white nav-font">
@@ -436,7 +441,7 @@ const Home: React.FC = () => {
                 to="/assessment"
                 className="btn-premium w-full sm:w-auto bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] font-black px-8 py-4 rounded-xl text-base shadow-xl flex items-center justify-center gap-3 transition-all"
               >
-                <Sparkles className="w-5 h-5" />
+                <IconGoldCrestStar className="w-5 h-5 text-[#111827]" />
                 เริ่ม Organization Assessment →
               </Link>
             </div>

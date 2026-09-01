@@ -17,7 +17,7 @@ export const Speakers: React.FC = () => {
     slug: 'den-masterfa',
     name: 'ครูเด่น มาสเตอร์ฟา (อนุสรณ์ หนองนา)',
     title: 'Master Facilitator & Director of CAP Vision Institute',
-    bio: 'ผู้อำนวยการสถาบันผู้เชี่ยวชาญด้าน Transformative Learning และกระบวนการคิดสร้างสรรค์ (6D CPS) ประสบการณ์กว่า 18+ ปี 1,000+ เวทีทั่วประเทศ',
+    bio: 'ผู้อำนวยการสถาบัน CAP Vision Partner และ นักออกแบบระบบพัฒนาบุคคลทุกระดับ ด้วยแนวทางการเรียนรู้แบบ Flow Learning, Transformative & Play to Learn และเชี่ยวชาญ Human Communication 4 ระดับ',
     image: '/images/denmasterfa.jpg',
     socials: { line: CONTACT_INFO.line }
   };

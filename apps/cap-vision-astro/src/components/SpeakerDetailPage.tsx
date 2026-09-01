@@ -26,7 +26,7 @@ import {
 
 const DEN_SPECIFIC = {
   heroHeadline: 'ครูเด่น มาสเตอร์ฟา (Master Facilitator)',
-  heroSub: 'ผู้อำนวยการสถาบันผู้เชี่ยวชาญด้าน Transformative Learning, 6D CPS Model และการออกแบบกระบวนการเรียนรู้เพื่อยกระดับภาวะผู้นำและทีมงานอย่างยั่งยืน',
+  heroSub: 'ผู้อำนวยการสถาบัน CAP Vision Partner และ นักออกแบบระบบพัฒนาบุคคลทุกระดับ ด้วยแนวทางการเรียนรู้แบบ Flow Learning, Transformative & Play to Learn เปลี่ยนจากสภาวะภายในสู่พฤติกรรมภายนอก และ เชี่ยวชาญการพัฒนาทักษะการสื่อสาร Human Communication 4 ระดับ ครอบคลุมระดับบุคคล, ครอบครัว, องค์กร และสังคม',
   stats: [
     { value: '18+', label: 'ปีประสบการณ์', icon: ShieldCheck },
     { value: '1,000+', label: 'เวทีทั่วประเทศ', icon: Award },

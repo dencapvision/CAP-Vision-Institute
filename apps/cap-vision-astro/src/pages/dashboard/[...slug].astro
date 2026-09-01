@@ -1,0 +1,22 @@
+---
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+const mapping: Record<string, string> = {
+  'blog/new': '/admin/contents',
+  'blog': '/admin/contents',
+  'articles': '/admin/contents',
+  'contents': '/admin/contents',
+  'speakers': '/admin/speakers',
+  'courses': '/admin/courses',
+  'events': '/admin/events',
+  'leads': '/admin/leads',
+  'media': '/admin/media',
+  'seo': '/admin/seo',
+  'categories': '/admin/categories',
+};
+
+const target = (slug && mapping[slug]) || (slug?.startsWith('blog') ? '/admin/contents' : '/admin/dashboard');
+return Astro.redirect(target);
+---

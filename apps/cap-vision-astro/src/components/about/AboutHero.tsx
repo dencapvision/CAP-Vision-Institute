@@ -1,12 +1,13 @@
 import React from 'react';
 
 import { CONTACT_INFO } from '../../constants/brand';
+import { IconInstituteShield, IconGoldCrestStar } from '../icons/CapBrandIcons';
 
-const AboutHero: React.FC = () => {
+export const AboutHero: React.FC = () => {
   const stats = [
     { value: '2552', label: 'ปีก่อตั้ง' },
     { value: '18+', label: 'ปีประสบการณ์' },
-    { value: '100+', label: 'องค์กรพันธมิตร' },
+    { value: '200+', label: 'องค์กรชั้นนำ' },
     { value: '10,000+', label: 'ผู้เรียนสำเร็จ' },
   ];
 
@@ -21,6 +22,7 @@ const AboutHero: React.FC = () => {
       <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
         {/* Label badge */}
         <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-[#60A5FA] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-8 nav-font backdrop-blur-md">
+          <IconInstituteShield className="w-4 h-4 text-[#F59E0B]" />
           About CAP Vision Institute
         </div>
 
@@ -43,18 +45,16 @@ const AboutHero: React.FC = () => {
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-          <a
-            href={CONTACT_INFO.lineUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-premium bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-widest nav-font shadow-xl transition-all"
+          <a href="/assessment"
+            className="btn-premium bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-widest nav-font shadow-xl transition-all inline-flex items-center gap-2"
           >
-            ปรึกษาหลักสูตรองค์กร
+            <IconGoldCrestStar className="w-4 h-4" />
+            ทำแบบประเมินองค์กรฟรี
           </a>
-          <a href="/courses"
+          <a href="/contact"
             className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded-2xl font-bold text-sm uppercase tracking-widest nav-font transition-all"
           >
-            ดูหลักสูตรทั้งหมด
+            ขอใบเสนอราคาหลักสูตร
           </a>
         </div>
 
@@ -62,10 +62,10 @@ const AboutHero: React.FC = () => {
         <div className="border-t border-white/10 pt-12 grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((s, i) => (
             <div key={i} className="text-center">
-              <div className="text-3xl md:text-5xl font-black text-[#c5a059] nav-font mb-2">
+              <div className="text-3xl md:text-5xl font-black text-[#F59E0B] nav-font mb-2">
                 {s.value}
               </div>
-              <div className="text-white/50 text-[10px] font-bold uppercase tracking-[0.3em]">
+              <div className="text-white/60 text-[11px] font-bold uppercase tracking-[0.25em]">
                 {s.label}
               </div>
             </div>

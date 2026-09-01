@@ -1,74 +1,86 @@
 import React from 'react';
+import { Award, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { IconGoldCrestStar } from '../icons/CapBrandIcons';
 
 const credentials = [
   {
-    category: 'ตำแหน่งและบทบาท',
+    category: 'ตำแหน่งและบทบาทสำคัญ',
     items: [
       'ผู้อำนวยการสถาบันจัดการเรียนรู้ CAP Vision Institute',
-      'วิทยากรบรรยาย ภาครัฐ เอกชน และบุคคลทั่วไป',
-      'ที่ปรึกษาการออกแบบกระบวนการเรียนรู้และพัฒนาสมรรถนะบุคลากร',
-      'ที่ปรึกษานักธุรกิจและเจ้าของกิจการด้านการจัดการศึกษา',
+      'วิทยากรและ Master Facilitator อบรมองค์กรภาครัฐ เอกชน และรัฐวิสาหกิจ',
+      'ที่ปรึกษาการออกแบบกระบวนการเรียนรู้และพัฒนาสมรรถนะบุคลากร (OD & Learning Design)',
+      'ผู้ร่วมก่อตั้ง Facilitator for Thailand (FFT) และโครงการ Dynamic School Thailand',
     ],
   },
   {
     category: 'ความเชี่ยวชาญเฉพาะด้าน',
     items: [
-      'นักสร้างบริบทการเรียนรู้และออกแบบกระบวนการสอน',
-      'ผู้ให้การปรึกษาทางจิตวิทยาและพัฒนาศักยภาพส่วนบุคคล',
-      'ครูฝึกสติสัมปชัญญะและสอนการทำสมาธิ',
-      'ผู้เชี่ยวชาญด้านการสื่อสาร การโค้ช และการพูด',
+      'Transformative Facilitation & Active Experiential Learning',
+      '6D Creative Problem Solving (CPS Model) นวัตกรรมการแก้ปัญหาเชิงระบบ',
+      'Executive Speechfulness & การสื่อสารโน้มน้าวใจระดับผู้นำ',
+      'Team Synergy & Silo Breaker การสร้างวัฒนธรรมการทำงานร่วมกัน',
     ],
   },
 ];
 
 const clients = [
-  { name: 'Toyota', type: 'ภาคเอกชน' },
+  { name: 'Toyota', type: 'ยานยนต์ & อุตสาหกรรม' },
   { name: 'PEA (การไฟฟ้าส่วนภูมิภาค)', type: 'รัฐวิสาหกิจ' },
   { name: 'AOT (การท่าอากาศยาน)', type: 'รัฐวิสาหกิจ' },
-  { name: 'ปปส. (สำนักงานคณะกรรมการป้องกันและปราบปรามยาเสพติด)', type: 'ราชการ' },
-  { name: 'Tops (Central Food Retail)', type: 'ภาคเอกชน' },
-  { name: 'ศอบต. (ศูนย์อำนวยการบริหารจังหวัดชายแดนภาคใต้)', type: 'ราชการ' },
-  { name: 'Dell Technologies Thailand', type: 'ภาคเอกชน' },
-  { name: 'Land and Houses', type: 'ภาคเอกชน' },
+  { name: 'Tops (Central Retail)', type: 'ค้าปลีก & FMCG' },
+  { name: 'Mr. D.I.Y. Thailand', type: 'ค้าปลีกชั้นนำ' },
+  { name: 'Land and Houses', type: 'อสังหาริมทรัพย์' },
+  { name: 'Dell Technologies', type: 'เทคโนโลยี & ดิจิทัล' },
+  { name: 'ศอบต. & หน่วยงานภาครัฐ', type: 'หน่วยงานราชการ' },
 ];
 
-const Experience: React.FC = () => {
+export const Experience: React.FC = () => {
   return (
-    <section className="py-24 md:py-40 bg-[#f8fafc]">
+    <section className="py-24 md:py-36 bg-[#F8FAFC]">
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Label */}
-        <p className="text-[#c5a059] text-[10px] md:text-[11px] font-black uppercase tracking-[0.6em] mb-6 nav-font">
-          Experience & Credentials
+        <p className="text-[#2563EB] text-xs font-black uppercase tracking-widest mb-6 nav-font">
+          Experience & Proven Track Record
         </p>
 
         {/* Headline */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 mb-20 items-end">
-          <h2 className="text-4xl md:text-6xl font-black text-[#0f3460] nav-font leading-[1.05] tracking-tight">
-            18 ปีแห่งการ
-            <br />
-            พิสูจน์บนเวที
-          </h2>
-          <p className="text-gray-600 text-lg md:text-xl leading-relaxed font-medium">
-            ไม่ใช่แค่ประสบการณ์ในห้องเรียน แต่คือประสบการณ์จากเวทีจริง องค์กรจริง และปัญหาจริงของผู้คนทุกภาคส่วน
-          </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 mb-16 items-end">
+          <div>
+            <h2 className="text-4xl md:text-6xl font-black text-[#0F2557] nav-font leading-[1.05] tracking-tight">
+              18+ ปีแห่งการ
+              <br />
+              <span className="text-[#F59E0B]">พิสูจน์ผลลัพธ์บนเวทีจริง</span>
+            </h2>
+          </div>
+          <div>
+            <p className="text-gray-700 text-base sm:text-lg leading-relaxed font-normal">
+              ไม่ใช่แค่ทฤษฎีในห้องเรียน แต่คือประสบการณ์จากเวทีจริง องค์กรจริง และการแก้ปัญหาจริงของผู้บริหารและทีมงานกว่า 200+ องค์กร
+            </p>
+          </div>
         </div>
 
-        {/* Credentials grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 mb-20 md:mb-28 border border-gray-200">
+        {/* Credentials Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
           {credentials.map((c, i) => (
             <div
               key={i}
-              className={`p-10 md:p-14 ${i === 0 ? 'border-b md:border-b-0 md:border-r border-gray-200' : ''}`}
+              className="bg-white rounded-3xl p-8 sm:p-10 shadow-lg border border-gray-100"
             >
-              <p className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.4em] mb-8 nav-font">
-                {c.category}
-              </p>
-              <ul className="space-y-5">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 bg-blue-50 text-[#2563EB] rounded-2xl flex items-center justify-center">
+                  {i === 0 ? <Award className="w-5 h-5" /> : <ShieldCheck className="w-5 h-5" />}
+                </div>
+                <h3 className="text-lg sm:text-xl font-black text-[#0F2557] nav-font">
+                  {c.category}
+                </h3>
+              </div>
+
+              <ul className="space-y-4">
                 {c.items.map((item, j) => (
-                  <li key={j} className="flex gap-4 items-start">
-                    <div className="w-1 h-1 bg-[#c5a059] rounded-full flex-shrink-0 mt-2.5" />
-                    <span className="text-gray-600 text-sm md:text-base leading-relaxed">{item}</span>
+                  <li key={j} className="flex gap-3.5 items-start">
+                    <CheckCircle2 className="w-4 h-4 text-[#2563EB] flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-700 text-xs sm:text-sm font-medium leading-relaxed">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -76,35 +88,30 @@ const Experience: React.FC = () => {
           ))}
         </div>
 
-        {/* Client list */}
+        {/* Client List Showcase */}
         <div>
-          <p className="text-[#c5a059] text-[10px] font-black uppercase tracking-[0.5em] mb-10 nav-font">
-            องค์กรที่เคยร่วมงาน (ตัวอย่าง)
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border border-gray-200">
-            {clients.map((client, i) => {
-              const row = Math.floor(i / 4);
-              const col = i % 4;
-              const isLastRow = Math.floor((clients.length - 1) / 4) === row;
-              const isLastCol = col === 3 || i === clients.length - 1;
-              return (
-                <div
-                  key={i}
-                  className={`p-6 md:p-8 ${!isLastRow ? 'border-b border-gray-200' : ''} ${!isLastCol ? 'border-r border-gray-200' : ''}`}
-                >
-                  <p className="text-[#c5a059] text-[9px] font-black uppercase tracking-[0.3em] mb-2 nav-font">
-                    {client.type}
-                  </p>
-                  <p className="text-[#0f3460] text-sm font-bold leading-snug">
-                    {client.name}
-                  </p>
-                </div>
-              );
-            })}
+          <div className="flex items-center gap-2 mb-8">
+            <IconGoldCrestStar className="w-4 h-4 text-[#F59E0B]" />
+            <p className="text-xs font-black text-gray-500 uppercase tracking-widest nav-font">
+              ตัวอย่างองค์กรชั้นนำที่ไว้วางใจ
+            </p>
           </div>
-          <p className="text-gray-400 text-xs mt-4">
-            และกว่า 100 องค์กรทั่วประเทศ ทั้งภาคเอกชน รัฐวิสาหกิจ ราชการ และสถาบันการศึกษา
-          </p>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {clients.map((client, i) => (
+              <div
+                key={i}
+                className="bg-white p-6 rounded-2xl border border-gray-100 shadow-xs hover:border-[#2563EB]/40 transition-colors"
+              >
+                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1.5">
+                  {client.type}
+                </span>
+                <p className="text-[#0F2557] text-sm font-black nav-font leading-snug">
+                  {client.name}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
 
       </div>

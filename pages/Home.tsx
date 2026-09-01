@@ -429,10 +429,10 @@ const Home: React.FC = () => {
                 Strategic Lead-Generation Funnel
               </div>
               <h3 className="text-xl sm:text-2xl font-black text-white nav-font">
-                พร้อมค้นหาจุดคานงัดเพื่อ Transform องค์กรของคุณแล้วหรือยัง?
+                พร้อมค้นหาพลังขับเคลื่อน และจุดปลดล็อกองค์กรของคุณแล้วหรือยัง?
               </h3>
               <p className="text-gray-300 text-xs sm:text-sm max-w-xl font-light">
-                ทำแบบประเมิน 12 ข้อ รับผลวิเคราะห์ Radar Chart และข้อเสนอแนะ Solutions เฉพาะองค์กรฟรีทันที
+                ประเมินคน ทีม และองค์กร เพื่อค้นหาว่า อะไรคือจุดแข็งที่ควรต่อยอด และอะไรคือจุดที่ควรเปลี่ยน
               </p>
             </div>
 

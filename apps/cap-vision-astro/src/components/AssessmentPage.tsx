@@ -35,12 +35,12 @@ const AssessmentPage: React.FC = () => {
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white nav-font leading-tight mb-6">
-              CAP Organization <br />
-              <span className="text-[#F59E0B]">Transformation Assessment</span>
+              ค้นหาพลังขับเคลื่อน <br />
+              <span className="text-[#F59E0B]">และจุดปลดล็อกองค์กรของคุณ</span>
             </h1>
 
             <p className="text-gray-300 text-base sm:text-xl leading-relaxed mb-8 font-light">
-              เครื่องมือประเมินระดับความพร้อมขององค์กร 4 มิติสำคัญ เพื่อค้นหาจุดคานงัดในการพัฒนาผู้นำ เสริมพลังทีมงาน และยกระดับวัฒนธรรมองค์กรอย่างตรงจุด
+              ประเมินคน ทีม และองค์กร เพื่อค้นหาว่า อะไรคือจุดแข็งที่ควรต่อยอด และอะไรคือจุดที่ควรเปลี่ยน
             </p>
 
             {/* Quick Benefits Pills */}

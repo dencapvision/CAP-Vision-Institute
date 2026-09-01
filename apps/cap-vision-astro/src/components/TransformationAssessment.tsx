@@ -327,17 +327,60 @@ export const TransformationAssessment: React.FC<{ isEmbedded?: boolean }> = ({ i
       (dimScores.leadership + dimScores.people + dimScores.culture + dimScores.execution) / 4
     );
 
+    // Dimension Insights Dictionary
+    const DIM_INSIGHTS: Record<string, { strength: string; unlock: string; action: string }> = {
+      leadership: {
+        strength: 'ผู้นำมีวิสัยทัศน์และการสื่อสารเป้าหมายที่ชัดเจน เป็นหลักยึดที่มั่นคงให้ทีมงาน',
+        unlock: 'เปลี่ยนจากการสั่งการแบบดั้งเดิม (Command & Control) สู่ Facilitative Leadership เพื่อเพิ่ม Ownership และปลดปล่อยศักยภาพของทีม',
+        action: 'จัดโปรแกรม Facilitative Leadership & Coaching Skill สำหรับผู้บริหารและหัวหน้างาน'
+      },
+      people: {
+        strength: 'ทีมงานมีความสามัคคีและสัมพันธภาพที่ดี มีความตั้งใจมุ่งมั่นในการส่งมอบงาน',
+        unlock: 'ทลายกำแพง Silo ข้ามสายงาน และสร้าง Psychological Safety ให้ทุกคนกล้าเปิดใจ ให้ Feedback เชิงสร้างสรรค์',
+        action: 'เวิร์กช็อป Team Synergy & Empathetic Communication เพื่อสร้างบรรยากาศแห่งความปลอดภัยทางจิตวิทยา'
+      },
+      culture: {
+        strength: 'คนในองค์กรเปิดรับค่านิยมและมีความตื่นตัวต่อทิศทางการเติบโตขององค์กร',
+        unlock: 'ปลดล็อก Fixed Mindset สู่ Growth Mindset กล้าทดลองแก้ปัญหาด้วยวิธีใหม่ (CPS Model) โดยไม่กลัวความผิดพลาด',
+        action: 'ขับเคลื่อน Growth Mindset & Creative Problem Solving (CPS Model) ลงสู่พฤติกรรมจริงในชีวิตประจำวัน'
+      },
+      execution: {
+        strength: 'มีระเบียบวินัยในการดำเนินงานและมีความมุ่งมั่นที่จะบรรลุเป้าหมายตาม KPI',
+        unlock: 'เปลี่ยนจากการจัดอบรมแบบสำเร็จรูป สู่การวิเคราะห์ TNA เชิงลึก และการวาง Action Learning วัดผลลัพธ์พฤติกรรมจริง',
+        action: 'วางระบบ Custom In-house Training Architecture พร้อมตัวชี้วัด Impact และการติดตามผลหลังอบรม'
+      }
+    };
+
+    // Sort dimensions by score descending
+    const sortedDims = Object.entries(dimScores).sort((a, b) => b[1] - a[1]);
+    const topDimKey = sortedDims[0][0];
+    const secondDimKey = sortedDims[1][0];
+    const lowestDimKey = sortedDims[3][0];
+    const secondLowestDimKey = sortedDims[2][0];
+
+    const strengths = [
+      { key: topDimKey, title: DIMENSION_CONFIG[topDimKey as keyof typeof DIMENSION_CONFIG].thTitle, score: Math.round(sortedDims[0][1]), text: DIM_INSIGHTS[topDimKey].strength },
+      { key: secondDimKey, title: DIMENSION_CONFIG[secondDimKey as keyof typeof DIMENSION_CONFIG].thTitle, score: Math.round(sortedDims[1][1]), text: DIM_INSIGHTS[secondDimKey].strength }
+    ];
+
+    const unlocks = [
+      { key: lowestDimKey, title: DIMENSION_CONFIG[lowestDimKey as keyof typeof DIMENSION_CONFIG].thTitle, score: Math.round(sortedDims[3][1]), text: DIM_INSIGHTS[lowestDimKey].unlock },
+      { key: secondLowestDimKey, title: DIMENSION_CONFIG[secondLowestDimKey as keyof typeof DIMENSION_CONFIG].thTitle, score: Math.round(sortedDims[2][1]), text: DIM_INSIGHTS[secondLowestDimKey].unlock }
+    ];
+
+    const nextMoves = [
+      DIM_INSIGHTS[lowestDimKey].action,
+      DIM_INSIGHTS[secondLowestDimKey].action,
+      'นัดหมาย Strategic Discovery Call 30 นาที กับ Master Facilitator เพื่อรับคำปรึกษาแนวทางออกแบบการเรียนรู้เฉพาะองค์กร'
+    ];
+
     let stage = {
       level: 1,
       title: 'Foundational Stage (ช่วงวางรากฐาน)',
       badge: 'Level 1: Foundation',
       badgeColor: 'bg-amber-100 text-amber-800 border-amber-300',
       description: 'องค์กรมีความจำเป็นเร่งด่วนในการจัดวาง Alignment ภาวะผู้นำ และการสร้างความปลอดภัยทางจิตวิทยาเพื่อให้ทีมเริ่มสื่อสารและทำงานร่วมกันได้อย่างมีประสิทธิภาพ',
-      recommendations: [
-        'จัด Workshop: Transformational Leadership เพื่อสร้างกรอบคิดและวิสัยทัศน์ร่วม',
-        'ทลายกำแพง Silo ด้วยหลักสูตร Team Synergy & Empathetic Communication',
-        'สำรวจ TNA เชิงลึกเพื่อออกแบบโปรแกรมพัฒนาที่ตรงจุดเจ็บปวด'
-      ]
+      recommendations: nextMoves
     };
 
     if (overallScore >= 85) {
@@ -359,12 +402,8 @@ export const TransformationAssessment: React.FC<{ isEmbedded?: boolean }> = ({ i
         title: 'Accelerating Growth Stage (ช่วงเร่งการเติบโต)',
         badge: 'Level 3: Accelerating',
         badgeColor: 'bg-blue-100 text-blue-800 border-blue-300',
-        description: 'องค์กรมีพื้นฐานที่ดี มีความร่วมมือและเป้าหมายชัดเจน แต่อาจยังมีจุดคานงัดบางมิติที่สามารถเร่งสปีดผลลัพธ์ผ่านการปรับ Mindset และกระบวนการทำงานให้คมชัดขึ้น',
-        recommendations: [
-          'เสริมศักยภาพผู้นำยุคใหม่ด้วย Facilitative Leadership & Coaching Skill',
-          'ยกระดับวัฒนธรรม Growth Mindset เพื่อรับมือความท้าทายและการเปลี่ยนแปลงที่รวดเร็ว',
-          'วางระบบ Action Learning Project พร้อมตัวชี้วัด Impact ชัดเจน'
-        ]
+        description: 'องค์กรมีพื้นฐานที่ดี มีความร่วมมือและเป้าหมายชัดเจน แต่อาจยังมีจุดปลดล็อกบางมิติที่สามารถเร่งสปีดผลลัพธ์ผ่านการปรับ Mindset และกระบวนการทำงานให้คมชัดขึ้น',
+        recommendations: nextMoves
       };
     } else if (overallScore >= 50) {
       stage = {
@@ -373,18 +412,17 @@ export const TransformationAssessment: React.FC<{ isEmbedded?: boolean }> = ({ i
         badge: 'Level 2: Developing',
         badgeColor: 'bg-indigo-100 text-indigo-800 border-indigo-300',
         description: 'องค์กรกำลังอยู่ในช่วงตื่นตัวและต้องการพัฒนา แต่ยังพบอุปสรรคด้านการสื่อสารข้ามแผนก และการนำความรู้ไปใช้จริงให้เกิดผลลัพธ์ที่สม่ำเสมอ',
-        recommendations: [
-          'จัดกระบวนการ Activity-Based Learning เพื่อกระตุ้นการมีส่วนร่วมและความไว้วางใจ',
-          'ฝึกทักษะการสื่อสารเชิงสร้างสรรค์และการให้ Feedback เชิงบวก',
-          'กำหนดเป้าหมายระยะสั้น (Quick Wins) เพื่อสร้างความเชื่อมั่นในทีม'
-        ]
+        recommendations: nextMoves
       };
     }
 
     return {
       dimScores,
       overallScore,
-      stage
+      stage,
+      strengths,
+      unlocks,
+      nextMoves
     };
   }, [answers]);
 
@@ -535,10 +573,13 @@ export const TransformationAssessment: React.FC<{ isEmbedded?: boolean }> = ({ i
                     <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-2">
                       Exclusive Diagnostic by Master Facilitators
                     </span>
-                    <h3 className="text-2xl sm:text-3xl font-black text-[#111827] leading-tight mb-4 nav-font">
-                      ประเมินจุดแข็งและ <span className="text-[#2563EB]">จุดคานงัด</span> ในการขับเคลื่อนองค์กรของคุณ
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#111827] leading-tight mb-3 nav-font">
+                      ค้นหาพลังขับเคลื่อน และ <span className="text-[#2563EB]">จุดปลดล็อก</span> องค์กรของคุณ
                     </h3>
-                    <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-6">
+                    <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-2 font-bold">
+                      ประเมินคน ทีม และองค์กร เพื่อค้นหาว่า อะไรคือจุดแข็งที่ควรต่อยอด และอะไรคือจุดที่ควรเปลี่ยน
+                    </p>
+                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-6 font-light">
                       แบบประเมินนี้ถูกพัฒนาจากประสบการณ์กว่า 18+ ปีของ CAP Vision Institute ในการจัด In-house Training และ OD Consulting ให้กับองค์กรชั้นนำกว่า 200+ แห่ง ใช้เวลาเพียง 3 นาที เพื่อค้นพบข้อเสนอแนะเชิงกลยุทธ์เฉพาะองค์กรคุณ
                     </p>
 
@@ -754,31 +795,110 @@ export const TransformationAssessment: React.FC<{ isEmbedded?: boolean }> = ({ i
                   </div>
                 </div>
 
-                {/* Recommendations */}
-                <div className="bg-blue-50/60 border border-blue-100 p-6 sm:p-8 rounded-3xl mb-12">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center shadow-md">
-                      <Target className="w-5 h-5" />
+                {/* ── 3 Core Results Pillars: Strengths, Unlocks, Next Move ── */}
+                <div className="space-y-6 mb-12">
+                  {/* 1. Your Strengths — จุดแข็งที่ควรต่อยอด */}
+                  <div className="bg-emerald-50/70 border border-emerald-200/80 p-6 sm:p-8 rounded-3xl">
+                    <div className="flex items-center gap-3 mb-5">
+                      <div className="w-10 h-10 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-md flex-shrink-0 font-black text-base">
+                        🌟
+                      </div>
+                      <div>
+                        <div className="text-[11px] font-black text-emerald-800 uppercase tracking-widest">
+                          Your Strengths
+                        </div>
+                        <h4 className="text-lg sm:text-xl font-black text-emerald-950 nav-font">
+                          จุดแข็งที่ควรต่อยอด (Key Organizational Strengths)
+                        </h4>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="text-lg font-black text-[#0F2557] nav-font">
-                        ข้อเสนอแนะเชิงกลยุทธ์เฉพาะองค์กร (Tailored Action Plan)
-                      </h4>
-                      <p className="text-xs text-gray-500">ขั้นตอนสำคัญเพื่อยกระดับผลลัพธ์สู่ระดับถัดไป</p>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {results.strengths.map((item, idx) => (
+                        <div key={idx} className="bg-white p-5 rounded-2xl border border-emerald-100 shadow-xs flex flex-col justify-between">
+                          <div>
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-xs font-black text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                                {item.title}
+                              </span>
+                              <span className="text-xs font-black text-emerald-700 font-mono">
+                                {item.score}%
+                              </span>
+                            </div>
+                            <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                              {item.text}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                    {results.stage.recommendations.map((rec, i) => (
-                      <div key={i} className="bg-white p-4 rounded-2xl border border-blue-100/80 shadow-sm flex items-start gap-3">
-                        <span className="w-6 h-6 rounded-full bg-[#2563EB]/10 text-[#2563EB] font-black text-xs flex items-center justify-center flex-shrink-0 mt-0.5">
-                          {i + 1}
-                        </span>
-                        <p className="text-xs sm:text-sm font-medium text-gray-700 leading-relaxed">
-                          {rec}
-                        </p>
+                  {/* 2. Your Unlocks — จุดปลดล็อกที่ควรลงมือเปลี่ยน */}
+                  <div className="bg-amber-50/70 border border-amber-200/80 p-6 sm:p-8 rounded-3xl">
+                    <div className="flex items-center gap-3 mb-5">
+                      <div className="w-10 h-10 rounded-2xl bg-[#F59E0B] text-[#111827] flex items-center justify-center shadow-md flex-shrink-0 font-black text-base">
+                        🔓
                       </div>
-                    ))}
+                      <div>
+                        <div className="text-[11px] font-black text-amber-800 uppercase tracking-widest">
+                          Your Unlocks
+                        </div>
+                        <h4 className="text-lg sm:text-xl font-black text-amber-950 nav-font">
+                          จุดปลดล็อกที่ควรลงมือเปลี่ยน (High-Impact Growth Levers)
+                        </h4>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {results.unlocks.map((item, idx) => (
+                        <div key={idx} className="bg-white p-5 rounded-2xl border border-amber-100 shadow-xs flex flex-col justify-between">
+                          <div>
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-xs font-black text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+                                จุดปลดล็อก: {item.title}
+                              </span>
+                              <span className="text-xs font-black text-amber-700 font-mono">
+                                {item.score}%
+                              </span>
+                            </div>
+                            <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-medium">
+                              {item.text}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 3. Your Next Move — ก้าวต่อไปที่แนะนำ */}
+                  <div className="bg-blue-50/70 border border-blue-200/80 p-6 sm:p-8 rounded-3xl">
+                    <div className="flex items-center gap-3 mb-5">
+                      <div className="w-10 h-10 rounded-2xl bg-[#2563EB] text-white flex items-center justify-center shadow-md flex-shrink-0 font-black text-base">
+                        🚀
+                      </div>
+                      <div>
+                        <div className="text-[11px] font-black text-blue-800 uppercase tracking-widest">
+                          Your Next Move
+                        </div>
+                        <h4 className="text-lg sm:text-xl font-black text-[#0F2557] nav-font">
+                          ก้าวต่อไปที่แนะนำ (Recommended Next Actions)
+                        </h4>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {results.nextMoves.map((rec, i) => (
+                        <div key={i} className="bg-white p-5 rounded-2xl border border-blue-100/90 shadow-xs flex items-start gap-3">
+                          <span className="w-6 h-6 rounded-full bg-[#2563EB] text-white font-black text-xs flex items-center justify-center flex-shrink-0 mt-0.5 shadow-sm">
+                            {i + 1}
+                          </span>
+                          <p className="text-xs sm:text-sm font-medium text-gray-700 leading-relaxed">
+                            {rec}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 

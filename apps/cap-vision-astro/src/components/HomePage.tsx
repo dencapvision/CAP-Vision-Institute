@@ -822,8 +822,9 @@ const Home: React.FC = () => {
             Start Your Organization Journey
           </div>
 
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black mb-6 nav-font leading-tight">
-            พร้อมยกระดับองค์กรของคุณแล้วหรือยัง?
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black mb-6 nav-font leading-tight !text-white text-white drop-shadow-md">
+            พร้อมยกระดับองค์กร
+            <span className="text-[#F59E0B] !text-[#F59E0B] block mt-1 sm:inline sm:ml-3">ของคุณแล้วหรือยัง?</span>
           </h2>
 
           <p className="text-gray-300 text-base sm:text-xl mb-10 max-w-2xl mx-auto font-light leading-relaxed">

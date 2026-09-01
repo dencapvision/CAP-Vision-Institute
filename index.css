@@ -91,7 +91,16 @@ body {
    Fixes headings & paragraphs on ALL dark navy backgrounds
    ============================================================ */
 
-/* ── Direct dark bg classes ── */
+/* ── Direct dark bg classes & Executive Transformation ── */
+.bg-\[\#111827\] h1, .bg-\[\#111827\] h2, .bg-\[\#111827\] h3, .bg-\[\#111827\] h4,
+.bg-\[\#0f2557\] h1, .bg-\[\#0f2557\] h2, .bg-\[\#0f2557\] h3, .bg-\[\#0f2557\] h4,
+.bg-\[\#0F2557\] h1, .bg-\[\#0F2557\] h2, .bg-\[\#0F2557\] h3, .bg-\[\#0F2557\] h4,
+.from-\[\#111827\] h1, .from-\[\#111827\] h2, .from-\[\#111827\] h3, .from-\[\#111827\] h4,
+.from-\[\#0f2557\] h1, .from-\[\#0f2557\] h2, .from-\[\#0f2557\] h3, .from-\[\#0f2557\] h4,
+.from-\[\#0F2557\] h1, .from-\[\#0F2557\] h2, .from-\[\#0F2557\] h3, .from-\[\#0F2557\] h4,
+.text-white h1, .text-white h2, .text-white h3, .text-white h4,
+h1.text-white, h2.text-white, h3.text-white, h4.text-white,
+h1.\!text-white, h2.\!text-white, h3.\!text-white,
 .bg-\[\#0f3460\] h1, .bg-\[\#0f3460\] h2, .bg-\[\#0f3460\] h3,
 .bg-\[\#0f3460\] h4, .bg-\[\#0f3460\] h5,
 .bg-\[\#0a1628\] h1, .bg-\[\#0a1628\] h2, .bg-\[\#0a1628\] h3,
@@ -104,30 +113,24 @@ body {
   opacity: 1 !important;
 }
 
+.bg-\[\#111827\] p, .bg-\[\#0f2557\] p, .bg-\[\#0F2557\] p,
+.from-\[\#111827\] p, .from-\[\#0f2557\] p, .from-\[\#0F2557\] p,
 .bg-\[\#0f3460\] p, .bg-\[\#0a1628\] p,
 .bg-\[\#1a4a7a\] p, .bg-\[\#0a2545\] p {
   color: rgba(255, 255, 255, 0.9) !important;
   opacity: 1 !important;
 }
 
-/* ── Gradient dark sections (from-[#0f3460], from-[#0a1628]) ── */
-.from-\[\#0f3460\] h1, .from-\[\#0f3460\] h2, .from-\[\#0f3460\] h3,
-.from-\[\#0f3460\] h4, .from-\[\#0f3460\] h5,
-.from-\[\#0a1628\] h1, .from-\[\#0a1628\] h2, .from-\[\#0a1628\] h3,
-.from-\[\#0a1628\] h4, .from-\[\#0a1628\] h5 {
-  color: #ffffff !important;
-  opacity: 1 !important;
-}
-
-.from-\[\#0f3460\] p, .from-\[\#0a1628\] p {
-  color: rgba(255, 255, 255, 0.9) !important;
-  opacity: 1 !important;
-}
-
-/* ── Protect Gold accent — never override ── */
+/* ── Protect Gold & Amber accent — never override ── */
+.text-\[\#F59E0B\], .text-\[\#F59E0B\] *,
+.text-\[\#f59e0b\], .text-\[\#f59e0b\] *,
 .text-\[\#c5a059\],
 .text-\[\#c5a059\] * {
   color: #c5a059 !important;
+}
+.text-\[\#F59E0B\], .text-\[\#F59E0B\] *,
+.text-\[\#f59e0b\], .text-\[\#f59e0b\] * {
+  color: #F59E0B !important;
 }
 
 /* ── Protect white text utility explicitly set ── */

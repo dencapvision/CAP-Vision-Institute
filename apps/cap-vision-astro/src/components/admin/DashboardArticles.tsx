@@ -2,13 +2,22 @@ import React, { useState, useEffect } from 'react';
 import {
   Sparkles, Save, Eye, EyeOff, Trash2, ExternalLink,
   Loader2, CheckCircle2, AlertCircle, Plus, RefreshCw,
-  ChevronDown, ChevronUp, FileText, Key, Settings, Zap, Check
+  ChevronDown, ChevronUp, FileText, Key, Settings, Zap, Check,
+  Edit, Image as ImageIcon, X, Upload
 } from 'lucide-react';
 import { generateArticle, type GeneratedArticle } from '../../lib/services/ai-article-generator';
 import {
-  fetchAllArticles, saveArticle, togglePublished, deleteArticle,
+  fetchAllArticles, saveArticle, updateArticle, togglePublished, deleteArticle,
   type BlogArticleRow
 } from '../../lib/services/blog-articles';
+
+const PRESET_IMAGES = [
+  { label: 'Workshop & Team', url: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1200' },
+  { label: 'Leadership Meeting', url: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1200' },
+  { label: 'Creative Strategy', url: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=1200' },
+  { label: 'Executive Mentoring', url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200' },
+  { label: 'Modern Office', url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200' }
+];
 
 const DashboardArticles: React.FC = () => {
   const [title, setTitle] = useState('ทักษะ Emotional Intelligence ที่ผู้นำองค์กรไทยต้องมี');
@@ -25,6 +34,14 @@ const DashboardArticles: React.FC = () => {
   const [apiKey, setApiKey] = useState('');
   const [showKeyConfig, setShowKeyConfig] = useState(false);
   const [keySaved, setKeySaved] = useState(false);
+
+  // Edit Modal State
+  const [editingArticle, setEditingArticle] = useState<BlogArticleRow | null>(null);
+  const [editTitle, setEditTitle] = useState('');
+  const [editThumbnail, setEditThumbnail] = useState('');
+  const [editSummary, setEditSummary] = useState('');
+  const [editCategory, setEditCategory] = useState('');
+  const [editSaving, setEditSaving] = useState(false);
 
   useEffect(() => {
     loadArticles();
@@ -86,6 +103,58 @@ const DashboardArticles: React.FC = () => {
     }
   }
 
+  function openEditModal(row: BlogArticleRow) {
+    setEditingArticle(row);
+    setEditTitle(row.title);
+    setEditThumbnail(row.thumbnail || row.content?.images?.[0]?.url || '');
+    setEditSummary(row.content?.summary || '');
+    setEditCategory(row.category || 'Leadership');
+  }
+
+  async function handleSaveEdit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!editingArticle) return;
+    setEditSaving(true);
+
+    try {
+      const updatedContent: GeneratedArticle = {
+        ...editingArticle.content,
+        title: editTitle,
+        summary: editSummary,
+        images: [
+          {
+            url: editThumbnail,
+            alt: editTitle,
+            title: editTitle,
+            description: editSummary
+          },
+          ...(editingArticle.content.images?.slice(1) || [])
+        ]
+      };
+
+      await updateArticle(editingArticle.id, {
+        content: updatedContent,
+        category: editCategory,
+        thumbnail: editThumbnail,
+        published: editingArticle.published
+      });
+
+      setArticles(prev => prev.map(a => a.id === editingArticle.id ? {
+        ...a,
+        title: editTitle,
+        thumbnail: editThumbnail,
+        category: editCategory,
+        content: updatedContent
+      } : a));
+
+      setEditingArticle(null);
+    } catch (err: any) {
+      alert('เกิดข้อผิดพลาดในการบันทึก: ' + (err.message || err));
+    } finally {
+      setEditSaving(false);
+    }
+  }
+
   async function handleTogglePublish(row: BlogArticleRow) {
     try {
       await togglePublished(row.id, !row.published);
@@ -110,8 +179,8 @@ const DashboardArticles: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-black text-gray-900 tracking-tight">AI Article Generator</h1>
-          <p className="text-gray-500 text-sm mt-1">สร้างบทความ AEO/SEO คุณภาพสูง พร้อม FAQ Schema</p>
+          <h1 className="text-2xl font-black text-gray-900 tracking-tight">AI Article Generator & Editor</h1>
+          <p className="text-gray-500 text-sm mt-1">สร้างและจัดการบทความ AEO/SEO ภาพประกอบ และ FAQ Schema</p>
         </div>
         <div className="flex gap-2 items-center flex-wrap">
           <button
@@ -263,27 +332,80 @@ const DashboardArticles: React.FC = () => {
           </div>
 
           {/* ── Right: Preview Panel ── */}
-          <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
             {!generated && !generating && (
               <div className="h-full flex flex-col items-center justify-center py-24 text-center px-8">
                 <div className="w-16 h-16 bg-[#c5a059]/10 rounded-2xl flex items-center justify-center mb-4">
                   <Sparkles className="w-8 h-8 text-[#c5a059]" />
                 </div>
                 <p className="font-black text-gray-400 nav-font text-sm uppercase tracking-widest">Preview บทความ</p>
-                <p className="text-gray-300 text-xs mt-2">ใส่หัวข้อและกด Generate</p>
+                <p className="text-gray-400 text-xs mt-2">ใส่หัวข้อและกดสร้างบทความ</p>
               </div>
             )}
 
             {generating && (
               <div className="h-full flex flex-col items-center justify-center py-24">
                 <Loader2 className="w-10 h-10 text-[#c5a059] animate-spin mb-4" />
-                <p className="font-bold text-gray-500 text-sm">Gemini AI กำลังสร้างบทความ...</p>
-                <p className="text-gray-400 text-xs mt-1">ใช้เวลาประมาณ 15-30 วินาที</p>
+                <p className="font-bold text-gray-700 text-sm">กำลังประมวลผลและสร้างเนื้อหา AEO/SEO...</p>
+                <p className="text-gray-400 text-xs mt-1">สร้างโครงสร้าง Framework, Case Study และ FAQ</p>
               </div>
             )}
 
             {generated && (
               <div className="overflow-y-auto max-h-[700px]">
+                {/* Header Image Selection */}
+                <div className="relative h-48 bg-gray-100 overflow-hidden group">
+                  {generated.images?.[0]?.url ? (
+                    <img
+                      src={generated.images[0].url}
+                      alt={generated.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
+                      <ImageIcon className="w-8 h-8 opacity-40" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-4">
+                    <div className="text-white w-full">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#F59E0B] mb-1">ภาพปกบทความ</p>
+                      <input
+                        type="url"
+                        value={generated.images?.[0]?.url || ''}
+                        onChange={(e) => {
+                          const url = e.target.value;
+                          setGenerated({
+                            ...generated,
+                            images: [{ url, alt: generated.title, title: generated.title, description: '' }]
+                          });
+                        }}
+                        placeholder="วาง URL รูปภาพปกที่ต้องการ..."
+                        className="w-full bg-black/60 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 text-xs text-white placeholder-white/50 focus:outline-none focus:border-[#F59E0B]"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Quick Presets for Image */}
+                <div className="p-3 bg-gray-50 border-b border-gray-100 flex items-center gap-2 overflow-x-auto text-[11px]">
+                  <span className="text-gray-500 font-bold shrink-0">เลือกภาพแนะนำ:</span>
+                  {PRESET_IMAGES.map((img) => (
+                    <button
+                      key={img.label}
+                      type="button"
+                      onClick={() => {
+                        setGenerated({
+                          ...generated,
+                          images: [{ url: img.url, alt: generated.title, title: generated.title, description: '' }]
+                        });
+                      }}
+                      className="shrink-0 px-2.5 py-1 rounded-md bg-white border border-gray-200 hover:border-[#c5a059] text-gray-700 hover:text-[#0f3460] font-medium transition-all"
+                    >
+                      {img.label}
+                    </button>
+                  ))}
+                </div>
+
                 {/* Article header */}
                 <div className="p-6 border-b border-gray-100">
                   <div className="flex items-center gap-2 mb-3">
@@ -296,7 +418,7 @@ const DashboardArticles: React.FC = () => {
 
                 {/* SEO */}
                 <div className="px-6 py-4 bg-gray-50 border-b border-gray-100">
-                  <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-2">SEO</p>
+                  <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-2">SEO & Metadata</p>
                   <p className="text-xs font-bold text-[#0f3460] mb-1">{generated.seo?.meta_title}</p>
                   <p className="text-xs text-gray-500 mb-2">{generated.seo?.meta_description}</p>
                   <div className="flex flex-wrap gap-1">
@@ -335,17 +457,6 @@ const DashboardArticles: React.FC = () => {
                     </div>
                   </div>
                 )}
-
-                {/* Hashtags */}
-                {generated.hashtags?.length > 0 && (
-                  <div className="px-6 py-4">
-                    <div className="flex flex-wrap gap-1.5">
-                      {generated.hashtags.map(t => (
-                        <span key={t} className="text-[9px] font-bold text-[#0f3460]/60 bg-gray-100 px-2 py-1 rounded-md">{t}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
             )}
           </div>
@@ -353,7 +464,7 @@ const DashboardArticles: React.FC = () => {
       )}
 
       {activeTab === 'list' && (
-        <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
           <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
             <p className="font-black text-gray-700 text-sm">บทความทั้งหมด ({articles.length})</p>
             <button onClick={loadArticles} className="text-gray-400 hover:text-[#0f3460] transition-colors">
@@ -379,20 +490,25 @@ const DashboardArticles: React.FC = () => {
           ) : (
             <div className="divide-y divide-gray-100">
               {articles.map(row => (
-                <div key={row.id} className="p-5">
+                <div key={row.id} className="p-5 hover:bg-gray-50/50 transition-colors">
                   <div className="flex items-start gap-4">
                     {/* Thumbnail */}
-                    {row.thumbnail ? (
-                      <img src={row.thumbnail} alt="" className="w-14 h-14 rounded-xl object-cover shrink-0" />
-                    ) : (
-                      <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center shrink-0">
-                        <FileText className="w-6 h-6 text-gray-300" />
+                    <div className="relative group/thumb cursor-pointer" onClick={() => openEditModal(row)}>
+                      {row.thumbnail ? (
+                        <img src={row.thumbnail} alt="" className="w-16 h-16 rounded-xl object-cover shrink-0 border border-gray-100 shadow-xs" />
+                      ) : (
+                        <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center shrink-0">
+                          <FileText className="w-6 h-6 text-gray-300" />
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-black/40 rounded-xl opacity-0 group-hover/thumb:opacity-100 transition-opacity flex items-center justify-center text-white text-[10px] font-bold">
+                        เปลี่ยนภาพ
                       </div>
-                    )}
+                    </div>
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md ${row.published ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-500'}`}>
+                        <span className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md ${row.published ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-600'}`}>
                           {row.published ? 'Published' : 'Draft'}
                         </span>
                         <span className="text-[9px] text-gray-400">{new Date(row.created_at).toLocaleDateString('th-TH')}</span>
@@ -402,35 +518,46 @@ const DashboardArticles: React.FC = () => {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex items-center gap-2 shrink-0">
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <button
+                        onClick={() => openEditModal(row)}
+                        className="p-2 text-gray-500 hover:text-[#0f3460] hover:bg-gray-100 rounded-lg transition-colors"
+                        title="แก้ไขบทความ / เปลี่ยนภาพประกอบ"
+                      >
+                        <Edit className="w-4 h-4 text-[#c5a059]" />
+                      </button>
+
                       <button
                         onClick={() => setExpandedId(expandedId === row.id ? null : row.id)}
-                        className="p-2 text-gray-400 hover:text-[#0f3460] transition-colors"
+                        className="p-2 text-gray-400 hover:text-[#0f3460] hover:bg-gray-100 rounded-lg transition-colors"
                         title="ดู Preview"
                       >
                         {expandedId === row.id ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                       </button>
+
                       {row.published && (
                         <a
                           href={`/resources/${row.slug}`}
                           target="_blank"
                           rel="noreferrer"
-                          className="p-2 text-gray-400 hover:text-[#0f3460] transition-colors"
-                          title="เปิดบทความ"
+                          className="p-2 text-gray-400 hover:text-[#0f3460] hover:bg-gray-100 rounded-lg transition-colors"
+                          title="เปิดดูบทความจริง"
                         >
                           <ExternalLink className="w-4 h-4" />
                         </a>
                       )}
+
                       <button
                         onClick={() => handleTogglePublish(row)}
-                        className={`p-2 transition-colors ${row.published ? 'text-green-500 hover:text-gray-400' : 'text-gray-300 hover:text-green-500'}`}
-                        title={row.published ? 'Unpublish' : 'Publish'}
+                        className={`p-2 rounded-lg transition-colors ${row.published ? 'text-emerald-600 hover:bg-emerald-50' : 'text-gray-300 hover:text-emerald-600 hover:bg-gray-100'}`}
+                        title={row.published ? 'คลิกเพื่อเปลี่ยนเป็น Draft' : 'คลิกเพื่อเผยแพร่ (Publish)'}
                       >
                         {row.published ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                       </button>
+
                       <button
                         onClick={() => handleDelete(row)}
-                        className="p-2 text-gray-300 hover:text-red-500 transition-colors"
+                        className="p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                         title="ลบบทความ"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -440,12 +567,12 @@ const DashboardArticles: React.FC = () => {
 
                   {/* Expanded preview */}
                   {expandedId === row.id && (
-                    <div className="mt-4 pl-[4.5rem] space-y-3">
+                    <div className="mt-4 pl-20 space-y-3">
                       <div className="bg-[#0f3460]/5 rounded-xl p-4">
                         <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">Summary</p>
-                        <p className="text-xs text-gray-600 leading-relaxed">{row.content.summary}</p>
+                        <p className="text-xs text-gray-600 leading-relaxed">{row.content?.summary}</p>
                       </div>
-                      {row.content.faq?.length > 0 && (
+                      {row.content?.faq?.length > 0 && (
                         <div className="text-xs text-gray-500">
                           <span className="font-bold">FAQ:</span> {row.content.faq.length} ข้อ ·
                           <span className="font-bold ml-1">Framework:</span> {row.content.framework?.length ?? 0} ขั้น
@@ -457,6 +584,115 @@ const DashboardArticles: React.FC = () => {
               ))}
             </div>
           )}
+        </div>
+      )}
+
+      {/* Edit Article & Image Modal */}
+      {editingArticle && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-6">
+              <div className="flex items-center gap-2">
+                <Edit className="w-5 h-5 text-[#c5a059]" />
+                <h2 className="text-lg font-black text-[#0f3460]">แก้ไขบทความ & ภาพประกอบ</h2>
+              </div>
+              <button
+                onClick={() => setEditingArticle(null)}
+                className="p-2 text-gray-400 hover:text-gray-700 rounded-full hover:bg-gray-100"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveEdit} className="space-y-4">
+              {/* Image Preview & URL */}
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">รูปภาพปกบทความ (Thumbnail URL) *</label>
+                <div className="relative h-44 bg-gray-100 rounded-2xl overflow-hidden mb-2 border border-gray-200">
+                  {editThumbnail ? (
+                    <img src={editThumbnail} alt="" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
+                      <ImageIcon className="w-8 h-8 opacity-30" />
+                    </div>
+                  )}
+                </div>
+                <input
+                  type="url"
+                  required
+                  value={editThumbnail}
+                  onChange={(e) => setEditThumbnail(e.target.value)}
+                  placeholder="https://images.unsplash.com/..."
+                  className="w-full px-4 py-2.5 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:ring-2 focus:ring-[#c5a059] outline-none"
+                />
+
+                {/* Preset image suggestions */}
+                <div className="mt-2 flex items-center gap-1.5 flex-wrap">
+                  <span className="text-[10px] text-gray-400 font-bold">เลือกภาพแนะนำ:</span>
+                  {PRESET_IMAGES.map((img) => (
+                    <button
+                      key={img.label}
+                      type="button"
+                      onClick={() => setEditThumbnail(img.url)}
+                      className="px-2.5 py-1 rounded-md text-[10px] bg-gray-100 hover:bg-[#c5a059] hover:text-white font-bold text-gray-600 transition-colors"
+                    >
+                      {img.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">หัวข้อบทความ *</label>
+                <input
+                  type="text"
+                  required
+                  value={editTitle}
+                  onChange={(e) => setEditTitle(e.target.value)}
+                  className="w-full px-4 py-2.5 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:ring-2 focus:ring-[#c5a059] outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">หมวดหมู่</label>
+                <input
+                  type="text"
+                  value={editCategory}
+                  onChange={(e) => setEditCategory(e.target.value)}
+                  placeholder="Leadership / Team / Culture"
+                  className="w-full px-4 py-2.5 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:ring-2 focus:ring-[#c5a059] outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">สรุปเนื้อหาบทความ (Summary)</label>
+                <textarea
+                  rows={3}
+                  value={editSummary}
+                  onChange={(e) => setEditSummary(e.target.value)}
+                  className="w-full px-4 py-2.5 bg-gray-50 rounded-xl text-sm border border-gray-200 focus:ring-2 focus:ring-[#c5a059] outline-none resize-none"
+                />
+              </div>
+
+              <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                <button
+                  type="button"
+                  onClick={() => setEditingArticle(null)}
+                  className="px-5 py-2.5 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-100"
+                >
+                  ยกเลิก
+                </button>
+                <button
+                  type="submit"
+                  disabled={editSaving}
+                  className="px-6 py-2.5 rounded-xl text-sm font-bold bg-[#0f3460] text-white hover:bg-[#1a4a8a] disabled:opacity-50 flex items-center gap-2"
+                >
+                  {editSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                  บันทึกการแก้ไข
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
     </div>

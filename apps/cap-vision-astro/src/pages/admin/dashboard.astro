@@ -35,9 +35,9 @@ try {
     newLeadsRes,
     totalMediaRes
   ] = await Promise.all([
-    supabase.from('contents').select('*', { count: 'exact', head: true }),
-    supabase.from('contents').select('*', { count: 'exact', head: true }).eq('status', 'published'),
-    supabase.from('speakers').select('*', { count: 'exact', head: true }),
+    supabase.from('blog_articles').select('*', { count: 'exact', head: true }),
+    supabase.from('blog_articles').select('*', { count: 'exact', head: true }).eq('is_published', true),
+    supabase.from('instructors').select('*', { count: 'exact', head: true }),
     supabase.from('courses').select('*', { count: 'exact', head: true }),
     supabase.from('events').select('*', { count: 'exact', head: true }),
     supabase.from('leads').select('*', { count: 'exact', head: true }),
@@ -59,7 +59,7 @@ try {
   const { data: leadsData } = await supabase.from('leads').select('*').order('created_at', { ascending: false }).limit(5);
   recentLeads = leadsData || [];
 
-  const { data: contentsData } = await supabase.from('contents').select('id, title, status, content_type, updated_at').order('updated_at', { ascending: false }).limit(5);
+  const { data: contentsData } = await supabase.from('blog_articles').select('id, title, is_published, slug, created_at').order('created_at', { ascending: false }).limit(5);
   recentContents = contentsData || [];
 } catch (err: any) {
   console.error('[Admin Dashboard] SSR data fetch error:', err);

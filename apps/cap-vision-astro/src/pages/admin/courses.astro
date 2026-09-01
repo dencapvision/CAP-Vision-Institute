@@ -1,0 +1,12 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import DashboardCourses from '../../components/admin/DashboardCourses.tsx';
+
+export const prerender = false;
+---
+
+<AdminLayout title="จัดการหลักสูตร | CAP Vision Admin">
+  <div class="p-6 md:p-8">
+    <DashboardCourses client:only="react" />
+  </div>
+</AdminLayout>

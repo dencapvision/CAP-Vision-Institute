@@ -1,32 +1,5 @@
 import { supabase } from '../supabase';
-
-export interface PostContentSection {
-  type: 'text' | 'heading' | 'subheading' | 'quote' | 'image' | 'list' | 'box' | 'highlight';
-  content?: string;
-  title?: string;
-  items?: string[];
-  level?: number;
-  author?: string;
-  imageUrl?: string;
-  variant?: 'info' | 'warning' | 'success' | 'danger';
-}
-
-export interface GeneratedArticle {
-  title: string;
-  slug: string;
-  summary: string;
-  context: string;
-  insight: string;
-  framework: any;
-  application: string;
-  case_study: any;
-  takeaways: string[];
-  faq: Array<{ question: string; answer: string }>;
-  cta?: any;
-  seo?: { meta_title?: string; metaTitle?: string; meta_description?: string; metaDescription?: string; keywords?: string[] };
-  hashtags?: string[];
-  images?: Array<{ url: string; alt: string; title?: string; description?: string; caption?: string }>;
-}
+import type { GeneratedArticle } from './ai-article-generator';
 
 export interface BlogArticleRow {
   id: string;
@@ -51,7 +24,7 @@ export async function fetchPublishedArticles(): Promise<BlogArticleRow[]> {
     .eq('published', true)
     .order('created_at', { ascending: false });
   if (error) throw error;
-  return (data ?? []) as BlogArticleRow[];
+  return data as BlogArticleRow[];
 }
 
 export async function fetchAllArticles(): Promise<BlogArticleRow[]> {
@@ -60,7 +33,7 @@ export async function fetchAllArticles(): Promise<BlogArticleRow[]> {
     .select('*')
     .order('created_at', { ascending: false });
   if (error) throw error;
-  return (data ?? []) as BlogArticleRow[];
+  return data as BlogArticleRow[];
 }
 
 export async function fetchArticleBySlug(slug: string): Promise<BlogArticleRow | null> {
@@ -74,6 +47,40 @@ export async function fetchArticleBySlug(slug: string): Promise<BlogArticleRow |
   return data as BlogArticleRow;
 }
 
+export async function saveArticle(article: GeneratedArticle): Promise<BlogArticleRow> {
+  const row = {
+    slug: article.slug,
+    title: article.title,
+    category: article.seo?.keywords?.[0] ? 'Insight' : 'Insight',
+    thumbnail: article.images?.[0]?.url ?? '',
+    author: 'ครูเด่น มาสเตอร์ฟา',
+    date_label: new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' }),
+    read_time: '7 นาที',
+    content: article,
+    published: false,
+  };
+  const { data, error } = await supabase
+    .from('blog_articles')
+    .upsert(row, { onConflict: 'slug' })
+    .select()
+    .single();
+  if (error) throw error;
+  return data as BlogArticleRow;
+}
+
+export async function togglePublished(id: string, published: boolean): Promise<void> {
+  const { error } = await supabase
+    .from('blog_articles')
+    .update({ published, updated_at: new Date().toISOString() })
+    .eq('id', id);
+  if (error) throw error;
+}
+
+export async function deleteArticle(id: string): Promise<void> {
+  const { error } = await supabase.from('blog_articles').delete().eq('id', id);
+  if (error) throw error;
+}
+
 export async function fetchArticleById(id: string): Promise<BlogArticleRow | null> {
   const { data, error } = await supabase
     .from('blog_articles')
@@ -82,6 +89,27 @@ export async function fetchArticleById(id: string): Promise<BlogArticleRow | nul
     .single();
   if (error) return null;
   return data as BlogArticleRow;
+}
+
+export async function updateArticle(id: string, payload: {
+  content: GeneratedArticle;
+  category: string;
+  thumbnail: string;
+  published?: boolean;
+}): Promise<void> {
+  const { error } = await supabase
+    .from('blog_articles')
+    .update({
+      slug: payload.content.slug,
+      title: payload.content.title,
+      category: payload.category,
+      thumbnail: payload.thumbnail,
+      content: payload.content,
+      published: payload.published ?? false,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', id);
+  if (error) throw error;
 }
 
 export async function fetchRelatedArticles(slug: string, keywords: string[], limit = 3): Promise<BlogArticleRow[]> {

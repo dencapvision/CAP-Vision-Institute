@@ -1,0 +1,12 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import DashboardSpeakers from '../../components/admin/DashboardSpeakers.tsx';
+
+export const prerender = false;
+---
+
+<AdminLayout title="จัดการวิทยากร | CAP Vision Admin">
+  <div class="p-6 md:p-8">
+    <DashboardSpeakers client:only="react" />
+  </div>
+</AdminLayout>

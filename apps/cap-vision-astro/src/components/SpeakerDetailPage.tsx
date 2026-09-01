@@ -1318,10 +1318,10 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {DEN_SPECIFIC.services.map((item, idx) => {
               const isExternal = item.link.startsWith('http');
-              const Component = 'a';
+              const Component = isExternal ? 'a' : Link;
               const linkProps = isExternal 
                 ? { href: item.link, target: "_blank", rel: "noopener noreferrer" }
-                : { href: item.link };
+                : { to: item.link };
 
               return (
                 <Component 

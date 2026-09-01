@@ -1,0 +1,12 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import DashboardEvents from '../../components/admin/DashboardEvents.tsx';
+
+export const prerender = false;
+---
+
+<AdminLayout title="จัดการอีเวนท์ | CAP Vision Admin">
+  <div class="p-6 md:p-8">
+    <DashboardEvents client:only="react" />
+  </div>
+</AdminLayout>

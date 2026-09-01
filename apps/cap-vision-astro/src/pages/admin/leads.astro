@@ -1,0 +1,12 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import DashboardLeads from '../../components/admin/DashboardLeads.tsx';
+
+export const prerender = false;
+---
+
+<AdminLayout title="จัดการ Leads & ผู้ติดต่อ | CAP Vision Admin">
+  <div class="p-6 md:p-8">
+    <DashboardLeads client:only="react" />
+  </div>
+</AdminLayout>

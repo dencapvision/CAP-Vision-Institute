@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 
 import { CONTACT_INFO, CLIENTS } from '../constants/brand';
-import BookingWizard from '../components/SubconsciousSpeaker/BookingWizard';
+import BookingWizard from './SubconsciousSpeaker/BookingWizard';
 
 // ─── Pain Points ────────────────────────────────────────────────────────────
 const PAIN_POINTS = [
@@ -55,54 +55,54 @@ const VALUE_PROPS = [
    }
 ];
 
-// ─── Service Cards ───────────────────────────────────────────────────────────
+// ─── Service Cards (Aligned with CAP Vision Blueprint) ────────────────────────
 const SERVICE_CARDS = [
    {
-      id: 'in-house-training',
+      id: 'leadership',
       Icon: GraduationCap,
-      title: 'In-house Training',
-      tagline: 'หลักสูตรที่ออกแบบมาเพื่อองค์กรของคุณโดยเฉพาะ ไม่มีสูตรสำเร็จ',
+      title: 'Leadership Transformation',
+      tagline: 'ยกระดับผู้นำทุกระดับจาก "ผู้สั่งการ" สู่ "Facilitative & Inspiring Leader"',
       features: [
-         'วิเคราะห์ปัญหาจริงก่อนออกแบบหลักสูตร',
-         'Facilitator ที่มีประสบการณ์สูง',
-         'Activity-Based Learning',
-         'วัดผลก่อนและหลังอบรม'
+         'Transformational Leadership & Executive Presence',
+         'Facilitative Leadership for Modern Managers',
+         'Strategic Thinking & Decisive Execution',
+         '1-on-1 Executive Coaching & Leadership DNA'
       ]
    },
    {
-      id: 'executive-coaching',
+      id: 'people-team',
       Icon: Users,
-      title: 'Executive Coaching',
-      tagline: 'โค้ชผู้บริหารให้ดึงศักยภาพสูงสุด และสร้าง Leadership ที่แท้จริง',
+      title: 'People & Team Synergy',
+      tagline: 'ทลายกำแพง Silo สร้างความปลอดภัยทางจิตวิทยา และการสื่อสารที่ไร้รอยต่อ',
       features: [
-         '1-on-1 Coaching Sessions',
-         'Leadership DNA Discovery',
-         '360° Feedback Analysis',
-         'Personal Development Plan'
+         'Psychological Safety & High-Performing Teams',
+         'Empathetic Communication & Constructive Feedback',
+         'DISC & Behavioral Dynamics at Work',
+         'Cross-Functional Collaboration & Trust Building'
       ]
    },
    {
-      id: 'od-consulting',
+      id: 'culture',
       Icon: Target,
-      title: 'OD Consulting',
-      tagline: 'วางกลยุทธ์การพัฒนาองค์กรและสร้างวัฒนธรรมแห่งการเรียนรู้ที่ยั่งยืน',
+      title: 'Organization Culture',
+      tagline: 'ปลูกฝัง Growth Mindset และสร้างวัฒนธรรมแห่งการเรียนรู้ที่ยั่งยืน',
       features: [
-         'TNA & Needs Assessment',
-         'Culture & Change Management',
-         'Succession Planning',
-         'Learning Ecosystem Design'
+         'Building Growth Mindset Culture',
+         'Change Agility & Resilience in Disruption',
+         'Creative Problem Solving (CPS Model)',
+         'Core Values Activation into Daily Behavior'
       ]
    },
    {
-      id: 'digital-learning',
+      id: 'customized',
       Icon: Laptop,
-      title: 'Digital Learning',
-      tagline: 'แพลตฟอร์มและเนื้อหาการเรียนรู้ออนไลน์สำหรับองค์กรยุคใหม่',
+      title: 'Customized In-house Solutions',
+      tagline: 'เริ่มจาก TNA วิเคราะห์ปัญหาจริง สู่ Workshop ที่ปรับแต่ง 100%',
       features: [
-         'E-Learning Content Design',
-         'Blended Learning Programs',
-         'AI-powered Learning',
-         'LMS Integration Support'
+         'In-depth TNA (Training Needs Analysis) Diagnostic',
+         'Activity-Based Learning Workshop Design',
+         'Pre & Post Assessment with Action Plan',
+         'Long-term OD Consulting & ROI Tracking'
       ]
    },
    {
@@ -426,11 +426,11 @@ const Services: React.FC = () => {
                      );
 
                      return externalUrl ? (
-                        <a key={id} href={externalUrl} target="_blank" rel="noopener noreferrer">
+                        <a key={id} id={id} href={externalUrl} target="_blank" rel="noopener noreferrer" className="scroll-mt-28">
                            {CardContent}
                         </a>
                      ) : (
-                        <div key={id}>
+                        <div key={id} id={id} className="scroll-mt-28">
                            {CardContent}
                         </div>
                      );

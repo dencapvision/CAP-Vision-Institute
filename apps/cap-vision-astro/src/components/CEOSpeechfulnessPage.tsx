@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 import { CONTACT_INFO } from '../constants/brand';
-import SpeechfulnessRegistration from '../components/SpeechfulnessRegistration';
+import SpeechfulnessRegistration from './SpeechfulnessRegistration';
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 

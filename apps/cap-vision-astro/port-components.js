@@ -9,6 +9,12 @@ const ROOT_DIR = path.join(__dirname, '..', '..');
 const ASTRO_COMPONENTS_DIR = path.join(__dirname, 'src', 'components');
 
 const FILES_TO_PORT = [
+  { src: 'pages/Home.tsx', dest: 'HomePage.tsx' },
+  { src: 'pages/Assessment.tsx', dest: 'AssessmentPage.tsx' },
+  { src: 'components/TransformationAssessment.tsx', dest: 'TransformationAssessment.tsx' },
+  { src: 'components/StatCounter.tsx', dest: 'StatCounter.tsx' },
+  { src: 'components/Header.tsx', dest: 'Header.tsx' },
+  { src: 'components/Footer.tsx', dest: 'Footer.tsx' },
   { src: 'pages/Contact.tsx', dest: 'ContactPage.tsx' },
   { src: 'pages/Services.tsx', dest: 'ServicesPage.tsx' },
   { src: 'pages/About.tsx', dest: 'AboutPage.tsx' },
@@ -95,6 +101,8 @@ function portFile(srcRel, destRel) {
   content = content.replace(/from\s+['"]@\/services\/(.*?)['"]/g, "from '../lib/services/$1'");
   content = content.replace(/from\s+['"]\.\.\/\.\.\/components\/workshop\/(.*?)['"]/g, "from './$1'");
   content = content.replace(/from\s+['"]\.\.\/components\/about\/(.*?)['"]/g, "from './about/$1'");
+  content = content.replace(/from\s+['"]\.\.\/components\/(.*?)['"]/g, "from './$1'");
+  content = content.replace(/from\s+['"]@\/components\/(.*?)['"]/g, "from './$1'");
   content = content.replace(/@\/services/g, '../../services'); // fallback
   
   // 3.5 Remove SEO imports and <SEO ... /> tags

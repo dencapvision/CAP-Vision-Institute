@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 import { CONTACT_INFO } from '../constants/brand';
-import WebAppBookingWizard from '../components/WebAppBookingWizard';
+import WebAppBookingWizard from './WebAppBookingWizard';
 
 interface PlanFeature {
   text: string;

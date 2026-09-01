@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AssessmentPage from '../components/AssessmentPage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="แบบประเมินความพร้อมองค์กร (Transformation Assessment) | CAP Vision Institute"
+  description="วินิจฉัยศักยภาพองค์กร 4 มิติ Strategic Leadership, Team Synergy, Culture & Growth Mindset, Execution เพื่อรับ Action Plan เฉพาะองค์กรฟรี"
+>
+  <div class="pt-16">
+    <AssessmentPage client:load />
+  </div>
+</Layout>

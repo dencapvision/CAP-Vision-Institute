@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ClientsSection from '../components/ClientsSection';
+import ClientsSection from './ClientsSection';
 import AboutHero from './about/AboutHero';
 import FounderStory from './about/FounderStory';
 import CapVisionStory from './about/CapVisionStory';

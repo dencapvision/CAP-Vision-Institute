@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ArrowRight, Building2, BookOpen, Tag, MessageCircle, Loader2 } from 'lucide-react';
 import { fetchPortfolioBySlug } from '../lib/services/portfolio';
 import type { Portfolio } from '../lib/services/portfolio';
-import PortfolioGallery from '../components/PortfolioGallery';
+import PortfolioGallery from './PortfolioGallery';
 
 
 const CATEGORY_COLORS: Record<string, string> = {

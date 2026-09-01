@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 import { CONTACT_INFO, CLIENTS as BRAND_CLIENTS } from '../constants/brand';
-import { BookingWizard } from '../components/CEO/BookingWizard';
+import { BookingWizard } from './CEO/BookingWizard';
 
 // ─── Logos & Assets ───────────────────────────────────────────────────────────
 const CAP_LOGO = 'https://pub-49b9ffb9f2f8472e9f4b3eb5944bf728.r2.dev/media/about%20us/cap%20vision%20logo.png';

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import { ArrowRight, ExternalLink, Loader2 } from 'lucide-react';
 
-import ClientsSection from '../components/ClientsSection';
-import PortfolioCard from '../components/PortfolioCard';
+import ClientsSection from './ClientsSection';
+import PortfolioCard from './PortfolioCard';
 import { fetchPortfolios } from '../lib/services/portfolio';
 import type { Portfolio } from '../lib/services/portfolio';
 

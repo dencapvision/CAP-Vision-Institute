@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 
 
 import { CONTACT_INFO } from '../constants/brand';
-import BookingWizard from '../components/SubconsciousSpeaker/BookingWizard';
+import BookingWizard from './SubconsciousSpeaker/BookingWizard';
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 

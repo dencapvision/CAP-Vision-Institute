@@ -78,20 +78,20 @@ const LeadershipHero: React.FC = () => {
 
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                <Link
+                  to="/assessment"
+                  className="bg-[#2563EB] text-white px-8 py-4 md:py-5 rounded-2xl font-black text-base md:text-lg transition-all flex items-center justify-center gap-3 shadow-2xl nav-font hover:bg-[#1D4ED8] active:scale-95"
+                >
+                  <Sparkles className="w-5 h-5 text-[#F59E0B]" />
+                  ประเมินองค์กรฟรี (3 นาที)
+                </Link>
                 <a
                   href="#courses-grid"
-                  className="bg-[#c5a059] text-white px-10 py-5 rounded-2xl font-black text-lg transition-all flex items-center justify-center gap-3 shadow-2xl nav-font hover:bg-[#e0c58e] hover:text-[#0f3460] active:scale-95"
+                  className="bg-white/10 backdrop-blur-xl text-white border-2 border-white/20 px-8 py-4 md:py-5 rounded-2xl font-black text-base md:text-lg transition-all flex items-center justify-center gap-3 nav-font hover:bg-white/20 active:scale-95 shadow-xl"
                 >
                   เลือกหลักสูตรที่ใช่
                   <ArrowRight className="w-5 h-5" />
                 </a>
-                <Link
-                  to="/contact"
-                  className="bg-white/5 backdrop-blur-xl text-white border-2 border-white/20 px-10 py-5 rounded-2xl font-black text-lg transition-all flex items-center justify-center gap-3 nav-font hover:bg-white/10 active:scale-95 shadow-xl"
-                >
-                  ขอ In-house Training
-                  <GraduationCap className="w-5 h-5" />
-                </Link>
               </div>
             </div>
           </div>

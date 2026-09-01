@@ -33,7 +33,7 @@ const pillars = [
 
 const Methodology: React.FC = () => {
   return (
-    <section className="py-24 md:py-40 bg-white">
+    <section id="cap-framework" className="py-24 md:py-40 bg-white scroll-mt-24">
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Label + Headline */}

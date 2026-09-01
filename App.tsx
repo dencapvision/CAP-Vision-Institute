@@ -32,6 +32,7 @@ const CEOMemberDashboard = lazy(() => import('./pages/CEOMemberDashboard'));
 const LeadershipRoadmap = lazy(() => import('./pages/LeadershipRoadmap'));
 const WebAppOnboarding = lazy(() => import('./pages/WebAppOnboarding'));
 const SalesPageFormBuilder = lazy(() => import('./pages/SalesPageFormBuilder'));
+const Assessment = lazy(() => import('./pages/Assessment'));
 
 
 // Dashboard pages
@@ -86,6 +87,7 @@ const AppShell: React.FC = () => {
           <Routes>
             {/* Public routes */}
             <Route path="/" element={<Home />} />
+            <Route path="/assessment" element={<Assessment />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/courses/:id" element={<CourseDetail />} />
             <Route path="/services" element={<Services />} />

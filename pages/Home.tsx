@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, GraduationCap, Award, Sparkles, CheckCircle2, ChevronRight, MessageCircle } from 'lucide-react';
+import { 
+  ArrowRight, Users, GraduationCap, Award, Sparkles, CheckCircle2, 
+  ChevronRight, MessageCircle, BarChart3, Target, Zap, Shield, 
+  Compass, Layers3, Trophy, PhoneCall, Play, Clock, ArrowUpRight,
+  Lightbulb, Brain, HeartHandshake, Rocket
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 import { BRAND_INFO, CONTACT_INFO } from '../constants/brand';
 import { HRD_ARTICLES } from '../constants/articles';
@@ -9,21 +14,22 @@ import type { Course } from '../types';
 import Logo from '../components/Logo';
 import ClientsSection from '../components/ClientsSection';
 import SEO from '../components/SEO';
-import { Calendar, User } from 'lucide-react';
 import StatCounter from '../components/StatCounter';
-
+import TransformationAssessment from '../components/TransformationAssessment';
 
 const Home: React.FC = () => {
   const [featuredCourses, setFeaturedCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeSolutionTab, setActiveSolutionTab] = useState<number>(0);
+  const [showAssessmentModal, setShowAssessmentModal] = useState(false);
 
   useEffect(() => {
     const loadCourses = async () => {
       try {
         const data = await fetchCourses();
-        setFeaturedCourses(data.slice(0, 3));
+        setFeaturedCourses(data.slice(0, 4));
       } catch (error) {
-        console.error("Error loading featured courses:", error);
+        console.error('Error loading featured courses:', error);
       } finally {
         setLoading(false);
       }
@@ -31,421 +37,831 @@ const Home: React.FC = () => {
     loadCourses();
   }, []);
 
+  // 4 Core Solutions
+  const SOLUTIONS = [
+    {
+      id: 'leadership',
+      title: 'Leadership Transformation',
+      thTitle: 'ภาวะผู้นำเพื่อการเปลี่ยนแปลง',
+      tagline: 'ยกระดับผู้นำทุกระดับจาก "ผู้สั่งการ" สู่ "Facilitative & Inspiring Leader"',
+      description: 'พัฒนา Mindset และทักษะการนำพาทีมในยุคแห่งความผันผวน สร้างวิสัยทัศน์ร่วม (Shared Vision) และการตัดสินใจเชิงกลยุทธ์ที่ขับเคลื่อนผลลัพธ์องค์กรอย่างแท้จริง',
+      icon: Trophy,
+      color: '#2563EB',
+      bgLight: 'bg-blue-50',
+      highlights: [
+        'Transformational Leadership & Executive Presence',
+        'Facilitative Leadership for Modern Managers',
+        'Strategic Thinking & Decisive Execution',
+        '1-on-1 Executive Coaching & Leadership DNA'
+      ],
+      image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80'
+    },
+    {
+      id: 'people-team',
+      title: 'People & Team Synergy',
+      thTitle: 'พัฒนาคนและพลังทีมงาน',
+      tagline: 'ทลายกำแพง Silo สร้างความปลอดภัยทางจิตวิทยา และการสื่อสารที่ไร้รอยต่อ',
+      description: 'ปรับกระบวนการทำงานร่วมกันผ่านการสื่อสารด้วย Empathy การเข้าใจความหลากหลายของบุคคล และการสร้างบรรยากาศที่ทุกคนกล้าคิด กล้าเสนอ และร่วมมือกันอย่างเต็มใจ',
+      icon: Users,
+      color: '#0F2557',
+      bgLight: 'bg-indigo-50',
+      highlights: [
+        'Psychological Safety & High-Performing Teams',
+        'Empathetic Communication & Constructive Feedback',
+        'DISC & Behavioral Dynamics at Work',
+        'Cross-Functional Collaboration & Trust Building'
+      ],
+      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80'
+    },
+    {
+      id: 'culture',
+      title: 'Organization Culture',
+      thTitle: 'วัฒนธรรมองค์กร & กรอบคิดเติบโต',
+      tagline: 'ปลูกฝัง Growth Mindset และสร้างวัฒนธรรมแห่งการเรียนรู้ที่ยั่งยืน',
+      description: 'เปลี่ยน Mindset ของคนในองค์กรให้มองปัญหาเป็นความท้าทาย เปิดรับนวัตกรรม และสร้างความยืดหยุ่น (Agility) เพื่อให้องค์กรพร้อมปรับตัวต่อการเปลี่ยนแปลงทุกรูปแบบ',
+      icon: Zap,
+      color: '#F59E0B',
+      bgLight: 'bg-amber-50',
+      highlights: [
+        'Building Growth Mindset Culture',
+        'Change Agility & Resilience in Disruption',
+        'Creative Problem Solving (CPS Model)',
+        'Core Values Activation into Daily Behavior'
+      ],
+      image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80'
+    },
+    {
+      id: 'customized',
+      title: 'Customized In-house Solutions',
+      thTitle: 'โซลูชันออกแบบเฉพาะองค์กร',
+      tagline: 'เริ่มจาก TNA วิเคราะห์ปัญหาจริง สู่ Workshop ที่ปรับแต่ง 100%',
+      description: 'ไม่มีหลักสูตรสำเร็จรูป (No One-Size-Fits-All) เราลงลึกศึกษาบริบท Pain Points และเป้าหมายธุรกิจขององค์กรคุณ เพื่อออกแบบ Learning Journey ที่ตอบโจทย์เฉพาะองค์กรอย่างแท้จริง',
+      icon: Compass,
+      color: '#10B981',
+      bgLight: 'bg-emerald-50',
+      highlights: [
+        'In-depth TNA (Training Needs Analysis) Diagnostic',
+        'Activity-Based Learning Workshop Design',
+        'Pre & Post Assessment with Action Plan',
+        'Long-term OD Consulting & ROI Tracking'
+      ],
+      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80'
+    }
+  ];
+
+  // 4 Main Program Categories
+  const PROGRAM_CATEGORIES = [
+    {
+      category: 'Leadership Programs',
+      thTitle: 'หลักสูตรภาวะผู้นำ',
+      desc: 'สร้างผู้นำที่จุดประกายทีม กล้าคิดเชิงกลยุทธ์ และนำการเปลี่ยนแปลง',
+      icon: Trophy,
+      count: '15+ หลักสูตร',
+      color: '#2563EB',
+      link: '/courses?cat=Leader+Skills'
+    },
+    {
+      category: 'People Skills',
+      thTitle: 'ทักษะคนและการทำงานร่วมกัน',
+      desc: 'การสื่อสาร, Service Mind, การให้ Feedback และการเข้าใจพฤติกรรมมนุษย์',
+      icon: HeartHandshake,
+      count: '18+ หลักสูตร',
+      color: '#0F2557',
+      link: '/courses?cat=People+Skills'
+    },
+    {
+      category: 'Creative Thinking',
+      thTitle: 'การคิดเชิงสร้างสรรค์ & แก้ปัญหา',
+      desc: 'Creative Problem Solving (CPS Model), Design Thinking และการพัฒนานวัตกรรม',
+      icon: Lightbulb,
+      count: '10+ หลักสูตร',
+      color: '#F59E0B',
+      link: '/courses?cat=Work+Skills'
+    },
+    {
+      category: 'Facilitator & Process Design',
+      thTitle: 'หลักสูตรวิทยากร & ฟาซิลิตี้',
+      desc: 'ศาสตร์และศิลป์แห่งการเป็น Modern Facilitator ออกแบบกระบวนการเรียนรู้ที่มีพลัง',
+      icon: Brain,
+      count: '8+ หลักสูตร',
+      color: '#10B981',
+      link: '/courses'
+    }
+  ];
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white">
       <SEO
-        title="หน้าหลัก"
-        description="CAP Vision Institute สถาบันฝึกอบรมระดับมืออาชีพ ผู้นำด้าน Transformative Learning นำโดย ครูเด่น (อนุสรณ์ หนองนา) และ Master Fa"
+        title="CAP Vision Institute | Transform People → Transform Organization"
+        description="สถาบันที่ปรึกษาและจัดฝึกอบรมชั้นนำ (In-house Training & OD Consulting) ผู้นำด้าน Transformative Learning และ Activity-Based Learning กว่า 18+ ปี โดย ครูเด่น อนุสรณ์ หนองนา (Master Fa)"
       />
 
-      {/* Hero Section */}
-      <motion.section 
+      {/* ── 1. HERO SECTION (Executive Transformation) ────────────────────────── */}
+      <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-        className="relative min-h-[100svh] flex items-center overflow-hidden bg-[#0f3460] pt-12 md:pt-0"
+        transition={{ duration: 0.8 }}
+        className="relative min-h-[92svh] flex items-center overflow-hidden bg-[#111827] text-white pt-24 pb-16 md:pt-32 md:pb-24"
       >
+        {/* Dynamic Background Mesh & Authentic Workshop Imagery */}
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80"
-            alt="CAP Vision Institute - ทีมเวิร์คและการพัฒนาองค์กร"
-            className="w-full h-full object-cover scale-110 md:scale-100 transition-transform duration-[10s] opacity-30"
+            alt="CAP Vision Institute Workshop and Collaborative Learning"
+            className="w-full h-full object-cover scale-105 opacity-20 transition-transform duration-[12s] ease-out"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0f3460] via-[#0f3460]/80 to-transparent"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(197,160,89,0.1),transparent_70%)]"></div>
-          <div className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 bg-[#c5a059]/10 rounded-full blur-[120px] animate-pulse"></div>
-          <div className="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 bg-blue-400/5 rounded-full blur-[120px]"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#111827] via-[#111827]/90 to-[#0F2557]/80"></div>
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#2563EB]/15 rounded-full blur-[140px] pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#F59E0B]/10 rounded-full blur-[120px] pointer-events-none"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 md:py-24">
-          <div className="max-w-4xl">
-
-            {/* Badge */}
-            <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full mb-8 md:mb-10 animate-fade-in-down">
-              <span className="w-2 h-2 bg-[#c5a059] rounded-full animate-ping flex-shrink-0"></span>
-              <span className="text-white/80 font-bold tracking-[0.15em] text-[10px] md:text-xs nav-font uppercase leading-none mt-0.5">
-                Transformative Learning Programs
-              </span>
-            </div>
-
-            {/* H1 */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1.1] md:leading-[1.05] mb-6 md:mb-8 nav-font tracking-tight">
-              <span className="text-white block md:inline">พัฒนาคน สร้างทีม</span><br className="hidden md:block" />
-              <span className="text-[#c5a059]">ยกระดับองค์กร</span>
-            </h1>
-
-            {/* Highlight */}
-            <p className="text-xl md:text-2xl font-bold text-[#c5a059] mb-4">
-              Inspire People. Transform Mindsets. Create Real Impact.
-            </p>
-
-            {/* Sub */}
-            <p className="text-base md:text-xl text-white/85 leading-relaxed mb-10 md:mb-12 max-w-2xl">
-              จุดประกายคน เปลี่ยนวิธีคิด สร้างผลลัพธ์ที่จับต้องได้
-            </p>
-
-            {/* CTAs — conversion-first order */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-10 md:mb-14">
-              <Link to="/contact" className="btn-premium bg-[#c5a059] text-white px-8 md:px-12 py-4 md:py-5 rounded-2xl font-black text-base md:text-lg transition-all flex items-center justify-center gap-3 group shadow-2xl nav-font active:scale-95 hover:bg-[#e0c58e] hover:text-[#0f3460]">
-                ขอใบเสนอราคา
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-              </Link>
-              <Link to="/courses" className="btn-premium bg-white/5 backdrop-blur-xl text-white border-2 border-white/20 px-8 md:px-12 py-4 md:py-5 rounded-2xl font-black text-base md:text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-3 nav-font active:scale-95">
-                ดูหลักสูตรทั้งหมด
-              </Link>
-            </div>
-
-            {/* Trust stats */}
-            <div className="flex flex-wrap gap-8 md:gap-14 border-t border-white/10 pt-8">
-              {[
-                { value: '10,000+', label: 'ผู้เรียนสำเร็จ' },
-                { value: '200+',    label: 'องค์กรพันธมิตร' },
-                { value: '18+',     label: 'ปีประสบการณ์' },
-              ].map((stat, i) => (
-                <div key={i}>
-                  <div className="text-2xl md:text-3xl font-black text-[#c5a059] nav-font">
-                    <StatCounter value={stat.value} />
-                  </div>
-                  <div className="text-white/85 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-3 text-white/80">
-          <span className="text-[10px] items-center font-bold tracking-widest uppercase rotate-90 origin-left translate-x-3 mb-8">Scroll</span>
-          <div className="w-0.5 h-16 bg-gradient-to-b from-white/40 to-transparent"></div>
-        </div>
-      </motion.section>
-      {/* Video Intro Section */}
-      <motion.section 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-        className="py-24 md:py-32 bg-[#0a2545] relative overflow-hidden"
-      >
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-[#c5a059] rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16 md:mb-24">
-            <span className="text-[#c5a059] font-black text-[10px] md:text-sm uppercase tracking-[0.4em] mb-4 block nav-font underline decoration-2 underline-offset-8">
-              Experience the Transformation
-            </span>
-            <motion.h2 
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-3xl md:text-5xl lg:text-7xl font-black text-white nav-font leading-tight"
-            >
-              สัมผัสประสบการณ์ <span className="font-gold">การเรียนรู้</span> ที่แท้จริง
-            </motion.h2>
-          </div>
-          
-          <motion.div 
-            initial={{ scale: 0.95, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="max-w-5xl mx-auto"
-          >
-            <div className="relative aspect-video rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border-8 border-white/5 ring-1 ring-white/10 group">
-              <iframe
-                src="https://www.youtube.com/embed/nTdeTEWVeWE?si=JTWQI8tXb57_e7SL"
-                title="CAP Vision Institute - Intro Video"
-                className="absolute inset-0 w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              ></iframe>
-            </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-              {[
-                { title: 'Visionary Learning', desc: 'กระบวนการเรียนรู้ที่มองไกลกว่าแค่ทฤษฎี' },
-                { title: 'Interactive Flow', desc: 'การมีส่วนร่วมที่สร้างการเปลี่ยนแปลงจากภายใน' },
-                { title: 'Result Oriented', desc: 'มุ่งเน้นผลลัพธ์ที่นำไปใช้งานได้จริงในองค์กร' }
-              ].map((item, i) => (
-                <div key={i} className="group p-6 rounded-2xl hover:bg-white/5 transition-colors">
-                  <h4 className="text-[#c5a059] font-black text-lg mb-2 nav-font uppercase tracking-tight">{item.title}</h4>
-                  <p className="text-white/85 text-sm font-medium">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </motion.section>
-
-      {/* Featured Courses Section */}
-      <motion.section 
-        initial={{ y: 50, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8 }}
-        className="py-24 md:py-32 bg-white relative"
-      >
-        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-50/50 rounded-full blur-[100px] pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 md:mb-20 gap-8">
-            <div className="max-w-2xl">
-              <span className="text-[#c5a059] font-black text-[10px] md:text-sm uppercase tracking-[0.4em] mb-4 block nav-font">Course Selection</span>
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-[#0f3460] nav-font leading-tight">
-                หลักสูตรที่ <span className="font-gold">ดีที่สุด</span> สำหรับคุณ
-              </h2>
-            </div>
-            <Link to="/courses" className="group flex items-center gap-3 text-lg font-bold text-[#0f3460] hover:text-[#c5a059] transition-all nav-font">
-              ดูหลักสูตรทั้งหมด <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-            {loading ? (
-               <div className="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center py-12">
-                  <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#c5a059] border-t-transparent"></div>
-               </div>
-            ) : featuredCourses.length > 0 ? (
-               featuredCourses.map((course) => (
-              <div key={course.id} className="card-premium group flex flex-col h-full bg-white relative overflow-hidden transition-all duration-500">
-                <div className="relative overflow-hidden aspect-[16/10] bg-[#0f3460]/5">
-                  <img
-                    src={course.image}
-                    alt={course.alt_text || course.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    loading="lazy"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f3460]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute top-4 left-4 bg-[#c5a059] text-white px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase z-10 shadow-lg">
-                    Premium Workshop
-                  </div>
-                </div>
-                <div className="p-8 md:p-10 flex flex-col flex-grow">
-                  <h3 className="text-xl md:text-2xl font-black text-[#0f3460] mb-4 nav-font group-hover:text-[#c5a059] transition-colors leading-tight whitespace-pre-line min-h-[3.5rem]">
-                    {course.title}
-                  </h3>
-                  <p className="text-gray-500 text-sm md:text-base mb-8 line-clamp-3 opacity-80 leading-relaxed font-medium flex-grow">
-                    {course.description}
-                  </p>
-                  <div className="pt-8 border-t border-gray-100 mt-auto">
-                    <Link 
-                      to={`/courses/${course.slug || course.id}`} 
-                      className="btn-premium w-full bg-[#0f3460] hover:bg-[#c5a059] text-white py-4 rounded-xl font-black text-sm md:text-base flex items-center justify-center gap-3 transition-all nav-font shadow-xl group/btn"
-                    >
-                      ดูรายละเอียดหลักสูตร
-                      <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" />
-                    </Link>
-                  </div>
-                </div>
+            {/* Left Content */}
+            <div className="lg:col-span-7">
+              
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-md border border-white/15 px-4 py-2 rounded-full mb-6 animate-fade-in-down">
+                <span className="w-2.5 h-2.5 bg-[#F59E0B] rounded-full animate-pulse flex-shrink-0"></span>
+                <span className="text-white font-bold tracking-wider text-xs uppercase nav-font">
+                  Transformative Learning & OD Consulting
+                </span>
               </div>
-            ))
-            ) : (
-               <div className="col-span-1 md:col-span-2 lg:col-span-3 text-center py-12">
-                 <p className="text-gray-500">กำลังเตรียมหลักสูตรล่าสุด โปรดกลับมาใหม่ภายหลัง</p>
-               </div>
-            )}
-          </div>
-        </div>
-      </motion.section>
 
-      {/* Stats Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-        className="py-24 md:py-32 bg-[#0f3460] relative overflow-hidden"
-      >
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#c5a059] rounded-full blur-[100px]"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-400 rounded-full blur-[100px]"></div>
-        </div>
+              {/* Main Headline */}
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.1] mb-6 nav-font tracking-tight">
+                <span className="text-white block">Transform People</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] via-[#2563EB] to-[#F59E0B]">
+                  Transform Organization
+                </span>
+              </h1>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
-            {[
-              { label: 'ผู้สำเร็จการอบรม', value: '10,000+', icon: <Users className="w-8 h-8 md:w-10 md:h-10" /> },
-              { label: 'หลักสูตรที่เปิดสอน', value: '50+', icon: <GraduationCap className="w-8 h-8 md:w-10 md:h-10" /> },
-              { label: 'องค์กรพันธมิตร', value: '200+', icon: <Award className="w-8 h-8 md:w-10 md:h-10" /> },
-              { label: 'ความพึงพอใจ', value: '99%', icon: <Sparkles className="w-8 h-8 md:w-10 md:h-10" /> }
-            ].map((stat, idx) => (
-              <div key={idx} className="group">
-                <div className="text-[#c5a059] mb-6 flex justify-center group-hover:scale-110 transition-transform duration-500">
-                  {stat.icon}
-                </div>
-                <div className="text-3xl md:text-6xl font-black text-white mb-2 md:mb-4 nav-font tracking-tight">
-                  <StatCounter value={stat.value} />
-                </div>
-                <div className="text-white/80 font-black tracking-[0.2em] text-[10px] md:text-sm uppercase nav-font">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Instructor Section */}
-      <motion.section 
-        initial={{ y: 60, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8 }}
-        className="py-16 md:py-32 bg-gray-50 overflow-hidden"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center gap-12 md:gap-24">
-            <div className="lg:w-1/2 relative">
-              <div className="absolute -top-16 -left-16 w-64 md:w-80 h-64 md:h-80 bg-[#c5a059] rounded-full mix-blend-multiply filter blur-[80px] opacity-10 animate-pulse"></div>
-              <div className="bg-white p-4 md:p-6 rounded-[3rem] md:rounded-[4rem] shadow-2xl relative z-10">
-                <img
-                  src="/images/denmasterfa.jpg"
-                  alt="ครูเด่น มาสเตอร์ฟา"
-                  className="rounded-[2.5rem] md:rounded-[3rem] w-full max-w-lg mx-auto"
-                />
-              </div>
-              <div className="absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 bg-[#c5a059] text-white p-6 md:p-10 rounded-[2rem] md:rounded-[3rem] z-20 shadow-2xl hidden md:block border-8 border-white">
-                <p className="text-3xl md:text-5xl font-black mb-1 nav-font">18+</p>
-                <p className="text-[8px] md:text-xs font-bold uppercase tracking-[0.3em] nav-font">Experience Years</p>
-              </div>
-            </div>
-            <div className="lg:w-1/2">
-              <span className="inline-block text-[#c5a059] font-black text-xs uppercase tracking-[0.5em] mb-6 md:mb-8 nav-font">Master Facilitator</span>
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-[#0f3460] mb-6 md:mb-10 nav-font leading-tight">{BRAND_INFO.director}</h2>
-              <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-8 md:mb-12 font-medium opacity-80">
-                ผู้อำนวยการสถาบัน แคป วิชั่น อินสติทิวต์ ผู้เชี่ยวชาญด้านกระบวนการเรียนรู้เพื่อการเปลี่ยนแปลง (Transformative Learning)
+              {/* Subheadline & Value Proposition */}
+              <p className="text-lg sm:text-xl text-gray-300 font-light leading-relaxed mb-8 max-w-2xl">
+                จุดประกายศักยภาพผู้นำ เสริมพลังทีมงาน และยกระดับวัฒนธรรมองค์กร ด้วยกระบวนการ <strong className="text-white font-bold">Activity-Based Learning</strong> ที่สร้างการเปลี่ยนแปลงพฤติกรรมจริงจากภายใน
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8 mb-10 md:mb-16">
+
+              {/* Dual CTAs (Conversion-Focused) */}
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                <Link
+                  to="/assessment"
+                  className="btn-premium bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-8 py-4 sm:py-5 rounded-2xl font-black text-base shadow-2xl flex items-center justify-center gap-3 active:scale-95 group transition-all"
+                >
+                  <Sparkles className="w-5 h-5 text-[#F59E0B]" />
+                  ทำแบบประเมินองค์กรฟรี (3 นาที)
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+                </Link>
+
+                <Link
+                  to="/contact"
+                  className="btn-premium bg-white/10 hover:bg-white/20 text-white border-2 border-white/20 px-8 py-4 sm:py-5 rounded-2xl font-bold text-base flex items-center justify-center gap-3 active:scale-95 transition-all"
+                >
+                  ขอใบเสนอราคา / ปรึกษาหลักสูตร
+                </Link>
+              </div>
+
+              {/* Trust Stats */}
+              <div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/10 max-w-xl">
                 {[
-                  'Activity Based Learning',
-                  'Transformative Facilitator',
-                  'Leadership Development',
-                  'Corporate Culture Coaching'
-                ].map((point, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <CheckCircle2 className="w-5 md:w-6 h-5 md:h-6 text-[#c5a059]" />
-                    <span className="font-bold text-[#0f3460] text-base md:text-lg nav-font">{point}</span>
+                  { value: '10,000+', label: 'ผู้ผ่านการอบรม' },
+                  { value: '200+', label: 'องค์กรพันธมิตร' },
+                  { value: '18+', label: 'ปีประสบการณ์' }
+                ].map((stat, i) => (
+                  <div key={i}>
+                    <div className="text-2xl sm:text-3xl font-black text-[#F59E0B] nav-font">
+                      <StatCounter value={stat.value} />
+                    </div>
+                    <div className="text-gray-400 text-xs sm:text-sm font-medium mt-1">{stat.label}</div>
                   </div>
                 ))}
               </div>
-              <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
-                <Link to="/speakers" className="bg-[#0f3460] text-white px-10 md:px-12 py-4 md:py-5 rounded-2xl font-bold text-base md:text-lg hover:bg-[#c5a059] transition-all nav-font shadow-xl text-center">
-                  ทีมวิทยากรทั้งหมด
-                </Link>
-                <a href={CONTACT_INFO.lineUrl} className="flex items-center justify-center gap-3 bg-white border-2 border-gray-200 text-[#0f3460] px-8 md:px-10 py-4 md:py-5 rounded-2xl font-bold hover:border-[#c5a059] transition-all nav-font">
-                  <MessageCircle className="w-6 h-6 text-[#c5a059]" /> {CONTACT_INFO.line}
-                </a>
+
+            </div>
+
+            {/* Right Card: Interactive Feature Showcase */}
+            <div className="lg:col-span-5">
+              <div className="relative">
+                {/* Glow behind card */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#2563EB] to-[#F59E0B] rounded-[2.5rem] blur-xl opacity-30"></div>
+                
+                <div className="relative bg-white/10 backdrop-blur-2xl border border-white/20 p-6 sm:p-8 rounded-[2rem] shadow-2xl">
+                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-[#2563EB] text-white flex items-center justify-center font-black">
+                        ⭐
+                      </div>
+                      <div>
+                        <div className="text-sm font-bold text-white">CAP Transformation Assessment</div>
+                        <div className="text-xs text-gray-400">แบบประเมินความพร้อม 4 มิติ</div>
+                      </div>
+                    </div>
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#F59E0B]/20 text-[#F59E0B] border border-[#F59E0B]/30">
+                      FREE TOOL
+                    </span>
+                  </div>
+
+                  {/* 4 Dimension preview bars */}
+                  <div className="space-y-4 mb-6">
+                    {[
+                      { name: 'Strategic Leadership', score: 85, color: '#2563EB' },
+                      { name: 'People & Team Synergy', score: 78, color: '#60A5FA' },
+                      { name: 'Culture & Growth Mindset', score: 92, color: '#F59E0B' },
+                      { name: 'Execution & Measurable Impact', score: 80, color: '#10B981' }
+                    ].map((item, idx) => (
+                      <div key={idx} className="space-y-1.5">
+                        <div className="flex justify-between text-xs font-bold text-gray-200">
+                          <span>{item.name}</span>
+                          <span style={{ color: item.color }}>{item.score}%</span>
+                        </div>
+                        <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                          <div
+                            className="h-full rounded-full"
+                            style={{ width: `${item.score}%`, backgroundColor: item.color }}
+                          ></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <p className="text-xs text-gray-300 mb-6 leading-relaxed">
+                    ค้นหาจุดคานงัดและข้อเสนอแนะเชิงกลยุทธ์ที่ปรับแต่งสำหรับองค์กรของคุณทันที พร้อมรับรายงานสรุปและนัดปรึกษาผู้เชี่ยวชาญ 30 นาที
+                  </p>
+
+                  <Link
+                    to="/assessment"
+                    className="w-full btn-premium bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] font-black py-3.5 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg transition-all"
+                  >
+                    เริ่มทำแบบประเมินเดี๋ยวนี้
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
               </div>
             </div>
+
           </div>
         </div>
       </motion.section>
 
-
-      <ClientsSection />
-
-      {/* Insights & Articles Section */}
-      <motion.section 
-        initial={{ y: 60, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8 }}
-        className="py-24 md:py-32 bg-white"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 gap-6">
-            <div className="max-w-2xl">
-              <span className="inline-block text-[#c5a059] font-black text-xs uppercase tracking-[0.5em] mb-4 nav-font">Knowledge Hub</span>
-              <h2 className="text-3xl md:text-5xl font-black text-[#0f3460] nav-font">Insights & Articles</h2>
+      {/* ── 2. ASSESSMENT CALLOUT SPOTLIGHT ⭐ ─────────────────────────────────── */}
+      <section className="bg-gradient-to-r from-[#0F2557] via-[#111827] to-[#0F2557] text-white py-12 border-y border-white/10 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div className="flex items-start gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-[#2563EB]/20 border border-[#2563EB]/40 text-[#F59E0B] flex items-center justify-center flex-shrink-0 mt-1">
+                <BarChart3 className="w-7 h-7" />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-[#F59E0B] uppercase tracking-widest block mb-1">
+                  ⭐ Organization Diagnostic Tool
+                </span>
+                <h3 className="text-xl sm:text-2xl font-black text-white nav-font">
+                  องค์กรของคุณพร้อมสำหรับการเปลี่ยนแปลงในระดับใด?
+                </h3>
+                <p className="text-gray-300 text-xs sm:text-sm mt-1 max-w-2xl">
+                  ประเมิน 4 มิติสำคัญ (Leadership, People, Culture, Execution) รับผลวิเคราะห์แบบ Radar Chart ทันที
+                </p>
+              </div>
             </div>
-            <Link 
-              to="/resources" 
-              className="group flex items-center gap-2 text-[#0f3460] font-bold hover:text-[#c5a059] transition-colors nav-font text-lg"
+
+            <div className="flex-shrink-0 flex items-center gap-3 w-full sm:w-auto">
+              <Link
+                to="/assessment"
+                className="btn-premium w-full sm:w-auto bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] font-black px-6 py-3.5 rounded-xl text-sm shadow-xl flex items-center justify-center gap-2"
+              >
+                เริ่มทำแบบประเมิน (ฟรี)
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. SOLUTIONS SECTION (4 Core Pillars) ─────────────────────────────── */}
+      <section className="py-20 md:py-32 bg-white relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Section Header */}
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+              Comprehensive OD & Training Solutions
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+              โซลูชันการพัฒนา <span className="text-[#2563EB]">ครบวงจร</span> สำหรับองค์กร
+            </h2>
+            <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed">
+              ตอบโจทย์ทั้งการพัฒนาผู้นำ การสร้างความร่วมมือในทีม การปรับวัฒนธรรมองค์กร และการออกแบบเฉพาะตามโจทย์ธุรกิจ
+            </p>
+          </div>
+
+          {/* Solutions Tabs */}
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-12">
+            {SOLUTIONS.map((sol, idx) => {
+              const Icon = sol.icon;
+              const isActive = activeSolutionTab === idx;
+              return (
+                <button
+                  key={sol.id}
+                  onClick={() => setActiveSolutionTab(idx)}
+                  className={`flex items-center gap-2.5 px-5 py-3.5 rounded-2xl font-bold text-xs sm:text-sm transition-all active:scale-95 ${
+                    isActive
+                      ? 'bg-[#111827] text-white shadow-xl shadow-gray-900/10'
+                      : 'bg-gray-50 text-gray-600 hover:bg-gray-100 hover:text-[#111827]'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" style={{ color: isActive ? '#F59E0B' : sol.color }} />
+                  <span>{sol.title}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Active Solution Content Card */}
+          <div className="bg-gray-50 rounded-3xl p-6 sm:p-12 border border-gray-100 shadow-sm transition-all duration-300">
+            {(() => {
+              const sol = SOLUTIONS[activeSolutionTab];
+              const Icon = sol.icon;
+              return (
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                  <div className="lg:col-span-7">
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold mb-4" style={{ backgroundColor: `${sol.color}15`, color: sol.color }}>
+                      <Icon className="w-4 h-4" />
+                      {sol.thTitle}
+                    </div>
+
+                    <h3 className="text-2xl sm:text-4xl font-black text-[#111827] nav-font mb-4 leading-tight">
+                      {sol.tagline}
+                    </h3>
+
+                    <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-8">
+                      {sol.description}
+                    </p>
+
+                    {/* Highlights List */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                      {sol.highlights.map((item, i) => (
+                        <div key={i} className="flex items-start gap-2.5 bg-white p-3.5 rounded-xl border border-gray-200/60 shadow-xs">
+                          <CheckCircle2 className="w-4 h-4 text-[#2563EB] flex-shrink-0 mt-0.5" />
+                          <span className="text-xs sm:text-sm font-bold text-gray-800">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <Link
+                        to="/contact"
+                        className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-8 py-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2"
+                      >
+                        ปรึกษาออกแบบโซลูชันนี้
+                        <ArrowRight className="w-4 h-4" />
+                      </Link>
+                      <Link
+                        to="/services"
+                        className="btn-premium bg-white hover:bg-gray-100 text-[#111827] border border-gray-200 px-6 py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2"
+                      >
+                        ดูรายละเอียดบริการทั้งหมด
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-5">
+                    <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl border-4 border-white">
+                      <img
+                        src={sol.image}
+                        alt={sol.title}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/60 via-transparent to-transparent"></div>
+                      <div className="absolute bottom-4 left-4 right-4 text-white">
+                        <div className="text-xs font-bold uppercase tracking-wider text-[#F59E0B]">
+                          Activity Based Learning
+                        </div>
+                        <div className="text-sm font-bold">เน้นการลงมือปฏิบัติจริง มีส่วนร่วม 100%</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── 4. PROGRAMS SHOWCASE (4 Categories) ───────────────────────────────── */}
+      <section className="py-20 md:py-32 bg-[#F8FAFC] border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div>
+              <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+                Signature Program Categories
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+                หมวดหมู่หลักสูตร <span className="text-[#2563EB]">ยอดนิยม</span>
+              </h2>
+            </div>
+            <Link
+              to="/courses"
+              className="flex items-center gap-2 text-sm font-bold text-[#2563EB] hover:text-[#1D4ED8] group nav-font"
             >
-              ดูบทความทั้งหมด
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              ดูหลักสูตรทั้งหมด 50+ วิชา
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {HRD_ARTICLES.slice(0, 3).map((article) => (
-              <motion.div
+          {/* 4 Category Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {PROGRAM_CATEGORIES.map((cat, idx) => {
+              const Icon = cat.icon;
+              return (
+                <Link
+                  key={idx}
+                  to={cat.link}
+                  className="exec-card-interactive p-6 flex flex-col justify-between group h-full"
+                >
+                  <div>
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 shadow-sm" style={{ backgroundColor: `${cat.color}15`, color: cat.color }}>
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+                      {cat.count}
+                    </div>
+                    <h3 className="text-lg font-black text-[#111827] group-hover:text-[#2563EB] transition-colors mb-1 nav-font">
+                      {cat.thTitle}
+                    </h3>
+                    <div className="text-xs font-bold text-gray-400 mb-3">{cat.category}</div>
+                    <p className="text-xs text-gray-600 leading-relaxed line-clamp-3">
+                      {cat.desc}
+                    </p>
+                  </div>
+
+                  <div className="pt-6 mt-6 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#2563EB] group-hover:translate-x-1 transition-transform">
+                    <span>สำรวจหลักสูตร</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Featured Courses Selection */}
+          {featuredCourses.length > 0 && (
+            <div className="space-y-6">
+              <div className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                หลักสูตรแนะนำสำหรับ In-house Training
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {featuredCourses.map(course => (
+                  <div key={course.id} className="bg-white rounded-2xl border border-gray-200/70 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col h-full group">
+                    <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+                      <img
+                        src={course.image}
+                        alt={course.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80';
+                        }}
+                      />
+                      <div className="absolute top-3 left-3 bg-[#111827]/80 backdrop-blur-md text-white px-3 py-1 rounded-full text-[10px] font-bold">
+                        {course.category || 'In-house'}
+                      </div>
+                    </div>
+
+                    <div className="p-5 flex flex-col flex-grow">
+                      <h4 className="text-sm sm:text-base font-black text-[#111827] group-hover:text-[#2563EB] transition-colors line-clamp-2 mb-2 nav-font leading-snug">
+                        {course.title}
+                      </h4>
+                      <p className="text-xs text-gray-500 line-clamp-2 mb-4 leading-relaxed">
+                        {course.description}
+                      </p>
+
+                      <div className="pt-4 border-t border-gray-100 mt-auto flex items-center justify-between">
+                        <span className="text-[11px] font-bold text-gray-400">Activity Based</span>
+                        <Link
+                          to={`/courses/${course.slug || course.id}`}
+                          className="text-xs font-bold text-[#2563EB] hover:underline flex items-center gap-1"
+                        >
+                          รายละเอียด
+                          <ChevronRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+        </div>
+      </section>
+
+      {/* ── 5. TRANSFORMATION JOURNEY (CAP Framework) ─────────────────────────── */}
+      <section className="py-20 md:py-32 bg-[#111827] text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-1/4 left-0 w-96 h-96 bg-[#2563EB] rounded-full blur-[140px]"></div>
+          <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-[#F59E0B] rounded-full blur-[140px]"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <span className="text-[#F59E0B] font-bold text-xs uppercase tracking-widest block mb-3">
+              The Signature Methodology
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black text-white nav-font leading-tight">
+              เส้นทางการเปลี่ยนแปลง <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] via-[#2563EB] to-[#F59E0B]">
+                CAP Transformation Framework
+              </span>
+            </h2>
+            <p className="text-gray-300 text-sm sm:text-base mt-4 leading-relaxed font-light">
+              กระบวนการ 3 ขั้นตอนที่พิสูจน์แล้วว่าสามารถสร้างการเปลี่ยนแปลงระดับพฤติกรรม และให้ผลลัพธ์ทางธุรกิจที่จับต้องได้จริง
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+            
+            {/* Step 1: Context & Clarify */}
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-3xl relative group hover:bg-white/10 transition-all">
+              <div className="w-14 h-14 rounded-2xl bg-[#2563EB] text-white flex items-center justify-center text-2xl font-black mb-6 shadow-lg shadow-blue-500/20">
+                C
+              </div>
+              <div className="text-xs font-bold text-[#60A5FA] uppercase tracking-wider mb-1">
+                Phase 01
+              </div>
+              <h3 className="text-xl font-black text-white nav-font mb-2">Context & Clarify</h3>
+              <div className="text-xs font-bold text-[#F59E0B] mb-4">วินิจฉัยบริบท & สื่อสารเป้าหมาย</div>
+              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">
+                เริ่มต้นด้วยการทำ TNA (Training Needs Analysis) สัมภาษณ์ผู้บริหารและสำรวจโจทย์จริง เพื่อค้นหารากเหง้าของปัญหาและกำหนด KPI ที่ชัดเจน
+              </p>
+              <ul className="text-xs text-gray-400 space-y-2 border-t border-white/10 pt-4">
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB]" />
+                  <span>Executive & Stakeholder Interviews</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB]" />
+                  <span>Organization Transformation Assessment</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB]" />
+                  <span>Customized Syllabus & Case Design</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Step 2: Align & Activate */}
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-3xl relative group hover:bg-white/10 transition-all">
+              <div className="w-14 h-14 rounded-2xl bg-[#F59E0B] text-[#111827] flex items-center justify-center text-2xl font-black mb-6 shadow-lg shadow-amber-500/20">
+                A
+              </div>
+              <div className="text-xs font-bold text-[#F59E0B] uppercase tracking-wider mb-1">
+                Phase 02
+              </div>
+              <h3 className="text-xl font-black text-white nav-font mb-2">Align & Activate</h3>
+              <div className="text-xs font-bold text-[#60A5FA] mb-4">จัดวางความคิด & ปลดล็อกศักยภาพ</div>
+              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">
+                ส่งมอบกระบวนการเรียนรู้แบบ Activity-Based Learning ที่เน้น Experiential Workshop ผู้เรียนได้สัมผัส ค้นพบวิธีคิดใหม่ และทดลองใช้ Tools ทันที
+              </p>
+              <ul className="text-xs text-gray-400 space-y-2 border-t border-white/10 pt-4">
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#F59E0B]" />
+                  <span>Interactive & Activity-Based Flow</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#F59E0B]" />
+                  <span>Transformative Facilitation Dynamics</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#F59E0B]" />
+                  <span>Individual & Team Action Plan Commitments</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Step 3: Perform & Partner */}
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-3xl relative group hover:bg-white/10 transition-all">
+              <div className="w-14 h-14 rounded-2xl bg-[#10B981] text-white flex items-center justify-center text-2xl font-black mb-6 shadow-lg shadow-emerald-500/20">
+                P
+              </div>
+              <div className="text-xs font-bold text-[#34D399] uppercase tracking-wider mb-1">
+                Phase 03
+              </div>
+              <h3 className="text-xl font-black text-white nav-font mb-2">Perform & Partner</h3>
+              <div className="text-xs font-bold text-[#F59E0B] mb-4">ปฏิบัติการจริง & ร่วมทางระยะยาว</div>
+              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">
+                ติดตามผลลัพธ์การนำไปใช้ในการทำงานจริง (Action Learning) ให้คำปรึกษาต่อเนื่อง และประเมินพัฒนาการอย่างเป็นรูปธรรม
+              </p>
+              <ul className="text-xs text-gray-400 space-y-2 border-t border-white/10 pt-4">
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
+                  <span>Post-Workshop Follow-up & Coaching</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
+                  <span>Learning Impact & Behavioral Evaluation</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
+                  <span>Long-term Growth Partner</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── 6. LEAD FACILITATOR SPOTLIGHT (ครูเด่น & Team) ────────────────────── */}
+      <section className="py-20 md:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Image Box */}
+            <div className="lg:col-span-5 relative">
+              <div className="absolute -top-6 -left-6 w-72 h-72 bg-[#2563EB]/10 rounded-full blur-3xl pointer-events-none"></div>
+              
+              <div className="relative bg-[#111827] p-3 rounded-[2.5rem] shadow-2xl">
+                <img
+                  src="/images/denmasterfa.jpg"
+                  alt="ครูเด่น อนุสรณ์ หนองนา Master Facilitator"
+                  className="rounded-[2rem] w-full object-cover aspect-[4/5]"
+                />
+                
+                {/* Floating Experience Badge */}
+                <div className="absolute -bottom-6 -right-6 bg-[#2563EB] text-white p-6 rounded-2xl shadow-xl border-4 border-white hidden sm:block">
+                  <div className="text-3xl font-black nav-font">18+ ปี</div>
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-blue-100">
+                    Transformative Facilitator
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Profile Info */}
+            <div className="lg:col-span-7">
+              <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+                Master Facilitator & Director
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font mb-4 leading-tight">
+                {BRAND_INFO.director}
+              </h2>
+              <p className="text-lg font-bold text-[#0F2557] mb-6">
+                ผู้อำนวยการ CAP Vision Institute และผู้เชี่ยวชาญด้านกระบวนการเรียนรู้เพื่อการเปลี่ยนแปลง
+              </p>
+              <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-8">
+                ด้วยประสบการณ์กว่า 18 ปี ในการจัดกระบวนการเรียนรู้ให้กับองค์กรชั้นนำทั้งภาครัฐ รัฐวิสาหกิจ และบริษัทเอกชน ครูเด่นมุ่งเน้นการสร้างพื้นที่การเรียนรู้ที่มีความปลอดภัยทางจิตวิทยา ผสมผสานศาสตร์แห่งจิตวิทยาการเรียนรู้ผู้ใหญ่ (Adult Learning) และเทคนิค Facilitation ขั้นสูง เพื่อให้ผู้เรียนทุกคนเกิดแรงบันดาลใจและปลดล็อกศักยภาพจากภายใน
+              </p>
+
+              {/* Competencies Badges */}
+              <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 mb-10">
+                {[
+                  'Activity-Based Learning Architecture',
+                  'Transformational Leadership Coaching',
+                  'Psychological Safety & Team Synergy',
+                  'Creative Problem Solving Facilitator'
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-2 bg-gray-50 p-3 rounded-xl border border-gray-200/60">
+                    <CheckCircle2 className="w-4 h-4 text-[#2563EB] flex-shrink-0" />
+                    <span className="text-xs font-bold text-gray-800">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  to="/speakers"
+                  className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-8 py-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2"
+                >
+                  ทำความรู้จักทีมวิทยากรทั้งหมด
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <a
+                  href={CONTACT_INFO.lineUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-premium bg-[#06C755] text-white px-6 py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-md"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  คุยกับครูเด่นผ่าน LINE
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── 7. CASE STUDIES & CLIENTS SECTION ─────────────────────────────────── */}
+      <ClientsSection />
+
+      {/* ── 8. KNOWLEDGE HUB SECTION ──────────────────────────────────────────── */}
+      <section className="py-20 md:py-32 bg-[#F8FAFC]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div>
+              <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+                Executive Insights & Articles
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+                คลังความรู้สำหรับ <span className="text-[#2563EB]">ผู้นำ & HRD</span>
+              </h2>
+            </div>
+            <Link
+              to="/resources"
+              className="flex items-center gap-2 text-sm font-bold text-[#2563EB] hover:text-[#1D4ED8] group nav-font"
+            >
+              ดูบทความทั้งหมด
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {HRD_ARTICLES.slice(0, 3).map(article => (
+              <div
                 key={article.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="group bg-gray-50 rounded-[2rem] overflow-hidden hover:shadow-2xl transition-all duration-500 flex flex-col h-full"
+                className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full group"
               >
-                <Link to={`/resources/${article.id}`} className="relative h-64 overflow-hidden block">
+                <Link to={`/resources/${article.id}`} className="relative h-56 overflow-hidden block">
                   <img
                     src={article.thumbnail}
                     alt={article.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#0f3460] px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest z-10 shadow-sm">
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#111827] px-3.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">
                     {article.category}
                   </div>
                 </Link>
-                <div className="p-8 flex flex-col flex-grow">
-                  <div className="flex items-center gap-4 text-gray-400 text-xs mb-4 font-bold uppercase tracking-wider">
-                    <span className="flex items-center gap-1.5">
-                      <Calendar className="w-3.5 h-3.5" />
-                      {article.date}
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <User className="w-3.5 h-3.5" />
-                      {article.author}
-                    </span>
+
+                <div className="p-6 sm:p-8 flex flex-col flex-grow">
+                  <div className="text-xs text-gray-400 font-bold mb-3">
+                    {article.date} • โดย {article.author}
                   </div>
-                  <h3 className="text-xl font-black text-[#0f3460] mb-4 group-hover:text-[#c5a059] transition-colors line-clamp-2 leading-tight">
+
+                  <h3 className="text-base sm:text-lg font-black text-[#111827] group-hover:text-[#2563EB] transition-colors line-clamp-2 mb-3 leading-snug nav-font">
                     <Link to={`/resources/${article.id}`}>{article.title}</Link>
                   </h3>
-                  <p className="text-gray-500 text-sm line-clamp-3 mb-8 flex-grow">
+
+                  <p className="text-xs sm:text-sm text-gray-500 line-clamp-3 mb-6 flex-grow leading-relaxed">
                     {article.excerpt}
                   </p>
+
                   <Link
                     to={`/resources/${article.id}`}
-                    className="inline-flex items-center gap-2 text-[#0f3460] font-black text-sm uppercase tracking-wider group/link hover:text-[#c5a059] transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#2563EB] group-hover:underline"
                   >
-                    อ่านต่อ
-                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                    อ่านบทความฉบับเต็ม
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
+
         </div>
-      </motion.section>
+      </section>
 
-
-      {/* Final CTA */}
-
-      <motion.section 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.2 }}
-        className="py-24 md:py-40 bg-gradient-to-br from-[#0f3460] to-[#0a2545] text-white relative overflow-hidden"
-      >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-5 pointer-events-none">
-          <Logo className="w-full h-full p-20" />
+      {/* ── 9. FINAL EXECUTIVE CTA SECTION ────────────────────────────────────── */}
+      <section className="py-20 md:py-32 bg-gradient-to-br from-[#111827] via-[#0F2557] to-[#111827] text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5 pointer-events-none">
+          <Logo className="w-full h-full p-24" />
         </div>
+
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl lg:text-7xl font-black mb-8 md:mb-12 nav-font leading-tight tracking-tight uppercase text-white">ยกระดับ<br />องค์กรของคุณ</h2>
-          <p className="text-white/85 text-base md:text-xl lg:text-2xl mb-12 md:mb-20 font-light max-w-2xl mx-auto">
-            ปรึกษาเราเพื่อออกแบบโซลูชันการพัฒนาผู้นำที่ทันสมัยและวัดผลได้จริง
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-[#F59E0B] text-xs font-bold uppercase tracking-wider mb-6">
+            <Sparkles className="w-4 h-4" />
+            Start Your Organization Journey
+          </div>
+
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black mb-6 nav-font leading-tight">
+            พร้อมยกระดับองค์กรของคุณแล้วหรือยัง?
+          </h2>
+
+          <p className="text-gray-300 text-base sm:text-xl mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+            เริ่มต้นจากการทำ Organization Transformation Assessment เพื่อวินิจฉัยจุดแข็งและร่วมออกแบบโปรแกรมพัฒนากับทีม Master Facilitator
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-8">
-            <a href={CONTACT_INFO.lineUrl} className="btn-premium bg-[#c5a059] text-white px-10 md:px-16 py-4 md:py-6 rounded-[2rem] font-bold text-lg md:text-2xl hover:scale-105 transition-all shadow-2xl nav-font">
-              พูดคุยกับพวกเรา
-            </a>
-            <a href={`tel:${CONTACT_INFO.phone}`} className="btn-premium bg-white/10 border-2 border-white/20 text-white px-10 md:px-16 py-4 md:py-6 rounded-[2rem] font-bold text-lg md:text-2xl hover:bg-white/20 transition-all nav-font">
-              {CONTACT_INFO.phone}
-            </a>
+
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link
+              to="/assessment"
+              className="btn-premium bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] font-black px-10 py-5 rounded-2xl text-base shadow-2xl nav-font flex items-center justify-center gap-2"
+            >
+              <Sparkles className="w-5 h-5" />
+              ทำแบบประเมินความพร้อมองค์กร
+            </Link>
+            <Link
+              to="/contact"
+              className="btn-premium bg-white/10 hover:bg-white/20 border-2 border-white/20 text-white font-bold px-10 py-5 rounded-2xl text-base nav-font flex items-center justify-center gap-2"
+            >
+              ขอใบเสนอราคา / ปรึกษาหลักสูตร
+            </Link>
           </div>
         </div>
-      </motion.section>
+      </section>
 
     </div>
   );

@@ -106,19 +106,6 @@ const SERVICE_CARDS = [
       ]
    },
    {
-      id: 'subconscious-speaker',
-      Icon: Brain,
-      title: 'ก้าวแรกสู่ วิทยากรจิตใต้สำนึก',
-      tagline: 'หลักสูตรพิเศษเพื่อการเป็นวิทยากรที่เปลี่ยนคนจากภายใน (จำกัดเพียง 20 ท่าน)',
-      features: [
-         'Psychological Facilitation Techniques',
-         'Subconscious Communication Skills',
-         'Transformative Learning Design',
-         'Certification by CAP Vision'
-      ],
-      isSpecial: true
-   },
-   {
       id: 'facilitorium',
       Icon: Layers3,
       title: 'The Facilitorium',
@@ -294,100 +281,6 @@ const Services: React.FC = () => {
                         </div>
                      </div>
                   ))}
-               </div>
-            </section>
-
-            {/* ── 3.5 EXCLUSIVE COURSE (CENTRIC PREMIUM DESIGN) ──────────────── */}
-            <section className="py-24 relative overflow-hidden bg-[#0a0f1e]" id="exclusive-course">
-               {/* Background Decorative Elements */}
-               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#c5a059]/5 blur-[120px] rounded-full pointer-events-none" />
-               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none" />
-
-               <div className="max-w-5xl mx-auto px-4 relative z-10 text-center">
-                  <motion.div
-                     initial={{ opacity: 0, y: 30 }}
-                     whileInView={{ opacity: 1, y: 0 }}
-                     viewport={{ once: true }}
-                     transition={{ duration: 1 }}
-                     className="space-y-12"
-                  >
-                     {/* Badge */}
-                     <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-6 py-2 rounded-full backdrop-blur-md"
-                     >
-                        <Sparkles className="w-4 h-4 text-[#c5a059]" />
-                        <span className="text-white/70 text-sm font-bold tracking-widest nav-font uppercase">EXCLUSIVE COURSE</span>
-                     </motion.div>
-
-                     {/* Main Title */}
-                     <div className="space-y-4">
-                        <h2 className="text-5xl md:text-7xl font-black text-white nav-font tracking-tight leading-none">
-                           ก้าวแรกสู่
-                        </h2>
-                        <h3 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#c5a059] to-[#8e6d3a] nav-font tracking-tight leading-none">
-                           วิทยากรจิตใต้สำนึก
-                        </h3>
-                     </div>
-
-                     {/* Quote */}
-                     <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.4 }}
-                        className="text-white/80 text-xl md:text-2xl font-medium max-w-3xl mx-auto leading-relaxed italic"
-                     >
-                        “เพราะการสื่อสารที่ทรงพลังที่สุด...ไม่ได้เริ่มจากเทคนิค <br className="hidden md:block" />
-                        แต่เริ่มจากจิตใต้สำนึกที่มีความสุข”
-                     </motion.p>
-
-                     {/* CTAs */}
-                     <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
-                        <Link to="/subconscious-speaker">
-                           <motion.button
-                              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(197, 160, 89, 0.4)" }}
-                              whileTap={{ scale: 0.95 }}
-                              className="bg-[#c5a059] text-[#0a0f1e] px-12 py-5 rounded-2xl font-black text-xl nav-font shadow-xl flex items-center gap-3 group"
-                           >
-                              รายละเอียดหลักสูตร <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                           </motion.button>
-                        </Link>
-                        
-                        <motion.button
-                           whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-                           onClick={() => setIsBookingOpen(true)}
-                           className="bg-white/5 border border-white/10 text-white px-12 py-5 rounded-2xl font-black text-xl nav-font backdrop-blur-md transition-all"
-                        >
-                           ลงทะเบียน Early Bird
-                        </motion.button>
-                     </div>
-
-                     {/* Info Row */}
-                     <motion.div 
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.6 }}
-                        className="flex flex-wrap justify-center items-center gap-8 md:gap-12 pt-12 border-t border-white/5"
-                     >
-                        <div className="flex items-center gap-3 text-white/60">
-                           <Calendar className="w-5 h-5 text-[#c5a059]" />
-                           <span className="text-sm font-bold nav-font">20-21 พฤษภาคม 2569</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-white/60">
-                           <MapPin className="w-5 h-5 text-[#c5a059]" />
-                           <span className="text-sm font-bold nav-font">กรุงเทพมหานคร</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-white/60">
-                           <Users className="w-5 h-5 text-[#c5a059]" />
-                           <span className="text-sm font-bold nav-font">จำกัดเพียง 20 ท่าน</span>
-                        </div>
-                     </motion.div>
-                  </motion.div>
                </div>
             </section>
 

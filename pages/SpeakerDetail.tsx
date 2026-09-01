@@ -721,8 +721,46 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
         </div>
       </section>
 
+      {/* ── 1. GREETING BANNER CARD (ถัดจากส่วน HERO) ── */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20 mb-16">
+        <div className="bg-white rounded-3xl p-4 sm:p-8 shadow-2xl border border-gray-100 overflow-hidden">
+          <div className="flex flex-col lg:flex-row items-center gap-8">
+            <div className="w-full lg:w-1/2 rounded-2xl overflow-hidden shadow-lg border-2 border-gray-100 bg-gray-900 group">
+              <img
+                src="https://res.cloudinary.com/dmo4kq7ej/image/upload/v1788199810/1787733149434_cjlynw.jpg"
+                alt="สาส์นทักทายจากครูเด่น มาสเตอร์ฟา"
+                className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-500"
+              />
+            </div>
+            <div className="w-full lg:w-1/2 flex flex-col justify-center">
+              <div className="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-4 nav-font w-fit">
+                <IconGoldCrestStar className="w-3.5 h-3.5 text-[#F59E0B]" />
+                สาส์นจาก Master Facilitator
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-black text-[#0F2557] nav-font mb-4 leading-tight">
+                "การเรียนรู้ที่แท้จริง คือการค้นพบพลังที่อยู่ในตัวคุณเอง"
+              </h2>
+              <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-6 font-normal">
+                ยินดีต้อนรับทุกท่านสู่พื้นที่แห่งการเติบโตและการเปลี่ยนผ่าน เราเชื่อมั่นว่าทุกองค์กรและทุกคนมีศักยภาพอันไร้ขีดจำกัด กระบวนการของ CAP Vision Institute ถูกออกแบบมาเพื่อเป็นสะพานเชื่อมโยงศักยภาพนั้นสู่ความสำเร็จจริง
+              </p>
+              <div className="flex items-center gap-4">
+                <a
+                  href="https://res.cloudinary.com/dmo4kq7ej/image/upload/v1788199810/1787733149434_cjlynw.jpg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#0F2557] hover:bg-[#2563EB] text-white text-xs font-bold px-5 py-3 rounded-xl shadow-sm transition-all"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  เปิดดูการ์ดขนาดเต็ม
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Comparison: Trainer vs Facilitator */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20 mb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
         <div className="bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-gray-100">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-[#2563EB] text-xs font-black uppercase tracking-widest block mb-2 nav-font">
@@ -759,6 +797,89 @@ const DenMasterFaDetail: React.FC<{ speaker: Instructor, taughtCourses: Course[]
           </div>
         </div>
       </div>
+
+      {/* ── 2. 1-PAGE EXECUTIVE PROFILE / ONE-PAGER SUMMARY ── */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+        <div className="bg-[#F8FAFC] rounded-3xl p-6 sm:p-12 border border-gray-200/80 shadow-xl">
+          <div className="max-w-3xl mx-auto text-center mb-10">
+            <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 text-[#2563EB] text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-3 nav-font">
+              <FileText className="w-4 h-4" />
+              Official Executive Profile
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-black text-[#0F2557] nav-font mb-3">
+              ประวัติย่อ 1-Page Executive Summary
+            </h2>
+            <p className="text-gray-600 text-xs sm:text-sm font-normal max-w-xl mx-auto leading-relaxed">
+              เอกสารสรุปประวัติ ผลงาน ประสบการณ์ และแนวทางการจัดกระบวนการเรียนรู้แบบย่อ 1 หน้า สำหรับผู้บริหาร ฝ่ายจัดซื้อ และ HRD
+            </p>
+          </div>
+
+          {/* 2 One-Pager Cards Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Card 1 */}
+            <div className="bg-white rounded-3xl overflow-hidden shadow-xl border-2 border-gray-100 p-3 sm:p-5 flex flex-col justify-between group">
+              <div>
+                <div className="flex items-center justify-between mb-3 px-2">
+                  <span className="text-xs font-black text-[#0F2557] nav-font">ประวัติย่อฉบับทางการ (ชุดที่ 1)</span>
+                  <span className="text-[11px] font-bold text-[#2563EB] bg-blue-50 px-3 py-0.5 rounded-full">Executive Profile</span>
+                </div>
+                <div className="relative overflow-hidden rounded-2xl bg-gray-900 border border-gray-100">
+                  <img
+                    src="https://res.cloudinary.com/dmo4kq7ej/image/upload/v1786514510/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%94%E0%B9%81%E0%B8%99%E0%B8%B0%E0%B8%99%E0%B8%B3_%E0%B8%AD%E0%B8%99%E0%B8%B8%E0%B8%AA%E0%B8%A3%E0%B8%93%E0%B9%8C_%E0%B8%AB%E0%B8%99%E0%B8%AD%E0%B8%87%E0%B8%99%E0%B8%B2_1_%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2_tz1rp0.png"
+                    alt="การ์ดแนะนำ อนุสรณ์ หนองนา 1 หน้า"
+                    className="w-full h-auto object-contain group-hover:scale-[1.01] transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              <div className="pt-4 px-2 flex items-center justify-between border-t border-gray-100 mt-4">
+                <span className="text-[11px] font-medium text-gray-500">อนุสรณ์ หนองนา (ครูเด่น)</span>
+                <a
+                  href="https://res.cloudinary.com/dmo4kq7ej/image/upload/v1786514510/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%94%E0%B9%81%E0%B8%99%E0%B8%B0%E0%B8%99%E0%B8%B3_%E0%B8%AD%E0%B8%99%E0%B8%B8%E0%B8%AA%E0%B8%A3%E0%B8%93%E0%B9%8C_%E0%B8%AB%E0%B8%99%E0%B8%AD%E0%B8%87%E0%B8%99%E0%B8%B2_1_%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2_tz1rp0.png"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 bg-[#0F2557] hover:bg-[#2563EB] text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-xs"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  เปิดดูภาพเต็ม
+                </a>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-white rounded-3xl overflow-hidden shadow-xl border-2 border-gray-100 p-3 sm:p-5 flex flex-col justify-between group">
+              <div>
+                <div className="flex items-center justify-between mb-3 px-2">
+                  <span className="text-xs font-black text-[#0F2557] nav-font">ประวัติย่อฉบับทางการ (ชุดที่ 2)</span>
+                  <span className="text-[11px] font-bold text-[#F59E0B] bg-amber-50 px-3 py-0.5 rounded-full">Facilitator Portfolio</span>
+                </div>
+                <div className="relative overflow-hidden rounded-2xl bg-gray-900 border border-gray-100">
+                  <img
+                    src="https://res.cloudinary.com/dmo4kq7ej/image/upload/v1786824025/b61c8175-85ec-4cd8-8c23-ef68ed8ecb47_gecnhc.png"
+                    alt="ประวัติย่อ Master Facilitator ครูเด่น"
+                    className="w-full h-auto object-contain group-hover:scale-[1.01] transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              <div className="pt-4 px-2 flex items-center justify-between border-t border-gray-100 mt-4">
+                <span className="text-[11px] font-medium text-gray-500">Master Facilitator & Director</span>
+                <a
+                  href="https://res.cloudinary.com/dmo4kq7ej/image/upload/v1786824025/b61c8175-85ec-4cd8-8c23-ef68ed8ecb47_gecnhc.png"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 bg-[#0F2557] hover:bg-[#2563EB] text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-xs"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  เปิดดูภาพเต็ม
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Signature Programs */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">

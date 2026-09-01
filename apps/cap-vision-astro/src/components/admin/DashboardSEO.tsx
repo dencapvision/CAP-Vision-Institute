@@ -67,9 +67,8 @@ const DashboardSEO: React.FC = () => {
       ) : articles.length === 0 ? (
         <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center text-gray-400">
           <BarChart3 className="w-10 h-10 mx-auto mb-3 opacity-20" />
-          <p className="font-bold">ยังไม่มีบทความ</p>
-          <a href="/dashboard/blog/new" className="mt-3 text-sm font-black text-[#c5a059] flex items-center gap-1 justify-center hover:underline">
-            สร้างบทความแรก <ArrowRight className="w-3.5 h-3.5" />
+          <a href="/admin/contents" className="mt-3 text-sm font-black text-[#c5a059] flex items-center gap-1 justify-center hover:underline">
+            สร้างบทความแรกด้วย AI <ArrowRight className="w-3.5 h-3.5" />
           </a>
         </div>
       ) : (

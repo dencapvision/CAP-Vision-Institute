@@ -160,7 +160,11 @@ const navItems: NavItem[] = [
 ];
 
 // ===== SUB-COMPONENT: Dropdown Panel =====
-const DropdownPanel: React.FC<{ items: SubItem[]; alignRight?: boolean }> = ({ items, alignRight }) => (
+const DropdownPanel: React.FC<{
+  items: SubItem[];
+  alignRight?: boolean;
+  onItemClick: (path: string, external?: boolean) => void;
+}> = ({ items, alignRight, onItemClick }) => (
   <div
     className={`absolute top-[calc(100%-2px)] min-w-[290px] bg-white shadow-2xl rounded-2xl border border-gray-100 p-3 z-50 ${alignRight ? 'right-0' : 'left-0'}`}
     style={{ animation: 'dropIn 0.18s cubic-bezier(0.16,1,0.3,1) both' }}
@@ -190,11 +194,15 @@ const DropdownPanel: React.FC<{ items: SubItem[]; alignRight?: boolean }> = ({ i
             href={sub.path}
             target="_blank"
             rel="noreferrer"
+            onClick={() => onItemClick(sub.path, true)}
           >
             {inner}
           </a>
         ) : (
-          <a key={sub.name} href={sub.path}>
+          <a key={sub.name}
+            href={sub.path}
+            onClick={() => onItemClick(sub.path, false)}
+          >
             {inner}
           </a>
         );
@@ -244,6 +252,38 @@ const Header: React.FC = () => {
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
     return location.pathname.startsWith(path);
+  };
+
+  const handleNavClick = (path: string) => {
+    setIsOpen(false);
+    setOpenDropdown(null);
+    setOpenMobileSubmenu(null);
+  };
+
+  const handleSubmenuClick = (path: string, external?: boolean) => {
+    setIsOpen(false);
+    setOpenDropdown(null);
+    setOpenMobileSubmenu(null);
+
+    if (external) return;
+
+    if (path.includes('#')) {
+      const [pagePath, hash] = path.split('#');
+      const isTargetPage =
+        pagePath === '' ||
+        location.pathname === pagePath ||
+        (pagePath === '/services' && location.pathname.startsWith('/services')) ||
+        (pagePath === '/about' && location.pathname.startsWith('/about'));
+
+      if (isTargetPage && hash) {
+        setTimeout(() => {
+          const el = document.getElementById(hash);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      }
+    }
   };
 
   return (
@@ -326,7 +366,11 @@ const Header: React.FC = () => {
                   </a>
 
                   {item.submenu && openDropdown === item.name && (
-                    <DropdownPanel items={item.submenu} alignRight={alignRight} />
+                    <DropdownPanel
+                      items={item.submenu}
+                      alignRight={alignRight}
+                      onItemClick={handleSubmenuClick}
+                    />
                   )}
                 </div>
               );
@@ -334,6 +378,7 @@ const Header: React.FC = () => {
 
             {/* CTA Button */}
             <a href="/contact"
+              onClick={() => handleNavClick('/contact')}
               className="ml-3 bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-5 py-2.5 rounded-xl text-[13px] font-bold flex items-center gap-2 transition-all duration-300 shadow-md hover:shadow-lg nav-font whitespace-nowrap active:scale-95"
             >
               <PhoneCall className="w-4 h-4" />
@@ -344,6 +389,7 @@ const Header: React.FC = () => {
           {/* ---- Mobile Action Bar ---- */}
           <div className="xl:hidden flex items-center gap-2">
             <a href="/assessment"
+              onClick={() => handleNavClick('/assessment')}
               className="bg-[#2563EB]/10 border border-[#2563EB]/30 text-[#2563EB] px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 active:scale-95"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
@@ -396,6 +442,7 @@ const Header: React.FC = () => {
                 >
                   <div className="flex items-center">
                     <a href={item.path}
+                      onClick={() => handleNavClick(item.path)}
                       className={`flex-1 flex items-center gap-3 py-3 px-3.5 rounded-2xl font-black nav-font text-base transition-all ${
                         isAssessment
                           ? 'text-[#2563EB] bg-blue-50/80 border border-blue-100'
@@ -452,11 +499,20 @@ const Header: React.FC = () => {
                           </div>
                         );
                         return sub.external ? (
-                          <a key={sub.name} href={sub.path} target="_blank" rel="noreferrer">
+                          <a
+                            key={sub.name}
+                            href={sub.path}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={() => handleSubmenuClick(sub.path, true)}
+                          >
                             {inner}
                           </a>
                         ) : (
-                          <a key={sub.name} href={sub.path}>
+                          <a key={sub.name}
+                            href={sub.path}
+                            onClick={() => handleSubmenuClick(sub.path, false)}
+                          >
                             {inner}
                           </a>
                         );

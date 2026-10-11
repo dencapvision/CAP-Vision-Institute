@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import { 
   ArrowRight, Award, Sparkles, CheckCircle2, 
-  ChevronRight, MessageCircle, BarChart3, Target,
-  Compass, Layers3, PhoneCall, Play, Clock, ArrowUpRight
+  ChevronRight, ChevronDown, MessageCircle, BarChart3, Target,
+  Compass, Layers3, PhoneCall, Play, Clock, ArrowUpRight,
+  HelpCircle, Users, TrendingUp, ShieldCheck
 } from 'lucide-react';
 import { 
   IconLeadership, IconTeamSynergy, IconGrowthCulture, 
@@ -26,6 +27,7 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [activeSolutionTab, setActiveSolutionTab] = useState<number>(0);
   const [showAssessmentModal, setShowAssessmentModal] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   useEffect(() => {
     const loadCourses = async () => {
@@ -232,16 +234,67 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Section Header */}
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
-              ORGANIZATION DIAGNOSTIC
+              ORGANIZATION DIAGNOSTIC & INSIGHT
             </span>
             <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
               “ปัญหาขององค์กรคุณ <span className="text-[#2563EB]">อยู่ตรงไหน?</span>”
             </h2>
             <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed font-light">
-              การพัฒนาองค์กรที่เห็นผลจริง ต้องเริ่มต้นจากการระบุสาเหตุที่แท้จริง ไม่ใช่แค่การจัดอบรมตามหลักสูตรทั่วไป
+              การพัฒนาองค์กรที่เห็นผลลัพธ์ยั่งยืน ต้องเริ่มจากการเจาะลึกที่รากเหง้าของปัญหา ไม่ใช่แค่การจัดอบรมตามหัวข้อทั่วไป
             </p>
+          </div>
+
+          {/* Insight Comparison: Traditional Training vs CAP Transformative Design */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14 max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl p-6 sm:p-7 border border-red-100 shadow-sm relative overflow-hidden">
+              <div className="flex items-center gap-2 text-xs font-black text-red-600 uppercase tracking-wider mb-2">
+                <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                การอบรมแบบดั้งเดิม (Traditional Training)
+              </div>
+              <h3 className="text-base sm:text-lg font-black text-gray-900 nav-font mb-2">
+                เน้นทฤษฎี บรรยายทางเดียว จบในห้องสัมมนา
+              </h3>
+              <ul className="text-xs sm:text-sm text-gray-600 space-y-2.5 mt-3">
+                <li className="flex items-start gap-2.5">
+                  <span className="text-red-500 font-bold shrink-0">✕</span>
+                  <span>ใช้หลักสูตรสำเร็จรูป ไม่สอดคล้องกับบริบทจริงขององค์กร</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="text-red-500 font-bold shrink-0">✕</span>
+                  <span>ผู้เรียนนั่งฟังบรรยาย รู้สึกเบื่อ และขาดการมีส่วนร่วม</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="text-red-500 font-bold shrink-0">✕</span>
+                  <span>พฤติกรรมเดิมกลับมาใน 1 สัปดาห์ เพราะไม่มี Action Plan และการวัดผล</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-gradient-to-br from-blue-50/80 via-white to-blue-50/40 rounded-2xl p-6 sm:p-7 border border-blue-200/80 shadow-md relative overflow-hidden">
+              <div className="flex items-center gap-2 text-xs font-black text-[#2563EB] uppercase tracking-wider mb-2">
+                <span className="w-2 h-2 rounded-full bg-[#2563EB]"></span>
+                แนวทาง CAP Transformative Learning
+              </div>
+              <h3 className="text-base sm:text-lg font-black text-[#111827] nav-font mb-2">
+                เจาะลึก TNA ผู้เรียนสัมผัสด้วยตนเอง เชื่อมสู่ผลงานจริง
+              </h3>
+              <ul className="text-xs sm:text-sm text-gray-700 space-y-2.5 mt-3">
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+                  <span>เริ่มจาก TNA วินิจฉัยจุดติดขัดเฉพาะองค์กรคุณแบบ 100%</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+                  <span>Activity-Based Learning ผู้เรียนตระหนักและคิดทางแก้ได้เอง</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+                  <span>แปลง Mindset สู่ Daily Behavior พร้อมเครื่องมือติดตามผล</span>
+                </li>
+              </ul>
+            </div>
           </div>
 
           {/* 4 Pain Point Cards */}
@@ -697,7 +750,161 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* ── 6. LEAD FACILITATOR SPOTLIGHT (ครูเด่น & Team) ────────────────────── */}
+      {/* ── 6. EXPECTED OUTCOMES SECTION (คุณค่าที่องค์กรได้รับจริง) ─────────────── */}
+      <section className="py-20 md:py-32 bg-[#F8FAFC] border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+              TANGIBLE IMPACT & OUTCOMES
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+              ผลลัพธ์ที่องค์กรจะได้รับ <span className="text-[#2563EB]">อย่างเป็นรูปธรรม</span>
+            </h2>
+            <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed font-light">
+              การพัฒนาที่ไม่จบเพียงแค่ความสนุกในห้องอบรม แต่เปลี่ยนเป็นพลังขับเคลื่อน 3 ระดับที่สัมผัสได้จริงในชีวิตการทำงาน
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14">
+            
+            {/* Level 1: Individual */}
+            <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                    ระดับบุคคล (Individual)
+                  </span>
+                  <span className="text-xs font-black text-gray-400 font-mono">01</span>
+                </div>
+                <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center mb-5 shadow-xs">
+                  <Users className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-black text-[#111827] nav-font mb-3 leading-snug">
+                  Mindset เปลี่ยน สู่ความรับผิดชอบเชิงรุก
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6 font-light">
+                  พนักงานตระหนักรู้ในตนเอง ปลดล็อก Fixed Mindset สู่ Growth Mindset ก้าวข้าม Comfort Zone และทำงานด้วยจิตสำนึกของความเป็นเจ้าของร่วม (Ownership)
+                </p>
+              </div>
+
+              <ul className="space-y-3 pt-5 border-t border-gray-100 text-xs text-gray-700 font-medium">
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+                  <span>กล้าคิดริเริ่มและรับผิดชอบผลลัพธ์ของงาน</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+                  <span>สื่อสารด้วยความเห็นอกเห็นใจ (Empathy) และเปิดรับคำแนะนำ</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+                  <span>พร้อมปรับตัวยืดหยุ่นต่อสถานการณ์ที่ไม่แน่นอน</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Level 2: Team */}
+            <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
+                    ระดับทีม (Team Synergy)
+                  </span>
+                  <span className="text-xs font-black text-gray-400 font-mono">02</span>
+                </div>
+                <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-[#0F2557] flex items-center justify-center mb-5 shadow-xs">
+                  <Target className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-black text-[#111827] nav-font mb-3 leading-snug">
+                  ทลายกำแพง Silo สู่ความร่วมมือที่ไร้รอยต่อ
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6 font-light">
+                  สร้างความปลอดภัยทางจิตวิทยา (Psychological Safety) ที่เปิดโอกาสให้ทุกคนกล้าพูดความจริง กล้าเสนอไอเดีย และรวมพลังกันแก้ปัญหาข้ามสายงาน
+                </p>
+              </div>
+
+              <ul className="space-y-3 pt-5 border-t border-gray-100 text-xs text-gray-700 font-medium">
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#0F2557] shrink-0 mt-0.5" />
+                  <span>การประสานงานข้ามแผนกเป็นไปอย่างราบรื่นและไว้เนื้อเชื่อใจ</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#0F2557] shrink-0 mt-0.5" />
+                  <span>ลดความขัดแย้งเชิงบุคคล มุ่งเน้นเป้าหมายความสำเร็จร่วมกัน</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#0F2557] shrink-0 mt-0.5" />
+                  <span>เกิดการแลกเปลี่ยนความรู้และระดมสมองแก้ปัญหาอย่างสร้างสรรค์</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Level 3: Organization */}
+            <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                    ระดับองค์กร (Organization)
+                  </span>
+                  <span className="text-xs font-black text-gray-400 font-mono">03</span>
+                </div>
+                <div className="w-12 h-12 rounded-2xl bg-amber-50 text-[#F59E0B] flex items-center justify-center mb-5 shadow-xs">
+                  <TrendingUp className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-black text-[#111827] nav-font mb-3 leading-snug">
+                  ผลักดันกลยุทธ์ได้เร็ว วัฒนธรรมเติบโตยั่งยืน
+                </h3>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6 font-light">
+                  ผู้นำทุกระดับสามารถถ่ายทอดวิสัยทัศน์ นำพาการเปลี่ยนแปลง และแปลง Core Values ให้ออกมาเป็นพฤติกรรมจริงในการทำงานทุกวัน
+                </p>
+              </div>
+
+              <ul className="space-y-3 pt-5 border-t border-gray-100 text-xs text-gray-700 font-medium">
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#F59E0B] shrink-0 mt-0.5" />
+                  <span>เพิ่มความเร็วในการขับเคลื่อนแผนกลยุทธ์ขององค์กร (Strategic Agility)</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#F59E0B] shrink-0 mt-0.5" />
+                  <span>ค่านิยมองค์กร (Core Values) ปรากฏชัดเจนในวัฒนธรรมการทำงาน</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#F59E0B] shrink-0 mt-0.5" />
+                  <span>ความผูกพันของพนักงาน (Engagement) สูงขึ้น ผลประกอบการเติบโตมั่นคง</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          {/* Outcome Assessment Callout */}
+          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200/80 shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="text-base sm:text-lg font-bold text-[#111827] nav-font">
+                  วัดผลอย่างเป็นระบบด้วย Pre & Post Assessment
+                </h4>
+                <p className="text-xs sm:text-sm text-gray-500 font-light mt-0.5">
+                  เราจัดทำสรุปผลการเรียนรู้และข้อสังเกตเชิงลึก (Executive Summary Report) ส่งมอบให้ฝ่าย HRD หลังจบการอบรมทุกครั้ง
+                </p>
+              </div>
+            </div>
+            <a href="/contact"
+              className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-7 py-3.5 rounded-xl font-bold text-xs sm:text-sm shrink-0 flex items-center gap-2"
+            >
+              ปรึกษาแนวทางการวัดผล
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── 7. LEAD FACILITATOR SPOTLIGHT (ครูเด่น & Team) ────────────────────── */}
       <section className="py-20 md:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -844,7 +1051,91 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* ── 9. FINAL EXECUTIVE CTA SECTION ────────────────────────────────────── */}
+      {/* ── 8. FAQ SECTION (คำถามที่พบบ่อยสำหรับ HR & ผู้บริหาร) ───────────────── */}
+      <section className="py-20 md:py-32 bg-white border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center mb-16">
+            <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+              DECISION ENABLERS & FAQ
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+              คำถามที่พบบ่อยสำหรับ <span className="text-[#2563EB]">HRD & ผู้บริหาร</span>
+            </h2>
+            <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed font-light">
+              รวบรวมข้อสงสัยสำคัญที่องค์กรมักสอบถาม ก่อนตัดสินใจเลือกหลักสูตรและกระบวนการเรียนรู้กับ CAP Vision
+            </p>
+          </div>
+
+          {/* Accordion List */}
+          <div className="space-y-4">
+            {[
+              {
+                q: 'CAP Vision แตกต่างจากสถาบันฝึกอบรมทั่วไปอย่างไร?',
+                a: 'เราไม่ใช้หลักสูตรสำเร็จรูป (No One-Size-Fits-All) แต่เริ่มจากการทำ TNA เพื่อวินิจฉัยปัญหาองค์กรจริง ใช้กระบวนการ Activity-Based & Transformative Learning ที่เน้นให้ผู้เรียนคิด ตระหนัก และค้นพบแนวทางแก้ปัญหาด้วยตนเอง ไม่ใช่เพียงแค่นั่งฟังบรรยาย พร้อมเชื่อมโยง Mindset สู่ Action Plan ที่นำไปปรับใช้ในงานได้ทันที'
+              },
+              {
+                q: 'สามารถปรับแต่งเนื้อหาและ Case Study ให้ตรงกับธุรกิจของเราได้ไหม?',
+                a: 'ปรับแต่งได้ 100% ครับ ทีมงานของเราจะทำการสัมภาษณ์และศึกษาบริบทจริงขององค์กรคุณ เพื่อออกแบบเนื้อหา กิจกรรม และกรณีศึกษา (Customized Cases) ให้สอดคล้องกับสถานการณ์จริงของอุตสาหกรรม วัฒนธรรมองค์กร และเป้าหมายทางธุรกิจที่คุณต้องการ'
+              },
+              {
+                q: 'ขั้นตอนการขอรับคำปรึกษาและใบเสนอราคา (Proposal) ใช้เวลานานเท่าใด?',
+                a: 'เพียงกรอกข้อมูลโจทย์เบื้องต้นผ่านหน้าติดต่อ หรือส่งรายละเอียดความต้องการ ทีมงานจะติดต่อกลับเพื่อพูดคุยซักถามโจทย์เชิงลึก และจัดส่ง Proposal โครงสร้างหลักสูตร (Syllabus) พร้อมใบเสนอราคาเบื้องต้นให้ท่านพิจารณาภายใน 24 ชั่วโมง'
+              },
+              {
+                q: 'รองรับรูปแบบการจัดอบรมแบบใดบ้าง และจำนวนผู้เข้าอบรมที่แนะนำคือเท่าใด?',
+                a: 'รองรับทั้ง In-house Workshop ณ บริษัท, สัมมนานอกสถานที่ (Offsite / Outing Workshop) ทั่วประเทศ รวมถึง Virtual Interactive Training สำหรับเวิร์กช็อปที่มีการทำกิจกรรมอย่างเข้มข้น แนะนำขนาดกลุ่ม 20-40 ท่านต่อรุ่น เพื่อให้เกิดการมีส่วนร่วมและการดูแลผู้เรียนอย่างทั่วถึง'
+              },
+              {
+                q: 'มีกระบวนการติดตามและประเมินผลลัพธ์หลังจบการอบรม (Post-training) หรือไม่?',
+                a: 'เรามีระบบแบบประเมินผลก่อนและหลังการอบรม (Pre & Post Assessment), สรุปรายงานการเรียนรู้และข้อสังเกตของผู้เข้าร่วมอบรม (Executive Summary Report) ส่งมอบให้ฝ่าย HR พร้อมมีตัวเลือกโปรแกรม Coaching หรือ Follow-up Session เพื่อติดตามผลการปฏิบัติตาม Action Plan อย่างต่อเนื่อง'
+              }
+            ].map((faq, idx) => {
+              const isOpen = openFaqIndex === idx;
+              return (
+                <div
+                  key={idx}
+                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                    isOpen 
+                      ? 'bg-blue-50/40 border-blue-200 shadow-md' 
+                      : 'bg-white border-gray-200/80 hover:border-gray-300 hover:bg-gray-50/50 shadow-xs'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                    aria-expanded={isOpen}
+                    className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-bold text-sm sm:text-base text-[#111827] nav-font"
+                  >
+                    <span className="flex items-center gap-3">
+                      <HelpCircle className={`w-5 h-5 shrink-0 ${isOpen ? 'text-[#2563EB]' : 'text-gray-400'}`} />
+                      <span>{faq.q}</span>
+                    </span>
+                    <ChevronDown className={`w-5 h-5 shrink-0 text-gray-500 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#2563EB]' : ''}`} />
+                  </button>
+
+                  {isOpen && (
+                    <div className="px-6 pb-6 pt-1 text-xs sm:text-sm text-gray-600 font-light leading-relaxed border-t border-blue-100/60 mt-1">
+                      <p className="pl-8">{faq.a}</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Additional Help Callout */}
+          <div className="mt-12 text-center text-xs sm:text-sm text-gray-500">
+            มีคำถามเฉพาะทางหรือต้องการสอบถามเพิ่มเติม?{' '}
+            <a href="/contact" className="font-bold text-[#2563EB] hover:underline inline-flex items-center gap-1">
+              พูดคุยกับทีมที่ปรึกษาโดยตรง <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── 9. FINAL CONSULTATION & CLOSING CTA ───────────────────────────────── */}
       <section className="py-20 md:py-32 bg-gradient-to-br from-[#111827] via-[#0F2557] to-[#111827] text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <Logo className="w-full h-full p-24" />
@@ -853,29 +1144,43 @@ const Home: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-[#F59E0B] text-xs font-bold uppercase tracking-wider mb-6">
             <Sparkles className="w-4 h-4" />
-            Start Your Organization Journey
+            Transform People · Transform Organization
           </div>
 
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black mb-6 nav-font leading-tight !text-white text-white drop-shadow-md">
             พร้อมยกระดับองค์กร
-            <span className="text-[#F59E0B] !text-[#F59E0B] block mt-1 sm:inline sm:ml-3">ของคุณแล้วหรือยัง?</span>
+            <span className="text-[#F59E0B] !text-[#F59E0B] block mt-1 sm:inline sm:ml-3">สู่ผลลัพธ์ใหม่แล้วหรือยัง?</span>
           </h2>
 
-          <p className="text-gray-300 text-base sm:text-xl mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-            เริ่มต้นจากการทำ Organization Transformation Assessment เพื่อวินิจฉัยจุดแข็งและร่วมออกแบบโปรแกรมพัฒนากับทีม Master Facilitator
+          <p className="text-gray-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+            เริ่มต้นจากการปรึกษาโจทย์เฉพาะองค์กรของคุณเพื่อรับโครงสร้างหลักสูตรและใบเสนอราคาเบื้องต้นใน 24 ชั่วโมง หรือสำรวจความพร้อมด้วยแบบประเมินฟรี
           </p>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="/assessment"
-              className="btn-premium bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] font-black px-10 py-5 rounded-2xl text-base shadow-2xl nav-font flex items-center justify-center gap-2"
-            >
-              <Sparkles className="w-5 h-5" />
-              ทำแบบประเมินความพร้อมองค์กร
-            </a>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
             <a href="/contact"
-              className="btn-premium bg-white/10 hover:bg-white/20 border-2 border-white/20 text-white font-bold px-10 py-5 rounded-2xl text-base nav-font flex items-center justify-center gap-2"
+              className="btn-premium bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-10 py-5 rounded-2xl text-base shadow-2xl nav-font flex items-center justify-center gap-2 transition-all active:scale-95"
             >
-              ขอใบเสนอราคา / ปรึกษาหลักสูตร
+              ปรึกษาโจทย์องค์กร (รับข้อเสนอใน 24 ชม.)
+              <ArrowRight className="w-5 h-5" />
+            </a>
+            <a href="/assessment"
+              className="btn-premium bg-white/10 hover:bg-white/20 border-2 border-white/20 text-white font-bold px-10 py-5 rounded-2xl text-base nav-font flex items-center justify-center gap-2 transition-all active:scale-95"
+            >
+              <Sparkles className="w-5 h-5 text-[#F59E0B]" />
+              สำรวจความพร้อมองค์กร (3 นาที)
+            </a>
+          </div>
+
+          {/* Quick Line contact */}
+          <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
+            <span>หรือปรึกษาด่วนกับ ครูเด่น มาสเตอร์ฟา ผ่าน</span>
+            <a
+              href={CONTACT_INFO.lineUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-[#34D399] hover:underline font-bold inline-flex items-center gap-1"
+            >
+              <MessageCircle className="w-3.5 h-3.5" /> LINE Official
             </a>
           </div>
         </div>

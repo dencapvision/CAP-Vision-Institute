@@ -311,31 +311,31 @@ const Header: React.FC = () => {
             : 'h-20 bg-white/90 backdrop-blur-md md:bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-full">
+        <div className="w-full max-w-[1536px] mx-auto px-3 sm:px-5 lg:px-6 xl:px-8 flex items-center justify-between h-full gap-2">
 
           {/* ---- Logo ---- */}
-          <a href="/" className="flex items-center gap-2.5 group shrink-0" aria-label="CAP Vision Institute - หน้าหลัก">
+          <a href="/" className="flex items-center gap-2 sm:gap-2.5 group shrink-0 min-w-0 pr-1" aria-label="CAP Vision Institute - หน้าหลัก">
             <Logo
-              className={`transition-all duration-300 ${
-                isScrolled ? 'w-8 h-8 md:w-9 md:h-9' : 'w-9 h-9 md:w-11 md:h-11'
+              className={`transition-all duration-300 shrink-0 ${
+                isScrolled ? 'w-8 h-8 md:w-9 md:h-9' : 'w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10'
               } group-hover:scale-105`}
             />
-            <div className="flex flex-col leading-none">
-              <span className={`font-black tracking-tight nav-font uppercase transition-all duration-300 ${
-                isScrolled ? 'text-base md:text-lg text-[#111827]' : 'text-base md:text-xl text-[#111827]'
+            <div className="flex flex-col leading-tight min-w-0">
+              <span className={`font-black tracking-tight nav-font uppercase transition-all duration-300 truncate ${
+                isScrolled ? 'text-xs sm:text-base md:text-lg text-[#111827]' : 'text-xs sm:text-base md:text-lg xl:text-xl text-[#111827]'
               }`}>
                 CAP Vision Institute
               </span>
-              <span className="text-[9px] md:text-[10px] font-bold tracking-wider nav-font text-[#2563EB]">
+              <span className="hidden sm:block text-[9px] md:text-[10px] font-bold tracking-wider nav-font text-[#2563EB] truncate">
                 Transform People → Transform Organization
               </span>
             </div>
           </a>
 
           {/* ---- Desktop Nav ---- */}
-          <div className="hidden xl:flex items-center gap-1 h-full">
-            {navItems.map((item, idx) => {
-              const alignRight = idx >= navItems.length - 3;
+          <div className="hidden xl:flex items-center gap-0.5 xl:gap-1 2xl:gap-1.5 h-full">
+            {navItems.filter(item => item.path !== '/contact').map((item, idx, filtered) => {
+              const alignRight = idx >= filtered.length - 2;
               const isAssessment = item.path === '/assessment';
               return (
                 <div
@@ -346,19 +346,19 @@ const Header: React.FC = () => {
                 >
                   <a href={item.path}
                     aria-current={isActive(item.path) ? 'page' : undefined}
-                    className={`px-3 py-2 text-[13px] font-bold transition-all duration-200 nav-font flex items-center gap-1.5 whitespace-nowrap rounded-xl ${
+                    className={`px-2 xl:px-2.5 2xl:px-3 py-1.5 xl:py-2 text-[12.5px] xl:text-[13px] 2xl:text-[13.5px] font-bold transition-all duration-200 nav-font flex items-center gap-1 xl:gap-1.5 whitespace-nowrap rounded-xl ${
                       isAssessment
-                        ? 'bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/25 hover:bg-[#2563EB] hover:text-white shadow-xs'
+                        ? 'bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/25 hover:bg-[#2563EB] hover:text-white shadow-xs px-2.5 xl:px-3'
                         : isActive(item.path)
-                          ? 'text-[#2563EB] bg-blue-50/50'
-                          : 'text-[#111827] hover:text-[#2563EB] hover:bg-gray-50'
+                          ? 'text-[#2563EB] bg-blue-50/60'
+                          : 'text-[#111827] hover:text-[#2563EB] hover:bg-gray-100/70'
                     }`}
                   >
-                    {item.icon}
-                    {item.name}
+                    {isAssessment && <IconGoldCrestStar className="w-3.5 h-3.5 text-[#F59E0B] shrink-0" />}
+                    <span>{item.name}</span>
                     {item.submenu && (
                       <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                        className={`w-3 h-3 xl:w-3.5 xl:h-3.5 transition-transform duration-200 shrink-0 ${
                           openDropdown === item.name ? 'rotate-180 text-[#2563EB]' : 'text-gray-400'
                         }`}
                       />
@@ -379,26 +379,26 @@ const Header: React.FC = () => {
             {/* CTA Button */}
             <a href="/contact"
               onClick={() => handleNavClick('/contact')}
-              className="ml-3 bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-5 py-2.5 rounded-xl text-[13px] font-bold flex items-center gap-2 transition-all duration-300 shadow-md hover:shadow-lg nav-font whitespace-nowrap active:scale-95"
+              className="ml-1.5 xl:ml-2.5 2xl:ml-3.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-3.5 xl:px-4 2xl:px-5 py-2 xl:py-2.5 rounded-xl text-[12.5px] xl:text-[13px] font-bold flex items-center gap-1.5 xl:gap-2 transition-all duration-300 shadow-md hover:shadow-lg nav-font whitespace-nowrap active:scale-95 shrink-0"
             >
-              <PhoneCall className="w-4 h-4" />
+              <PhoneCall className="w-3.5 h-3.5 xl:w-4 xl:h-4 shrink-0" />
               ขอใบเสนอราคา
             </a>
           </div>
 
           {/* ---- Mobile Action Bar ---- */}
-          <div className="xl:hidden flex items-center gap-2">
+          <div className="xl:hidden flex items-center gap-1.5 sm:gap-2 shrink-0">
             <a href="/assessment"
               onClick={() => handleNavClick('/assessment')}
-              className="bg-[#2563EB]/10 border border-[#2563EB]/30 text-[#2563EB] px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 active:scale-95"
+              className="hidden xs:inline-flex sm:inline-flex bg-[#2563EB]/10 border border-[#2563EB]/30 text-[#2563EB] px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl text-xs font-bold items-center gap-1 sm:gap-1.5 active:scale-95 shrink-0 whitespace-nowrap"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
-              ประเมินองค์กร
+              <Sparkles className="w-3.5 h-3.5 text-[#F59E0B] shrink-0" />
+              <span>ประเมินองค์กร</span>
             </a>
 
             <a
               href={`tel:${CONTACT_INFO.phone}`}
-              className="bg-[#2563EB] text-white p-2.5 rounded-xl hover:bg-[#1D4ED8] transition-all shadow-sm active:scale-90"
+              className="bg-[#2563EB] text-white p-2 sm:p-2.5 rounded-xl hover:bg-[#1D4ED8] transition-all shadow-sm active:scale-90 flex items-center justify-center shrink-0"
               aria-label="โทรปรึกษา"
             >
               <PhoneCall className="w-4 h-4" />
@@ -406,7 +406,7 @@ const Header: React.FC = () => {
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-[#111827] bg-white border border-gray-200 p-2.5 rounded-xl hover:bg-gray-50 transition-colors focus:outline-none shadow-sm min-w-[40px] min-h-[40px] flex items-center justify-center"
+              className="text-[#111827] bg-white border border-gray-200 p-2 sm:p-2.5 rounded-xl hover:bg-gray-50 transition-colors focus:outline-none shadow-sm min-w-[38px] min-h-[38px] sm:min-w-[40px] sm:min-h-[40px] flex items-center justify-center shrink-0"
               aria-label={isOpen ? 'ปิดเมนู' : 'เปิดเมนู'}
               aria-expanded={isOpen}
             >

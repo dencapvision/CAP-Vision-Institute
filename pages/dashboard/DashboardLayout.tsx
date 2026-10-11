@@ -4,21 +4,23 @@ import { supabase } from '../../lib/supabaseClient';
 import {
   LayoutDashboard, BookOpen, Users, Sparkles, FileText,
   Briefcase, BarChart3, LogOut, Menu, X, ChevronRight, Library, Crown,
-  Calendar, MessageSquare, Tag, Image as ImageIcon
+  Calendar, MessageSquare, Tag, Image as ImageIcon, FileCheck, Target
 } from 'lucide-react';
 
 const NAV = [
-  { to: '/dashboard', label: 'ภาพรวม', icon: LayoutDashboard, exact: true },
+  { to: '/dashboard', label: 'ภาพรวม (Overview)', icon: LayoutDashboard, exact: true },
+  { to: '/dashboard/proposals', label: 'ใบเสนอราคา (Proposals)', icon: FileCheck },
+  { to: '/dashboard/leads', label: 'Leads & CRM', icon: MessageSquare },
+  { to: '/dashboard/assessments', label: 'ผลประเมินองค์กร', icon: Target },
   { to: '/dashboard/ceo-tier', label: 'CEO Tier', icon: Crown },
+  { to: '/dashboard/courses', label: 'หลักสูตร (Courses)', icon: BookOpen },
+  { to: '/dashboard/speakers', label: 'วิทยากร / Facilitator', icon: Users },
+  { to: '/dashboard/portfolio', label: 'Case Studies / ผลงาน', icon: Briefcase },
   { to: '/dashboard/blog', label: 'บทความ', icon: FileText },
-  { to: '/dashboard/resources', label: 'Resources', icon: Library },
-  { to: '/dashboard/portfolio', label: 'Portfolio', icon: Briefcase },
-  { to: '/dashboard/courses', label: 'หลักสูตร', icon: BookOpen },
-  { to: '/dashboard/events', label: 'อีเวนท์', icon: Calendar },
-  { to: '/dashboard/speakers', label: 'วิทยากร', icon: Users },
+  { to: '/dashboard/resources', label: 'คลังความรู้ (Resources)', icon: Library },
+  { to: '/dashboard/events', label: 'อีเวนท์ (Events)', icon: Calendar },
   { to: '/dashboard/ai-generator', label: 'Course AI', icon: Sparkles },
-  { to: '/dashboard/media', label: 'คลังสื่อ', icon: ImageIcon },
-  { to: '/dashboard/leads', label: 'Leads', icon: MessageSquare },
+  { to: '/dashboard/media', label: 'คลังสื่อ (Media)', icon: ImageIcon },
   { to: '/dashboard/categories', label: 'หมวดหมู่ / Tags', icon: Tag },
   { to: '/dashboard/seo', label: 'SEO Analyzer', icon: BarChart3 },
 ];

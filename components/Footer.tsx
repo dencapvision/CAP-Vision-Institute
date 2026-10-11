@@ -80,28 +80,27 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* SEO Core Solutions (Sitelinks Driver) */}
           <div>
-            <h4 className="font-bold text-sm mb-6 nav-font text-[#F59E0B] uppercase tracking-wider">โครงสร้างหลักสูตร</h4>
-            <ul className="space-y-3 text-gray-300 text-xs sm:text-sm font-medium">
-              <li><Link to="/courses?cat=Leader+Skills" className="hover:text-[#60A5FA] transition-colors">Leadership Programs</Link></li>
-              <li><Link to="/courses?cat=People+Skills" className="hover:text-[#60A5FA] transition-colors">People & Communication Skills</Link></li>
-              <li><Link to="/courses?cat=Work+Skills" className="hover:text-[#60A5FA] transition-colors">Creative Thinking & CPS</Link></li>
-              <li><Link to="/courses" className="hover:text-[#60A5FA] transition-colors">The Modern Facilitator</Link></li>
-              <li><Link to="/growth-mastery/handouts" className="hover:text-[#60A5FA] transition-colors">Workshop Handouts</Link></li>
+            <h4 className="font-bold text-sm mb-6 nav-font text-[#F59E0B] uppercase tracking-wider">บริการอบรม In-house</h4>
+            <ul className="space-y-2.5 text-gray-300 text-xs sm:text-sm font-medium">
+              <li><Link to="/in-house-training" className="hover:text-[#60A5FA] transition-colors">รับจัดอบรม In-house Training</Link></li>
+              <li><Link to="/leadership-development" className="hover:text-[#60A5FA] transition-colors">หลักสูตรพัฒนาผู้นำ (Leadership)</Link></li>
+              <li><Link to="/team-building" className="hover:text-[#60A5FA] transition-colors">Team Building & พัฒนาทีมงาน</Link></li>
+              <li><Link to="/communication-training" className="hover:text-[#60A5FA] transition-colors">อบรมทักษะการสื่อสาร (Communication)</Link></li>
+              <li><Link to="/service-mind" className="hover:text-[#60A5FA] transition-colors">อบรม Service Mind & Excellence</Link></li>
             </ul>
           </div>
 
-          {/* Solutions & OD */}
+          {/* Specialized & OD Solutions */}
           <div>
-            <h4 className="font-bold text-sm mb-6 nav-font text-[#F59E0B] uppercase tracking-wider">โซลูชันองค์กร</h4>
-            <ul className="space-y-3 text-gray-300 text-xs sm:text-sm font-medium">
-              <li><Link to="/services#leadership" className="hover:text-[#60A5FA] transition-colors">Leadership Transformation</Link></li>
-              <li><Link to="/services#people-team" className="hover:text-[#60A5FA] transition-colors">People & Team Synergy</Link></li>
-              <li><Link to="/services#culture" className="hover:text-[#60A5FA] transition-colors">Growth Mindset Culture</Link></li>
-              <li><Link to="/services#customized" className="hover:text-[#60A5FA] transition-colors">Customized In-house Training</Link></li>
-              <li><Link to="/ceo-speechfulness" className="hover:text-[#60A5FA] transition-colors">CEO Speechfulness Coaching</Link></li>
-              <li><Link to="/portfolio" className="hover:text-[#60A5FA] transition-colors">Enterprise Case Studies</Link></li>
+            <h4 className="font-bold text-sm mb-6 nav-font text-[#F59E0B] uppercase tracking-wider">ที่ปรึกษา & โค้ชชิ่ง</h4>
+            <ul className="space-y-2.5 text-gray-300 text-xs sm:text-sm font-medium">
+              <li><Link to="/facilitator-training" className="hover:text-[#60A5FA] transition-colors">Facilitator Training (กระบวนกร)</Link></li>
+              <li><Link to="/executive-coaching" className="hover:text-[#60A5FA] transition-colors">Executive Coaching สำหรับผู้บริหาร</Link></li>
+              <li><Link to="/od-consulting" className="hover:text-[#60A5FA] transition-colors">OD Consulting ที่ปรึกษาพัฒนาองค์กร</Link></li>
+              <li><Link to="/leadership-roadmap" className="hover:text-[#60A5FA] transition-colors">Leadership Development Roadmap</Link></li>
+              <li><Link to="/portfolio" className="hover:text-[#60A5FA] transition-colors">ผลงานและภาพบรรยากาศอบรม</Link></li>
             </ul>
           </div>
 

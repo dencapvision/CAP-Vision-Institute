@@ -1,13 +1,119 @@
 import { BRAND_INFO } from './brand';
 
 export const DEFAULT_SEO = {
-  title: `${BRAND_INFO.name} | ${BRAND_INFO.slogan}`,
-  description: 'สถาบันพัฒนาที่ปรึกษา วิทยากร กระบวนกร และพัฒนาบุคลากรในองค์กร ออกแบบหลักสูตร In-house Training ที่เน้นผลลัพธ์ นำโดยครูเด่น มาสเตอร์ฟา',
-  keywords: 'ฝึกอบรม, In-house Training, พัฒนาบุคลากร, วิทยากร, กระบวนกร, ผู้นำ, HRD, Soft Skills, Leadership, CAP Vision Institute, ครูเด่น มาสเตอร์ฟา',
+  title: 'รับจัดอบรม In-house Training | พัฒนาผู้นำและทีมองค์กร | CAP Vision Institute',
+  description: 'พัฒนาคนให้เปลี่ยนวิธีคิด สร้างทีมให้ทำงานได้จริง ยกระดับองค์กรด้วย In-house Training และ Customized Learning โดย ครูเด่น Master Facilitator ประสบการณ์ 18+ ปี',
+  keywords: 'รับจัดอบรม In-house Training, In-house Training, พัฒนาบุคลากร, พัฒนาผู้นำ, พัฒนาทีม, Training สำหรับองค์กร, Customized Training, Transformative Learning, Experiential Learning, Master Facilitator, Facilitation, Leadership Transformation, Human Communication, เปลี่ยนวิธีคิด, สร้างทีม, ยกระดับผู้นำ, สร้างวัฒนธรรมองค์กร, เพิ่มประสิทธิภาพการทำงาน, สร้างการเปลี่ยนแปลงที่ยั่งยืน, CAP Vision Institute, ครูเด่น มาสเตอร์ฟา',
   author: 'CAP Vision Institute',
   themeColor: '#0f3460',
   url: 'https://capvisionpartner.com',
-  ogImage: '/og-image.jpg', // Placeholder, needs actual image
+  ogImage: '/og-image.jpg',
+  h1: 'พัฒนาคน สร้างทีม ยกระดับองค์กร',
+  subH1: 'In-house Training & Transformative Learning ที่ออกแบบตามโจทย์จริงขององค์กร',
+  primaryCta: 'ปรึกษาและออกแบบหลักสูตรสำหรับองค์กร',
+  secondaryCta: 'ดูหลักสูตรทั้งหมด',
+};
+
+// 8 Core SEO Landing Pages Architecture
+export const SEO_LANDING_PAGES = [
+  {
+    url: '/in-house-training',
+    h1: 'รับจัดอบรม In-house Training สำหรับองค์กร',
+    intent: 'Commercial',
+    description: 'ออกแบบและจัดฝึกอบรม In-house Training ที่ตอบโจทย์เฉพาะองค์กร เน้นผลลัพธ์และการนำไปใช้จริง',
+    keywords: ['รับจัดอบรม In-house Training', 'In-house Training สำหรับองค์กร', 'จัดอบรมภายในองค์กร']
+  },
+  {
+    url: '/leadership-development',
+    h1: 'หลักสูตรพัฒนาผู้นำและ Leadership Development',
+    intent: 'Commercial',
+    description: 'ยกระดับผู้นำทุกระดับ จากผู้สั่งการสู่ Facilitative Leader ที่สร้างแรงบันดาลใจและขับเคลื่อนผลลัพธ์',
+    keywords: ['พัฒนาผู้นำ', 'Leadership Development', 'หลักสูตรผู้นำ', 'Transformational Leadership']
+  },
+  {
+    url: '/team-building',
+    h1: 'Team Building และการพัฒนาทีมสำหรับองค์กร',
+    intent: 'Commercial',
+    description: 'สร้าง Team Synergy และ Psychological Safety ทลายกำแพง Silo สู่ทีมที่ร่วมมือกันอย่างแท้จริง',
+    keywords: ['Team Building องค์กร', 'พัฒนาทีมงาน', 'Team Synergy', 'Psychological Safety']
+  },
+  {
+    url: '/communication-training',
+    h1: 'หลักสูตรอบรมทักษะการสื่อสารสำหรับองค์กร',
+    intent: 'Commercial',
+    description: 'พัฒนาทักษะ Human Communication 4 ระดับ การฟังเชิงลึก และการสื่อสารด้วยความเข้าอกเข้าใจ (Empathy)',
+    keywords: ['อบรมการสื่อสาร', 'Communication Training', 'ทักษะการสื่อสารในองค์กร', 'Empathetic Communication']
+  },
+  {
+    url: '/service-mind',
+    h1: 'อบรม Service Mind และ Service Excellence',
+    intent: 'Commercial',
+    description: 'สร้างหัวใจบริการที่แท้จริงจากภายใน ยกระดับประสบการณ์ลูกค้าสู่ Service Excellence ที่ยั่งยืน',
+    keywords: ['อบรม Service Mind', 'Service Excellence', 'พัฒนาทักษะการบริการ', 'Customer Experience']
+  },
+  {
+    url: '/facilitator-training',
+    h1: 'Facilitator Training พัฒนาทักษะกระบวนกร',
+    intent: 'Niche',
+    description: 'ศาสตร์และศิลป์แห่งการเป็น Modern Facilitator ออกแบบและนำกระบวนการเรียนรู้เพื่อการเปลี่ยนแปลง',
+    keywords: ['Facilitator Training', 'ฝึกอบรมกระบวนกร', 'ทักษะวิทยากร', 'Master Facilitator']
+  },
+  {
+    url: '/executive-coaching',
+    h1: 'Executive Coaching สำหรับผู้บริหาร',
+    intent: 'Premium',
+    description: '1-on-1 Coaching ปลดล็อกศักยภาพผู้นำระดับสูง วางกลยุทธ์และปรับ Mindset สู่ความสำเร็จที่ยั่งยืน',
+    keywords: ['Executive Coaching', 'โค้ชผู้บริหาร', 'Coaching สำหรับผู้นำ', '1-on-1 Coaching']
+  },
+  {
+    url: '/od-consulting',
+    h1: 'OD Consulting ที่ปรึกษาพัฒนาองค์กร',
+    intent: 'B2B',
+    description: 'ที่ปรึกษาด้านการพัฒนาองค์กร ออกแบบสถาปัตยกรรมการเรียนรู้และขับเคลื่อนวัฒนธรรมองค์กรเชิงกลยุทธ์',
+    keywords: ['OD Consulting', 'ที่ปรึกษาพัฒนาองค์กร', 'Organization Development', 'Culture Transformation']
+  }
+];
+
+// Strategic SEO Vocabulary
+export const SEO_VOCABULARY = {
+  coreKeywords: [
+    'In-house Training',
+    'พัฒนาบุคลากร',
+    'พัฒนาผู้นำ',
+    'พัฒนาทีม',
+    'Training สำหรับองค์กร',
+    'Customized Training'
+  ],
+  differentiationKeywords: [
+    'Transformative Learning',
+    'Experiential Learning',
+    'Master Facilitator',
+    'Facilitation',
+    'Leadership Transformation',
+    'Human Communication'
+  ],
+  businessOutcomes: [
+    'เปลี่ยนวิธีคิด',
+    'สร้างทีม',
+    'ยกระดับผู้นำ',
+    'สร้างวัฒนธรรมองค์กร',
+    'เพิ่มประสิทธิภาพการทำงาน',
+    'สร้างการเปลี่ยนแปลงที่ยั่งยืน'
+  ]
+};
+
+// Strategic Positioning
+export const BRAND_POSITIONING = {
+  layer1_searchIntent: 'In-house Training',
+  layer2_expertise: 'Leadership • Team • Communication • Facilitation • OD',
+  layer3_differentiator: 'Transformative Learning',
+  brandPromise: 'พัฒนาคน สร้างทีม ยกระดับองค์กร',
+  signature: 'Master Facilitator | Transformative Learning',
+  proofMetrics: {
+    yearsExperience: '18+',
+    learnersTrained: '10,000+',
+    organizations: '200+'
+  }
 };
 
 export const generateTitle = (pageTitle: string) => `${pageTitle} | ${BRAND_INFO.name}`;

@@ -76,7 +76,7 @@ export const Contact: React.FC = () => {
     } catch (error: any) {
       console.error('Failed to submit form:', error);
       const errorMsg = error.message || 'เกิดข้อผิดพลาดในการส่งข้อมูล';
-      alert(`ขออภัยครับ: ${errorMsg}\n\nหากปัญหายังคงอยู่ กรุณาติดต่อผ่าน LINE OA @capvision`);
+      alert(`ขออภัยครับ: ${errorMsg}\n\nหากปัญหายังคงอยู่ กรุณาติดต่อผ่าน LINE OA ${CONTACT_INFO.line}`);
     }
   };
 
@@ -138,7 +138,7 @@ export const Contact: React.FC = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2.5 bg-[#06C755] hover:bg-[#05B34C] text-white px-8 py-3.5 rounded-2xl font-black text-sm nav-font transition-all shadow-xl active:scale-95"
             >
-              <MessageCircle className="w-4 h-4" /> ทัก LINE OA ทันที (@capvision)
+              <MessageCircle className="w-4 h-4" /> ทัก LINE OA ทันที (@denmasterfa)
             </a>
             <a
               href={`tel:${CONTACT_INFO.phone.replace(/[^0-9]/g, '')}`}

@@ -105,7 +105,7 @@ const DEN_SPECIFIC = {
   ],
   contact: {
     line: 'https://lin.ee/OO6jotG',
-    lineId: '@capvision',
+    lineId: '@denmasterfa',
     phone: CONTACT_INFO.phone
   }
 };

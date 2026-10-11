@@ -50,17 +50,43 @@ interface SEOProps {
 
 const ORG_DATA = {
   name: 'CAP Vision Institute',
+  alternateName: ['สถาบันพัฒนาผู้นำและองค์กร แคป วิชั่น', 'บริษัทจัดฝึกอบรม CAP Vision', 'CAP Vision Training'],
   url: 'https://capvisionpartner.com',
-  logo: 'https://capvisionpartner.com/logo.png',
-  telephone: '+66-XX-XXXX-XXXX',
+  logo: 'https://capvisionpartner.com/images/logo.png',
+  telephone: '+66-93-223-5919',
+  email: 'contact@capvisionpartner.com',
+  priceRange: '$$$',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'กรุงเทพมหานคร',
+    addressLocality: 'ลำลูกกา',
+    addressRegion: 'ปทุมธานี / กรุงเทพมหานคร',
     addressCountry: 'TH',
+    postalCode: '12130'
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 13.9317,
+    longitude: 100.6974
+  },
+  areaServed: [
+    { '@type': 'Country', name: 'Thailand' },
+    { '@type': 'AdministrativeArea', name: 'กรุงเทพมหานคร' },
+    { '@type': 'AdministrativeArea', name: 'ปทุมธานี' },
+    { '@type': 'AdministrativeArea', name: 'สมุทรปราการ' },
+    { '@type': 'AdministrativeArea', name: 'ชลบุรี' },
+    { '@type': 'AdministrativeArea', name: 'ระยอง' }
+  ],
+  founder: {
+    '@type': 'Person',
+    name: 'อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)',
+    jobTitle: 'Master Facilitator & Executive Coach',
+    description: 'ผู้เชี่ยวชาญด้านกระบวนการเรียนรู้เพื่อการเปลี่ยนแปลง (Transformative Learning) และผู้ออกแบบหลักสูตรพัฒนาผู้นำองค์กร ประสบการณ์ 18+ ปี',
+    sameAs: ['https://capvisionpartner.com/speakers']
   },
   sameAs: [
     'https://www.facebook.com/capvisioninstitute',
     'https://lin.ee/capvision',
+    'https://capvisionpartner.com'
   ],
 };
 
@@ -82,13 +108,13 @@ export default function SEO({
   const canonicalUrl = canonical || (typeof window !== 'undefined' ? window.location.href : '');
   const keywordString = keywords.join(', ');
 
-  // ===== JSON-LD: EducationalOrganization (always present) =====
+  // ===== JSON-LD: EducationalOrganization & ProfessionalService (always present) =====
   const orgSchema = {
     '@context': 'https://schema.org',
-    '@type': 'EducationalOrganization',
+    '@type': ['EducationalOrganization', 'ProfessionalService'],
     ...ORG_DATA,
     description:
-      'สถาบันพัฒนาศักยภาพผู้นำและฝึกอบรมครบวงจร ออกแบบหลักสูตร In-house Training สำหรับองค์กรไทย',
+      'บริษัทจัดฝึกอบรม In-house Training และสถาบันพัฒนาบุคลากรชั้นนำ ออกแบบหลักสูตร Leadership, Team Building, Growth Mindset และ OD Consulting สำหรับองค์กรทั่วประเทศไทย',
   };
 
   // ===== JSON-LD: Course (for course pages) =====

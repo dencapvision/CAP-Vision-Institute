@@ -1,0 +1,12 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import DashboardProposals from '../../components/admin/DashboardProposals.tsx';
+
+export const prerender = false;
+---
+
+<AdminLayout title="ระบบออกใบเสนอราคา (Proposals & Quotations) | CAP Vision Admin">
+  <div class="p-6 md:p-8">
+    <DashboardProposals client:only="react" />
+  </div>
+</AdminLayout>

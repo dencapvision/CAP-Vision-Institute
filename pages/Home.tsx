@@ -58,7 +58,7 @@ const Home: React.FC = () => {
         'Strategic Thinking & Decisive Execution',
         '1-on-1 Executive Coaching & Leadership DNA'
       ],
-      image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80'
+      image: 'https://assets.capvisionpartner.com/media/portfolio/Comprehensive%20OD%20%26%20Training%20Solutions.jpg'
     },
     {
       id: 'people-team',
@@ -92,7 +92,7 @@ const Home: React.FC = () => {
         'Creative Problem Solving (CPS Model)',
         'Core Values Activation into Daily Behavior'
       ],
-      image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80'
+      image: 'https://assets.capvisionpartner.com/media/portfolio/Organization%20Culture.jpg'
     },
     {
       id: 'customized',
@@ -109,7 +109,7 @@ const Home: React.FC = () => {
         'Pre & Post Assessment with Action Plan',
         'Long-term OD Consulting & ROI Tracking'
       ],
-      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80'
+      image: 'https://assets.capvisionpartner.com/media/portfolio/Customized%20In-house%20Solutions.jpg'
     }
   ];
 
@@ -156,8 +156,8 @@ const Home: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <SEO
-        title="CAP Vision Institute | Transform People → Transform Organization"
-        description="สถาบันที่ปรึกษาและจัดฝึกอบรมชั้นนำ (In-house Training & OD Consulting) ผู้นำด้าน Transformative Learning และ Activity-Based Learning กว่า 18+ ปี โดย ครูเด่น อนุสรณ์ หนองนา (Master Fa)"
+        title="รับจัดอบรม In-house Training | พัฒนาผู้นำและทีมองค์กร | CAP Vision Institute"
+        description="พัฒนาคนให้เปลี่ยนวิธีคิด สร้างทีมให้ทำงานได้จริง ยกระดับองค์กรด้วย In-house Training และ Customized Learning โดย ครูเด่น Master Facilitator ประสบการณ์ 18+ ปี"
       />
 
       {/* ── 1. HERO SECTION (Executive Transformation) ────────────────────────── */}
@@ -189,57 +189,57 @@ const Home: React.FC = () => {
               <div className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-md border border-white/15 px-4 py-2 rounded-full mb-6 animate-fade-in-down">
                 <span className="w-2.5 h-2.5 bg-[#F59E0B] rounded-full animate-pulse flex-shrink-0"></span>
                 <span className="text-white font-bold tracking-wider text-xs uppercase nav-font">
-                  Transformative Learning & Executive OD Consulting
+                  In-house Training & Transformative Learning
                 </span>
               </div>
 
-              {/* Main Headline */}
+              {/* Main Headline (H1) */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.12] mb-6 nav-font tracking-tight !text-white text-white">
                 <span className="block">พัฒนาคน</span>
                 <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] via-[#38BDF8] to-[#93C5FD]">
-                  เปลี่ยนวิธีคิด
+                  สร้างทีม
                 </span>
                 <span className="block text-[#F59E0B]">
-                  ยกระดับทั้งองค์กร
+                  ยกระดับองค์กร
                 </span>
               </h1>
 
-              {/* Subheadline */}
-              <p className="text-lg sm:text-xl text-gray-300 font-light leading-relaxed mb-8 max-w-2xl">
-                ออกแบบประสบการณ์การเรียนรู้ที่เปลี่ยนคนจากภายใน สู่ทีมที่ทำงานร่วมกันได้ดี และองค์กรที่พร้อมเติบโต
+              {/* Subheadline (Sub-H1) */}
+              <p className="text-lg sm:text-xl text-gray-200 font-normal leading-relaxed mb-8 max-w-2xl">
+                In-house Training & Transformative Learning ที่ออกแบบตามโจทย์จริงขององค์กร
               </p>
 
               {/* Dual CTAs (Conversion-Focused) */}
               <div className="flex flex-col sm:flex-row gap-4 mb-12">
                 <Link
-                  to="/assessment"
+                  to="/contact"
                   className="btn-premium bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-8 py-4 sm:py-5 rounded-2xl font-black text-base shadow-2xl flex items-center justify-center gap-3 active:scale-95 group transition-all"
                 >
                   <IconGoldCrestStar className="w-5 h-5 text-[#F59E0B]" />
-                  ประเมินองค์กรของคุณ (Diagnostic)
+                  ปรึกษาและออกแบบหลักสูตรสำหรับองค์กร
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
                 </Link>
 
                 <Link
-                  to="/contact"
+                  to="/courses"
                   className="btn-premium bg-white/10 hover:bg-white/20 text-white border-2 border-white/20 px-8 py-4 sm:py-5 rounded-2xl font-bold text-base flex items-center justify-center gap-3 active:scale-95 transition-all"
                 >
-                  คุยกับ CAP Vision
+                  ดูหลักสูตรทั้งหมด
                 </Link>
               </div>
 
               {/* Trust Stats */}
               <div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/10 max-w-xl">
                 {[
-                  { value: '18+', label: 'Years Experience' },
-                  { value: '10,000+', label: 'Learners Trained' },
-                  { value: '200+', label: 'Organizations' }
+                  { value: '18+', label: 'ปีประสบการณ์ (Years)' },
+                  { value: '10,000+', label: 'ผู้เรียน (Learners)' },
+                  { value: '200+', label: 'องค์กร (Organizations)' }
                 ].map((stat, i) => (
                   <div key={i}>
                     <div className="text-2xl sm:text-3xl font-black text-[#F59E0B] nav-font">
                       <StatCounter value={stat.value} />
                     </div>
-                    <div className="text-gray-400 text-xs sm:text-sm font-medium mt-1">{stat.label}</div>
+                    <div className="text-gray-300 text-xs sm:text-sm font-medium mt-1">{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -482,7 +482,7 @@ const Home: React.FC = () => {
                       : 'bg-gray-50 text-gray-600 hover:bg-gray-100 hover:text-[#111827]'
                   }`}
                 >
-                  <Icon className="w-4 h-4" style={{ color: isActive ? '#F59E0B' : sol.color }} />
+                  <Icon className="w-4 h-4" />
                   <span>{sol.title}</span>
                 </button>
               );

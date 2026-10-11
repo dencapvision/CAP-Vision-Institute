@@ -5,8 +5,8 @@ interface Props {
 }
 
 const { 
-  title = "CAP Vision Institute | สถาบันพัฒนาศักยภาพผู้นำและฝึกอบรมองค์กรครบวงจร",
-  description = "สถาบันฝึกอบรมระดับพรีเมี่ยม พัฒนาศักยภาพผู้นำและทีมงานแบบครบวงจร ด้วย 6D CPS Model และ CAP Framework โดย ครูเด่น มาสเตอร์ฟา [Master Facilitator]"
+  title = "รับจัดอบรม In-house Training | พัฒนาผู้นำและทีมองค์กร | CAP Vision Institute",
+  description = "พัฒนาคนให้เปลี่ยนวิธีคิด สร้างทีมให้ทำงานได้จริง ยกระดับองค์กรด้วย In-house Training และ Customized Learning โดย ครูเด่น Master Facilitator ประสบการณ์ 18+ ปี"
 } = Astro.props;
 
 import Header from '../components/Header';
@@ -25,11 +25,122 @@ import '../styles/global.css';
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		
+		<meta name="keywords" content="บริษัทฝึกอบรม, สถาบันฝึกอบรม, บริษัทจัดฝึกอบรม, รับจัดอบรม In-house Training, ฝึกอบรม, อบรมองค์กร, ศูนย์ฝึกอบรม, พัฒนาบุคลากร, พัฒนาผู้นำ, Leadership Development, Team Building, Growth Mindset, Master Facilitator, CAP Vision Institute, ครูเด่น มาสเตอร์ฟา, อบรมใกล้ฉัน, อบรมปทุมธานี, อบรมกรุงเทพ" />
+		<meta name="author" content="CAP Vision Institute" />
+		<link rel="canonical" href="https://capvisionpartner.com/" />
+		
+		<!-- Open Graph / Social Meta -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://capvisionpartner.com/" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content="https://capvisionpartner.com/images/og-capvision.jpg" />
+		<meta property="og:locale" content="th_TH" />
+		<meta property="og:site_name" content="CAP Vision Institute" />
+		
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content="https://capvisionpartner.com/images/og-capvision.jpg" />
+
+		<!-- Geo Tags for Local SEO -->
+		<meta name="geo.region" content="TH-13" />
+		<meta name="geo.placename" content="Pathum Thani / Bangkok" />
+		<meta name="geo.position" content="13.9317;100.6974" />
+		<meta name="ICBM" content="13.9317, 100.6974" />
+		
 		<!-- Google Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 		
+		<!-- JSON-LD Structured Data Schema (SEO/AEO/GEO) -->
+		<script type="application/ld+json" is:inline>
+		{
+			"@context": "https://schema.org",
+			"@graph": [
+				{
+					"@type": ["EducationalOrganization", "ProfessionalService"],
+					"@id": "https://capvisionpartner.com/#organization",
+					"name": "CAP Vision Institute",
+					"alternateName": ["สถาบันพัฒนาผู้นำและองค์กร แคป วิชั่น", "บริษัทจัดฝึกอบรม CAP Vision", "CAP Vision Training"],
+					"url": "https://capvisionpartner.com",
+					"logo": "https://capvisionpartner.com/images/logo.png",
+					"telephone": "+66-93-223-5919",
+					"email": "contact@capvisionpartner.com",
+					"priceRange": "$$$",
+					"address": {
+						"@type": "PostalAddress",
+						"addressLocality": "ลำลูกกา",
+						"addressRegion": "ปทุมธานี / กรุงเทพมหานคร",
+						"addressCountry": "TH",
+						"postalCode": "12130"
+					},
+					"geo": {
+						"@type": "GeoCoordinates",
+						"latitude": 13.9317,
+						"longitude": 100.6974
+					},
+					"areaServed": [
+						{ "@type": "Country", "name": "Thailand" },
+						{ "@type": "AdministrativeArea", "name": "กรุงเทพมหานคร" },
+						{ "@type": "AdministrativeArea", "name": "ปทุมธานี" },
+						{ "@type": "AdministrativeArea", "name": "สมุทรปราการ" },
+						{ "@type": "AdministrativeArea", "name": "ชลบุรี" },
+						{ "@type": "AdministrativeArea", "name": "ระยอง" }
+					],
+					"founder": {
+						"@type": "Person",
+						"name": "อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)",
+						"jobTitle": "Master Facilitator & Executive Coach",
+						"description": "ผู้เชี่ยวชาญด้านกระบวนการเรียนรู้เพื่อการเปลี่ยนแปลง (Transformative Learning) และผู้ออกแบบหลักสูตรพัฒนาผู้นำองค์กร ประสบการณ์ 18+ ปี",
+						"sameAs": ["https://capvisionpartner.com/speakers"]
+					},
+					"description": "บริษัทจัดฝึกอบรม In-house Training และสถาบันพัฒนาบุคลากรชั้นนำ ออกแบบหลักสูตร Leadership, Team Building, Growth Mindset และ OD Consulting สำหรับองค์กรทั่วประเทศไทย"
+				},
+				{
+					"@type": "FAQPage",
+					"@id": "https://capvisionpartner.com/#faq",
+					"mainEntity": [
+						{
+							"@type": "Question",
+							"name": "บริษัทฝึกอบรม หรือ สถาบันฝึกอบรม CAP Vision ให้บริการด้านใดบ้าง?",
+							"acceptedAnswer": {
+								"@type": "Answer",
+								"text": "CAP Vision Institute เป็นสถาบันและบริษัทจัดฝึกอบรม In-house Training ครบวงจร ให้บริการออกแบบหลักสูตรพัฒนาบุคลากรเฉพาะองค์กร (Customized Learning) ทั้งหลักสูตรภาวะผู้นำ (Leadership), Team Building, การสื่อสารองค์กร (Communication), Service Mind และการให้คำปรึกษาพัฒนาองค์กร (OD Consulting) โดย ครูเด่น มาสเตอร์ฟา"
+							}
+						},
+						{
+							"@type": "Question",
+							"name": "ควรจัดอบรม In-house Training หัวข้ออะไรดีสำหรับปี 2026?",
+							"acceptedAnswer": {
+								"@type": "Answer",
+								"text": "หลักสูตรยอดนิยมสำหรับองค์กรยุคนี้คือ Facilitative Leadership, Growth Mindset, Effective & Empathetic Communication, Team Synergy และ OKRs ซึ่งทีมวิทยากรจะออกแบบเนื้อหาให้ตรงกับปัญหาและเป้าหมายขององค์กรอย่างแท้จริง"
+							}
+						},
+						{
+							"@type": "Question",
+							"name": "ทำไมถึงควรเลือก CAP Vision Institute สำหรับการพัฒนาบุคลากร?",
+							"acceptedAnswer": {
+								"@type": "Answer",
+								"text": "เพราะเราไม่ใช่แค่สอนทฤษฎี แต่เน้นการสร้าง 'กระบวนการเรียนรู้เชิงประสบการณ์' (Experiential Facilitation) ให้ผู้เข้าอบรมได้คิด ค้นพบ และนำไปใช้จริง โดย ครูเด่น มาสเตอร์ฟา ที่มีประสบการณ์ฝึกอบรมองค์กรชั้นนำกว่า 18 ปี"
+							}
+						},
+						{
+							"@type": "Question",
+							"name": "CAP Vision Institute ให้บริการจัดฝึกอบรมในพื้นที่ใดบ้าง (Local / Onsite)?",
+							"acceptedAnswer": {
+								"@type": "Answer",
+								"text": "เราให้บริการจัดฝึกอบรมนอกสถานที่ (On-site Training) ถึงสถานประกอบการของลูกค้าทั่วประเทศ ทั้งกรุงเทพมหานคร, ปทุมธานี (โซนรังสิต/ลำลูกกา), สมุทรปราการ, ชลบุรี, ระยอง และต่างจังหวัดทั่วไทย รวมถึงรูปแบบ Online Interactive Workshop"
+							}
+						}
+					]
+				}
+			]
+		}
+		</script>
+
 		<style is:global>
 			body {
 				font-family: 'Sarabun', sans-serif;

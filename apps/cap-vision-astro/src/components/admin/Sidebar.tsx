@@ -2,19 +2,21 @@ import React, { useState, useEffect } from 'react';
 import {
   LayoutDashboard, FileText, Users, BookOpen,
   Calendar, Image, Settings, LogOut, ChevronRight,
-  Sparkles, Tag, MessageSquare, Menu, X
+  Sparkles, Tag, MessageSquare, Menu, X, FileCheck, Target
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 const navItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/admin/proposals', label: 'ใบเสนอราคา (Proposals)', icon: FileCheck },
+  { href: '/admin/leads', label: 'Leads & CRM', icon: MessageSquare },
+  { href: '/admin/assessments', label: 'ผลประเมินองค์กร', icon: Target },
   { href: '/admin/contents', label: 'บทความ / ข้อมูล', icon: FileText },
   { href: '/admin/speakers', label: 'วิทยากร', icon: Users },
   { href: '/admin/courses', label: 'หลักสูตร', icon: BookOpen },
   { href: '/admin/speechfulness', label: 'CEO Speechfulness', icon: Sparkles },
   { href: '/admin/events', label: 'อีเวนท์', icon: Calendar },
   { href: '/admin/media', label: 'Media Library', icon: Image },
-  { href: '/admin/leads', label: 'Leads', icon: MessageSquare },
   { href: '/admin/categories', label: 'หมวดหมู่ / Tags', icon: Tag },
 ] as const;
 

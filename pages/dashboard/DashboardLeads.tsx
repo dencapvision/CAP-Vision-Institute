@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabaseClient';
-import { MessageSquare, Calendar, Mail, Phone, Building, User, CheckCircle, Clock, Search, Loader2 } from 'lucide-react';
+import { MessageSquare, Calendar, Mail, Phone, Building, User, CheckCircle, Clock, Search, Loader2, FileText, Plus } from 'lucide-react';
 
 interface Lead {
   id: string;
@@ -16,6 +17,7 @@ interface Lead {
 }
 
 const DashboardLeads: React.FC = () => {
+  const navigate = useNavigate();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,6 +26,17 @@ const DashboardLeads: React.FC = () => {
   useEffect(() => {
     fetchLeads();
   }, []);
+
+  const handleCreateProposal = (lead: Lead) => {
+    const params = new URLSearchParams({
+      name: lead.name || '',
+      company: lead.company || '',
+      phone: lead.phone || '',
+      email: lead.email || '',
+      topic: lead.interest_topic || ''
+    });
+    navigate(`/dashboard/proposals?${params.toString()}`);
+  };
 
   const fetchLeads = async () => {
     try {
@@ -190,11 +203,17 @@ const DashboardLeads: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-gray-100">
+              <div className="pt-4 border-t border-gray-100 flex flex-col gap-2">
+                <button
+                  onClick={() => handleCreateProposal(lead)}
+                  className="w-full bg-[#2563EB]/10 hover:bg-[#2563EB] text-[#2563EB] hover:text-white py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+                >
+                  <FileText className="w-3.5 h-3.5" /> ออกใบเสนอราคา (Proposal)
+                </button>
                 <select
                   value={lead.status || 'new'}
                   onChange={(e) => updateStatus(lead.id, e.target.value)}
-                  className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#c5a059] text-sm font-bold text-[#0f3460] cursor-pointer outline-none"
+                  className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#c5a059] text-xs font-bold text-[#0f3460] cursor-pointer outline-none"
                 >
                   <option value="new">รอติดต่อกลับใหม่</option>
                   <option value="contacted">กำลังประสานงาน</option>

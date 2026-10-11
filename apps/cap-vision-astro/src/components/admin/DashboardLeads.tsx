@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
-import { MessageSquare, Calendar, Mail, Phone, Building, User, CheckCircle, Clock, Search, Loader2 } from 'lucide-react';
+import { MessageSquare, Calendar, Mail, Phone, Building, User, CheckCircle, Clock, Search, Loader2, FileText } from 'lucide-react';
 
 interface Lead {
   id: string;
@@ -190,11 +190,17 @@ const DashboardLeads: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-gray-100">
+              <div className="pt-4 border-t border-gray-100 flex flex-col gap-2">
+                <a
+                  href={`/admin/proposals?name=${encodeURIComponent(lead.name || '')}&company=${encodeURIComponent(lead.company || '')}&phone=${encodeURIComponent(lead.phone || '')}&email=${encodeURIComponent(lead.email || '')}&topic=${encodeURIComponent(lead.interest_topic || '')}`}
+                  className="w-full bg-[#2563EB]/10 hover:bg-[#2563EB] text-[#2563EB] hover:text-white py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 text-center"
+                >
+                  <FileText className="w-3.5 h-3.5" /> ออกใบเสนอราคา (Proposal)
+                </a>
                 <select
                   value={lead.status || 'new'}
                   onChange={(e) => updateStatus(lead.id, e.target.value)}
-                  className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#c5a059] text-sm font-bold text-[#0f3460] cursor-pointer outline-none"
+                  className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#c5a059] text-xs font-bold text-[#0f3460] cursor-pointer outline-none"
                 >
                   <option value="new">รอติดต่อกลับใหม่</option>
                   <option value="contacted">กำลังประสานงาน</option>

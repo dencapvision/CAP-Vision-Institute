@@ -58,7 +58,7 @@ const Home: React.FC = () => {
         'Strategic Thinking & Decisive Execution',
         '1-on-1 Executive Coaching & Leadership DNA'
       ],
-      image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80'
+      image: 'https://assets.capvisionpartner.com/media/portfolio/Comprehensive%20OD%20%26%20Training%20Solutions.jpg'
     },
     {
       id: 'people-team',
@@ -92,7 +92,7 @@ const Home: React.FC = () => {
         'Creative Problem Solving (CPS Model)',
         'Core Values Activation into Daily Behavior'
       ],
-      image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80'
+      image: 'https://assets.capvisionpartner.com/media/portfolio/Organization%20Culture.jpg'
     },
     {
       id: 'customized',
@@ -109,7 +109,7 @@ const Home: React.FC = () => {
         'Pre & Post Assessment with Action Plan',
         'Long-term OD Consulting & ROI Tracking'
       ],
-      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80'
+      image: 'https://assets.capvisionpartner.com/media/portfolio/Customized%20In-house%20Solutions.jpg'
     }
   ];
 

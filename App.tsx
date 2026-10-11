@@ -1,5 +1,5 @@
 import React, { useEffect, lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import AIAgent from './components/AIAgent';
@@ -17,6 +17,7 @@ const BlogPost = lazy(() => import('./pages/BlogPost'));
 const Events = lazy(() => import('./pages/Events'));
 const About = lazy(() => import('./pages/About'));
 const Portfolio = lazy(() => import('./pages/Portfolio'));
+const PortfolioDetail = lazy(() => import('./pages/PortfolioDetail'));
 const Login = lazy(() => import('./pages/Login'));
 const Speakers = lazy(() => import('./pages/Speakers'));
 const SpeakerDetail = lazy(() => import('./pages/SpeakerDetail'));
@@ -24,7 +25,6 @@ const JoinUs = lazy(() => import('./pages/JoinUs'));
 const MediaManager = lazy(() => import('./pages/MediaManager'));
 const CourseBuilderPage = lazy(() => import('./pages/CourseBuilder'));
 const WorkshopHandouts = lazy(() => import('./pages/workshop/WorkshopHandouts'));
-const PortfolioDetail = lazy(() => import('./pages/PortfolioDetail'));
 const WebAppPricing = lazy(() => import('./pages/WebAppPricing'));
 const CEOSpeechfulness = lazy(() => import('./pages/CEOSpeechfulness'));
 const SubconsciousSpeaker = lazy(() => import('./pages/SubconsciousSpeaker'));
@@ -34,11 +34,14 @@ const LeadershipRoadmap = lazy(() => import('./pages/LeadershipRoadmap'));
 const WebAppOnboarding = lazy(() => import('./pages/WebAppOnboarding'));
 const SalesPageFormBuilder = lazy(() => import('./pages/SalesPageFormBuilder'));
 const Assessment = lazy(() => import('./pages/Assessment'));
+const SEOLandingPage = lazy(() => import('./pages/SEOLandingPage'));
 
 
 // Dashboard pages
 const DashboardLayout = lazy(() => import('./pages/dashboard/DashboardLayout'));
 const DashboardHome = lazy(() => import('./pages/dashboard/DashboardHome'));
+const DashboardProposals = lazy(() => import('./pages/dashboard/DashboardProposals'));
+const DashboardAssessments = lazy(() => import('./pages/dashboard/DashboardAssessments'));
 const DashboardCourses = lazy(() => import('./pages/dashboard/DashboardCourses'));
 const CourseCreateWizard = lazy(() => import('./pages/dashboard/CourseCreateWizard'));
 const DashboardSpeakers = lazy(() => import('./pages/dashboard/DashboardSpeakers'));
@@ -75,10 +78,10 @@ const ScrollToTop = () => {
   return null;
 };
 
-// Wrapper that hides Header/Footer for /dashboard/* routes
+// Wrapper that hides Header/Footer for /dashboard/* and /admin/* routes
 const AppShell: React.FC = () => {
   const { pathname } = useLocation();
-  const isDashboard = pathname.startsWith('/dashboard');
+  const isDashboard = pathname.startsWith('/dashboard') || pathname.startsWith('/admin');
 
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
@@ -97,7 +100,7 @@ const AppShell: React.FC = () => {
             <Route path="/events" element={<Events />} />
             <Route path="/about" element={<About />} />
             <Route path="/portfolio" element={<Portfolio />} />
-                <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
+            <Route path="/portfolio/:slug" element={<PortfolioDetail />} />
             <Route path="/speakers" element={<Speakers />} />
             <Route path="/speakers/:id" element={<SpeakerDetail />} />
             <Route path="/join-us" element={<JoinUs />} />
@@ -115,10 +118,33 @@ const AppShell: React.FC = () => {
             <Route path="/web-app-onboarding" element={<WebAppOnboarding />} />
             <Route path="/sales-page-builder" element={<SalesPageFormBuilder />} />
 
+            {/* ── 8 Core SEO Landing Pages ────────────────────────────────── */}
+            <Route path="/in-house-training" element={<SEOLandingPage slugOverride="in-house-training" />} />
+            <Route path="/leadership-development" element={<SEOLandingPage slugOverride="leadership-development" />} />
+            <Route path="/team-building" element={<SEOLandingPage slugOverride="team-building" />} />
+            <Route path="/communication-training" element={<SEOLandingPage slugOverride="communication-training" />} />
+            <Route path="/service-mind" element={<SEOLandingPage slugOverride="service-mind" />} />
+            <Route path="/facilitator-training" element={<SEOLandingPage slugOverride="facilitator-training" />} />
+            <Route path="/executive-coaching" element={<SEOLandingPage slugOverride="executive-coaching" />} />
+            <Route path="/od-consulting" element={<SEOLandingPage slugOverride="od-consulting" />} />
+
+            {/* Admin Aliases / Redirects */}
+            <Route path="/admin" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/admin/dashboard" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/admin/proposals" element={<Navigate to="/dashboard/proposals" replace />} />
+            <Route path="/admin/leads" element={<Navigate to="/dashboard/leads" replace />} />
+            <Route path="/admin/assessments" element={<Navigate to="/dashboard/assessments" replace />} />
+            <Route path="/admin/courses" element={<Navigate to="/dashboard/courses" replace />} />
+            <Route path="/admin/speakers" element={<Navigate to="/dashboard/speakers" replace />} />
+            <Route path="/admin/portfolio" element={<Navigate to="/dashboard/portfolio" replace />} />
+            <Route path="/admin/blog" element={<Navigate to="/dashboard/blog" replace />} />
+            <Route path="/admin/resources" element={<Navigate to="/dashboard/resources" replace />} />
 
             {/* Dashboard routes */}
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<DashboardHome />} />
+              <Route path="proposals" element={<DashboardProposals />} />
+              <Route path="assessments" element={<DashboardAssessments />} />
               <Route path="courses" element={<DashboardCourses />} />
               <Route path="courses/new" element={<CourseCreateWizard />} />
               <Route path="speakers" element={<DashboardSpeakers />} />
@@ -139,7 +165,6 @@ const AppShell: React.FC = () => {
               <Route path="leads" element={<DashboardLeads />} />
               <Route path="categories" element={<DashboardCategories />} />
               <Route path="media" element={<MediaManager />} />
-
             </Route>
           </Routes>
         </Suspense>

@@ -1,0 +1,12 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import DashboardAssessments from '../../components/admin/DashboardAssessments.tsx';
+
+export const prerender = false;
+---
+
+<AdminLayout title="ผลการประเมินองค์กร (Assessments) | CAP Vision Admin">
+  <div class="p-6 md:p-8">
+    <DashboardAssessments client:only="react" />
+  </div>
+</AdminLayout>

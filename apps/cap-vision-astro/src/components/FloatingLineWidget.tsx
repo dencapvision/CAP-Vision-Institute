@@ -76,7 +76,7 @@ export const FloatingLineWidget: React.FC = () => {
                 <div className="w-7 h-7 rounded-xl bg-white/20 flex items-center justify-center">
                   <MessageCircle className="w-4 h-4 text-white" />
                 </div>
-                <span>ทัก LINE OA ทันที (@capvision)</span>
+                <span>ทัก LINE OA ทันที (@denmasterfa)</span>
               </div>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>

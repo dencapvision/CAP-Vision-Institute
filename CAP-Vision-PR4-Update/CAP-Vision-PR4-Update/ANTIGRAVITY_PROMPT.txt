@@ -1,0 +1,10 @@
+นำชุด CAP-Vision-PR4-Update ไปอัปเดต dencapvision/CAP-Vision-Institute ตาม Architecture เดิม
+1. อ่าน README_TH.md และตรวจ git status, branch, commit และ AGENTS.md ก่อน
+2. ทำงานใน Branch ใหม่ ห้ามแก้ main โดยตรง และรักษางานค้างของผู้ใช้
+3. หากใช้ Branch feat/lead-conversion-crm-qa จาก GitHub ให้ตรวจ commit/tree ตรงกับ README และไม่ใช้ Patch ซ้ำ
+4. หากใช้ Patch ให้เลือก MAIN_TO_PR4.patch หรือ PR3_TO_PR4.patch ตามฐานจริง ตรวจ git apply --check ก่อน หากมี conflict ให้เทียบและรวมทีละไฟล์ ห้ามคัดลอกทับทั้งหมด
+5. npm ci, npm test, npm run build ใน apps/cap-vision-astro; ตรวจ canonical/OG, contact submit, notification failure, consent และ CRM บน staging
+6. อ่าน docs/qa/2026-10-11-leads-seo-crm.md และตรวจข้อจำกัดทั้งหมด
+7. SQL migration ยังไม่ถูกใช้กับฐานจริง ให้เตรียมและทดสอบใน staging พร้อมตรวจ admin allowlist เท่านั้น
+8. สรุปไฟล์ที่เปลี่ยน ผลทดสอบ ข้อค้าง และจัดทำ Draft PR
+ห้าม Merge, เปลี่ยนฐานข้อมูล Production หรือ Deploy Production โดยไม่ได้รับอนุมัติ

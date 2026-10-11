@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HomePage from '../components/HomePage.tsx';
+
+export const prerender = false;
+---
+
+<Layout 
+  title="อบรมองค์กร In-house Training พัฒนาผู้นำและทีม | CAP Vision Institute"
+  description="CAP Vision Institute ออกแบบ In-house Training และเวิร์กช็อปเฉพาะองค์กร เพื่อพัฒนาการสื่อสาร ทีมงาน ภาวะผู้นำ และวัฒนธรรมองค์กร เริ่มจากโจทย์จริง สู่การนำไปใช้จริง"
+>
+  <HomePage client:load />
+</Layout>

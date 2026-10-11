@@ -1,0 +1,96 @@
+{
+  "repository": "dencapvision/CAP-Vision-Institute",
+  "pull_request": 4,
+  "remote_commit": "cdb96bb76a3131b8826b675ef9323d7100b81875",
+  "tree_sha": "45243711cdea816b3c201e17cebc0208a58ef5bf",
+  "files": [
+    {
+      "path": "apps/cap-vision-astro/copy-wrangler.js",
+      "sha256": "c9fbe6a61265c9a726b848448234d9ef895e2e3eba3d453b5abc242ca947de89"
+    },
+    {
+      "path": "apps/cap-vision-astro/package-lock.json",
+      "sha256": "c1b04b25fc0446ab3615ddb838f91996573eb928e3fbc7cce04041979e9b3778"
+    },
+    {
+      "path": "apps/cap-vision-astro/package.json",
+      "sha256": "eff61cb583a3843b79b8fad97c07584cb4fc25715ae0785750f997669075219c"
+    },
+    {
+      "path": "apps/cap-vision-astro/public/sitemap.xml",
+      "sha256": "21911104b25f9d576a4822d61ba312ba3d46b8851467c75463a35058ca346382"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/components/ContactPage.tsx",
+      "sha256": "3435223040f0f26ec7548b2e210ebbe63137432c3235458898360b89e04137fe"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/components/ConversionConsent.tsx",
+      "sha256": "ffed8ea4ab12eadbc5ef5ad81dbb0f85b4abbafb0ef9772d2a20e09ccf1e7edb"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/components/admin/DashboardLeads.tsx",
+      "sha256": "44593243f0b23c45be192a31cea56eaad8780125be94620142aa552a8dcf00a0"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/layouts/AdminLayout.astro",
+      "sha256": "8361ad64769842055d6907e34479080b433cff723f10f3a70804afece3d06129"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/layouts/Layout.astro",
+      "sha256": "724b5f02c856f33a33572fdb5a4e808e946e750d99d32794ebed6f1c83b36210"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/lib/conversion.d.mts",
+      "sha256": "c3973669c281a7eb958281a57ddb32f21693e6b1e60efddabac493a465b8921f"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/lib/conversion.mjs",
+      "sha256": "13e1ac0b866f2402b7e9d2b8c19c77243c821e8b5559c0b3c3bace996b01de60"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/lib/lead-environment.ts",
+      "sha256": "28096ffaf9974b90c87d150a812b7a9f20eae3bede957a2cf9a337c701db6195"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/lib/lead-workflow.d.mts",
+      "sha256": "72d7cd8b89b316da0dfdf05febeffb99220bcaba274b6c6c19bb3d479b4b12b9"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/lib/lead-workflow.mjs",
+      "sha256": "acaeb24567e612cd8c608ebc2aa6bf8fb830e01642f5f90a45e0ee22b7ddba47"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/pages/admin/login.astro",
+      "sha256": "b11ce2f4faa3520ab94a094ef592b3d4f8ba3d2b62af3e435a9eac15028e3578"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/pages/index.astro",
+      "sha256": "91245e997103652ae7b0c7882ec27c200d7a9efc60a77ac6d75149200694c819"
+    },
+    {
+      "path": "apps/cap-vision-astro/tests/crm-rls.test.mjs",
+      "sha256": "902e969460577e27d0bcb3c0453a6f8211e3c17feac95a649dedd49e6a5e3d80"
+    },
+    {
+      "path": "apps/cap-vision-astro/tests/lead-workflow.test.mjs",
+      "sha256": "6d23c674991392fbf63c43b0703720a190d36caff109e8353f5c6f3dc48af2ed"
+    },
+    {
+      "path": "apps/cap-vision-astro/tests/seo-rendered.mjs",
+      "sha256": "b00b97ddfc52d096475585a95f23a2833b822dda3c08a8a9f0ce63c8036b5d15"
+    },
+    {
+      "path": "docs/qa/2026-10-11-leads-seo-crm.md",
+      "sha256": "d7c54bce313878475368528005362770aab95570deb50182763e8d68f8348edf"
+    },
+    {
+      "path": "supabase/migrations/20261011150000_lead_crm_mvp.sql",
+      "sha256": "937a877f53da02e4e1068717b20e63c98852cd3f95f0732b5eee8a760d087c45"
+    }
+  ],
+  "patches": {
+    "MAIN_TO_PR4.patch": "89668af8a10b6adbdd237ed1d1091e074f0748223d2260da6cc91c34a1c85b16",
+    "PR3_TO_PR4.patch": "fd78ffd649f828772424306718aa93c92dcd5f1341d857ece0281598423df608"
+  }
+}

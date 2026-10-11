@@ -13,6 +13,8 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FloatingLineWidget from '../components/FloatingLineWidget';
 import '../styles/global.css';
+
+const canonicalUrl = new URL(Astro.url.pathname, 'https://capvisionpartner.com').toString();
 ---
 
 <!doctype html>
@@ -27,11 +29,11 @@ import '../styles/global.css';
 		
 		<meta name="keywords" content="บริษัทฝึกอบรม, สถาบันฝึกอบรม, บริษัทจัดฝึกอบรม, รับจัดอบรม In-house Training, ฝึกอบรม, อบรมองค์กร, ศูนย์ฝึกอบรม, พัฒนาบุคลากร, พัฒนาผู้นำ, Leadership Development, Team Building, Growth Mindset, Master Facilitator, CAP Vision Institute, ครูเด่น มาสเตอร์ฟา, อบรมใกล้ฉัน, อบรมปทุมธานี, อบรมกรุงเทพ" />
 		<meta name="author" content="CAP Vision Institute" />
-		<link rel="canonical" href="https://capvisionpartner.com/" />
+		<link rel="canonical" href={canonicalUrl} />
 		
 		<!-- Open Graph / Social Meta -->
 		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://capvisionpartner.com/" />
+		<meta property="og:url" content={canonicalUrl} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content="https://capvisionpartner.com/images/og-capvision.jpg" />

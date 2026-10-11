@@ -157,153 +157,75 @@ const Home: React.FC = () => {
     <div className="flex flex-col min-h-screen bg-white">
       
 
-      {/* ── 1. HERO SECTION (Executive Transformation) ────────────────────────── */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="relative min-h-[92svh] flex items-center overflow-hidden bg-[#111827] text-white pt-24 pb-16 md:pt-32 md:pb-24"
-      >
-        {/* Dynamic Background Mesh & Authentic Workshop Imagery */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80"
-            alt="CAP Vision Institute Workshop and Collaborative Learning"
-            className="w-full h-full object-cover scale-105 opacity-20 transition-transform duration-[12s] ease-out"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#111827] via-[#111827]/95 to-[#0F2557]/85"></div>
-          <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-[#2563EB]/15 rounded-full blur-[140px] pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-[#F59E0B]/10 rounded-full blur-[120px] pointer-events-none"></div>
+      {/* ── 1. PROBLEM-FIRST HERO — CAP Vision Conversion V2 ── */}
+      <section aria-labelledby="home-hero-title" className="relative isolate overflow-hidden bg-[#111827] text-white pt-28 pb-16 md:pt-36 md:pb-24">
+        <div className="absolute inset-0 -z-10">
+          <img src="/images/courses/team_synergy.png" alt="" aria-hidden="true"
+            className="h-full w-full object-cover opacity-[0.13]" fetchPriority="high" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#111827] via-[#111827]/95 to-[#0F2557]/90" />
         </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Content */}
-            <div className="lg:col-span-7">
-              
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-md border border-white/15 px-4 py-2 rounded-full mb-6 animate-fade-in-down">
-                <span className="w-2.5 h-2.5 bg-[#F59E0B] rounded-full animate-pulse flex-shrink-0"></span>
-                <span className="text-white font-bold tracking-wider text-xs uppercase nav-font">
-                  Transformative Learning & Executive OD Consulting
-                </span>
-              </div>
-
-              {/* Main Headline */}
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black leading-[1.12] mb-6 nav-font tracking-tight !text-white text-white">
-                <span className="block">พัฒนาคน</span>
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] via-[#38BDF8] to-[#93C5FD]">
-                  เปลี่ยนวิธีคิด
-                </span>
-                <span className="block text-[#F59E0B]">
-                  ยกระดับทั้งองค์กร
-                </span>
-              </h1>
-
-              {/* Subheadline */}
-              <p className="text-lg sm:text-xl text-gray-300 font-light leading-relaxed mb-8 max-w-2xl">
-                ออกแบบประสบการณ์การเรียนรู้ที่เปลี่ยนคนจากภายใน สู่ทีมที่ทำงานร่วมกันได้ดี และองค์กรที่พร้อมเติบโต
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.12fr_0.88fr]">
+            <div>
+              <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-300/25 bg-blue-400/10 px-4 py-2 text-xs font-bold tracking-wider text-blue-200">
+                CAP VISION INSTITUTE · TRANSFORMATION PARTNER
               </p>
-
-              {/* Dual CTAs (Conversion-Focused) */}
-              <div className="flex flex-col sm:flex-row gap-4 mb-12">
-                <a href="/assessment"
-                  className="btn-premium bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-8 py-4 sm:py-5 rounded-2xl font-black text-base shadow-2xl flex items-center justify-center gap-3 active:scale-95 group transition-all"
-                >
-                  <IconGoldCrestStar className="w-5 h-5 text-[#F59E0B]" />
-                  ประเมินองค์กรของคุณ (Diagnostic)
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+              <h1 id="home-hero-title" className="nav-font mb-6 text-4xl font-extrabold leading-[1.25] tracking-tight text-white sm:text-5xl lg:text-[3.4rem]">
+                องค์กรมี <span className="text-[#FBBF24]">“คนเก่ง”</span><br />
+                แต่ทำไมทีมยังไปได้<br className="hidden sm:block" />
+                ไม่เต็มศักยภาพ?
+              </h1>
+              <p className="mb-6 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">
+                คนเก่งแต่สื่อสารกันไม่เข้าใจ ทีมทำงานแยกส่วน
+                หัวหน้าเก่งงานแต่ยังนำคนไม่เป็น และค่านิยมองค์กรยังไม่เกิดขึ้นจริงในงานประจำวัน
+              </p>
+              <div className="mb-7 border-l-4 border-[#FBBF24] pl-5">
+                <p className="nav-font text-xl font-bold leading-relaxed text-white sm:text-2xl">
+                  บางครั้งปัญหาไม่ใช่การขาดคนเก่ง<br />
+                  แต่คือการยังไม่สามารถดึงศักยภาพของคน<br className="hidden sm:block" />
+                  มาสร้างผลงานร่วมกันได้
+                </p>
+              </div>
+              <p className="mb-8 max-w-2xl text-base leading-8 text-slate-300">
+                CAP Vision ช่วยวิเคราะห์โจทย์คน ทีม และองค์กร
+                แล้วออกแบบ In-house Training, Workshop และ Learning Journey
+                ที่เชื่อม Mindset → Behavior → Performance
+              </p>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <a href="/contact" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-7 py-4 text-base font-bold text-white shadow-xl transition hover:bg-[#1D4ED8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+                  ปรึกษาโจทย์องค์กร <ArrowRight size={19} aria-hidden="true" />
                 </a>
-
-                <a href="/contact"
-                  className="btn-premium bg-white/10 hover:bg-white/20 text-white border-2 border-white/20 px-8 py-4 sm:py-5 rounded-2xl font-bold text-base flex items-center justify-center gap-3 active:scale-95 transition-all"
-                >
-                  คุยกับ CAP Vision
+                <a href="/assessment" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+                  สำรวจความพร้อมองค์กร <ChevronRight size={18} aria-hidden="true" />
                 </a>
               </div>
-
-              {/* Trust Stats */}
-              <div className="grid grid-cols-3 gap-6 pt-8 border-t border-white/10 max-w-xl">
+              <p className="mt-5 text-sm text-slate-400">
+                Human • Heart • Harmony · Transform People → Transform Organization
+              </p>
+            </div>
+            <aside aria-label="ปัญหาที่ CAP Vision ช่วยองค์กรรับมือ" className="rounded-[1.75rem] border border-white/20 bg-white/[0.08] p-6 shadow-2xl backdrop-blur-md sm:p-8">
+              <p className="mb-6 text-sm font-bold uppercase tracking-wide text-[#FBBF24]">โจทย์ที่หลายองค์กรกำลังเผชิญ</p>
+              <ul className="space-y-5">
                 {[
-                  { value: '18+', label: 'Years Experience' },
-                  { value: '10,000+', label: 'Learners Trained' },
-                  { value: '200+', label: 'Organizations' }
-                ].map((stat, i) => (
-                  <div key={i}>
-                    <div className="text-2xl sm:text-3xl font-black text-[#F59E0B] nav-font">
-                      <StatCounter value={stat.value} />
-                    </div>
-                    <div className="text-gray-400 text-xs sm:text-sm font-medium mt-1">{stat.label}</div>
-                  </div>
+                  ['Communication Gap', 'คนเก่งแต่สื่อสารกันไม่เข้าใจ'],
+                  ['Silo Working', 'แต่ละทีมเก่ง แต่ยังต่างคนต่างทำ'],
+                  ['Low Ownership', 'พนักงานรอคำสั่ง มากกว่าร่วมรับผิดชอบ'],
+                  ['Leadership Gap', 'หัวหน้าเก่งงาน แต่ยังต้องพัฒนาทักษะการนำคน'],
+                  ['Values in Action', 'มี Core Values แต่ยังไม่เห็นในพฤติกรรมจริง']
+                ].map(([label, detail]) => (
+                  <li key={label} className="flex gap-3">
+                    <CheckCircle2 className="mt-1 shrink-0 text-[#60A5FA]" size={20} aria-hidden="true" />
+                    <div><strong className="block text-sm text-white">{label}</strong><span className="text-sm leading-7 text-slate-300">{detail}</span></div>
+                  </li>
                 ))}
-              </div>
-
-            </div>
-
-            {/* Right Card: Interactive Feature Showcase */}
-            <div className="lg:col-span-5">
-              <div className="relative">
-                {/* Glow behind card */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-[#2563EB] to-[#F59E0B] rounded-[2.5rem] blur-xl opacity-30"></div>
-                
-                <div className="relative bg-white/10 backdrop-blur-2xl border border-white/20 p-6 sm:p-8 rounded-[2rem] shadow-2xl">
-                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
-                    <div className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#1E293B] to-[#0F172A] border border-white/20 flex items-center justify-center shadow-lg">
-                        <IconGoldCrestStar className="w-6 h-6 text-[#F59E0B]" />
-                      </div>
-                      <div>
-                        <div className="text-sm font-bold text-white">Organization Diagnostic Tool</div>
-                        <div className="text-xs text-gray-400">ประเมินความพร้อม 4 มิติ (3 นาที)</div>
-                      </div>
-                    </div>
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#F59E0B]/20 text-[#F59E0B] border border-[#F59E0B]/30">
-                      FREE DIAGNOSTIC
-                    </span>
-                  </div>
-
-                  {/* 4 Dimension preview bars */}
-                  <div className="space-y-4 mb-6">
-                    {[
-                      { name: 'Strategic Leadership', score: 85, color: '#2563EB' },
-                      { name: 'People & Team Synergy', score: 78, color: '#60A5FA' },
-                      { name: 'Culture & Growth Mindset', score: 92, color: '#F59E0B' },
-                      { name: 'Execution & Creative Innovation', score: 80, color: '#10B981' }
-                    ].map((item, idx) => (
-                      <div key={idx} className="space-y-1.5">
-                        <div className="flex justify-between text-xs font-bold text-gray-200">
-                          <span>{item.name}</span>
-                          <span style={{ color: item.color }}>{item.score}%</span>
-                        </div>
-                        <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-                          <div
-                            className="h-full rounded-full transition-all duration-1000"
-                            style={{ width: `${item.score}%`, backgroundColor: item.color }}
-                          ></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <p className="text-xs text-gray-300 mb-6 leading-relaxed">
-                    วินิจฉัยจุดติดขัดในองค์กร รับผลวิเคราะห์ Radar Chart ทันที พร้อมรับรายงานสรุปกลยุทธ์เฉพาะองค์กร
-                  </p>
-
-                  <a href="/assessment"
-                    className="w-full btn-premium bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] font-black py-3.5 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg transition-all"
-                  >
-                    <IconGoldCrestStar className="w-4 h-4 text-[#111827]" />
-                    เริ่มทำแบบประเมินเดี๋ยวนี้
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-            </div>
-
+              </ul>
+              <a href="/services" className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#93C5FD] hover:text-white">
+                ดูแนวทางพัฒนาองค์กร <ArrowRight size={17} aria-hidden="true" />
+              </a>
+            </aside>
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* ── 2. PAIN POINTS SECTION: “ปัญหาขององค์กรคุณ อยู่ตรงไหน?” ─────────────── */}
       <section className="py-20 md:py-28 bg-[#F8FAFC] border-b border-gray-200 relative overflow-hidden">

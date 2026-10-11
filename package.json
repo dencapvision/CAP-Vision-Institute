@@ -22,7 +22,8 @@
     "upweb": "powershell -ExecutionPolicy Bypass -File ./scripts/deploy.ps1",
     "deploy": "cd apps/cap-vision-astro && npm run deploy",
     "deploy:worker": "cd apps/cap-vision-astro && npm run deploy",
-    "deploy:web": "powershell -ExecutionPolicy Bypass -File ./scripts/deploy.ps1",
+    "deploy:vps": "powershell -ExecutionPolicy Bypass -File ./scripts/deploy.ps1",
+    "deploy:web": "npm run build && wrangler pages deploy dist --project-name=cap-vision-institute --branch=main",
     "deploy:pages": "npm run build && wrangler pages deploy dist --project-name=cap-vision-institute",
     "deploy:pages:prod": "npm run build && wrangler pages deploy dist --project-name=cap-vision-institute --branch=main"
   },

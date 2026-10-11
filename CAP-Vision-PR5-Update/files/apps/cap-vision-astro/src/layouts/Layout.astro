@@ -1,0 +1,163 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+	noindex?: boolean;
+	image?: string;
+}
+
+const { 
+  noindex = false,
+  image = '/images/denmasterfa.jpg',
+  title = "รับจัดอบรม In-house Training | พัฒนาผู้นำและทีมองค์กร | CAP Vision Institute",
+  description = "พัฒนาคนให้เปลี่ยนวิธีคิด สร้างทีมให้ทำงานได้จริง ยกระดับองค์กรด้วย In-house Training และ Customized Learning โดย ครูเด่น Master Facilitator ประสบการณ์ 18+ ปี"
+} = Astro.props;
+
+import ConversionConsent from '../components/ConversionConsent';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import FloatingLineWidget from '../components/FloatingLineWidget';
+import '../styles/global.css';
+
+// Match the slashless URLs already used in the sitemap; strip tracking queries.
+const canonicalPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const socialImage = (() => {
+  try { const url = new URL(image, 'https://capvisionpartner.com'); return ['https:', 'http:'].includes(url.protocol) ? url.href : 'https://capvisionpartner.com/images/denmasterfa.jpg'; }
+  catch { return 'https://capvisionpartner.com/images/denmasterfa.jpg'; }
+})();
+const canonicalUrl = new URL(canonicalPath, 'https://capvisionpartner.com').toString();
+---
+
+<!doctype html>
+<html lang="th">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		{noindex && <meta name="robots" content="noindex, follow" />}
+		
+		<meta name="keywords" content="บริษัทฝึกอบรม, สถาบันฝึกอบรม, บริษัทจัดฝึกอบรม, รับจัดอบรม In-house Training, ฝึกอบรม, อบรมองค์กร, ศูนย์ฝึกอบรม, พัฒนาบุคลากร, พัฒนาผู้นำ, Leadership Development, Team Building, Growth Mindset, Master Facilitator, CAP Vision Institute, ครูเด่น มาสเตอร์ฟา, อบรมใกล้ฉัน, อบรมปทุมธานี, อบรมกรุงเทพ" />
+		<meta name="author" content="CAP Vision Institute" />
+		<link rel="canonical" href={canonicalUrl} />
+		
+		<!-- Open Graph / Social Meta -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={socialImage} />
+		<meta property="og:locale" content="th_TH" />
+		<meta property="og:site_name" content="CAP Vision Institute" />
+		
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={socialImage} />
+
+		<!-- Geo Tags for Local SEO -->
+		<meta name="geo.region" content="TH-13" />
+		<meta name="geo.placename" content="Pathum Thani / Bangkok" />
+		<meta name="geo.position" content="13.9317;100.6974" />
+		<meta name="ICBM" content="13.9317, 100.6974" />
+		
+		<!-- Google Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		
+		<!-- JSON-LD Structured Data Schema (SEO/AEO/GEO) -->
+		<script type="application/ld+json" is:inline>{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "EducationalOrganization",
+        "ProfessionalService"
+      ],
+      "@id": "https://capvisionpartner.com/#organization",
+      "name": "CAP Vision Institute",
+      "alternateName": [
+        "สถาบันพัฒนาผู้นำและองค์กร แคป วิชั่น",
+        "บริษัทจัดฝึกอบรม CAP Vision",
+        "CAP Vision Training"
+      ],
+      "url": "https://capvisionpartner.com",
+      "logo": "https://capvisionpartner.com/images/logo.png",
+      "telephone": "+66-93-223-5919",
+      "email": "contact@capvisionpartner.com",
+      "priceRange": "$$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "ลำลูกกา",
+        "addressRegion": "ปทุมธานี / กรุงเทพมหานคร",
+        "addressCountry": "TH",
+        "postalCode": "12130"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 13.9317,
+        "longitude": 100.6974
+      },
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "Thailand"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "กรุงเทพมหานคร"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "ปทุมธานี"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "สมุทรปราการ"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "ชลบุรี"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "ระยอง"
+        }
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)",
+        "jobTitle": "Master Facilitator & Executive Coach",
+        "description": "ผู้เชี่ยวชาญด้านกระบวนการเรียนรู้เพื่อการเปลี่ยนแปลง (Transformative Learning) และผู้ออกแบบหลักสูตรพัฒนาผู้นำองค์กร ประสบการณ์ 18+ ปี",
+        "sameAs": [
+          "https://capvisionpartner.com/speakers"
+        ]
+      },
+      "description": "บริษัทจัดฝึกอบรม In-house Training และสถาบันพัฒนาบุคลากรชั้นนำ ออกแบบหลักสูตร Leadership, Team Building, Growth Mindset และ OD Consulting สำหรับองค์กรทั่วประเทศไทย"
+    }
+  ]
+}</script>
+
+		<style is:global>
+			body {
+				font-family: 'Sarabun', sans-serif;
+			}
+			h1, h2, h3, h4, h5, h6, .nav-font {
+				font-family: 'Prompt', sans-serif;
+			}
+		</style>
+	</head>
+	<body class="bg-[#f8fafc] text-[#1a202c] min-h-screen flex flex-col overflow-x-hidden">
+		<Header client:load />
+		<main class="flex-grow">
+			<slot />
+		</main>
+		<Footer client:visible />
+		<ConversionConsent client:load />
+		<FloatingLineWidget client:load />
+	</body>
+</html>

@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CourseDetailView from '../../components/CourseDetailView.tsx';
+import { supabase } from '../../lib/supabase';
+
+// Enable server SSR
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+import { loadPublishedRecord, plainDescription } from '../../lib/public-content.mjs';
+const result = await loadPublishedRecord(supabase, 'courses', slug || '', {
+  select: '*, instructor:instructor_id(*)', publishedColumn: 'is_published'
+});
+const course = result.data;
+const unavailable = result.status === 503;
+Astro.response.status = result.status;
+if (unavailable) {
+  Astro.response.headers.set('Retry-After', '60');
+  Astro.response.headers.set('Cache-Control', 'no-store');
+}
+const errorTitle = unavailable ? 'ข้อมูลหลักสูตรยังไม่พร้อมใช้งาน' : 'ไม่พบหลักสูตรที่คุณต้องการ';
+
+---
+
+<Layout
+  noindex={!course}
+  image={course?.thumbnail}
+  title={course ? `${course.title} | CAP Vision Institute` : `${errorTitle} | CAP Vision Institute`}
+  description={course ? plainDescription(course.description) : errorTitle}
+>
+	<main class="flex-grow pt-20">
+		{!course ? (
+			<div class="min-h-[60vh] bg-gray-50 flex items-center justify-center p-4">
+				<div class="text-center bg-white p-12 rounded-[3rem] shadow-xl max-w-lg border border-gray-100 my-12">
+					<div class="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+						<span class="text-4xl font-bold">!</span>
+					</div>
+					<h2 class="text-3xl font-black text-[#0f3460] mb-4 nav-font">{errorTitle}</h2>
+					<p class="text-gray-500 mb-8 font-medium">{unavailable ? 'กรุณาลองใหม่อีกครั้ง หรือปรึกษาทีมงานผ่านหน้าติดต่อ' : 'หลักสูตรนี้อาจถูกย้าย หรือไม่มีอยู่ในระบบปัจจุบัน'}</p>
+
+					<a href="/courses" class="inline-flex items-center gap-2 bg-[#0f3460] text-white px-8 py-4 rounded-2xl font-bold nav-font transition-all hover:bg-[#c5a059]">
+						กลับสู่หน้าหลักสูตร
+					</a>
+				</div>
+			</div>
+		) : (
+			<CourseDetailView course={course} client:load />
+		)}
+	</main>
+</Layout>
+

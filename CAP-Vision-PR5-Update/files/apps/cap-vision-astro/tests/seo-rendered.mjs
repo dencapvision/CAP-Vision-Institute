@@ -1,0 +1,33 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+const base = process.env.QA_BASE_URL || 'http://127.0.0.1:4321';
+const xml = await readFile(new URL('../public/sitemap.xml',import.meta.url),'utf8');
+const paths = [...xml.matchAll(/<loc>https:\/\/capvisionpartner.com([^<]*)<\/loc>/g)].map(m=>m[1]);
+for (const path of [...paths, '/contact/?utm_source=test', '/resources/flow-state-learning']) {
+  const response = await fetch(base + path, {signal:AbortSignal.timeout(30000)});
+  const html = await response.text();
+  const canonical = 'https://capvisionpartner.com' + (path.split('?')[0].replace(/\/+$/,'') || '/');
+  assert.equal(response.status,200, `${path} status`);
+  assert.equal((html.match(/rel="canonical"/g)||[]).length,1,`${path} duplicate canonical`);
+  assert.ok(html.includes(`rel="canonical" href="${canonical}"`),`${path} canonical`);
+  assert.ok(html.includes(`property="og:url" content="${canonical}"`),`${path} OG`);
+  assert.ok(/<title>[^<]+<\/title>/.test(html), `${path} title`);
+  for (const [,json] of html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)) JSON.parse(json);
+  console.log(`PASS ${path}`);
+}
+const article = await (await fetch(base+'/resources/leader-as-facilitator')).text();
+assert.ok(article.includes('ทำไมผู้นำที่ดี ต้องเป็น Facilitator'));
+assert.ok(!article.includes('กำลังโหลดเนื้อหา...'));
+assert.ok(article.includes('Instructor บอกคำตอบ'));
+assert.ok(!article.includes('"@type": "FAQPage"'));
+console.log('PASS full article SSR and matching metadata');
+const invalidCourse = await fetch(base+'/courses/invalid%2Fslug');
+assert.equal(invalidCourse.status,404);
+assert.ok((await invalidCourse.text()).includes('noindex, follow'));
+console.log('PASS invalid course 404/noindex');
+const missing = await fetch(base+'/nonexistent-qa-page');
+assert.equal(missing.status,404);
+console.log('PASS missing route 404');
+const admin = await (await fetch(base+'/admin/login')).text();
+assert.ok(admin.includes('noindex, nofollow'));
+console.log('PASS admin noindex');

@@ -1,0 +1,10 @@
+อัปเดต dencapvision/CAP-Vision-Institute ด้วย CAP-Vision-PR5-Update
+1. อ่าน README_TH.md, AGENTS.md และ MANIFEST.json; ตรวจ git status, branch และ commit ปัจจุบัน
+2. ยืนยันว่าโปรเจคมีการเปลี่ยนแปลงของ PR #4 แล้ว; ทำงานใน Branch ใหม่และรักษางานค้างของผู้ใช้
+3. หาก fetch Branch feat/seo-detail-reliability-20261012 จาก GitHub โดยตรง ให้ตรวจ commit/tree ใน README แล้วไม่ใช้ Patch ซ้ำ
+4. หากใช้ ZIP ให้ตรวจ git apply --check UPDATE_PR5.patch ก่อนใช้; หากมี conflict ให้เทียบไฟล์ฉบับเต็มใน files/ และรวมทีละไฟล์ ห้ามคัด ZIP ทั้งโฟลเดอร์เข้า source หรือคัดลอกทับทั้งหมด
+5. ใน apps/cap-vision-astro รัน npm ci, npm test, npm run build และ npm run typecheck:public
+6. ตรวจ SSR article, canonical/OG, sitemap 49 URL, 404/noindex และ 503/Retry-After ตาม docs/qa/2026-10-12-public-content-seo.md
+7. ทดสอบ published course/DB-only article และ Contact → Lead → LINE → CRM บน staging โดยใช้บัญชีและฐาน staging ที่ได้รับอนุญาต
+8. สรุปไฟล์ที่เปลี่ยน ผลทดสอบ และงานค้าง พร้อม Draft PR
+ห้าม Merge, Deploy Production หรือเปลี่ยนฐาน Production โดยไม่ได้รับอนุมัติ

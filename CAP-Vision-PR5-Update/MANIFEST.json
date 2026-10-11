@@ -1,0 +1,85 @@
+{
+  "repository": "dencapvision/CAP-Vision-Institute",
+  "pull_request": 5,
+  "remote_commit": "ab0fe974f4b67bb649a878dd1667a797307da911",
+  "tree_sha": "acc5acd09b511346556c8912799469f0d91f1a55",
+  "supported_bases": [
+    "41840b5b2496aa64a57c1517f3cac8df7d948e2c",
+    "cdb96bb76a3131b8826b675ef9323d7100b81875"
+  ],
+  "files": [
+    {
+      "path": ".github/workflows/astro-qa.yml",
+      "sha256": "50d468d9932100565da4d0c967303080f9f89030ff8ef0930edc00a49c3e8e80"
+    },
+    {
+      "path": "apps/cap-vision-astro/package.json",
+      "sha256": "199e39fcafd48cd006f1be6b1debae20fd9368c5a124c505d09df77204ba93ee"
+    },
+    {
+      "path": "apps/cap-vision-astro/public/sitemap.xml",
+      "sha256": "013efc4d145f3ba7d7998f14e5ca7884df4ce75a2eb58a7fef2b274517acb5c7"
+    },
+    {
+      "path": "apps/cap-vision-astro/scripts/generate-sitemap.mjs",
+      "sha256": "a16081ba7398875af5fa517accc676a3527d93ae4d1316e2277b6a51ad6a8539"
+    },
+    {
+      "path": "apps/cap-vision-astro/scripts/verify-release.mjs",
+      "sha256": "8973b9d77dc210359f06987b6e9480267dfbd75770284e9974577deb31274c32"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/components/BlogArticleDetailPage.tsx",
+      "sha256": "7737a6eeb99db6a3a0618813dfeacf2a14ad4efe1f8ec3a4b16d8257c49db11c"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/layouts/Layout.astro",
+      "sha256": "e25b1036700242be6dffc573dff63f9809a35fd33b1e4a2cec806a05609c063d"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/lib/public-content.d.mts",
+      "sha256": "c7fab20ce4bdcd7c977765e45c872b2a7b012e52d3455907190f5917764ce19d"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/lib/public-content.mjs",
+      "sha256": "690abdf347060fb5f5d5d31eb9115158ef717bd407b88f36a7567308c3907830"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/lib/server-articles.ts",
+      "sha256": "f7935d0aa5f602b0a5c81d062de83329f50145525a7704fcc5321479ae4498c9"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/pages/404.astro",
+      "sha256": "7e0d0c783bb228374b0be9fe16efd93c0f3b2772e2a3a84392f82e113f737dc1"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/pages/courses/[slug].astro",
+      "sha256": "3c17f023795afc1b0915014b2c9eb37a00f2e6c4b22a9ba32256aab60c05982e"
+    },
+    {
+      "path": "apps/cap-vision-astro/src/pages/resources/[slug].astro",
+      "sha256": "664ede5c1cd0f0be891507210877a7697d286951ea04f600c4953f8b3b7d4e93"
+    },
+    {
+      "path": "apps/cap-vision-astro/tests/public-content.test.mjs",
+      "sha256": "a3ce5472ea5e9b9f04abcc51a511205e3e60983730e3930169526b899d5f8420"
+    },
+    {
+      "path": "apps/cap-vision-astro/tests/seo-rendered.mjs",
+      "sha256": "af34c3a889c40ecda717419d5260439512dab73db1cfae489ac7212dcfc0e4cf"
+    },
+    {
+      "path": "apps/cap-vision-astro/tests/tsconfig.public.json",
+      "sha256": "346b44f3fbf33d180dce0ea09d80542079cc06713d00f66ce10813de5c4649fb"
+    },
+    {
+      "path": "apps/cap-vision-astro/tsconfig.json",
+      "sha256": "af7c30c520e660d82496410ae8f7273cc12bd49e35880a6733e562a7ce802dd8"
+    },
+    {
+      "path": "docs/qa/2026-10-12-public-content-seo.md",
+      "sha256": "0c20ad211451d4fbe439ac773ed751100dedf24a585b583146ace9353e0521e7"
+    }
+  ],
+  "patch_sha256": "dc0dd83749a72e6b184aa23850e9f369abae5af458e2ba2e22851c146d658d14"
+}

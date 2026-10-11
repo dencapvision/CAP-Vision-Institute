@@ -1,0 +1,871 @@
+diff --git a/.github/workflows/astro-qa.yml b/.github/workflows/astro-qa.yml
+new file mode 100644
+index 0000000..31a9d2e
+--- /dev/null
++++ b/.github/workflows/astro-qa.yml
+@@ -0,0 +1,27 @@
++name: Astro QA
++on:
++  pull_request:
++    paths:
++      - 'apps/cap-vision-astro/**'
++      - 'supabase/migrations/**'
++      - '.github/workflows/astro-qa.yml'
++permissions:
++  contents: read
++jobs:
++  qa:
++    runs-on: ubuntu-latest
++    timeout-minutes: 10
++    defaults:
++      run:
++        working-directory: apps/cap-vision-astro
++    steps:
++      - uses: actions/checkout@v4
++      - uses: actions/setup-node@v4
++        with:
++          node-version: '24'
++          cache: npm
++          cache-dependency-path: apps/cap-vision-astro/package-lock.json
++      - run: npm ci
++      - run: npm test
++      - run: npm run build
++      - run: npm run typecheck:public
+diff --git a/apps/cap-vision-astro/package.json b/apps/cap-vision-astro/package.json
+index afdb024..46fd8cb 100644
+--- a/apps/cap-vision-astro/package.json
++++ b/apps/cap-vision-astro/package.json
+@@ -7,11 +7,12 @@
+   },
+   "scripts": {
+     "dev": "astro dev",
+-    "build": "astro build && node copy-wrangler.js",
++    "build": "node scripts/generate-sitemap.mjs && astro build && node copy-wrangler.js",
+     "preview": "astro preview",
+     "astro": "astro",
+     "deploy": "npm run build && npx wrangler deploy --config dist/wrangler.json",
+-    "test": "node --test tests/*.test.mjs"
++    "test": "node scripts/generate-sitemap.mjs --check && node --test tests/*.test.mjs",
++    "typecheck:public": "tsc --noEmit -p tests/tsconfig.public.json"
+   },
+   "dependencies": {
+     "@astrojs/cloudflare": "^14.1.4",
+diff --git a/apps/cap-vision-astro/public/sitemap.xml b/apps/cap-vision-astro/public/sitemap.xml
+index 49ac893..b238d96 100644
+--- a/apps/cap-vision-astro/public/sitemap.xml
++++ b/apps/cap-vision-astro/public/sitemap.xml
+@@ -1,63 +1,52 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+-  <!-- Homepage -->
+-  <url>
+-    <loc>https://capvisionpartner.com/</loc>
+-    <lastmod>2026-09-02</lastmod>
+-    <changefreq>weekly</changefreq>
+-    <priority>1.0</priority>
+-  </url>
+-
+-  <!-- Public routes implemented in the Astro application -->
+-
+-  <!-- Core Content & Conversion Pages -->
+-  <url>
+-    <loc>https://capvisionpartner.com/assessment</loc>
+-    <lastmod>2026-09-02</lastmod>
+-    <changefreq>monthly</changefreq>
+-    <priority>0.8</priority>
+-  </url>
+-  <url>
+-    <loc>https://capvisionpartner.com/courses</loc>
+-    <lastmod>2026-09-02</lastmod>
+-    <changefreq>weekly</changefreq>
+-    <priority>0.8</priority>
+-  </url>
+-  <url>
+-    <loc>https://capvisionpartner.com/services</loc>
+-    <lastmod>2026-09-02</lastmod>
+-    <changefreq>monthly</changefreq>
+-    <priority>0.8</priority>
+-  </url>
+-
+-  <url>
+-    <loc>https://capvisionpartner.com/portfolio</loc>
+-    <lastmod>2026-09-02</lastmod>
+-    <changefreq>weekly</changefreq>
+-    <priority>0.7</priority>
+-  </url>
+-  <url>
+-    <loc>https://capvisionpartner.com/speakers</loc>
+-    <lastmod>2026-09-02</lastmod>
+-    <changefreq>monthly</changefreq>
+-    <priority>0.7</priority>
+-  </url>
+-  <url>
+-    <loc>https://capvisionpartner.com/resources</loc>
+-    <lastmod>2026-09-02</lastmod>
+-    <changefreq>daily</changefreq>
+-    <priority>0.7</priority>
+-  </url>
+-  <url>
+-    <loc>https://capvisionpartner.com/about</loc>
+-    <lastmod>2026-09-02</lastmod>
+-    <changefreq>monthly</changefreq>
+-    <priority>0.6</priority>
+-  </url>
+-  <url>
+-    <loc>https://capvisionpartner.com/contact</loc>
+-    <lastmod>2026-09-02</lastmod>
+-    <changefreq>monthly</changefreq>
+-    <priority>0.6</priority>
+-  </url>
++  <url><loc>https://capvisionpartner.com/</loc></url>
++  <url><loc>https://capvisionpartner.com/assessment</loc></url>
++  <url><loc>https://capvisionpartner.com/courses</loc></url>
++  <url><loc>https://capvisionpartner.com/services</loc></url>
++  <url><loc>https://capvisionpartner.com/portfolio</loc></url>
++  <url><loc>https://capvisionpartner.com/speakers</loc></url>
++  <url><loc>https://capvisionpartner.com/resources</loc></url>
++  <url><loc>https://capvisionpartner.com/about</loc></url>
++  <url><loc>https://capvisionpartner.com/contact</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/10-facilitation-tools</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/5-leadership-skills-thai-orgs</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/active-vs-passive-learning</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/agile-hr-transformation</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/ai-facilitation-future</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/ai-proof-skills-hr-2026</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/building-growth-mindset-culture</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/cap-theory-self-discovery</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/case-study-1day-team-transformation</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/circle-dialogue-technique</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/coaching-skills-for-managers</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/data-driven-hr</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/design-thinking-for-hr</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/effective-leadership-communication</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/employee-engagement-strategies</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/feedback-culture-7-methods</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/flow-state-at-work</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/flow-state-learning</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/growth-mindset-organization</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/growth-mindset-vs-fixed-mindset</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/hr-as-learning-designer</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/hrd-future-skills-2025</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/intro-to-facilitation</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/leader-as-facilitator</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/leader-deep-listening</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/leadership-speaking-trust</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/learning-journey-design</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/manager-to-leader-cap-theory</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/mental-health-in-workplace</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/okrs-implementation-guide</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/play-to-learn</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/psychological-safety-facilitation</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/self-talk-change-life</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/team-silo-connect-hearts</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/team-talk-flow</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/training-management-guide</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/training-roi-measurement</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/training-to-transformative-learning</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/what-is-facilitation</loc></url>
++  <url><loc>https://capvisionpartner.com/resources/why-high-performers-burnout</loc></url>
+ </urlset>
+diff --git a/apps/cap-vision-astro/scripts/generate-sitemap.mjs b/apps/cap-vision-astro/scripts/generate-sitemap.mjs
+new file mode 100644
+index 0000000..eeef505
+--- /dev/null
++++ b/apps/cap-vision-astro/scripts/generate-sitemap.mjs
+@@ -0,0 +1,18 @@
++import {readFile, readdir, writeFile} from 'node:fs/promises';
++const root = new URL('../', import.meta.url);
++const basePaths = ['/', '/assessment', '/courses', '/services', '/portfolio', '/speakers', '/resources', '/about', '/contact'];
++const posts = await readdir(new URL('src/data/blog/posts/', root));
++const resources = [];
++for (const file of posts.filter(p => p.endsWith('.json')).sort()) {
++  const article = JSON.parse(await readFile(new URL(`src/data/blog/posts/${file}`, root), 'utf8'));
++  const publicCopy = await readFile(new URL(`public/content/blog/posts/${file}`, root), 'utf8');
++  if (JSON.stringify(JSON.parse(publicCopy)) !== JSON.stringify(article)) throw new Error(`Article copies differ: ${file}`);
++  if (!article.title) throw new Error(`Article has no title: ${file}`);
++  resources.push(`/resources/${encodeURIComponent(file.replace(/\.json$/, ''))}`);
++}
++const paths = [...new Set([...basePaths, ...resources])];
++const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${paths.map(path => `  <url><loc>https://capvisionpartner.com${path}</loc></url>`).join('\n')}\n</urlset>\n`;
++if (process.argv.includes('--check')) {
++  if (await readFile(new URL('public/sitemap.xml', root), 'utf8') !== xml) throw new Error('Sitemap is out of date');
++} else await writeFile(new URL('public/sitemap.xml', root), xml);
++console.log(`Sitemap checked: ${paths.length} URLs, ${resources.length} bundled articles`);
+diff --git a/apps/cap-vision-astro/scripts/verify-release.mjs b/apps/cap-vision-astro/scripts/verify-release.mjs
+new file mode 100644
+index 0000000..863e7ab
+--- /dev/null
++++ b/apps/cap-vision-astro/scripts/verify-release.mjs
+@@ -0,0 +1,22 @@
++import assert from 'node:assert/strict';
++const arg = process.argv.find(a=>a.startsWith('--base='));
++if (!arg) throw new Error('Supply --base=https://your-staging-host (read-only HTTP check)');
++const base = new URL(arg.slice(7));
++if (!['http:', 'https:'].includes(base.protocol)) throw new Error('Invalid base URL');
++const checks = ['/', '/contact', '/services', '/resources/leader-as-facilitator'];
++const failures=[];
++for (const path of checks) {
++  try {
++    const response=await fetch(new URL(path,base),{signal:AbortSignal.timeout(15000)});
++    assert.equal(response.status,200, `${path}: HTTP ${response.status}`);
++    const html=await response.text();
++    assert.ok(html.includes(`rel="canonical" href="https://capvisionpartner.com${path}"`),`${path}: canonical mismatch`);
++    assert.ok(html.includes(`property="og:url" content="https://capvisionpartner.com${path}"`),`${path}: OG mismatch`);
++    if (path==='/') assert.ok(html.includes('อบรมองค์กร In-house Training พัฒนาผู้นำและทีม | CAP Vision Institute'), 'Homepage metadata is from an older build');
++    if (path.startsWith('/resources/')) assert.ok(!html.includes('กำลังโหลดเนื้อหา...'), 'Article is not rendered on server');
++    assert.ok(html.includes('การวัดผลเว็บไซต์'),'Consent interface is missing');
++    assert.ok(!html.includes('Error Log:'),'Raw error was exposed');
++    console.log(`PASS ${path}`);
++  } catch(e) { failures.push(e.message);console.error(`FAIL ${e.message}`); }
++}
++if(failures.length) process.exitCode=1;
+diff --git a/apps/cap-vision-astro/src/components/BlogArticleDetailPage.tsx b/apps/cap-vision-astro/src/components/BlogArticleDetailPage.tsx
+index 8f5e1d2..87d6bce 100644
+--- a/apps/cap-vision-astro/src/components/BlogArticleDetailPage.tsx
++++ b/apps/cap-vision-astro/src/components/BlogArticleDetailPage.tsx
+@@ -1,3 +1,4 @@
++import { articleMetadata } from '../lib/public-content.mjs';
+ import React, { useState, useEffect } from 'react';
+ import { supabase } from '../lib/supabase';
+ import { HRD_ARTICLES } from '../constants/articles';
+@@ -9,12 +10,13 @@ import AICoachSidebar from './LearningHub/AICoachSidebar';
+ 
+ interface BlogArticleDetailPageProps {
+   slug: string;
++  initialArticle?: any;
+ }
+ 
+-const BlogArticleDetailPage: React.FC<BlogArticleDetailPageProps> = ({ slug }) => {
+-  const [articleData, setArticleData] = useState<any>(null);
+-  const [isAeo, setIsAeo] = useState(false);
+-  const [loading, setLoading] = useState(true);
++const BlogArticleDetailPage: React.FC<BlogArticleDetailPageProps> = ({ slug, initialArticle }) => {
++  const [articleData, setArticleData] = useState<any>(initialArticle || null);
++  const [isAeo, setIsAeo] = useState(!!initialArticle?.summary);
++  const [loading, setLoading] = useState(!initialArticle);
+   const [error, setError] = useState<string | null>(null);
+   const [relatedArticles, setRelatedArticles] = useState<any[]>([]);
+   const [recommendedArticles, setRecommendedArticles] = useState<any[]>([]);
+@@ -101,20 +103,23 @@ const BlogArticleDetailPage: React.FC<BlogArticleDetailPageProps> = ({ slug }) =
+       setLoading(false);
+     };
+ 
+-    loadArticle();
++    if (!initialArticle) loadArticle();
++    else {
++      const keywords = initialArticle.seo?.keywords || [];
++      fetchRelatedArticles(slug, keywords).then(setRelatedArticles).catch(() => {});
++    }
+ 
+     // Recommended static articles
+     const recommended = HRD_ARTICLES
+       .filter(a => a.id !== slug)
+       .slice(0, 3);
+     setRecommendedArticles(recommended);
+-  }, [slug]);
++  }, [slug, initialArticle]);
+ 
+   // Update page title/meta dynamically client-side for SEO convenience
+   useEffect(() => {
+     if (articleData) {
+-      const metaTitle = articleData.seo?.meta_title || articleData.seo?.metaTitle || `${articleData.title} | CAP Vision Insight`;
+-      const metaDesc = articleData.seo?.meta_description || articleData.seo?.metaDescription || articleData.summary || articleData.excerpt || '';
++      const {title: metaTitle, description: metaDesc} = articleMetadata(articleData);
+       document.title = metaTitle;
+       
+       const metaDescTag = document.querySelector('meta[name="description"]');
+diff --git a/apps/cap-vision-astro/src/layouts/Layout.astro b/apps/cap-vision-astro/src/layouts/Layout.astro
+index fe9d257..230e207 100644
+--- a/apps/cap-vision-astro/src/layouts/Layout.astro
++++ b/apps/cap-vision-astro/src/layouts/Layout.astro
+@@ -2,9 +2,13 @@
+ interface Props {
+ 	title?: string;
+ 	description?: string;
++	noindex?: boolean;
++	image?: string;
+ }
+ 
+ const { 
++  noindex = false,
++  image = '/images/denmasterfa.jpg',
+   title = "รับจัดอบรม In-house Training | พัฒนาผู้นำและทีมองค์กร | CAP Vision Institute",
+   description = "พัฒนาคนให้เปลี่ยนวิธีคิด สร้างทีมให้ทำงานได้จริง ยกระดับองค์กรด้วย In-house Training และ Customized Learning โดย ครูเด่น Master Facilitator ประสบการณ์ 18+ ปี"
+ } = Astro.props;
+@@ -17,6 +21,10 @@ import '../styles/global.css';
+ 
+ // Match the slashless URLs already used in the sitemap; strip tracking queries.
+ const canonicalPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
++const socialImage = (() => {
++  try { const url = new URL(image, 'https://capvisionpartner.com'); return ['https:', 'http:'].includes(url.protocol) ? url.href : 'https://capvisionpartner.com/images/denmasterfa.jpg'; }
++  catch { return 'https://capvisionpartner.com/images/denmasterfa.jpg'; }
++})();
+ const canonicalUrl = new URL(canonicalPath, 'https://capvisionpartner.com').toString();
+ ---
+ 
+@@ -29,6 +37,7 @@ const canonicalUrl = new URL(canonicalPath, 'https://capvisionpartner.com').toSt
+ 		<meta name="generator" content={Astro.generator} />
+ 		<title>{title}</title>
+ 		<meta name="description" content={description} />
++		{noindex && <meta name="robots" content="noindex, follow" />}
+ 		
+ 		<meta name="keywords" content="บริษัทฝึกอบรม, สถาบันฝึกอบรม, บริษัทจัดฝึกอบรม, รับจัดอบรม In-house Training, ฝึกอบรม, อบรมองค์กร, ศูนย์ฝึกอบรม, พัฒนาบุคลากร, พัฒนาผู้นำ, Leadership Development, Team Building, Growth Mindset, Master Facilitator, CAP Vision Institute, ครูเด่น มาสเตอร์ฟา, อบรมใกล้ฉัน, อบรมปทุมธานี, อบรมกรุงเทพ" />
+ 		<meta name="author" content="CAP Vision Institute" />
+@@ -39,7 +48,7 @@ const canonicalUrl = new URL(canonicalPath, 'https://capvisionpartner.com').toSt
+ 		<meta property="og:url" content={canonicalUrl} />
+ 		<meta property="og:title" content={title} />
+ 		<meta property="og:description" content={description} />
+-		<meta property="og:image" content="https://capvisionpartner.com/images/og-capvision.jpg" />
++		<meta property="og:image" content={socialImage} />
+ 		<meta property="og:locale" content="th_TH" />
+ 		<meta property="og:site_name" content="CAP Vision Institute" />
+ 		
+@@ -47,7 +56,7 @@ const canonicalUrl = new URL(canonicalPath, 'https://capvisionpartner.com').toSt
+ 		<meta name="twitter:card" content="summary_large_image" />
+ 		<meta name="twitter:title" content={title} />
+ 		<meta name="twitter:description" content={description} />
+-		<meta name="twitter:image" content="https://capvisionpartner.com/images/og-capvision.jpg" />
++		<meta name="twitter:image" content={socialImage} />
+ 
+ 		<!-- Geo Tags for Local SEO -->
+ 		<meta name="geo.region" content="TH-13" />
+@@ -61,90 +70,77 @@ const canonicalUrl = new URL(canonicalPath, 'https://capvisionpartner.com').toSt
+ 		<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800;900&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+ 		
+ 		<!-- JSON-LD Structured Data Schema (SEO/AEO/GEO) -->
+-		<script type="application/ld+json" is:inline>
+-		{
+-			"@context": "https://schema.org",
+-			"@graph": [
+-				{
+-					"@type": ["EducationalOrganization", "ProfessionalService"],
+-					"@id": "https://capvisionpartner.com/#organization",
+-					"name": "CAP Vision Institute",
+-					"alternateName": ["สถาบันพัฒนาผู้นำและองค์กร แคป วิชั่น", "บริษัทจัดฝึกอบรม CAP Vision", "CAP Vision Training"],
+-					"url": "https://capvisionpartner.com",
+-					"logo": "https://capvisionpartner.com/images/logo.png",
+-					"telephone": "+66-93-223-5919",
+-					"email": "contact@capvisionpartner.com",
+-					"priceRange": "$$$",
+-					"address": {
+-						"@type": "PostalAddress",
+-						"addressLocality": "ลำลูกกา",
+-						"addressRegion": "ปทุมธานี / กรุงเทพมหานคร",
+-						"addressCountry": "TH",
+-						"postalCode": "12130"
+-					},
+-					"geo": {
+-						"@type": "GeoCoordinates",
+-						"latitude": 13.9317,
+-						"longitude": 100.6974
+-					},
+-					"areaServed": [
+-						{ "@type": "Country", "name": "Thailand" },
+-						{ "@type": "AdministrativeArea", "name": "กรุงเทพมหานคร" },
+-						{ "@type": "AdministrativeArea", "name": "ปทุมธานี" },
+-						{ "@type": "AdministrativeArea", "name": "สมุทรปราการ" },
+-						{ "@type": "AdministrativeArea", "name": "ชลบุรี" },
+-						{ "@type": "AdministrativeArea", "name": "ระยอง" }
+-					],
+-					"founder": {
+-						"@type": "Person",
+-						"name": "อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)",
+-						"jobTitle": "Master Facilitator & Executive Coach",
+-						"description": "ผู้เชี่ยวชาญด้านกระบวนการเรียนรู้เพื่อการเปลี่ยนแปลง (Transformative Learning) และผู้ออกแบบหลักสูตรพัฒนาผู้นำองค์กร ประสบการณ์ 18+ ปี",
+-						"sameAs": ["https://capvisionpartner.com/speakers"]
+-					},
+-					"description": "บริษัทจัดฝึกอบรม In-house Training และสถาบันพัฒนาบุคลากรชั้นนำ ออกแบบหลักสูตร Leadership, Team Building, Growth Mindset และ OD Consulting สำหรับองค์กรทั่วประเทศไทย"
+-				},
+-				{
+-					"@type": "FAQPage",
+-					"@id": "https://capvisionpartner.com/#faq",
+-					"mainEntity": [
+-						{
+-							"@type": "Question",
+-							"name": "บริษัทฝึกอบรม หรือ สถาบันฝึกอบรม CAP Vision ให้บริการด้านใดบ้าง?",
+-							"acceptedAnswer": {
+-								"@type": "Answer",
+-								"text": "CAP Vision Institute เป็นสถาบันและบริษัทจัดฝึกอบรม In-house Training ครบวงจร ให้บริการออกแบบหลักสูตรพัฒนาบุคลากรเฉพาะองค์กร (Customized Learning) ทั้งหลักสูตรภาวะผู้นำ (Leadership), Team Building, การสื่อสารองค์กร (Communication), Service Mind และการให้คำปรึกษาพัฒนาองค์กร (OD Consulting) โดย ครูเด่น มาสเตอร์ฟา"
+-							}
+-						},
+-						{
+-							"@type": "Question",
+-							"name": "ควรจัดอบรม In-house Training หัวข้ออะไรดีสำหรับปี 2026?",
+-							"acceptedAnswer": {
+-								"@type": "Answer",
+-								"text": "หลักสูตรยอดนิยมสำหรับองค์กรยุคนี้คือ Facilitative Leadership, Growth Mindset, Effective & Empathetic Communication, Team Synergy และ OKRs ซึ่งทีมวิทยากรจะออกแบบเนื้อหาให้ตรงกับปัญหาและเป้าหมายขององค์กรอย่างแท้จริง"
+-							}
+-						},
+-						{
+-							"@type": "Question",
+-							"name": "ทำไมถึงควรเลือก CAP Vision Institute สำหรับการพัฒนาบุคลากร?",
+-							"acceptedAnswer": {
+-								"@type": "Answer",
+-								"text": "เพราะเราไม่ใช่แค่สอนทฤษฎี แต่เน้นการสร้าง 'กระบวนการเรียนรู้เชิงประสบการณ์' (Experiential Facilitation) ให้ผู้เข้าอบรมได้คิด ค้นพบ และนำไปใช้จริง โดย ครูเด่น มาสเตอร์ฟา ที่มีประสบการณ์ฝึกอบรมองค์กรชั้นนำกว่า 18 ปี"
+-							}
+-						},
+-						{
+-							"@type": "Question",
+-							"name": "CAP Vision Institute ให้บริการจัดฝึกอบรมในพื้นที่ใดบ้าง (Local / Onsite)?",
+-							"acceptedAnswer": {
+-								"@type": "Answer",
+-								"text": "เราให้บริการจัดฝึกอบรมนอกสถานที่ (On-site Training) ถึงสถานประกอบการของลูกค้าทั่วประเทศ ทั้งกรุงเทพมหานคร, ปทุมธานี (โซนรังสิต/ลำลูกกา), สมุทรปราการ, ชลบุรี, ระยอง และต่างจังหวัดทั่วไทย รวมถึงรูปแบบ Online Interactive Workshop"
+-							}
+-						}
+-					]
+-				}
+-			]
+-		}
+-		</script>
++		<script type="application/ld+json" is:inline>{
++  "@context": "https://schema.org",
++  "@graph": [
++    {
++      "@type": [
++        "EducationalOrganization",
++        "ProfessionalService"
++      ],
++      "@id": "https://capvisionpartner.com/#organization",
++      "name": "CAP Vision Institute",
++      "alternateName": [
++        "สถาบันพัฒนาผู้นำและองค์กร แคป วิชั่น",
++        "บริษัทจัดฝึกอบรม CAP Vision",
++        "CAP Vision Training"
++      ],
++      "url": "https://capvisionpartner.com",
++      "logo": "https://capvisionpartner.com/images/logo.png",
++      "telephone": "+66-93-223-5919",
++      "email": "contact@capvisionpartner.com",
++      "priceRange": "$$$",
++      "address": {
++        "@type": "PostalAddress",
++        "addressLocality": "ลำลูกกา",
++        "addressRegion": "ปทุมธานี / กรุงเทพมหานคร",
++        "addressCountry": "TH",
++        "postalCode": "12130"
++      },
++      "geo": {
++        "@type": "GeoCoordinates",
++        "latitude": 13.9317,
++        "longitude": 100.6974
++      },
++      "areaServed": [
++        {
++          "@type": "Country",
++          "name": "Thailand"
++        },
++        {
++          "@type": "AdministrativeArea",
++          "name": "กรุงเทพมหานคร"
++        },
++        {
++          "@type": "AdministrativeArea",
++          "name": "ปทุมธานี"
++        },
++        {
++          "@type": "AdministrativeArea",
++          "name": "สมุทรปราการ"
++        },
++        {
++          "@type": "AdministrativeArea",
++          "name": "ชลบุรี"
++        },
++        {
++          "@type": "AdministrativeArea",
++          "name": "ระยอง"
++        }
++      ],
++      "founder": {
++        "@type": "Person",
++        "name": "อนุสรณ์ หนองนา (ครูเด่น มาสเตอร์ฟา)",
++        "jobTitle": "Master Facilitator & Executive Coach",
++        "description": "ผู้เชี่ยวชาญด้านกระบวนการเรียนรู้เพื่อการเปลี่ยนแปลง (Transformative Learning) และผู้ออกแบบหลักสูตรพัฒนาผู้นำองค์กร ประสบการณ์ 18+ ปี",
++        "sameAs": [
++          "https://capvisionpartner.com/speakers"
++        ]
++      },
++      "description": "บริษัทจัดฝึกอบรม In-house Training และสถาบันพัฒนาบุคลากรชั้นนำ ออกแบบหลักสูตร Leadership, Team Building, Growth Mindset และ OD Consulting สำหรับองค์กรทั่วประเทศไทย"
++    }
++  ]
++}</script>
+ 
+ 		<style is:global>
+ 			body {
+diff --git a/apps/cap-vision-astro/src/lib/public-content.d.mts b/apps/cap-vision-astro/src/lib/public-content.d.mts
+new file mode 100644
+index 0000000..df9ac44
+--- /dev/null
++++ b/apps/cap-vision-astro/src/lib/public-content.d.mts
+@@ -0,0 +1,8 @@
++export interface ContentResult {status: 200 | 404 | 503; data: any;}
++export function isPublicSlug(slug: unknown): boolean;
++export function loadPublishedRecord(client: import('@supabase/supabase-js').SupabaseClient, table: string, slug: string, options?: {select?: string; publishedColumn?: string; timeoutMs?: number}): Promise<ContentResult>;
++export function normalizeDatabaseArticle(row: any): any;
++export function staticArticle(article: any): any;
++export function resolveArticle(slug: string, options: {bundled?: Record<string, any>; fallback?: any[]; lookup: (slug: string) => Promise<ContentResult>}): Promise<ContentResult>;
++export function plainDescription(value: unknown): string;
++export function articleMetadata(article: any): {title: string; description: string};
+diff --git a/apps/cap-vision-astro/src/lib/public-content.mjs b/apps/cap-vision-astro/src/lib/public-content.mjs
+new file mode 100644
+index 0000000..3ff20ac
+--- /dev/null
++++ b/apps/cap-vision-astro/src/lib/public-content.mjs
+@@ -0,0 +1,44 @@
++// Shared server lookup: absence is different from an unavailable database.
++export function isPublicSlug(slug) {
++  return typeof slug === 'string' && slug.length <= 180 && /^[\p{L}\p{N}][\p{L}\p{N}\p{M}_-]*$/u.test(slug);
++}
++export async function loadPublishedRecord(client, table, slug, options = {}) {
++  if (!isPublicSlug(slug)) return {status: 404, data: null};
++  try {
++    const {data, error} = await client.from(table).select(options.select || '*')
++      .eq('slug', slug).eq(options.publishedColumn || 'published', true)
++      .abortSignal(AbortSignal.timeout(options.timeoutMs || 5000)).maybeSingle();
++    if (error) return {status: 503, data: null};
++    return {status: data ? 200 : 404, data: data || null};
++  } catch { return {status: 503, data: null}; }
++}
++export function normalizeDatabaseArticle(row) {
++  if (!row || !row.content || typeof row.content !== 'object') return null;
++  return {...row.content, title: row.title || row.content.title, slug: row.slug,
++    category: row.category, thumbnail: row.thumbnail, author: row.author,
++    date: row.date_label, readTime: row.read_time};
++}
++export function staticArticle(article) {
++  return {id: article.id, slug: article.id, title: article.title, category: article.category || 'HRD Insight',
++    thumbnail: article.thumbnail, author: 'ครูเด่น มาสเตอร์ฟา', date: article.date,
++    readTime: '5 นาที', excerpt: article.excerpt, sections: [{type:'text', content:article.excerpt}]};
++}
++export async function resolveArticle(slug, {bundled = {}, fallback = [], lookup}) {
++  if (!isPublicSlug(slug)) return {status:404, data:null};
++  if (Object.hasOwn(bundled, slug)) return {status:200, data:bundled[slug]};
++  const result = await lookup(slug);
++  if (result.status === 200) {
++    const data = normalizeDatabaseArticle(result.data);
++    if (data?.title) return {status:200, data};
++  }
++  const article = fallback.find(a => a.id === slug);
++  if (article) return {status:200, data:staticArticle(article)};
++  return {status:result.status === 404 ? 404 : 503, data:null};
++}
++export function plainDescription(value) {
++  return typeof value === 'string' ? value.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim() : '';
++}
++export function articleMetadata(article) {
++  return {title: article.seo?.meta_title || article.seo?.metaTitle || `${article.title} | CAP Vision Insight`,
++    description: plainDescription(article.seo?.meta_description || article.seo?.metaDescription || article.summary || article.excerpt || article.title)};
++}
+diff --git a/apps/cap-vision-astro/src/lib/server-articles.ts b/apps/cap-vision-astro/src/lib/server-articles.ts
+new file mode 100644
+index 0000000..444364a
+--- /dev/null
++++ b/apps/cap-vision-astro/src/lib/server-articles.ts
+@@ -0,0 +1,10 @@
++import { supabase } from './supabase';
++import { HRD_ARTICLES } from '../constants/articles';
++import { loadPublishedRecord, resolveArticle } from './public-content.mjs';
++// These JSON files match public/content/blog/posts; bundle them for Worker SSR.
++const files = import.meta.glob('../data/blog/posts/*.json', {eager: true, import: 'default'});
++const bundled = Object.fromEntries(Object.entries(files).map(([path, article]) => [path.split('/').pop()!.replace(/\.json$/, ''), article]));
++export const loadServerArticle = (slug: string) => resolveArticle(slug, {
++  bundled, fallback: HRD_ARTICLES,
++  lookup: value => loadPublishedRecord(supabase, 'blog_articles', value)
++});
+diff --git a/apps/cap-vision-astro/src/pages/404.astro b/apps/cap-vision-astro/src/pages/404.astro
+index cf6f2e4..27c1c26 100644
+--- a/apps/cap-vision-astro/src/pages/404.astro
++++ b/apps/cap-vision-astro/src/pages/404.astro
+@@ -3,9 +3,10 @@ import Layout from '../layouts/Layout.astro';
+ 
+ // SSR for dynamic route fallbacks
+ export const prerender = false;
++Astro.response.status = 404;
+ ---
+ 
+-<Layout title="ไม่พบหน้า | CAP Vision Institute" description="ขออภัย ไม่พบหน้าที่คุณต้องการในระบบ">
++<Layout noindex title="ไม่พบหน้า | CAP Vision Institute" description="ขออภัย ไม่พบหน้าที่คุณต้องการในระบบ">
+   <div class="min-h-[80vh] bg-gray-50 flex items-center justify-center p-6 pt-28">
+     <div class="text-center bg-white p-12 md:p-20 rounded-[3rem] shadow-2xl max-w-2xl border border-gray-100/50 relative overflow-hidden group">
+       {/* Background Accent */}
+diff --git a/apps/cap-vision-astro/src/pages/courses/[slug].astro b/apps/cap-vision-astro/src/pages/courses/[slug].astro
+index d2b15f7..84842c0 100644
+--- a/apps/cap-vision-astro/src/pages/courses/[slug].astro
++++ b/apps/cap-vision-astro/src/pages/courses/[slug].astro
+@@ -8,31 +8,26 @@ export const prerender = false;
+ 
+ const { slug } = Astro.params;
+ 
+-// Fetch individual course from Supabase by slug
+-let course = null;
+-let fetchError = null;
+-
+-try {
+-  const { data, error } = await supabase
+-    .from('courses')
+-    .select('*, instructor:instructor_id(*)')
+-    .eq('slug', slug)
+-    .eq('is_published', true)
+-    .single();
+-
+-  if (error) {
+-    throw error;
+-  }
+-  course = data;
+-} catch (err: any) {
+-  console.error(`Error fetching course [${slug}] in Astro SSR:`, err);
+-  fetchError = err.message || err;
++import { loadPublishedRecord, plainDescription } from '../../lib/public-content.mjs';
++const result = await loadPublishedRecord(supabase, 'courses', slug || '', {
++  select: '*, instructor:instructor_id(*)', publishedColumn: 'is_published'
++});
++const course = result.data;
++const unavailable = result.status === 503;
++Astro.response.status = result.status;
++if (unavailable) {
++  Astro.response.headers.set('Retry-After', '60');
++  Astro.response.headers.set('Cache-Control', 'no-store');
+ }
++const errorTitle = unavailable ? 'ข้อมูลหลักสูตรยังไม่พร้อมใช้งาน' : 'ไม่พบหลักสูตรที่คุณต้องการ';
++
+ ---
+ 
+-<Layout 
+-  title={course ? `${course.title} | CAP Vision Institute` : "ไม่พบหลักสูตร | CAP Vision Institute"}
+-  description={course ? course.description : "ขออภัย ไม่พบหลักสูตรที่คุณต้องการในระบบ"}
++<Layout
++  noindex={!course}
++  image={course?.thumbnail}
++  title={course ? `${course.title} | CAP Vision Institute` : `${errorTitle} | CAP Vision Institute`}
++  description={course ? plainDescription(course.description) : errorTitle}
+ >
+ 	<main class="flex-grow pt-20">
+ 		{!course ? (
+@@ -41,9 +36,9 @@ try {
+ 					<div class="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+ 						<span class="text-4xl font-bold">!</span>
+ 					</div>
+-					<h2 class="text-3xl font-black text-[#0f3460] mb-4 nav-font">ขออภัย ไม่พบหลักสูตรที่คุณต้องการ</h2>
+-					<p class="text-gray-500 mb-8 font-medium">หลักสูตรนี้อาจถูกย้าย หรือไม่มีอยู่ในระบบปัจจุบัน</p>
+-					{fetchError && <p class="text-xs text-red-400 mb-6">Error Log: {fetchError}</p>}
++					<h2 class="text-3xl font-black text-[#0f3460] mb-4 nav-font">{errorTitle}</h2>
++					<p class="text-gray-500 mb-8 font-medium">{unavailable ? 'กรุณาลองใหม่อีกครั้ง หรือปรึกษาทีมงานผ่านหน้าติดต่อ' : 'หลักสูตรนี้อาจถูกย้าย หรือไม่มีอยู่ในระบบปัจจุบัน'}</p>
++
+ 					<a href="/courses" class="inline-flex items-center gap-2 bg-[#0f3460] text-white px-8 py-4 rounded-2xl font-bold nav-font transition-all hover:bg-[#c5a059]">
+ 						กลับสู่หน้าหลักสูตร
+ 					</a>
+diff --git a/apps/cap-vision-astro/src/pages/resources/[slug].astro b/apps/cap-vision-astro/src/pages/resources/[slug].astro
+index cf435e6..680ec35 100644
+--- a/apps/cap-vision-astro/src/pages/resources/[slug].astro
++++ b/apps/cap-vision-astro/src/pages/resources/[slug].astro
+@@ -1,18 +1,26 @@
+ ---
+ import Layout from '../../layouts/Layout.astro';
+ import BlogArticleDetailPage from '../../components/BlogArticleDetailPage';
+-import { HRD_ARTICLES } from '../../constants/articles';
+-
++import { loadServerArticle } from '../../lib/server-articles';
++import { articleMetadata } from '../../lib/public-content.mjs';
+ export const prerender = false;
+-const { slug } = Astro.params;
+-const decodedSlug = decodeURIComponent(slug || '');
+-
+-// Pre-render metadata from static constants for SEO, AEO, and GEO
+-const staticArt = HRD_ARTICLES.find(a => a.id === decodedSlug);
+-const metaTitle = staticArt ? `${staticArt.title} | CAP Vision Insight` : "CAP Vision Insight | คลังความรู้พัฒนาคนและองค์กร";
+-const metaDesc = staticArt ? staticArt.excerpt : "บทความ เทคนิค และเครื่องมือการพัฒนาบุคลากร การสื่อสาร และการสร้างภาวะผู้นำสำหรับผู้นำองค์กรยุคใหม่ โดย ครูเด่น มาสเตอร์ฟา";
++const slug = Astro.params.slug || '';
++const result = await loadServerArticle(slug);
++Astro.response.status = result.status;
++const unavailable = result.status === 503;
++if (unavailable) {
++  Astro.response.headers.set('Retry-After', '60');
++  Astro.response.headers.set('Cache-Control', 'no-store');
++}
++const errorTitle = unavailable ? 'ข้อมูลบทความยังไม่พร้อมใช้งาน' : 'ไม่พบบทความที่คุณต้องการ';
++const metadata = result.data ? articleMetadata(result.data) : {title: `${errorTitle} | CAP Vision Insight`, description: errorTitle};
+ ---
+-
+-<Layout title={metaTitle} description={metaDesc}>
+-  <BlogArticleDetailPage client:load slug={decodedSlug} />
++<Layout title={metadata.title} description={metadata.description} image={result.data?.thumbnail} noindex={!result.data}>
++  {result.data ? <BlogArticleDetailPage client:load slug={slug} initialArticle={result.data} /> : (
++    <section class="min-h-[60vh] flex flex-col items-center justify-center px-6 pt-28 text-center">
++      <h1 class="text-3xl font-bold mb-4">{errorTitle}</h1>
++      <p class="mb-6">{unavailable ? 'กรุณาลองใหม่อีกครั้ง หรือปรึกษาทีมงานผ่านหน้าติดต่อ' : 'บทความนี้อาจถูกลบหรือย้ายที่อยู่แล้ว'}</p>
++      <a href="/resources" class="underline">กลับหน้าคลังความรู้</a>
++    </section>
++  )}
+ </Layout>
+diff --git a/apps/cap-vision-astro/tests/public-content.test.mjs b/apps/cap-vision-astro/tests/public-content.test.mjs
+new file mode 100644
+index 0000000..c42bbcb
+--- /dev/null
++++ b/apps/cap-vision-astro/tests/public-content.test.mjs
+@@ -0,0 +1,39 @@
++import {test} from 'node:test';
++import assert from 'node:assert/strict';
++import {loadPublishedRecord, resolveArticle, articleMetadata, isPublicSlug} from '../src/lib/public-content.mjs';
++function client(result, reject=false) {
++  const calls=[];
++  const query = {select:x=>{calls.push(['select',x]);return query;},eq:(...args)=>{calls.push(args);return query;},
++    abortSignal:signal=>{assert.ok(signal instanceof AbortSignal);return query;},maybeSingle:async()=>{if(reject) throw Error('private');return result;}};
++  return {calls,from:table=>{calls.push(['table',table]);return query;}};
++}
++test('published record distinguishes absence from service failure',async()=>{
++  for(const [result,status] of [[{data:{title:'Published'},error:null},200],[{data:null,error:null},404],[{data:null,error:{code:'PGRST116'}},503]]) {
++    const c=client(result); assert.equal((await loadPublishedRecord(c,'courses','valid-slug',{publishedColumn:'is_published'})).status,status);
++    assert.ok(c.calls.some(v=>v[0]==='is_published'&&v[1]===true));
++  }
++  assert.deepEqual(await loadPublishedRecord(client({},true),'courses','valid-slug'),{status:503,data:null});
++});
++test('invalid slugs never query the database',async()=>{
++  const c=client({});
++  for(const slug of ['', '../admin','%2Fadmin','a/b','a'.repeat(181)]) {
++    assert.equal(isPublicSlug(slug),false);assert.equal((await loadPublishedRecord(c,'courses',slug)).status,404);
++  }
++  assert.equal(c.calls.length,0);assert.equal(isPublicSlug('ผู้นำ-ยุคใหม่'),true);
++});
++test('bundled full article renders without a database dependency',async()=>{
++  const article={title:'Full',summary:'Actual summary',seo:{meta_title:'Actual SEO'}};
++  const result=await resolveArticle('known',{bundled:{known:article},lookup:()=>{throw Error('must not query');}});
++  assert.equal(result.status,200);assert.equal(result.data,article);assert.equal(articleMetadata(result.data).title,'Actual SEO');
++});
++test('database-only articles normalize actual title and metadata',async()=>{
++  const result=await resolveArticle('database-only',{lookup:async()=>({status:200,data:{slug:'database-only',title:'DB title',content:{summary:'<b>Summary</b>'}}})});
++  assert.equal(result.data.title,'DB title');assert.equal(articleMetadata(result.data).description,'Summary');
++});
++test('fallback stays usable during an outage; unknown article returns 503',async()=>{
++  const lookup=async()=>({status:503,data:null});
++  const result=await resolveArticle('fallback',{fallback:[{id:'fallback',title:'Existing',excerpt:'Known content'}],lookup});
++  assert.equal(result.status,200);assert.equal(result.data.sections[0].content,'Known content');
++  assert.deepEqual(await resolveArticle('unknown',{lookup}),{status:503,data:null});
++  assert.deepEqual(await resolveArticle('unknown',{lookup:async()=>({status:404,data:null})}),{status:404,data:null});
++});
+diff --git a/apps/cap-vision-astro/tests/seo-rendered.mjs b/apps/cap-vision-astro/tests/seo-rendered.mjs
+index 189925f..2e9924a 100644
+--- a/apps/cap-vision-astro/tests/seo-rendered.mjs
++++ b/apps/cap-vision-astro/tests/seo-rendered.mjs
+@@ -15,6 +15,16 @@ for (const path of [...paths, '/contact/?utm_source=test', '/resources/flow-stat
+   for (const [,json] of html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)) JSON.parse(json);
+   console.log(`PASS ${path}`);
+ }
++const article = await (await fetch(base+'/resources/leader-as-facilitator')).text();
++assert.ok(article.includes('ทำไมผู้นำที่ดี ต้องเป็น Facilitator'));
++assert.ok(!article.includes('กำลังโหลดเนื้อหา...'));
++assert.ok(article.includes('Instructor บอกคำตอบ'));
++assert.ok(!article.includes('"@type": "FAQPage"'));
++console.log('PASS full article SSR and matching metadata');
++const invalidCourse = await fetch(base+'/courses/invalid%2Fslug');
++assert.equal(invalidCourse.status,404);
++assert.ok((await invalidCourse.text()).includes('noindex, follow'));
++console.log('PASS invalid course 404/noindex');
+ const missing = await fetch(base+'/nonexistent-qa-page');
+ assert.equal(missing.status,404);
+ console.log('PASS missing route 404');
+diff --git a/apps/cap-vision-astro/tests/tsconfig.public.json b/apps/cap-vision-astro/tests/tsconfig.public.json
+new file mode 100644
+index 0000000..5fb4c2d
+--- /dev/null
++++ b/apps/cap-vision-astro/tests/tsconfig.public.json
+@@ -0,0 +1,8 @@
++{
++  "extends": "../tsconfig.json",
++  "include": [
++    "../.astro/types.d.ts",
++    "../src/lib/server-articles.ts",
++    "../src/components/BlogArticleDetailPage.tsx"
++  ]
++}
+diff --git a/apps/cap-vision-astro/tsconfig.json b/apps/cap-vision-astro/tsconfig.json
+index 0a51930..37335d4 100644
+--- a/apps/cap-vision-astro/tsconfig.json
++++ b/apps/cap-vision-astro/tsconfig.json
+@@ -3,16 +3,32 @@
+   "compilerOptions": {
+     "jsx": "react-jsx",
+     "jsxImportSource": "react",
+-    "baseUrl": ".",
+     "paths": {
+-      "@/*": ["./src/*"],
+-      "@kru-den/core": ["../../packages/core/src/index.ts"],
+-      "@kru-den/core/*": ["../../packages/core/src/*"],
+-      "@kru-den/database": ["../../packages/database/src/index.ts"],
+-      "@kru-den/integrations": ["../../packages/integrations/src/index.ts"],
+-      "@kru-den/integrations/*": ["../../packages/integrations/src/*"]
++      "@/*": [
++        "./src/*"
++      ],
++      "@kru-den/core": [
++        "../../packages/core/src/index.ts"
++      ],
++      "@kru-den/core/*": [
++        "../../packages/core/src/*"
++      ],
++      "@kru-den/database": [
++        "../../packages/database/src/index.ts"
++      ],
++      "@kru-den/integrations": [
++        "../../packages/integrations/src/index.ts"
++      ],
++      "@kru-den/integrations/*": [
++        "../../packages/integrations/src/*"
++      ]
+     }
+   },
+-  "include": [".astro/types.d.ts", "**/*"],
+-  "exclude": ["dist"]
++  "include": [
++    ".astro/types.d.ts",
++    "**/*"
++  ],
++  "exclude": [
++    "dist"
++  ]
+ }
+diff --git a/docs/qa/2026-10-12-public-content-seo.md b/docs/qa/2026-10-12-public-content-seo.md
+new file mode 100644
+index 0000000..69373de
+--- /dev/null
++++ b/docs/qa/2026-10-12-public-content-seo.md
+@@ -0,0 +1,41 @@
++# CAP Vision — Public Content & SEO Reliability
++
++ฐานพัฒนา: main commit 41840b5b2496aa64a57c1517f3cac8df7d948e2c.
++PR #4 ถูก merged แล้ว. Commit ล่าสุดเพิ่มสำเนาชุดอัปเดตใน CAP-Vision-PR4-Update/; สำเนานี้เป็นเอกสารอ้างอิง ไม่ใช่ source ที่ build ใช้งาน. รอบนี้ไม่แก้หรือลบสำเนานั้น.
++
++## ผลตรวจและงานที่แก้
++
++1. courses/[slug] เดิมคืน 200 เมื่อไม่พบข้อมูลและแสดง Error Log. ใช้ maybeSingle แยก empty result = 404, database/network error = 503 พร้อม Retry-After: 60 และ Cache-Control: no-store. ทั้งสองกรณี noindex และไม่แสดง raw error. Lookup จำกัด published records พร้อม timeout 5 วินาทีและตรวจ slug รวมภาษาไทย.
++2. resources/[slug] เดิมมี metadata จาก constants แต่ React แสดงเพียง loading ใน HTML แรก แล้ว fetch JSON/DB ใน browser. รอบนี้ resolve บน server ตามลำดับ JSON ที่ bundled → published database article → existing constants. ส่ง initialArticle เข้า React ให้เนื้อหาและ metadata ตรงกันตั้งแต่ SSR และหลัง hydration.
++3. JSON ทั้ง 40 ไฟล์ใน src/data และ public/content ตรงกันทั้งหมด. Build สร้าง sitemap 49 URL: 9 หน้าหลัก + 40 บทความ. Generator ตรวจสำเนาทั้งสองชุดและ fail หากต่างกันเพื่อป้องกัน SSR/client content drift.
++4. Layout รองรับ noindex และ social image รายหน้า; เปลี่ยน default image ที่ไม่มีไฟล์ใน repo เป็น images/denmasterfa.jpg ที่มีจริง. ไม่สร้างภาพหรือ testimonial เพิ่ม.
++5. เอา FAQPage schema แบบเดียวที่ใส่ซ้ำทุกหน้าออก เพราะไม่ตรงกับ FAQ ที่ผู้ใช้เห็นในหน้าแรก. คง Organization schema และเนื้อหา FAQ ที่แสดงไว้. ยังไม่ได้เพิ่ม schema แบบรายบทความ.
++6. 404 route ส่ง status 404/noindex ชัดเจน. เพิ่ม read-only verify-release script สำหรับตรวจ staging/หลัง deploy ว่า homepage metadata, canonical/OG, SSR article และ consent UI เป็น build ใหม่.
++7. แก้ tsconfig โดยนำ baseUrl ที่ TypeScript 7 ไม่รองรับออก; คง paths aliases เดิม. เพิ่ม typecheck:public และ GitHub Actions QA สำหรับ PR เท่านั้น ไม่มี merge/deploy/migration step.
++
++## ผลทดสอบ
++
++- npm test: 12 tests ผ่าน รวม 7 capture/CRM/RLS tests เดิม และ 5 public content tests ใหม่. Database tests ใช้ isolated PGlite; ไม่ส่งข้อมูลลูกค้าเข้า production.
++- npm run build ผ่าน.
++- typecheck:public ผ่านสำหรับ server article loader, React article component และ imports. ไม่อ้างว่า typecheck ทั้ง monorepo ผ่าน.
++- Built Worker local HTTP QA: ครบ 49 sitemap URLs, query/trailing-slash variant และ resource sample ผ่าน status/canonical/OG/title/JSON-LD parse.
++- ยืนยันเนื้อหา leader-as-facilitator ปรากฏใน HTML แรก ไม่ใช่ loading screen; invalid course slug 404/noindex; missing route 404; admin login noindex.
++- verify-release ผ่านสำหรับ /, /contact, /services และ /resources/leader-as-facilitator บน local built Worker.
++- Local Wrangler ใช้ scratch-only network-interface shim เนื่องจาก runtime ไม่รองรับ os.networkInterfaces; shim ไม่รวมใน Git.
++- GitHub Actions เพิ่งเพิ่มใน PR นี้ ต้องดูผล CI หลังเปิด PR; ไม่ถือว่าผ่านก่อน GitHub รายงาน.
++
++## เว็บไซต์ที่ใช้งานจริง
++
++การอ่านหน้าแรกผ่าน web retrieval ได้หน้า Astro ที่แสดง copywriting ใหม่จาก PR #2 แต่ title ยังเป็นข้อความเดิมก่อน PR #3. จึงยังไม่ยืนยันว่า deploy ล่าสุดขึ้น origin แล้ว; retrieval อาจเป็น cached page.
++การตรวจ HTTP หลาย URL จาก execution environment ได้ 403 จึงใช้ผลนี้ยืนยันสถานะ Production ไม่ได้. ไม่สรุปว่าเว็บไซต์ล่มหรือ route ทั้งหมดคืน 403 ให้ผู้ใช้จริง.
++ให้รัน `node scripts/verify-release.mjs --base=https://capvisionpartner.com` จากเครือข่ายที่เข้าถึงเว็บได้หลังผู้ดูแลอนุมัติและเผยแพร่. Script อ่าน HTTP เท่านั้น.
++
++## ข้อค้างก่อนรับรองทั้งระบบ
++
++- Published course และ DB-only article ต้องตรวจกับ staging Supabase จริง; helper ทดสอบด้วย fixtures แล้ว แต่ไม่ได้รับรองข้อมูลและ policy ของ live DB.
++- Browser hydration, ฟอร์มจริง → Lead → LINE → CRM และ allowlisted staff ต้องทำ E2E บน staging. รอบนี้ไม่เปลี่ยน SQL migration หรือข้อมูลจริง.
++- GA4/GTM collector ยังไม่ได้เชื่อม; events/consent จาก PR #4 คงอยู่.
++- Sitemap รวม bundled content เท่านั้น; DB-only articles/courses ต้องเพิ่ม dynamic sitemap หลังยืนยัน schema และวิธี deploy.
++- Repo มีทั้ง root Vite deploy scripts, Astro Worker deployment และ VPS webhook. ต้องยืนยัน artifact/target จริงก่อนอนุมัติ production deploy; รอบนี้ไม่แก้ target หรือ trigger deploy.
++
++Draft review เท่านั้น. ยังไม่ Merge, Deploy Production หรือ apply migration กับฐานจริง.

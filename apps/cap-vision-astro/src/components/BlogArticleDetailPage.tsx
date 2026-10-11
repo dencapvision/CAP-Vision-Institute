@@ -1,3 +1,4 @@
+import { articleMetadata } from '../lib/public-content.mjs';
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { HRD_ARTICLES } from '../constants/articles';
@@ -9,12 +10,13 @@ import AICoachSidebar from './LearningHub/AICoachSidebar';
 
 interface BlogArticleDetailPageProps {
   slug: string;
+  initialArticle?: any;
 }
 
-const BlogArticleDetailPage: React.FC<BlogArticleDetailPageProps> = ({ slug }) => {
-  const [articleData, setArticleData] = useState<any>(null);
-  const [isAeo, setIsAeo] = useState(false);
-  const [loading, setLoading] = useState(true);
+const BlogArticleDetailPage: React.FC<BlogArticleDetailPageProps> = ({ slug, initialArticle }) => {
+  const [articleData, setArticleData] = useState<any>(initialArticle || null);
+  const [isAeo, setIsAeo] = useState(!!initialArticle?.summary);
+  const [loading, setLoading] = useState(!initialArticle);
   const [error, setError] = useState<string | null>(null);
   const [relatedArticles, setRelatedArticles] = useState<any[]>([]);
   const [recommendedArticles, setRecommendedArticles] = useState<any[]>([]);
@@ -101,20 +103,23 @@ const BlogArticleDetailPage: React.FC<BlogArticleDetailPageProps> = ({ slug }) =
       setLoading(false);
     };
 
-    loadArticle();
+    if (!initialArticle) loadArticle();
+    else {
+      const keywords = initialArticle.seo?.keywords || [];
+      fetchRelatedArticles(slug, keywords).then(setRelatedArticles).catch(() => {});
+    }
 
     // Recommended static articles
     const recommended = HRD_ARTICLES
       .filter(a => a.id !== slug)
       .slice(0, 3);
     setRecommendedArticles(recommended);
-  }, [slug]);
+  }, [slug, initialArticle]);
 
   // Update page title/meta dynamically client-side for SEO convenience
   useEffect(() => {
     if (articleData) {
-      const metaTitle = articleData.seo?.meta_title || articleData.seo?.metaTitle || `${articleData.title} | CAP Vision Insight`;
-      const metaDesc = articleData.seo?.meta_description || articleData.seo?.metaDescription || articleData.summary || articleData.excerpt || '';
+      const {title: metaTitle, description: metaDesc} = articleMetadata(articleData);
       document.title = metaTitle;
       
       const metaDescTag = document.querySelector('meta[name="description"]');

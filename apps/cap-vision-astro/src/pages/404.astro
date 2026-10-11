@@ -3,9 +3,10 @@ import Layout from '../layouts/Layout.astro';
 
 // SSR for dynamic route fallbacks
 export const prerender = false;
+Astro.response.status = 404;
 ---
 
-<Layout title="ไม่พบหน้า | CAP Vision Institute" description="ขออภัย ไม่พบหน้าที่คุณต้องการในระบบ">
+<Layout noindex title="ไม่พบหน้า | CAP Vision Institute" description="ขออภัย ไม่พบหน้าที่คุณต้องการในระบบ">
   <div class="min-h-[80vh] bg-gray-50 flex items-center justify-center p-6 pt-28">
     <div class="text-center bg-white p-12 md:p-20 rounded-[3rem] shadow-2xl max-w-2xl border border-gray-100/50 relative overflow-hidden group">
       {/* Background Accent */}

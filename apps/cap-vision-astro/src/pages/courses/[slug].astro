@@ -8,31 +8,26 @@ export const prerender = false;
 
 const { slug } = Astro.params;
 
-// Fetch individual course from Supabase by slug
-let course = null;
-let fetchError = null;
-
-try {
-  const { data, error } = await supabase
-    .from('courses')
-    .select('*, instructor:instructor_id(*)')
-    .eq('slug', slug)
-    .eq('is_published', true)
-    .single();
-
-  if (error) {
-    throw error;
-  }
-  course = data;
-} catch (err: any) {
-  console.error(`Error fetching course [${slug}] in Astro SSR:`, err);
-  fetchError = err.message || err;
+import { loadPublishedRecord, plainDescription } from '../../lib/public-content.mjs';
+const result = await loadPublishedRecord(supabase, 'courses', slug || '', {
+  select: '*, instructor:instructor_id(*)', publishedColumn: 'is_published'
+});
+const course = result.data;
+const unavailable = result.status === 503;
+Astro.response.status = result.status;
+if (unavailable) {
+  Astro.response.headers.set('Retry-After', '60');
+  Astro.response.headers.set('Cache-Control', 'no-store');
 }
+const errorTitle = unavailable ? 'ข้อมูลหลักสูตรยังไม่พร้อมใช้งาน' : 'ไม่พบหลักสูตรที่คุณต้องการ';
+
 ---
 
-<Layout 
-  title={course ? `${course.title} | CAP Vision Institute` : "ไม่พบหลักสูตร | CAP Vision Institute"}
-  description={course ? course.description : "ขออภัย ไม่พบหลักสูตรที่คุณต้องการในระบบ"}
+<Layout
+  noindex={!course}
+  image={course?.thumbnail}
+  title={course ? `${course.title} | CAP Vision Institute` : `${errorTitle} | CAP Vision Institute`}
+  description={course ? plainDescription(course.description) : errorTitle}
 >
 	<main class="flex-grow pt-20">
 		{!course ? (
@@ -41,9 +36,9 @@ try {
 					<div class="w-20 h-20 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
 						<span class="text-4xl font-bold">!</span>
 					</div>
-					<h2 class="text-3xl font-black text-[#0f3460] mb-4 nav-font">ขออภัย ไม่พบหลักสูตรที่คุณต้องการ</h2>
-					<p class="text-gray-500 mb-8 font-medium">หลักสูตรนี้อาจถูกย้าย หรือไม่มีอยู่ในระบบปัจจุบัน</p>
-					{fetchError && <p class="text-xs text-red-400 mb-6">Error Log: {fetchError}</p>}
+					<h2 class="text-3xl font-black text-[#0f3460] mb-4 nav-font">{errorTitle}</h2>
+					<p class="text-gray-500 mb-8 font-medium">{unavailable ? 'กรุณาลองใหม่อีกครั้ง หรือปรึกษาทีมงานผ่านหน้าติดต่อ' : 'หลักสูตรนี้อาจถูกย้าย หรือไม่มีอยู่ในระบบปัจจุบัน'}</p>
+
 					<a href="/courses" class="inline-flex items-center gap-2 bg-[#0f3460] text-white px-8 py-4 rounded-2xl font-bold nav-font transition-all hover:bg-[#c5a059]">
 						กลับสู่หน้าหลักสูตร
 					</a>

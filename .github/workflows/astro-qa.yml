@@ -1,0 +1,27 @@
+name: Astro QA
+on:
+  pull_request:
+    paths:
+      - 'apps/cap-vision-astro/**'
+      - 'supabase/migrations/**'
+      - '.github/workflows/astro-qa.yml'
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: apps/cap-vision-astro
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: apps/cap-vision-astro/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm run typecheck:public

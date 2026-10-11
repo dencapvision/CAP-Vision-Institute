@@ -1,18 +1,26 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import BlogArticleDetailPage from '../../components/BlogArticleDetailPage';
-import { HRD_ARTICLES } from '../../constants/articles';
-
+import { loadServerArticle } from '../../lib/server-articles';
+import { articleMetadata } from '../../lib/public-content.mjs';
 export const prerender = false;
-const { slug } = Astro.params;
-const decodedSlug = decodeURIComponent(slug || '');
-
-// Pre-render metadata from static constants for SEO, AEO, and GEO
-const staticArt = HRD_ARTICLES.find(a => a.id === decodedSlug);
-const metaTitle = staticArt ? `${staticArt.title} | CAP Vision Insight` : "CAP Vision Insight | คลังความรู้พัฒนาคนและองค์กร";
-const metaDesc = staticArt ? staticArt.excerpt : "บทความ เทคนิค และเครื่องมือการพัฒนาบุคลากร การสื่อสาร และการสร้างภาวะผู้นำสำหรับผู้นำองค์กรยุคใหม่ โดย ครูเด่น มาสเตอร์ฟา";
+const slug = Astro.params.slug || '';
+const result = await loadServerArticle(slug);
+Astro.response.status = result.status;
+const unavailable = result.status === 503;
+if (unavailable) {
+  Astro.response.headers.set('Retry-After', '60');
+  Astro.response.headers.set('Cache-Control', 'no-store');
+}
+const errorTitle = unavailable ? 'ข้อมูลบทความยังไม่พร้อมใช้งาน' : 'ไม่พบบทความที่คุณต้องการ';
+const metadata = result.data ? articleMetadata(result.data) : {title: `${errorTitle} | CAP Vision Insight`, description: errorTitle};
 ---
-
-<Layout title={metaTitle} description={metaDesc}>
-  <BlogArticleDetailPage client:load slug={decodedSlug} />
+<Layout title={metadata.title} description={metadata.description} image={result.data?.thumbnail} noindex={!result.data}>
+  {result.data ? <BlogArticleDetailPage client:load slug={slug} initialArticle={result.data} /> : (
+    <section class="min-h-[60vh] flex flex-col items-center justify-center px-6 pt-28 text-center">
+      <h1 class="text-3xl font-bold mb-4">{errorTitle}</h1>
+      <p class="mb-6">{unavailable ? 'กรุณาลองใหม่อีกครั้ง หรือปรึกษาทีมงานผ่านหน้าติดต่อ' : 'บทความนี้อาจถูกลบหรือย้ายที่อยู่แล้ว'}</p>
+      <a href="/resources" class="underline">กลับหน้าคลังความรู้</a>
+    </section>
+  )}
 </Layout>

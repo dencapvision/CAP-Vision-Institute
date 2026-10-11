@@ -14,7 +14,8 @@ const wranglerConfig = {
     "nodejs_compat"
   ],
   assets: {
-    directory: "./client"
+    directory: "./client",
+    binding: "ASSETS"
   },
   images: {
     binding: "IMAGES"

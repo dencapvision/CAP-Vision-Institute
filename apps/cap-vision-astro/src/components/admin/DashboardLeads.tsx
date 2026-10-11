@@ -1,4 +1,6 @@
+import { canWriteLeads } from '../../lib/lead-environment';
 import React, { useState, useEffect } from 'react';
+import { PIPELINE, pipelineStage } from '../../lib/lead-workflow.mjs';
 import { supabase } from '../../lib/supabase';
 import { MessageSquare, Calendar, Mail, Phone, Building, User, CheckCircle, Clock, Search, Loader2, FileText } from 'lucide-react';
 
@@ -13,6 +15,9 @@ interface Lead {
   interest_topic: string;
   source: string;
   status: string;
+  pipeline_stage: string | null;
+  follow_up_at: string | null;
+  crm_notes: string | null;
 }
 
 const DashboardLeads: React.FC = () => {
@@ -20,6 +25,8 @@ const DashboardLeads: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [savingId, setSavingId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchLeads();
@@ -28,6 +35,11 @@ const DashboardLeads: React.FC = () => {
   const fetchLeads = async () => {
     try {
       setLoading(true);
+      setErrorMessage('');
+      const {data: {user}} = await supabase.auth.getUser();
+      if (!user) throw new Error('กรุณาเข้าสู่ระบบ');
+      const {data: admin, error: adminError} = await supabase.from('crm_admins').select('user_id').eq('user_id', user.id).maybeSingle();
+      if (adminError || !admin) throw new Error('บัญชีนี้ยังไม่ได้รับสิทธิ์ CRM หรือยังไม่ได้ติดตั้งฐานข้อมูลรุ่นใหม่');
       const { data, error } = await supabase
         .from('leads')
         .select('*')
@@ -37,26 +49,23 @@ const DashboardLeads: React.FC = () => {
       setLeads(data || []);
     } catch (error) {
       console.error('Error fetching leads:', error);
-      alert('ไม่สามารถโหลดข้อมูลรายชื่อผู้ติดต่อได้');
+      setErrorMessage(error instanceof Error ? error.message : 'ไม่สามารถโหลดข้อมูลได้');
     } finally {
       setLoading(false);
     }
   };
 
-  const updateStatus = async (id: string, newStatus: string) => {
+  const updateLead = async (id: string, changes: Partial<Lead>) => {
+    if (!canWriteLeads(window.location.hostname)) { setErrorMessage('เวอร์ชันทดสอบไม่อนุญาตให้แก้ข้อมูลฐาน Production'); return; }
+    setSavingId(id);
+    setErrorMessage('');
     try {
-      const { error } = await supabase
-        .from('leads')
-        .update({ status: newStatus })
-        .eq('id', id);
-
-      if (error) throw error;
-      
-      setLeads(leads.map(lead => lead.id === id ? { ...lead, status: newStatus } : lead));
+      const { data, error } = await supabase.from('leads').update(changes).eq('id', id).select('*').single();
+      if (error || !data) throw new Error('ไม่สามารถบันทึกได้ กรุณาตรวจสิทธิ์และลองอีกครั้ง');
+      setLeads(current => current.map(lead => lead.id === id ? data : lead));
     } catch (error) {
-      console.error('Error updating lead status:', error);
-      alert('เกิดข้อผิดพลาดในการอัปเดตสถานะ');
-    }
+      setErrorMessage(error instanceof Error ? error.message : 'เกิดข้อผิดพลาดในการบันทึก');
+    } finally { setSavingId(null); }
   };
 
   const filteredLeads = leads.filter(lead => {
@@ -65,7 +74,7 @@ const DashboardLeads: React.FC = () => {
       (lead.company || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
       (lead.email || '').toLowerCase().includes(searchTerm.toLowerCase());
       
-    const matchesStatus = statusFilter === 'all' || lead.status === statusFilter;
+    const matchesStatus = statusFilter === 'all' || pipelineStage(lead) === statusFilter;
     
     return matchesSearch && matchesStatus;
   });
@@ -74,19 +83,14 @@ const DashboardLeads: React.FC = () => {
     switch (status) {
       case 'new': return 'bg-blue-100 text-blue-700 border-blue-200';
       case 'contacted': return 'bg-yellow-100 text-yellow-700 border-yellow-200';
-      case 'closed': return 'bg-green-100 text-green-700 border-green-200';
+      case 'won':
+      case 'delivery':
+      case 'repeat': return 'bg-green-100 text-green-700 border-green-200';
       default: return 'bg-gray-100 text-gray-700 border-gray-200';
     }
   };
 
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case 'new': return 'รอติดต่อกลับใหม่';
-      case 'contacted': return 'กำลังประสานงาน';
-      case 'closed': return 'ปิดงานเรียบร้อย';
-      default: return status || 'Unknown';
-    }
-  };
+  const getStatusLabel = (status: string) => PIPELINE[status as keyof typeof PIPELINE] || 'รอจัดประเภทจากข้อมูลเดิม';
 
   if (loading) {
     return (
@@ -98,6 +102,13 @@ const DashboardLeads: React.FC = () => {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
+      {errorMessage && <p role="alert" className="bg-red-50 p-4 text-red-700">{errorMessage}</p>}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {Object.entries(PIPELINE).map(([stage, label]) => <button key={stage} onClick={() => setStatusFilter(stage)} className="bg-white border rounded-xl p-3 text-left">
+          <span className="block text-sm">{label}</span><strong>{leads.filter(l => pipelineStage(l) === stage).length}</strong>
+        </button>)}
+      </div>
+      <p className="text-sm text-gray-600">ผู้สนใจจากฟอร์ม: {leads.filter(l => l.source === 'contact_form').length} · รอติดตาม: {leads.filter(l => l.follow_up_at && new Date(l.follow_up_at) <= new Date() && !['lost', 'repeat'].includes(pipelineStage(l))).length}</p>
       <div>
         <h1 className="text-2xl md:text-3xl font-black text-[#0f3460] nav-font">Leads & Inquiries</h1>
         <p className="text-gray-500 font-medium">จัดการรายชื่อผู้ที่ติดต่อเข้ามาผ่านเว็บไซต์</p>
@@ -115,8 +126,8 @@ const DashboardLeads: React.FC = () => {
           />
         </div>
         
-        <div className="flex gap-2">
-          {['all', 'new', 'contacted', 'closed'].map(status => (
+        <div className="flex flex-wrap gap-2">
+          {['all', ...Object.keys(PIPELINE)].map(status => (
             <button
               key={status}
               onClick={() => setStatusFilter(status)}
@@ -142,8 +153,8 @@ const DashboardLeads: React.FC = () => {
           filteredLeads.map((lead) => (
             <div key={lead.id} className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow flex flex-col h-full">
               <div className="flex justify-between items-start mb-4">
-                <span className={`px-3 py-1 text-xs font-bold rounded-full border ${getStatusColor(lead.status || 'new')}`}>
-                  {getStatusLabel(lead.status || 'new')}
+                <span className={`px-3 py-1 text-xs font-bold rounded-full border ${getStatusColor(pipelineStage(lead))}`}>
+                  {getStatusLabel(pipelineStage(lead))}
                 </span>
                 <span className="text-xs text-gray-400 flex items-center gap-1">
                   <Clock className="w-3 h-3" />
@@ -190,6 +201,20 @@ const DashboardLeads: React.FC = () => {
                 </div>
               </div>
 
+              <form key={`${lead.id}-${lead.follow_up_at}-${lead.crm_notes}`} className="space-y-2 mb-4" onSubmit={e => {
+                e.preventDefault();
+                const form = new FormData(e.currentTarget);
+                const date = String(form.get('followUp') || '');
+                updateLead(lead.id, {follow_up_at: date ? new Date(date).toISOString() : null, crm_notes: String(form.get('notes') || '')});
+              }}>
+                <label className="block text-xs">นัดติดตาม
+                  <input name="followUp" type="datetime-local" defaultValue={lead.follow_up_at ? new Date(new Date(lead.follow_up_at).getTime() - new Date(lead.follow_up_at).getTimezoneOffset() * 60000).toISOString().slice(0,16) : ''} className="block w-full border rounded p-2" />
+                </label>
+                <label className="block text-xs">บันทึกทีมงาน
+                  <textarea name="notes" maxLength={4000} defaultValue={lead.crm_notes || ''} className="block w-full border rounded p-2" />
+                </label>
+                <button disabled={savingId === lead.id} className="p-2 border rounded text-sm">{savingId === lead.id ? 'กำลังบันทึก...' : 'บันทึกการติดตาม'}</button>
+              </form>
               <div className="pt-4 border-t border-gray-100 flex flex-col gap-2">
                 <a
                   href={`/admin/proposals?name=${encodeURIComponent(lead.name || '')}&company=${encodeURIComponent(lead.company || '')}&phone=${encodeURIComponent(lead.phone || '')}&email=${encodeURIComponent(lead.email || '')}&topic=${encodeURIComponent(lead.interest_topic || '')}`}
@@ -198,13 +223,14 @@ const DashboardLeads: React.FC = () => {
                   <FileText className="w-3.5 h-3.5" /> ออกใบเสนอราคา (Proposal)
                 </a>
                 <select
-                  value={lead.status || 'new'}
-                  onChange={(e) => updateStatus(lead.id, e.target.value)}
+                  aria-label={`สถานะของ ${lead.name}`}
+                  disabled={savingId === lead.id}
+                  value={pipelineStage(lead)}
+                  onChange={(e) => updateLead(lead.id, {pipeline_stage: e.target.value})}
                   className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#c5a059] text-xs font-bold text-[#0f3460] cursor-pointer outline-none"
                 >
-                  <option value="new">รอติดต่อกลับใหม่</option>
-                  <option value="contacted">กำลังประสานงาน</option>
-                  <option value="closed">ปิดงานเรียบร้อย</option>
+                  <option value="" disabled>รอจัดประเภทจากข้อมูลเดิม</option>
+                  {Object.entries(PIPELINE).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
                 </select>
               </div>
             </div>

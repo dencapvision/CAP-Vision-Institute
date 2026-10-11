@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { canWriteLeads } from '../lib/lead-environment';
+import React, { useState, useRef, useEffect } from 'react';
 
 import {
   Phone, MessageCircle, MapPin, Facebook, Youtube, Instagram,
@@ -7,6 +8,8 @@ import {
 import { CONTACT_INFO, BRAND_INFO } from '../constants/brand';
 import { FAQS } from '../constants/faqs';
 import { supabase } from '../lib/supabase';
+import { captureContact } from '../lib/lead-workflow.mjs';
+import { trackConversion } from '../lib/conversion.mjs';
 
 import { IconGoldCrestStar } from './icons/CapBrandIcons';
 
@@ -20,63 +23,32 @@ export const Contact: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState('');
+  const submitLock = useRef(false);
+  const started = useRef(false);
+  useEffect(() => { trackConversion('contact_view'); }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    const formData = new FormData(e.currentTarget);
-    const fullName = formData.get('fullName') as string;
-    const organization = formData.get('organization') as string;
-    const phone = formData.get('phone') as string;
-    const email = formData.get('email') as string;
-    const lineId = formData.get('lineId') as string;
-    const service = formData.get('service') as string;
-    const requirements = formData.get('requirements') as string;
-
-    const displayData = {
-      'ชื่อ-นามสกุล': fullName,
-      'หน่วยงาน/องค์กร': organization,
-      'เบอร์ติดต่อ': phone,
-      'อีเมล': email,
-      'Line ID': lineId,
-      'บริการที่สนใจ': service,
-      'ความต้องการเพิ่มเติม': requirements
-    };
-
+    if (submitLock.current) return;
+    if (!canWriteLeads(window.location.hostname)) { setFormError('เวอร์ชันทดสอบยังไม่เปิดรับข้อมูล กรุณาติดต่อผ่านเว็บไซต์หลักหรือ LINE'); return; }
+    submitLock.current = true;
+    setSubmitting(true);
+    setFormError('');
+    const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+    trackConversion('contact_submit');
     try {
-      // 1. Persist to Supabase Database
-      const { error: dbError } = await supabase
-        .from('leads')
-        .insert([
-          {
-            name: fullName,
-            company: organization,
-            phone: phone,
-            email: email,
-            line_id: lineId,
-            interest_topic: `Service: ${service} | ${requirements}`,
-            source: 'contact_form',
-            status: 'new'
-          }
-        ]);
-
-      if (dbError) throw dbError;
-
-      // 2. Send notification via Supabase Edge Function
-      const { error: invokeError } = await supabase.functions.invoke('line-notify', {
-        body: { 
-          project: 'CONTACT',
-          formType: 'ฟอร์มติดต่อสอบถาม / ขอใบเสนอราคา', 
-          data: displayData 
-        }
-      });
-
-      if (invokeError) throw new Error(invokeError.message || 'Notification failed');
-
-      setSubmitted(true);
-    } catch (error: any) {
-      console.error('Failed to submit form:', error);
-      const errorMsg = error.message || 'เกิดข้อผิดพลาดในการส่งข้อมูล';
-      alert(`ขออภัยครับ: ${errorMsg}\n\nหากปัญหายังคงอยู่ กรุณาติดต่อผ่าน LINE OA ${CONTACT_INFO.line}`);
+      await captureContact({client: supabase, data, onSaved: () => {
+        setSubmitted(true);
+        trackConversion('generate_lead');
+      }});
+    } catch (error) {
+      trackConversion('contact_error');
+      setFormError(error instanceof Error ? error.message : 'เกิดข้อผิดพลาด กรุณาติดต่อผ่าน LINE OA');
+    } finally {
+      submitLock.current = false;
+      setSubmitting(false);
     }
   };
 
@@ -127,7 +99,7 @@ export const Contact: React.FC = () => {
 
           <p className="text-gray-300 text-base sm:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-8">
             บอกเราถึงความท้าทายและเป้าหมายขององค์กรคุณ<br />
-            เราช่วยวิเคราะห์ TNA ออกแบบ Framework และส่งข้อเสนอ <strong className="text-white font-bold">ภายใน 24 ชั่วโมง</strong>
+            เราช่วยวิเคราะห์ TNA ออกแบบ Framework และส่งข้อเสนอ <strong className="text-white font-bold">ตามเวลาที่นัดหมาย</strong>
           </p>
 
           {/* Quick contact shortcuts */}
@@ -191,7 +163,7 @@ export const Contact: React.FC = () => {
                 กรอกข้อมูลเพื่อให้ทีมงานจัดเตรียมข้อเสนอ
               </h2>
               <div className="flex flex-wrap gap-2.5">
-                {['ตอบกลับภายใน 24 ชั่วโมง', 'ปรึกษาฟรี', 'ไม่มีข้อผูกมัด'].map((t, i) => (
+                {['ทีมงานติดต่อกลับ', 'ปรึกษาฟรี', 'ไม่มีข้อผูกมัด'].map((t, i) => (
                   <span key={i} className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-xs font-bold px-3 py-1.5 rounded-full border border-emerald-200">
                     <CheckCircle className="w-3 h-3 text-emerald-600" /> {t}
                   </span>
@@ -199,7 +171,7 @@ export const Contact: React.FC = () => {
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} onFocus={() => { if (!started.current) { started.current = true; trackConversion('contact_start'); } }} aria-busy={submitting} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-2">
@@ -299,18 +271,20 @@ export const Contact: React.FC = () => {
                 ></textarea>
               </div>
 
+              {formError && <p role="alert" className="text-red-700">{formError}</p>}
               <div className="pt-2">
                 <button
                   type="submit"
+                  disabled={submitting}
                   className="btn-premium w-full bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-4 rounded-2xl font-black text-base shadow-xl flex items-center justify-center gap-3 active:scale-95 transition-all"
                 >
                   <Send className="w-4 h-4" />
-                  ส่งข้อมูลขอใบเสนอราคา / ปรึกษาฟรี
+                  {submitting ? 'กำลังส่งข้อมูล...' : 'ส่งข้อมูลขอใบเสนอราคา / ปรึกษาฟรี'}
                 </button>
               </div>
 
               <p className="text-center text-xs text-gray-400 font-light">
-                ทีมงานจะติดต่อกลับภายใน 24 ชั่วโมงทำการ · ข้อมูลองค์กรของท่านเป็นความลับ 100%
+                ทีมงานจะใช้ข้อมูลนี้เพื่อติดต่อกลับและจัดเตรียมข้อเสนอให้ท่าน
               </p>
             </form>
           </div>
@@ -365,7 +339,7 @@ export const Contact: React.FC = () => {
                   <MapPin className="w-5 h-5 text-[#2563EB]" />
                   <h4 className="text-base font-black text-[#0F2557] nav-font">ที่ตั้งสถาบัน</h4>
                 </div>
-                <p className="text-xs font-bold text-[#111827] mb-1">{BRAND_INFO.fullName}</p>
+                <p className="text-xs font-bold text-[#111827] mb-1">{BRAND_INFO.name}</p>
                 <p className="text-xs text-gray-500 leading-relaxed font-light">
                   {CONTACT_INFO.address}
                 </p>

@@ -9,12 +9,15 @@ const {
   description = "พัฒนาคนให้เปลี่ยนวิธีคิด สร้างทีมให้ทำงานได้จริง ยกระดับองค์กรด้วย In-house Training และ Customized Learning โดย ครูเด่น Master Facilitator ประสบการณ์ 18+ ปี"
 } = Astro.props;
 
+import ConversionConsent from '../components/ConversionConsent';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FloatingLineWidget from '../components/FloatingLineWidget';
 import '../styles/global.css';
 
-const canonicalUrl = new URL(Astro.url.pathname, 'https://capvisionpartner.com').toString();
+// Match the slashless URLs already used in the sitemap; strip tracking queries.
+const canonicalPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const canonicalUrl = new URL(canonicalPath, 'https://capvisionpartner.com').toString();
 ---
 
 <!doctype html>
@@ -158,6 +161,7 @@ const canonicalUrl = new URL(Astro.url.pathname, 'https://capvisionpartner.com')
 			<slot />
 		</main>
 		<Footer client:visible />
+		<ConversionConsent client:load />
 		<FloatingLineWidget client:load />
 	</body>
 </html>

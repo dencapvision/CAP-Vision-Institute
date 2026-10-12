@@ -42,3 +42,5 @@ jobs:
           npx --no-install wrangler deploy --config dist/wrangler.json
       - name: Verify public homepage changed
         run: node scripts/verify-live-theme.mjs https://capvisionpartner.com --attempts=6
+      - name: Verify shared design on internal pages
+        run: node scripts/verify-project-theme.mjs https://capvisionpartner.com

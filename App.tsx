@@ -1,3 +1,4 @@
+import './styles/project-pearl-glass.css';
 import React, { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Header from './components/Header';
@@ -84,7 +85,7 @@ const AppShell: React.FC = () => {
   const isDashboard = pathname.startsWith('/dashboard') || pathname.startsWith('/admin');
 
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden">
+    <div data-cap-design="pearl-glass-v1" className="min-h-screen flex flex-col overflow-x-hidden">
       {!isDashboard && <Header />}
       <main className={isDashboard ? 'flex-grow' : 'flex-grow w-full min-w-0'}>
         <Suspense fallback={<PageLoader />}>

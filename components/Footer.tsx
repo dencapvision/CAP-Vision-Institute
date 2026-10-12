@@ -13,7 +13,7 @@ const TikTokIcon = ({ className }: { className?: string }) => (
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#111827] text-white pt-20 pb-12 border-t-4 border-[#2563EB]">
+    <footer className="cap-site-footer bg-[#111827] text-white pt-20 pb-12 border-t-4 border-[#2563EB]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Feature Banner */}

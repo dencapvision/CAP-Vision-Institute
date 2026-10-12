@@ -138,3 +138,6 @@
 [data-cap-design] .cap-assessment-heading [class~="text-[#60A5FA]"]{color:var(--pg-primary)!important;}
 [data-cap-design] :is([class~="bg-[#111827]"],[class~="bg-[#0F2557]"]):not(.cap-pearl-hero):not(.cap-assessment-heading):not(.cap-glass-banner):not(a):not(button){background-color:#203e5c;}
 [data-cap-design] :is([class~="bg-[#111827]"],[class~="bg-[#0F2557]"]):not(.cap-pearl-hero):not(.cap-assessment-heading):not(.cap-glass-banner) [class~="text-[#F59E0B]"]{color:#e3cda5!important;}
+
+[data-cap-design] .cap-admin-content h1{font-size:clamp(26px,3vw,36px)!important;line-height:1.4;}
+[data-cap-design] .cap-admin-content :is(.overflow-hidden,.bg-white):has(>table){overflow-x:auto;}

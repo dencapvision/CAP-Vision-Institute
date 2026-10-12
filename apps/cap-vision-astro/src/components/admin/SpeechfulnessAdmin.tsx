@@ -1,3 +1,4 @@
+import {adminError} from '../../lib/admin-access.mjs';
 import React, { useState, useEffect } from 'react';
 import { 
   CheckCircle, 
@@ -29,6 +30,7 @@ const formatDateString = (dateStr: string) => {
 
 export default function SpeechfulnessAdmin() {
   const [items, setItems] = useState<any[]>([]);
+  const [errorMessage,setErrorMessage]=useState('');
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -47,7 +49,7 @@ export default function SpeechfulnessAdmin() {
         .select(`
           *,
           payments:ceo_payments(*),
-          profile:profiles(full_name, phone_number)
+          profile:profiles(full_name, phone)
         `)
         .eq('package_name', 'CEO Speechfulness 3 เดือน')
         .order('created_at', { ascending: false });
@@ -55,7 +57,7 @@ export default function SpeechfulnessAdmin() {
       if (error) throw error;
       setItems(data || []);
     } catch (err) {
-      console.error('Error fetching admin data:', err);
+      setErrorMessage(adminError(err).message);
     } finally {
       setLoading(false);
     }
@@ -66,7 +68,7 @@ export default function SpeechfulnessAdmin() {
       const { error } = await supabase
         .from('ceo_bookings')
         .update({ status })
-        .eq('id', bookingId);
+        .eq('id', bookingId).select('id').single();
 
       if (error) throw error;
       
@@ -119,6 +121,7 @@ export default function SpeechfulnessAdmin() {
     }
   };
 
+  if(errorMessage)return <p role="alert" className="bg-red-50 p-4">{errorMessage}</p>;
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
@@ -220,7 +223,7 @@ export default function SpeechfulnessAdmin() {
                             <Mail size={10} /> {item.user_email}
                           </p>
                           <p className="text-xs text-gray-400 font-medium flex items-center gap-1">
-                            <Phone size={10} /> {item.profile?.phone_number || 'N/A'}
+                            <Phone size={10} /> {item.profile?.phone || 'N/A'}
                           </p>
                         </div>
                       </div>

@@ -1,12 +1,5 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
-import MediaManager from '../../components/admin/MediaManager.tsx';
-
-export const prerender = false;
+import AdminPage from '../../components/admin/AdminPage';
 ---
-
-<AdminLayout title="Media Library | CAP Vision Admin">
-  <div class="p-6 md:p-8">
-    <MediaManager client:only="react" />
-  </div>
-</AdminLayout>
+<AdminLayout title="Admin — CAP Vision"><div class="p-6 lg:p-8"><AdminPage module="media" client:only="react" /></div></AdminLayout>

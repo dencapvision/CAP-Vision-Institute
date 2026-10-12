@@ -1,0 +1,25 @@
+name: Repair Admin CRM database
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  repair:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Install missing CRM schema and map existing CMS admins
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          PGSSLMODE: require
+        run: |
+          if [ -z "$SUPABASE_DB_URL" ]; then
+            echo 'Add SUPABASE_DB_URL in GitHub Actions secrets using the Supabase session pooler URI.'
+            exit 1
+          fi
+          psql "$SUPABASE_DB_URL" -X -v ON_ERROR_STOP=1 -f supabase/repairs/20261012_admin_crm_repair.sql

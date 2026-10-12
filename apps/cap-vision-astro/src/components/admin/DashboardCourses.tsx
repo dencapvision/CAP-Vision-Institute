@@ -1,3 +1,5 @@
+import RecordEditor from './RecordEditor';
+import {adminError} from '../../lib/admin-access.mjs';
 import React, { useEffect, useState } from 'react';
 
 import { supabase } from '../../lib/supabase';
@@ -16,21 +18,13 @@ const CATEGORIES = ['ทั้งหมด', 'Leader Skills', 'People Skills', '
 
 const DashboardCourses: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
+  const [errorMessage,setErrorMessage]=useState('');
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('ทั้งหมด');
 
-  useEffect(() => {
-    supabase
-      .from('courses')
-      .select('id, title, slug, category, description, created_at')
-      .order('created_at', { ascending: false })
-      .then(({ data }) => {
-        setCourses(data ?? []);
-        setLoading(false);
-      });
-  }, []);
-
+  async function load(){setLoading(true);setErrorMessage('');try{const result=await supabase.from('courses').select('id,title,slug,category,description,created_at').order('created_at',{ascending:false});if(result.error)throw result.error;setCourses(result.data||[]);}catch(e){setErrorMessage(adminError(e).message);}finally{setLoading(false);}}
+  useEffect(()=>{load();},[]);
   const filtered = courses.filter((c) => {
     const matchCat = category === 'ทั้งหมด' || c.category === category;
     const matchSearch =
@@ -42,12 +36,14 @@ const DashboardCourses: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <RecordEditor table="courses" onSaved={load}/>
+      {errorMessage&&<p role="alert" className="bg-red-50 p-4">{errorMessage}</p>}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-2xl font-black text-[#0f3460] nav-font">หลักสูตรทั้งหมด</h1>
           <p className="text-sm text-gray-500 mt-1">{courses.length} หลักสูตร</p>
         </div>
-        <a href="/dashboard/courses/new"
+        <a href="/admin/courses?edit=new"
           className="flex items-center gap-2 bg-[#c5a059] text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-[#b8924d] transition-colors shadow-sm"
         >
           <Plus className="w-4 h-4" />
@@ -127,7 +123,7 @@ const DashboardCourses: React.FC = () => {
                         >
                           <ExternalLink className="w-4 h-4" />
                         </a>
-                        <a href={`/dashboard/courses/${course.id}`}
+                        <a href={`/admin/courses?edit=${course.id}`}
                           className="p-1.5 rounded-lg hover:bg-[#c5a059]/10 text-gray-400 hover:text-[#c5a059] transition-colors"
                           title="แก้ไข"
                         >

@@ -1,3 +1,4 @@
+import { adminError } from '../../lib/admin-access.mjs';
 import React, { useState, useEffect } from 'react';
 import {
   Sparkles, Save, Eye, EyeOff, Trash2, ExternalLink,
@@ -40,10 +41,6 @@ const DashboardArticles: React.FC = () => {
   const [loadingList, setLoadingList] = useState(true);
   const [activeTab, setActiveTab] = useState<'generator' | 'list'>('generator');
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [apiKey, setApiKey] = useState('');
-  const [showKeyConfig, setShowKeyConfig] = useState(false);
-  const [keySaved, setKeySaved] = useState(false);
-
   // Edit Modal State
   const [editingArticle, setEditingArticle] = useState<BlogArticleRow | null>(null);
   const [editTitle, setEditTitle] = useState('');
@@ -54,10 +51,6 @@ const DashboardArticles: React.FC = () => {
 
   useEffect(() => {
     loadArticles();
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('gemini_api_key');
-      if (stored) setApiKey(stored);
-    }
   }, []);
 
   async function loadArticles() {
@@ -65,19 +58,12 @@ const DashboardArticles: React.FC = () => {
     try {
       const data = await fetchAllArticles();
       setArticles(data || []);
+      const editId=new URLSearchParams(window.location.search).get('edit');
+      const target=data?.find(a=>a.id===editId);if(target)openEditModal(target);
     } catch (e) {
-      console.error('Error loading articles:', e);
+      setError(adminError(e).message);
     } finally {
       setLoadingList(false);
-    }
-  }
-
-  function handleSaveApiKey(e: React.FormEvent) {
-    e.preventDefault();
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('gemini_api_key', apiKey.trim());
-      setKeySaved(true);
-      setTimeout(() => setKeySaved(false), 2500);
     }
   }
 
@@ -87,7 +73,7 @@ const DashboardArticles: React.FC = () => {
     setError('');
     setGenerated(null);
     try {
-      const result = await generateArticle(title.trim(), context.trim(), apiKey.trim());
+      const result = await generateArticle(title.trim(), context.trim());
       setGenerated(result);
     } catch (e: any) {
       setError(e.message || 'เกิดข้อผิดพลาดในการสร้างบทความ');
@@ -185,6 +171,8 @@ const DashboardArticles: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {error&&<p role="alert" className="bg-red-50 p-4 text-red-700">{error}</p>}
+
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
@@ -192,13 +180,6 @@ const DashboardArticles: React.FC = () => {
           <p className="text-gray-500 text-sm mt-1">สร้างและจัดการบทความ AEO/SEO ภาพประกอบ และ FAQ Schema</p>
         </div>
         <div className="flex gap-2 items-center flex-wrap">
-          <button
-            onClick={() => setShowKeyConfig(!showKeyConfig)}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-white border border-gray-200 text-gray-700 hover:border-[#c5a059] transition-all shadow-xs"
-          >
-            <Key className="w-3.5 h-3.5 text-[#c5a059]" />
-            {apiKey ? 'API Key (บันทึกแล้ว)' : 'ตั้งค่า Gemini API Key'}
-          </button>
           <button
             onClick={() => setActiveTab('generator')}
             className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${activeTab === 'generator' ? 'bg-[#0f3460] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
@@ -213,37 +194,6 @@ const DashboardArticles: React.FC = () => {
           </button>
         </div>
       </div>
-
-      {/* Optional Gemini API Key Drawer */}
-      {showKeyConfig && (
-        <div className="bg-gradient-to-r from-gray-900 via-[#0f3460] to-gray-900 text-white rounded-2xl p-6 shadow-xl border border-white/10 animate-fade-in">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2.5">
-              <Key className="w-5 h-5 text-[#F59E0B]" />
-              <h3 className="font-bold text-base">Google Gemini API Key (ฟรี)</h3>
-            </div>
-            <button onClick={() => setShowKeyConfig(false)} className="text-white/60 hover:text-white text-xs">ปิด ✕</button>
-          </div>
-          <p className="text-xs text-gray-300 mb-4 leading-relaxed max-w-2xl font-light">
-            คุณสามารถนำ Gemini API Key จาก <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-[#F59E0B] underline font-bold">Google AI Studio (ฟรี)</a> มาใส่ตรงนี้เพื่อสั่งการ AI เจนบทความสดแบบ Realtime ได้ไม่จำกัด (หากไม่ใส่ ระบบจะใช้ Domain Knowledge Engine ของสถาบันในการสร้างเนื้อหาอัตโนมัติ)
-          </p>
-          <form onSubmit={handleSaveApiKey} className="flex gap-3 max-w-xl">
-            <input
-              type="password"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder="วาง API Key เช่น AIzaSy..."
-              className="flex-1 px-4 py-2.5 bg-white/10 border border-white/20 rounded-xl text-sm text-white placeholder-white/40 focus:outline-none focus:border-[#F59E0B]"
-            />
-            <button
-              type="submit"
-              className="px-5 py-2.5 bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] font-bold text-sm rounded-xl flex items-center gap-2"
-            >
-              {keySaved ? <><Check className="w-4 h-4" /> บันทึกแล้ว</> : 'บันทึก Key'}
-            </button>
-          </form>
-        </div>
-      )}
 
       {activeTab === 'generator' && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

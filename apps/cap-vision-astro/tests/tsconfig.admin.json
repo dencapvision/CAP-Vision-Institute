@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../.astro/types.d.ts",
+    "../src/cloudflare-env.d.ts",
+    "../src/components/admin/**/*.tsx",
+    "../src/pages/api/admin-article.ts"
+  ],
+  "compilerOptions": {
+    "types": [
+      "astro/client"
+    ]
+  }
+}

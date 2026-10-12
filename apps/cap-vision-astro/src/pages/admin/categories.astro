@@ -1,12 +1,5 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
-import DashboardCategories from '../../components/admin/DashboardCategories.tsx';
-
-export const prerender = false;
+import AdminPage from '../../components/admin/AdminPage';
 ---
-
-<AdminLayout title="หมวดหมู่ & Tags | CAP Vision Admin">
-  <div class="p-6 md:p-8">
-    <DashboardCategories client:only="react" />
-  </div>
-</AdminLayout>
+<AdminLayout title="Admin — CAP Vision"><div class="p-6 lg:p-8"><AdminPage module="categories" client:only="react" /></div></AdminLayout>

@@ -1,11 +1,5 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
-import SpeechfulnessAdmin from '../../components/admin/SpeechfulnessAdmin.tsx';
-
-// Enable server SSR
-export const prerender = false;
+import AdminPage from '../../components/admin/AdminPage';
 ---
-
-<AdminLayout title="CEO Speechfulness Management | CAP Vision Admin">
-  <SpeechfulnessAdmin client:only="react" />
-</AdminLayout>
+<AdminLayout title="Admin — CAP Vision"><div class="p-6 lg:p-8"><AdminPage module="speechfulness" client:only="react" /></div></AdminLayout>

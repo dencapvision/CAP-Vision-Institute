@@ -49,9 +49,9 @@ export default function AdminLogin() {
           <form onSubmit={handleLogin} className="space-y-5">
             {/* Email */}
             <div>
-              <label className="block text-white/70 text-sm font-medium mb-2">อีเมล</label>
+              <label htmlFor="admin-email" className="block text-white/70 text-sm font-medium mb-2">อีเมล</label>
               <input
-                type="email"
+                id="admin-email" autoComplete="username" type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
@@ -62,10 +62,10 @@ export default function AdminLogin() {
 
             {/* Password */}
             <div>
-              <label className="block text-white/70 text-sm font-medium mb-2">รหัสผ่าน</label>
+              <label htmlFor="admin-password" className="block text-white/70 text-sm font-medium mb-2">รหัสผ่าน</label>
               <div className="relative">
                 <input
-                  type={showPw ? 'text' : 'password'}
+                  id="admin-password" autoComplete="current-password" type={showPw ? 'text' : 'password'}
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   required
@@ -74,6 +74,7 @@ export default function AdminLogin() {
                 />
                 <button
                   type="button"
+                  aria-label={showPw ? 'ซ่อนรหัสผ่าน' : 'แสดงรหัสผ่าน'}
                   onClick={() => setShowPw(!showPw)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/80 transition-colors"
                 >

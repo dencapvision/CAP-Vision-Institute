@@ -250,21 +250,7 @@ export default function DashboardProposals() {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
         }
       } else {
-        const sample: Proposal = {
-          ...INITIAL_PROPOSAL,
-          id: 'prop-sample-01',
-          clientName: 'คุณวราภรณ์ สุขสวัสดิ์',
-          clientCompany: 'บริษัท ซีพี ออลล์ จำกัด (มหาชน)',
-          clientRole: 'Head of Learning & People Development',
-          clientPhone: '081-987-6543',
-          clientEmail: 'waraporn.suk@company.co.th',
-          courseTitle: 'Transformational Leadership: ผู้นำแห่งการเปลี่ยนแปลง',
-          status: 'sent'
-        };
-        setProposals([sample]);
-        if (typeof window !== 'undefined') {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify([sample]));
-        }
+        setProposals([]);
       }
     } catch (e) {
       console.error('Error loading proposals:', e);
@@ -495,6 +481,7 @@ export default function DashboardProposals() {
             <ShieldCheck className="w-3.5 h-3.5 text-[#F59E0B]" />
             Executive Quotation & Proposal Generator
           </div>
+          <p className="text-sm text-gray-600">เอกสารส่วนนี้บันทึกในเบราว์เซอร์และอุปกรณ์นี้ กรุณาส่งออกเอกสารเพื่อสำรองข้อมูล</p>
           <h1 className="text-2xl md:text-3xl font-black text-[#0f3460] nav-font">
             ระบบออกใบเสนอราคา & ข้อเสนอโครงการ (Proposals)
           </h1>

@@ -72,12 +72,12 @@ export async function togglePublished(id: string, published: boolean): Promise<v
   const { error } = await supabase
     .from('blog_articles')
     .update({ published, updated_at: new Date().toISOString() })
-    .eq('id', id);
+    .eq('id', id).select('id').single();
   if (error) throw error;
 }
 
 export async function deleteArticle(id: string): Promise<void> {
-  const { error } = await supabase.from('blog_articles').delete().eq('id', id);
+  const { error } = await supabase.from('blog_articles').delete().eq('id', id).select('id').single();
   if (error) throw error;
 }
 
@@ -108,7 +108,7 @@ export async function updateArticle(id: string, payload: {
       published: payload.published ?? false,
       updated_at: new Date().toISOString(),
     })
-    .eq('id', id);
+    .eq('id', id).select('id').single();
   if (error) throw error;
 }
 

@@ -1,3 +1,4 @@
+import { adminError } from '../../lib/admin-access.mjs';
 import { canWriteLeads } from '../../lib/lead-environment';
 import React, { useState, useEffect } from 'react';
 import { PIPELINE, pipelineStage } from '../../lib/lead-workflow.mjs';
@@ -36,10 +37,6 @@ const DashboardLeads: React.FC = () => {
     try {
       setLoading(true);
       setErrorMessage('');
-      const {data: {user}} = await supabase.auth.getUser();
-      if (!user) throw new Error('กรุณาเข้าสู่ระบบ');
-      const {data: admin, error: adminError} = await supabase.from('crm_admins').select('user_id').eq('user_id', user.id).maybeSingle();
-      if (adminError || !admin) throw new Error('บัญชีนี้ยังไม่ได้รับสิทธิ์ CRM หรือยังไม่ได้ติดตั้งฐานข้อมูลรุ่นใหม่');
       const { data, error } = await supabase
         .from('leads')
         .select('*')
@@ -49,7 +46,7 @@ const DashboardLeads: React.FC = () => {
       setLeads(data || []);
     } catch (error) {
       console.error('Error fetching leads:', error);
-      setErrorMessage(error instanceof Error ? error.message : 'ไม่สามารถโหลดข้อมูลได้');
+      setErrorMessage(adminError(error).message);
     } finally {
       setLoading(false);
     }
@@ -61,10 +58,11 @@ const DashboardLeads: React.FC = () => {
     setErrorMessage('');
     try {
       const { data, error } = await supabase.from('leads').update(changes).eq('id', id).select('*').single();
-      if (error || !data) throw new Error('ไม่สามารถบันทึกได้ กรุณาตรวจสิทธิ์และลองอีกครั้ง');
+      if(error)throw error;
+      if(!data)throw new Error('ไม่มีรายการที่บันทึก');
       setLeads(current => current.map(lead => lead.id === id ? data : lead));
     } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'เกิดข้อผิดพลาดในการบันทึก');
+      setErrorMessage(adminError(error).message);
     } finally { setSavingId(null); }
   };
 
@@ -100,6 +98,7 @@ const DashboardLeads: React.FC = () => {
     );
   }
 
+  if(errorMessage&&leads.length===0)return <div role="alert" className="bg-red-50 border rounded-xl p-5 space-y-3"><p>{errorMessage}</p><button onClick={fetchLeads} className="border rounded p-2">ลองใหม่</button><a href="/admin/system" className="block underline">ตรวจสถานะระบบ</a></div>;
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {errorMessage && <p role="alert" className="bg-red-50 p-4 text-red-700">{errorMessage}</p>}

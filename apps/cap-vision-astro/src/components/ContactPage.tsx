@@ -1,3 +1,4 @@
+import { readContactContext, SERVICE_LABELS } from '../lib/contact-context.mjs';
 import { canWriteLeads } from '../lib/lead-environment';
 import React, { useState, useRef, useEffect } from 'react';
 
@@ -21,6 +22,14 @@ const TikTokIcon = ({ className }: { className?: string }) => (
 
 export const Contact: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [context, setContext] = useState({service: '', intent: 'consultation', source: ''});
+  const [service, setService] = useState('');
+  useEffect(() => {
+    const initial = readContactContext(window.location.search);
+    setContext(initial);
+    setService(initial.service);
+  }, []);
+
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const [submitting, setSubmitting] = useState(false);
@@ -172,6 +181,12 @@ export const Contact: React.FC = () => {
             </div>
 
             <form onSubmit={handleSubmit} onFocus={() => { if (!started.current) { started.current = true; trackConversion('contact_start'); } }} aria-busy={submitting} className="space-y-6">
+              <input type="hidden" name="source" value={context.source} />
+              <input type="hidden" name="intent" value={context.intent} />
+              {(context.service || context.intent === 'proposal') && <p role="status" className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm leading-7 text-[#111827]">
+                {context.intent === 'proposal' ? 'ขอใบเสนอราคา' : 'ปรึกษาโจทย์องค์กร'}{context.service ? ` · ${SERVICE_LABELS[context.service]}` : ''} — เปลี่ยนบริการที่สนใจได้ด้านล่าง
+              </p>}
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-bold text-gray-700 mb-2">
@@ -238,11 +253,14 @@ export const Contact: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-2">
+                  <label htmlFor="contact-service" className="block text-xs font-bold text-gray-700 mb-2">
                     บริการหรือหัวข้อที่สนใจ <span className="text-red-500">*</span>
                   </label>
                   <select
+                    id="contact-service"
                     name="service"
+                    value={service}
+                    onChange={event => setService(event.target.value)}
                     required
                     className="w-full px-4 py-3.5 rounded-2xl border border-gray-200 focus:ring-2 focus:ring-[#2563EB] focus:outline-none text-sm text-[#111827] bg-[#F8FAFC]"
                   >

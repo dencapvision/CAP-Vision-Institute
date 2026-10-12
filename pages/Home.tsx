@@ -1,3 +1,5 @@
+import { ProblemNavigator, WebsiteNavigator } from '../components/home/HomeNavigation';
+import { contactHref } from '../lib/contact-context.mjs';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -197,7 +199,7 @@ const Home: React.FC = () => {
                 ที่เชื่อม Mindset → Behavior → Performance
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
-                <Link to="/contact" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-7 py-4 text-base font-bold text-white shadow-xl transition hover:bg-[#1D4ED8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+                <Link to={contactHref()} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-7 py-4 text-base font-bold text-white shadow-xl transition hover:bg-[#1D4ED8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
                   ปรึกษาโจทย์องค์กร <ArrowRight size={19} aria-hidden="true" />
                 </Link>
                 <Link to="/assessment" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
@@ -232,195 +234,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* ── 2. PAIN POINTS SECTION: “ปัญหาขององค์กรคุณ อยู่ตรงไหน?” ─────────────── */}
-      <section className="py-20 md:py-28 bg-[#F8FAFC] border-b border-gray-200 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
-          {/* Section Header */}
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
-              ORGANIZATION DIAGNOSTIC & INSIGHT
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
-              “ปัญหาขององค์กรคุณ <span className="text-[#2563EB]">อยู่ตรงไหน?</span>”
-            </h2>
-            <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed font-light">
-              การพัฒนาองค์กรที่เห็นผลลัพธ์ยั่งยืน ต้องเริ่มจากการเจาะลึกที่รากเหง้าของปัญหา ไม่ใช่แค่การจัดอบรมตามหัวข้อทั่วไป
-            </p>
-          </div>
-
-          {/* Insight Comparison: Traditional Training vs CAP Transformative Design */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14 max-w-4xl mx-auto">
-            <div className="bg-white rounded-2xl p-6 sm:p-7 border border-red-100 shadow-sm relative overflow-hidden">
-              <div className="flex items-center gap-2 text-xs font-black text-red-600 uppercase tracking-wider mb-2">
-                <span className="w-2 h-2 rounded-full bg-red-500"></span>
-                การอบรมแบบดั้งเดิม (Traditional Training)
-              </div>
-              <h3 className="text-base sm:text-lg font-black text-gray-900 nav-font mb-2">
-                เน้นทฤษฎี บรรยายทางเดียว จบในห้องสัมมนา
-              </h3>
-              <ul className="text-xs sm:text-sm text-gray-600 space-y-2.5 mt-3">
-                <li className="flex items-start gap-2.5">
-                  <span className="text-red-500 font-bold shrink-0">✕</span>
-                  <span>ใช้หลักสูตรสำเร็จรูป ไม่สอดคล้องกับบริบทจริงขององค์กร</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="text-red-500 font-bold shrink-0">✕</span>
-                  <span>ผู้เรียนนั่งฟังบรรยาย รู้สึกเบื่อ และขาดการมีส่วนร่วม</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="text-red-500 font-bold shrink-0">✕</span>
-                  <span>พฤติกรรมเดิมกลับมาใน 1 สัปดาห์ เพราะไม่มี Action Plan และการวัดผล</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-gradient-to-br from-blue-50/80 via-white to-blue-50/40 rounded-2xl p-6 sm:p-7 border border-blue-200/80 shadow-md relative overflow-hidden">
-              <div className="flex items-center gap-2 text-xs font-black text-[#2563EB] uppercase tracking-wider mb-2">
-                <span className="w-2 h-2 rounded-full bg-[#2563EB]"></span>
-                แนวทาง CAP Transformative Learning
-              </div>
-              <h3 className="text-base sm:text-lg font-black text-[#111827] nav-font mb-2">
-                เจาะลึก TNA ผู้เรียนสัมผัสด้วยตนเอง เชื่อมสู่ผลงานจริง
-              </h3>
-              <ul className="text-xs sm:text-sm text-gray-700 space-y-2.5 mt-3">
-                <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
-                  <span>เริ่มจาก TNA วินิจฉัยจุดติดขัดเฉพาะองค์กรคุณแบบ 100%</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
-                  <span>Activity-Based Learning ผู้เรียนตระหนักและคิดทางแก้ได้เอง</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
-                  <span>แปลง Mindset สู่ Daily Behavior พร้อมเครื่องมือติดตามผล</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* 4 Pain Point Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {[
-              {
-                pillar: 'LEADERSHIP',
-                num: '01',
-                title: 'ผู้นำยังไม่สามารถดึงศักยภาพทีมออกมาได้',
-                description: 'ผู้นำเน้นการสั่งการมากกว่าการ Facilitate ขาดทักษะการสร้างแรงบันดาลใจ และยังติดกับดักการทำงานแบบเดิม',
-                impact: 'ทีมขาด Ownership & ทำงานแบบรอคำสั่ง',
-                icon: IconLeadership,
-                color: '#2563EB',
-                bgBadge: 'bg-blue-50 text-blue-700 border-blue-200'
-              },
-              {
-                pillar: 'TEAM',
-                num: '02',
-                title: 'คนเก่ง แต่ทำงานร่วมกันไม่ได้',
-                description: 'แต่ละฝ่ายทำงานแยกส่วน (Silo) ขาดความปลอดภัยทางจิตวิทยา (Psychological Safety) และการสื่อสารไม่เปิดใจ',
-                impact: 'เกิดความขัดแย้ง ประสิทธิภาพงานลดลง',
-                icon: IconTeamSynergy,
-                color: '#0F2557',
-                bgBadge: 'bg-indigo-50 text-indigo-700 border-indigo-200'
-              },
-              {
-                pillar: 'CULTURE',
-                num: '03',
-                title: 'องค์กรต้องการเปลี่ยน แต่คนยังไม่เปลี่ยน',
-                description: 'คนในองค์กรมี Fixed Mindset ยึดติดกับ Comfort Zone กลัวความผิดพลาด และต่อต้านการเปลี่ยนแปลงกลยุทธ์ใหม่',
-                impact: 'การทรานส์ฟอร์มองค์กรสะดุด ล่าช้า',
-                icon: IconGrowthCulture,
-                color: '#F59E0B',
-                bgBadge: 'bg-amber-50 text-amber-700 border-amber-200'
-              },
-              {
-                pillar: 'INNOVATION',
-                num: '04',
-                title: 'มีปัญหา แต่ทีมยังคิดทางออกแบบเดิม',
-                description: 'ขาดทักษะ Creative Problem Solving (CPS Model) และการคิดวิเคราะห์เชิงระบบ ทำให้ไม่เกิดนวัตกรรมหรือทางเลือกใหม่',
-                impact: 'สูญเสียความได้เปรียบในการแข่งขัน',
-                icon: IconCreativeCPS,
-                color: '#10B981',
-                bgBadge: 'bg-emerald-50 text-emerald-700 border-emerald-200'
-              }
-            ].map((card, idx) => {
-              const Icon = card.icon;
-              return (
-                <div
-                  key={idx}
-                  className="bg-white rounded-2xl p-7 border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-5">
-                      <span className={`text-[11px] font-black tracking-wider uppercase px-3 py-1 rounded-full border ${card.bgBadge}`}>
-                        {card.pillar}
-                      </span>
-                      <span className="text-xs font-black text-gray-400 font-mono">
-                        {card.num}
-                      </span>
-                    </div>
-
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110 shadow-md bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200/80">
-                      <Icon className="w-7 h-7" />
-                    </div>
-
-                    <h3 className="text-lg font-black text-[#111827] mb-3 nav-font leading-snug">
-                      {card.title}
-                    </h3>
-
-                    <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-4 font-light">
-                      {card.description}
-                    </p>
-                  </div>
-
-                  <div className="pt-4 border-t border-gray-100 mt-2">
-                    <div className="text-[11px] font-bold text-gray-500 mb-3 flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-red-400"></span>
-                      ผลกระทบ: <span className="text-gray-700">{card.impact}</span>
-                    </div>
-
-                    <Link
-                      to="/assessment"
-                      className="text-xs font-bold flex items-center gap-1 group-hover:gap-2 transition-all"
-                      style={{ color: card.color }}
-                    >
-                      ประเมินมิตินี้ในองค์กร
-                      <ChevronRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Direct Funnel CTA Card */}
-          <div className="bg-gradient-to-r from-[#111827] via-[#0F2557] to-[#111827] rounded-3xl p-8 sm:p-10 text-white shadow-2xl border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-2 text-center md:text-left">
-              <div className="inline-flex items-center gap-2 text-xs font-bold text-[#F59E0B] uppercase tracking-wider">
-                <IconGoldCrestStar className="w-4 h-4 text-[#F59E0B]" />
-                Strategic Lead-Generation Funnel
-              </div>
-              <h3 className="text-xl sm:text-2xl font-black text-white nav-font">
-                พร้อมค้นหาพลังขับเคลื่อน และจุดปลดล็อกองค์กรของคุณแล้วหรือยัง?
-              </h3>
-              <p className="text-gray-300 text-xs sm:text-sm max-w-xl font-light">
-                ประเมินคน ทีม และองค์กร เพื่อค้นหาว่า อะไรคือจุดแข็งที่ควรต่อยอด และอะไรคือจุดที่ควรเปลี่ยน
-              </p>
-            </div>
-
-            <div className="flex-shrink-0 w-full sm:w-auto">
-              <Link
-                to="/assessment"
-                className="btn-premium w-full sm:w-auto bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] font-black px-8 py-4 rounded-xl text-base shadow-xl flex items-center justify-center gap-3 transition-all"
-              >
-                <IconGoldCrestStar className="w-5 h-5 text-[#111827]" />
-                เริ่ม Organization Assessment →
-              </Link>
-            </div>
-          </div>
-
-        </div>
-      </section>
+      <ProblemNavigator />
 
       {/* ── 3. SOLUTIONS SECTION (4 Core Pillars) ─────────────────────────────── */}
       <section className="py-20 md:py-32 bg-white relative">
@@ -494,17 +308,17 @@ const Home: React.FC = () => {
 
                     <div className="flex flex-col sm:flex-row gap-4">
                       <Link
-                        to="/contact"
+                        to={contactHref(sol.id)}
                         className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-8 py-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2"
                       >
                         ปรึกษาออกแบบโซลูชันนี้
                         <ArrowRight className="w-4 h-4" />
                       </Link>
                       <Link
-                        to="/services"
+                        to={`/services#${sol.id}`}
                         className="btn-premium bg-white hover:bg-gray-100 text-[#111827] border border-gray-200 px-6 py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2"
                       >
-                        ดูรายละเอียดบริการทั้งหมด
+                        ดูรายละเอียดโซลูชันนี้
                       </Link>
                     </div>
                   </div>
@@ -758,6 +572,7 @@ const Home: React.FC = () => {
           </div>
 
         </div>
+        <div className="mt-8 text-center"><Link to="/about#cap-framework" className="inline-flex min-h-12 items-center gap-2 font-bold text-white underline underline-offset-4">รู้จักกระบวนการ CAP Framework <ArrowRight size={18} aria-hidden="true" /></Link></div>
       </section>
 
       {/* ── 6. EXPECTED OUTCOMES SECTION (คุณค่าที่องค์กรได้รับจริง) ─────────────── */}
@@ -903,7 +718,7 @@ const Home: React.FC = () => {
                 </p>
               </div>
             </div>
-            <Link to="/contact"
+            <Link to={contactHref()}
               className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-7 py-3.5 rounded-xl font-bold text-xs sm:text-sm shrink-0 flex items-center gap-2"
             >
               ปรึกษาแนวทางการวัดผล
@@ -1140,13 +955,15 @@ const Home: React.FC = () => {
           {/* Additional Help Callout */}
           <div className="mt-12 text-center text-xs sm:text-sm text-gray-500">
             มีคำถามเฉพาะทางหรือต้องการสอบถามเพิ่มเติม?{' '}
-            <Link to="/contact" className="font-bold text-[#2563EB] hover:underline inline-flex items-center gap-1">
+            <Link to={contactHref()} className="font-bold text-[#2563EB] hover:underline inline-flex items-center gap-1">
               พูดคุยกับทีมที่ปรึกษาโดยตรง <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
         </div>
       </section>
+
+      <WebsiteNavigator />
 
       {/* ── 9. FINAL CONSULTATION & CLOSING CTA ───────────────────────────────── */}
       <section className="py-20 md:py-32 bg-gradient-to-br from-[#111827] via-[#0F2557] to-[#111827] text-white relative overflow-hidden">
@@ -1170,7 +987,7 @@ const Home: React.FC = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-            <Link to="/contact"
+            <Link to={contactHref()}
               className="btn-premium bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-10 py-5 rounded-2xl text-base shadow-2xl nav-font flex items-center justify-center gap-2 transition-all active:scale-95"
             >
               ปรึกษาโจทย์องค์กร (รับข้อเสนอใน 24 ชม.)

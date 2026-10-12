@@ -1,5 +1,5 @@
 import { supabase, assertSupabaseEnv } from '../supabase';
-import type { Course } from '../types';
+import type { Course } from '../../types';
 
 const TABLE_NAME = 'courses';
 

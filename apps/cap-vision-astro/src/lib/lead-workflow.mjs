@@ -1,3 +1,4 @@
+import { contactSource } from './contact-context.mjs';
 export const PIPELINE = {
   new: 'ผู้สนใจใหม่', contacted: 'ติดต่อแล้ว', tna: 'วิเคราะห์ความต้องการ',
   proposal: 'ส่งข้อเสนอ', won: 'ตกลงใช้บริการ', lost: 'ไม่ดำเนินการ',
@@ -23,7 +24,7 @@ export async function captureContact({client, data, onSaved = () => {}}) {
   const d = validateContact(data);
   const {error} = await client.from('leads').insert([{
     name: d.fullName, company: d.organization, phone: d.phone, email: d.email,
-    line_id: d.lineId, interest_topic: `Service: ${d.service} | ${d.requirements}`,
+    line_id: d.lineId, interest_topic: `Service: ${d.service} | ${d.requirements}${contactSource(data) !== 'contact_form' ? ` | Origin: ${contactSource(data)}` : ''}`,
     source: 'contact_form', status: 'new'
   }]);
   if (error) throw new Error('ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง');

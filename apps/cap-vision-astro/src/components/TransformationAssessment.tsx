@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Sparkles, CheckCircle2, ArrowRight, ArrowLeft, BarChart3, 
-  Target, RefreshCw, Send,
+  Target, RefreshCw, Send, Trophy,
   MessageSquare, Building2,
   Mail, Phone, User, Compass
 } from 'lucide-react';

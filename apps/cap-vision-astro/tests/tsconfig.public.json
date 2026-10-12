@@ -6,6 +6,7 @@
     "../src/components/BlogArticleDetailPage.tsx",
     "../src/components/HomePage.tsx",
     "../src/components/FloatingLineWidget.tsx",
+    "../src/components/AIAgent.tsx",
     "../src/components/ContactPage.tsx",
     "../src/components/home/**/*.tsx"
   ],

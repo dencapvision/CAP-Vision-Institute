@@ -1,0 +1,46 @@
+name: Deploy Astro to Cloudflare
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: cap-vision-astro-production
+  cancel-in-progress: false
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: production
+    defaults:
+      run:
+        working-directory: apps/cap-vision-astro
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: apps/cap-vision-astro/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run typecheck:public
+      - run: npm run build
+      - name: Verify generated Worker target
+        run: |
+          node --input-type=module -e "import fs from 'node:fs'; const c=JSON.parse(fs.readFileSync('dist/wrangler.json')); if(c.name!=='cap-vision-institute'||c.main!=='./server/entry.mjs') throw Error('Unexpected Worker target');"
+      - name: Deploy the Astro Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo 'Set CLOUDFLARE_API_TOKEN in production environment or repository secrets.'
+            exit 1
+          fi
+          npx --no-install wrangler deploy --config dist/wrangler.json
+      - name: Verify public homepage changed
+        run: node scripts/verify-live-theme.mjs https://capvisionpartner.com --attempts=6
+      - name: Verify shared design on internal pages
+        run: node scripts/verify-project-theme.mjs https://capvisionpartner.com

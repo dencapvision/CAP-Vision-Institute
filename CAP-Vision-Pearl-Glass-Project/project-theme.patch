@@ -1,0 +1,703 @@
+diff --git a/.github/workflows/deploy-astro.yml b/.github/workflows/deploy-astro.yml
+index f1be861..db3558e 100644
+--- a/.github/workflows/deploy-astro.yml
++++ b/.github/workflows/deploy-astro.yml
+@@ -42,3 +42,5 @@ jobs:
+           npx --no-install wrangler deploy --config dist/wrangler.json
+       - name: Verify public homepage changed
+         run: node scripts/verify-live-theme.mjs https://capvisionpartner.com --attempts=6
++      - name: Verify shared design on internal pages
++        run: node scripts/verify-project-theme.mjs https://capvisionpartner.com
+diff --git a/App.tsx b/App.tsx
+index b9c6239..5936c9a 100644
+--- a/App.tsx
++++ b/App.tsx
+@@ -1,3 +1,4 @@
++import './styles/project-pearl-glass.css';
+ import React, { useEffect, lazy, Suspense } from 'react';
+ import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+ import Header from './components/Header';
+@@ -84,7 +85,7 @@ const AppShell: React.FC = () => {
+   const isDashboard = pathname.startsWith('/dashboard') || pathname.startsWith('/admin');
+ 
+   return (
+-    <div className="min-h-screen flex flex-col overflow-x-hidden">
++    <div data-cap-design="pearl-glass-v1" className="min-h-screen flex flex-col overflow-x-hidden">
+       {!isDashboard && <Header />}
+       <main className={isDashboard ? 'flex-grow' : 'flex-grow w-full min-w-0'}>
+         <Suspense fallback={<PageLoader />}>
+diff --git a/apps/cap-vision-astro/scripts/verify-project-theme.mjs b/apps/cap-vision-astro/scripts/verify-project-theme.mjs
+new file mode 100644
+index 0000000..d79d8de
+--- /dev/null
++++ b/apps/cap-vision-astro/scripts/verify-project-theme.mjs
+@@ -0,0 +1,35 @@
++import {pathToFileURL} from 'node:url';
++export const PROJECT_PAGES = ['/', '/services', '/courses', '/contact', '/about', '/assessment', '/resources', '/portfolio', '/speakers', '/admin/login'];
++export async function verifyProjectTheme(origin, fetcher=fetch) {
++  const results=[];
++  for(const path of PROJECT_PAGES){
++    const url=new URL(path,origin);url.searchParams.set('cap_design_check',String(Date.now()));
++    const response=await fetcher(url,{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(15000)});
++    if(!response.ok)throw Error(`${path}: HTTP ${response.status}`);
++    const html=await response.text();
++    if(!html.includes('data-cap-design="pearl-glass-v1"'))throw Error(`${path}: shared design marker missing`);
++    const cssUrls=[...html.matchAll(/<link\b[^>]*href=["']([^"']+\.css(?:\?[^"']*)?)["'][^>]*>/gi)]
++      .map(m=>new URL(m[1],url)).filter(u=>u.origin===url.origin);
++    let present=false;
++    for(const cssUrl of cssUrls){
++      const css=await fetcher(cssUrl,{signal:AbortSignal.timeout(15000)});
++      if(!css.ok)throw Error(`${path}: stylesheet HTTP ${css.status}`);
++      const text=await css.text();
++      if(text.includes('--pg-primary')&&text.includes('.cap-site-header'))present=true;
++    }
++    if(!present)throw Error(`${path}: shared theme CSS missing`);
++    results.push(path);
++  }
++  return {design:'pearl-glass-v1',pages:results};
++}
++if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
++  const origin=process.argv[2]||'https://capvisionpartner.com';
++  // Worker edge locations can briefly serve the previous deployment after publish.
++  const raw=process.argv.find(arg=>arg.startsWith('--attempts='))?.split('=')[1]||'6';
++  const attempts=Math.min(6,Math.max(1,Number(raw)||1));let passed=false;
++  for(let i=0;i<attempts;i++){
++    try{console.log('PASS:',JSON.stringify(await verifyProjectTheme(origin)));passed=true;break;}
++    catch(error){console.error(`Attempt ${i+1}/${attempts}: ${error.message}`);if(i+1<attempts)await new Promise(resolve=>setTimeout(resolve,10000));}
++  }
++  if(!passed)process.exitCode=1;
++}
+diff --git a/apps/cap-vision-astro/src/components/Footer.tsx b/apps/cap-vision-astro/src/components/Footer.tsx
+index 4ff6466..b73f6a2 100644
+--- a/apps/cap-vision-astro/src/components/Footer.tsx
++++ b/apps/cap-vision-astro/src/components/Footer.tsx
+@@ -13,7 +13,7 @@ const TikTokIcon = ({ className }: { className?: string }) => (
+ 
+ const Footer: React.FC = () => {
+   return (
+-    <footer className="bg-[#111827] text-white pt-20 pb-12 border-t-4 border-[#2563EB]">
++    <footer className="cap-site-footer bg-[#111827] text-white pt-20 pb-12 border-t-4 border-[#2563EB]">
+       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+         
+         {/* Top Feature Banner */}
+diff --git a/apps/cap-vision-astro/src/components/Header.tsx b/apps/cap-vision-astro/src/components/Header.tsx
+index 12c4796..c4f19ac 100644
+--- a/apps/cap-vision-astro/src/components/Header.tsx
++++ b/apps/cap-vision-astro/src/components/Header.tsx
+@@ -305,7 +305,7 @@ const Header: React.FC = () => {
+ 
+       <nav
+         aria-label="Main Navigation"
+-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
++        className={`cap-site-header fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+           isScrolled
+             ? 'h-16 bg-white/95 backdrop-blur-xl shadow-md border-b border-gray-100'
+             : 'h-20 bg-white/90 backdrop-blur-md md:bg-transparent'
+diff --git a/apps/cap-vision-astro/src/components/admin/Sidebar.tsx b/apps/cap-vision-astro/src/components/admin/Sidebar.tsx
+index 124f647..586564e 100644
+--- a/apps/cap-vision-astro/src/components/admin/Sidebar.tsx
++++ b/apps/cap-vision-astro/src/components/admin/Sidebar.tsx
+@@ -40,7 +40,7 @@ export default function Sidebar() {
+   }
+ 
+   const SidebarContent = () => (
+-    <div className="flex flex-col h-full bg-[#0a1628]">
++    <div className="cap-admin-sidebar flex flex-col h-full bg-[#0a1628]">
+       {/* Logo */}
+       <div className="px-6 py-6 border-b border-white/10 flex items-center gap-3">
+         <div className="w-9 h-9 rounded-xl bg-[#c5a059]/20 border border-[#c5a059]/40 flex items-center justify-center flex-shrink-0">
+diff --git a/apps/cap-vision-astro/src/layouts/AdminLayout.astro b/apps/cap-vision-astro/src/layouts/AdminLayout.astro
+index 110eeb4..bb70203 100644
+--- a/apps/cap-vision-astro/src/layouts/AdminLayout.astro
++++ b/apps/cap-vision-astro/src/layouts/AdminLayout.astro
+@@ -1,4 +1,5 @@
+ ---
++import '../styles/project-pearl-glass.css';
+ import Sidebar from '../components/admin/Sidebar.tsx';
+ import '../styles/global.css';
+ 
+@@ -24,7 +25,7 @@ const { title } = Astro.props;
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+     <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet" />
+   </head>
+-  <body class="min-h-screen bg-gray-50 text-gray-900 font-sans">
++  <body data-cap-design="pearl-glass-v1" class="min-h-screen bg-gray-50 text-gray-900 font-sans">
+     
+     {/* Client-side auth verification */}
+     <script>
+diff --git a/apps/cap-vision-astro/src/layouts/Layout.astro b/apps/cap-vision-astro/src/layouts/Layout.astro
+index 230e207..e3c0503 100644
+--- a/apps/cap-vision-astro/src/layouts/Layout.astro
++++ b/apps/cap-vision-astro/src/layouts/Layout.astro
+@@ -1,4 +1,5 @@
+ ---
++import '../styles/project-pearl-glass.css';
+ interface Props {
+ 	title?: string;
+ 	description?: string;
+@@ -151,7 +152,7 @@ const canonicalUrl = new URL(canonicalPath, 'https://capvisionpartner.com').toSt
+ 			}
+ 		</style>
+ 	</head>
+-	<body class="bg-[#f8fafc] text-[#1a202c] min-h-screen flex flex-col overflow-x-hidden">
++	<body data-cap-design="pearl-glass-v1" class="bg-[#f8fafc] text-[#1a202c] min-h-screen flex flex-col overflow-x-hidden">
+ 		<Header client:load />
+ 		<main class="flex-grow">
+ 			<slot />
+diff --git a/apps/cap-vision-astro/src/pages/admin/login.astro b/apps/cap-vision-astro/src/pages/admin/login.astro
+index 83dae33..8277b11 100644
+--- a/apps/cap-vision-astro/src/pages/admin/login.astro
++++ b/apps/cap-vision-astro/src/pages/admin/login.astro
+@@ -1,4 +1,5 @@
+ ---
++import '../../styles/project-pearl-glass.css';
+ import AdminLogin from '../../components/admin/AdminLogin.tsx';
+ import '../../styles/global.css';
+ ---
+@@ -13,9 +14,9 @@ import '../../styles/global.css';
+     <!-- Google Fonts -->
+     <link rel="preconnect" href="https://fonts.googleapis.com" />
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;650;700;900&display=swap" rel="stylesheet" />
++    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;900&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet" />
+   </head>
+-  <body class="font-sans">
++  <body data-cap-design="pearl-glass-v1" class="font-sans">
+     <AdminLogin client:load />
+   </body>
+ </html>
+diff --git a/apps/cap-vision-astro/src/styles/project-pearl-glass.css b/apps/cap-vision-astro/src/styles/project-pearl-glass.css
+new file mode 100644
+index 0000000..c736a97
+--- /dev/null
++++ b/apps/cap-vision-astro/src/styles/project-pearl-glass.css
+@@ -0,0 +1,122 @@
++/* CAP Vision Pearl & Glass · shared design foundation for all app shells. */
++[data-cap-design="pearl-glass-v1"] {
++  --pg-ink: #172b43;
++  --pg-muted: #526578;
++  --pg-primary: #284f72;
++  --pg-primary-hover: #1e4162;
++  --pg-pearl: #f3f6f8;
++  --pg-surface: #ffffff;
++  --pg-line: #d8e2ea;
++  --pg-shadow: 0 12px 32px rgba(39,70,95,.08), inset 0 1px 0 rgba(255,255,255,.85);
++  --pg-focus: #315e84;
++  --primary: var(--pg-ink);
++  --secondary: var(--pg-primary);
++  --exec-primary: var(--pg-ink);
++  --exec-secondary: #203e5c;
++  --exec-accent: var(--pg-primary);
++  --accent-blue: var(--pg-primary);
++  --bg-soft: var(--pg-pearl);
++  color: var(--pg-ink);
++  background: var(--pg-pearl);
++  font-family: Sarabun, var(--font-geist-sans, system-ui), sans-serif;
++  line-height: 1.7;
++  color-scheme: light;
++}
++/* Existing content and semantic/status colors retain their meaning. */
++[data-cap-design] :is(h1,h2,h3,h4,.nav-font) { font-family:Sarabun,var(--font-geist-sans,system-ui),sans-serif; }
++[data-cap-design] :is(h1,h2,h3) { text-wrap:balance; }
++[data-cap-design] a:focus-visible,
++[data-cap-design] button:focus-visible,
++[data-cap-design] summary:focus-visible { outline:3px solid var(--pg-focus);outline-offset:4px; }
++[data-cap-design] button:disabled { cursor:not-allowed; }
++[data-cap-design] :is(input,select,textarea):not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]):not([type=hidden]):not([type=file]) {
++  border-radius:14px;
++  border-color:#bdcdd9;
++  min-height:46px;
++  font-family:inherit;
++  font-size:16px;
++  box-shadow:inset 0 2px 4px rgba(39,70,95,.045);
++}
++[data-cap-design] :is(input,select,textarea):focus-visible { outline:3px solid var(--pg-focus);outline-offset:2px; }
++[data-cap-design] :is(input,textarea)::placeholder { opacity:1; }
++[data-cap-design] :is(input,select,textarea)[aria-invalid=true] { border-color:#b91c1c;outline-color:#b91c1c; }
++[data-cap-design] :is(input[type=checkbox],input[type=radio],input[type=range]) { accent-color:var(--pg-primary); }
++[data-cap-design] :is([class~="bg-gray-50"],[class~="bg-slate-50"],[class~="bg-[#F8FAFC]"],[class~="bg-[#f8fafc]"],[class~="bg-[#f0f2f5]"]) { background-color:var(--pg-pearl); }
++[data-cap-design] :is([class~="text-[#111827]"],[class~="text-[#0F2557]"],[class~="text-[#0f3460]"]) { color:var(--pg-ink); }
++[data-cap-design] :is([class~="text-[#2563EB]"],[class~="text-[#2563eb]"],[class~="text-blue-600"],[class~="text-blue-700"]) { color:#315e84; }
++[data-cap-design] :is([class~="bg-[#2563EB]"],[class~="bg-[#2563eb]"],[class~="bg-blue-600"],[class~="bg-[#0f3460]"]) { background-color:var(--pg-primary); }
++[data-cap-design] :is(a,button):is([class~="bg-[#2563EB]"],[class~="bg-[#2563eb]"],[class~="bg-blue-600"],[class~="bg-[#111827]"],[class~="bg-[#0f3460]"]) {
++  background:linear-gradient(145deg,#365f81,#284f72);
++  color:#fff;
++  border:1px solid rgba(255,255,255,.15);
++  border-radius:999px;
++  box-shadow:0 7px 16px rgba(40,79,114,.15),inset 0 1px 0 rgba(255,255,255,.16);
++  min-height:44px;
++}
++[data-cap-design] :is(a,button):is([class~="bg-[#2563EB]"],[class~="bg-blue-600"],[class~="bg-[#111827]"]):hover { background:var(--pg-primary-hover); }
++/* Only surfaces with explicit card geometry receive elevation; full-page white backgrounds do not blur. */
++[data-cap-design] :is([class~="bg-white"],[class~="bg-white/80"],[class~="bg-white/90"]):is([class~="rounded-xl"],[class~="rounded-2xl"],[class~="rounded-3xl"],[class~="rounded-[3rem]"]) {
++  background:linear-gradient(145deg,#ffffff,#f3f7fa);
++  border-color:var(--pg-line);
++  box-shadow:var(--pg-shadow);
++}
++[data-cap-design] :is([class~="border-gray-100"],[class~="border-gray-200"],[class~="border-slate-200"]) { border-color:var(--pg-line); }
++[data-cap-design] :is([class~="from-[#111827]"],[class~="from-[#0F2557]"],[class~="from-[#0f3460]"]) { --tw-gradient-from:#203e5c;--tw-gradient-to:#172b43; }
++[data-cap-design] :is([class~="via-[#0F2557]"],[class~="via-[#111827]"]) { --tw-gradient-via:#294b68; }
++[data-cap-design] :is([class~="to-[#111827]"],[class~="to-[#0F2557]"],[class~="to-[#1a4a7a]"]) { --tw-gradient-to:#172b43; }
++[data-cap-design] table { border-collapse:separate;border-spacing:0;font-size:14px;line-height:1.7; }
++[data-cap-design] thead { background:#eaf0f5;color:var(--pg-ink); }
++[data-cap-design] :is(th,td) { border-color:var(--pg-line); }
++[data-cap-design] th { font-weight:600; }
++[data-cap-design] tbody tr:hover { background-color:#edf3f7; }
++/* Glass belongs on shared navigation, not every scrolling surface. */
++[data-cap-design] .cap-site-header {
++  background:rgba(247,250,252,.94)!important;
++  border-bottom:1px solid rgba(196,212,225,.65);
++  box-shadow:0 4px 22px rgba(30,61,87,.06);
++  backdrop-filter:blur(16px);
++  -webkit-backdrop-filter:blur(16px);
++}
++[data-cap-design] .cap-site-header .nav-font { color:var(--pg-ink); }
++[data-cap-design] .cap-site-header :is(a,button).text-white { color:white; }
++[data-cap-design] .cap-site-header a[aria-current=page] { color:var(--pg-primary); }
++[data-cap-design] .cap-site-footer {
++  background:linear-gradient(145deg,#284963,#172b43);
++  border-top:1px solid #49657c;
++  color:#f5f8fb;
++}
++[data-cap-design] .cap-site-footer :is(h2,h3,h4) { color:#f5f8fb; }
++[data-cap-design] .cap-site-footer :is([class~="text-gray-400"],[class~="text-gray-500"],[class~="text-white/40"]) { color:#c6d4df; }
++[data-cap-design] .cap-admin-sidebar {
++  background:linear-gradient(160deg,#264762,#172b43)!important;
++  color:#f5f8fb;
++  border-right:1px solid #385770;
++}
++[data-cap-design] .cap-admin-sidebar :is([class~="text-white/20"],[class~="text-white/30"],[class~="text-white/40"],[class~="text-white/50"]) { color:#c6d4df; }
++[data-cap-design] .cap-admin-sidebar a:is([class*="bg-[#c5a059]"]) { background:#ffffff17;border-color:#ffffff2b;color:#e3d3b7; }
++[data-cap-design] .cap-admin-sidebar a:hover { background-color:#ffffff12; }
++/* Preserve dark-glass form legibility; no blanket recoloring of white text. */
++[data-cap-design] :is(input,textarea)[class~="text-white"] { color:#f5f8fb;background-color:#ffffff12; }
++[data-cap-design] :is(input,textarea)[class~="text-white"]::placeholder { color:#b9c9d7; }
++[data-cap-design] :is(input,textarea)[class~="text-white"]:focus-visible { outline-color:#b8d8ee; }
++@media(max-width:700px) {
++  [data-cap-design] :is(input,select,textarea):not([type=checkbox]):not([type=radio]) { font-size:16px; }
++  [data-cap-design] table { font-size:13px; }
++}
++@media(prefers-reduced-motion:reduce) {
++  [data-cap-design] *,[data-cap-design] *::before,[data-cap-design] *::after { animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important; }
++}
++@supports not (backdrop-filter:blur(1px)) { [data-cap-design] .cap-site-header { background:#f7fafc!important; } }
++@media(forced-colors:active) {
++  [data-cap-design] :is(a,button):focus-visible { outline-color:Highlight; }
++  [data-cap-design] .cap-site-header { background:Canvas!important;backdrop-filter:none; }
++}
++/* Quiet editorial typography and champagne accents outside the bespoke homepage. */
++[data-cap-design] h1:not(.cap-theme h1):not(.tiptap-editor h1) { font-size:clamp(32px,4.2vw,58px);line-height:1.35;font-weight:600;letter-spacing:-.025em; }
++[data-cap-design] h2:not(.cap-theme h2):not(.tiptap-editor h2) { font-weight:600;line-height:1.4; }
++[data-cap-design] :is([class~="text-[#F59E0B]"],[class~="text-[#c5a059]"]) { color:#936d32; }
++[data-cap-design] :is([class~="from-[#111827]"],[class~="from-[#0F2557]"],[class~="from-[#0f3460]"],.cap-site-footer,.cap-admin-sidebar) :is([class~="text-[#F59E0B]"],[class~="text-[#c5a059]"]) { color:#e3cda5; }
++[data-cap-design] :is(a,button)[class~="bg-[#c5a059]"] { background:var(--pg-primary);color:#fff;border-radius:999px;min-height:44px; }
++[data-cap-design] :is(a,button)[class~="bg-[#F59E0B]"] { background:#e7d6b8;color:var(--pg-ink);border-radius:999px;min-height:44px;box-shadow:0 7px 16px rgba(40,79,114,.14); }
++[data-cap-design] :is([class~="bg-[#0a1628]"],[class~="bg-[#0f1623]"]) { background:linear-gradient(160deg,#264762,#172b43); }
++[data-cap-design] :is([class~="bg-[#0a1628]"],[class~="bg-[#0f1623]"]) :is([class~="text-white/20"],[class~="text-white/40"],[class~="text-white/50"]) { color:#c6d4df; }
+diff --git a/apps/cap-vision-astro/tests/project-design.test.mjs b/apps/cap-vision-astro/tests/project-design.test.mjs
+new file mode 100644
+index 0000000..0cce1c1
+--- /dev/null
++++ b/apps/cap-vision-astro/tests/project-design.test.mjs
+@@ -0,0 +1,15 @@
++import {test} from 'node:test';
++import assert from 'node:assert/strict';
++import {verifyProjectTheme,PROJECT_PAGES} from '../scripts/verify-project-theme.mjs';
++const html='<body data-cap-design="pearl-glass-v1"><link href="/_astro/project.css" rel="stylesheet">';
++const fixture=(missingPath=null,css=':root{--pg-primary:#284f72}.cap-site-header{}')=>async url=>{
++ const path=new URL(url).pathname;
++ return new Response(path.endsWith('.css')?css:path===missingPath?'<body>old</body>':html);
++};
++test('release verifies every public shell and Admin login, not only the homepage',async()=>{
++ const result=await verifyProjectTheme('https://example.test',fixture());assert.deepEqual(result.pages,PROJECT_PAGES);
++});
++test('missing theme on a single internal page or missing stylesheet blocks release success',async()=>{
++ await assert.rejects(verifyProjectTheme('https://example.test',fixture('/contact')),/contact.*marker missing/);
++ await assert.rejects(verifyProjectTheme('https://example.test',fixture(null,'.old{}')),/CSS missing/);
++});
+diff --git a/cap-vision-admin/app/layout.tsx b/cap-vision-admin/app/layout.tsx
+index 59ce804..799a1b6 100644
+--- a/cap-vision-admin/app/layout.tsx
++++ b/cap-vision-admin/app/layout.tsx
+@@ -1,6 +1,7 @@
+ import type { Metadata } from 'next'
+ import { Geist, Geist_Mono } from 'next/font/google'
+ import './globals.css'
++import './project-pearl-glass.css'
+ 
+ const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
+ const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
+@@ -14,7 +15,8 @@ export const metadata: Metadata = {
+ export default function RootLayout({ children }: { children: React.ReactNode }) {
+   return (
+     <html lang="th" suppressHydrationWarning>
+-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}>
++      <head><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" /></head>
++      <body data-cap-design="pearl-glass-v1" className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}>
+         {children}
+       </body>
+     </html>
+diff --git a/cap-vision-admin/app/project-pearl-glass.css b/cap-vision-admin/app/project-pearl-glass.css
+new file mode 100644
+index 0000000..c736a97
+--- /dev/null
++++ b/cap-vision-admin/app/project-pearl-glass.css
+@@ -0,0 +1,122 @@
++/* CAP Vision Pearl & Glass · shared design foundation for all app shells. */
++[data-cap-design="pearl-glass-v1"] {
++  --pg-ink: #172b43;
++  --pg-muted: #526578;
++  --pg-primary: #284f72;
++  --pg-primary-hover: #1e4162;
++  --pg-pearl: #f3f6f8;
++  --pg-surface: #ffffff;
++  --pg-line: #d8e2ea;
++  --pg-shadow: 0 12px 32px rgba(39,70,95,.08), inset 0 1px 0 rgba(255,255,255,.85);
++  --pg-focus: #315e84;
++  --primary: var(--pg-ink);
++  --secondary: var(--pg-primary);
++  --exec-primary: var(--pg-ink);
++  --exec-secondary: #203e5c;
++  --exec-accent: var(--pg-primary);
++  --accent-blue: var(--pg-primary);
++  --bg-soft: var(--pg-pearl);
++  color: var(--pg-ink);
++  background: var(--pg-pearl);
++  font-family: Sarabun, var(--font-geist-sans, system-ui), sans-serif;
++  line-height: 1.7;
++  color-scheme: light;
++}
++/* Existing content and semantic/status colors retain their meaning. */
++[data-cap-design] :is(h1,h2,h3,h4,.nav-font) { font-family:Sarabun,var(--font-geist-sans,system-ui),sans-serif; }
++[data-cap-design] :is(h1,h2,h3) { text-wrap:balance; }
++[data-cap-design] a:focus-visible,
++[data-cap-design] button:focus-visible,
++[data-cap-design] summary:focus-visible { outline:3px solid var(--pg-focus);outline-offset:4px; }
++[data-cap-design] button:disabled { cursor:not-allowed; }
++[data-cap-design] :is(input,select,textarea):not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]):not([type=hidden]):not([type=file]) {
++  border-radius:14px;
++  border-color:#bdcdd9;
++  min-height:46px;
++  font-family:inherit;
++  font-size:16px;
++  box-shadow:inset 0 2px 4px rgba(39,70,95,.045);
++}
++[data-cap-design] :is(input,select,textarea):focus-visible { outline:3px solid var(--pg-focus);outline-offset:2px; }
++[data-cap-design] :is(input,textarea)::placeholder { opacity:1; }
++[data-cap-design] :is(input,select,textarea)[aria-invalid=true] { border-color:#b91c1c;outline-color:#b91c1c; }
++[data-cap-design] :is(input[type=checkbox],input[type=radio],input[type=range]) { accent-color:var(--pg-primary); }
++[data-cap-design] :is([class~="bg-gray-50"],[class~="bg-slate-50"],[class~="bg-[#F8FAFC]"],[class~="bg-[#f8fafc]"],[class~="bg-[#f0f2f5]"]) { background-color:var(--pg-pearl); }
++[data-cap-design] :is([class~="text-[#111827]"],[class~="text-[#0F2557]"],[class~="text-[#0f3460]"]) { color:var(--pg-ink); }
++[data-cap-design] :is([class~="text-[#2563EB]"],[class~="text-[#2563eb]"],[class~="text-blue-600"],[class~="text-blue-700"]) { color:#315e84; }
++[data-cap-design] :is([class~="bg-[#2563EB]"],[class~="bg-[#2563eb]"],[class~="bg-blue-600"],[class~="bg-[#0f3460]"]) { background-color:var(--pg-primary); }
++[data-cap-design] :is(a,button):is([class~="bg-[#2563EB]"],[class~="bg-[#2563eb]"],[class~="bg-blue-600"],[class~="bg-[#111827]"],[class~="bg-[#0f3460]"]) {
++  background:linear-gradient(145deg,#365f81,#284f72);
++  color:#fff;
++  border:1px solid rgba(255,255,255,.15);
++  border-radius:999px;
++  box-shadow:0 7px 16px rgba(40,79,114,.15),inset 0 1px 0 rgba(255,255,255,.16);
++  min-height:44px;
++}
++[data-cap-design] :is(a,button):is([class~="bg-[#2563EB]"],[class~="bg-blue-600"],[class~="bg-[#111827]"]):hover { background:var(--pg-primary-hover); }
++/* Only surfaces with explicit card geometry receive elevation; full-page white backgrounds do not blur. */
++[data-cap-design] :is([class~="bg-white"],[class~="bg-white/80"],[class~="bg-white/90"]):is([class~="rounded-xl"],[class~="rounded-2xl"],[class~="rounded-3xl"],[class~="rounded-[3rem]"]) {
++  background:linear-gradient(145deg,#ffffff,#f3f7fa);
++  border-color:var(--pg-line);
++  box-shadow:var(--pg-shadow);
++}
++[data-cap-design] :is([class~="border-gray-100"],[class~="border-gray-200"],[class~="border-slate-200"]) { border-color:var(--pg-line); }
++[data-cap-design] :is([class~="from-[#111827]"],[class~="from-[#0F2557]"],[class~="from-[#0f3460]"]) { --tw-gradient-from:#203e5c;--tw-gradient-to:#172b43; }
++[data-cap-design] :is([class~="via-[#0F2557]"],[class~="via-[#111827]"]) { --tw-gradient-via:#294b68; }
++[data-cap-design] :is([class~="to-[#111827]"],[class~="to-[#0F2557]"],[class~="to-[#1a4a7a]"]) { --tw-gradient-to:#172b43; }
++[data-cap-design] table { border-collapse:separate;border-spacing:0;font-size:14px;line-height:1.7; }
++[data-cap-design] thead { background:#eaf0f5;color:var(--pg-ink); }
++[data-cap-design] :is(th,td) { border-color:var(--pg-line); }
++[data-cap-design] th { font-weight:600; }
++[data-cap-design] tbody tr:hover { background-color:#edf3f7; }
++/* Glass belongs on shared navigation, not every scrolling surface. */
++[data-cap-design] .cap-site-header {
++  background:rgba(247,250,252,.94)!important;
++  border-bottom:1px solid rgba(196,212,225,.65);
++  box-shadow:0 4px 22px rgba(30,61,87,.06);
++  backdrop-filter:blur(16px);
++  -webkit-backdrop-filter:blur(16px);
++}
++[data-cap-design] .cap-site-header .nav-font { color:var(--pg-ink); }
++[data-cap-design] .cap-site-header :is(a,button).text-white { color:white; }
++[data-cap-design] .cap-site-header a[aria-current=page] { color:var(--pg-primary); }
++[data-cap-design] .cap-site-footer {
++  background:linear-gradient(145deg,#284963,#172b43);
++  border-top:1px solid #49657c;
++  color:#f5f8fb;
++}
++[data-cap-design] .cap-site-footer :is(h2,h3,h4) { color:#f5f8fb; }
++[data-cap-design] .cap-site-footer :is([class~="text-gray-400"],[class~="text-gray-500"],[class~="text-white/40"]) { color:#c6d4df; }
++[data-cap-design] .cap-admin-sidebar {
++  background:linear-gradient(160deg,#264762,#172b43)!important;
++  color:#f5f8fb;
++  border-right:1px solid #385770;
++}
++[data-cap-design] .cap-admin-sidebar :is([class~="text-white/20"],[class~="text-white/30"],[class~="text-white/40"],[class~="text-white/50"]) { color:#c6d4df; }
++[data-cap-design] .cap-admin-sidebar a:is([class*="bg-[#c5a059]"]) { background:#ffffff17;border-color:#ffffff2b;color:#e3d3b7; }
++[data-cap-design] .cap-admin-sidebar a:hover { background-color:#ffffff12; }
++/* Preserve dark-glass form legibility; no blanket recoloring of white text. */
++[data-cap-design] :is(input,textarea)[class~="text-white"] { color:#f5f8fb;background-color:#ffffff12; }
++[data-cap-design] :is(input,textarea)[class~="text-white"]::placeholder { color:#b9c9d7; }
++[data-cap-design] :is(input,textarea)[class~="text-white"]:focus-visible { outline-color:#b8d8ee; }
++@media(max-width:700px) {
++  [data-cap-design] :is(input,select,textarea):not([type=checkbox]):not([type=radio]) { font-size:16px; }
++  [data-cap-design] table { font-size:13px; }
++}
++@media(prefers-reduced-motion:reduce) {
++  [data-cap-design] *,[data-cap-design] *::before,[data-cap-design] *::after { animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important; }
++}
++@supports not (backdrop-filter:blur(1px)) { [data-cap-design] .cap-site-header { background:#f7fafc!important; } }
++@media(forced-colors:active) {
++  [data-cap-design] :is(a,button):focus-visible { outline-color:Highlight; }
++  [data-cap-design] .cap-site-header { background:Canvas!important;backdrop-filter:none; }
++}
++/* Quiet editorial typography and champagne accents outside the bespoke homepage. */
++[data-cap-design] h1:not(.cap-theme h1):not(.tiptap-editor h1) { font-size:clamp(32px,4.2vw,58px);line-height:1.35;font-weight:600;letter-spacing:-.025em; }
++[data-cap-design] h2:not(.cap-theme h2):not(.tiptap-editor h2) { font-weight:600;line-height:1.4; }
++[data-cap-design] :is([class~="text-[#F59E0B]"],[class~="text-[#c5a059]"]) { color:#936d32; }
++[data-cap-design] :is([class~="from-[#111827]"],[class~="from-[#0F2557]"],[class~="from-[#0f3460]"],.cap-site-footer,.cap-admin-sidebar) :is([class~="text-[#F59E0B]"],[class~="text-[#c5a059]"]) { color:#e3cda5; }
++[data-cap-design] :is(a,button)[class~="bg-[#c5a059]"] { background:var(--pg-primary);color:#fff;border-radius:999px;min-height:44px; }
++[data-cap-design] :is(a,button)[class~="bg-[#F59E0B]"] { background:#e7d6b8;color:var(--pg-ink);border-radius:999px;min-height:44px;box-shadow:0 7px 16px rgba(40,79,114,.14); }
++[data-cap-design] :is([class~="bg-[#0a1628]"],[class~="bg-[#0f1623]"]) { background:linear-gradient(160deg,#264762,#172b43); }
++[data-cap-design] :is([class~="bg-[#0a1628]"],[class~="bg-[#0f1623]"]) :is([class~="text-white/20"],[class~="text-white/40"],[class~="text-white/50"]) { color:#c6d4df; }
+diff --git a/cap-vision-admin/components/layout/Sidebar.tsx b/cap-vision-admin/components/layout/Sidebar.tsx
+index 234de6b..582efc0 100644
+--- a/cap-vision-admin/components/layout/Sidebar.tsx
++++ b/cap-vision-admin/components/layout/Sidebar.tsx
+@@ -35,7 +35,7 @@ export default function Sidebar() {
+   }
+ 
+   const SidebarContent = () => (
+-    <div className="flex flex-col h-full">
++    <div className="cap-admin-sidebar flex flex-col h-full">
+       {/* Logo */}
+       <div className="px-6 py-6 border-b border-white/10 flex items-center gap-3">
+         <div className="w-9 h-9 rounded-xl bg-[#c5a059]/20 border border-[#c5a059]/40 flex items-center justify-center flex-shrink-0">
+diff --git a/components/Footer.tsx b/components/Footer.tsx
+index fc90d33..280dd89 100644
+--- a/components/Footer.tsx
++++ b/components/Footer.tsx
+@@ -13,7 +13,7 @@ const TikTokIcon = ({ className }: { className?: string }) => (
+ 
+ const Footer: React.FC = () => {
+   return (
+-    <footer className="bg-[#111827] text-white pt-20 pb-12 border-t-4 border-[#2563EB]">
++    <footer className="cap-site-footer bg-[#111827] text-white pt-20 pb-12 border-t-4 border-[#2563EB]">
+       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+         
+         {/* Top Feature Banner */}
+diff --git a/components/Header.tsx b/components/Header.tsx
+index 73f1bd9..75362d3 100644
+--- a/components/Header.tsx
++++ b/components/Header.tsx
+@@ -305,7 +305,7 @@ const Header: React.FC = () => {
+ 
+       <nav
+         aria-label="Main Navigation"
+-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
++        className={`cap-site-header fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+           isScrolled
+             ? 'h-16 bg-white/95 backdrop-blur-xl shadow-md border-b border-gray-100'
+             : 'h-20 bg-white/90 backdrop-blur-md md:bg-transparent'
+diff --git a/docs/project-pearl-glass.md b/docs/project-pearl-glass.md
+new file mode 100644
+index 0000000..b61ae08
+--- /dev/null
++++ b/docs/project-pearl-glass.md
+@@ -0,0 +1,50 @@
++# Pearl & Glass — ธีมส่วนกลางทั้งโปรเจกต์
++
++## ขอบเขต
++
++ใช้ design foundation เดียวกันกับ React/Vite เดิม, Astro public/Admin บน Cloudflare และ Next.js Admin แยกใน cap-vision-admin โดยไม่เปลี่ยน stack, route, Auth, RLS, Lead workflow หรือการบันทึกข้อมูล
++
++ธีมส่วนกลางเชื่อมจาก shared app shells จึงครอบคลุมหน้าภายในและรายละเอียดหลักสูตร/ผลงาน/วิทยากร/บทความที่ใช้ Layout เดียวกัน หน้า Home ยังคงองค์ประกอบ Pearl & Glass เดิม
++
++## สิ่งที่เปลี่ยน
++
++- ตัวแปรสีขาวมุก น้ำเงิน Slate เส้นขอบ และเงานุ่ม
++- เมนูหลัก Glass header ที่มีสีพื้นอ่านได้ทั้งบน Hero สีอ่อนและเข้ม
++- Footer และ Sidebar เปลี่ยนเป็น Dark Glass; ปรับข้อความรองให้อ่านชัดขึ้น
++- การ์ดผิวมุก เงานุ่ม และปุ่มหลักทรง Pill
++- ฟอร์มและตัวกรองใช้ฟอนต์ 16px, เส้นขอบชัด, focus ring และ invalid state สีแดง
++- ตารางใช้หัวตารางโทนอ่อน เส้นขอบบาง และแถว hover
++- ลดน้ำหนัก/ขนาดหัวเรื่องภายใน และเปลี่ยน Accent ของแบรนด์เป็น Champagne ที่อ่านได้ตามพื้นสี
++- รักษาสีสถานะ success/warning/error และแก้เฉพาะสีแบรนด์ ไม่มี backdrop-filter บนการ์ดทุกใบ
++- reduced-motion, forced-colors และพื้นทึบสำรองสำหรับ header
++
++## โครงสร้าง
++
++Canonical CSS: styles/project-pearl-glass.css
++
++สำเนาสำหรับแต่ละ runtime: apps/cap-vision-astro/src/styles/project-pearl-glass.css และ cap-vision-admin/app/project-pearl-glass.css
++
++Marker ของ shell: data-cap-design="pearl-glass-v1"
++
++Navigation hooks: cap-site-header, cap-site-footer, cap-admin-sidebar
++
++ตรวจหลังเผยแพร่: node apps/cap-vision-astro/scripts/verify-project-theme.mjs https://capvisionpartner.com
++
++ตัวตรวจต้องพบ marker และ CSS ของธีมใน Home, Services, Courses, Contact, About, Assessment, Resources, Portfolio, Speakers และ Admin Login หากหน้าใดยังเป็น build เก่าหรือ CSS หายจะไม่รายงานความสำเร็จ
++
++## Validation
++
++- React TypeScript/build และ Astro public typecheck/build ผ่าน
++- Next.js Admin tsc และ build ผ่าน โดยใช้ Supabase URL/key แบบ fixture ไม่ใช้ข้อมูลหรือ Secret จริง
++- Node tests 19 กรณีผ่าน
++- Chromium ตรวจ 11 public/login routes, 320/390/768/1440px, เมนูมือถือ, ฟอนต์ฟอร์ม, การเลือกบริการ/Proposal และ redirect ผู้ไม่ได้ login ออกจาก Admin ผ่าน
++- ตรวจภาพหน้า Services/Contact/Login และความชัดของพื้นสีแล้ว
++- ไม่ใช้ session ลูกค้าจริง ไม่ submit ฟอร์ม ไม่เรียก LINE หรือ email
++
++## เผยแพร่
++
++Astro เป็นแอปที่ใช้งานจริงบน capvisionpartner.com: Deploy ด้วย workflow Deploy Astro to Cloudflare หลัง merge และตรวจทั้ง homepage verifier กับ project verifier
++
++Next.js Admin เป็นแอปแยก: ชุดโค้ดและ build พร้อม แต่ไม่ได้เผยแพร่ไปโฮสต์ของ Next.js เพราะไม่มีปลายทางการเผยแพร่แอปแยกในขอบเขตนี้ หน้า /admin/... ของเว็บไซต์หลักใช้ Astro และได้รับธีมผ่าน AdminLayout
++
++Rollback ด้วยการ revert commit ของชุดนี้และ build/deploy runtime เดิม ไม่มี migration
+diff --git a/pages/dashboard/DashboardLayout.tsx b/pages/dashboard/DashboardLayout.tsx
+index 935d8d7..1ed2a5c 100644
+--- a/pages/dashboard/DashboardLayout.tsx
++++ b/pages/dashboard/DashboardLayout.tsx
+@@ -62,7 +62,7 @@ const DashboardLayout: React.FC = () => {
+   }
+ 
+   const Sidebar = () => (
+-    <aside className="w-64 bg-[#0f1623] text-white flex flex-col h-full">
++    <aside className="cap-admin-sidebar w-64 bg-[#0f1623] text-white flex flex-col h-full">
+       {/* Logo */}
+       <div className="px-6 pt-8 pb-6 border-b border-white/10">
+         <Link to="/" className="flex items-center gap-3">
+diff --git a/styles/project-pearl-glass.css b/styles/project-pearl-glass.css
+new file mode 100644
+index 0000000..c736a97
+--- /dev/null
++++ b/styles/project-pearl-glass.css
+@@ -0,0 +1,122 @@
++/* CAP Vision Pearl & Glass · shared design foundation for all app shells. */
++[data-cap-design="pearl-glass-v1"] {
++  --pg-ink: #172b43;
++  --pg-muted: #526578;
++  --pg-primary: #284f72;
++  --pg-primary-hover: #1e4162;
++  --pg-pearl: #f3f6f8;
++  --pg-surface: #ffffff;
++  --pg-line: #d8e2ea;
++  --pg-shadow: 0 12px 32px rgba(39,70,95,.08), inset 0 1px 0 rgba(255,255,255,.85);
++  --pg-focus: #315e84;
++  --primary: var(--pg-ink);
++  --secondary: var(--pg-primary);
++  --exec-primary: var(--pg-ink);
++  --exec-secondary: #203e5c;
++  --exec-accent: var(--pg-primary);
++  --accent-blue: var(--pg-primary);
++  --bg-soft: var(--pg-pearl);
++  color: var(--pg-ink);
++  background: var(--pg-pearl);
++  font-family: Sarabun, var(--font-geist-sans, system-ui), sans-serif;
++  line-height: 1.7;
++  color-scheme: light;
++}
++/* Existing content and semantic/status colors retain their meaning. */
++[data-cap-design] :is(h1,h2,h3,h4,.nav-font) { font-family:Sarabun,var(--font-geist-sans,system-ui),sans-serif; }
++[data-cap-design] :is(h1,h2,h3) { text-wrap:balance; }
++[data-cap-design] a:focus-visible,
++[data-cap-design] button:focus-visible,
++[data-cap-design] summary:focus-visible { outline:3px solid var(--pg-focus);outline-offset:4px; }
++[data-cap-design] button:disabled { cursor:not-allowed; }
++[data-cap-design] :is(input,select,textarea):not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]):not([type=hidden]):not([type=file]) {
++  border-radius:14px;
++  border-color:#bdcdd9;
++  min-height:46px;
++  font-family:inherit;
++  font-size:16px;
++  box-shadow:inset 0 2px 4px rgba(39,70,95,.045);
++}
++[data-cap-design] :is(input,select,textarea):focus-visible { outline:3px solid var(--pg-focus);outline-offset:2px; }
++[data-cap-design] :is(input,textarea)::placeholder { opacity:1; }
++[data-cap-design] :is(input,select,textarea)[aria-invalid=true] { border-color:#b91c1c;outline-color:#b91c1c; }
++[data-cap-design] :is(input[type=checkbox],input[type=radio],input[type=range]) { accent-color:var(--pg-primary); }
++[data-cap-design] :is([class~="bg-gray-50"],[class~="bg-slate-50"],[class~="bg-[#F8FAFC]"],[class~="bg-[#f8fafc]"],[class~="bg-[#f0f2f5]"]) { background-color:var(--pg-pearl); }
++[data-cap-design] :is([class~="text-[#111827]"],[class~="text-[#0F2557]"],[class~="text-[#0f3460]"]) { color:var(--pg-ink); }
++[data-cap-design] :is([class~="text-[#2563EB]"],[class~="text-[#2563eb]"],[class~="text-blue-600"],[class~="text-blue-700"]) { color:#315e84; }
++[data-cap-design] :is([class~="bg-[#2563EB]"],[class~="bg-[#2563eb]"],[class~="bg-blue-600"],[class~="bg-[#0f3460]"]) { background-color:var(--pg-primary); }
++[data-cap-design] :is(a,button):is([class~="bg-[#2563EB]"],[class~="bg-[#2563eb]"],[class~="bg-blue-600"],[class~="bg-[#111827]"],[class~="bg-[#0f3460]"]) {
++  background:linear-gradient(145deg,#365f81,#284f72);
++  color:#fff;
++  border:1px solid rgba(255,255,255,.15);
++  border-radius:999px;
++  box-shadow:0 7px 16px rgba(40,79,114,.15),inset 0 1px 0 rgba(255,255,255,.16);
++  min-height:44px;
++}
++[data-cap-design] :is(a,button):is([class~="bg-[#2563EB]"],[class~="bg-blue-600"],[class~="bg-[#111827]"]):hover { background:var(--pg-primary-hover); }
++/* Only surfaces with explicit card geometry receive elevation; full-page white backgrounds do not blur. */
++[data-cap-design] :is([class~="bg-white"],[class~="bg-white/80"],[class~="bg-white/90"]):is([class~="rounded-xl"],[class~="rounded-2xl"],[class~="rounded-3xl"],[class~="rounded-[3rem]"]) {
++  background:linear-gradient(145deg,#ffffff,#f3f7fa);
++  border-color:var(--pg-line);
++  box-shadow:var(--pg-shadow);
++}
++[data-cap-design] :is([class~="border-gray-100"],[class~="border-gray-200"],[class~="border-slate-200"]) { border-color:var(--pg-line); }
++[data-cap-design] :is([class~="from-[#111827]"],[class~="from-[#0F2557]"],[class~="from-[#0f3460]"]) { --tw-gradient-from:#203e5c;--tw-gradient-to:#172b43; }
++[data-cap-design] :is([class~="via-[#0F2557]"],[class~="via-[#111827]"]) { --tw-gradient-via:#294b68; }
++[data-cap-design] :is([class~="to-[#111827]"],[class~="to-[#0F2557]"],[class~="to-[#1a4a7a]"]) { --tw-gradient-to:#172b43; }
++[data-cap-design] table { border-collapse:separate;border-spacing:0;font-size:14px;line-height:1.7; }
++[data-cap-design] thead { background:#eaf0f5;color:var(--pg-ink); }
++[data-cap-design] :is(th,td) { border-color:var(--pg-line); }
++[data-cap-design] th { font-weight:600; }
++[data-cap-design] tbody tr:hover { background-color:#edf3f7; }
++/* Glass belongs on shared navigation, not every scrolling surface. */
++[data-cap-design] .cap-site-header {
++  background:rgba(247,250,252,.94)!important;
++  border-bottom:1px solid rgba(196,212,225,.65);
++  box-shadow:0 4px 22px rgba(30,61,87,.06);
++  backdrop-filter:blur(16px);
++  -webkit-backdrop-filter:blur(16px);
++}
++[data-cap-design] .cap-site-header .nav-font { color:var(--pg-ink); }
++[data-cap-design] .cap-site-header :is(a,button).text-white { color:white; }
++[data-cap-design] .cap-site-header a[aria-current=page] { color:var(--pg-primary); }
++[data-cap-design] .cap-site-footer {
++  background:linear-gradient(145deg,#284963,#172b43);
++  border-top:1px solid #49657c;
++  color:#f5f8fb;
++}
++[data-cap-design] .cap-site-footer :is(h2,h3,h4) { color:#f5f8fb; }
++[data-cap-design] .cap-site-footer :is([class~="text-gray-400"],[class~="text-gray-500"],[class~="text-white/40"]) { color:#c6d4df; }
++[data-cap-design] .cap-admin-sidebar {
++  background:linear-gradient(160deg,#264762,#172b43)!important;
++  color:#f5f8fb;
++  border-right:1px solid #385770;
++}
++[data-cap-design] .cap-admin-sidebar :is([class~="text-white/20"],[class~="text-white/30"],[class~="text-white/40"],[class~="text-white/50"]) { color:#c6d4df; }
++[data-cap-design] .cap-admin-sidebar a:is([class*="bg-[#c5a059]"]) { background:#ffffff17;border-color:#ffffff2b;color:#e3d3b7; }
++[data-cap-design] .cap-admin-sidebar a:hover { background-color:#ffffff12; }
++/* Preserve dark-glass form legibility; no blanket recoloring of white text. */
++[data-cap-design] :is(input,textarea)[class~="text-white"] { color:#f5f8fb;background-color:#ffffff12; }
++[data-cap-design] :is(input,textarea)[class~="text-white"]::placeholder { color:#b9c9d7; }
++[data-cap-design] :is(input,textarea)[class~="text-white"]:focus-visible { outline-color:#b8d8ee; }
++@media(max-width:700px) {
++  [data-cap-design] :is(input,select,textarea):not([type=checkbox]):not([type=radio]) { font-size:16px; }
++  [data-cap-design] table { font-size:13px; }
++}
++@media(prefers-reduced-motion:reduce) {
++  [data-cap-design] *,[data-cap-design] *::before,[data-cap-design] *::after { animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important; }
++}
++@supports not (backdrop-filter:blur(1px)) { [data-cap-design] .cap-site-header { background:#f7fafc!important; } }
++@media(forced-colors:active) {
++  [data-cap-design] :is(a,button):focus-visible { outline-color:Highlight; }
++  [data-cap-design] .cap-site-header { background:Canvas!important;backdrop-filter:none; }
++}
++/* Quiet editorial typography and champagne accents outside the bespoke homepage. */
++[data-cap-design] h1:not(.cap-theme h1):not(.tiptap-editor h1) { font-size:clamp(32px,4.2vw,58px);line-height:1.35;font-weight:600;letter-spacing:-.025em; }
++[data-cap-design] h2:not(.cap-theme h2):not(.tiptap-editor h2) { font-weight:600;line-height:1.4; }
++[data-cap-design] :is([class~="text-[#F59E0B]"],[class~="text-[#c5a059]"]) { color:#936d32; }
++[data-cap-design] :is([class~="from-[#111827]"],[class~="from-[#0F2557]"],[class~="from-[#0f3460]"],.cap-site-footer,.cap-admin-sidebar) :is([class~="text-[#F59E0B]"],[class~="text-[#c5a059]"]) { color:#e3cda5; }
++[data-cap-design] :is(a,button)[class~="bg-[#c5a059]"] { background:var(--pg-primary);color:#fff;border-radius:999px;min-height:44px; }
++[data-cap-design] :is(a,button)[class~="bg-[#F59E0B]"] { background:#e7d6b8;color:var(--pg-ink);border-radius:999px;min-height:44px;box-shadow:0 7px 16px rgba(40,79,114,.14); }
++[data-cap-design] :is([class~="bg-[#0a1628]"],[class~="bg-[#0f1623]"]) { background:linear-gradient(160deg,#264762,#172b43); }
++[data-cap-design] :is([class~="bg-[#0a1628]"],[class~="bg-[#0f1623]"]) :is([class~="text-white/20"],[class~="text-white/40"],[class~="text-white/50"]) { color:#c6d4df; }

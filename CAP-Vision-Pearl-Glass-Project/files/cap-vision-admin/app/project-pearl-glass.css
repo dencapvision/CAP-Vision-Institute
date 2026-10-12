@@ -1,0 +1,122 @@
+/* CAP Vision Pearl & Glass · shared design foundation for all app shells. */
+[data-cap-design="pearl-glass-v1"] {
+  --pg-ink: #172b43;
+  --pg-muted: #526578;
+  --pg-primary: #284f72;
+  --pg-primary-hover: #1e4162;
+  --pg-pearl: #f3f6f8;
+  --pg-surface: #ffffff;
+  --pg-line: #d8e2ea;
+  --pg-shadow: 0 12px 32px rgba(39,70,95,.08), inset 0 1px 0 rgba(255,255,255,.85);
+  --pg-focus: #315e84;
+  --primary: var(--pg-ink);
+  --secondary: var(--pg-primary);
+  --exec-primary: var(--pg-ink);
+  --exec-secondary: #203e5c;
+  --exec-accent: var(--pg-primary);
+  --accent-blue: var(--pg-primary);
+  --bg-soft: var(--pg-pearl);
+  color: var(--pg-ink);
+  background: var(--pg-pearl);
+  font-family: Sarabun, var(--font-geist-sans, system-ui), sans-serif;
+  line-height: 1.7;
+  color-scheme: light;
+}
+/* Existing content and semantic/status colors retain their meaning. */
+[data-cap-design] :is(h1,h2,h3,h4,.nav-font) { font-family:Sarabun,var(--font-geist-sans,system-ui),sans-serif; }
+[data-cap-design] :is(h1,h2,h3) { text-wrap:balance; }
+[data-cap-design] a:focus-visible,
+[data-cap-design] button:focus-visible,
+[data-cap-design] summary:focus-visible { outline:3px solid var(--pg-focus);outline-offset:4px; }
+[data-cap-design] button:disabled { cursor:not-allowed; }
+[data-cap-design] :is(input,select,textarea):not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]):not([type=hidden]):not([type=file]) {
+  border-radius:14px;
+  border-color:#bdcdd9;
+  min-height:46px;
+  font-family:inherit;
+  font-size:16px;
+  box-shadow:inset 0 2px 4px rgba(39,70,95,.045);
+}
+[data-cap-design] :is(input,select,textarea):focus-visible { outline:3px solid var(--pg-focus);outline-offset:2px; }
+[data-cap-design] :is(input,textarea)::placeholder { opacity:1; }
+[data-cap-design] :is(input,select,textarea)[aria-invalid=true] { border-color:#b91c1c;outline-color:#b91c1c; }
+[data-cap-design] :is(input[type=checkbox],input[type=radio],input[type=range]) { accent-color:var(--pg-primary); }
+[data-cap-design] :is([class~="bg-gray-50"],[class~="bg-slate-50"],[class~="bg-[#F8FAFC]"],[class~="bg-[#f8fafc]"],[class~="bg-[#f0f2f5]"]) { background-color:var(--pg-pearl); }
+[data-cap-design] :is([class~="text-[#111827]"],[class~="text-[#0F2557]"],[class~="text-[#0f3460]"]) { color:var(--pg-ink); }
+[data-cap-design] :is([class~="text-[#2563EB]"],[class~="text-[#2563eb]"],[class~="text-blue-600"],[class~="text-blue-700"]) { color:#315e84; }
+[data-cap-design] :is([class~="bg-[#2563EB]"],[class~="bg-[#2563eb]"],[class~="bg-blue-600"],[class~="bg-[#0f3460]"]) { background-color:var(--pg-primary); }
+[data-cap-design] :is(a,button):is([class~="bg-[#2563EB]"],[class~="bg-[#2563eb]"],[class~="bg-blue-600"],[class~="bg-[#111827]"],[class~="bg-[#0f3460]"]) {
+  background:linear-gradient(145deg,#365f81,#284f72);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:999px;
+  box-shadow:0 7px 16px rgba(40,79,114,.15),inset 0 1px 0 rgba(255,255,255,.16);
+  min-height:44px;
+}
+[data-cap-design] :is(a,button):is([class~="bg-[#2563EB]"],[class~="bg-blue-600"],[class~="bg-[#111827]"]):hover { background:var(--pg-primary-hover); }
+/* Only surfaces with explicit card geometry receive elevation; full-page white backgrounds do not blur. */
+[data-cap-design] :is([class~="bg-white"],[class~="bg-white/80"],[class~="bg-white/90"]):is([class~="rounded-xl"],[class~="rounded-2xl"],[class~="rounded-3xl"],[class~="rounded-[3rem]"]) {
+  background:linear-gradient(145deg,#ffffff,#f3f7fa);
+  border-color:var(--pg-line);
+  box-shadow:var(--pg-shadow);
+}
+[data-cap-design] :is([class~="border-gray-100"],[class~="border-gray-200"],[class~="border-slate-200"]) { border-color:var(--pg-line); }
+[data-cap-design] :is([class~="from-[#111827]"],[class~="from-[#0F2557]"],[class~="from-[#0f3460]"]) { --tw-gradient-from:#203e5c;--tw-gradient-to:#172b43; }
+[data-cap-design] :is([class~="via-[#0F2557]"],[class~="via-[#111827]"]) { --tw-gradient-via:#294b68; }
+[data-cap-design] :is([class~="to-[#111827]"],[class~="to-[#0F2557]"],[class~="to-[#1a4a7a]"]) { --tw-gradient-to:#172b43; }
+[data-cap-design] table { border-collapse:separate;border-spacing:0;font-size:14px;line-height:1.7; }
+[data-cap-design] thead { background:#eaf0f5;color:var(--pg-ink); }
+[data-cap-design] :is(th,td) { border-color:var(--pg-line); }
+[data-cap-design] th { font-weight:600; }
+[data-cap-design] tbody tr:hover { background-color:#edf3f7; }
+/* Glass belongs on shared navigation, not every scrolling surface. */
+[data-cap-design] .cap-site-header {
+  background:rgba(247,250,252,.94)!important;
+  border-bottom:1px solid rgba(196,212,225,.65);
+  box-shadow:0 4px 22px rgba(30,61,87,.06);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+[data-cap-design] .cap-site-header .nav-font { color:var(--pg-ink); }
+[data-cap-design] .cap-site-header :is(a,button).text-white { color:white; }
+[data-cap-design] .cap-site-header a[aria-current=page] { color:var(--pg-primary); }
+[data-cap-design] .cap-site-footer {
+  background:linear-gradient(145deg,#284963,#172b43);
+  border-top:1px solid #49657c;
+  color:#f5f8fb;
+}
+[data-cap-design] .cap-site-footer :is(h2,h3,h4) { color:#f5f8fb; }
+[data-cap-design] .cap-site-footer :is([class~="text-gray-400"],[class~="text-gray-500"],[class~="text-white/40"]) { color:#c6d4df; }
+[data-cap-design] .cap-admin-sidebar {
+  background:linear-gradient(160deg,#264762,#172b43)!important;
+  color:#f5f8fb;
+  border-right:1px solid #385770;
+}
+[data-cap-design] .cap-admin-sidebar :is([class~="text-white/20"],[class~="text-white/30"],[class~="text-white/40"],[class~="text-white/50"]) { color:#c6d4df; }
+[data-cap-design] .cap-admin-sidebar a:is([class*="bg-[#c5a059]"]) { background:#ffffff17;border-color:#ffffff2b;color:#e3d3b7; }
+[data-cap-design] .cap-admin-sidebar a:hover { background-color:#ffffff12; }
+/* Preserve dark-glass form legibility; no blanket recoloring of white text. */
+[data-cap-design] :is(input,textarea)[class~="text-white"] { color:#f5f8fb;background-color:#ffffff12; }
+[data-cap-design] :is(input,textarea)[class~="text-white"]::placeholder { color:#b9c9d7; }
+[data-cap-design] :is(input,textarea)[class~="text-white"]:focus-visible { outline-color:#b8d8ee; }
+@media(max-width:700px) {
+  [data-cap-design] :is(input,select,textarea):not([type=checkbox]):not([type=radio]) { font-size:16px; }
+  [data-cap-design] table { font-size:13px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  [data-cap-design] *,[data-cap-design] *::before,[data-cap-design] *::after { animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important; }
+}
+@supports not (backdrop-filter:blur(1px)) { [data-cap-design] .cap-site-header { background:#f7fafc!important; } }
+@media(forced-colors:active) {
+  [data-cap-design] :is(a,button):focus-visible { outline-color:Highlight; }
+  [data-cap-design] .cap-site-header { background:Canvas!important;backdrop-filter:none; }
+}
+/* Quiet editorial typography and champagne accents outside the bespoke homepage. */
+[data-cap-design] h1:not(.cap-theme h1):not(.tiptap-editor h1) { font-size:clamp(32px,4.2vw,58px);line-height:1.35;font-weight:600;letter-spacing:-.025em; }
+[data-cap-design] h2:not(.cap-theme h2):not(.tiptap-editor h2) { font-weight:600;line-height:1.4; }
+[data-cap-design] :is([class~="text-[#F59E0B]"],[class~="text-[#c5a059]"]) { color:#936d32; }
+[data-cap-design] :is([class~="from-[#111827]"],[class~="from-[#0F2557]"],[class~="from-[#0f3460]"],.cap-site-footer,.cap-admin-sidebar) :is([class~="text-[#F59E0B]"],[class~="text-[#c5a059]"]) { color:#e3cda5; }
+[data-cap-design] :is(a,button)[class~="bg-[#c5a059]"] { background:var(--pg-primary);color:#fff;border-radius:999px;min-height:44px; }
+[data-cap-design] :is(a,button)[class~="bg-[#F59E0B]"] { background:#e7d6b8;color:var(--pg-ink);border-radius:999px;min-height:44px;box-shadow:0 7px 16px rgba(40,79,114,.14); }
+[data-cap-design] :is([class~="bg-[#0a1628]"],[class~="bg-[#0f1623]"]) { background:linear-gradient(160deg,#264762,#172b43); }
+[data-cap-design] :is([class~="bg-[#0a1628]"],[class~="bg-[#0f1623]"]) :is([class~="text-white/20"],[class~="text-white/40"],[class~="text-white/50"]) { color:#c6d4df; }

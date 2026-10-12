@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 import { CONTACT_INFO } from '../constants/brand';
 import { supabase } from '../lib/supabaseClient';
-import { Link } from 'react-router-dom';
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
 
@@ -153,18 +152,18 @@ const ProgramCard: React.FC<{ program: string }> = ({ program }) => (
     </p>
     <p className="font-black text-base nav-font mb-4 leading-tight">{program}</p>
     <div className="flex gap-2">
-      <Link
-        to="/courses"
+      <a
+        href="/courses"
         className="flex-1 bg-[#c5a059] text-white py-2 rounded-xl font-black text-xs nav-font flex items-center justify-center gap-1 hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all"
       >
         ดูรายละเอียด <ChevronRight className="w-3 h-3" />
-      </Link>
-      <Link
-        to="/contact"
+      </a>
+      <a
+        href="/contact"
         className="flex-1 bg-white/10 text-white py-2 rounded-xl font-black text-xs nav-font flex items-center justify-center gap-1 hover:bg-white/20 transition-all"
       >
         ขอใบเสนอราคา <ArrowRight className="w-3 h-3" />
-      </Link>
+      </a>
     </div>
   </div>
 );
@@ -179,12 +178,12 @@ const SoftCTA: React.FC<{ onShowForm: () => void }> = ({ onShowForm }) => (
     >
       ใช่ ต้องการปรึกษา
     </button>
-    <Link
-      to="/courses"
+    <a
+      href="/courses"
       className="bg-white text-[#0f3460] border border-[#0f3460]/20 px-3 py-1.5 rounded-full text-[11px] font-black nav-font hover:bg-[#0f3460] hover:text-white transition-all shadow-sm"
     >
       ดูหลักสูตรก่อน
-    </Link>
+    </a>
   </div>
 );
 

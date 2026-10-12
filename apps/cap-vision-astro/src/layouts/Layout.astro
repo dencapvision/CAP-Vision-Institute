@@ -18,6 +18,7 @@ import ConversionConsent from '../components/ConversionConsent';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FloatingLineWidget from '../components/FloatingLineWidget';
+import AIAgent from '../components/AIAgent';
 import '../styles/global.css';
 
 // Match the slashless URLs already used in the sitemap; strip tracking queries.
@@ -160,5 +161,6 @@ const canonicalUrl = new URL(canonicalPath, 'https://capvisionpartner.com').toSt
 		<Footer client:visible />
 		<ConversionConsent client:load />
 		<FloatingLineWidget client:load />
+		<AIAgent client:load />
 	</body>
 </html>

@@ -30,7 +30,7 @@ export default function ThemeHome() {
     fetchCourses().then(data => { if (active) setCourses(data.slice(0, 3)); }).catch(() => {});
     return () => { active = false; };
   }, []);
-  return <div className="cap-theme">
+  return <div className="cap-theme" data-cap-theme="pearl-glass-v1">
     <section className="cap-hero" aria-labelledby="home-hero-title">
       <div className="cap-hero-copy">
         <p className="cap-eyebrow"><span /> CAP VISION INSTITUTE</p>

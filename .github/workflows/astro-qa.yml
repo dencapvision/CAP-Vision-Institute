@@ -5,6 +5,7 @@ on:
       - 'apps/cap-vision-astro/**'
       - 'supabase/migrations/**'
       - '.github/workflows/astro-qa.yml'
+      - '.github/workflows/deploy-astro.yml'
 permissions:
   contents: read
 jobs:

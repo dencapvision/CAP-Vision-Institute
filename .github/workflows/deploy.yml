@@ -1,9 +1,7 @@
-name: Deploy to VPS
+name: Legacy VPS deploy (manual)
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -11,7 +9,7 @@ jobs:
     steps:
       - name: Trigger server deploy via webhook
         run: |
-          curl -X POST https://capvisionpartner.com/webhook/deploy \
+          curl --fail-with-body -X POST https://capvisionpartner.com/webhook/deploy \
             -H "Content-Type: application/json" \
             -d '{"ref":"refs/heads/main"}' \
-            --max-time 10 || true
+            --max-time 20

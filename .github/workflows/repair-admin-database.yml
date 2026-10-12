@@ -1,6 +1,9 @@
 name: Repair Admin CRM database
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/repair-admin-database.yml']
 permissions:
   contents: read
 jobs:
@@ -23,7 +26,7 @@ jobs:
             exit 1
           fi
           python - <<'PY'
-          import os, sys
+          import os, sys, json
           from urllib.parse import urlsplit, unquote
           try:
               uri = urlsplit(os.environ['SUPABASE_DB_URL'])
@@ -34,6 +37,16 @@ jobs:
           except Exception:
               valid = False
           if not valid:
+              print('DB_CONNECTION_CHECK=' + json.dumps({
+                  'postgres_scheme': uri.scheme in ('postgres','postgresql'),
+                  'https_api_url': uri.scheme == 'https',
+                  'production_direct_host': direct,
+                  'pooler_host': (uri.hostname or '').endswith('.pooler.supabase.com'),
+                  'production_pooler_user': (unquote(uri.username or '')).endswith('.' + project),
+                  'password_present': bool(uri.password),
+                  'password_placeholder': unquote(uri.password or '') in ('[YOUR-PASSWORD]','YOUR-PASSWORD','[your-password]'),
+                  'outer_whitespace': os.environ['SUPABASE_DB_URL'] != os.environ['SUPABASE_DB_URL'].strip()
+              }))
               sys.exit('SUPABASE_DB_URL must be the production project PostgreSQL connection URI with a password.')
           print('Production database target verified.')
           PY

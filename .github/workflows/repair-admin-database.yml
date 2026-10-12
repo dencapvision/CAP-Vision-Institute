@@ -1,6 +1,9 @@
 name: Repair Admin CRM database
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/repair-admin-database.yml']
 permissions:
   contents: read
 jobs:
@@ -28,15 +31,21 @@ jobs:
           uri = urlsplit('')
           direct = pooler = False
           project = 'nheppvjayzxlblkeanxs'
+          parse_error = None
+          secret = os.environ['SUPABASE_DB_URL']
           try:
               uri = urlsplit(os.environ['SUPABASE_DB_URL'])
               direct = uri.hostname == 'db.' + project + '.supabase.co'
               pooler = (uri.hostname or '').endswith('.pooler.supabase.com') and (unquote(uri.username or '')).endswith('.' + project)
               valid = uri.scheme in ('postgres','postgresql') and (direct or pooler) and bool(uri.password)
-          except Exception:
+          except Exception as exc:
               valid = False
+              parse_error = 'invalid_brackets' if str(exc) == 'Invalid IPv6 URL' else 'malformed_uri'
           if not valid:
               print('DB_CONNECTION_CHECK=' + json.dumps({
+                  'parse_error': parse_error,
+                  'postgres_prefix': secret.startswith(('postgres://','postgresql://')),
+                  'placeholder_present': any(x in secret for x in ('[YOUR-PASSWORD]','[your-password]','YOUR-PASSWORD','[POOLER-HOST]')),
                   'postgres_scheme': uri.scheme in ('postgres','postgresql'),
                   'https_api_url': uri.scheme == 'https',
                   'production_direct_host': direct,

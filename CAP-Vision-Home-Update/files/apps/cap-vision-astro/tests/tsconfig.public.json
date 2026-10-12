@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "include": [
+    "../.astro/types.d.ts",
+    "../src/lib/server-articles.ts",
+    "../src/components/BlogArticleDetailPage.tsx",
+    "../src/components/HomePage.tsx",
+    "../src/components/ContactPage.tsx",
+    "../src/components/home/**/*.tsx"
+  ],
+  "compilerOptions": {
+    "types": [
+      "astro/client"
+    ]
+  }
+}

@@ -1,0 +1,1050 @@
+diff --git a/apps/cap-vision-astro/src/components/ContactPage.tsx b/apps/cap-vision-astro/src/components/ContactPage.tsx
+index 8e8e262..e3424dd 100644
+--- a/apps/cap-vision-astro/src/components/ContactPage.tsx
++++ b/apps/cap-vision-astro/src/components/ContactPage.tsx
+@@ -1,3 +1,4 @@
++import { readContactContext, SERVICE_LABELS } from '../lib/contact-context.mjs';
+ import { canWriteLeads } from '../lib/lead-environment';
+ import React, { useState, useRef, useEffect } from 'react';
+ 
+@@ -21,6 +22,14 @@ const TikTokIcon = ({ className }: { className?: string }) => (
+ 
+ export const Contact: React.FC = () => {
+   const [submitted, setSubmitted] = useState(false);
++  const [context, setContext] = useState({service: '', intent: 'consultation', source: ''});
++  const [service, setService] = useState('');
++  useEffect(() => {
++    const initial = readContactContext(window.location.search);
++    setContext(initial);
++    setService(initial.service);
++  }, []);
++
+   const [openFaq, setOpenFaq] = useState<number | null>(0);
+ 
+   const [submitting, setSubmitting] = useState(false);
+@@ -172,6 +181,12 @@ export const Contact: React.FC = () => {
+             </div>
+ 
+             <form onSubmit={handleSubmit} onFocus={() => { if (!started.current) { started.current = true; trackConversion('contact_start'); } }} aria-busy={submitting} className="space-y-6">
++              <input type="hidden" name="source" value={context.source} />
++              <input type="hidden" name="intent" value={context.intent} />
++              {(context.service || context.intent === 'proposal') && <p role="status" className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm leading-7 text-[#111827]">
++                {context.intent === 'proposal' ? 'ขอใบเสนอราคา' : 'ปรึกษาโจทย์องค์กร'}{context.service ? ` · ${SERVICE_LABELS[context.service]}` : ''} — เปลี่ยนบริการที่สนใจได้ด้านล่าง
++              </p>}
++
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <div>
+                   <label className="block text-xs font-bold text-gray-700 mb-2">
+@@ -238,11 +253,14 @@ export const Contact: React.FC = () => {
+                 </div>
+ 
+                 <div>
+-                  <label className="block text-xs font-bold text-gray-700 mb-2">
++                  <label htmlFor="contact-service" className="block text-xs font-bold text-gray-700 mb-2">
+                     บริการหรือหัวข้อที่สนใจ <span className="text-red-500">*</span>
+                   </label>
+                   <select
++                    id="contact-service"
+                     name="service"
++                    value={service}
++                    onChange={event => setService(event.target.value)}
+                     required
+                     className="w-full px-4 py-3.5 rounded-2xl border border-gray-200 focus:ring-2 focus:ring-[#2563EB] focus:outline-none text-sm text-[#111827] bg-[#F8FAFC]"
+                   >
+diff --git a/apps/cap-vision-astro/src/components/HomePage.tsx b/apps/cap-vision-astro/src/components/HomePage.tsx
+index d5c5b47..8c20279 100644
+--- a/apps/cap-vision-astro/src/components/HomePage.tsx
++++ b/apps/cap-vision-astro/src/components/HomePage.tsx
+@@ -1,3 +1,5 @@
++import { ProblemNavigator, WebsiteNavigator } from './home/HomeNavigation';
++import { contactHref } from '../lib/contact-context.mjs';
+ import React, { useState, useEffect } from 'react';
+ 
+ import { 
+@@ -194,7 +196,7 @@ const Home: React.FC = () => {
+                 ที่เชื่อม Mindset → Behavior → Performance
+               </p>
+               <div className="flex flex-col gap-3 sm:flex-row">
+-                <a href="/contact" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-7 py-4 text-base font-bold text-white shadow-xl transition hover:bg-[#1D4ED8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
++                <a href={contactHref()} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-7 py-4 text-base font-bold text-white shadow-xl transition hover:bg-[#1D4ED8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+                   ปรึกษาโจทย์องค์กร <ArrowRight size={19} aria-hidden="true" />
+                 </a>
+                 <a href="/assessment" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+@@ -229,193 +231,7 @@ const Home: React.FC = () => {
+         </div>
+       </section>
+ 
+-      {/* ── 2. PAIN POINTS SECTION: “ปัญหาขององค์กรคุณ อยู่ตรงไหน?” ─────────────── */}
+-      <section className="py-20 md:py-28 bg-[#F8FAFC] border-b border-gray-200 relative overflow-hidden">
+-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+-          
+-          {/* Section Header */}
+-          <div className="text-center max-w-3xl mx-auto mb-12">
+-            <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+-              ORGANIZATION DIAGNOSTIC & INSIGHT
+-            </span>
+-            <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+-              “ปัญหาขององค์กรคุณ <span className="text-[#2563EB]">อยู่ตรงไหน?</span>”
+-            </h2>
+-            <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed font-light">
+-              การพัฒนาองค์กรที่เห็นผลลัพธ์ยั่งยืน ต้องเริ่มจากการเจาะลึกที่รากเหง้าของปัญหา ไม่ใช่แค่การจัดอบรมตามหัวข้อทั่วไป
+-            </p>
+-          </div>
+-
+-          {/* Insight Comparison: Traditional Training vs CAP Transformative Design */}
+-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14 max-w-4xl mx-auto">
+-            <div className="bg-white rounded-2xl p-6 sm:p-7 border border-red-100 shadow-sm relative overflow-hidden">
+-              <div className="flex items-center gap-2 text-xs font-black text-red-600 uppercase tracking-wider mb-2">
+-                <span className="w-2 h-2 rounded-full bg-red-500"></span>
+-                การอบรมแบบดั้งเดิม (Traditional Training)
+-              </div>
+-              <h3 className="text-base sm:text-lg font-black text-gray-900 nav-font mb-2">
+-                เน้นทฤษฎี บรรยายทางเดียว จบในห้องสัมมนา
+-              </h3>
+-              <ul className="text-xs sm:text-sm text-gray-600 space-y-2.5 mt-3">
+-                <li className="flex items-start gap-2.5">
+-                  <span className="text-red-500 font-bold shrink-0">✕</span>
+-                  <span>ใช้หลักสูตรสำเร็จรูป ไม่สอดคล้องกับบริบทจริงขององค์กร</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <span className="text-red-500 font-bold shrink-0">✕</span>
+-                  <span>ผู้เรียนนั่งฟังบรรยาย รู้สึกเบื่อ และขาดการมีส่วนร่วม</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <span className="text-red-500 font-bold shrink-0">✕</span>
+-                  <span>พฤติกรรมเดิมกลับมาใน 1 สัปดาห์ เพราะไม่มี Action Plan และการวัดผล</span>
+-                </li>
+-              </ul>
+-            </div>
+-
+-            <div className="bg-gradient-to-br from-blue-50/80 via-white to-blue-50/40 rounded-2xl p-6 sm:p-7 border border-blue-200/80 shadow-md relative overflow-hidden">
+-              <div className="flex items-center gap-2 text-xs font-black text-[#2563EB] uppercase tracking-wider mb-2">
+-                <span className="w-2 h-2 rounded-full bg-[#2563EB]"></span>
+-                แนวทาง CAP Transformative Learning
+-              </div>
+-              <h3 className="text-base sm:text-lg font-black text-[#111827] nav-font mb-2">
+-                เจาะลึก TNA ผู้เรียนสัมผัสด้วยตนเอง เชื่อมสู่ผลงานจริง
+-              </h3>
+-              <ul className="text-xs sm:text-sm text-gray-700 space-y-2.5 mt-3">
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+-                  <span>เริ่มจาก TNA วินิจฉัยจุดติดขัดเฉพาะองค์กรคุณแบบ 100%</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+-                  <span>Activity-Based Learning ผู้เรียนตระหนักและคิดทางแก้ได้เอง</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+-                  <span>แปลง Mindset สู่ Daily Behavior พร้อมเครื่องมือติดตามผล</span>
+-                </li>
+-              </ul>
+-            </div>
+-          </div>
+-
+-          {/* 4 Pain Point Cards */}
+-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+-            {[
+-              {
+-                pillar: 'LEADERSHIP',
+-                num: '01',
+-                title: 'ผู้นำยังไม่สามารถดึงศักยภาพทีมออกมาได้',
+-                description: 'ผู้นำเน้นการสั่งการมากกว่าการ Facilitate ขาดทักษะการสร้างแรงบันดาลใจ และยังติดกับดักการทำงานแบบเดิม',
+-                impact: 'ทีมขาด Ownership & ทำงานแบบรอคำสั่ง',
+-                icon: IconLeadership,
+-                color: '#2563EB',
+-                bgBadge: 'bg-blue-50 text-blue-700 border-blue-200'
+-              },
+-              {
+-                pillar: 'TEAM',
+-                num: '02',
+-                title: 'คนเก่ง แต่ทำงานร่วมกันไม่ได้',
+-                description: 'แต่ละฝ่ายทำงานแยกส่วน (Silo) ขาดความปลอดภัยทางจิตวิทยา (Psychological Safety) และการสื่อสารไม่เปิดใจ',
+-                impact: 'เกิดความขัดแย้ง ประสิทธิภาพงานลดลง',
+-                icon: IconTeamSynergy,
+-                color: '#0F2557',
+-                bgBadge: 'bg-indigo-50 text-indigo-700 border-indigo-200'
+-              },
+-              {
+-                pillar: 'CULTURE',
+-                num: '03',
+-                title: 'องค์กรต้องการเปลี่ยน แต่คนยังไม่เปลี่ยน',
+-                description: 'คนในองค์กรมี Fixed Mindset ยึดติดกับ Comfort Zone กลัวความผิดพลาด และต่อต้านการเปลี่ยนแปลงกลยุทธ์ใหม่',
+-                impact: 'การทรานส์ฟอร์มองค์กรสะดุด ล่าช้า',
+-                icon: IconGrowthCulture,
+-                color: '#F59E0B',
+-                bgBadge: 'bg-amber-50 text-amber-700 border-amber-200'
+-              },
+-              {
+-                pillar: 'INNOVATION',
+-                num: '04',
+-                title: 'มีปัญหา แต่ทีมยังคิดทางออกแบบเดิม',
+-                description: 'ขาดทักษะ Creative Problem Solving (CPS Model) และการคิดวิเคราะห์เชิงระบบ ทำให้ไม่เกิดนวัตกรรมหรือทางเลือกใหม่',
+-                impact: 'สูญเสียความได้เปรียบในการแข่งขัน',
+-                icon: IconCreativeCPS,
+-                color: '#10B981',
+-                bgBadge: 'bg-emerald-50 text-emerald-700 border-emerald-200'
+-              }
+-            ].map((card, idx) => {
+-              const Icon = card.icon;
+-              return (
+-                <div
+-                  key={idx}
+-                  className="bg-white rounded-2xl p-7 border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group"
+-                >
+-                  <div>
+-                    <div className="flex items-center justify-between mb-5">
+-                      <span className={`text-[11px] font-black tracking-wider uppercase px-3 py-1 rounded-full border ${card.bgBadge}`}>
+-                        {card.pillar}
+-                      </span>
+-                      <span className="text-xs font-black text-gray-400 font-mono">
+-                        {card.num}
+-                      </span>
+-                    </div>
+-
+-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110 shadow-md bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200/80">
+-                      <Icon className="w-7 h-7" />
+-                    </div>
+-
+-                    <h3 className="text-lg font-black text-[#111827] mb-3 nav-font leading-snug">
+-                      {card.title}
+-                    </h3>
+-
+-                    <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-4 font-light">
+-                      {card.description}
+-                    </p>
+-                  </div>
+-
+-                  <div className="pt-4 border-t border-gray-100 mt-2">
+-                    <div className="text-[11px] font-bold text-gray-500 mb-3 flex items-center gap-1.5">
+-                      <span className="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+-                      ผลกระทบ: <span className="text-gray-700">{card.impact}</span>
+-                    </div>
+-
+-                    <a href="/assessment"
+-                      className="text-xs font-bold flex items-center gap-1 group-hover:gap-2 transition-all"
+-                      style={{ color: card.color }}
+-                    >
+-                      ประเมินมิตินี้ในองค์กร
+-                      <ChevronRight className="w-4 h-4" />
+-                    </a>
+-                  </div>
+-                </div>
+-              );
+-            })}
+-          </div>
+-
+-          {/* Direct Funnel CTA Card */}
+-          <div className="bg-gradient-to-r from-[#111827] via-[#0F2557] to-[#111827] rounded-3xl p-8 sm:p-10 text-white shadow-2xl border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+-            <div className="space-y-2 text-center md:text-left">
+-              <div className="inline-flex items-center gap-2 text-xs font-bold text-[#F59E0B] uppercase tracking-wider">
+-                <IconGoldCrestStar className="w-4 h-4 text-[#F59E0B]" />
+-                Strategic Lead-Generation Funnel
+-              </div>
+-              <h3 className="text-xl sm:text-2xl font-black text-white nav-font">
+-                พร้อมค้นหาพลังขับเคลื่อน และจุดปลดล็อกองค์กรของคุณแล้วหรือยัง?
+-              </h3>
+-              <p className="text-gray-300 text-xs sm:text-sm max-w-xl font-light">
+-                ประเมินคน ทีม และองค์กร เพื่อค้นหาว่า อะไรคือจุดแข็งที่ควรต่อยอด และอะไรคือจุดที่ควรเปลี่ยน
+-              </p>
+-            </div>
+-
+-            <div className="flex-shrink-0 w-full sm:w-auto">
+-              <a href="/assessment"
+-                className="btn-premium w-full sm:w-auto bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] font-black px-8 py-4 rounded-xl text-base shadow-xl flex items-center justify-center gap-3 transition-all"
+-              >
+-                <IconGoldCrestStar className="w-5 h-5 text-[#111827]" />
+-                เริ่ม Organization Assessment →
+-              </a>
+-            </div>
+-          </div>
+-
+-        </div>
+-      </section>
++      <ProblemNavigator />
+ 
+       {/* ── 3. SOLUTIONS SECTION (4 Core Pillars) ─────────────────────────────── */}
+       <section className="py-20 md:py-32 bg-white relative">
+@@ -449,7 +265,7 @@ const Home: React.FC = () => {
+                       : 'bg-gray-50 text-gray-600 hover:bg-gray-100 hover:text-[#111827]'
+                   }`}
+                 >
+-                  <Icon className="w-4 h-4" style={{ color: isActive ? '#F59E0B' : sol.color }} />
++                  <span style={{ color: isActive ? '#F59E0B' : sol.color }}><Icon className="w-4 h-4" /></span>
+                   <span>{sol.title}</span>
+                 </button>
+               );
+@@ -488,16 +304,16 @@ const Home: React.FC = () => {
+                     </div>
+ 
+                     <div className="flex flex-col sm:flex-row gap-4">
+-                      <a href="/contact"
++                      <a href={contactHref(sol.id)}
+                         className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-8 py-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2"
+                       >
+                         ปรึกษาออกแบบโซลูชันนี้
+                         <ArrowRight className="w-4 h-4" />
+                       </a>
+-                      <a href="/services"
++                      <a href={`/services#${sol.id}`}
+                         className="btn-premium bg-white hover:bg-gray-100 text-[#111827] border border-gray-200 px-6 py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2"
+                       >
+-                        ดูรายละเอียดบริการทั้งหมด
++                        ดูรายละเอียดโซลูชันนี้
+                       </a>
+                     </div>
+                   </div>
+@@ -748,6 +564,7 @@ const Home: React.FC = () => {
+           </div>
+ 
+         </div>
++        <div className="mt-8 text-center"><a href="/about#cap-framework" className="inline-flex min-h-12 items-center gap-2 font-bold text-white underline underline-offset-4">รู้จักกระบวนการ CAP Framework <ArrowRight size={18} aria-hidden="true" /></a></div>
+       </section>
+ 
+       {/* ── 6. EXPECTED OUTCOMES SECTION (คุณค่าที่องค์กรได้รับจริง) ─────────────── */}
+@@ -893,7 +710,7 @@ const Home: React.FC = () => {
+                 </p>
+               </div>
+             </div>
+-            <a href="/contact"
++            <a href={contactHref()}
+               className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-7 py-3.5 rounded-xl font-bold text-xs sm:text-sm shrink-0 flex items-center gap-2"
+             >
+               ปรึกษาแนวทางการวัดผล
+@@ -1127,7 +944,7 @@ const Home: React.FC = () => {
+           {/* Additional Help Callout */}
+           <div className="mt-12 text-center text-xs sm:text-sm text-gray-500">
+             มีคำถามเฉพาะทางหรือต้องการสอบถามเพิ่มเติม?{' '}
+-            <a href="/contact" className="font-bold text-[#2563EB] hover:underline inline-flex items-center gap-1">
++            <a href={contactHref()} className="font-bold text-[#2563EB] hover:underline inline-flex items-center gap-1">
+               พูดคุยกับทีมที่ปรึกษาโดยตรง <ArrowRight className="w-3.5 h-3.5" />
+             </a>
+           </div>
+@@ -1135,6 +952,8 @@ const Home: React.FC = () => {
+         </div>
+       </section>
+ 
++      <WebsiteNavigator />
++
+       {/* ── 9. FINAL CONSULTATION & CLOSING CTA ───────────────────────────────── */}
+       <section className="py-20 md:py-32 bg-gradient-to-br from-[#111827] via-[#0F2557] to-[#111827] text-white relative overflow-hidden">
+         <div className="absolute inset-0 opacity-5 pointer-events-none">
+@@ -1157,7 +976,7 @@ const Home: React.FC = () => {
+           </p>
+ 
+           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+-            <a href="/contact"
++            <a href={contactHref()}
+               className="btn-premium bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-10 py-5 rounded-2xl text-base shadow-2xl nav-font flex items-center justify-center gap-2 transition-all active:scale-95"
+             >
+               ปรึกษาโจทย์องค์กร (รับข้อเสนอใน 24 ชม.)
+diff --git a/apps/cap-vision-astro/src/components/TransformationAssessment.tsx b/apps/cap-vision-astro/src/components/TransformationAssessment.tsx
+index 973bf9c..dd79956 100644
+--- a/apps/cap-vision-astro/src/components/TransformationAssessment.tsx
++++ b/apps/cap-vision-astro/src/components/TransformationAssessment.tsx
+@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
+ import { motion, AnimatePresence } from 'framer-motion';
+ import { 
+   Sparkles, CheckCircle2, ArrowRight, ArrowLeft, BarChart3, 
+-  Target, RefreshCw, Send,
++  Target, RefreshCw, Send, Trophy,
+   MessageSquare, Building2,
+   Mail, Phone, User, Compass
+ } from 'lucide-react';
+diff --git a/apps/cap-vision-astro/src/components/home/HomeNavigation.tsx b/apps/cap-vision-astro/src/components/home/HomeNavigation.tsx
+new file mode 100644
+index 0000000..d9e0a5a
+--- /dev/null
++++ b/apps/cap-vision-astro/src/components/home/HomeNavigation.tsx
+@@ -0,0 +1,56 @@
++import React from 'react';
++import { ArrowRight, Compass } from 'lucide-react';
++import { contactHref } from '../../lib/contact-context.mjs';
++
++export const PROBLEM_PATHS = [
++  {id: 'leadership', title: 'หัวหน้าเก่งงาน แต่ยังนำคนไม่เป็น', outcome: 'พัฒนาการสื่อสาร การโค้ช และการดึงศักยภาพทีม', label: 'พัฒนาผู้นำ'},
++  {id: 'people-team', title: 'คนเก่ง แต่สื่อสารและร่วมงานกันยาก', outcome: 'สร้างความเข้าใจ การให้ Feedback และความร่วมมือข้ามทีม', label: 'พัฒนาคนและทีม'},
++  {id: 'culture', title: 'องค์กรอยากเปลี่ยน แต่พฤติกรรมยังเหมือนเดิม', outcome: 'เชื่อมค่านิยมและ Growth Mindset กับการทำงานจริง', label: 'พัฒนาวัฒนธรรมองค์กร'},
++  {id: 'customized', title: 'มีโจทย์เฉพาะ ต้องการออกแบบให้ตรงบริบท', outcome: 'เริ่มจาก TNA แล้ววาง Learning Journey พร้อมแนวทางติดตามผล', label: 'ออกแบบเฉพาะองค์กร'},
++];
++const WEBSITE_PATHS = [
++  ['/services', 'โซลูชันองค์กร', 'เลือกแนวทางพัฒนาคนและทีม'],
++  ['/courses', 'หลักสูตร', 'ค้นหาหัวข้อและรายละเอียดการเรียนรู้'],
++  ['/assessment', 'ประเมินองค์กร', 'สำรวจจุดแข็งและโจทย์ที่ควรพัฒนา'],
++  ['/portfolio', 'ผลงานและกรณีศึกษา', 'ดูประสบการณ์การทำงานกับองค์กร'],
++  ['/speakers', 'ทีมวิทยากร', 'รู้จักผู้ร่วมออกแบบกระบวนการเรียนรู้'],
++  ['/resources', 'คลังความรู้', 'อ่านแนวคิดสำหรับผู้นำและ HR'],
++];
++export function ProblemNavigator() {
++  return <section id="home-problems" aria-labelledby="home-problems-title" className="bg-[#F8FAFC] py-16 md:py-24 scroll-mt-24">
++    <div className="mx-auto max-w-7xl px-5 sm:px-8">
++      <p className="text-sm font-bold tracking-wider text-[#2563EB]">เริ่มจากโจทย์ขององค์กรคุณ</p>
++      <h2 id="home-problems-title" className="nav-font mt-3 text-3xl font-black leading-snug text-[#111827] sm:text-4xl">อยากเปลี่ยนเรื่องไหนให้เห็นผล?</h2>
++      <p className="mt-4 max-w-2xl leading-7 text-gray-600">เลือกโจทย์ที่ใกล้กับสถานการณ์ของคุณ เพื่อสำรวจแนวทางพัฒนา หรือพูดคุยกับทีมเพื่อออกแบบร่วมกัน</p>
++      <div className="mt-9 grid gap-5 md:grid-cols-2">
++        {PROBLEM_PATHS.map((problem, index) => <article key={problem.id} className="flex flex-col rounded-2xl border border-gray-200 bg-white p-6 sm:p-8">
++          <span className="text-sm font-bold text-[#2563EB]">0{index + 1}</span>
++          <h3 className="nav-font mt-3 text-xl font-bold leading-relaxed text-[#111827]">{problem.title}</h3>
++          <p className="mt-3 flex-1 leading-7 text-gray-600">{problem.outcome}</p>
++          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
++            <a href={`/services#${problem.id}`} className="inline-flex min-h-11 items-center gap-2 font-bold text-[#2563EB] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4">{problem.label}<ArrowRight size={17} aria-hidden="true" /></a>
++            <a href={contactHref(problem.id)} className="inline-flex min-h-11 items-center font-semibold text-[#111827] hover:underline">ปรึกษาโจทย์นี้</a>
++          </div>
++        </article>)}
++      </div>
++      <a href="/assessment" className="mt-7 inline-flex min-h-11 items-center gap-2 font-bold text-[#111827]"><Compass size={20} aria-hidden="true" />ยังไม่แน่ใจ? เริ่มจากแบบประเมินองค์กร<ArrowRight size={17} aria-hidden="true" /></a>
++    </div>
++  </section>;
++}
++export function WebsiteNavigator() {
++  return <section id="home-explore" aria-labelledby="home-explore-title" className="border-t border-gray-200 bg-white py-16 md:py-20">
++    <div className="mx-auto max-w-7xl px-5 sm:px-8">
++      <h2 id="home-explore-title" className="nav-font text-3xl font-black leading-snug text-[#111827]">เลือกเส้นทางที่ตอบโจทย์คุณ</h2>
++      <nav aria-label="สำรวจส่วนต่างๆ ของ CAP Vision" className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
++        {WEBSITE_PATHS.map(([href, title, description]) => <a key={href} href={href} className="rounded-2xl border border-gray-200 p-6 transition hover:border-[#2563EB] hover:bg-blue-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2563EB]">
++          <span className="flex items-center justify-between gap-3 font-bold text-[#111827]">{title}<ArrowRight size={18} aria-hidden="true" /></span>
++          <span className="mt-2 block text-sm leading-7 text-gray-600">{description}</span>
++        </a>)}
++      </nav>
++      <div className="mt-8 flex flex-wrap gap-4">
++        <a href={contactHref('', 'proposal')} className="inline-flex min-h-12 items-center rounded-xl bg-[#2563EB] px-6 py-3 font-bold text-white hover:bg-[#1D4ED8]">ขอใบเสนอราคาสำหรับองค์กร</a>
++        <a href="/about#cap-framework" className="inline-flex min-h-12 items-center gap-2 px-2 font-bold text-[#111827]">รู้จัก CAP Framework<ArrowRight size={18} aria-hidden="true" /></a>
++      </div>
++    </div>
++  </section>;
++}
+diff --git a/apps/cap-vision-astro/src/lib/contact-context.d.mts b/apps/cap-vision-astro/src/lib/contact-context.d.mts
+new file mode 100644
+index 0000000..6da5fde
+--- /dev/null
++++ b/apps/cap-vision-astro/src/lib/contact-context.d.mts
+@@ -0,0 +1,4 @@
++export const SERVICE_LABELS: Record<string, string>;
++export function readContactContext(search?: string): {service: string; intent: string; source: string};
++export function contactHref(service?: string, intent?: string): string;
++export function contactSource(data: Record<string, unknown>): string;
+diff --git a/apps/cap-vision-astro/src/lib/contact-context.mjs b/apps/cap-vision-astro/src/lib/contact-context.mjs
+new file mode 100644
+index 0000000..63aa4a9
+--- /dev/null
++++ b/apps/cap-vision-astro/src/lib/contact-context.mjs
+@@ -0,0 +1,25 @@
++// URL context is a navigation hint, never authentication or a trusted attribution signal.
++export const SERVICE_LABELS = {
++  leadership: 'Leadership Transformation',
++  'people-team': 'People & Team Synergy',
++  culture: 'Organization Culture & Growth Mindset',
++  customized: 'Customized In-house Training',
++  coaching: 'Executive Coaching', facilitator: 'Modern Facilitator Training', other: 'อื่นๆ'
++};
++export function readContactContext(search = '') {
++  const params = new URLSearchParams(search);
++  const candidate = params.get('service') || '';
++  const service = Object.hasOwn(SERVICE_LABELS, candidate) ? candidate : '';
++  const intent = params.get('intent') === 'proposal' ? 'proposal' : 'consultation';
++  const source = params.get('source') === 'home' ? 'home' : '';
++  return {service, intent, source};
++}
++export function contactHref(service = '', intent = 'consultation') {
++  const context = readContactContext(new URLSearchParams({service, intent, source: 'home'}).toString());
++  const params = new URLSearchParams({source: 'home', intent: context.intent});
++  if (context.service) params.set('service', context.service);
++  return `/contact?${params}`;
++}
++export function contactSource(data) {
++  return data.source === 'home' ? (data.intent === 'proposal' ? 'home_proposal' : 'home_consultation') : 'contact_form';
++}
+diff --git a/apps/cap-vision-astro/src/lib/lead-workflow.mjs b/apps/cap-vision-astro/src/lib/lead-workflow.mjs
+index f480c8b..243444a 100644
+--- a/apps/cap-vision-astro/src/lib/lead-workflow.mjs
++++ b/apps/cap-vision-astro/src/lib/lead-workflow.mjs
+@@ -1,3 +1,4 @@
++import { contactSource } from './contact-context.mjs';
+ export const PIPELINE = {
+   new: 'ผู้สนใจใหม่', contacted: 'ติดต่อแล้ว', tna: 'วิเคราะห์ความต้องการ',
+   proposal: 'ส่งข้อเสนอ', won: 'ตกลงใช้บริการ', lost: 'ไม่ดำเนินการ',
+@@ -23,7 +24,7 @@ export async function captureContact({client, data, onSaved = () => {}}) {
+   const d = validateContact(data);
+   const {error} = await client.from('leads').insert([{
+     name: d.fullName, company: d.organization, phone: d.phone, email: d.email,
+-    line_id: d.lineId, interest_topic: `Service: ${d.service} | ${d.requirements}`,
++    line_id: d.lineId, interest_topic: `Service: ${d.service} | ${d.requirements}${contactSource(data) !== 'contact_form' ? ` | Origin: ${contactSource(data)}` : ''}`,
+     source: 'contact_form', status: 'new'
+   }]);
+   if (error) throw new Error('ไม่สามารถบันทึกข้อมูลได้ กรุณาลองอีกครั้ง');
+diff --git a/apps/cap-vision-astro/src/lib/services/courses.ts b/apps/cap-vision-astro/src/lib/services/courses.ts
+index 0f1c89f..e7c8f28 100644
+--- a/apps/cap-vision-astro/src/lib/services/courses.ts
++++ b/apps/cap-vision-astro/src/lib/services/courses.ts
+@@ -1,5 +1,5 @@
+ import { supabase, assertSupabaseEnv } from '../supabase';
+-import type { Course } from '../types';
++import type { Course } from '../../types';
+ 
+ const TABLE_NAME = 'courses';
+ 
+diff --git a/apps/cap-vision-astro/tests/home-journey.test.mjs b/apps/cap-vision-astro/tests/home-journey.test.mjs
+new file mode 100644
+index 0000000..740fa4d
+--- /dev/null
++++ b/apps/cap-vision-astro/tests/home-journey.test.mjs
+@@ -0,0 +1,29 @@
++import {test} from 'node:test';
++import assert from 'node:assert/strict';
++import {readContactContext, contactHref, contactSource} from '../src/lib/contact-context.mjs';
++import {captureContact} from '../src/lib/lead-workflow.mjs';
++
++test('selected problem survives the Home to Contact link; proposal is distinct', () => {
++  for (const service of ['leadership','people-team','culture','customized']) {
++    const url = new URL(contactHref(service),'https://example.test');
++    assert.deepEqual(readContactContext(url.search),{service,intent:'consultation',source:'home'});
++  }
++  assert.equal(readContactContext(new URL(contactHref('', 'proposal'),'https://example.test').search).intent,'proposal');
++});
++test('unknown and prototype values cannot preselect a service or create arbitrary CRM sources', () => {
++  for (const service of ['__proto__','constructor','not-a-service','<script>']) {
++    assert.equal(readContactContext(`?service=${encodeURIComponent(service)}`).service,'');
++  }
++  assert.deepEqual(readContactContext('?source=https://evil.test&intent=delete'),{service:'',source:'',intent:'consultation'});
++  assert.equal(contactSource({source:'email@example.com'}),'contact_form');
++});
++test('CRM captures fixed homepage context while preserving service and user requirements', async () => {
++  let saved;
++  const client = {from:()=>({insert:async rows=>{saved=rows[0];return {error:null};}}),functions:{invoke:async()=>({error:null})}};
++  const data={fullName:'QA',organization:'Fixture',phone:'0812345678',email:'qa@example.test',service:'culture',requirements:'Culture workshop',source:'home',intent:'proposal'};
++  await captureContact({client,data});
++  assert.equal(saved.source,'contact_form');
++  assert.equal(saved.interest_topic,'Service: culture | Culture workshop | Origin: home_proposal');
++  await captureContact({client,data:{...data,source:'unknown'}});
++  assert.equal(saved.source,'contact_form');
++});
+diff --git a/apps/cap-vision-astro/tests/tsconfig.public.json b/apps/cap-vision-astro/tests/tsconfig.public.json
+index 5fb4c2d..c7eefc0 100644
+--- a/apps/cap-vision-astro/tests/tsconfig.public.json
++++ b/apps/cap-vision-astro/tests/tsconfig.public.json
+@@ -3,6 +3,14 @@
+   "include": [
+     "../.astro/types.d.ts",
+     "../src/lib/server-articles.ts",
+-    "../src/components/BlogArticleDetailPage.tsx"
+-  ]
++    "../src/components/BlogArticleDetailPage.tsx",
++    "../src/components/HomePage.tsx",
++    "../src/components/ContactPage.tsx",
++    "../src/components/home/**/*.tsx"
++  ],
++  "compilerOptions": {
++    "types": [
++      "astro/client"
++    ]
++  }
+ }
+diff --git a/components/home/HomeNavigation.tsx b/components/home/HomeNavigation.tsx
+new file mode 100644
+index 0000000..d9e0a5a
+--- /dev/null
++++ b/components/home/HomeNavigation.tsx
+@@ -0,0 +1,56 @@
++import React from 'react';
++import { ArrowRight, Compass } from 'lucide-react';
++import { contactHref } from '../../lib/contact-context.mjs';
++
++export const PROBLEM_PATHS = [
++  {id: 'leadership', title: 'หัวหน้าเก่งงาน แต่ยังนำคนไม่เป็น', outcome: 'พัฒนาการสื่อสาร การโค้ช และการดึงศักยภาพทีม', label: 'พัฒนาผู้นำ'},
++  {id: 'people-team', title: 'คนเก่ง แต่สื่อสารและร่วมงานกันยาก', outcome: 'สร้างความเข้าใจ การให้ Feedback และความร่วมมือข้ามทีม', label: 'พัฒนาคนและทีม'},
++  {id: 'culture', title: 'องค์กรอยากเปลี่ยน แต่พฤติกรรมยังเหมือนเดิม', outcome: 'เชื่อมค่านิยมและ Growth Mindset กับการทำงานจริง', label: 'พัฒนาวัฒนธรรมองค์กร'},
++  {id: 'customized', title: 'มีโจทย์เฉพาะ ต้องการออกแบบให้ตรงบริบท', outcome: 'เริ่มจาก TNA แล้ววาง Learning Journey พร้อมแนวทางติดตามผล', label: 'ออกแบบเฉพาะองค์กร'},
++];
++const WEBSITE_PATHS = [
++  ['/services', 'โซลูชันองค์กร', 'เลือกแนวทางพัฒนาคนและทีม'],
++  ['/courses', 'หลักสูตร', 'ค้นหาหัวข้อและรายละเอียดการเรียนรู้'],
++  ['/assessment', 'ประเมินองค์กร', 'สำรวจจุดแข็งและโจทย์ที่ควรพัฒนา'],
++  ['/portfolio', 'ผลงานและกรณีศึกษา', 'ดูประสบการณ์การทำงานกับองค์กร'],
++  ['/speakers', 'ทีมวิทยากร', 'รู้จักผู้ร่วมออกแบบกระบวนการเรียนรู้'],
++  ['/resources', 'คลังความรู้', 'อ่านแนวคิดสำหรับผู้นำและ HR'],
++];
++export function ProblemNavigator() {
++  return <section id="home-problems" aria-labelledby="home-problems-title" className="bg-[#F8FAFC] py-16 md:py-24 scroll-mt-24">
++    <div className="mx-auto max-w-7xl px-5 sm:px-8">
++      <p className="text-sm font-bold tracking-wider text-[#2563EB]">เริ่มจากโจทย์ขององค์กรคุณ</p>
++      <h2 id="home-problems-title" className="nav-font mt-3 text-3xl font-black leading-snug text-[#111827] sm:text-4xl">อยากเปลี่ยนเรื่องไหนให้เห็นผล?</h2>
++      <p className="mt-4 max-w-2xl leading-7 text-gray-600">เลือกโจทย์ที่ใกล้กับสถานการณ์ของคุณ เพื่อสำรวจแนวทางพัฒนา หรือพูดคุยกับทีมเพื่อออกแบบร่วมกัน</p>
++      <div className="mt-9 grid gap-5 md:grid-cols-2">
++        {PROBLEM_PATHS.map((problem, index) => <article key={problem.id} className="flex flex-col rounded-2xl border border-gray-200 bg-white p-6 sm:p-8">
++          <span className="text-sm font-bold text-[#2563EB]">0{index + 1}</span>
++          <h3 className="nav-font mt-3 text-xl font-bold leading-relaxed text-[#111827]">{problem.title}</h3>
++          <p className="mt-3 flex-1 leading-7 text-gray-600">{problem.outcome}</p>
++          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
++            <a href={`/services#${problem.id}`} className="inline-flex min-h-11 items-center gap-2 font-bold text-[#2563EB] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4">{problem.label}<ArrowRight size={17} aria-hidden="true" /></a>
++            <a href={contactHref(problem.id)} className="inline-flex min-h-11 items-center font-semibold text-[#111827] hover:underline">ปรึกษาโจทย์นี้</a>
++          </div>
++        </article>)}
++      </div>
++      <a href="/assessment" className="mt-7 inline-flex min-h-11 items-center gap-2 font-bold text-[#111827]"><Compass size={20} aria-hidden="true" />ยังไม่แน่ใจ? เริ่มจากแบบประเมินองค์กร<ArrowRight size={17} aria-hidden="true" /></a>
++    </div>
++  </section>;
++}
++export function WebsiteNavigator() {
++  return <section id="home-explore" aria-labelledby="home-explore-title" className="border-t border-gray-200 bg-white py-16 md:py-20">
++    <div className="mx-auto max-w-7xl px-5 sm:px-8">
++      <h2 id="home-explore-title" className="nav-font text-3xl font-black leading-snug text-[#111827]">เลือกเส้นทางที่ตอบโจทย์คุณ</h2>
++      <nav aria-label="สำรวจส่วนต่างๆ ของ CAP Vision" className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
++        {WEBSITE_PATHS.map(([href, title, description]) => <a key={href} href={href} className="rounded-2xl border border-gray-200 p-6 transition hover:border-[#2563EB] hover:bg-blue-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#2563EB]">
++          <span className="flex items-center justify-between gap-3 font-bold text-[#111827]">{title}<ArrowRight size={18} aria-hidden="true" /></span>
++          <span className="mt-2 block text-sm leading-7 text-gray-600">{description}</span>
++        </a>)}
++      </nav>
++      <div className="mt-8 flex flex-wrap gap-4">
++        <a href={contactHref('', 'proposal')} className="inline-flex min-h-12 items-center rounded-xl bg-[#2563EB] px-6 py-3 font-bold text-white hover:bg-[#1D4ED8]">ขอใบเสนอราคาสำหรับองค์กร</a>
++        <a href="/about#cap-framework" className="inline-flex min-h-12 items-center gap-2 px-2 font-bold text-[#111827]">รู้จัก CAP Framework<ArrowRight size={18} aria-hidden="true" /></a>
++      </div>
++    </div>
++  </section>;
++}
+diff --git a/docs/home-journey-update.md b/docs/home-journey-update.md
+new file mode 100644
+index 0000000..5539ea9
+--- /dev/null
++++ b/docs/home-journey-update.md
+@@ -0,0 +1,55 @@
++# CAP Vision Home Journey Update
++
++Base: `6fb1b5a98a5e36a9cb2a046caf7cf5ada01ad060` (main).
++
++## ผลลัพธ์
++
++หน้า Home ให้ผู้ชมเลือกโจทย์องค์กร 4 ด้าน แล้วอ่านบริการตรงหมวดหรือปรึกษาโดยฟอร์มเลือกบริการให้ล่วงหน้า มีทางลัดไปบริการ หลักสูตร แบบประเมิน ผลงาน วิทยากร และคลังความรู้ พร้อมปุ่มขอใบเสนอราคาและ CAP Framework
++
++ปรับทั้ง React/Vite เดิม (`pages/Home.tsx`, `pages/Contact.tsx`) และ Astro/Cloudflare (`apps/cap-vision-astro/src/components/HomePage.tsx`, `ContactPage.tsx`) เนื่องจาก repository มีสองแอป มี HomeNavigation และ contact-context แยกเป็นส่วนที่ใช้ซ้ำได้ภายในแต่ละแอป
++
++## เส้นทาง
++
++- การ์ดโจทย์ → `/services#leadership`, `#people-team`, `#culture`, `#customized`
++- ปรึกษาโจทย์ → `/contact?source=home&intent=consultation&service=<service>`
++- ขอใบเสนอราคา → `/contact?source=home&intent=proposal`
++- หมวดหลักสูตรเดิมและรายละเอียดหลักสูตรยังใช้เส้นทางเดิม
++- CAP Framework → `/about#cap-framework`
++
++ใช้หน้า services ที่ตรวจว่ามีจริงทั้งสองแอป แทน SEO landing routes ที่มีเฉพาะแอป React ปัจจุบัน ฟอร์มรับเฉพาะ service ที่อยู่ในรายการที่กำหนด; ค่าอื่นกลับไปเริ่มเลือกบริการ ผู้ใช้เปลี่ยนบริการได้ ข้อมูลชื่อและข้อมูลติดต่อไม่ถูกส่งผ่าน URL
++
++## CRM และความปลอดภัย
++
++ไม่ต้อง migration ไม่แก้ RLS ไม่แก้สิทธิ์ Admin และไม่เปลี่ยน source ของ lead จาก `contact_form` เพื่อรักษากฎตรวจข้อมูลของฐานข้อมูล เพิ่ม `Origin: home_consultation` หรือ `Origin: home_proposal` ใน interest_topic หลังรายละเอียดความต้องการเฉพาะกรณีมาจาก Home; เป็นบริบทจากผู้ใช้ ไม่ใช่หลักฐานยืนยันแหล่งที่มา
++
++ระบบแจ้งเตือนและ guard ที่ป้องกัน preview เขียนข้อมูลจริงยังใช้ของเดิม
++
++## ตรวจคุณภาพ
++
++- Astro: npm test (15 ผ่าน), npm run typecheck:public และ npm run build ผ่าน
++- React: npm ci --legacy-peer-deps และ npm run build ผ่าน (peer conflict React 19/react-helmet-async เป็นข้อจำกัดเดิม)
++- Chromium ตรวจ React UI: 4 บริการถูกเลือกตรงลิงก์และเปลี่ยนได้, proposal intent, URL ที่ไม่รู้จัก, service anchor, hub 6 ปลายทาง, จอ 320–1440px และไม่มี page error ผ่าน
++- ไม่ส่งแบบฟอร์ม ไม่เขียนฐานข้อมูลจริง ไม่ส่ง LINE/อีเมลจริง และไม่ deploy
++- Astro Cloudflare dev background runtime เริ่มไม่ได้ในสภาพแวดล้อมนี้; build/typecheck/unit tests ผ่าน แต่ต้องตรวจ hosting preview และ workflow จริงก่อนปล่อย production
++- แก้ข้อผิดพลาดเดิมที่พบจากการเพิ่ม Home/Contact เข้า typecheck: import Course ผิดตำแหน่ง, import Trophy ที่ขาด และ style ของ custom icon
++
++## นำเข้าใน Antigravity
++
++ใช้ branch `feat/home-journey-20261012` หรือแตก ZIP และคัดลอกไฟล์ภายใน `files/` ไปที่ root ของ repository ตาม path เดิม ชุดนี้เป็นไฟล์ที่เปลี่ยนจาก base ด้านบน ไม่ใช่ repository ทั้งชุด
++
++```sh
++# React/Vite
++npm ci --legacy-peer-deps
++npm run build
++
++# Astro/Cloudflare
++cd apps/cap-vision-astro
++npm ci
++npm test
++npm run typecheck:public
++npm run build
++```
++
++ตรวจ preview: Home → การ์ดโจทย์ → Services; Home → ปรึกษา → บริการเลือกไว้; Home → ขอใบเสนอราคา → intent ถูกต้อง; เปลี่ยนบริการได้; หลักสูตร/ผลงาน/วิทยากร/บทความเปิดได้; เมนูและมือถือใช้งานได้ จากนั้นขออนุมัติก่อน merge/deploy production
++
++Rollback: revert commit ของชุดนี้แล้ว build/deploy ผ่าน workflow ที่อนุมัติไว้ ไม่ต้องเปลี่ยนฐานข้อมูล
+diff --git a/lib/contact-context.d.mts b/lib/contact-context.d.mts
+new file mode 100644
+index 0000000..6da5fde
+--- /dev/null
++++ b/lib/contact-context.d.mts
+@@ -0,0 +1,4 @@
++export const SERVICE_LABELS: Record<string, string>;
++export function readContactContext(search?: string): {service: string; intent: string; source: string};
++export function contactHref(service?: string, intent?: string): string;
++export function contactSource(data: Record<string, unknown>): string;
+diff --git a/lib/contact-context.mjs b/lib/contact-context.mjs
+new file mode 100644
+index 0000000..63aa4a9
+--- /dev/null
++++ b/lib/contact-context.mjs
+@@ -0,0 +1,25 @@
++// URL context is a navigation hint, never authentication or a trusted attribution signal.
++export const SERVICE_LABELS = {
++  leadership: 'Leadership Transformation',
++  'people-team': 'People & Team Synergy',
++  culture: 'Organization Culture & Growth Mindset',
++  customized: 'Customized In-house Training',
++  coaching: 'Executive Coaching', facilitator: 'Modern Facilitator Training', other: 'อื่นๆ'
++};
++export function readContactContext(search = '') {
++  const params = new URLSearchParams(search);
++  const candidate = params.get('service') || '';
++  const service = Object.hasOwn(SERVICE_LABELS, candidate) ? candidate : '';
++  const intent = params.get('intent') === 'proposal' ? 'proposal' : 'consultation';
++  const source = params.get('source') === 'home' ? 'home' : '';
++  return {service, intent, source};
++}
++export function contactHref(service = '', intent = 'consultation') {
++  const context = readContactContext(new URLSearchParams({service, intent, source: 'home'}).toString());
++  const params = new URLSearchParams({source: 'home', intent: context.intent});
++  if (context.service) params.set('service', context.service);
++  return `/contact?${params}`;
++}
++export function contactSource(data) {
++  return data.source === 'home' ? (data.intent === 'proposal' ? 'home_proposal' : 'home_consultation') : 'contact_form';
++}
+diff --git a/pages/Contact.tsx b/pages/Contact.tsx
+index de0e802..6687069 100644
+--- a/pages/Contact.tsx
++++ b/pages/Contact.tsx
+@@ -1,4 +1,5 @@
+-import React, { useState } from 'react';
++import { readContactContext, SERVICE_LABELS, contactSource } from '../lib/contact-context.mjs';
++import React, { useState, useEffect } from 'react';
+ import { Link } from 'react-router-dom';
+ import {
+   Phone, MessageCircle, MapPin, Facebook, Youtube, Instagram,
+@@ -18,6 +19,14 @@ const TikTokIcon = ({ className }: { className?: string }) => (
+ 
+ export const Contact: React.FC = () => {
+   const [submitted, setSubmitted] = useState(false);
++  const [context, setContext] = useState({service: '', intent: 'consultation', source: ''});
++  const [service, setService] = useState('');
++  useEffect(() => {
++    const initial = readContactContext(window.location.search);
++    setContext(initial);
++    setService(initial.service);
++  }, []);
++
+   const [openFaq, setOpenFaq] = useState<number | null>(0);
+ 
+   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+@@ -53,7 +62,7 @@ export const Contact: React.FC = () => {
+             phone: phone,
+             email: email,
+             line_id: lineId,
+-            interest_topic: `Service: ${service} | ${requirements}`,
++            interest_topic: `Service: ${service} | ${requirements}${contactSource(context) !== 'contact_form' ? ` | Origin: ${contactSource(context)}` : ''}`,
+             source: 'contact_form',
+             status: 'new'
+           }
+@@ -204,6 +213,12 @@ export const Contact: React.FC = () => {
+             </div>
+ 
+             <form onSubmit={handleSubmit} className="space-y-6">
++              <input type="hidden" name="source" value={context.source} />
++              <input type="hidden" name="intent" value={context.intent} />
++              {(context.service || context.intent === 'proposal') && <p role="status" className="rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm leading-7 text-[#111827]">
++                {context.intent === 'proposal' ? 'ขอใบเสนอราคา' : 'ปรึกษาโจทย์องค์กร'}{context.service ? ` · ${SERVICE_LABELS[context.service]}` : ''} — เปลี่ยนบริการที่สนใจได้ด้านล่าง
++              </p>}
++
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                 <div>
+                   <label className="block text-xs font-bold text-gray-700 mb-2">
+@@ -270,11 +285,14 @@ export const Contact: React.FC = () => {
+                 </div>
+ 
+                 <div>
+-                  <label className="block text-xs font-bold text-gray-700 mb-2">
++                  <label htmlFor="contact-service" className="block text-xs font-bold text-gray-700 mb-2">
+                     บริการหรือหัวข้อที่สนใจ <span className="text-red-500">*</span>
+                   </label>
+                   <select
++                    id="contact-service"
+                     name="service"
++                    value={service}
++                    onChange={event => setService(event.target.value)}
+                     required
+                     className="w-full px-4 py-3.5 rounded-2xl border border-gray-200 focus:ring-2 focus:ring-[#2563EB] focus:outline-none text-sm text-[#111827] bg-[#F8FAFC]"
+                   >
+diff --git a/pages/Home.tsx b/pages/Home.tsx
+index b8223fb..feba026 100644
+--- a/pages/Home.tsx
++++ b/pages/Home.tsx
+@@ -1,3 +1,5 @@
++import { ProblemNavigator, WebsiteNavigator } from '../components/home/HomeNavigation';
++import { contactHref } from '../lib/contact-context.mjs';
+ import React, { useState, useEffect } from 'react';
+ import { Link } from 'react-router-dom';
+ import { 
+@@ -197,7 +199,7 @@ const Home: React.FC = () => {
+                 ที่เชื่อม Mindset → Behavior → Performance
+               </p>
+               <div className="flex flex-col gap-3 sm:flex-row">
+-                <Link to="/contact" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-7 py-4 text-base font-bold text-white shadow-xl transition hover:bg-[#1D4ED8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
++                <Link to={contactHref()} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-7 py-4 text-base font-bold text-white shadow-xl transition hover:bg-[#1D4ED8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+                   ปรึกษาโจทย์องค์กร <ArrowRight size={19} aria-hidden="true" />
+                 </Link>
+                 <Link to="/assessment" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+@@ -232,195 +234,7 @@ const Home: React.FC = () => {
+         </div>
+       </section>
+ 
+-      {/* ── 2. PAIN POINTS SECTION: “ปัญหาขององค์กรคุณ อยู่ตรงไหน?” ─────────────── */}
+-      <section className="py-20 md:py-28 bg-[#F8FAFC] border-b border-gray-200 relative overflow-hidden">
+-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+-          
+-          {/* Section Header */}
+-          <div className="text-center max-w-3xl mx-auto mb-12">
+-            <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+-              ORGANIZATION DIAGNOSTIC & INSIGHT
+-            </span>
+-            <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+-              “ปัญหาขององค์กรคุณ <span className="text-[#2563EB]">อยู่ตรงไหน?</span>”
+-            </h2>
+-            <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed font-light">
+-              การพัฒนาองค์กรที่เห็นผลลัพธ์ยั่งยืน ต้องเริ่มจากการเจาะลึกที่รากเหง้าของปัญหา ไม่ใช่แค่การจัดอบรมตามหัวข้อทั่วไป
+-            </p>
+-          </div>
+-
+-          {/* Insight Comparison: Traditional Training vs CAP Transformative Design */}
+-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14 max-w-4xl mx-auto">
+-            <div className="bg-white rounded-2xl p-6 sm:p-7 border border-red-100 shadow-sm relative overflow-hidden">
+-              <div className="flex items-center gap-2 text-xs font-black text-red-600 uppercase tracking-wider mb-2">
+-                <span className="w-2 h-2 rounded-full bg-red-500"></span>
+-                การอบรมแบบดั้งเดิม (Traditional Training)
+-              </div>
+-              <h3 className="text-base sm:text-lg font-black text-gray-900 nav-font mb-2">
+-                เน้นทฤษฎี บรรยายทางเดียว จบในห้องสัมมนา
+-              </h3>
+-              <ul className="text-xs sm:text-sm text-gray-600 space-y-2.5 mt-3">
+-                <li className="flex items-start gap-2.5">
+-                  <span className="text-red-500 font-bold shrink-0">✕</span>
+-                  <span>ใช้หลักสูตรสำเร็จรูป ไม่สอดคล้องกับบริบทจริงขององค์กร</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <span className="text-red-500 font-bold shrink-0">✕</span>
+-                  <span>ผู้เรียนนั่งฟังบรรยาย รู้สึกเบื่อ และขาดการมีส่วนร่วม</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <span className="text-red-500 font-bold shrink-0">✕</span>
+-                  <span>พฤติกรรมเดิมกลับมาใน 1 สัปดาห์ เพราะไม่มี Action Plan และการวัดผล</span>
+-                </li>
+-              </ul>
+-            </div>
+-
+-            <div className="bg-gradient-to-br from-blue-50/80 via-white to-blue-50/40 rounded-2xl p-6 sm:p-7 border border-blue-200/80 shadow-md relative overflow-hidden">
+-              <div className="flex items-center gap-2 text-xs font-black text-[#2563EB] uppercase tracking-wider mb-2">
+-                <span className="w-2 h-2 rounded-full bg-[#2563EB]"></span>
+-                แนวทาง CAP Transformative Learning
+-              </div>
+-              <h3 className="text-base sm:text-lg font-black text-[#111827] nav-font mb-2">
+-                เจาะลึก TNA ผู้เรียนสัมผัสด้วยตนเอง เชื่อมสู่ผลงานจริง
+-              </h3>
+-              <ul className="text-xs sm:text-sm text-gray-700 space-y-2.5 mt-3">
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+-                  <span>เริ่มจาก TNA วินิจฉัยจุดติดขัดเฉพาะองค์กรคุณแบบ 100%</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+-                  <span>Activity-Based Learning ผู้เรียนตระหนักและคิดทางแก้ได้เอง</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+-                  <span>แปลง Mindset สู่ Daily Behavior พร้อมเครื่องมือติดตามผล</span>
+-                </li>
+-              </ul>
+-            </div>
+-          </div>
+-
+-          {/* 4 Pain Point Cards */}
+-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+-            {[
+-              {
+-                pillar: 'LEADERSHIP',
+-                num: '01',
+-                title: 'ผู้นำยังไม่สามารถดึงศักยภาพทีมออกมาได้',
+-                description: 'ผู้นำเน้นการสั่งการมากกว่าการ Facilitate ขาดทักษะการสร้างแรงบันดาลใจ และยังติดกับดักการทำงานแบบเดิม',
+-                impact: 'ทีมขาด Ownership & ทำงานแบบรอคำสั่ง',
+-                icon: IconLeadership,
+-                color: '#2563EB',
+-                bgBadge: 'bg-blue-50 text-blue-700 border-blue-200'
+-              },
+-              {
+-                pillar: 'TEAM',
+-                num: '02',
+-                title: 'คนเก่ง แต่ทำงานร่วมกันไม่ได้',
+-                description: 'แต่ละฝ่ายทำงานแยกส่วน (Silo) ขาดความปลอดภัยทางจิตวิทยา (Psychological Safety) และการสื่อสารไม่เปิดใจ',
+-                impact: 'เกิดความขัดแย้ง ประสิทธิภาพงานลดลง',
+-                icon: IconTeamSynergy,
+-                color: '#0F2557',
+-                bgBadge: 'bg-indigo-50 text-indigo-700 border-indigo-200'
+-              },
+-              {
+-                pillar: 'CULTURE',
+-                num: '03',
+-                title: 'องค์กรต้องการเปลี่ยน แต่คนยังไม่เปลี่ยน',
+-                description: 'คนในองค์กรมี Fixed Mindset ยึดติดกับ Comfort Zone กลัวความผิดพลาด และต่อต้านการเปลี่ยนแปลงกลยุทธ์ใหม่',
+-                impact: 'การทรานส์ฟอร์มองค์กรสะดุด ล่าช้า',
+-                icon: IconGrowthCulture,
+-                color: '#F59E0B',
+-                bgBadge: 'bg-amber-50 text-amber-700 border-amber-200'
+-              },
+-              {
+-                pillar: 'INNOVATION',
+-                num: '04',
+-                title: 'มีปัญหา แต่ทีมยังคิดทางออกแบบเดิม',
+-                description: 'ขาดทักษะ Creative Problem Solving (CPS Model) และการคิดวิเคราะห์เชิงระบบ ทำให้ไม่เกิดนวัตกรรมหรือทางเลือกใหม่',
+-                impact: 'สูญเสียความได้เปรียบในการแข่งขัน',
+-                icon: IconCreativeCPS,
+-                color: '#10B981',
+-                bgBadge: 'bg-emerald-50 text-emerald-700 border-emerald-200'
+-              }
+-            ].map((card, idx) => {
+-              const Icon = card.icon;
+-              return (
+-                <div
+-                  key={idx}
+-                  className="bg-white rounded-2xl p-7 border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group"
+-                >
+-                  <div>
+-                    <div className="flex items-center justify-between mb-5">
+-                      <span className={`text-[11px] font-black tracking-wider uppercase px-3 py-1 rounded-full border ${card.bgBadge}`}>
+-                        {card.pillar}
+-                      </span>
+-                      <span className="text-xs font-black text-gray-400 font-mono">
+-                        {card.num}
+-                      </span>
+-                    </div>
+-
+-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110 shadow-md bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200/80">
+-                      <Icon className="w-7 h-7" />
+-                    </div>
+-
+-                    <h3 className="text-lg font-black text-[#111827] mb-3 nav-font leading-snug">
+-                      {card.title}
+-                    </h3>
+-
+-                    <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-4 font-light">
+-                      {card.description}
+-                    </p>
+-                  </div>
+-
+-                  <div className="pt-4 border-t border-gray-100 mt-2">
+-                    <div className="text-[11px] font-bold text-gray-500 mb-3 flex items-center gap-1.5">
+-                      <span className="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+-                      ผลกระทบ: <span className="text-gray-700">{card.impact}</span>
+-                    </div>
+-
+-                    <Link
+-                      to="/assessment"
+-                      className="text-xs font-bold flex items-center gap-1 group-hover:gap-2 transition-all"
+-                      style={{ color: card.color }}
+-                    >
+-                      ประเมินมิตินี้ในองค์กร
+-                      <ChevronRight className="w-4 h-4" />
+-                    </Link>
+-                  </div>
+-                </div>
+-              );
+-            })}
+-          </div>
+-
+-          {/* Direct Funnel CTA Card */}
+-          <div className="bg-gradient-to-r from-[#111827] via-[#0F2557] to-[#111827] rounded-3xl p-8 sm:p-10 text-white shadow-2xl border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+-            <div className="space-y-2 text-center md:text-left">
+-              <div className="inline-flex items-center gap-2 text-xs font-bold text-[#F59E0B] uppercase tracking-wider">
+-                <IconGoldCrestStar className="w-4 h-4 text-[#F59E0B]" />
+-                Strategic Lead-Generation Funnel
+-              </div>
+-              <h3 className="text-xl sm:text-2xl font-black text-white nav-font">
+-                พร้อมค้นหาพลังขับเคลื่อน และจุดปลดล็อกองค์กรของคุณแล้วหรือยัง?
+-              </h3>
+-              <p className="text-gray-300 text-xs sm:text-sm max-w-xl font-light">
+-                ประเมินคน ทีม และองค์กร เพื่อค้นหาว่า อะไรคือจุดแข็งที่ควรต่อยอด และอะไรคือจุดที่ควรเปลี่ยน
+-              </p>
+-            </div>
+-
+-            <div className="flex-shrink-0 w-full sm:w-auto">
+-              <Link
+-                to="/assessment"
+-                className="btn-premium w-full sm:w-auto bg-[#F59E0B] hover:bg-[#D97706] text-[#111827] font-black px-8 py-4 rounded-xl text-base shadow-xl flex items-center justify-center gap-3 transition-all"
+-              >
+-                <IconGoldCrestStar className="w-5 h-5 text-[#111827]" />
+-                เริ่ม Organization Assessment →
+-              </Link>
+-            </div>
+-          </div>
+-
+-        </div>
+-      </section>
++      <ProblemNavigator />
+ 
+       {/* ── 3. SOLUTIONS SECTION (4 Core Pillars) ─────────────────────────────── */}
+       <section className="py-20 md:py-32 bg-white relative">
+@@ -494,17 +308,17 @@ const Home: React.FC = () => {
+ 
+                     <div className="flex flex-col sm:flex-row gap-4">
+                       <Link
+-                        to="/contact"
++                        to={contactHref(sol.id)}
+                         className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-8 py-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2"
+                       >
+                         ปรึกษาออกแบบโซลูชันนี้
+                         <ArrowRight className="w-4 h-4" />
+                       </Link>
+                       <Link
+-                        to="/services"
++                        to={`/services#${sol.id}`}
+                         className="btn-premium bg-white hover:bg-gray-100 text-[#111827] border border-gray-200 px-6 py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2"
+                       >
+-                        ดูรายละเอียดบริการทั้งหมด
++                        ดูรายละเอียดโซลูชันนี้
+                       </Link>
+                     </div>
+                   </div>
+@@ -758,6 +572,7 @@ const Home: React.FC = () => {
+           </div>
+ 
+         </div>
++        <div className="mt-8 text-center"><Link to="/about#cap-framework" className="inline-flex min-h-12 items-center gap-2 font-bold text-white underline underline-offset-4">รู้จักกระบวนการ CAP Framework <ArrowRight size={18} aria-hidden="true" /></Link></div>
+       </section>
+ 
+       {/* ── 6. EXPECTED OUTCOMES SECTION (คุณค่าที่องค์กรได้รับจริง) ─────────────── */}
+@@ -903,7 +718,7 @@ const Home: React.FC = () => {
+                 </p>
+               </div>
+             </div>
+-            <Link to="/contact"
++            <Link to={contactHref()}
+               className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-7 py-3.5 rounded-xl font-bold text-xs sm:text-sm shrink-0 flex items-center gap-2"
+             >
+               ปรึกษาแนวทางการวัดผล
+@@ -1140,7 +955,7 @@ const Home: React.FC = () => {
+           {/* Additional Help Callout */}
+           <div className="mt-12 text-center text-xs sm:text-sm text-gray-500">
+             มีคำถามเฉพาะทางหรือต้องการสอบถามเพิ่มเติม?{' '}
+-            <Link to="/contact" className="font-bold text-[#2563EB] hover:underline inline-flex items-center gap-1">
++            <Link to={contactHref()} className="font-bold text-[#2563EB] hover:underline inline-flex items-center gap-1">
+               พูดคุยกับทีมที่ปรึกษาโดยตรง <ArrowRight className="w-3.5 h-3.5" />
+             </Link>
+           </div>
+@@ -1148,6 +963,8 @@ const Home: React.FC = () => {
+         </div>
+       </section>
+ 
++      <WebsiteNavigator />
++
+       {/* ── 9. FINAL CONSULTATION & CLOSING CTA ───────────────────────────────── */}
+       <section className="py-20 md:py-32 bg-gradient-to-br from-[#111827] via-[#0F2557] to-[#111827] text-white relative overflow-hidden">
+         <div className="absolute inset-0 opacity-5 pointer-events-none">
+@@ -1170,7 +987,7 @@ const Home: React.FC = () => {
+           </p>
+ 
+           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+-            <Link to="/contact"
++            <Link to={contactHref()}
+               className="btn-premium bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-10 py-5 rounded-2xl text-base shadow-2xl nav-font flex items-center justify-center gap-2 transition-all active:scale-95"
+             >
+               ปรึกษาโจทย์องค์กร (รับข้อเสนอใน 24 ชม.)

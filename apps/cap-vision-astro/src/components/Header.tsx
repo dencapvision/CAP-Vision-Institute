@@ -305,7 +305,7 @@ const Header: React.FC = () => {
 
       <nav
         aria-label="Main Navigation"
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`cap-site-header fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? 'h-16 bg-white/95 backdrop-blur-xl shadow-md border-b border-gray-100'
             : 'h-20 bg-white/90 backdrop-blur-md md:bg-transparent'

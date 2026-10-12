@@ -62,7 +62,7 @@ const DashboardLayout: React.FC = () => {
   }
 
   const Sidebar = () => (
-    <aside className="w-64 bg-[#0f1623] text-white flex flex-col h-full">
+    <aside className="cap-admin-sidebar w-64 bg-[#0f1623] text-white flex flex-col h-full">
       {/* Logo */}
       <div className="px-6 pt-8 pb-6 border-b border-white/10">
         <Link to="/" className="flex items-center gap-3">

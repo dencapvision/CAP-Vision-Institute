@@ -35,7 +35,7 @@ export default function Sidebar() {
   }
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full">
+    <div className="cap-admin-sidebar flex flex-col h-full">
       {/* Logo */}
       <div className="px-6 py-6 border-b border-white/10 flex items-center gap-3">
         <div className="w-9 h-9 rounded-xl bg-[#c5a059]/20 border border-[#c5a059]/40 flex items-center justify-center flex-shrink-0">

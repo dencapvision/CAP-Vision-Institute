@@ -40,6 +40,16 @@ jobs:
             exit 1
           fi
           npx --no-install wrangler deploy --config dist/wrangler.json
+      - name: Configure Course Advisor provider when key is available
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -n "$GEMINI_API_KEY" ]; then
+            printf '%s' "$GEMINI_API_KEY" | npx --no-install wrangler secret put GEMINI_API_KEY --config dist/wrangler.json
+          else
+            echo 'No repository Gemini key supplied; existing Worker secret is preserved. Basic course guidance remains available.'
+          fi
       - name: Verify public homepage changed
         run: node scripts/verify-live-theme.mjs https://capvisionpartner.com --attempts=6
       - name: Verify shared design on internal pages

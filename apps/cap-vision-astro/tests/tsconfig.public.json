@@ -8,7 +8,9 @@
     "../src/components/FloatingLineWidget.tsx",
     "../src/components/AIAgent.tsx",
     "../src/components/ContactPage.tsx",
-    "../src/components/home/**/*.tsx"
+    "../src/components/home/**/*.tsx",
+    "../src/pages/api/course-advisor.ts",
+    "../src/cloudflare-env.d.ts"
   ],
   "compilerOptions": {
     "types": [

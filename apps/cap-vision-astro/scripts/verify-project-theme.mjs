@@ -8,6 +8,8 @@ export async function verifyProjectTheme(origin, fetcher=fetch) {
     if(!response.ok)throw Error(`${path}: HTTP ${response.status}`);
     const html=await response.text();
     if(!html.includes('data-cap-design="pearl-glass-v1"'))throw Error(`${path}: shared design marker missing`);
+    if(!path.startsWith('/admin')&&!html.includes('data-cap-contact="course-advisor-v3"'))throw Error(`${path}: Course Advisor missing`);
+    if(['/services','/courses','/contact','/about','/assessment','/resources','/portfolio','/speakers'].includes(path)&&!html.includes('cap-pearl-hero'))throw Error(`${path}: Pearl hero missing`);
     const cssUrls=[...html.matchAll(/<link\b[^>]*href=["']([^"']+\.css(?:\?[^"']*)?)["'][^>]*>/gi)]
       .map(m=>new URL(m[1],url)).filter(u=>u.origin===url.origin);
     let present=false;
@@ -15,7 +17,7 @@ export async function verifyProjectTheme(origin, fetcher=fetch) {
       const css=await fetcher(cssUrl,{signal:AbortSignal.timeout(15000)});
       if(!css.ok)throw Error(`${path}: stylesheet HTTP ${css.status}`);
       const text=await css.text();
-      if(text.includes('--pg-primary')&&text.includes('.cap-site-header'))present=true;
+      if(text.includes('--pg-primary')&&text.includes('.cap-site-header')&&text.includes('.cap-pearl-hero'))present=true;
     }
     if(!present)throw Error(`${path}: shared theme CSS missing`);
     results.push(path);

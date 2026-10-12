@@ -14,7 +14,7 @@ ALTER TABLE public.leads ADD COLUMN IF NOT EXISTS pipeline_stage text CHECK (pip
   ('new','contacted','tna','proposal','won','lost','delivery','follow_up','repeat'));
 ALTER TABLE public.leads ADD COLUMN IF NOT EXISTS follow_up_at timestamptz;
 ALTER TABLE public.leads ADD COLUMN IF NOT EXISTS crm_notes text CHECK (length(crm_notes) <= 4000);
-UPDATE public.leads SET pipeline_stage = status WHERE status IN ('new','contacted','lost');
+UPDATE public.leads SET pipeline_stage = status WHERE pipeline_stage IS NULL AND status IN ('new','contacted','lost');
 -- Historical qualified/closed are intentionally left unclassified.
 -- Enforce the contact contract at the database boundary as well as in the UI.
 -- NOT VALID leaves historical data intact while checking new inserts/updates.

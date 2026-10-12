@@ -17,6 +17,7 @@ const wranglerConfig = {
     directory: "./client",
     binding: "ASSETS"
   },
+  ratelimits: [{ name: "COURSE_ADVISOR_LIMITER", namespace_id: "2026101201", simple: { limit: 30, period: 60 } }],
   images: {
     binding: "IMAGES"
   }

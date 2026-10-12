@@ -132,7 +132,7 @@ export const Resources: React.FC = () => {
       
 
       {/* ─── 1. HERO SECTION ─────────────────────────────────────────── */}
-      <section className="relative bg-gradient-to-b from-[#111827] via-[#0F2557] to-[#111827] pt-28 md:pt-40 pb-24 md:pb-36 overflow-hidden text-white">
+      <section className="cap-pearl-hero relative bg-gradient-to-b from-[#111827] via-[#0F2557] to-[#111827] pt-28 md:pt-40 pb-24 md:pb-36 overflow-hidden text-white">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#2563EB]/15 rounded-full blur-[140px]" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#F59E0B]/10 rounded-full blur-[120px]" />

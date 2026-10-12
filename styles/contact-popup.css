@@ -24,3 +24,21 @@
   body:has(.cap-mobile-cta) .cap-contact-ai-panel { height:calc(100dvh - 280px - env(safe-area-inset-bottom,0px)); }
 }
 @media(prefers-reduced-motion:reduce) { .cap-contact-dock *, .cap-contact-dock *::before { animation:none!important;transition:none!important; } }
+
+/* Course Advisor: readable responses, permanent service paths, safe scrolling. */
+.cap-advisor-messages{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:16px;display:flex;flex-direction:column;gap:12px;color:#263e54;font-size:14px;line-height:1.65;}
+.cap-advisor-message{max-width:94%;border:1px solid #d9e4ed;background:white;border-radius:16px;padding:12px 14px;box-shadow:0 4px 12px #27465e08;overflow-wrap:anywhere;}
+.cap-advisor-message p{margin:0 0 6px;white-space:pre-wrap;}
+.cap-advisor-message p:last-child{margin:0;}
+.cap-advisor-message--user{align-self:flex-end;background:#284f72;color:white;border-color:#284f72;}
+.cap-advisor-message small{display:block;margin-top:8px;color:#5b7080;font-size:11px;}
+.cap-advisor-program{display:block;color:#284f72;margin-top:8px;}
+.cap-advisor-starters{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px 12px;flex-shrink:0;}
+.cap-advisor-starters button{border:1px solid #cedde8;background:white;color:#284f72;border-radius:12px;padding:8px;font-size:12px;cursor:pointer;}
+.cap-advisor-paths{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;border-top:1px solid #d9e4ed;flex-shrink:0;background:#eff5f8;}
+.cap-advisor-paths a{display:inline-flex;align-items:center;gap:4px;border:1px solid #ccdce7;background:white;color:#284f72;padding:6px 9px;border-radius:999px;font-size:12px;text-decoration:none;}
+.cap-advisor-input{display:flex;gap:8px;padding:12px;flex-shrink:0;background:white;}
+.cap-advisor-input input{flex:1;width:0;min-width:0;border:1px solid #cfdee8;border-radius:12px;padding:10px;background:#f6f9fb;color:#172b43;}
+.cap-advisor-input button{border:0;background:#284f72;color:white;border-radius:12px;padding:12px;cursor:pointer;}
+.cap-advisor-input button:disabled{opacity:.4;}
+@media(max-height:600px){.cap-advisor-starters{display:none}.cap-advisor-paths{padding:6px}.cap-advisor-input{padding:8px}.cap-contact-heading{padding:12px}}

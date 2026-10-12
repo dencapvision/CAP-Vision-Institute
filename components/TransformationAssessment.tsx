@@ -520,7 +520,7 @@ export const TransformationAssessment: React.FC<{ isEmbedded?: boolean }> = ({ i
       <div className="bg-white rounded-3xl border border-gray-100 shadow-2xl overflow-hidden">
         
         {/* Top Header Bar */}
-        <div className="bg-[#111827] text-white p-6 sm:p-8 relative overflow-hidden">
+        <div className="cap-assessment-heading bg-[#111827] text-white p-6 sm:p-8 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#2563EB]/15 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#F59E0B]/10 rounded-full blur-2xl pointer-events-none"></div>
           

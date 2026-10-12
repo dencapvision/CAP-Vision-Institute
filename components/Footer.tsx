@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Feature Banner */}
-        <div className="bg-[#0F2557] rounded-3xl p-6 sm:p-10 mb-16 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+        <div className="cap-glass-banner bg-[#0F2557] rounded-3xl p-6 sm:p-10 mb-16 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-2xl bg-[#2563EB] text-white flex items-center justify-center flex-shrink-0 shadow-md">
               <IconGoldCrestStar className="w-6 h-6 text-[#F59E0B]" />

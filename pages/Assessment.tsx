@@ -15,7 +15,7 @@ const AssessmentPage: React.FC = () => {
       />
 
       {/* Hero Header */}
-      <section className="relative bg-[#111827] text-white pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
+      <section className="cap-pearl-hero relative bg-[#111827] text-white pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-20">
           <img
             src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80"

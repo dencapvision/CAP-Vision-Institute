@@ -1,0 +1,2367 @@
+diff --git a/apps/cap-vision-astro/src/components/HomePage.tsx b/apps/cap-vision-astro/src/components/HomePage.tsx
+index 8c20279..bc3edb2 100644
+--- a/apps/cap-vision-astro/src/components/HomePage.tsx
++++ b/apps/cap-vision-astro/src/components/HomePage.tsx
+@@ -1,1012 +1 @@
+-import { ProblemNavigator, WebsiteNavigator } from './home/HomeNavigation';
+-import { contactHref } from '../lib/contact-context.mjs';
+-import React, { useState, useEffect } from 'react';
+-
+-import { 
+-  ArrowRight, Award, Sparkles, CheckCircle2, 
+-  ChevronRight, ChevronDown, MessageCircle, BarChart3, Target,
+-  Compass, Layers3, PhoneCall, Play, Clock, ArrowUpRight,
+-  HelpCircle, Users, TrendingUp, ShieldCheck
+-} from 'lucide-react';
+-import { 
+-  IconLeadership, IconTeamSynergy, IconGrowthCulture, 
+-  IconCreativeCPS, IconCustomArchitecture, IconFacilitatorMastery, 
+-  IconGoldCrestStar, IconInstituteShield 
+-} from './icons/CapBrandIcons';
+-import { motion } from 'framer-motion';
+-import { BRAND_INFO, CONTACT_INFO } from '../constants/brand';
+-import { HRD_ARTICLES } from '../constants/articles';
+-import { fetchCourses } from '../lib/services/courses';
+-import type { Course } from '../types';
+-import Logo from './Logo';
+-import ClientsSection from './ClientsSection';
+-
+-import StatCounter from './StatCounter';
+-import TransformationAssessment from './TransformationAssessment';
+-
+-const Home: React.FC = () => {
+-  const [featuredCourses, setFeaturedCourses] = useState<Course[]>([]);
+-  const [loading, setLoading] = useState(true);
+-  const [activeSolutionTab, setActiveSolutionTab] = useState<number>(0);
+-  const [showAssessmentModal, setShowAssessmentModal] = useState(false);
+-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+-
+-  useEffect(() => {
+-    const loadCourses = async () => {
+-      try {
+-        const data = await fetchCourses();
+-        setFeaturedCourses(data.slice(0, 4));
+-      } catch (error) {
+-        console.error('Error loading featured courses:', error);
+-      } finally {
+-        setLoading(false);
+-      }
+-    };
+-    loadCourses();
+-  }, []);
+-
+-  // 4 Core Solutions with Custom Brand Emblems
+-  const SOLUTIONS = [
+-    {
+-      id: 'leadership',
+-      title: 'Leadership Transformation',
+-      thTitle: 'ภาวะผู้นำเพื่อการเปลี่ยนแปลง',
+-      tagline: 'ยกระดับผู้นำทุกระดับจาก "ผู้สั่งการ" สู่ "Facilitative & Inspiring Leader"',
+-      description: 'พัฒนา Mindset และทักษะการนำพาทีมในยุคแห่งความผันผวน สร้างวิสัยทัศน์ร่วม (Shared Vision) และการตัดสินใจเชิงกลยุทธ์ที่ขับเคลื่อนผลลัพธ์องค์กรอย่างแท้จริง',
+-      icon: IconLeadership,
+-      color: '#2563EB',
+-      bgLight: 'bg-blue-50',
+-      highlights: [
+-        'Transformational Leadership & Executive Presence',
+-        'Facilitative Leadership for Modern Managers',
+-        'Strategic Thinking & Decisive Execution',
+-        '1-on-1 Executive Coaching & Leadership DNA'
+-      ],
+-      image: 'https://assets.capvisionpartner.com/media/portfolio/Comprehensive%20OD%20%26%20Training%20Solutions.jpg'
+-    },
+-    {
+-      id: 'people-team',
+-      title: 'People & Team Synergy',
+-      thTitle: 'พัฒนาคนและพลังทีมงาน',
+-      tagline: 'ทลายกำแพง Silo สร้างความปลอดภัยทางจิตวิทยา และการสื่อสารที่ไร้รอยต่อ',
+-      description: 'ปรับกระบวนการทำงานร่วมกันผ่านการสื่อสารด้วย Empathy การเข้าใจความหลากหลายของบุคคล และการสร้างบรรยากาศที่ทุกคนกล้าคิด กล้าเสนอ และร่วมมือกันอย่างเต็มใจ',
+-      icon: IconTeamSynergy,
+-      color: '#0F2557',
+-      bgLight: 'bg-indigo-50',
+-      highlights: [
+-        'Psychological Safety & High-Performing Teams',
+-        'Empathetic Communication & Constructive Feedback',
+-        'DISC & Behavioral Dynamics at Work',
+-        'Cross-Functional Collaboration & Trust Building'
+-      ],
+-      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80'
+-    },
+-    {
+-      id: 'culture',
+-      title: 'Organization Culture',
+-      thTitle: 'วัฒนธรรมองค์กร & กรอบคิดเติบโต',
+-      tagline: 'ปลูกฝัง Growth Mindset และสร้างวัฒนธรรมแห่งการเรียนรู้ที่ยั่งยืน',
+-      description: 'เปลี่ยน Mindset ของคนในองค์กรให้มองปัญหาเป็นความท้าทาย เปิดรับนวัตกรรม และสร้างความยืดหยุ่น (Agility) เพื่อให้องค์กรพร้อมปรับตัวต่อการเปลี่ยนแปลงทุกรูปแบบ',
+-      icon: IconGrowthCulture,
+-      color: '#F59E0B',
+-      bgLight: 'bg-amber-50',
+-      highlights: [
+-        'Building Growth Mindset Culture',
+-        'Change Agility & Resilience in Disruption',
+-        'Creative Problem Solving (CPS Model)',
+-        'Core Values Activation into Daily Behavior'
+-      ],
+-      image: 'https://assets.capvisionpartner.com/media/portfolio/Organization%20Culture.jpg'
+-    },
+-    {
+-      id: 'customized',
+-      title: 'Customized In-house Solutions',
+-      thTitle: 'โซลูชันออกแบบเฉพาะองค์กร',
+-      tagline: 'เริ่มจาก TNA วิเคราะห์ปัญหาจริง สู่ Workshop ที่ปรับแต่ง 100%',
+-      description: 'ไม่มีหลักสูตรสำเร็จรูป (No One-Size-Fits-All) เราลงลึกศึกษาบริบท Pain Points และเป้าหมายธุรกิจขององค์กรคุณ เพื่อออกแบบ Learning Journey ที่ตอบโจทย์เฉพาะองค์กรอย่างแท้จริง',
+-      icon: IconCustomArchitecture,
+-      color: '#10B981',
+-      bgLight: 'bg-emerald-50',
+-      highlights: [
+-        'In-depth TNA (Training Needs Analysis) Diagnostic',
+-        'Activity-Based Learning Workshop Design',
+-        'Pre & Post Assessment with Action Plan',
+-        'Long-term OD Consulting & ROI Tracking'
+-      ],
+-      image: 'https://assets.capvisionpartner.com/media/portfolio/Customized%20In-house%20Solutions.jpg'
+-    }
+-  ];
+-
+-  // 4 Main Program Categories
+-  const PROGRAM_CATEGORIES = [
+-    {
+-      category: 'Leadership Programs',
+-      thTitle: 'หลักสูตรภาวะผู้นำ',
+-      desc: 'สร้างผู้นำที่จุดประกายทีม กล้าคิดเชิงกลยุทธ์ และนำการเปลี่ยนแปลง',
+-      icon: IconLeadership,
+-      count: '15+ หลักสูตร',
+-      color: '#2563EB',
+-      link: '/courses?cat=Leader+Skills'
+-    },
+-    {
+-      category: 'People Skills',
+-      thTitle: 'ทักษะคนและการทำงานร่วมกัน',
+-      desc: 'การสื่อสาร, Service Mind, การให้ Feedback และการเข้าใจพฤติกรรมมนุษย์',
+-      icon: IconTeamSynergy,
+-      count: '18+ หลักสูตร',
+-      color: '#0F2557',
+-      link: '/courses?cat=People+Skills'
+-    },
+-    {
+-      category: 'Creative Thinking',
+-      thTitle: 'การคิดเชิงสร้างสรรค์ & แก้ปัญหา',
+-      desc: 'Creative Problem Solving (CPS Model), Design Thinking และการพัฒนานวัตกรรม',
+-      icon: IconCreativeCPS,
+-      count: '10+ หลักสูตร',
+-      color: '#F59E0B',
+-      link: '/courses?cat=Work+Skills'
+-    },
+-    {
+-      category: 'Facilitator & Process Design',
+-      thTitle: 'หลักสูตรวิทยากร & Facilitator',
+-      desc: 'ศาสตร์และศิลป์แห่งการเป็น Modern Facilitator ออกแบบกระบวนการเรียนรู้ที่มีพลัง',
+-      icon: IconFacilitatorMastery,
+-      count: '8+ หลักสูตร',
+-      color: '#10B981',
+-      link: '/courses'
+-    }
+-  ];
+-
+-  return (
+-    <div className="flex flex-col min-h-screen bg-white">
+-      
+-
+-      {/* ── 1. PROBLEM-FIRST HERO — CAP Vision Conversion V2 ── */}
+-      <section aria-labelledby="home-hero-title" className="relative isolate overflow-hidden bg-[#111827] text-white pt-28 pb-16 md:pt-36 md:pb-24">
+-        <div className="absolute inset-0 -z-10">
+-          <img src="/images/courses/team_synergy.png" alt="" aria-hidden="true"
+-            className="h-full w-full object-cover opacity-[0.13]" fetchPriority="high" />
+-          <div className="absolute inset-0 bg-gradient-to-r from-[#111827] via-[#111827]/95 to-[#0F2557]/90" />
+-        </div>
+-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+-          <div className="grid items-center gap-12 lg:grid-cols-[1.12fr_0.88fr]">
+-            <div>
+-              <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-300/25 bg-blue-400/10 px-4 py-2 text-xs font-bold tracking-wider text-blue-200">
+-                CAP VISION INSTITUTE · TRANSFORMATION PARTNER
+-              </p>
+-              <h1 id="home-hero-title" className="nav-font mb-6 text-4xl font-extrabold leading-[1.25] tracking-tight text-white sm:text-5xl lg:text-[3.4rem]">
+-                องค์กรมี <span className="text-[#FBBF24]">“คนเก่ง”</span><br />
+-                แต่ทำไมทีมยังไปได้<br className="hidden sm:block" />
+-                ไม่เต็มศักยภาพ?
+-              </h1>
+-              <p className="mb-6 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">
+-                คนเก่งแต่สื่อสารกันไม่เข้าใจ ทีมทำงานแยกส่วน
+-                หัวหน้าเก่งงานแต่ยังนำคนไม่เป็น และค่านิยมองค์กรยังไม่เกิดขึ้นจริงในงานประจำวัน
+-              </p>
+-              <div className="mb-7 border-l-4 border-[#FBBF24] pl-5">
+-                <p className="nav-font text-xl font-bold leading-relaxed text-white sm:text-2xl">
+-                  บางครั้งปัญหาไม่ใช่การขาดคนเก่ง<br />
+-                  แต่คือการยังไม่สามารถดึงศักยภาพของคน<br className="hidden sm:block" />
+-                  มาสร้างผลงานร่วมกันได้
+-                </p>
+-              </div>
+-              <p className="mb-8 max-w-2xl text-base leading-8 text-slate-300">
+-                CAP Vision ช่วยวิเคราะห์โจทย์คน ทีม และองค์กร
+-                แล้วออกแบบ In-house Training, Workshop และ Learning Journey
+-                ที่เชื่อม Mindset → Behavior → Performance
+-              </p>
+-              <div className="flex flex-col gap-3 sm:flex-row">
+-                <a href={contactHref()} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-7 py-4 text-base font-bold text-white shadow-xl transition hover:bg-[#1D4ED8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+-                  ปรึกษาโจทย์องค์กร <ArrowRight size={19} aria-hidden="true" />
+-                </a>
+-                <a href="/assessment" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+-                  สำรวจความพร้อมองค์กร <ChevronRight size={18} aria-hidden="true" />
+-                </a>
+-              </div>
+-              <p className="mt-5 text-sm text-slate-400">
+-                Human • Heart • Harmony · Transform People → Transform Organization
+-              </p>
+-            </div>
+-            <aside aria-label="ปัญหาที่ CAP Vision ช่วยองค์กรรับมือ" className="rounded-[1.75rem] border border-white/20 bg-white/[0.08] p-6 shadow-2xl backdrop-blur-md sm:p-8">
+-              <p className="mb-6 text-sm font-bold uppercase tracking-wide text-[#FBBF24]">โจทย์ที่หลายองค์กรกำลังเผชิญ</p>
+-              <ul className="space-y-5">
+-                {[
+-                  ['Communication Gap', 'คนเก่งแต่สื่อสารกันไม่เข้าใจ'],
+-                  ['Silo Working', 'แต่ละทีมเก่ง แต่ยังต่างคนต่างทำ'],
+-                  ['Low Ownership', 'พนักงานรอคำสั่ง มากกว่าร่วมรับผิดชอบ'],
+-                  ['Leadership Gap', 'หัวหน้าเก่งงาน แต่ยังต้องพัฒนาทักษะการนำคน'],
+-                  ['Values in Action', 'มี Core Values แต่ยังไม่เห็นในพฤติกรรมจริง']
+-                ].map(([label, detail]) => (
+-                  <li key={label} className="flex gap-3">
+-                    <CheckCircle2 className="mt-1 shrink-0 text-[#60A5FA]" size={20} aria-hidden="true" />
+-                    <div><strong className="block text-sm text-white">{label}</strong><span className="text-sm leading-7 text-slate-300">{detail}</span></div>
+-                  </li>
+-                ))}
+-              </ul>
+-              <a href="/services" className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#93C5FD] hover:text-white">
+-                ดูแนวทางพัฒนาองค์กร <ArrowRight size={17} aria-hidden="true" />
+-              </a>
+-            </aside>
+-          </div>
+-        </div>
+-      </section>
+-
+-      <ProblemNavigator />
+-
+-      {/* ── 3. SOLUTIONS SECTION (4 Core Pillars) ─────────────────────────────── */}
+-      <section className="py-20 md:py-32 bg-white relative">
+-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+-          
+-          {/* Section Header */}
+-          <div className="text-center max-w-3xl mx-auto mb-16">
+-            <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+-              Comprehensive OD & Training Solutions
+-            </span>
+-            <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+-              โซลูชันการพัฒนา <span className="text-[#2563EB]">ครบวงจร</span> สำหรับองค์กร
+-            </h2>
+-            <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed">
+-              ตอบโจทย์ทั้งการพัฒนาผู้นำ การสร้างความร่วมมือในทีม การปรับวัฒนธรรมองค์กร และการออกแบบเฉพาะตามโจทย์ธุรกิจ
+-            </p>
+-          </div>
+-
+-          {/* Solutions Tabs */}
+-          <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-12">
+-            {SOLUTIONS.map((sol, idx) => {
+-              const Icon = sol.icon;
+-              const isActive = activeSolutionTab === idx;
+-              return (
+-                <button
+-                  key={sol.id}
+-                  onClick={() => setActiveSolutionTab(idx)}
+-                  className={`flex items-center gap-2.5 px-5 py-3.5 rounded-2xl font-bold text-xs sm:text-sm transition-all active:scale-95 ${
+-                    isActive
+-                      ? 'bg-[#111827] text-white shadow-xl shadow-gray-900/10'
+-                      : 'bg-gray-50 text-gray-600 hover:bg-gray-100 hover:text-[#111827]'
+-                  }`}
+-                >
+-                  <span style={{ color: isActive ? '#F59E0B' : sol.color }}><Icon className="w-4 h-4" /></span>
+-                  <span>{sol.title}</span>
+-                </button>
+-              );
+-            })}
+-          </div>
+-
+-          {/* Active Solution Content Card */}
+-          <div className="bg-gray-50 rounded-3xl p-6 sm:p-12 border border-gray-100 shadow-sm transition-all duration-300">
+-            {(() => {
+-              const sol = SOLUTIONS[activeSolutionTab];
+-              const Icon = sol.icon;
+-              return (
+-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+-                  <div className="lg:col-span-7">
+-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold mb-4" style={{ backgroundColor: `${sol.color}15`, color: sol.color }}>
+-                      <Icon className="w-4 h-4" />
+-                      {sol.thTitle}
+-                    </div>
+-
+-                    <h3 className="text-2xl sm:text-4xl font-black text-[#111827] nav-font mb-4 leading-tight">
+-                      {sol.tagline}
+-                    </h3>
+-
+-                    <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-8">
+-                      {sol.description}
+-                    </p>
+-
+-                    {/* Highlights List */}
+-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+-                      {sol.highlights.map((item, i) => (
+-                        <div key={i} className="flex items-start gap-2.5 bg-white p-3.5 rounded-xl border border-gray-200/60 shadow-xs">
+-                          <CheckCircle2 className="w-4 h-4 text-[#2563EB] flex-shrink-0 mt-0.5" />
+-                          <span className="text-xs sm:text-sm font-bold text-gray-800">{item}</span>
+-                        </div>
+-                      ))}
+-                    </div>
+-
+-                    <div className="flex flex-col sm:flex-row gap-4">
+-                      <a href={contactHref(sol.id)}
+-                        className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-8 py-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2"
+-                      >
+-                        ปรึกษาออกแบบโซลูชันนี้
+-                        <ArrowRight className="w-4 h-4" />
+-                      </a>
+-                      <a href={`/services#${sol.id}`}
+-                        className="btn-premium bg-white hover:bg-gray-100 text-[#111827] border border-gray-200 px-6 py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2"
+-                      >
+-                        ดูรายละเอียดโซลูชันนี้
+-                      </a>
+-                    </div>
+-                  </div>
+-
+-                  <div className="lg:col-span-5">
+-                    <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl border-4 border-white">
+-                      <img
+-                        src={sol.image}
+-                        alt={sol.title}
+-                        className="w-full h-full object-cover"
+-                      />
+-                      <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/60 via-transparent to-transparent"></div>
+-                      <div className="absolute bottom-4 left-4 right-4 text-white">
+-                        <div className="text-xs font-bold uppercase tracking-wider text-[#F59E0B]">
+-                          Activity Based Learning
+-                        </div>
+-                        <div className="text-sm font-bold">เน้นการลงมือปฏิบัติจริง มีส่วนร่วม 100%</div>
+-                      </div>
+-                    </div>
+-                  </div>
+-                </div>
+-              );
+-            })()}
+-          </div>
+-
+-        </div>
+-      </section>
+-
+-      {/* ── 4. PROGRAMS SHOWCASE (4 Categories) ───────────────────────────────── */}
+-      <section className="py-20 md:py-32 bg-[#F8FAFC] border-t border-gray-100">
+-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+-          
+-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+-            <div>
+-              <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+-                Signature Program Categories
+-              </span>
+-              <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+-                หมวดหมู่หลักสูตร <span className="text-[#2563EB]">ยอดนิยม</span>
+-              </h2>
+-            </div>
+-            <a href="/courses"
+-              className="flex items-center gap-2 text-sm font-bold text-[#2563EB] hover:text-[#1D4ED8] group nav-font"
+-            >
+-              ดูหลักสูตรทั้งหมด 50+ วิชา
+-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+-            </a>
+-          </div>
+-
+-          {/* 4 Category Cards */}
+-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+-            {PROGRAM_CATEGORIES.map((cat, idx) => {
+-              const Icon = cat.icon;
+-              return (
+-                <a key={idx}
+-                  href={cat.link}
+-                  className="exec-card-interactive p-6 flex flex-col justify-between group h-full"
+-                >
+-                  <div>
+-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 shadow-sm" style={{ backgroundColor: `${cat.color}15`, color: cat.color }}>
+-                      <Icon className="w-6 h-6" />
+-                    </div>
+-                    <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+-                      {cat.count}
+-                    </div>
+-                    <h3 className="text-lg font-black text-[#111827] group-hover:text-[#2563EB] transition-colors mb-1 nav-font">
+-                      {cat.thTitle}
+-                    </h3>
+-                    <div className="text-xs font-bold text-gray-400 mb-3">{cat.category}</div>
+-                    <p className="text-xs text-gray-600 leading-relaxed line-clamp-3">
+-                      {cat.desc}
+-                    </p>
+-                  </div>
+-
+-                  <div className="pt-6 mt-6 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#2563EB] group-hover:translate-x-1 transition-transform">
+-                    <span>สำรวจหลักสูตร</span>
+-                    <ArrowRight className="w-4 h-4" />
+-                  </div>
+-                </a>
+-              );
+-            })}
+-          </div>
+-
+-          {/* Featured Courses Selection */}
+-          {featuredCourses.length > 0 && (
+-            <div className="space-y-6">
+-              <div className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+-                หลักสูตรแนะนำสำหรับ In-house Training
+-              </div>
+-
+-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+-                {featuredCourses.map(course => (
+-                  <div key={course.id} className="bg-white rounded-2xl border border-gray-200/70 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col h-full group">
+-                    <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+-                      <img
+-                        src={course.image}
+-                        alt={course.title}
+-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+-                        onError={(e) => {
+-                          (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80';
+-                        }}
+-                      />
+-                      <div className="absolute top-3 left-3 bg-[#111827]/80 backdrop-blur-md text-white px-3 py-1 rounded-full text-[10px] font-bold">
+-                        {course.category || 'In-house'}
+-                      </div>
+-                    </div>
+-
+-                    <div className="p-5 flex flex-col flex-grow">
+-                      <h4 className="text-sm sm:text-base font-black text-[#111827] group-hover:text-[#2563EB] transition-colors line-clamp-2 mb-2 nav-font leading-snug">
+-                        {course.title}
+-                      </h4>
+-                      <p className="text-xs text-gray-500 line-clamp-2 mb-4 leading-relaxed">
+-                        {course.description}
+-                      </p>
+-
+-                      <div className="pt-4 border-t border-gray-100 mt-auto flex items-center justify-between">
+-                        <span className="text-[11px] font-bold text-gray-400">Activity Based</span>
+-                        <a href={`/courses/${course.slug || course.id}`}
+-                          className="text-xs font-bold text-[#2563EB] hover:underline flex items-center gap-1"
+-                        >
+-                          รายละเอียด
+-                          <ChevronRight className="w-3.5 h-3.5" />
+-                        </a>
+-                      </div>
+-                    </div>
+-                  </div>
+-                ))}
+-              </div>
+-            </div>
+-          )}
+-
+-        </div>
+-      </section>
+-
+-      {/* ── 5. TRANSFORMATION JOURNEY (CAP Framework) ─────────────────────────── */}
+-      <section className="py-20 md:py-32 bg-[#111827] text-white relative overflow-hidden">
+-        <div className="absolute inset-0 opacity-10">
+-          <div className="absolute top-1/4 left-0 w-96 h-96 bg-[#2563EB] rounded-full blur-[140px]"></div>
+-          <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-[#F59E0B] rounded-full blur-[140px]"></div>
+-        </div>
+-
+-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+-          
+-          <div className="text-center max-w-3xl mx-auto mb-20">
+-            <span className="text-[#F59E0B] font-bold text-xs uppercase tracking-widest block mb-3">
+-              The Signature Methodology
+-            </span>
+-            <h2 className="text-3xl sm:text-5xl font-black text-white nav-font leading-tight">
+-              เส้นทางการเปลี่ยนแปลง <br />
+-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] via-[#2563EB] to-[#F59E0B]">
+-                CAP Transformation Framework
+-              </span>
+-            </h2>
+-            <p className="text-gray-300 text-sm sm:text-base mt-4 leading-relaxed font-light">
+-              กระบวนการ 3 ขั้นตอนที่พิสูจน์แล้วว่าสามารถสร้างการเปลี่ยนแปลงระดับพฤติกรรม และให้ผลลัพธ์ทางธุรกิจที่จับต้องได้จริง
+-            </p>
+-          </div>
+-
+-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+-            
+-            {/* Step 1: Context & Clarify */}
+-            <div className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-3xl relative group hover:bg-white/10 transition-all">
+-              <div className="w-14 h-14 rounded-2xl bg-[#2563EB] text-white flex items-center justify-center text-2xl font-black mb-6 shadow-lg shadow-blue-500/20">
+-                C
+-              </div>
+-              <div className="text-xs font-bold text-[#60A5FA] uppercase tracking-wider mb-1">
+-                Phase 01
+-              </div>
+-              <h3 className="text-xl font-black text-white nav-font mb-2">Context & Clarify</h3>
+-              <div className="text-xs font-bold text-[#F59E0B] mb-4">วินิจฉัยบริบท & สื่อสารเป้าหมาย</div>
+-              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">
+-                เริ่มต้นด้วยการทำ TNA (Training Needs Analysis) สัมภาษณ์ผู้บริหารและสำรวจโจทย์จริง เพื่อค้นหารากเหง้าของปัญหาและกำหนด KPI ที่ชัดเจน
+-              </p>
+-              <ul className="text-xs text-gray-400 space-y-2 border-t border-white/10 pt-4">
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB]" />
+-                  <span>Executive & Stakeholder Interviews</span>
+-                </li>
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB]" />
+-                  <span>Organization Transformation Assessment</span>
+-                </li>
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB]" />
+-                  <span>Customized Syllabus & Case Design</span>
+-                </li>
+-              </ul>
+-            </div>
+-
+-            {/* Step 2: Align & Activate */}
+-            <div className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-3xl relative group hover:bg-white/10 transition-all">
+-              <div className="w-14 h-14 rounded-2xl bg-[#F59E0B] text-[#111827] flex items-center justify-center text-2xl font-black mb-6 shadow-lg shadow-amber-500/20">
+-                A
+-              </div>
+-              <div className="text-xs font-bold text-[#F59E0B] uppercase tracking-wider mb-1">
+-                Phase 02
+-              </div>
+-              <h3 className="text-xl font-black text-white nav-font mb-2">Align & Activate</h3>
+-              <div className="text-xs font-bold text-[#60A5FA] mb-4">จัดวางความคิด & ปลดล็อกศักยภาพ</div>
+-              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">
+-                ส่งมอบกระบวนการเรียนรู้แบบ Activity-Based Learning ที่เน้น Experiential Workshop ผู้เรียนได้สัมผัส ค้นพบวิธีคิดใหม่ และทดลองใช้ Tools ทันที
+-              </p>
+-              <ul className="text-xs text-gray-400 space-y-2 border-t border-white/10 pt-4">
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#F59E0B]" />
+-                  <span>Interactive & Activity-Based Flow</span>
+-                </li>
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#F59E0B]" />
+-                  <span>Transformative Facilitation Dynamics</span>
+-                </li>
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#F59E0B]" />
+-                  <span>Individual & Team Action Plan Commitments</span>
+-                </li>
+-              </ul>
+-            </div>
+-
+-            {/* Step 3: Perform & Partner */}
+-            <div className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-3xl relative group hover:bg-white/10 transition-all">
+-              <div className="w-14 h-14 rounded-2xl bg-[#10B981] text-white flex items-center justify-center text-2xl font-black mb-6 shadow-lg shadow-emerald-500/20">
+-                P
+-              </div>
+-              <div className="text-xs font-bold text-[#34D399] uppercase tracking-wider mb-1">
+-                Phase 03
+-              </div>
+-              <h3 className="text-xl font-black text-white nav-font mb-2">Perform & Partner</h3>
+-              <div className="text-xs font-bold text-[#F59E0B] mb-4">ปฏิบัติการจริง & ร่วมทางระยะยาว</div>
+-              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">
+-                ติดตามผลลัพธ์การนำไปใช้ในการทำงานจริง (Action Learning) ให้คำปรึกษาต่อเนื่อง และประเมินพัฒนาการอย่างเป็นรูปธรรม
+-              </p>
+-              <ul className="text-xs text-gray-400 space-y-2 border-t border-white/10 pt-4">
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
+-                  <span>Post-Workshop Follow-up & Coaching</span>
+-                </li>
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
+-                  <span>Learning Impact & Behavioral Evaluation</span>
+-                </li>
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
+-                  <span>Long-term Growth Partner</span>
+-                </li>
+-              </ul>
+-            </div>
+-
+-          </div>
+-
+-        </div>
+-        <div className="mt-8 text-center"><a href="/about#cap-framework" className="inline-flex min-h-12 items-center gap-2 font-bold text-white underline underline-offset-4">รู้จักกระบวนการ CAP Framework <ArrowRight size={18} aria-hidden="true" /></a></div>
+-      </section>
+-
+-      {/* ── 6. EXPECTED OUTCOMES SECTION (คุณค่าที่องค์กรได้รับจริง) ─────────────── */}
+-      <section className="py-20 md:py-32 bg-[#F8FAFC] border-b border-gray-200">
+-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+-          
+-          <div className="text-center max-w-3xl mx-auto mb-16">
+-            <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+-              TANGIBLE IMPACT & OUTCOMES
+-            </span>
+-            <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+-              ผลลัพธ์ที่องค์กรจะได้รับ <span className="text-[#2563EB]">อย่างเป็นรูปธรรม</span>
+-            </h2>
+-            <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed font-light">
+-              การพัฒนาที่ไม่จบเพียงแค่ความสนุกในห้องอบรม แต่เปลี่ยนเป็นพลังขับเคลื่อน 3 ระดับที่สัมผัสได้จริงในชีวิตการทำงาน
+-            </p>
+-          </div>
+-
+-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14">
+-            
+-            {/* Level 1: Individual */}
+-            <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+-              <div>
+-                <div className="flex items-center justify-between mb-6">
+-                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+-                    ระดับบุคคล (Individual)
+-                  </span>
+-                  <span className="text-xs font-black text-gray-400 font-mono">01</span>
+-                </div>
+-                <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center mb-5 shadow-xs">
+-                  <Users className="w-6 h-6" />
+-                </div>
+-                <h3 className="text-xl font-black text-[#111827] nav-font mb-3 leading-snug">
+-                  Mindset เปลี่ยน สู่ความรับผิดชอบเชิงรุก
+-                </h3>
+-                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6 font-light">
+-                  พนักงานตระหนักรู้ในตนเอง ปลดล็อก Fixed Mindset สู่ Growth Mindset ก้าวข้าม Comfort Zone และทำงานด้วยจิตสำนึกของความเป็นเจ้าของร่วม (Ownership)
+-                </p>
+-              </div>
+-
+-              <ul className="space-y-3 pt-5 border-t border-gray-100 text-xs text-gray-700 font-medium">
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+-                  <span>กล้าคิดริเริ่มและรับผิดชอบผลลัพธ์ของงาน</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+-                  <span>สื่อสารด้วยความเห็นอกเห็นใจ (Empathy) และเปิดรับคำแนะนำ</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+-                  <span>พร้อมปรับตัวยืดหยุ่นต่อสถานการณ์ที่ไม่แน่นอน</span>
+-                </li>
+-              </ul>
+-            </div>
+-
+-            {/* Level 2: Team */}
+-            <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+-              <div>
+-                <div className="flex items-center justify-between mb-6">
+-                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
+-                    ระดับทีม (Team Synergy)
+-                  </span>
+-                  <span className="text-xs font-black text-gray-400 font-mono">02</span>
+-                </div>
+-                <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-[#0F2557] flex items-center justify-center mb-5 shadow-xs">
+-                  <Target className="w-6 h-6" />
+-                </div>
+-                <h3 className="text-xl font-black text-[#111827] nav-font mb-3 leading-snug">
+-                  ทลายกำแพง Silo สู่ความร่วมมือที่ไร้รอยต่อ
+-                </h3>
+-                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6 font-light">
+-                  สร้างความปลอดภัยทางจิตวิทยา (Psychological Safety) ที่เปิดโอกาสให้ทุกคนกล้าพูดความจริง กล้าเสนอไอเดีย และรวมพลังกันแก้ปัญหาข้ามสายงาน
+-                </p>
+-              </div>
+-
+-              <ul className="space-y-3 pt-5 border-t border-gray-100 text-xs text-gray-700 font-medium">
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#0F2557] shrink-0 mt-0.5" />
+-                  <span>การประสานงานข้ามแผนกเป็นไปอย่างราบรื่นและไว้เนื้อเชื่อใจ</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#0F2557] shrink-0 mt-0.5" />
+-                  <span>ลดความขัดแย้งเชิงบุคคล มุ่งเน้นเป้าหมายความสำเร็จร่วมกัน</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#0F2557] shrink-0 mt-0.5" />
+-                  <span>เกิดการแลกเปลี่ยนความรู้และระดมสมองแก้ปัญหาอย่างสร้างสรรค์</span>
+-                </li>
+-              </ul>
+-            </div>
+-
+-            {/* Level 3: Organization */}
+-            <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+-              <div>
+-                <div className="flex items-center justify-between mb-6">
+-                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+-                    ระดับองค์กร (Organization)
+-                  </span>
+-                  <span className="text-xs font-black text-gray-400 font-mono">03</span>
+-                </div>
+-                <div className="w-12 h-12 rounded-2xl bg-amber-50 text-[#F59E0B] flex items-center justify-center mb-5 shadow-xs">
+-                  <TrendingUp className="w-6 h-6" />
+-                </div>
+-                <h3 className="text-xl font-black text-[#111827] nav-font mb-3 leading-snug">
+-                  ผลักดันกลยุทธ์ได้เร็ว วัฒนธรรมเติบโตยั่งยืน
+-                </h3>
+-                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6 font-light">
+-                  ผู้นำทุกระดับสามารถถ่ายทอดวิสัยทัศน์ นำพาการเปลี่ยนแปลง และแปลง Core Values ให้ออกมาเป็นพฤติกรรมจริงในการทำงานทุกวัน
+-                </p>
+-              </div>
+-
+-              <ul className="space-y-3 pt-5 border-t border-gray-100 text-xs text-gray-700 font-medium">
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#F59E0B] shrink-0 mt-0.5" />
+-                  <span>เพิ่มความเร็วในการขับเคลื่อนแผนกลยุทธ์ขององค์กร (Strategic Agility)</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#F59E0B] shrink-0 mt-0.5" />
+-                  <span>ค่านิยมองค์กร (Core Values) ปรากฏชัดเจนในวัฒนธรรมการทำงาน</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#F59E0B] shrink-0 mt-0.5" />
+-                  <span>ความผูกพันของพนักงาน (Engagement) สูงขึ้น ผลประกอบการเติบโตมั่นคง</span>
+-                </li>
+-              </ul>
+-            </div>
+-
+-          </div>
+-
+-          {/* Outcome Assessment Callout */}
+-          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200/80 shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
+-            <div className="flex items-center gap-4">
+-              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0">
+-                <ShieldCheck className="w-6 h-6" />
+-              </div>
+-              <div>
+-                <h4 className="text-base sm:text-lg font-bold text-[#111827] nav-font">
+-                  วัดผลอย่างเป็นระบบด้วย Pre & Post Assessment
+-                </h4>
+-                <p className="text-xs sm:text-sm text-gray-500 font-light mt-0.5">
+-                  เราจัดทำสรุปผลการเรียนรู้และข้อสังเกตเชิงลึก (Executive Summary Report) ส่งมอบให้ฝ่าย HRD หลังจบการอบรมทุกครั้ง
+-                </p>
+-              </div>
+-            </div>
+-            <a href={contactHref()}
+-              className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-7 py-3.5 rounded-xl font-bold text-xs sm:text-sm shrink-0 flex items-center gap-2"
+-            >
+-              ปรึกษาแนวทางการวัดผล
+-              <ArrowRight className="w-4 h-4" />
+-            </a>
+-          </div>
+-
+-        </div>
+-      </section>
+-
+-      {/* ── 7. LEAD FACILITATOR SPOTLIGHT (ครูเด่น & Team) ────────────────────── */}
+-      <section className="py-20 md:py-32 bg-white">
+-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+-            
+-            {/* Image Box */}
+-            <div className="lg:col-span-5 relative">
+-              <div className="absolute -top-6 -left-6 w-72 h-72 bg-[#2563EB]/10 rounded-full blur-3xl pointer-events-none"></div>
+-              
+-              <div className="relative bg-[#111827] p-3 rounded-[2.5rem] shadow-2xl">
+-                <img
+-                  src="/images/denmasterfa.jpg"
+-                  alt="ครูเด่น อนุสรณ์ หนองนา Master Facilitator"
+-                  className="rounded-[2rem] w-full object-cover aspect-[4/5]"
+-                />
+-                
+-                {/* Floating Experience Badge */}
+-                <div className="absolute -bottom-6 -right-6 bg-[#2563EB] text-white p-6 rounded-2xl shadow-xl border-4 border-white hidden sm:block">
+-                  <div className="text-3xl font-black nav-font">18+ ปี</div>
+-                  <div className="text-[10px] font-bold uppercase tracking-wider text-blue-100">
+-                    Transformative Facilitator
+-                  </div>
+-                </div>
+-              </div>
+-            </div>
+-
+-            {/* Profile Info */}
+-            <div className="lg:col-span-7">
+-              <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+-                Master Facilitator & Director
+-              </span>
+-              <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font mb-4 leading-tight">
+-                {BRAND_INFO.director}
+-              </h2>
+-              <p className="text-lg font-bold text-[#0F2557] mb-6">
+-                ผู้อำนวยการ CAP Vision Institute และผู้เชี่ยวชาญด้านกระบวนการเรียนรู้เพื่อการเปลี่ยนแปลง
+-              </p>
+-              <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-8">
+-                ด้วยประสบการณ์กว่า 18 ปี ในการจัดกระบวนการเรียนรู้ให้กับองค์กรชั้นนำทั้งภาครัฐ รัฐวิสาหกิจ และบริษัทเอกชน ครูเด่นมุ่งเน้นการสร้างพื้นที่การเรียนรู้ที่มีความปลอดภัยทางจิตวิทยา ผสมผสานศาสตร์แห่งจิตวิทยาการเรียนรู้ผู้ใหญ่ (Adult Learning) และเทคนิค Facilitation ขั้นสูง เพื่อให้ผู้เรียนทุกคนเกิดแรงบันดาลใจและปลดล็อกศักยภาพจากภายใน
+-              </p>
+-
+-              {/* Competencies Badges */}
+-              <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 mb-10">
+-                {[
+-                  'Activity-Based Learning Architecture',
+-                  'Transformational Leadership Coaching',
+-                  'Psychological Safety & Team Synergy',
+-                  'Creative Problem Solving Facilitator'
+-                ].map((item, idx) => (
+-                  <div key={idx} className="flex items-center gap-2 bg-gray-50 p-3 rounded-xl border border-gray-200/60">
+-                    <CheckCircle2 className="w-4 h-4 text-[#2563EB] flex-shrink-0" />
+-                    <span className="text-xs font-bold text-gray-800">{item}</span>
+-                  </div>
+-                ))}
+-              </div>
+-
+-              <div className="flex flex-col sm:flex-row gap-4">
+-                <a href="/speakers"
+-                  className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-8 py-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2"
+-                >
+-                  ทำความรู้จักทีมวิทยากรทั้งหมด
+-                  <ArrowRight className="w-4 h-4" />
+-                </a>
+-                <a
+-                  href={CONTACT_INFO.lineUrl}
+-                  target="_blank"
+-                  rel="noreferrer"
+-                  className="btn-premium bg-[#06C755] text-white px-6 py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-md"
+-                >
+-                  <MessageCircle className="w-4 h-4" />
+-                  คุยกับครูเด่นผ่าน LINE
+-                </a>
+-              </div>
+-            </div>
+-
+-          </div>
+-        </div>
+-      </section>
+-
+-      {/* ── 7. CASE STUDIES & CLIENTS SECTION ─────────────────────────────────── */}
+-      <ClientsSection />
+-
+-      {/* ── 8. KNOWLEDGE HUB SECTION ──────────────────────────────────────────── */}
+-      <section className="py-20 md:py-32 bg-[#F8FAFC]">
+-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+-          
+-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+-            <div>
+-              <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+-                Executive Insights & Articles
+-              </span>
+-              <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+-                คลังความรู้สำหรับ <span className="text-[#2563EB]">ผู้นำ & HRD</span>
+-              </h2>
+-            </div>
+-            <a href="/resources"
+-              className="flex items-center gap-2 text-sm font-bold text-[#2563EB] hover:text-[#1D4ED8] group nav-font"
+-            >
+-              ดูบทความทั้งหมด
+-              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+-            </a>
+-          </div>
+-
+-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+-            {HRD_ARTICLES.slice(0, 3).map(article => (
+-              <div
+-                key={article.id}
+-                className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full group"
+-              >
+-                <a href={`/resources/${article.id}`} className="relative h-56 overflow-hidden block">
+-                  <img
+-                    src={article.thumbnail}
+-                    alt={article.title}
+-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+-                  />
+-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#111827] px-3.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">
+-                    {article.category}
+-                  </div>
+-                </a>
+-
+-                <div className="p-6 sm:p-8 flex flex-col flex-grow">
+-                  <div className="text-xs text-gray-400 font-bold mb-3">
+-                    {article.date} • โดย {article.author}
+-                  </div>
+-
+-                  <h3 className="text-base sm:text-lg font-black text-[#111827] group-hover:text-[#2563EB] transition-colors line-clamp-2 mb-3 leading-snug nav-font">
+-                    <a href={`/resources/${article.id}`}>{article.title}</a>
+-                  </h3>
+-
+-                  <p className="text-xs sm:text-sm text-gray-500 line-clamp-3 mb-6 flex-grow leading-relaxed">
+-                    {article.excerpt}
+-                  </p>
+-
+-                  <a href={`/resources/${article.id}`}
+-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#2563EB] group-hover:underline"
+-                  >
+-                    อ่านบทความฉบับเต็ม
+-                    <ArrowRight className="w-3.5 h-3.5" />
+-                  </a>
+-                </div>
+-              </div>
+-            ))}
+-          </div>
+-
+-        </div>
+-      </section>
+-
+-      {/* ── 8. FAQ SECTION (คำถามที่พบบ่อยสำหรับ HR & ผู้บริหาร) ───────────────── */}
+-      <section className="py-20 md:py-32 bg-white border-t border-gray-100">
+-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+-          
+-          <div className="text-center mb-16">
+-            <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+-              DECISION ENABLERS & FAQ
+-            </span>
+-            <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+-              คำถามที่พบบ่อยสำหรับ <span className="text-[#2563EB]">HRD & ผู้บริหาร</span>
+-            </h2>
+-            <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed font-light">
+-              รวบรวมข้อสงสัยสำคัญที่องค์กรมักสอบถาม ก่อนตัดสินใจเลือกหลักสูตรและกระบวนการเรียนรู้กับ CAP Vision
+-            </p>
+-          </div>
+-
+-          {/* Accordion List */}
+-          <div className="space-y-4">
+-            {[
+-              {
+-                q: 'CAP Vision แตกต่างจากสถาบันฝึกอบรมทั่วไปอย่างไร?',
+-                a: 'เราไม่ใช้หลักสูตรสำเร็จรูป (No One-Size-Fits-All) แต่เริ่มจากการทำ TNA เพื่อวินิจฉัยปัญหาองค์กรจริง ใช้กระบวนการ Activity-Based & Transformative Learning ที่เน้นให้ผู้เรียนคิด ตระหนัก และค้นพบแนวทางแก้ปัญหาด้วยตนเอง ไม่ใช่เพียงแค่นั่งฟังบรรยาย พร้อมเชื่อมโยง Mindset สู่ Action Plan ที่นำไปปรับใช้ในงานได้ทันที'
+-              },
+-              {
+-                q: 'สามารถปรับแต่งเนื้อหาและ Case Study ให้ตรงกับธุรกิจของเราได้ไหม?',
+-                a: 'ปรับแต่งได้ 100% ครับ ทีมงานของเราจะทำการสัมภาษณ์และศึกษาบริบทจริงขององค์กรคุณ เพื่อออกแบบเนื้อหา กิจกรรม และกรณีศึกษา (Customized Cases) ให้สอดคล้องกับสถานการณ์จริงของอุตสาหกรรม วัฒนธรรมองค์กร และเป้าหมายทางธุรกิจที่คุณต้องการ'
+-              },
+-              {
+-                q: 'ขั้นตอนการขอรับคำปรึกษาและใบเสนอราคา (Proposal) ใช้เวลานานเท่าใด?',
+-                a: 'เพียงกรอกข้อมูลโจทย์เบื้องต้นผ่านหน้าติดต่อ หรือส่งรายละเอียดความต้องการ ทีมงานจะติดต่อกลับเพื่อพูดคุยซักถามโจทย์เชิงลึก และจัดส่ง Proposal โครงสร้างหลักสูตร (Syllabus) พร้อมใบเสนอราคาเบื้องต้นให้ท่านพิจารณาภายใน 24 ชั่วโมง'
+-              },
+-              {
+-                q: 'รองรับรูปแบบการจัดอบรมแบบใดบ้าง และจำนวนผู้เข้าอบรมที่แนะนำคือเท่าใด?',
+-                a: 'รองรับทั้ง In-house Workshop ณ บริษัท, สัมมนานอกสถานที่ (Offsite / Outing Workshop) ทั่วประเทศ รวมถึง Virtual Interactive Training สำหรับเวิร์กช็อปที่มีการทำกิจกรรมอย่างเข้มข้น แนะนำขนาดกลุ่ม 20-40 ท่านต่อรุ่น เพื่อให้เกิดการมีส่วนร่วมและการดูแลผู้เรียนอย่างทั่วถึง'
+-              },
+-              {
+-                q: 'มีกระบวนการติดตามและประเมินผลลัพธ์หลังจบการอบรม (Post-training) หรือไม่?',
+-                a: 'เรามีระบบแบบประเมินผลก่อนและหลังการอบรม (Pre & Post Assessment), สรุปรายงานการเรียนรู้และข้อสังเกตของผู้เข้าร่วมอบรม (Executive Summary Report) ส่งมอบให้ฝ่าย HR พร้อมมีตัวเลือกโปรแกรม Coaching หรือ Follow-up Session เพื่อติดตามผลการปฏิบัติตาม Action Plan อย่างต่อเนื่อง'
+-              }
+-            ].map((faq, idx) => {
+-              const isOpen = openFaqIndex === idx;
+-              return (
+-                <div
+-                  key={idx}
+-                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+-                    isOpen 
+-                      ? 'bg-blue-50/40 border-blue-200 shadow-md' 
+-                      : 'bg-white border-gray-200/80 hover:border-gray-300 hover:bg-gray-50/50 shadow-xs'
+-                  }`}
+-                >
+-                  <button
+-                    type="button"
+-                    onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+-                    aria-expanded={isOpen}
+-                    className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-bold text-sm sm:text-base text-[#111827] nav-font"
+-                  >
+-                    <span className="flex items-center gap-3">
+-                      <HelpCircle className={`w-5 h-5 shrink-0 ${isOpen ? 'text-[#2563EB]' : 'text-gray-400'}`} />
+-                      <span>{faq.q}</span>
+-                    </span>
+-                    <ChevronDown className={`w-5 h-5 shrink-0 text-gray-500 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#2563EB]' : ''}`} />
+-                  </button>
+-
+-                  {isOpen && (
+-                    <div className="px-6 pb-6 pt-1 text-xs sm:text-sm text-gray-600 font-light leading-relaxed border-t border-blue-100/60 mt-1">
+-                      <p className="pl-8">{faq.a}</p>
+-                    </div>
+-                  )}
+-                </div>
+-              );
+-            })}
+-          </div>
+-
+-          {/* Additional Help Callout */}
+-          <div className="mt-12 text-center text-xs sm:text-sm text-gray-500">
+-            มีคำถามเฉพาะทางหรือต้องการสอบถามเพิ่มเติม?{' '}
+-            <a href={contactHref()} className="font-bold text-[#2563EB] hover:underline inline-flex items-center gap-1">
+-              พูดคุยกับทีมที่ปรึกษาโดยตรง <ArrowRight className="w-3.5 h-3.5" />
+-            </a>
+-          </div>
+-
+-        </div>
+-      </section>
+-
+-      <WebsiteNavigator />
+-
+-      {/* ── 9. FINAL CONSULTATION & CLOSING CTA ───────────────────────────────── */}
+-      <section className="py-20 md:py-32 bg-gradient-to-br from-[#111827] via-[#0F2557] to-[#111827] text-white relative overflow-hidden">
+-        <div className="absolute inset-0 opacity-5 pointer-events-none">
+-          <Logo className="w-full h-full p-24" />
+-        </div>
+-
+-        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
+-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-[#F59E0B] text-xs font-bold uppercase tracking-wider mb-6">
+-            <Sparkles className="w-4 h-4" />
+-            Transform People · Transform Organization
+-          </div>
+-
+-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black mb-6 nav-font leading-tight !text-white text-white drop-shadow-md">
+-            พร้อมยกระดับองค์กร
+-            <span className="text-[#F59E0B] !text-[#F59E0B] block mt-1 sm:inline sm:ml-3">สู่ผลลัพธ์ใหม่แล้วหรือยัง?</span>
+-          </h2>
+-
+-          <p className="text-gray-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+-            เริ่มต้นจากการปรึกษาโจทย์เฉพาะองค์กรของคุณเพื่อรับโครงสร้างหลักสูตรและใบเสนอราคาเบื้องต้นใน 24 ชั่วโมง หรือสำรวจความพร้อมด้วยแบบประเมินฟรี
+-          </p>
+-
+-          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+-            <a href={contactHref()}
+-              className="btn-premium bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-10 py-5 rounded-2xl text-base shadow-2xl nav-font flex items-center justify-center gap-2 transition-all active:scale-95"
+-            >
+-              ปรึกษาโจทย์องค์กร (รับข้อเสนอใน 24 ชม.)
+-              <ArrowRight className="w-5 h-5" />
+-            </a>
+-            <a href="/assessment"
+-              className="btn-premium bg-white/10 hover:bg-white/20 border-2 border-white/20 text-white font-bold px-10 py-5 rounded-2xl text-base nav-font flex items-center justify-center gap-2 transition-all active:scale-95"
+-            >
+-              <Sparkles className="w-5 h-5 text-[#F59E0B]" />
+-              สำรวจความพร้อมองค์กร (3 นาที)
+-            </a>
+-          </div>
+-
+-          {/* Quick Line contact */}
+-          <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
+-            <span>หรือปรึกษาด่วนกับ ครูเด่น มาสเตอร์ฟา ผ่าน</span>
+-            <a
+-              href={CONTACT_INFO.lineUrl}
+-              target="_blank"
+-              rel="noreferrer"
+-              className="text-[#34D399] hover:underline font-bold inline-flex items-center gap-1"
+-            >
+-              <MessageCircle className="w-3.5 h-3.5" /> LINE Official
+-            </a>
+-          </div>
+-        </div>
+-      </section>
+-
+-    </div>
+-  );
+-};
+-
+-export default Home;
++export { default } from './home/ThemeHome';
+diff --git a/apps/cap-vision-astro/src/components/home/ThemeHome.tsx b/apps/cap-vision-astro/src/components/home/ThemeHome.tsx
+new file mode 100644
+index 0000000..63b9ed9
+--- /dev/null
++++ b/apps/cap-vision-astro/src/components/home/ThemeHome.tsx
+@@ -0,0 +1,94 @@
++import React, { useEffect, useState } from 'react';
++import { ArrowUpRight, ArrowRight, Compass, Users, Heart, Layers, Sparkles } from 'lucide-react';
++import { contactHref } from '../../lib/contact-context.mjs';
++import { CONTACT_INFO } from '../../constants/brand';
++import { HRD_ARTICLES } from '../../constants/articles';
++import { fetchCourses } from '../../lib/services/courses';
++import type { Course } from '../../types';
++import '../../styles/cap-theme.css';
++
++const solutions = [
++  {id: 'leadership', icon: Compass, en: 'LEADERSHIP', title: 'ผู้นำที่ปลุกพลังทีม', text: 'จากเก่งงาน สู่การนำคนและสร้างความรับผิดชอบร่วมกัน', color: 'blue'},
++  {id: 'people-team', icon: Users, en: 'PEOPLE & TEAM', title: 'ทีมที่เข้าใจและไปด้วยกัน', text: 'สื่อสารเป็น ให้ Feedback ได้ และร่วมมือข้ามสายงาน', color: 'teal'},
++  {id: 'culture', icon: Heart, en: 'CULTURE & MINDSET', title: 'วัฒนธรรมที่เกิดขึ้นจริง', text: 'เปลี่ยนค่านิยมบนกระดาษ เป็นพฤติกรรมในทุกวัน', color: 'gold'},
++  {id: 'customized', icon: Layers, en: 'CUSTOMIZED LEARNING', title: 'เส้นทางที่ออกแบบเพื่อคุณ', text: 'เริ่มจากโจทย์องค์กร สู่เวิร์กช็อปและการติดตามผล', color: 'lilac'},
++];
++const categories = [
++  {title: 'Leadership', th: 'ภาวะผู้นำ', href: '/courses?cat=Leader+Skills'},
++  {title: 'People Skills', th: 'การสื่อสารและทีม', href: '/courses?cat=People+Skills'},
++  {title: 'Work Skills', th: 'การคิดและแก้ปัญหา', href: '/courses?cat=Work+Skills'},
++  {title: 'Facilitator', th: 'วิทยากรและกระบวนกร', href: '/courses'},
++];
++const paths = [
++  ['/services','โซลูชันองค์กร'], ['/courses','หลักสูตร'], ['/assessment','ประเมินองค์กร'],
++  ['/portfolio','ผลงานและกรณีศึกษา'], ['/speakers','ทีมวิทยากร'], ['/resources','คลังความรู้'],
++];
++export default function ThemeHome() {
++  const [courses, setCourses] = useState<Course[]>([]);
++  useEffect(() => {
++    let active = true;
++    fetchCourses().then(data => { if (active) setCourses(data.slice(0, 3)); }).catch(() => {});
++    return () => { active = false; };
++  }, []);
++  return <div className="cap-theme">
++    <section className="cap-hero" aria-labelledby="home-hero-title">
++      <div className="cap-hero-copy">
++        <p className="cap-eyebrow"><span /> CAP VISION INSTITUTE</p>
++        <p className="cap-editorial">A new perspective. A lasting change.</p>
++        <h1 id="home-hero-title">ปลุกศักยภาพคน<br /><span>ให้เป็นพลัง</span><br />ขององค์กร</h1>
++        <p className="cap-lead">ออกแบบ In-house Training และ Learning Journey<br className="cap-desktop-break" /> ที่เชื่อมวิธีคิด พฤติกรรม และการทำงานจริง</p>
++        <div className="cap-actions">
++          <a className="cap-button" href={contactHref()}>ปรึกษาโจทย์องค์กร <ArrowUpRight size={20} aria-hidden="true" /></a>
++          <a className="cap-text-link" href="#home-problems">สำรวจโซลูชัน <ArrowRight size={18} aria-hidden="true" /></a>
++        </div>
++        <p className="cap-signature">Human <span>•</span> Heart <span>•</span> Harmony</p>
++      </div>
++      <div className="cap-hero-visual" aria-hidden="true">
++        <div className="cap-orbit cap-orbit-one" /><div className="cap-orbit cap-orbit-two" />
++        <div className="cap-sculpture"><div className="cap-stone cap-stone-pearl" /><div className="cap-stone cap-stone-blue" /><div className="cap-stone cap-stone-sage" /><div className="cap-stone-shadow" /></div>
++        <div className="cap-glass-label"><span className="cap-dot" /> Transform People<br /><strong>Transform Organization</strong></div>
++        <span className="cap-visual-note">CHANGE STARTS WITHIN</span>
++      </div>
++    </section>
++    <div className="cap-intro-strip"><span>YOUR TRANSFORMATION PARTNER</span><p>เข้าใจโจทย์ <i /> ออกแบบร่วมกัน <i /> นำไปใช้จริง</p><a href="/about">รู้จัก CAP Vision <ArrowUpRight size={17} aria-hidden="true" /></a></div>
++
++    <section id="home-problems" className="cap-section" aria-labelledby="home-problems-title">
++      <div className="cap-section-heading"><div><p className="cap-eyebrow">DESIGNED AROUND YOUR PEOPLE</p><h2 id="home-problems-title">อยากเปลี่ยนเรื่องไหน<br /><span>ให้เห็นผล?</span></h2></div><p>เลือกโจทย์ของคุณ<br />แล้วค่อยออกแบบเส้นทางไปด้วยกัน</p></div>
++      <div className="cap-solution-grid">{solutions.map(({id, icon: Icon, en, title, text, color}, i) => <article key={id} className={`cap-solution cap-tone-${color}`}>
++        <div className="cap-card-top"><span className="cap-icon"><Icon size={25} aria-hidden="true" /></span><span className="cap-index">0{i + 1}</span></div>
++        <p className="cap-card-eyebrow">{en}</p><h3>{title}</h3><p className="cap-card-description">{text}</p>
++        <div className="cap-card-actions"><a href={`/services#${id}`} aria-label={`ดูรายละเอียด ${title}`}>ดูแนวทาง <ArrowUpRight size={19} aria-hidden="true" /></a><a href={contactHref(id)}>ปรึกษาโจทย์นี้</a></div>
++      </article>)}</div>
++      <a className="cap-assessment-link" href="/assessment"><span className="cap-icon"><Compass size={22} aria-hidden="true" /></span><span>ยังไม่แน่ใจว่าจะเริ่มตรงไหน?<strong>สำรวจความพร้อมองค์กร</strong></span><ArrowUpRight size={24} aria-hidden="true" /></a>
++    </section>
++
++    <section className="cap-section cap-framework" aria-labelledby="cap-framework-heading">
++      <div className="cap-section-heading"><div><p className="cap-eyebrow">THE CAP WAY</p><h2 id="cap-framework-heading">การเปลี่ยนแปลงที่ดี<br /><span>มีเส้นทางของมัน</span></h2></div><a className="cap-text-link" href="/about#cap-framework">รู้จัก CAP Framework <ArrowUpRight size={19} aria-hidden="true" /></a></div>
++      <div className="cap-framework-grid">{[
++        ['C','Context & Clarify','เข้าใจโจทย์','ค้นหาบริบทและเป้าหมายที่สำคัญ'],
++        ['A','Align & Activate','ลงมือเปลี่ยน','เรียนรู้ ทดลอง และสะท้อนคิด'],
++        ['P','Perform & Partner','เติบโตไปด้วยกัน','นำไปใช้ ติดตาม และพัฒนาต่อ'],
++      ].map(([letter, en, title, text]) => <article key={letter}><span className="cap-phase-letter">{letter}</span><p className="cap-card-eyebrow">{en}</p><h3>{title}</h3><p>{text}</p></article>)}</div>
++    </section>
++
++    <section className="cap-section" aria-labelledby="cap-courses-heading">
++      <div className="cap-section-heading"><div><p className="cap-eyebrow">LEARN. PRACTICE. TRANSFORM.</p><h2 id="cap-courses-heading">การเรียนรู้ที่ต่อยอด<br /><span>สู่การทำงานจริง</span></h2></div><a className="cap-text-link" href="/courses">ดูหลักสูตรทั้งหมด <ArrowUpRight size={19} aria-hidden="true" /></a></div>
++      <div className="cap-category-grid">{categories.map(c => <a key={c.title} href={c.href}><span>{c.title}</span><strong>{c.th}</strong><ArrowUpRight size={22} aria-hidden="true" /></a>)}</div>
++      {courses.length > 0 && <div className="cap-course-grid">{courses.map(c => <a key={c.id} className="cap-course" href={`/courses/${encodeURIComponent(c.slug || c.id)}`}>
++        <div className="cap-course-image">{c.image && <img src={c.image} alt={c.alt_text || c.title} loading="lazy" width="640" height="400" />}</div><div><span className="cap-card-eyebrow">{c.category}</span><h3>{c.title}</h3><span className="cap-text-link">รายละเอียดหลักสูตร <ArrowUpRight size={17} aria-hidden="true" /></span></div>
++      </a>)}</div>}
++    </section>
++
++    <section className="cap-section cap-human-section" aria-labelledby="cap-human-heading">
++      <div className="cap-founder-photo"><img src="/images/denmasterfa.jpg" alt="ครูเด่น อนุสรณ์ หนองนา ขณะพูดและอำนวยกระบวนการเรียนรู้" width="883" height="853" loading="lazy" /><span>HUMAN COMMUNICATION FACILITATOR</span></div>
++      <div className="cap-human-copy"><p className="cap-eyebrow">HUMAN AT THE HEART</p><h2 id="cap-human-heading">เริ่มจากเข้าใจคน<br /><span>จึงเปลี่ยนองค์กรได้</span></h2><p>ครูเด่น มาสเตอร์ฟา และทีมวิทยากร<br />ร่วมออกแบบพื้นที่การเรียนรู้ที่เปิดให้คนคิด<br />ลงมือทำ และค้นพบทางไปต่อด้วยตัวเอง</p><div className="cap-actions"><a className="cap-button" href="/speakers">รู้จักทีมวิทยากร <ArrowUpRight size={19} aria-hidden="true" /></a><a className="cap-text-link" href="/portfolio">ดูผลงาน <ArrowUpRight size={19} aria-hidden="true" /></a></div></div>
++    </section>
++
++    <section className="cap-section" aria-labelledby="cap-insights-heading">
++      <div className="cap-section-heading"><div><p className="cap-eyebrow">A LITTLE INSIGHT. A NEW POSSIBILITY.</p><h2 id="cap-insights-heading">มุมคิดสำหรับ<br /><span>ผู้นำและคนทำงาน</span></h2></div><a className="cap-text-link" href="/resources">เข้าคลังความรู้ <ArrowUpRight size={19} aria-hidden="true" /></a></div>
++      <div className="cap-insight-grid">{HRD_ARTICLES.slice(0, 3).map((a, i) => <a href={`/resources/${a.id}`} key={a.id}><span className="cap-index">0{i+1}</span><h3>{a.title}</h3><span className="cap-text-link">อ่านต่อ <ArrowUpRight size={18} aria-hidden="true" /></span></a>)}</div>
++    </section>
++
++    <section id="home-explore" className="cap-section cap-closing" aria-labelledby="cap-closing-title"><div className="cap-closing-glow" aria-hidden="true" /><p className="cap-eyebrow">LET’S CREATE YOUR NEXT CHAPTER</p><h2 id="cap-closing-title">ก้าวต่อไปขององค์กร<br /><span>เริ่มจากบทสนทนาที่ดี</span></h2><div className="cap-actions"><a className="cap-button" href={contactHref()}>ปรึกษาโจทย์องค์กร <ArrowUpRight size={20} aria-hidden="true" /></a><a className="cap-button cap-button-light" href={contactHref('', 'proposal')}>ขอใบเสนอราคา <ArrowUpRight size={20} aria-hidden="true" /></a></div><a className="cap-line-link" href={CONTACT_INFO.lineUrl} target="_blank" rel="noopener noreferrer">คุยกับครูเด่นผ่าน LINE <ArrowUpRight size={16} aria-hidden="true" /></a><nav aria-label="สำรวจส่วนต่างๆ ของ CAP Vision" className="cap-explore-nav">{paths.map(([href,title]) => <a href={href} key={href}>{title}</a>)}</nav></section>
++  </div>;
++}
+diff --git a/apps/cap-vision-astro/src/styles/cap-theme.css b/apps/cap-vision-astro/src/styles/cap-theme.css
+new file mode 100644
+index 0000000..b138abd
+--- /dev/null
++++ b/apps/cap-vision-astro/src/styles/cap-theme.css
+@@ -0,0 +1,16 @@
++/* CAP Vision · Pearl / Glass / Depth. Scoped to the public homepage. */
++.cap-theme{--cap-ink:#172b43;--cap-muted:#526578;--cap-blue:#315e84;--cap-line:rgba(49,77,105,.16);--cap-pearl:#edf2f5;--cap-radius:30px;color:var(--cap-ink);background:#f5f7f8;font-family:Sarabun,sans-serif;line-height:1.65;overflow:clip}
++.cap-theme *{box-sizing:border-box}.cap-theme h1,.cap-theme h2,.cap-theme h3{font-family:Sarabun,sans-serif}.cap-theme h1,.cap-theme h2,.cap-theme h3,.cap-theme p{margin:0}.cap-theme a{text-decoration:none}.cap-theme a:focus-visible,.cap-theme summary:focus-visible{outline:3px solid #315e84;outline-offset:6px;border-radius:8px}.cap-theme svg{flex-shrink:0}.cap-theme .cap-eyebrow{display:flex;align-items:center;gap:10px;color:var(--cap-muted);font-size:11px;font-weight:700;letter-spacing:.16em;line-height:1.6}.cap-eyebrow>span{width:7px;height:7px;border-radius:50%;background:#598a91}.cap-theme .cap-editorial{font-family:'Playfair Display',Georgia,serif;font-size:18px;color:var(--cap-muted);margin:22px 0 15px}
++.cap-hero{position:relative;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:50px;max-width:1380px;margin:auto;padding:145px 64px 85px;min-height:810px}.cap-hero-copy{position:relative;z-index:2}.cap-theme h1{font-size:clamp(48px,4.8vw,72px);line-height:1.24;font-weight:600;letter-spacing:-.045em}.cap-theme h1 span,.cap-theme h2 span{color:var(--cap-blue)}.cap-theme .cap-lead{font-size:17px;line-height:1.9;color:var(--cap-muted);margin-top:25px;max-width:480px}.cap-actions{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:30px}.cap-button{display:inline-flex;align-items:center;justify-content:center;gap:22px;min-height:54px;padding:13px 23px;background:#284f72;color:#fff!important;border:1px solid #284f72;border-radius:100px;box-shadow:0 9px 20px #294e7125,inset 0 1px 0 #ffffff28;font-size:15px;font-weight:600;transition:transform .2s,box-shadow .2s}.cap-button:hover{transform:translateY(-2px);box-shadow:0 13px 26px #294e7135}.cap-text-link{display:inline-flex;align-items:center;gap:13px;min-height:44px;font-size:14px;color:var(--cap-ink);font-weight:600}.cap-text-link:hover{color:var(--cap-blue)}.cap-theme .cap-signature{margin-top:32px;font-family:'Playfair Display',Georgia,serif;font-size:18px;color:#5f7486;letter-spacing:.03em}.cap-signature span{margin:0 10px;color:#bdac8b}
++.cap-hero-visual{position:relative;min-height:570px;isolation:isolate;border-radius:45% 45% 38% 38%;background:radial-gradient(ellipse at 50% 50%,#d3e3ec 0%,#edf2f5 55%,#f5f7f8 75%)}.cap-sculpture{position:absolute;left:50%;top:44%;width:320px;height:400px;transform:translate(-50%,-50%)}.cap-stone{position:absolute;box-shadow:inset -18px -20px 30px #153e6133,inset 10px 9px 20px #ffffffab,0 24px 26px #233d532b;transform:rotate(-12deg)}.cap-stone-pearl{z-index:3;top:28px;left:87px;width:190px;height:165px;border-radius:48% 52% 46% 54%;background:radial-gradient(ellipse at 26% 21%,#ffffff 0%,#e3eaf2 34%,#96b0c9 80%)}.cap-stone-blue{z-index:2;top:156px;left:39px;width:246px;height:155px;border-radius:46% 54% 42% 58%;background:radial-gradient(ellipse at 25% 20%,#a9d0e9 0%,#6e9ebd 38%,#31577c 86%);transform:rotate(10deg)}.cap-stone-sage{z-index:1;top:274px;left:16px;width:284px;height:138px;border-radius:48% 52% 42% 58%;background:radial-gradient(ellipse at 24% 20%,#d7e7df,#a6bdb6 42%,#617f84 88%);transform:rotate(-6deg)}.cap-stone-shadow{position:absolute;top:398px;left:28px;width:270px;height:40px;border-radius:50%;background:#213c5240;filter:blur(20px)}.cap-orbit{position:absolute;width:430px;height:430px;border:1px solid #7e9cb329;border-radius:50%;left:50%;top:46%;transform:translate(-50%,-50%) rotateX(55deg) rotate(-20deg);z-index:-1}.cap-orbit-two{width:540px;height:540px;transform:translate(-50%,-50%) rotateX(55deg) rotate(30deg)}.cap-glass-label{position:absolute;bottom:55px;left:20px;padding:23px 28px;max-width:320px;background:linear-gradient(125deg,#ffffffd9,#ffffff65);backdrop-filter:blur(16px);border:1px solid #fff;border-radius:23px;box-shadow:0 15px 35px #536d8421,inset 0 1px 0 #fff;color:#4b6579;font-size:16px;line-height:1.7}.cap-glass-label strong{font-weight:600;color:#244564;font-family:'Playfair Display',Georgia,serif;font-size:20px}.cap-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#598a91;margin-right:10px}.cap-visual-note{position:absolute;right:0;bottom:12px;font-size:9px;letter-spacing:.18em;color:#61788b}
++.cap-intro-strip{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px 64px;border-block:1px solid var(--cap-line);max-width:1380px;margin:auto}.cap-intro-strip>span{font-size:10px;color:var(--cap-muted);letter-spacing:.1em}.cap-intro-strip p{display:flex;align-items:center;gap:20px;font-size:15px}.cap-intro-strip i{width:4px;height:4px;background:#9bafbd;border-radius:50%}.cap-intro-strip a{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--cap-ink)}
++.cap-section{max-width:1380px;padding:84px 64px;margin:auto;scroll-margin-top:100px}.cap-section-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:35px;margin-bottom:35px}.cap-theme h2{font-size:clamp(30px,3.1vw,44px);line-height:1.35;font-weight:600;letter-spacing:-.025em}.cap-section-heading h2{margin-top:15px}.cap-section-heading>p{color:var(--cap-muted);font-size:15px;line-height:1.9}.cap-solution-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:19px}.cap-solution{display:flex;flex-direction:column;padding:26px 24px;border-radius:var(--cap-radius);background:linear-gradient(145deg,#fbfdfe,#e6edf1);border:1px solid #ffffff;box-shadow:10px 13px 23px #a9b9c62d,-7px -7px 19px #ffffffb0}.cap-tone-teal{background:linear-gradient(145deg,#f8fcfb,#e2ece9)}.cap-tone-gold{background:linear-gradient(145deg,#fdfbf7,#efe8dd)}.cap-tone-lilac{background:linear-gradient(145deg,#fbfaff,#e9e7f0)}.cap-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.cap-icon{display:inline-flex;align-items:center;justify-content:center;width:55px;height:55px;border-radius:18px;background:#ffffff73;box-shadow:inset 1px 1px 1px #fff,3px 5px 10px #5b728218;color:#365f7d}.cap-index{font-family:'Playfair Display',Georgia,serif;font-size:16px;color:#6b7f8e}.cap-theme .cap-card-eyebrow{font-size:9px;font-weight:700;letter-spacing:.12em;color:#56697b;margin-bottom:11px}.cap-theme h3{font-size:21px;line-height:1.5;font-weight:600}.cap-theme .cap-card-description{font-size:14px;color:var(--cap-muted);line-height:1.85;margin-top:11px;flex:1}.cap-card-actions{margin-top:28px;display:flex;align-items:flex-start;flex-direction:column;gap:5px}.cap-card-actions a{display:inline-flex;align-items:center;gap:12px;font-weight:600;font-size:14px;color:var(--cap-ink);min-height:44px}.cap-card-actions a:last-child{font-size:12px;color:#526578;font-weight:400}.cap-card-actions a:hover{text-decoration:underline;text-underline-offset:5px}.cap-assessment-link{display:flex;align-items:center;gap:17px;padding:21px 27px;margin-top:25px;border:1px solid var(--cap-line);border-radius:24px;color:var(--cap-muted);max-width:580px;font-size:13px}.cap-assessment-link strong{display:block;color:var(--cap-ink);font-size:16px}.cap-assessment-link>svg{margin-left:auto}.cap-assessment-link .cap-icon{box-shadow:none;background:#e6edf2;width:46px;height:46px}
++.cap-framework{border-top:1px solid var(--cap-line)}.cap-framework-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}.cap-framework-grid article{position:relative;min-height:220px;border-top:1px solid #b8c8d3;padding:25px 20px 25px 0}.cap-phase-letter{font-family:'Playfair Display',Georgia,serif;position:absolute;right:14px;top:0;font-size:125px;line-height:1.2;color:#d7e3eb;font-weight:500;z-index:0}.cap-framework-grid article>p,.cap-framework-grid article>h3{position:relative;max-width:230px}.cap-framework-grid article>p:last-child{color:var(--cap-muted);font-size:14px;margin-top:12px}.cap-framework-grid .cap-card-eyebrow{margin-top:25px}.cap-category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.cap-category-grid a{position:relative;padding:25px;background:#fff;border-radius:21px;border:1px solid var(--cap-line);color:var(--cap-ink);transition:background .2s}.cap-category-grid a:hover{background:#e9f0f5}.cap-category-grid span{font-family:'Playfair Display',Georgia,serif;font-size:19px;display:block}.cap-category-grid strong{font-size:13px;font-weight:400;color:var(--cap-muted);display:block;margin-top:5px}.cap-category-grid svg{position:absolute;right:17px;top:26px;width:18px}.cap-course-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:25px}.cap-course{color:var(--cap-ink);overflow:hidden;background:#fff;border-radius:24px;border:1px solid var(--cap-line)}.cap-course>div:last-child{padding:24px}.cap-course-image{aspect-ratio:1.6;background:#dfe9ef}.cap-course-image img{width:100%;height:100%;object-fit:cover}.cap-course h3{font-size:19px;margin:10px 0 15px}
++.cap-human-section{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.cap-founder-photo{position:relative;overflow:hidden;border-radius:40px;aspect-ratio:1.12;background:#d9e4ea}.cap-founder-photo img{width:100%;height:100%;object-fit:cover;object-position:center 46%}.cap-founder-photo>span{position:absolute;bottom:22px;left:24px;right:24px;border:1px solid #ffffff60;background:#ffffffdc;backdrop-filter:blur(12px);font-size:9px;letter-spacing:.13em;padding:13px 18px;border-radius:100px;color:#244564}.cap-human-copy h2{margin:18px 0 25px}.cap-human-copy>p:not(.cap-eyebrow){color:var(--cap-muted);font-size:16px;line-height:1.95}.cap-human-copy .cap-actions{gap:20px}.cap-insight-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}.cap-insight-grid a{color:var(--cap-ink);padding:26px 0;border-top:1px solid var(--cap-line);display:flex;flex-direction:column;gap:22px}.cap-insight-grid h3{font-size:19px;flex:1}.cap-insight-grid .cap-text-link{font-size:13px}
++.cap-closing{position:relative;text-align:center;overflow:hidden;border:1px solid #ffffffa6;border-radius:40px;background:linear-gradient(130deg,#dfeaf0,#eff3f6 48%,#e2ebe7);margin:20px auto 70px;padding:70px 50px 28px;max-width:1252px}.cap-closing>*{position:relative;z-index:1}.cap-closing .cap-eyebrow{justify-content:center}.cap-closing h2{margin-top:20px}.cap-closing .cap-actions{justify-content:center}.cap-button-light{background:#ffffffb3!important;border-color:#fff!important;color:#284f72!important;box-shadow:0 8px 18px #4f6e8614}.cap-closing .cap-line-link{display:inline-flex;gap:10px;align-items:center;font-size:13px;color:var(--cap-muted);padding:25px 0;min-height:44px}.cap-explore-nav{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;border-top:1px solid #8099af30;padding-top:20px;margin-top:20px}.cap-explore-nav a{color:var(--cap-ink);font-size:12px;min-height:44px;display:inline-flex;align-items:center}.cap-explore-nav a:hover{text-decoration:underline}.cap-closing-glow{position:absolute;width:280px;height:280px;border-radius:50%;background:#fff7;right:-100px;top:-80px;box-shadow:-50px 50px 120px #adc8d548;z-index:0}
++@media(min-width:1440px){.cap-hero{min-height:850px}.cap-hero-visual{min-height:620px}}
++@media(max-width:1100px){.cap-hero{padding:130px 35px 65px;gap:15px}.cap-section{padding:70px 35px}.cap-intro-strip{padding-inline:35px}.cap-solution-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cap-hero-visual{min-height:520px}.cap-sculpture{transform:translate(-50%,-50%) scale(.88)}.cap-glass-label{left:0;font-size:14px}.cap-glass-label strong{font-size:18px}.cap-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cap-closing{margin-inline:35px}.cap-human-section{gap:35px}.cap-intro-strip>span{display:none}.cap-orbit-two{width:420px;height:420px}}
++@media(max-width:700px){.cap-hero{grid-template-columns:1fr;padding:120px 24px 30px;gap:5px;min-height:0}.cap-theme h1{font-size:49px}.cap-theme .cap-editorial{font-size:15px;margin:20px 0 15px}.cap-theme .cap-lead{font-size:15px}.cap-hero-visual{min-height:440px;margin:0 -5px}.cap-sculpture{top:40%;transform:translate(-50%,-50%) scale(.77)}.cap-glass-label{bottom:30px;left:10px;padding:16px 22px}.cap-visual-note{bottom:0;right:5px}.cap-orbit{width:310px;height:310px}.cap-orbit-two{width:380px;height:380px}.cap-intro-strip{padding:20px 24px;flex-direction:column;gap:7px;align-items:flex-start}.cap-intro-strip p{font-size:13px;gap:12px}.cap-intro-strip a{font-size:12px}.cap-section{padding:55px 24px}.cap-section-heading{align-items:flex-start;flex-direction:column;gap:15px;margin-bottom:28px}.cap-section-heading>p{font-size:14px}.cap-theme h2{font-size:31px}.cap-solution-grid{grid-template-columns:1fr;gap:17px}.cap-solution{padding:25px}.cap-card-top{margin-bottom:20px}.cap-card-actions{flex-direction:row;align-items:center;gap:25px;margin-top:15px}.cap-assessment-link{padding:18px 17px;gap:12px}.cap-assessment-link .cap-icon{display:none}.cap-assessment-link strong{font-size:15px}.cap-framework-grid{grid-template-columns:1fr;gap:10px}.cap-framework-grid article{min-height:170px;padding:20px 0}.cap-phase-letter{font-size:112px;top:9px}.cap-framework-grid .cap-card-eyebrow{margin-top:13px}.cap-category-grid{grid-template-columns:1fr 1fr;gap:12px}.cap-category-grid a{padding:23px 16px}.cap-category-grid span{font-size:17px;padding-right:16px}.cap-category-grid svg{right:9px;top:28px;width:14px}.cap-category-grid strong{font-size:12px}.cap-course-grid{grid-template-columns:1fr}.cap-human-section{grid-template-columns:1fr;gap:30px}.cap-founder-photo{border-radius:28px;aspect-ratio:1.12}.cap-founder-photo>span{font-size:8px;left:15px;right:15px;bottom:15px;padding:12px}.cap-human-copy>p:not(.cap-eyebrow){font-size:15px}.cap-insight-grid{grid-template-columns:1fr;gap:5px}.cap-insight-grid a{gap:15px;padding:22px 0}.cap-closing{margin:0 16px 40px;padding:45px 22px 20px;border-radius:28px}.cap-closing h2{font-size:29px}.cap-actions{gap:17px}.cap-button{gap:14px;font-size:14px;min-height:52px}.cap-closing .cap-actions{flex-direction:column;align-items:stretch;gap:12px}.cap-closing .cap-button{justify-content:space-between}.cap-explore-nav{gap:4px 18px;margin-top:5px}.cap-theme .cap-signature{font-size:17px;margin-top:24px}.cap-eyebrow{letter-spacing:.12em!important}.cap-desktop-break{display:none}}
++@media(max-width:360px){.cap-theme h1{font-size:43px}.cap-hero,.cap-section{padding-inline:20px}.cap-category-grid{grid-template-columns:1fr}.cap-card-actions{gap:16px}.cap-theme h3{font-size:20px}.cap-sculpture{transform:translate(-50%,-50%) scale(.68)}.cap-closing h2{font-size:26px}}
++@media(prefers-reduced-motion:reduce){.cap-theme *{scroll-behavior:auto!important;transition:none!important}}
++@supports not (backdrop-filter:blur(1px)){.cap-glass-label,.cap-founder-photo>span{background:#f4f8fb}}
+diff --git a/components/home/ThemeHome.tsx b/components/home/ThemeHome.tsx
+new file mode 100644
+index 0000000..5a547be
+--- /dev/null
++++ b/components/home/ThemeHome.tsx
+@@ -0,0 +1,94 @@
++import React, { useEffect, useState } from 'react';
++import { ArrowUpRight, ArrowRight, Compass, Users, Heart, Layers, Sparkles } from 'lucide-react';
++import { contactHref } from '../../lib/contact-context.mjs';
++import { CONTACT_INFO } from '../../constants/brand';
++import { HRD_ARTICLES } from '../../constants/articles';
++import { fetchCourses } from '../../services/courses';
++import type { Course } from '../../types';
++import '../../styles/cap-theme.css';
++
++const solutions = [
++  {id: 'leadership', icon: Compass, en: 'LEADERSHIP', title: 'ผู้นำที่ปลุกพลังทีม', text: 'จากเก่งงาน สู่การนำคนและสร้างความรับผิดชอบร่วมกัน', color: 'blue'},
++  {id: 'people-team', icon: Users, en: 'PEOPLE & TEAM', title: 'ทีมที่เข้าใจและไปด้วยกัน', text: 'สื่อสารเป็น ให้ Feedback ได้ และร่วมมือข้ามสายงาน', color: 'teal'},
++  {id: 'culture', icon: Heart, en: 'CULTURE & MINDSET', title: 'วัฒนธรรมที่เกิดขึ้นจริง', text: 'เปลี่ยนค่านิยมบนกระดาษ เป็นพฤติกรรมในทุกวัน', color: 'gold'},
++  {id: 'customized', icon: Layers, en: 'CUSTOMIZED LEARNING', title: 'เส้นทางที่ออกแบบเพื่อคุณ', text: 'เริ่มจากโจทย์องค์กร สู่เวิร์กช็อปและการติดตามผล', color: 'lilac'},
++];
++const categories = [
++  {title: 'Leadership', th: 'ภาวะผู้นำ', href: '/courses?cat=Leader+Skills'},
++  {title: 'People Skills', th: 'การสื่อสารและทีม', href: '/courses?cat=People+Skills'},
++  {title: 'Work Skills', th: 'การคิดและแก้ปัญหา', href: '/courses?cat=Work+Skills'},
++  {title: 'Facilitator', th: 'วิทยากรและกระบวนกร', href: '/courses'},
++];
++const paths = [
++  ['/services','โซลูชันองค์กร'], ['/courses','หลักสูตร'], ['/assessment','ประเมินองค์กร'],
++  ['/portfolio','ผลงานและกรณีศึกษา'], ['/speakers','ทีมวิทยากร'], ['/resources','คลังความรู้'],
++];
++export default function ThemeHome() {
++  const [courses, setCourses] = useState<Course[]>([]);
++  useEffect(() => {
++    let active = true;
++    fetchCourses().then(data => { if (active) setCourses(data.slice(0, 3)); }).catch(() => {});
++    return () => { active = false; };
++  }, []);
++  return <div className="cap-theme">
++    <section className="cap-hero" aria-labelledby="home-hero-title">
++      <div className="cap-hero-copy">
++        <p className="cap-eyebrow"><span /> CAP VISION INSTITUTE</p>
++        <p className="cap-editorial">A new perspective. A lasting change.</p>
++        <h1 id="home-hero-title">ปลุกศักยภาพคน<br /><span>ให้เป็นพลัง</span><br />ขององค์กร</h1>
++        <p className="cap-lead">ออกแบบ In-house Training และ Learning Journey<br className="cap-desktop-break" /> ที่เชื่อมวิธีคิด พฤติกรรม และการทำงานจริง</p>
++        <div className="cap-actions">
++          <a className="cap-button" href={contactHref()}>ปรึกษาโจทย์องค์กร <ArrowUpRight size={20} aria-hidden="true" /></a>
++          <a className="cap-text-link" href="#home-problems">สำรวจโซลูชัน <ArrowRight size={18} aria-hidden="true" /></a>
++        </div>
++        <p className="cap-signature">Human <span>•</span> Heart <span>•</span> Harmony</p>
++      </div>
++      <div className="cap-hero-visual" aria-hidden="true">
++        <div className="cap-orbit cap-orbit-one" /><div className="cap-orbit cap-orbit-two" />
++        <div className="cap-sculpture"><div className="cap-stone cap-stone-pearl" /><div className="cap-stone cap-stone-blue" /><div className="cap-stone cap-stone-sage" /><div className="cap-stone-shadow" /></div>
++        <div className="cap-glass-label"><span className="cap-dot" /> Transform People<br /><strong>Transform Organization</strong></div>
++        <span className="cap-visual-note">CHANGE STARTS WITHIN</span>
++      </div>
++    </section>
++    <div className="cap-intro-strip"><span>YOUR TRANSFORMATION PARTNER</span><p>เข้าใจโจทย์ <i /> ออกแบบร่วมกัน <i /> นำไปใช้จริง</p><a href="/about">รู้จัก CAP Vision <ArrowUpRight size={17} aria-hidden="true" /></a></div>
++
++    <section id="home-problems" className="cap-section" aria-labelledby="home-problems-title">
++      <div className="cap-section-heading"><div><p className="cap-eyebrow">DESIGNED AROUND YOUR PEOPLE</p><h2 id="home-problems-title">อยากเปลี่ยนเรื่องไหน<br /><span>ให้เห็นผล?</span></h2></div><p>เลือกโจทย์ของคุณ<br />แล้วค่อยออกแบบเส้นทางไปด้วยกัน</p></div>
++      <div className="cap-solution-grid">{solutions.map(({id, icon: Icon, en, title, text, color}, i) => <article key={id} className={`cap-solution cap-tone-${color}`}>
++        <div className="cap-card-top"><span className="cap-icon"><Icon size={25} aria-hidden="true" /></span><span className="cap-index">0{i + 1}</span></div>
++        <p className="cap-card-eyebrow">{en}</p><h3>{title}</h3><p className="cap-card-description">{text}</p>
++        <div className="cap-card-actions"><a href={`/services#${id}`} aria-label={`ดูรายละเอียด ${title}`}>ดูแนวทาง <ArrowUpRight size={19} aria-hidden="true" /></a><a href={contactHref(id)}>ปรึกษาโจทย์นี้</a></div>
++      </article>)}</div>
++      <a className="cap-assessment-link" href="/assessment"><span className="cap-icon"><Compass size={22} aria-hidden="true" /></span><span>ยังไม่แน่ใจว่าจะเริ่มตรงไหน?<strong>สำรวจความพร้อมองค์กร</strong></span><ArrowUpRight size={24} aria-hidden="true" /></a>
++    </section>
++
++    <section className="cap-section cap-framework" aria-labelledby="cap-framework-heading">
++      <div className="cap-section-heading"><div><p className="cap-eyebrow">THE CAP WAY</p><h2 id="cap-framework-heading">การเปลี่ยนแปลงที่ดี<br /><span>มีเส้นทางของมัน</span></h2></div><a className="cap-text-link" href="/about#cap-framework">รู้จัก CAP Framework <ArrowUpRight size={19} aria-hidden="true" /></a></div>
++      <div className="cap-framework-grid">{[
++        ['C','Context & Clarify','เข้าใจโจทย์','ค้นหาบริบทและเป้าหมายที่สำคัญ'],
++        ['A','Align & Activate','ลงมือเปลี่ยน','เรียนรู้ ทดลอง และสะท้อนคิด'],
++        ['P','Perform & Partner','เติบโตไปด้วยกัน','นำไปใช้ ติดตาม และพัฒนาต่อ'],
++      ].map(([letter, en, title, text]) => <article key={letter}><span className="cap-phase-letter">{letter}</span><p className="cap-card-eyebrow">{en}</p><h3>{title}</h3><p>{text}</p></article>)}</div>
++    </section>
++
++    <section className="cap-section" aria-labelledby="cap-courses-heading">
++      <div className="cap-section-heading"><div><p className="cap-eyebrow">LEARN. PRACTICE. TRANSFORM.</p><h2 id="cap-courses-heading">การเรียนรู้ที่ต่อยอด<br /><span>สู่การทำงานจริง</span></h2></div><a className="cap-text-link" href="/courses">ดูหลักสูตรทั้งหมด <ArrowUpRight size={19} aria-hidden="true" /></a></div>
++      <div className="cap-category-grid">{categories.map(c => <a key={c.title} href={c.href}><span>{c.title}</span><strong>{c.th}</strong><ArrowUpRight size={22} aria-hidden="true" /></a>)}</div>
++      {courses.length > 0 && <div className="cap-course-grid">{courses.map(c => <a key={c.id} className="cap-course" href={`/courses/${encodeURIComponent(c.slug || c.id)}`}>
++        <div className="cap-course-image">{c.image && <img src={c.image} alt={c.alt_text || c.title} loading="lazy" width="640" height="400" />}</div><div><span className="cap-card-eyebrow">{c.category}</span><h3>{c.title}</h3><span className="cap-text-link">รายละเอียดหลักสูตร <ArrowUpRight size={17} aria-hidden="true" /></span></div>
++      </a>)}</div>}
++    </section>
++
++    <section className="cap-section cap-human-section" aria-labelledby="cap-human-heading">
++      <div className="cap-founder-photo"><img src="/images/denmasterfa.jpg" alt="ครูเด่น อนุสรณ์ หนองนา ขณะพูดและอำนวยกระบวนการเรียนรู้" width="883" height="853" loading="lazy" /><span>HUMAN COMMUNICATION FACILITATOR</span></div>
++      <div className="cap-human-copy"><p className="cap-eyebrow">HUMAN AT THE HEART</p><h2 id="cap-human-heading">เริ่มจากเข้าใจคน<br /><span>จึงเปลี่ยนองค์กรได้</span></h2><p>ครูเด่น มาสเตอร์ฟา และทีมวิทยากร<br />ร่วมออกแบบพื้นที่การเรียนรู้ที่เปิดให้คนคิด<br />ลงมือทำ และค้นพบทางไปต่อด้วยตัวเอง</p><div className="cap-actions"><a className="cap-button" href="/speakers">รู้จักทีมวิทยากร <ArrowUpRight size={19} aria-hidden="true" /></a><a className="cap-text-link" href="/portfolio">ดูผลงาน <ArrowUpRight size={19} aria-hidden="true" /></a></div></div>
++    </section>
++
++    <section className="cap-section" aria-labelledby="cap-insights-heading">
++      <div className="cap-section-heading"><div><p className="cap-eyebrow">A LITTLE INSIGHT. A NEW POSSIBILITY.</p><h2 id="cap-insights-heading">มุมคิดสำหรับ<br /><span>ผู้นำและคนทำงาน</span></h2></div><a className="cap-text-link" href="/resources">เข้าคลังความรู้ <ArrowUpRight size={19} aria-hidden="true" /></a></div>
++      <div className="cap-insight-grid">{HRD_ARTICLES.slice(0, 3).map((a, i) => <a href={`/resources/${a.id}`} key={a.id}><span className="cap-index">0{i+1}</span><h3>{a.title}</h3><span className="cap-text-link">อ่านต่อ <ArrowUpRight size={18} aria-hidden="true" /></span></a>)}</div>
++    </section>
++
++    <section id="home-explore" className="cap-section cap-closing" aria-labelledby="cap-closing-title"><div className="cap-closing-glow" aria-hidden="true" /><p className="cap-eyebrow">LET’S CREATE YOUR NEXT CHAPTER</p><h2 id="cap-closing-title">ก้าวต่อไปขององค์กร<br /><span>เริ่มจากบทสนทนาที่ดี</span></h2><div className="cap-actions"><a className="cap-button" href={contactHref()}>ปรึกษาโจทย์องค์กร <ArrowUpRight size={20} aria-hidden="true" /></a><a className="cap-button cap-button-light" href={contactHref('', 'proposal')}>ขอใบเสนอราคา <ArrowUpRight size={20} aria-hidden="true" /></a></div><a className="cap-line-link" href={CONTACT_INFO.lineUrl} target="_blank" rel="noopener noreferrer">คุยกับครูเด่นผ่าน LINE <ArrowUpRight size={16} aria-hidden="true" /></a><nav aria-label="สำรวจส่วนต่างๆ ของ CAP Vision" className="cap-explore-nav">{paths.map(([href,title]) => <a href={href} key={href}>{title}</a>)}</nav></section>
++  </div>;
++}
+diff --git a/docs/visual-theme.md b/docs/visual-theme.md
+new file mode 100644
+index 0000000..4592cf6
+--- /dev/null
++++ b/docs/visual-theme.md
+@@ -0,0 +1,66 @@
++# CAP Vision · Pearl & Glass Theme
++
++## ทิศทางการออกแบบ
++
++ถอดหลักการจากภาพอ้างอิง 4 ภาพ: เงานุ่มและพื้นผิวนูน (Neumorphism), กระจกโปร่งแสง (Glassmorphism), การจัดวัตถุสามมิติบนพื้นที่ว่าง และการวางหัวเรื่องสั้นเหนือภาพที่มีระยะหน้า–หลัง
++
++ธีมสำหรับ CAP Vision: ขาวมุก ฟ้าเทา น้ำเงิน และเขียว Sage เป็นรายละเอียด ใช้ Sarabun สำหรับภาษาไทยและ Playfair Display สำหรับข้อความภาษาอังกฤษบางส่วน
++
++ใช้หลักการของภาพเป็นแรงบันดาลใจ ไม่ฝังภาพตัวอย่างที่มีชื่อแบรนด์หรือข้อความของผู้อื่น องค์ประกอบสามมิติใน Hero สร้างด้วย CSS gradient, radius และเงา ไม่ใช้ภาพขนาดใหญ่หรือ WebGL
++
++## Design tokens
++
++| Token | Value | หน้าที่ |
++| --- | --- | --- |
++| --cap-ink | #172b43 | ข้อความหลัก |
++| --cap-muted | #526578 | คำอธิบาย |
++| --cap-blue | #315e84 | ส่วนเน้น |
++| Background | #f5f7f8 | พื้นขาวมุก |
++| --cap-radius | 30px | มุมการ์ด |
++| Button | #284f72 | CTA หลัก |
++
++CSS ทั้งหมดอยู่ใต้ .cap-theme ไม่เปลี่ยนสไตล์ฟอร์ม Admin หรือระบบภายใน มี focus-visible, reduced-motion และพื้นทึบสำรองเมื่อ backdrop-filter ไม่รองรับ
++
++## หน้าแรกใหม่
++
++- Hero สั้น + ประติมากรรมสามมิติ + Glass panel
++- โซลูชัน 4 การ์ด: แต่ละการ์ดมีหัวเรื่อง คำอธิบายหนึ่งประโยค และทางไปบริการ/ปรึกษา
++- CAP Framework 3 ขั้น สรุปให้เห็นภาพ
++- หมวดหลักสูตร 4 หมวด และหลักสูตรจากข้อมูลเดิมสูงสุด 3 รายการ
++- ภาพจริงของครูเด่น เชื่อมไปวิทยากรและผลงาน
++- บทความ 3 หัวเรื่อง เชื่อมเนื้อหาเต็ม
++- Closing CTA และเมนูทางลัด 6 ปลายทาง
++
++ย้ายคำอธิบายเชิงลึกไปยังหน้าเดิมที่มีอยู่ ลดข้อความซ้ำและคำรับรองที่ไม่มีหลักฐาน ไม่สร้าง Testimonial หรือผลลัพธ์ลูกค้าใหม่
++
++## Files
++
++React: pages/Home.tsx, components/home/ThemeHome.tsx, styles/cap-theme.css
++Astro: src/components/HomePage.tsx, src/components/home/ThemeHome.tsx, src/styles/cap-theme.css ภายใน apps/cap-vision-astro
++
++ทั้งสองแอปใช้หน้าแรกแบบเดียวกัน โดยแยกเส้นทาง import ระบบดึงหลักสูตร ใช้ contact-context และฟอร์มจาก PR #6 ต่อ ไม่มี migration
++
++## Validation
++
++- React TypeScript/build และ Astro public typecheck/build ผ่าน
++- ชุดทดสอบเดิม 15 กรณีผ่าน
++- Chromium: H1 เดียว, 4 consultation flows, เปลี่ยนบริการในฟอร์มได้, proposal intent, unknown query fallback, service anchor และเมนูทางลัดผ่าน
++- ตรวจการล้นแนวนอน 320, 390, 768, 1440px ผ่าน
++- ตรวจภาพเดสก์ท็อป/มือถือโดยใช้ Sarabun ภายใน QA และปิด network ภายนอก; ไม่ส่งฟอร์มหรือแจ้งเตือนจริง
++- Cloudflare hosting preview ยังต้องตรวจเพิ่มเติมก่อน deploy; สภาพแวดล้อมนี้ไม่รองรับ Astro background runtime เดิม
++
++## นำเข้า
++
++ใช้ branch feat/visual-theme-20261012 หรือคัดลอกไฟล์ภายใน files/ ของ ZIP ไปวางตาม path เดิมใน repository root
++
++```sh
++npm ci --legacy-peer-deps
++npm run build
++cd apps/cap-vision-astro
++npm ci
++npm test
++npm run typecheck:public
++npm run build
++```
++
++ตรวจ Hosting Preview และอนุมัติก่อน Merge/Deploy Production; rollback ด้วยการ revert commit ของธีม ไม่มีผลต่อข้อมูล Lead
+diff --git a/pages/Home.tsx b/pages/Home.tsx
+index feba026..777186e 100644
+--- a/pages/Home.tsx
++++ b/pages/Home.tsx
+@@ -1,1023 +1,6 @@
+-import { ProblemNavigator, WebsiteNavigator } from '../components/home/HomeNavigation';
+-import { contactHref } from '../lib/contact-context.mjs';
+-import React, { useState, useEffect } from 'react';
+-import { Link } from 'react-router-dom';
+-import { 
+-  ArrowRight, Award, Sparkles, CheckCircle2, 
+-  ChevronRight, ChevronDown, MessageCircle, BarChart3, Target,
+-  Compass, Layers3, PhoneCall, Play, Clock, ArrowUpRight,
+-  HelpCircle, Users, TrendingUp, ShieldCheck
+-} from 'lucide-react';
+-import { 
+-  IconLeadership, IconTeamSynergy, IconGrowthCulture, 
+-  IconCreativeCPS, IconCustomArchitecture, IconFacilitatorMastery, 
+-  IconGoldCrestStar, IconInstituteShield 
+-} from '../components/icons/CapBrandIcons';
+-import { motion } from 'framer-motion';
+-import { BRAND_INFO, CONTACT_INFO } from '../constants/brand';
+-import { HRD_ARTICLES } from '../constants/articles';
+-import { fetchCourses } from '../services/courses';
+-import type { Course } from '../types';
+-import Logo from '../components/Logo';
+-import ClientsSection from '../components/ClientsSection';
++import React from 'react';
+ import SEO from '../components/SEO';
+-import StatCounter from '../components/StatCounter';
+-import TransformationAssessment from '../components/TransformationAssessment';
+-
+-const Home: React.FC = () => {
+-  const [featuredCourses, setFeaturedCourses] = useState<Course[]>([]);
+-  const [loading, setLoading] = useState(true);
+-  const [activeSolutionTab, setActiveSolutionTab] = useState<number>(0);
+-  const [showAssessmentModal, setShowAssessmentModal] = useState(false);
+-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+-
+-  useEffect(() => {
+-    const loadCourses = async () => {
+-      try {
+-        const data = await fetchCourses();
+-        setFeaturedCourses(data.slice(0, 4));
+-      } catch (error) {
+-        console.error('Error loading featured courses:', error);
+-      } finally {
+-        setLoading(false);
+-      }
+-    };
+-    loadCourses();
+-  }, []);
+-
+-  // 4 Core Solutions with Custom Brand Emblems
+-  const SOLUTIONS = [
+-    {
+-      id: 'leadership',
+-      title: 'Leadership Transformation',
+-      thTitle: 'ภาวะผู้นำเพื่อการเปลี่ยนแปลง',
+-      tagline: 'ยกระดับผู้นำทุกระดับจาก "ผู้สั่งการ" สู่ "Facilitative & Inspiring Leader"',
+-      description: 'พัฒนา Mindset และทักษะการนำพาทีมในยุคแห่งความผันผวน สร้างวิสัยทัศน์ร่วม (Shared Vision) และการตัดสินใจเชิงกลยุทธ์ที่ขับเคลื่อนผลลัพธ์องค์กรอย่างแท้จริง',
+-      icon: IconLeadership,
+-      color: '#2563EB',
+-      bgLight: 'bg-blue-50',
+-      highlights: [
+-        'Transformational Leadership & Executive Presence',
+-        'Facilitative Leadership for Modern Managers',
+-        'Strategic Thinking & Decisive Execution',
+-        '1-on-1 Executive Coaching & Leadership DNA'
+-      ],
+-      image: 'https://assets.capvisionpartner.com/media/portfolio/Comprehensive%20OD%20%26%20Training%20Solutions.jpg'
+-    },
+-    {
+-      id: 'people-team',
+-      title: 'People & Team Synergy',
+-      thTitle: 'พัฒนาคนและพลังทีมงาน',
+-      tagline: 'ทลายกำแพง Silo สร้างความปลอดภัยทางจิตวิทยา และการสื่อสารที่ไร้รอยต่อ',
+-      description: 'ปรับกระบวนการทำงานร่วมกันผ่านการสื่อสารด้วย Empathy การเข้าใจความหลากหลายของบุคคล และการสร้างบรรยากาศที่ทุกคนกล้าคิด กล้าเสนอ และร่วมมือกันอย่างเต็มใจ',
+-      icon: IconTeamSynergy,
+-      color: '#0F2557',
+-      bgLight: 'bg-indigo-50',
+-      highlights: [
+-        'Psychological Safety & High-Performing Teams',
+-        'Empathetic Communication & Constructive Feedback',
+-        'DISC & Behavioral Dynamics at Work',
+-        'Cross-Functional Collaboration & Trust Building'
+-      ],
+-      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80'
+-    },
+-    {
+-      id: 'culture',
+-      title: 'Organization Culture',
+-      thTitle: 'วัฒนธรรมองค์กร & กรอบคิดเติบโต',
+-      tagline: 'ปลูกฝัง Growth Mindset และสร้างวัฒนธรรมแห่งการเรียนรู้ที่ยั่งยืน',
+-      description: 'เปลี่ยน Mindset ของคนในองค์กรให้มองปัญหาเป็นความท้าทาย เปิดรับนวัตกรรม และสร้างความยืดหยุ่น (Agility) เพื่อให้องค์กรพร้อมปรับตัวต่อการเปลี่ยนแปลงทุกรูปแบบ',
+-      icon: IconGrowthCulture,
+-      color: '#F59E0B',
+-      bgLight: 'bg-amber-50',
+-      highlights: [
+-        'Building Growth Mindset Culture',
+-        'Change Agility & Resilience in Disruption',
+-        'Creative Problem Solving (CPS Model)',
+-        'Core Values Activation into Daily Behavior'
+-      ],
+-      image: 'https://assets.capvisionpartner.com/media/portfolio/Organization%20Culture.jpg'
+-    },
+-    {
+-      id: 'customized',
+-      title: 'Customized In-house Solutions',
+-      thTitle: 'โซลูชันออกแบบเฉพาะองค์กร',
+-      tagline: 'เริ่มจาก TNA วิเคราะห์ปัญหาจริง สู่ Workshop ที่ปรับแต่ง 100%',
+-      description: 'ไม่มีหลักสูตรสำเร็จรูป (No One-Size-Fits-All) เราลงลึกศึกษาบริบท Pain Points และเป้าหมายธุรกิจขององค์กรคุณ เพื่อออกแบบ Learning Journey ที่ตอบโจทย์เฉพาะองค์กรอย่างแท้จริง',
+-      icon: IconCustomArchitecture,
+-      color: '#10B981',
+-      bgLight: 'bg-emerald-50',
+-      highlights: [
+-        'In-depth TNA (Training Needs Analysis) Diagnostic',
+-        'Activity-Based Learning Workshop Design',
+-        'Pre & Post Assessment with Action Plan',
+-        'Long-term OD Consulting & ROI Tracking'
+-      ],
+-      image: 'https://assets.capvisionpartner.com/media/portfolio/Customized%20In-house%20Solutions.jpg'
+-    }
+-  ];
+-
+-  // 4 Main Program Categories
+-  const PROGRAM_CATEGORIES = [
+-    {
+-      category: 'Leadership Programs',
+-      thTitle: 'หลักสูตรภาวะผู้นำ',
+-      desc: 'สร้างผู้นำที่จุดประกายทีม กล้าคิดเชิงกลยุทธ์ และนำการเปลี่ยนแปลง',
+-      icon: IconLeadership,
+-      count: '15+ หลักสูตร',
+-      color: '#2563EB',
+-      link: '/courses?cat=Leader+Skills'
+-    },
+-    {
+-      category: 'People Skills',
+-      thTitle: 'ทักษะคนและการทำงานร่วมกัน',
+-      desc: 'การสื่อสาร, Service Mind, การให้ Feedback และการเข้าใจพฤติกรรมมนุษย์',
+-      icon: IconTeamSynergy,
+-      count: '18+ หลักสูตร',
+-      color: '#0F2557',
+-      link: '/courses?cat=People+Skills'
+-    },
+-    {
+-      category: 'Creative Thinking',
+-      thTitle: 'การคิดเชิงสร้างสรรค์ & แก้ปัญหา',
+-      desc: 'Creative Problem Solving (CPS Model), Design Thinking และการพัฒนานวัตกรรม',
+-      icon: IconCreativeCPS,
+-      count: '10+ หลักสูตร',
+-      color: '#F59E0B',
+-      link: '/courses?cat=Work+Skills'
+-    },
+-    {
+-      category: 'Facilitator & Process Design',
+-      thTitle: 'หลักสูตรวิทยากร & Facilitator',
+-      desc: 'ศาสตร์และศิลป์แห่งการเป็น Modern Facilitator ออกแบบกระบวนการเรียนรู้ที่มีพลัง',
+-      icon: IconFacilitatorMastery,
+-      count: '8+ หลักสูตร',
+-      color: '#10B981',
+-      link: '/courses'
+-    }
+-  ];
+-
+-  return (
+-    <div className="flex flex-col min-h-screen bg-white">
+-      <SEO
+-        title="รับจัดอบรม In-house Training | พัฒนาผู้นำและทีมองค์กร | CAP Vision Institute"
+-        description="พัฒนาคนให้เปลี่ยนวิธีคิด สร้างทีมให้ทำงานได้จริง ยกระดับองค์กรด้วย In-house Training และ Customized Learning โดย ครูเด่น Master Facilitator ประสบการณ์ 18+ ปี"
+-      />
+-
+-      {/* ── 1. PROBLEM-FIRST HERO — CAP Vision Conversion V2 ── */}
+-      <section aria-labelledby="home-hero-title" className="relative isolate overflow-hidden bg-[#111827] text-white pt-28 pb-16 md:pt-36 md:pb-24">
+-        <div className="absolute inset-0 -z-10">
+-          <img src="/images/courses/team_synergy.png" alt="" aria-hidden="true"
+-            className="h-full w-full object-cover opacity-[0.13]" fetchPriority="high" />
+-          <div className="absolute inset-0 bg-gradient-to-r from-[#111827] via-[#111827]/95 to-[#0F2557]/90" />
+-        </div>
+-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+-          <div className="grid items-center gap-12 lg:grid-cols-[1.12fr_0.88fr]">
+-            <div>
+-              <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-300/25 bg-blue-400/10 px-4 py-2 text-xs font-bold tracking-wider text-blue-200">
+-                CAP VISION INSTITUTE · TRANSFORMATION PARTNER
+-              </p>
+-              <h1 id="home-hero-title" className="nav-font mb-6 text-4xl font-extrabold leading-[1.25] tracking-tight text-white sm:text-5xl lg:text-[3.4rem]">
+-                องค์กรมี <span className="text-[#FBBF24]">“คนเก่ง”</span><br />
+-                แต่ทำไมทีมยังไปได้<br className="hidden sm:block" />
+-                ไม่เต็มศักยภาพ?
+-              </h1>
+-              <p className="mb-6 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">
+-                คนเก่งแต่สื่อสารกันไม่เข้าใจ ทีมทำงานแยกส่วน
+-                หัวหน้าเก่งงานแต่ยังนำคนไม่เป็น และค่านิยมองค์กรยังไม่เกิดขึ้นจริงในงานประจำวัน
+-              </p>
+-              <div className="mb-7 border-l-4 border-[#FBBF24] pl-5">
+-                <p className="nav-font text-xl font-bold leading-relaxed text-white sm:text-2xl">
+-                  บางครั้งปัญหาไม่ใช่การขาดคนเก่ง<br />
+-                  แต่คือการยังไม่สามารถดึงศักยภาพของคน<br className="hidden sm:block" />
+-                  มาสร้างผลงานร่วมกันได้
+-                </p>
+-              </div>
+-              <p className="mb-8 max-w-2xl text-base leading-8 text-slate-300">
+-                CAP Vision ช่วยวิเคราะห์โจทย์คน ทีม และองค์กร
+-                แล้วออกแบบ In-house Training, Workshop และ Learning Journey
+-                ที่เชื่อม Mindset → Behavior → Performance
+-              </p>
+-              <div className="flex flex-col gap-3 sm:flex-row">
+-                <Link to={contactHref()} className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-[#2563EB] px-7 py-4 text-base font-bold text-white shadow-xl transition hover:bg-[#1D4ED8] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+-                  ปรึกษาโจทย์องค์กร <ArrowRight size={19} aria-hidden="true" />
+-                </Link>
+-                <Link to="/assessment" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+-                  สำรวจความพร้อมองค์กร <ChevronRight size={18} aria-hidden="true" />
+-                </Link>
+-              </div>
+-              <p className="mt-5 text-sm text-slate-400">
+-                Human • Heart • Harmony · Transform People → Transform Organization
+-              </p>
+-            </div>
+-            <aside aria-label="ปัญหาที่ CAP Vision ช่วยองค์กรรับมือ" className="rounded-[1.75rem] border border-white/20 bg-white/[0.08] p-6 shadow-2xl backdrop-blur-md sm:p-8">
+-              <p className="mb-6 text-sm font-bold uppercase tracking-wide text-[#FBBF24]">โจทย์ที่หลายองค์กรกำลังเผชิญ</p>
+-              <ul className="space-y-5">
+-                {[
+-                  ['Communication Gap', 'คนเก่งแต่สื่อสารกันไม่เข้าใจ'],
+-                  ['Silo Working', 'แต่ละทีมเก่ง แต่ยังต่างคนต่างทำ'],
+-                  ['Low Ownership', 'พนักงานรอคำสั่ง มากกว่าร่วมรับผิดชอบ'],
+-                  ['Leadership Gap', 'หัวหน้าเก่งงาน แต่ยังต้องพัฒนาทักษะการนำคน'],
+-                  ['Values in Action', 'มี Core Values แต่ยังไม่เห็นในพฤติกรรมจริง']
+-                ].map(([label, detail]) => (
+-                  <li key={label} className="flex gap-3">
+-                    <CheckCircle2 className="mt-1 shrink-0 text-[#60A5FA]" size={20} aria-hidden="true" />
+-                    <div><strong className="block text-sm text-white">{label}</strong><span className="text-sm leading-7 text-slate-300">{detail}</span></div>
+-                  </li>
+-                ))}
+-              </ul>
+-              <Link to="/services" className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#93C5FD] hover:text-white">
+-                ดูแนวทางพัฒนาองค์กร <ArrowRight size={17} aria-hidden="true" />
+-              </Link>
+-            </aside>
+-          </div>
+-        </div>
+-      </section>
+-
+-      <ProblemNavigator />
+-
+-      {/* ── 3. SOLUTIONS SECTION (4 Core Pillars) ─────────────────────────────── */}
+-      <section className="py-20 md:py-32 bg-white relative">
+-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+-          
+-          {/* Section Header */}
+-          <div className="text-center max-w-3xl mx-auto mb-16">
+-            <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+-              Comprehensive OD & Training Solutions
+-            </span>
+-            <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+-              โซลูชันการพัฒนา <span className="text-[#2563EB]">ครบวงจร</span> สำหรับองค์กร
+-            </h2>
+-            <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed">
+-              ตอบโจทย์ทั้งการพัฒนาผู้นำ การสร้างความร่วมมือในทีม การปรับวัฒนธรรมองค์กร และการออกแบบเฉพาะตามโจทย์ธุรกิจ
+-            </p>
+-          </div>
+-
+-          {/* Solutions Tabs */}
+-          <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-12">
+-            {SOLUTIONS.map((sol, idx) => {
+-              const Icon = sol.icon;
+-              const isActive = activeSolutionTab === idx;
+-              return (
+-                <button
+-                  key={sol.id}
+-                  onClick={() => setActiveSolutionTab(idx)}
+-                  className={`flex items-center gap-2.5 px-5 py-3.5 rounded-2xl font-bold text-xs sm:text-sm transition-all active:scale-95 ${
+-                    isActive
+-                      ? 'bg-[#111827] text-white shadow-xl shadow-gray-900/10'
+-                      : 'bg-gray-50 text-gray-600 hover:bg-gray-100 hover:text-[#111827]'
+-                  }`}
+-                >
+-                  <Icon className="w-4 h-4" />
+-                  <span>{sol.title}</span>
+-                </button>
+-              );
+-            })}
+-          </div>
+-
+-          {/* Active Solution Content Card */}
+-          <div className="bg-gray-50 rounded-3xl p-6 sm:p-12 border border-gray-100 shadow-sm transition-all duration-300">
+-            {(() => {
+-              const sol = SOLUTIONS[activeSolutionTab];
+-              const Icon = sol.icon;
+-              return (
+-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+-                  <div className="lg:col-span-7">
+-                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold mb-4" style={{ backgroundColor: `${sol.color}15`, color: sol.color }}>
+-                      <Icon className="w-4 h-4" />
+-                      {sol.thTitle}
+-                    </div>
+-
+-                    <h3 className="text-2xl sm:text-4xl font-black text-[#111827] nav-font mb-4 leading-tight">
+-                      {sol.tagline}
+-                    </h3>
+-
+-                    <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-8">
+-                      {sol.description}
+-                    </p>
+-
+-                    {/* Highlights List */}
+-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+-                      {sol.highlights.map((item, i) => (
+-                        <div key={i} className="flex items-start gap-2.5 bg-white p-3.5 rounded-xl border border-gray-200/60 shadow-xs">
+-                          <CheckCircle2 className="w-4 h-4 text-[#2563EB] flex-shrink-0 mt-0.5" />
+-                          <span className="text-xs sm:text-sm font-bold text-gray-800">{item}</span>
+-                        </div>
+-                      ))}
+-                    </div>
+-
+-                    <div className="flex flex-col sm:flex-row gap-4">
+-                      <Link
+-                        to={contactHref(sol.id)}
+-                        className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-8 py-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2"
+-                      >
+-                        ปรึกษาออกแบบโซลูชันนี้
+-                        <ArrowRight className="w-4 h-4" />
+-                      </Link>
+-                      <Link
+-                        to={`/services#${sol.id}`}
+-                        className="btn-premium bg-white hover:bg-gray-100 text-[#111827] border border-gray-200 px-6 py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2"
+-                      >
+-                        ดูรายละเอียดโซลูชันนี้
+-                      </Link>
+-                    </div>
+-                  </div>
+-
+-                  <div className="lg:col-span-5">
+-                    <div className="relative rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl border-4 border-white">
+-                      <img
+-                        src={sol.image}
+-                        alt={sol.title}
+-                        className="w-full h-full object-cover"
+-                      />
+-                      <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/60 via-transparent to-transparent"></div>
+-                      <div className="absolute bottom-4 left-4 right-4 text-white">
+-                        <div className="text-xs font-bold uppercase tracking-wider text-[#F59E0B]">
+-                          Activity Based Learning
+-                        </div>
+-                        <div className="text-sm font-bold">เน้นการลงมือปฏิบัติจริง มีส่วนร่วม 100%</div>
+-                      </div>
+-                    </div>
+-                  </div>
+-                </div>
+-              );
+-            })()}
+-          </div>
+-
+-        </div>
+-      </section>
+-
+-      {/* ── 4. PROGRAMS SHOWCASE (4 Categories) ───────────────────────────────── */}
+-      <section className="py-20 md:py-32 bg-[#F8FAFC] border-t border-gray-100">
+-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+-          
+-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+-            <div>
+-              <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+-                Signature Program Categories
+-              </span>
+-              <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+-                หมวดหมู่หลักสูตร <span className="text-[#2563EB]">ยอดนิยม</span>
+-              </h2>
+-            </div>
+-            <Link
+-              to="/courses"
+-              className="flex items-center gap-2 text-sm font-bold text-[#2563EB] hover:text-[#1D4ED8] group nav-font"
+-            >
+-              ดูหลักสูตรทั้งหมด 50+ วิชา
+-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+-            </Link>
+-          </div>
+-
+-          {/* 4 Category Cards */}
+-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+-            {PROGRAM_CATEGORIES.map((cat, idx) => {
+-              const Icon = cat.icon;
+-              return (
+-                <Link
+-                  key={idx}
+-                  to={cat.link}
+-                  className="exec-card-interactive p-6 flex flex-col justify-between group h-full"
+-                >
+-                  <div>
+-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 transition-transform group-hover:scale-110 shadow-sm" style={{ backgroundColor: `${cat.color}15`, color: cat.color }}>
+-                      <Icon className="w-6 h-6" />
+-                    </div>
+-                    <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+-                      {cat.count}
+-                    </div>
+-                    <h3 className="text-lg font-black text-[#111827] group-hover:text-[#2563EB] transition-colors mb-1 nav-font">
+-                      {cat.thTitle}
+-                    </h3>
+-                    <div className="text-xs font-bold text-gray-400 mb-3">{cat.category}</div>
+-                    <p className="text-xs text-gray-600 leading-relaxed line-clamp-3">
+-                      {cat.desc}
+-                    </p>
+-                  </div>
+-
+-                  <div className="pt-6 mt-6 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-[#2563EB] group-hover:translate-x-1 transition-transform">
+-                    <span>สำรวจหลักสูตร</span>
+-                    <ArrowRight className="w-4 h-4" />
+-                  </div>
+-                </Link>
+-              );
+-            })}
+-          </div>
+-
+-          {/* Featured Courses Selection */}
+-          {featuredCourses.length > 0 && (
+-            <div className="space-y-6">
+-              <div className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+-                หลักสูตรแนะนำสำหรับ In-house Training
+-              </div>
+-
+-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+-                {featuredCourses.map(course => (
+-                  <div key={course.id} className="bg-white rounded-2xl border border-gray-200/70 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col h-full group">
+-                    <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+-                      <img
+-                        src={course.image}
+-                        alt={course.title}
+-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+-                        onError={(e) => {
+-                          (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80';
+-                        }}
+-                      />
+-                      <div className="absolute top-3 left-3 bg-[#111827]/80 backdrop-blur-md text-white px-3 py-1 rounded-full text-[10px] font-bold">
+-                        {course.category || 'In-house'}
+-                      </div>
+-                    </div>
+-
+-                    <div className="p-5 flex flex-col flex-grow">
+-                      <h4 className="text-sm sm:text-base font-black text-[#111827] group-hover:text-[#2563EB] transition-colors line-clamp-2 mb-2 nav-font leading-snug">
+-                        {course.title}
+-                      </h4>
+-                      <p className="text-xs text-gray-500 line-clamp-2 mb-4 leading-relaxed">
+-                        {course.description}
+-                      </p>
+-
+-                      <div className="pt-4 border-t border-gray-100 mt-auto flex items-center justify-between">
+-                        <span className="text-[11px] font-bold text-gray-400">Activity Based</span>
+-                        <Link
+-                          to={`/courses/${course.slug || course.id}`}
+-                          className="text-xs font-bold text-[#2563EB] hover:underline flex items-center gap-1"
+-                        >
+-                          รายละเอียด
+-                          <ChevronRight className="w-3.5 h-3.5" />
+-                        </Link>
+-                      </div>
+-                    </div>
+-                  </div>
+-                ))}
+-              </div>
+-            </div>
+-          )}
+-
+-        </div>
+-      </section>
+-
+-      {/* ── 5. TRANSFORMATION JOURNEY (CAP Framework) ─────────────────────────── */}
+-      <section className="py-20 md:py-32 bg-[#111827] text-white relative overflow-hidden">
+-        <div className="absolute inset-0 opacity-10">
+-          <div className="absolute top-1/4 left-0 w-96 h-96 bg-[#2563EB] rounded-full blur-[140px]"></div>
+-          <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-[#F59E0B] rounded-full blur-[140px]"></div>
+-        </div>
+-
+-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+-          
+-          <div className="text-center max-w-3xl mx-auto mb-20">
+-            <span className="text-[#F59E0B] font-bold text-xs uppercase tracking-widest block mb-3">
+-              The Signature Methodology
+-            </span>
+-            <h2 className="text-3xl sm:text-5xl font-black text-white nav-font leading-tight">
+-              เส้นทางการเปลี่ยนแปลง <br />
+-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] via-[#2563EB] to-[#F59E0B]">
+-                CAP Transformation Framework
+-              </span>
+-            </h2>
+-            <p className="text-gray-300 text-sm sm:text-base mt-4 leading-relaxed font-light">
+-              กระบวนการ 3 ขั้นตอนที่พิสูจน์แล้วว่าสามารถสร้างการเปลี่ยนแปลงระดับพฤติกรรม และให้ผลลัพธ์ทางธุรกิจที่จับต้องได้จริง
+-            </p>
+-          </div>
+-
+-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+-            
+-            {/* Step 1: Context & Clarify */}
+-            <div className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-3xl relative group hover:bg-white/10 transition-all">
+-              <div className="w-14 h-14 rounded-2xl bg-[#2563EB] text-white flex items-center justify-center text-2xl font-black mb-6 shadow-lg shadow-blue-500/20">
+-                C
+-              </div>
+-              <div className="text-xs font-bold text-[#60A5FA] uppercase tracking-wider mb-1">
+-                Phase 01
+-              </div>
+-              <h3 className="text-xl font-black text-white nav-font mb-2">Context & Clarify</h3>
+-              <div className="text-xs font-bold text-[#F59E0B] mb-4">วินิจฉัยบริบท & สื่อสารเป้าหมาย</div>
+-              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">
+-                เริ่มต้นด้วยการทำ TNA (Training Needs Analysis) สัมภาษณ์ผู้บริหารและสำรวจโจทย์จริง เพื่อค้นหารากเหง้าของปัญหาและกำหนด KPI ที่ชัดเจน
+-              </p>
+-              <ul className="text-xs text-gray-400 space-y-2 border-t border-white/10 pt-4">
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB]" />
+-                  <span>Executive & Stakeholder Interviews</span>
+-                </li>
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB]" />
+-                  <span>Organization Transformation Assessment</span>
+-                </li>
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB]" />
+-                  <span>Customized Syllabus & Case Design</span>
+-                </li>
+-              </ul>
+-            </div>
+-
+-            {/* Step 2: Align & Activate */}
+-            <div className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-3xl relative group hover:bg-white/10 transition-all">
+-              <div className="w-14 h-14 rounded-2xl bg-[#F59E0B] text-[#111827] flex items-center justify-center text-2xl font-black mb-6 shadow-lg shadow-amber-500/20">
+-                A
+-              </div>
+-              <div className="text-xs font-bold text-[#F59E0B] uppercase tracking-wider mb-1">
+-                Phase 02
+-              </div>
+-              <h3 className="text-xl font-black text-white nav-font mb-2">Align & Activate</h3>
+-              <div className="text-xs font-bold text-[#60A5FA] mb-4">จัดวางความคิด & ปลดล็อกศักยภาพ</div>
+-              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">
+-                ส่งมอบกระบวนการเรียนรู้แบบ Activity-Based Learning ที่เน้น Experiential Workshop ผู้เรียนได้สัมผัส ค้นพบวิธีคิดใหม่ และทดลองใช้ Tools ทันที
+-              </p>
+-              <ul className="text-xs text-gray-400 space-y-2 border-t border-white/10 pt-4">
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#F59E0B]" />
+-                  <span>Interactive & Activity-Based Flow</span>
+-                </li>
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#F59E0B]" />
+-                  <span>Transformative Facilitation Dynamics</span>
+-                </li>
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#F59E0B]" />
+-                  <span>Individual & Team Action Plan Commitments</span>
+-                </li>
+-              </ul>
+-            </div>
+-
+-            {/* Step 3: Perform & Partner */}
+-            <div className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-3xl relative group hover:bg-white/10 transition-all">
+-              <div className="w-14 h-14 rounded-2xl bg-[#10B981] text-white flex items-center justify-center text-2xl font-black mb-6 shadow-lg shadow-emerald-500/20">
+-                P
+-              </div>
+-              <div className="text-xs font-bold text-[#34D399] uppercase tracking-wider mb-1">
+-                Phase 03
+-              </div>
+-              <h3 className="text-xl font-black text-white nav-font mb-2">Perform & Partner</h3>
+-              <div className="text-xs font-bold text-[#F59E0B] mb-4">ปฏิบัติการจริง & ร่วมทางระยะยาว</div>
+-              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">
+-                ติดตามผลลัพธ์การนำไปใช้ในการทำงานจริง (Action Learning) ให้คำปรึกษาต่อเนื่อง และประเมินพัฒนาการอย่างเป็นรูปธรรม
+-              </p>
+-              <ul className="text-xs text-gray-400 space-y-2 border-t border-white/10 pt-4">
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
+-                  <span>Post-Workshop Follow-up & Coaching</span>
+-                </li>
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
+-                  <span>Learning Impact & Behavioral Evaluation</span>
+-                </li>
+-                <li className="flex items-center gap-2">
+-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
+-                  <span>Long-term Growth Partner</span>
+-                </li>
+-              </ul>
+-            </div>
+-
+-          </div>
+-
+-        </div>
+-        <div className="mt-8 text-center"><Link to="/about#cap-framework" className="inline-flex min-h-12 items-center gap-2 font-bold text-white underline underline-offset-4">รู้จักกระบวนการ CAP Framework <ArrowRight size={18} aria-hidden="true" /></Link></div>
+-      </section>
+-
+-      {/* ── 6. EXPECTED OUTCOMES SECTION (คุณค่าที่องค์กรได้รับจริง) ─────────────── */}
+-      <section className="py-20 md:py-32 bg-[#F8FAFC] border-b border-gray-200">
+-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+-          
+-          <div className="text-center max-w-3xl mx-auto mb-16">
+-            <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+-              TANGIBLE IMPACT & OUTCOMES
+-            </span>
+-            <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+-              ผลลัพธ์ที่องค์กรจะได้รับ <span className="text-[#2563EB]">อย่างเป็นรูปธรรม</span>
+-            </h2>
+-            <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed font-light">
+-              การพัฒนาที่ไม่จบเพียงแค่ความสนุกในห้องอบรม แต่เปลี่ยนเป็นพลังขับเคลื่อน 3 ระดับที่สัมผัสได้จริงในชีวิตการทำงาน
+-            </p>
+-          </div>
+-
+-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14">
+-            
+-            {/* Level 1: Individual */}
+-            <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+-              <div>
+-                <div className="flex items-center justify-between mb-6">
+-                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+-                    ระดับบุคคล (Individual)
+-                  </span>
+-                  <span className="text-xs font-black text-gray-400 font-mono">01</span>
+-                </div>
+-                <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center mb-5 shadow-xs">
+-                  <Users className="w-6 h-6" />
+-                </div>
+-                <h3 className="text-xl font-black text-[#111827] nav-font mb-3 leading-snug">
+-                  Mindset เปลี่ยน สู่ความรับผิดชอบเชิงรุก
+-                </h3>
+-                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6 font-light">
+-                  พนักงานตระหนักรู้ในตนเอง ปลดล็อก Fixed Mindset สู่ Growth Mindset ก้าวข้าม Comfort Zone และทำงานด้วยจิตสำนึกของความเป็นเจ้าของร่วม (Ownership)
+-                </p>
+-              </div>
+-
+-              <ul className="space-y-3 pt-5 border-t border-gray-100 text-xs text-gray-700 font-medium">
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+-                  <span>กล้าคิดริเริ่มและรับผิดชอบผลลัพธ์ของงาน</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+-                  <span>สื่อสารด้วยความเห็นอกเห็นใจ (Empathy) และเปิดรับคำแนะนำ</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
+-                  <span>พร้อมปรับตัวยืดหยุ่นต่อสถานการณ์ที่ไม่แน่นอน</span>
+-                </li>
+-              </ul>
+-            </div>
+-
+-            {/* Level 2: Team */}
+-            <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+-              <div>
+-                <div className="flex items-center justify-between mb-6">
+-                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
+-                    ระดับทีม (Team Synergy)
+-                  </span>
+-                  <span className="text-xs font-black text-gray-400 font-mono">02</span>
+-                </div>
+-                <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-[#0F2557] flex items-center justify-center mb-5 shadow-xs">
+-                  <Target className="w-6 h-6" />
+-                </div>
+-                <h3 className="text-xl font-black text-[#111827] nav-font mb-3 leading-snug">
+-                  ทลายกำแพง Silo สู่ความร่วมมือที่ไร้รอยต่อ
+-                </h3>
+-                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6 font-light">
+-                  สร้างความปลอดภัยทางจิตวิทยา (Psychological Safety) ที่เปิดโอกาสให้ทุกคนกล้าพูดความจริง กล้าเสนอไอเดีย และรวมพลังกันแก้ปัญหาข้ามสายงาน
+-                </p>
+-              </div>
+-
+-              <ul className="space-y-3 pt-5 border-t border-gray-100 text-xs text-gray-700 font-medium">
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#0F2557] shrink-0 mt-0.5" />
+-                  <span>การประสานงานข้ามแผนกเป็นไปอย่างราบรื่นและไว้เนื้อเชื่อใจ</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#0F2557] shrink-0 mt-0.5" />
+-                  <span>ลดความขัดแย้งเชิงบุคคล มุ่งเน้นเป้าหมายความสำเร็จร่วมกัน</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#0F2557] shrink-0 mt-0.5" />
+-                  <span>เกิดการแลกเปลี่ยนความรู้และระดมสมองแก้ปัญหาอย่างสร้างสรรค์</span>
+-                </li>
+-              </ul>
+-            </div>
+-
+-            {/* Level 3: Organization */}
+-            <div className="bg-white rounded-3xl p-8 border border-gray-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+-              <div>
+-                <div className="flex items-center justify-between mb-6">
+-                  <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+-                    ระดับองค์กร (Organization)
+-                  </span>
+-                  <span className="text-xs font-black text-gray-400 font-mono">03</span>
+-                </div>
+-                <div className="w-12 h-12 rounded-2xl bg-amber-50 text-[#F59E0B] flex items-center justify-center mb-5 shadow-xs">
+-                  <TrendingUp className="w-6 h-6" />
+-                </div>
+-                <h3 className="text-xl font-black text-[#111827] nav-font mb-3 leading-snug">
+-                  ผลักดันกลยุทธ์ได้เร็ว วัฒนธรรมเติบโตยั่งยืน
+-                </h3>
+-                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6 font-light">
+-                  ผู้นำทุกระดับสามารถถ่ายทอดวิสัยทัศน์ นำพาการเปลี่ยนแปลง และแปลง Core Values ให้ออกมาเป็นพฤติกรรมจริงในการทำงานทุกวัน
+-                </p>
+-              </div>
+-
+-              <ul className="space-y-3 pt-5 border-t border-gray-100 text-xs text-gray-700 font-medium">
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#F59E0B] shrink-0 mt-0.5" />
+-                  <span>เพิ่มความเร็วในการขับเคลื่อนแผนกลยุทธ์ขององค์กร (Strategic Agility)</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#F59E0B] shrink-0 mt-0.5" />
+-                  <span>ค่านิยมองค์กร (Core Values) ปรากฏชัดเจนในวัฒนธรรมการทำงาน</span>
+-                </li>
+-                <li className="flex items-start gap-2.5">
+-                  <CheckCircle2 className="w-4 h-4 text-[#F59E0B] shrink-0 mt-0.5" />
+-                  <span>ความผูกพันของพนักงาน (Engagement) สูงขึ้น ผลประกอบการเติบโตมั่นคง</span>
+-                </li>
+-              </ul>
+-            </div>
+-
+-          </div>
+-
+-          {/* Outcome Assessment Callout */}
+-          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200/80 shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
+-            <div className="flex items-center gap-4">
+-              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center shrink-0">
+-                <ShieldCheck className="w-6 h-6" />
+-              </div>
+-              <div>
+-                <h4 className="text-base sm:text-lg font-bold text-[#111827] nav-font">
+-                  วัดผลอย่างเป็นระบบด้วย Pre & Post Assessment
+-                </h4>
+-                <p className="text-xs sm:text-sm text-gray-500 font-light mt-0.5">
+-                  เราจัดทำสรุปผลการเรียนรู้และข้อสังเกตเชิงลึก (Executive Summary Report) ส่งมอบให้ฝ่าย HRD หลังจบการอบรมทุกครั้ง
+-                </p>
+-              </div>
+-            </div>
+-            <Link to={contactHref()}
+-              className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-7 py-3.5 rounded-xl font-bold text-xs sm:text-sm shrink-0 flex items-center gap-2"
+-            >
+-              ปรึกษาแนวทางการวัดผล
+-              <ArrowRight className="w-4 h-4" />
+-            </Link>
+-          </div>
+-
+-        </div>
+-      </section>
+-
+-      {/* ── 7. LEAD FACILITATOR SPOTLIGHT (ครูเด่น & Team) ────────────────────── */}
+-      <section className="py-20 md:py-32 bg-white">
+-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+-            
+-            {/* Image Box */}
+-            <div className="lg:col-span-5 relative">
+-              <div className="absolute -top-6 -left-6 w-72 h-72 bg-[#2563EB]/10 rounded-full blur-3xl pointer-events-none"></div>
+-              
+-              <div className="relative bg-[#111827] p-3 rounded-[2.5rem] shadow-2xl">
+-                <img
+-                  src="/images/denmasterfa.jpg"
+-                  alt="ครูเด่น อนุสรณ์ หนองนา Master Facilitator"
+-                  className="rounded-[2rem] w-full object-cover aspect-[4/5]"
+-                />
+-                
+-                {/* Floating Experience Badge */}
+-                <div className="absolute -bottom-6 -right-6 bg-[#2563EB] text-white p-6 rounded-2xl shadow-xl border-4 border-white hidden sm:block">
+-                  <div className="text-3xl font-black nav-font">18+ ปี</div>
+-                  <div className="text-[10px] font-bold uppercase tracking-wider text-blue-100">
+-                    Transformative Facilitator
+-                  </div>
+-                </div>
+-              </div>
+-            </div>
+-
+-            {/* Profile Info */}
+-            <div className="lg:col-span-7">
+-              <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+-                Master Facilitator & Director
+-              </span>
+-              <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font mb-4 leading-tight">
+-                {BRAND_INFO.director}
+-              </h2>
+-              <p className="text-lg font-bold text-[#0F2557] mb-6">
+-                ผู้อำนวยการ CAP Vision Institute และผู้เชี่ยวชาญด้านกระบวนการเรียนรู้เพื่อการเปลี่ยนแปลง
+-              </p>
+-              <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-8">
+-                ด้วยประสบการณ์กว่า 18 ปี ในการจัดกระบวนการเรียนรู้ให้กับองค์กรชั้นนำทั้งภาครัฐ รัฐวิสาหกิจ และบริษัทเอกชน ครูเด่นมุ่งเน้นการสร้างพื้นที่การเรียนรู้ที่มีความปลอดภัยทางจิตวิทยา ผสมผสานศาสตร์แห่งจิตวิทยาการเรียนรู้ผู้ใหญ่ (Adult Learning) และเทคนิค Facilitation ขั้นสูง เพื่อให้ผู้เรียนทุกคนเกิดแรงบันดาลใจและปลดล็อกศักยภาพจากภายใน
+-              </p>
+-
+-              {/* Competencies Badges */}
+-              <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 mb-10">
+-                {[
+-                  'Activity-Based Learning Architecture',
+-                  'Transformational Leadership Coaching',
+-                  'Psychological Safety & Team Synergy',
+-                  'Creative Problem Solving Facilitator'
+-                ].map((item, idx) => (
+-                  <div key={idx} className="flex items-center gap-2 bg-gray-50 p-3 rounded-xl border border-gray-200/60">
+-                    <CheckCircle2 className="w-4 h-4 text-[#2563EB] flex-shrink-0" />
+-                    <span className="text-xs font-bold text-gray-800">{item}</span>
+-                  </div>
+-                ))}
+-              </div>
+-
+-              <div className="flex flex-col sm:flex-row gap-4">
+-                <Link
+-                  to="/speakers"
+-                  className="btn-premium bg-[#111827] hover:bg-[#0F2557] text-white px-8 py-4 rounded-xl font-bold text-sm shadow-md flex items-center justify-center gap-2"
+-                >
+-                  ทำความรู้จักทีมวิทยากรทั้งหมด
+-                  <ArrowRight className="w-4 h-4" />
+-                </Link>
+-                <a
+-                  href={CONTACT_INFO.lineUrl}
+-                  target="_blank"
+-                  rel="noreferrer"
+-                  className="btn-premium bg-[#06C755] text-white px-6 py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-md"
+-                >
+-                  <MessageCircle className="w-4 h-4" />
+-                  คุยกับครูเด่นผ่าน LINE
+-                </a>
+-              </div>
+-            </div>
+-
+-          </div>
+-        </div>
+-      </section>
+-
+-      {/* ── 7. CASE STUDIES & CLIENTS SECTION ─────────────────────────────────── */}
+-      <ClientsSection />
+-
+-      {/* ── 8. KNOWLEDGE HUB SECTION ──────────────────────────────────────────── */}
+-      <section className="py-20 md:py-32 bg-[#F8FAFC]">
+-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+-          
+-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+-            <div>
+-              <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+-                Executive Insights & Articles
+-              </span>
+-              <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+-                คลังความรู้สำหรับ <span className="text-[#2563EB]">ผู้นำ & HRD</span>
+-              </h2>
+-            </div>
+-            <Link
+-              to="/resources"
+-              className="flex items-center gap-2 text-sm font-bold text-[#2563EB] hover:text-[#1D4ED8] group nav-font"
+-            >
+-              ดูบทความทั้งหมด
+-              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+-            </Link>
+-          </div>
+-
+-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+-            {HRD_ARTICLES.slice(0, 3).map(article => (
+-              <div
+-                key={article.id}
+-                className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col h-full group"
+-              >
+-                <Link to={`/resources/${article.id}`} className="relative h-56 overflow-hidden block">
+-                  <img
+-                    src={article.thumbnail}
+-                    alt={article.title}
+-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+-                  />
+-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-[#111827] px-3.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">
+-                    {article.category}
+-                  </div>
+-                </Link>
+-
+-                <div className="p-6 sm:p-8 flex flex-col flex-grow">
+-                  <div className="text-xs text-gray-400 font-bold mb-3">
+-                    {article.date} • โดย {article.author}
+-                  </div>
+-
+-                  <h3 className="text-base sm:text-lg font-black text-[#111827] group-hover:text-[#2563EB] transition-colors line-clamp-2 mb-3 leading-snug nav-font">
+-                    <Link to={`/resources/${article.id}`}>{article.title}</Link>
+-                  </h3>
+-
+-                  <p className="text-xs sm:text-sm text-gray-500 line-clamp-3 mb-6 flex-grow leading-relaxed">
+-                    {article.excerpt}
+-                  </p>
+-
+-                  <Link
+-                    to={`/resources/${article.id}`}
+-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#2563EB] group-hover:underline"
+-                  >
+-                    อ่านบทความฉบับเต็ม
+-                    <ArrowRight className="w-3.5 h-3.5" />
+-                  </Link>
+-                </div>
+-              </div>
+-            ))}
+-          </div>
+-
+-        </div>
+-      </section>
+-
+-      {/* ── 8. FAQ SECTION (คำถามที่พบบ่อยสำหรับ HR & ผู้บริหาร) ───────────────── */}
+-      <section className="py-20 md:py-32 bg-white border-t border-gray-100">
+-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+-          
+-          <div className="text-center mb-16">
+-            <span className="text-[#2563EB] font-bold text-xs uppercase tracking-widest block mb-3">
+-              DECISION ENABLERS & FAQ
+-            </span>
+-            <h2 className="text-3xl sm:text-5xl font-black text-[#111827] nav-font leading-tight">
+-              คำถามที่พบบ่อยสำหรับ <span className="text-[#2563EB]">HRD & ผู้บริหาร</span>
+-            </h2>
+-            <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed font-light">
+-              รวบรวมข้อสงสัยสำคัญที่องค์กรมักสอบถาม ก่อนตัดสินใจเลือกหลักสูตรและกระบวนการเรียนรู้กับ CAP Vision
+-            </p>
+-          </div>
+-
+-          {/* Accordion List */}
+-          <div className="space-y-4">
+-            {[
+-              {
+-                q: 'CAP Vision แตกต่างจากสถาบันฝึกอบรมทั่วไปอย่างไร?',
+-                a: 'เราไม่ใช้หลักสูตรสำเร็จรูป (No One-Size-Fits-All) แต่เริ่มจากการทำ TNA เพื่อวินิจฉัยปัญหาองค์กรจริง ใช้กระบวนการ Activity-Based & Transformative Learning ที่เน้นให้ผู้เรียนคิด ตระหนัก และค้นพบแนวทางแก้ปัญหาด้วยตนเอง ไม่ใช่เพียงแค่นั่งฟังบรรยาย พร้อมเชื่อมโยง Mindset สู่ Action Plan ที่นำไปปรับใช้ในงานได้ทันที'
+-              },
+-              {
+-                q: 'สามารถปรับแต่งเนื้อหาและ Case Study ให้ตรงกับธุรกิจของเราได้ไหม?',
+-                a: 'ปรับแต่งได้ 100% ครับ ทีมงานของเราจะทำการสัมภาษณ์และศึกษาบริบทจริงขององค์กรคุณ เพื่อออกแบบเนื้อหา กิจกรรม และกรณีศึกษา (Customized Cases) ให้สอดคล้องกับสถานการณ์จริงของอุตสาหกรรม วัฒนธรรมองค์กร และเป้าหมายทางธุรกิจที่คุณต้องการ'
+-              },
+-              {
+-                q: 'ขั้นตอนการขอรับคำปรึกษาและใบเสนอราคา (Proposal) ใช้เวลานานเท่าใด?',
+-                a: 'เพียงกรอกข้อมูลโจทย์เบื้องต้นผ่านหน้าติดต่อ หรือส่งรายละเอียดความต้องการ ทีมงานจะติดต่อกลับเพื่อพูดคุยซักถามโจทย์เชิงลึก และจัดส่ง Proposal โครงสร้างหลักสูตร (Syllabus) พร้อมใบเสนอราคาเบื้องต้นให้ท่านพิจารณาภายใน 24 ชั่วโมง'
+-              },
+-              {
+-                q: 'รองรับรูปแบบการจัดอบรมแบบใดบ้าง และจำนวนผู้เข้าอบรมที่แนะนำคือเท่าใด?',
+-                a: 'รองรับทั้ง In-house Workshop ณ บริษัท, สัมมนานอกสถานที่ (Offsite / Outing Workshop) ทั่วประเทศ รวมถึง Virtual Interactive Training สำหรับเวิร์กช็อปที่มีการทำกิจกรรมอย่างเข้มข้น แนะนำขนาดกลุ่ม 20-40 ท่านต่อรุ่น เพื่อให้เกิดการมีส่วนร่วมและการดูแลผู้เรียนอย่างทั่วถึง'
+-              },
+-              {
+-                q: 'มีกระบวนการติดตามและประเมินผลลัพธ์หลังจบการอบรม (Post-training) หรือไม่?',
+-                a: 'เรามีระบบแบบประเมินผลก่อนและหลังการอบรม (Pre & Post Assessment), สรุปรายงานการเรียนรู้และข้อสังเกตของผู้เข้าร่วมอบรม (Executive Summary Report) ส่งมอบให้ฝ่าย HR พร้อมมีตัวเลือกโปรแกรม Coaching หรือ Follow-up Session เพื่อติดตามผลการปฏิบัติตาม Action Plan อย่างต่อเนื่อง'
+-              }
+-            ].map((faq, idx) => {
+-              const isOpen = openFaqIndex === idx;
+-              return (
+-                <div
+-                  key={idx}
+-                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+-                    isOpen 
+-                      ? 'bg-blue-50/40 border-blue-200 shadow-md' 
+-                      : 'bg-white border-gray-200/80 hover:border-gray-300 hover:bg-gray-50/50 shadow-xs'
+-                  }`}
+-                >
+-                  <button
+-                    type="button"
+-                    onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+-                    aria-expanded={isOpen}
+-                    className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-bold text-sm sm:text-base text-[#111827] nav-font"
+-                  >
+-                    <span className="flex items-center gap-3">
+-                      <HelpCircle className={`w-5 h-5 shrink-0 ${isOpen ? 'text-[#2563EB]' : 'text-gray-400'}`} />
+-                      <span>{faq.q}</span>
+-                    </span>
+-                    <ChevronDown className={`w-5 h-5 shrink-0 text-gray-500 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#2563EB]' : ''}`} />
+-                  </button>
+-
+-                  {isOpen && (
+-                    <div className="px-6 pb-6 pt-1 text-xs sm:text-sm text-gray-600 font-light leading-relaxed border-t border-blue-100/60 mt-1">
+-                      <p className="pl-8">{faq.a}</p>
+-                    </div>
+-                  )}
+-                </div>
+-              );
+-            })}
+-          </div>
+-
+-          {/* Additional Help Callout */}
+-          <div className="mt-12 text-center text-xs sm:text-sm text-gray-500">
+-            มีคำถามเฉพาะทางหรือต้องการสอบถามเพิ่มเติม?{' '}
+-            <Link to={contactHref()} className="font-bold text-[#2563EB] hover:underline inline-flex items-center gap-1">
+-              พูดคุยกับทีมที่ปรึกษาโดยตรง <ArrowRight className="w-3.5 h-3.5" />
+-            </Link>
+-          </div>
+-
+-        </div>
+-      </section>
+-
+-      <WebsiteNavigator />
+-
+-      {/* ── 9. FINAL CONSULTATION & CLOSING CTA ───────────────────────────────── */}
+-      <section className="py-20 md:py-32 bg-gradient-to-br from-[#111827] via-[#0F2557] to-[#111827] text-white relative overflow-hidden">
+-        <div className="absolute inset-0 opacity-5 pointer-events-none">
+-          <Logo className="w-full h-full p-24" />
+-        </div>
+-
+-        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
+-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-[#F59E0B] text-xs font-bold uppercase tracking-wider mb-6">
+-            <Sparkles className="w-4 h-4" />
+-            Transform People · Transform Organization
+-          </div>
+-
+-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black mb-6 nav-font leading-tight !text-white text-white drop-shadow-md">
+-            พร้อมยกระดับองค์กร
+-            <span className="text-[#F59E0B] !text-[#F59E0B] block mt-1 sm:inline sm:ml-3">สู่ผลลัพธ์ใหม่แล้วหรือยัง?</span>
+-          </h2>
+-
+-          <p className="text-gray-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto font-light leading-relaxed">
+-            เริ่มต้นจากการปรึกษาโจทย์เฉพาะองค์กรของคุณเพื่อรับโครงสร้างหลักสูตรและใบเสนอราคาเบื้องต้นใน 24 ชั่วโมง หรือสำรวจความพร้อมด้วยแบบประเมินฟรี
+-          </p>
+-
+-          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+-            <Link to={contactHref()}
+-              className="btn-premium bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold px-10 py-5 rounded-2xl text-base shadow-2xl nav-font flex items-center justify-center gap-2 transition-all active:scale-95"
+-            >
+-              ปรึกษาโจทย์องค์กร (รับข้อเสนอใน 24 ชม.)
+-              <ArrowRight className="w-5 h-5" />
+-            </Link>
+-            <Link to="/assessment"
+-              className="btn-premium bg-white/10 hover:bg-white/20 border-2 border-white/20 text-white font-bold px-10 py-5 rounded-2xl text-base nav-font flex items-center justify-center gap-2 transition-all active:scale-95"
+-            >
+-              <Sparkles className="w-5 h-5 text-[#F59E0B]" />
+-              สำรวจความพร้อมองค์กร (3 นาที)
+-            </Link>
+-          </div>
+-
+-          {/* Quick Line contact */}
+-          <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
+-            <span>หรือปรึกษาด่วนกับ ครูเด่น มาสเตอร์ฟา ผ่าน</span>
+-            <a
+-              href={CONTACT_INFO.lineUrl}
+-              target="_blank"
+-              rel="noreferrer"
+-              className="text-[#34D399] hover:underline font-bold inline-flex items-center gap-1"
+-            >
+-              <MessageCircle className="w-3.5 h-3.5" /> LINE Official
+-            </a>
+-          </div>
+-        </div>
+-      </section>
+-
+-    </div>
+-  );
+-};
+-
+-export default Home;
++import ThemeHome from '../components/home/ThemeHome';
++export default function Home() {
++  return <><SEO title="อบรมองค์กร In-house Training พัฒนาผู้นำและทีม | CAP Vision Institute" description="ออกแบบการเรียนรู้เฉพาะองค์กร เพื่อพัฒนาคน ทีม ผู้นำ และวัฒนธรรม ผ่าน CAP Transformation Framework" /><ThemeHome /></>;
++}
+diff --git a/styles/cap-theme.css b/styles/cap-theme.css
+new file mode 100644
+index 0000000..b138abd
+--- /dev/null
++++ b/styles/cap-theme.css
+@@ -0,0 +1,16 @@
++/* CAP Vision · Pearl / Glass / Depth. Scoped to the public homepage. */
++.cap-theme{--cap-ink:#172b43;--cap-muted:#526578;--cap-blue:#315e84;--cap-line:rgba(49,77,105,.16);--cap-pearl:#edf2f5;--cap-radius:30px;color:var(--cap-ink);background:#f5f7f8;font-family:Sarabun,sans-serif;line-height:1.65;overflow:clip}
++.cap-theme *{box-sizing:border-box}.cap-theme h1,.cap-theme h2,.cap-theme h3{font-family:Sarabun,sans-serif}.cap-theme h1,.cap-theme h2,.cap-theme h3,.cap-theme p{margin:0}.cap-theme a{text-decoration:none}.cap-theme a:focus-visible,.cap-theme summary:focus-visible{outline:3px solid #315e84;outline-offset:6px;border-radius:8px}.cap-theme svg{flex-shrink:0}.cap-theme .cap-eyebrow{display:flex;align-items:center;gap:10px;color:var(--cap-muted);font-size:11px;font-weight:700;letter-spacing:.16em;line-height:1.6}.cap-eyebrow>span{width:7px;height:7px;border-radius:50%;background:#598a91}.cap-theme .cap-editorial{font-family:'Playfair Display',Georgia,serif;font-size:18px;color:var(--cap-muted);margin:22px 0 15px}
++.cap-hero{position:relative;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:50px;max-width:1380px;margin:auto;padding:145px 64px 85px;min-height:810px}.cap-hero-copy{position:relative;z-index:2}.cap-theme h1{font-size:clamp(48px,4.8vw,72px);line-height:1.24;font-weight:600;letter-spacing:-.045em}.cap-theme h1 span,.cap-theme h2 span{color:var(--cap-blue)}.cap-theme .cap-lead{font-size:17px;line-height:1.9;color:var(--cap-muted);margin-top:25px;max-width:480px}.cap-actions{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:30px}.cap-button{display:inline-flex;align-items:center;justify-content:center;gap:22px;min-height:54px;padding:13px 23px;background:#284f72;color:#fff!important;border:1px solid #284f72;border-radius:100px;box-shadow:0 9px 20px #294e7125,inset 0 1px 0 #ffffff28;font-size:15px;font-weight:600;transition:transform .2s,box-shadow .2s}.cap-button:hover{transform:translateY(-2px);box-shadow:0 13px 26px #294e7135}.cap-text-link{display:inline-flex;align-items:center;gap:13px;min-height:44px;font-size:14px;color:var(--cap-ink);font-weight:600}.cap-text-link:hover{color:var(--cap-blue)}.cap-theme .cap-signature{margin-top:32px;font-family:'Playfair Display',Georgia,serif;font-size:18px;color:#5f7486;letter-spacing:.03em}.cap-signature span{margin:0 10px;color:#bdac8b}
++.cap-hero-visual{position:relative;min-height:570px;isolation:isolate;border-radius:45% 45% 38% 38%;background:radial-gradient(ellipse at 50% 50%,#d3e3ec 0%,#edf2f5 55%,#f5f7f8 75%)}.cap-sculpture{position:absolute;left:50%;top:44%;width:320px;height:400px;transform:translate(-50%,-50%)}.cap-stone{position:absolute;box-shadow:inset -18px -20px 30px #153e6133,inset 10px 9px 20px #ffffffab,0 24px 26px #233d532b;transform:rotate(-12deg)}.cap-stone-pearl{z-index:3;top:28px;left:87px;width:190px;height:165px;border-radius:48% 52% 46% 54%;background:radial-gradient(ellipse at 26% 21%,#ffffff 0%,#e3eaf2 34%,#96b0c9 80%)}.cap-stone-blue{z-index:2;top:156px;left:39px;width:246px;height:155px;border-radius:46% 54% 42% 58%;background:radial-gradient(ellipse at 25% 20%,#a9d0e9 0%,#6e9ebd 38%,#31577c 86%);transform:rotate(10deg)}.cap-stone-sage{z-index:1;top:274px;left:16px;width:284px;height:138px;border-radius:48% 52% 42% 58%;background:radial-gradient(ellipse at 24% 20%,#d7e7df,#a6bdb6 42%,#617f84 88%);transform:rotate(-6deg)}.cap-stone-shadow{position:absolute;top:398px;left:28px;width:270px;height:40px;border-radius:50%;background:#213c5240;filter:blur(20px)}.cap-orbit{position:absolute;width:430px;height:430px;border:1px solid #7e9cb329;border-radius:50%;left:50%;top:46%;transform:translate(-50%,-50%) rotateX(55deg) rotate(-20deg);z-index:-1}.cap-orbit-two{width:540px;height:540px;transform:translate(-50%,-50%) rotateX(55deg) rotate(30deg)}.cap-glass-label{position:absolute;bottom:55px;left:20px;padding:23px 28px;max-width:320px;background:linear-gradient(125deg,#ffffffd9,#ffffff65);backdrop-filter:blur(16px);border:1px solid #fff;border-radius:23px;box-shadow:0 15px 35px #536d8421,inset 0 1px 0 #fff;color:#4b6579;font-size:16px;line-height:1.7}.cap-glass-label strong{font-weight:600;color:#244564;font-family:'Playfair Display',Georgia,serif;font-size:20px}.cap-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#598a91;margin-right:10px}.cap-visual-note{position:absolute;right:0;bottom:12px;font-size:9px;letter-spacing:.18em;color:#61788b}
++.cap-intro-strip{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px 64px;border-block:1px solid var(--cap-line);max-width:1380px;margin:auto}.cap-intro-strip>span{font-size:10px;color:var(--cap-muted);letter-spacing:.1em}.cap-intro-strip p{display:flex;align-items:center;gap:20px;font-size:15px}.cap-intro-strip i{width:4px;height:4px;background:#9bafbd;border-radius:50%}.cap-intro-strip a{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--cap-ink)}
++.cap-section{max-width:1380px;padding:84px 64px;margin:auto;scroll-margin-top:100px}.cap-section-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:35px;margin-bottom:35px}.cap-theme h2{font-size:clamp(30px,3.1vw,44px);line-height:1.35;font-weight:600;letter-spacing:-.025em}.cap-section-heading h2{margin-top:15px}.cap-section-heading>p{color:var(--cap-muted);font-size:15px;line-height:1.9}.cap-solution-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:19px}.cap-solution{display:flex;flex-direction:column;padding:26px 24px;border-radius:var(--cap-radius);background:linear-gradient(145deg,#fbfdfe,#e6edf1);border:1px solid #ffffff;box-shadow:10px 13px 23px #a9b9c62d,-7px -7px 19px #ffffffb0}.cap-tone-teal{background:linear-gradient(145deg,#f8fcfb,#e2ece9)}.cap-tone-gold{background:linear-gradient(145deg,#fdfbf7,#efe8dd)}.cap-tone-lilac{background:linear-gradient(145deg,#fbfaff,#e9e7f0)}.cap-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.cap-icon{display:inline-flex;align-items:center;justify-content:center;width:55px;height:55px;border-radius:18px;background:#ffffff73;box-shadow:inset 1px 1px 1px #fff,3px 5px 10px #5b728218;color:#365f7d}.cap-index{font-family:'Playfair Display',Georgia,serif;font-size:16px;color:#6b7f8e}.cap-theme .cap-card-eyebrow{font-size:9px;font-weight:700;letter-spacing:.12em;color:#56697b;margin-bottom:11px}.cap-theme h3{font-size:21px;line-height:1.5;font-weight:600}.cap-theme .cap-card-description{font-size:14px;color:var(--cap-muted);line-height:1.85;margin-top:11px;flex:1}.cap-card-actions{margin-top:28px;display:flex;align-items:flex-start;flex-direction:column;gap:5px}.cap-card-actions a{display:inline-flex;align-items:center;gap:12px;font-weight:600;font-size:14px;color:var(--cap-ink);min-height:44px}.cap-card-actions a:last-child{font-size:12px;color:#526578;font-weight:400}.cap-card-actions a:hover{text-decoration:underline;text-underline-offset:5px}.cap-assessment-link{display:flex;align-items:center;gap:17px;padding:21px 27px;margin-top:25px;border:1px solid var(--cap-line);border-radius:24px;color:var(--cap-muted);max-width:580px;font-size:13px}.cap-assessment-link strong{display:block;color:var(--cap-ink);font-size:16px}.cap-assessment-link>svg{margin-left:auto}.cap-assessment-link .cap-icon{box-shadow:none;background:#e6edf2;width:46px;height:46px}
++.cap-framework{border-top:1px solid var(--cap-line)}.cap-framework-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}.cap-framework-grid article{position:relative;min-height:220px;border-top:1px solid #b8c8d3;padding:25px 20px 25px 0}.cap-phase-letter{font-family:'Playfair Display',Georgia,serif;position:absolute;right:14px;top:0;font-size:125px;line-height:1.2;color:#d7e3eb;font-weight:500;z-index:0}.cap-framework-grid article>p,.cap-framework-grid article>h3{position:relative;max-width:230px}.cap-framework-grid article>p:last-child{color:var(--cap-muted);font-size:14px;margin-top:12px}.cap-framework-grid .cap-card-eyebrow{margin-top:25px}.cap-category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.cap-category-grid a{position:relative;padding:25px;background:#fff;border-radius:21px;border:1px solid var(--cap-line);color:var(--cap-ink);transition:background .2s}.cap-category-grid a:hover{background:#e9f0f5}.cap-category-grid span{font-family:'Playfair Display',Georgia,serif;font-size:19px;display:block}.cap-category-grid strong{font-size:13px;font-weight:400;color:var(--cap-muted);display:block;margin-top:5px}.cap-category-grid svg{position:absolute;right:17px;top:26px;width:18px}.cap-course-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:25px}.cap-course{color:var(--cap-ink);overflow:hidden;background:#fff;border-radius:24px;border:1px solid var(--cap-line)}.cap-course>div:last-child{padding:24px}.cap-course-image{aspect-ratio:1.6;background:#dfe9ef}.cap-course-image img{width:100%;height:100%;object-fit:cover}.cap-course h3{font-size:19px;margin:10px 0 15px}
++.cap-human-section{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.cap-founder-photo{position:relative;overflow:hidden;border-radius:40px;aspect-ratio:1.12;background:#d9e4ea}.cap-founder-photo img{width:100%;height:100%;object-fit:cover;object-position:center 46%}.cap-founder-photo>span{position:absolute;bottom:22px;left:24px;right:24px;border:1px solid #ffffff60;background:#ffffffdc;backdrop-filter:blur(12px);font-size:9px;letter-spacing:.13em;padding:13px 18px;border-radius:100px;color:#244564}.cap-human-copy h2{margin:18px 0 25px}.cap-human-copy>p:not(.cap-eyebrow){color:var(--cap-muted);font-size:16px;line-height:1.95}.cap-human-copy .cap-actions{gap:20px}.cap-insight-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}.cap-insight-grid a{color:var(--cap-ink);padding:26px 0;border-top:1px solid var(--cap-line);display:flex;flex-direction:column;gap:22px}.cap-insight-grid h3{font-size:19px;flex:1}.cap-insight-grid .cap-text-link{font-size:13px}
++.cap-closing{position:relative;text-align:center;overflow:hidden;border:1px solid #ffffffa6;border-radius:40px;background:linear-gradient(130deg,#dfeaf0,#eff3f6 48%,#e2ebe7);margin:20px auto 70px;padding:70px 50px 28px;max-width:1252px}.cap-closing>*{position:relative;z-index:1}.cap-closing .cap-eyebrow{justify-content:center}.cap-closing h2{margin-top:20px}.cap-closing .cap-actions{justify-content:center}.cap-button-light{background:#ffffffb3!important;border-color:#fff!important;color:#284f72!important;box-shadow:0 8px 18px #4f6e8614}.cap-closing .cap-line-link{display:inline-flex;gap:10px;align-items:center;font-size:13px;color:var(--cap-muted);padding:25px 0;min-height:44px}.cap-explore-nav{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;border-top:1px solid #8099af30;padding-top:20px;margin-top:20px}.cap-explore-nav a{color:var(--cap-ink);font-size:12px;min-height:44px;display:inline-flex;align-items:center}.cap-explore-nav a:hover{text-decoration:underline}.cap-closing-glow{position:absolute;width:280px;height:280px;border-radius:50%;background:#fff7;right:-100px;top:-80px;box-shadow:-50px 50px 120px #adc8d548;z-index:0}
++@media(min-width:1440px){.cap-hero{min-height:850px}.cap-hero-visual{min-height:620px}}
++@media(max-width:1100px){.cap-hero{padding:130px 35px 65px;gap:15px}.cap-section{padding:70px 35px}.cap-intro-strip{padding-inline:35px}.cap-solution-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cap-hero-visual{min-height:520px}.cap-sculpture{transform:translate(-50%,-50%) scale(.88)}.cap-glass-label{left:0;font-size:14px}.cap-glass-label strong{font-size:18px}.cap-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cap-closing{margin-inline:35px}.cap-human-section{gap:35px}.cap-intro-strip>span{display:none}.cap-orbit-two{width:420px;height:420px}}
++@media(max-width:700px){.cap-hero{grid-template-columns:1fr;padding:120px 24px 30px;gap:5px;min-height:0}.cap-theme h1{font-size:49px}.cap-theme .cap-editorial{font-size:15px;margin:20px 0 15px}.cap-theme .cap-lead{font-size:15px}.cap-hero-visual{min-height:440px;margin:0 -5px}.cap-sculpture{top:40%;transform:translate(-50%,-50%) scale(.77)}.cap-glass-label{bottom:30px;left:10px;padding:16px 22px}.cap-visual-note{bottom:0;right:5px}.cap-orbit{width:310px;height:310px}.cap-orbit-two{width:380px;height:380px}.cap-intro-strip{padding:20px 24px;flex-direction:column;gap:7px;align-items:flex-start}.cap-intro-strip p{font-size:13px;gap:12px}.cap-intro-strip a{font-size:12px}.cap-section{padding:55px 24px}.cap-section-heading{align-items:flex-start;flex-direction:column;gap:15px;margin-bottom:28px}.cap-section-heading>p{font-size:14px}.cap-theme h2{font-size:31px}.cap-solution-grid{grid-template-columns:1fr;gap:17px}.cap-solution{padding:25px}.cap-card-top{margin-bottom:20px}.cap-card-actions{flex-direction:row;align-items:center;gap:25px;margin-top:15px}.cap-assessment-link{padding:18px 17px;gap:12px}.cap-assessment-link .cap-icon{display:none}.cap-assessment-link strong{font-size:15px}.cap-framework-grid{grid-template-columns:1fr;gap:10px}.cap-framework-grid article{min-height:170px;padding:20px 0}.cap-phase-letter{font-size:112px;top:9px}.cap-framework-grid .cap-card-eyebrow{margin-top:13px}.cap-category-grid{grid-template-columns:1fr 1fr;gap:12px}.cap-category-grid a{padding:23px 16px}.cap-category-grid span{font-size:17px;padding-right:16px}.cap-category-grid svg{right:9px;top:28px;width:14px}.cap-category-grid strong{font-size:12px}.cap-course-grid{grid-template-columns:1fr}.cap-human-section{grid-template-columns:1fr;gap:30px}.cap-founder-photo{border-radius:28px;aspect-ratio:1.12}.cap-founder-photo>span{font-size:8px;left:15px;right:15px;bottom:15px;padding:12px}.cap-human-copy>p:not(.cap-eyebrow){font-size:15px}.cap-insight-grid{grid-template-columns:1fr;gap:5px}.cap-insight-grid a{gap:15px;padding:22px 0}.cap-closing{margin:0 16px 40px;padding:45px 22px 20px;border-radius:28px}.cap-closing h2{font-size:29px}.cap-actions{gap:17px}.cap-button{gap:14px;font-size:14px;min-height:52px}.cap-closing .cap-actions{flex-direction:column;align-items:stretch;gap:12px}.cap-closing .cap-button{justify-content:space-between}.cap-explore-nav{gap:4px 18px;margin-top:5px}.cap-theme .cap-signature{font-size:17px;margin-top:24px}.cap-eyebrow{letter-spacing:.12em!important}.cap-desktop-break{display:none}}
++@media(max-width:360px){.cap-theme h1{font-size:43px}.cap-hero,.cap-section{padding-inline:20px}.cap-category-grid{grid-template-columns:1fr}.cap-card-actions{gap:16px}.cap-theme h3{font-size:20px}.cap-sculpture{transform:translate(-50%,-50%) scale(.68)}.cap-closing h2{font-size:26px}}
++@media(prefers-reduced-motion:reduce){.cap-theme *{scroll-behavior:auto!important;transition:none!important}}
++@supports not (backdrop-filter:blur(1px)){.cap-glass-label,.cap-founder-photo>span{background:#f4f8fb}}

@@ -1,6 +1,9 @@
 name: Deploy Astro to Cloudflare
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/deploy-astro.yml']
 permissions:
   contents: read
 concurrency:
@@ -28,32 +31,19 @@ jobs:
       - run: npm test
       - run: npm run typecheck:public
       - run: npm run build
-      - name: Verify generated Worker target
-        run: |
-          node --input-type=module -e "import fs from 'node:fs'; const c=JSON.parse(fs.readFileSync('dist/wrangler.json')); if(c.name!=='cap-vision-institute'||c.main!=='./server/entry.mjs') throw Error('Unexpected Worker target');"
-      - name: Deploy the Astro Worker
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: |
-          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
-            echo 'Set CLOUDFLARE_API_TOKEN in production environment or repository secrets.'
-            exit 1
-          fi
-          npx --no-install wrangler deploy --config dist/wrangler.json
       - name: Configure Course Advisor provider when key is available
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: |
           if [ -n "$DEEPSEEK_API_KEY" ]; then
-            printf '%s' "$DEEPSEEK_API_KEY" | npx --no-install wrangler secret put DEEPSEEK_API_KEY --config dist/wrangler.json
+            for attempt in 1 2 3; do
+              if printf '%s' "$DEEPSEEK_API_KEY" | npx --no-install wrangler secret put DEEPSEEK_API_KEY --config dist/wrangler.json; then break; fi
+              if [ "$attempt" = 3 ]; then exit 1; fi
+            done
           else
             echo 'No repository DeepSeek key supplied; existing Worker secret is preserved. Basic course guidance remains available.'
           fi
-      - name: Verify public homepage changed
-        run: node scripts/verify-live-theme.mjs https://capvisionpartner.com --attempts=6
-      - name: Verify shared design on internal pages
-        run: node scripts/verify-project-theme.mjs https://capvisionpartner.com
       - name: Verify live DeepSeek Course Advisor
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}

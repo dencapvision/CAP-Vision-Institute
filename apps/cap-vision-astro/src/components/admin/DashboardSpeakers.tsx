@@ -93,7 +93,7 @@ const DashboardSpeakers: React.FC = () => {
             bio: formData.bio,
             updated_at: new Date().toISOString()
           })
-          .eq('id', editingSpeaker.id);
+          .eq('id', editingSpeaker.id).select('id').single();
 
         if (error) throw error;
         setMsg('บันทึกข้อมูลเรียบร้อยแล้ว');
@@ -128,7 +128,7 @@ const DashboardSpeakers: React.FC = () => {
   async function handleDelete(id: string, name: string) {
     if (!window.confirm(`คุณแน่ใจว่าต้องการลบวิทยากร "${name}" ใช่หรือไม่?`)) return;
     try {
-      const { error } = await supabase.from('instructors').delete().eq('id', id);
+      const { error } = await supabase.from('instructors').delete().eq('id', id).select('id').single();
       if (error) throw error;
       setSpeakers(speakers.filter(s => s.id !== id));
     } catch (err: any) {

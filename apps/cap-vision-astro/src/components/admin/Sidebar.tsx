@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {
-  LayoutDashboard, FileText, Users, BookOpen,
+  ShieldCheck, LayoutDashboard, FileText, Users, BookOpen,
   Calendar, Image, Settings, LogOut, ChevronRight,
   Sparkles, Tag, MessageSquare, Menu, X, FileCheck, Target
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 const navItems = [
+  { href: '/admin/system', label: 'สถานะระบบและสิทธิ์', icon: ShieldCheck },
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/proposals', label: 'ใบเสนอราคา (Proposals)', icon: FileCheck },
   { href: '/admin/leads', label: 'Leads & CRM', icon: MessageSquare },
@@ -98,6 +99,7 @@ export default function Sidebar() {
     <>
       {/* Mobile toggle */}
       <button
+        aria-label={open ? 'ปิดเมนูแอดมิน' : 'เปิดเมนูแอดมิน'} aria-expanded={open}
         onClick={() => setOpen(!open)}
         className="lg:hidden fixed top-4 left-4 z-50 w-10 h-10 rounded-xl bg-[#0f3460] border border-white/10 flex items-center justify-center text-white shadow-lg"
       >

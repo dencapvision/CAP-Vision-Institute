@@ -1,12 +1,5 @@
 ---
 import AdminLayout from '../../layouts/AdminLayout.astro';
-import DashboardSEO from '../../components/admin/DashboardSEO.tsx';
-
-export const prerender = false;
+import AdminPage from '../../components/admin/AdminPage';
 ---
-
-<AdminLayout title="SEO Settings | CAP Vision Admin">
-  <div class="p-6 md:p-8">
-    <DashboardSEO client:only="react" />
-  </div>
-</AdminLayout>
+<AdminLayout title="Admin — CAP Vision"><div class="p-6 lg:p-8"><AdminPage module="seo" client:only="react" /></div></AdminLayout>

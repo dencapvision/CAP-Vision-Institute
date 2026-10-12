@@ -26,6 +26,7 @@ jobs:
           cache-dependency-path: apps/cap-vision-astro/package-lock.json
       - run: npm ci
       - run: npm test
+      - run: npm run typecheck:admin
       - run: npm run typecheck:public
       - run: npm run build
       - name: Verify generated Worker target
@@ -39,14 +40,20 @@ jobs:
             echo 'Set CLOUDFLARE_API_TOKEN in production environment or repository secrets.'
             exit 1
           fi
-          npx --no-install wrangler deploy --config dist/wrangler.json
+          for attempt in 1 2 3; do
+            if npx --no-install wrangler deploy --config dist/wrangler.json; then break; fi
+            if [ "$attempt" = 3 ]; then exit 1; fi
+          done
       - name: Configure Course Advisor provider when key is available
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: |
           if [ -n "$DEEPSEEK_API_KEY" ]; then
-            printf '%s' "$DEEPSEEK_API_KEY" | npx --no-install wrangler secret put DEEPSEEK_API_KEY --config dist/wrangler.json
+            for attempt in 1 2 3; do
+              if printf '%s' "$DEEPSEEK_API_KEY" | npx --no-install wrangler secret put DEEPSEEK_API_KEY --config dist/wrangler.json; then break; fi
+              if [ "$attempt" = 3 ]; then exit 1; fi
+            done
           else
             echo 'No repository DeepSeek key supplied; existing Worker secret is preserved. Basic course guidance remains available.'
           fi
@@ -58,3 +65,5 @@ jobs:
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: node scripts/verify-course-advisor.mjs https://capvisionpartner.com
+      - name: Verify guarded Admin routes
+        run: node scripts/verify-admin-release.mjs https://capvisionpartner.com

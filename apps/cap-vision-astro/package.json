@@ -12,7 +12,8 @@
     "astro": "astro",
     "deploy": "npm run build && npx wrangler deploy --config dist/wrangler.json",
     "test": "node scripts/generate-sitemap.mjs --check && node --test tests/*.test.mjs",
-    "typecheck:public": "tsc --noEmit -p tests/tsconfig.public.json"
+    "typecheck:public": "tsc --noEmit -p tests/tsconfig.public.json",
+    "typecheck:admin": "tsc --noEmit -p tests/tsconfig.admin.json"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.1.4",

@@ -1,3 +1,4 @@
+import { adminError } from '../../lib/admin-access.mjs';
 import React, { useState, useEffect } from 'react';
 
 import {
@@ -11,6 +12,7 @@ interface ArticleWithSEO extends BlogArticleRow { seo: SEOResult }
 
 const DashboardSEO: React.FC = () => {
   const [articles, setArticles] = useState<ArticleWithSEO[]>([]);
+  const [errorMessage,setErrorMessage]=useState('');
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'issues' | 'good'>('all');
 
@@ -21,7 +23,7 @@ const DashboardSEO: React.FC = () => {
     try {
       const data = await fetchAllArticles();
       setArticles(data.map(a => ({ ...a, seo: analyzeSEO(a.content) })));
-    } catch { /* ignore */ }
+    } catch(error) {setErrorMessage(adminError(error).message);}
     finally { setLoading(false); }
   }
 
@@ -49,6 +51,7 @@ const DashboardSEO: React.FC = () => {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5);
 
+  if(errorMessage)return <p role="alert" className="bg-red-50 p-4">{errorMessage}</p>;
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -141,7 +144,7 @@ const DashboardSEO: React.FC = () => {
                         )}
                       </div>
 
-                      <a href={`/dashboard/blog/edit/${a.id}`}
+                      <a href={`/admin/contents?edit=${a.id}`}
                         className="p-2 text-gray-300 hover:text-[#0f3460] transition-colors rounded-lg hover:bg-gray-100 shrink-0">
                         <Edit3 className="w-4 h-4" />
                       </a>
@@ -204,7 +207,7 @@ const DashboardSEO: React.FC = () => {
               </div>
 
               {/* Quick Action */}
-              <a href="/dashboard/blog/new"
+              <a href="/admin/contents"
                 className="flex items-center justify-center gap-2 bg-[#c5a059] text-white py-3 rounded-xl font-black text-sm hover:bg-[#e0c58e] hover:text-[#0f3460] transition-all shadow-sm w-full">
                 <Zap className="w-4 h-4" /> สร้างบทความใหม่
               </a>

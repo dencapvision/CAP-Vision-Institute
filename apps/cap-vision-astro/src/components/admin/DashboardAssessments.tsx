@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { adminError } from '../../lib/admin-access.mjs';
 import { supabase } from '../../lib/supabase';
 import {
   Target, Search, Filter, Phone, Mail, MessageSquare, Building2, User,
@@ -22,6 +23,7 @@ interface AssessmentLead {
 
 export default function DashboardAssessments() {
   const [assessments, setAssessments] = useState<AssessmentLead[]>([]);
+  const [errorMessage,setErrorMessage]=useState('');
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -38,18 +40,10 @@ export default function DashboardAssessments() {
         .eq('source', 'transformation_assessment')
         .order('created_at', { ascending: false });
 
-      if (error) {
-        console.warn('Could not fetch assessment leads from DB, checking all leads:', error);
-        const { data: allData } = await supabase
-          .from('leads')
-          .select('*')
-          .order('created_at', { ascending: false });
-        setAssessments(allData || []);
-      } else {
-        setAssessments(data || []);
-      }
+      if(error)throw error;
+      setAssessments(data||[]);setErrorMessage('');
     } catch (err) {
-      console.error('Error loading assessments:', err);
+      setErrorMessage(adminError(err).message);
     } finally {
       setLoading(false);
     }
@@ -70,7 +64,7 @@ export default function DashboardAssessments() {
 
   const filtered = assessments.filter(a => {
     const q = searchTerm.toLowerCase();
-    return (
+  return (
       (a.name || '').toLowerCase().includes(q) ||
       (a.company || '').toLowerCase().includes(q) ||
       (a.email || '').toLowerCase().includes(q) ||
@@ -78,6 +72,7 @@ export default function DashboardAssessments() {
     );
   });
 
+  if(errorMessage)return <p role="alert" className="bg-red-50 p-4">{errorMessage}</p>;
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16">
       {/* Header */}

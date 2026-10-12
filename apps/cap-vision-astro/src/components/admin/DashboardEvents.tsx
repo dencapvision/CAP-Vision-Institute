@@ -1,3 +1,5 @@
+import RecordEditor from './RecordEditor';
+import {adminError} from '../../lib/admin-access.mjs';
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 
@@ -15,6 +17,7 @@ interface Event {
 
 const DashboardEvents: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
+  const [errorMessage,setErrorMessage]=useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,10 +33,10 @@ const DashboardEvents: React.FC = () => {
         .order('event_date', { ascending: false });
 
       if (error) throw error;
-      setEvents(data || []);
+      setEvents(data || []);setErrorMessage('');
     } catch (error) {
       console.error('Error fetching events:', error);
-      alert('ไม่สามารถโหลดข้อมูลอีเวนท์ได้');
+      setErrorMessage(adminError(error).message);
     } finally {
       setLoading(false);
     }
@@ -43,7 +46,7 @@ const DashboardEvents: React.FC = () => {
     if (!window.confirm('คุณต้องการลบอีเวนท์นี้ใช่หรือไม่?')) return;
     
     try {
-      const { error } = await supabase.from('events').delete().eq('id', id);
+      const { error } = await supabase.from('events').delete().eq('id', id).select('id').single();
       if (error) throw error;
       setEvents(events.filter(e => e.id !== id));
     } catch (error) {
@@ -57,7 +60,7 @@ const DashboardEvents: React.FC = () => {
       const { error } = await supabase
         .from('events')
         .update({ is_published: !currentStatus })
-        .eq('id', id);
+        .eq('id', id).select('id').single();
 
       if (error) throw error;
       setEvents(events.map(e => e.id === id ? { ...e, is_published: !currentStatus } : e));
@@ -77,12 +80,15 @@ const DashboardEvents: React.FC = () => {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
+      <RecordEditor table="events" onSaved={fetchEvents}/>
+      {errorMessage&&<p role="alert" className="bg-red-50 p-4">{errorMessage}</p>}
+
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl md:text-3xl font-black text-[#0f3460] nav-font">จัดการอีเวนท์</h1>
           <p className="text-gray-500 font-medium">จัดการตารางงาน สัมมนา และกิจกรรมต่างๆ</p>
         </div>
-        <a href="/dashboard/events/new"
+        <a href="/admin/events?edit=new"
           className="bg-[#c5a059] text-white px-6 py-3 rounded-2xl font-bold flex items-center gap-2 hover:bg-[#e0c58e] hover:text-[#0f3460] transition-colors nav-font shadow-lg"
         >
           <Plus className="w-5 h-5" /> สร้างอีเวนท์ใหม่
@@ -151,7 +157,7 @@ const DashboardEvents: React.FC = () => {
                     </td>
                     <td className="p-4 text-right pr-6">
                       <div className="flex items-center justify-end gap-2">
-                        <a href={`/dashboard/events/edit/${event.id}`}
+                        <a href={`/admin/events?edit=${event.id}`}
                           className="p-2 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition-colors"
                           title="แก้ไข"
                         >

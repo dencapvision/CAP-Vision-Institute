@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { adminError } from '../../lib/admin-access.mjs';
 import { supabase } from '../../lib/supabase';
 import { Tag, BookOpen, FileText, Loader2, PlayCircle } from 'lucide-react';
 
@@ -11,6 +12,7 @@ interface CategoryStats {
 
 const DashboardCategories: React.FC = () => {
   const [categories, setCategories] = useState<CategoryStats[]>([]);
+  const [errorMessage,setErrorMessage]=useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,14 +24,16 @@ const DashboardCategories: React.FC = () => {
       setLoading(true);
       
       // Fetch courses
-      const { data: courses } = await supabase.from('courses').select('category');
+      const { data: courses,error:courseError } = await supabase.from('courses').select('category');
       
       // Fetch articles
-      const { data: articles } = await supabase.from('articles').select('category');
+      const { data: articles,error:articleError } = await supabase.from('blog_articles').select('category');
       
       // Fetch online courses
-      const { data: onlineCourses } = await supabase.from('online_courses').select('category');
+      const { data: onlineCourses,error:onlineError } = await supabase.from('online_courses').select('category');
 
+      if(courseError||articleError||onlineError)throw courseError||articleError||onlineError;
+      setErrorMessage('');
       const statsMap = new Map<string, CategoryStats>();
 
       const addStat = (cat: string | null | undefined, type: 'course' | 'article' | 'online') => {
@@ -60,14 +64,15 @@ const DashboardCategories: React.FC = () => {
       setCategories(sortedCategories);
     } catch (error) {
       console.error('Error fetching generic categories:', error);
-      alert('เกิดข้อผิดพลาดในการโหลดข้อมูลหมวดหมู่');
+      setErrorMessage(adminError(error).message);
     } finally {
       setLoading(false);
     }
   };
 
+    if(errorMessage)return <p role="alert" className="bg-red-50 p-4">{errorMessage}</p>;
   if (loading) {
-    return (
+  return (
       <div className="flex justify-center items-center h-64">
         <Loader2 className="w-8 h-8 animate-spin text-[#c5a059]" />
       </div>

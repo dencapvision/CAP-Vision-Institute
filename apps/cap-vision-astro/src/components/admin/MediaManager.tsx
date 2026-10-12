@@ -1,3 +1,4 @@
+import {adminError} from '../../lib/admin-access.mjs';
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import ImageUpload from '../ImageUpload';
@@ -14,6 +15,7 @@ interface MediaFile {
 }
 
 const MediaManager: React.FC = () => {
+    const [errorMessage,setErrorMessage]=useState('');
     const [files, setFiles] = useState<MediaFile[]>([]);
     const [loading, setLoading] = useState(true);
     const [bucketExists, setBucketExists] = useState(true);
@@ -32,7 +34,7 @@ const MediaManager: React.FC = () => {
 
             setFiles(data as MediaFile[]);
         } catch (error) {
-            console.error('Error fetching files:', error);
+            setErrorMessage(adminError(error).message);
         } finally {
             setLoading(false);
         }
@@ -64,6 +66,8 @@ const MediaManager: React.FC = () => {
 
     return (
         <div className="bg-gray-50 min-h-screen pt-24 pb-12">
+            {errorMessage&&<p role="alert" className="bg-red-50 text-red-700 p-4">{errorMessage}</p>}
+
             
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

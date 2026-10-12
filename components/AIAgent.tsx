@@ -1,3 +1,5 @@
+import { useContactPopup } from '../lib/useContactPopup';
+import '../styles/contact-popup.css';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   MessageCircle, X, Send, ArrowRight,
@@ -189,7 +191,7 @@ const SoftCTA: React.FC<{ onShowForm: () => void }> = ({ onShowForm }) => (
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 
 const AIAgent: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setIsOpen, triggerRef, close } = useContactPopup('ai');
   const [sessionId] = useState(() => {
     const saved = localStorage.getItem('capvision_ai_session_id');
     if (saved) return saved;
@@ -245,7 +247,9 @@ const AIAgent: React.FC = () => {
   useEffect(() => { if (messages.length) scrollToBottom(); }, [messages]);
 
   useEffect(() => {
-    if (isOpen) setTimeout(() => inputRef.current?.focus(), 300);
+    if (!isOpen) return;
+    const timer = setTimeout(() => inputRef.current?.focus(), 300);
+    return () => clearTimeout(timer);
   }, [isOpen]);
 
   const sendToAI = useCallback(async (text: string) => {
@@ -310,11 +314,11 @@ const AIAgent: React.FC = () => {
       .replace(/\n/g, '<br/>');
 
   return (
-    <div className="fixed bottom-6 right-5 md:right-6 z-[9999] flex flex-col items-end">
+    <div className="cap-contact-dock cap-contact-dock--ai" data-cap-contact="ai-v2">
       {/* ── CHAT WINDOW ─────────────────────────────────────────────────── */}
       {isOpen && (
         <div
-          className="mb-4 w-[calc(100vw-24px)] md:w-[400px] max-h-[88svh] md:max-h-[660px] bg-white rounded-[1.5rem] shadow-2xl border border-gray-100 flex flex-col overflow-hidden"
+          id="cap-ai-panel" role="dialog" aria-labelledby="cap-ai-title" className="cap-contact-panel cap-contact-ai-panel"
           style={{ animation: 'chatSlideUp 0.28s cubic-bezier(0.16,1,0.3,1) both' }}
         >
           {/* Header */}
@@ -327,16 +331,16 @@ const AIAgent: React.FC = () => {
                 <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-[#0f3460]" />
               </div>
               <div>
-                <h3 className="font-black text-[15px] nav-font leading-none">กระบวนกรคู่คิด</h3>
+                <h3 id="cap-ai-title" className="font-black text-[15px] nav-font leading-none">กระบวนกรคู่คิด</h3>
                 <span className="text-[10px] text-[#c5a059] font-bold tracking-wider uppercase">
                   Dialogue Partner · ออนไลน์
                 </span>
               </div>
             </div>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={close}
               className="bg-white/10 hover:bg-white/25 p-2 rounded-full transition-all"
-              aria-label="Close"
+              aria-label="ปิดหน้าต่าง AI"
             >
               <X className="w-5 h-5" />
             </button>
@@ -446,40 +450,9 @@ const AIAgent: React.FC = () => {
         </div>
       )}
 
-      {/* ── TOGGLE BUTTON ────────────────────────────────────────────────── */}
-      <button
-        onClick={() => setIsOpen(o => !o)}
-        aria-label="ปรึกษาคู่คิดทางปัญญา"
-        className={`group relative flex items-center justify-center transition-all duration-400 rounded-full shadow-[0_8px_32px_rgba(15,52,96,0.45)] ${
-          isOpen
-            ? 'bg-gray-800 p-3 rotate-90 scale-90'
-            : 'bg-[#0f3460] p-4 hover:scale-110 active:scale-95'
-        }`}
-      >
-        {!isOpen && (
-          <span className="absolute inset-0 rounded-full bg-[#0f3460] animate-ping opacity-20" />
-        )}
-        {isOpen ? (
-          <X className="w-7 h-7 text-white" />
-        ) : (
-          <MessageCircle className="w-8 h-8 text-white" />
-        )}
-
-        {/* Tooltip */}
-        {!isOpen && (
-          <div className="absolute right-full mr-4 bg-white text-[#0f3460] px-5 py-3 rounded-2xl shadow-2xl font-black nav-font text-[13px] whitespace-nowrap opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 pointer-events-none border border-blue-50 flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-[#c5a059]" />
-            ปรึกษาคู่คิดทางปัญญา
-            <div className="absolute top-1/2 right-[-7px] -translate-y-1/2 w-0 h-0 border-l-[7px] border-l-white border-y-[5px] border-y-transparent" />
-          </div>
-        )}
-
-        {/* Unread badge when closed and not interacted */}
-        {!isOpen && messages.length === 0 && (
-          <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#c5a059] rounded-full flex items-center justify-center">
-            <span className="text-white text-[8px] font-black">1</span>
-          </div>
-        )}
+      <button ref={triggerRef} onClick={() => isOpen ? close() : setIsOpen(true)}
+        aria-label="ปรึกษาคู่คิดทางปัญญา" aria-expanded={isOpen} aria-controls="cap-ai-panel" className="cap-contact-launcher">
+        {isOpen ? <X size={22} /> : <Sparkles size={22} />}<span>AI คู่คิด</span>
       </button>
 
       <style>{`

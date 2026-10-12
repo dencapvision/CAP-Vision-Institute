@@ -11,5 +11,6 @@ test('repair is repeatable, preserves legacy leads and maps only existing CMS ad
  assert.equal((await db.query('SELECT * FROM crm_admins')).rows.length,1);assert.equal((await db.query('SELECT pipeline_stage FROM leads')).rows[0].pipeline_stage,null);
  await db.exec("SET ROLE authenticated;SET request.jwt.claim.sub='00000000-0000-0000-0000-000000000002';");assert.equal((await db.query('SELECT * FROM leads')).rows.length,0);await assert.rejects(db.exec("INSERT INTO crm_admins VALUES ('00000000-0000-0000-0000-000000000002')"));
  await db.exec("SET request.jwt.claim.sub='00000000-0000-0000-0000-000000000001';");assert.equal((await db.query('SELECT * FROM leads')).rows.length,1);assert.equal((await db.query("UPDATE leads SET pipeline_stage='contacted' RETURNING id")).rows.length,1);
- await db.exec('RESET ROLE;SET ROLE anon;');await assert.rejects(db.query('SELECT * FROM leads'));await db.close();
+ await db.exec("RESET ROLE;UPDATE leads SET status='new',pipeline_stage='won';");await db.exec(sql);assert.equal((await db.query('SELECT pipeline_stage FROM leads')).rows[0].pipeline_stage,'won');
+ await db.exec('SET ROLE anon;');await assert.rejects(db.query('SELECT * FROM leads'));await db.close();
 });

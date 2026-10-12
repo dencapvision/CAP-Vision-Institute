@@ -23,6 +23,13 @@ export async function verifyProjectTheme(origin, fetcher=fetch) {
   return {design:'pearl-glass-v1',pages:results};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
-  try{console.log('PASS:',JSON.stringify(await verifyProjectTheme(process.argv[2]||'https://capvisionpartner.com')));}
-  catch(error){console.error(error.message);process.exitCode=1;}
+  const origin=process.argv[2]||'https://capvisionpartner.com';
+  // Worker edge locations can briefly serve the previous deployment after publish.
+  const raw=process.argv.find(arg=>arg.startsWith('--attempts='))?.split('=')[1]||'6';
+  const attempts=Math.min(6,Math.max(1,Number(raw)||1));let passed=false;
+  for(let i=0;i<attempts;i++){
+    try{console.log('PASS:',JSON.stringify(await verifyProjectTheme(origin)));passed=true;break;}
+    catch(error){console.error(`Attempt ${i+1}/${attempts}: ${error.message}`);if(i+1<attempts)await new Promise(resolve=>setTimeout(resolve,10000));}
+  }
+  if(!passed)process.exitCode=1;
 }

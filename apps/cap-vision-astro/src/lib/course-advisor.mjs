@@ -1,4 +1,4 @@
-export const DEFAULT_MODEL = 'gemini-3-flash-preview';
+export const DEFAULT_MODEL = 'deepseek-flash';
 export const PORTFOLIO = [
   {name:'Service Mind Excellence',keywords:/บริการ|ลูกค้า|customer|service|front.line/i,duration:'1 วัน',question:'ทีมบริการอยากพัฒนาเรื่องใจบริการ การรับมือลูกค้า หรือบุคลิกภาพมากที่สุดครับ?'},
   {name:'Feedback & Coaching',keywords:/feedback|coaching|โค้ช|ฟีดแบ็ก/i,duration:'1 วัน',question:'หัวหน้างานอยากพัฒนาเรื่องการให้ Feedback หรือการโค้ชทีมมากกว่ากันครับ?'},
@@ -45,15 +45,15 @@ export async function advise(input,{apiKey,model=DEFAULT_MODEL,fetcher=fetch}={}
   const basic=basicAdvice(input);
   if(basic.mode==='handoff'||!apiKey) return basic;
   try {
-    const response=await fetcher(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,{
-      method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},signal:AbortSignal.timeout(20000),
-      body:JSON.stringify({systemInstruction:{parts:[{text:SYSTEM_PROMPT}]},contents:[...input.history,{role:'user',content:input.message}].map(h=>({role:h.role==='assistant'?'model':'user',parts:[{text:h.content}]})),generationConfig:{temperature:0.7,maxOutputTokens:1800,responseMimeType:'application/json',thinkingConfig:{thinkingLevel:'minimal'}}})
+    const response=await fetcher('https://api.deepseek.com/chat/completions',{
+      method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${apiKey}`},signal:AbortSignal.timeout(20000),
+      body:JSON.stringify({model,messages:[{role:'system',content:SYSTEM_PROMPT},...input.history,{role:'user',content:input.message}],temperature:0.7,max_tokens:1800,response_format:{type:'json_object'},thinking:{type:'disabled'},stream:false})
     });
     if(!response.ok)throw Error('provider unavailable');
     const data=await response.json();
-    const result=JSON.parse(data.candidates?.[0]?.content?.parts?.filter(p=>!p.thought).map(p=>p.text||'').join('')||'{}');
+    const result=JSON.parse(data.choices?.[0]?.message?.content||'{}');
     if(typeof result.reply!=='string'||!result.reply.trim()||result.reply.length>4000)throw Error('invalid response');
     const program=PORTFOLIO.find(p=>p.name===result.suggested_program)?.name||null;
-    return {reply:result.reply,suggested_program:program,mode:'gemini',model};
+    return {reply:result.reply,suggested_program:program,mode:'deepseek',model};
   }catch { return {...basic,mode:'basic'}; }
 }

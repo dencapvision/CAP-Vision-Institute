@@ -1,6 +1,9 @@
 name: Repair Admin CRM database
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/repair-admin-database.yml']
 permissions:
   contents: read
 jobs:
@@ -22,4 +25,31 @@ jobs:
             echo 'Add SUPABASE_DB_URL in GitHub Actions secrets using the Supabase session pooler URI.'
             exit 1
           fi
-          psql "$SUPABASE_DB_URL" -X -v ON_ERROR_STOP=1 -f supabase/repairs/20261012_admin_crm_repair.sql
+          python - <<'PY'
+          import os, sys
+          from urllib.parse import urlsplit, unquote
+          try:
+              uri = urlsplit(os.environ['SUPABASE_DB_URL'])
+              project = 'nheppvjayzxlblkeanxs'
+              direct = uri.hostname == 'db.' + project + '.supabase.co'
+              pooler = (uri.hostname or '').endswith('.pooler.supabase.com') and (unquote(uri.username or '')).endswith('.' + project)
+              valid = uri.scheme in ('postgres','postgresql') and (direct or pooler) and bool(uri.password)
+          except Exception:
+              valid = False
+          if not valid:
+              sys.exit('SUPABASE_DB_URL must be the production project PostgreSQL connection URI with a password.')
+          print('Production database target verified.')
+          PY
+          psql "$SUPABASE_DB_URL" -X -v ON_ERROR_STOP=1 \
+            -c 'CREATE TEMP TABLE repair_lead_count AS SELECT count(*) AS total FROM public.leads;' \
+            -f supabase/repairs/20261012_admin_crm_repair.sql \
+            -c "DO \$\$ BEGIN
+              IF (SELECT count(*) FROM public.leads) <> (SELECT total FROM repair_lead_count) THEN RAISE EXCEPTION 'Lead count changed'; END IF;
+              IF EXISTS (SELECT 1 FROM public.profiles p WHERE p.is_admin IS TRUE AND NOT EXISTS (SELECT 1 FROM public.crm_admins c WHERE c.user_id=p.id)) THEN RAISE EXCEPTION 'Missing existing admin mapping'; END IF;
+              IF has_table_privilege('anon','public.leads','SELECT') OR has_table_privilege('authenticated','public.crm_admins','INSERT') THEN RAISE EXCEPTION 'Unsafe CRM grants'; END IF;
+              IF NOT (SELECT bool_and(relrowsecurity) FROM pg_class WHERE oid IN ('public.leads'::regclass,'public.crm_admins'::regclass)) THEN RAISE EXCEPTION 'RLS disabled'; END IF;
+              IF (SELECT count(*) FROM information_schema.columns WHERE table_schema='public' AND table_name='leads' AND column_name IN ('pipeline_stage','follow_up_at','crm_notes')) <> 3 THEN RAISE EXCEPTION 'Missing CRM columns'; END IF;
+              IF (SELECT count(*) FROM pg_policies WHERE schemaname='public' AND tablename='leads') <> 3 THEN RAISE EXCEPTION 'Unexpected CRM policies'; END IF;
+            END \$\$;" \
+            -c "SELECT json_build_object('verification','CRM_REPAIR_VERIFIED','existing_cms_admins',(SELECT count(*) FROM public.profiles WHERE is_admin IS TRUE),'crm_admins',(SELECT count(*) FROM public.crm_admins),'lead_count_preserved',(SELECT count(*) FROM public.leads)=(SELECT total FROM repair_lead_count),'anonymous_read_denied',NOT has_table_privilege('anon','public.leads','SELECT'),'self_enrollment_denied',NOT has_table_privilege('authenticated','public.crm_admins','INSERT'));"
+

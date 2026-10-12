@@ -25,9 +25,11 @@ jobs:
           python - <<'PY'
           import os, sys, json
           from urllib.parse import urlsplit, unquote
+          uri = urlsplit('')
+          direct = pooler = False
+          project = 'nheppvjayzxlblkeanxs'
           try:
               uri = urlsplit(os.environ['SUPABASE_DB_URL'])
-              project = 'nheppvjayzxlblkeanxs'
               direct = uri.hostname == 'db.' + project + '.supabase.co'
               pooler = (uri.hostname or '').endswith('.pooler.supabase.com') and (unquote(uri.username or '')).endswith('.' + project)
               valid = uri.scheme in ('postgres','postgresql') and (direct or pooler) and bool(uri.password)

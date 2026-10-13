@@ -164,7 +164,7 @@ h1.\!text-white, h2.\!text-white, h3.\!text-white,
 }
 
 .font-heading-premium {
-  font-family: 'Inter', sans-serif; /* or the intended heading font */
+  font-family: 'Prompt', sans-serif;
   letter-spacing: -0.03em;
   line-height: 1.2;
 }

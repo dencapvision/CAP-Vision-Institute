@@ -23,7 +23,8 @@
   color-scheme: light;
 }
 /* Existing content and semantic/status colors retain their meaning. */
-[data-cap-design] :is(h1,h2,h3,h4,.nav-font) { font-family:Sarabun,var(--font-geist-sans,system-ui),sans-serif; }
+[data-cap-design] :is(h1,h2,h3,h4,h5,h6,[role="heading"],.nav-font,.font-heading-premium) { font-family:"Prompt",sans-serif!important; }
+[data-cap-design] :is(h1,h2,h3,h4,h5,h6,[role="heading"]) { letter-spacing:normal; }
 [data-cap-design] :is(h1,h2,h3) { text-wrap:balance; }
 [data-cap-design] a:focus-visible,
 [data-cap-design] button:focus-visible,

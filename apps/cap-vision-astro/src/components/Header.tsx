@@ -218,6 +218,8 @@ const Header: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [openMobileSubmenu, setOpenMobileSubmenu] = useState<string | null>(null);
   const location = (typeof window !== 'undefined' ? window.location : { pathname: '', search: '' });
+  const mobileToggle = useRef<HTMLButtonElement>(null);
+  const mobileDrawer = useRef<HTMLDivElement>(null);
   const dropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Scroll detection
@@ -236,8 +238,24 @@ const Header: React.FC = () => {
 
   // Lock body scroll when mobile menu open
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = isOpen ? 'hidden' : previousOverflow;
+    if (isOpen) {
+      window.dispatchEvent(new CustomEvent('cap:contact-open', { detail: 'navigation' }));
+      mobileDrawer.current?.querySelector<HTMLElement>('a,button')?.focus();
+    }
+    const onKey = (event: KeyboardEvent) => {
+      if (!isOpen) return;
+      if (event.key === 'Escape') { event.preventDefault(); setIsOpen(false); mobileToggle.current?.focus(); }
+      if (event.key === 'Tab') {
+        const items = [mobileToggle.current, ...Array.from(mobileDrawer.current?.querySelectorAll<HTMLElement>('a[href],button') || [])].filter(Boolean) as HTMLElement[];
+        const first = items[0], last = items[items.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => { document.body.style.overflow = previousOverflow; window.removeEventListener('keydown', onKey); };
   }, [isOpen]);
 
   // Dropdown hover helpers with delay for smooth UX
@@ -305,7 +323,7 @@ const Header: React.FC = () => {
 
       <nav
         aria-label="Main Navigation"
-        className={`cap-site-header fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`cap-site-header fixed top-0 left-0 right-0 ${isOpen ? 'z-[70]' : 'z-50'} transition-all duration-300 ${
           isScrolled
             ? 'h-16 bg-white/95 backdrop-blur-xl shadow-md border-b border-gray-100'
             : 'h-20 bg-white/90 backdrop-blur-md md:bg-transparent'
@@ -407,6 +425,8 @@ const Header: React.FC = () => {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-[#111827] bg-white border border-gray-200 p-2 sm:p-2.5 rounded-xl hover:bg-gray-50 transition-colors focus:outline-none shadow-sm min-w-[38px] min-h-[38px] sm:min-w-[40px] sm:min-h-[40px] flex items-center justify-center shrink-0"
+              ref={mobileToggle}
+              aria-controls="cap-mobile-navigation"
               aria-label={isOpen ? 'ปิดเมนู' : 'เปิดเมนู'}
               aria-expanded={isOpen}
             >
@@ -419,8 +439,10 @@ const Header: React.FC = () => {
       {/* ---- Mobile Full-screen Drawer ---- */}
       {isOpen && (
         <div
-          className="xl:hidden fixed inset-0 z-40 bg-white"
-          style={{ animation: 'slideInRight 0.28s cubic-bezier(0.16,1,0.3,1) both', paddingTop: '64px' }}
+          ref={mobileDrawer}
+          id="cap-mobile-navigation"
+          className="cap-mobile-menu xl:hidden fixed inset-0 z-[60] bg-white"
+          style={{ animation: 'slideInRight 0.28s cubic-bezier(0.16,1,0.3,1) both', paddingTop: isScrolled ? '64px' : '80px' }}
           role="dialog"
           aria-modal="true"
           aria-label="เมนูหลัก"
@@ -469,6 +491,7 @@ const Header: React.FC = () => {
                         }
                         className="p-3 min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-400 hover:text-[#2563EB] rounded-xl transition-colors"
                         aria-label={`ขยาย ${item.name}`}
+                        aria-expanded={openMobileSubmenu === item.name}
                       >
                         <ChevronRight
                           className={`w-5 h-5 transition-transform duration-200 ${
@@ -525,7 +548,7 @@ const Header: React.FC = () => {
           </nav>
 
           {/* Sticky CTA at drawer bottom */}
-          <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 flex gap-3 safe-area-pb">
+          <div className="cap-menu-cta fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 flex gap-3 safe-area-pb">
             <a href="/assessment"
               className="flex-1 bg-[#2563EB] text-white py-3.5 rounded-xl font-bold text-center nav-font text-sm flex items-center justify-center gap-2 shadow-md active:scale-95"
             >

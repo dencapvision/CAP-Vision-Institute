@@ -42,3 +42,15 @@
 .cap-advisor-input button{border:0;background:#284f72;color:white;border-radius:12px;padding:12px;cursor:pointer;}
 .cap-advisor-input button:disabled{opacity:.4;}
 @media(max-height:600px){.cap-advisor-starters{display:none}.cap-advisor-paths{padding:6px}.cap-advisor-input{padding:8px}.cap-contact-heading{padding:12px}}
+
+@media(max-width:767px){
+ .cap-contact-dock{bottom:calc(12px + env(safe-area-inset-bottom,0px));max-width:calc(100vw - 24px)}
+ .cap-contact-dock--line{left:12px}.cap-contact-dock--ai{right:12px}
+ .cap-contact-launcher{min-height:44px;padding:10px 14px;font-size:13px;gap:6px}
+ .cap-contact-launcher svg{width:20px;height:20px}
+ .cap-contact-heading{padding:14px 16px}
+ .cap-contact-close{min-width:44px;min-height:44px}
+ .cap-advisor-messages{font-size:15px;line-height:1.75;padding:12px}
+ .cap-advisor-paths a{min-height:40px}
+}
+body:has(.cap-mobile-menu) .cap-contact-dock{visibility:hidden;pointer-events:none}
